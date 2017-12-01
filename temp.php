@@ -1,0 +1,47 @@
+    <?php $form = ActiveForm::begin(); ?>
+
+    <?= $form->field($model, 'ID_DOTBD')->dropDownList(ArrayHelper::map(Dotbaoduong::find()->all(), 'ID_DOTBD', 'MA_DOTBD'));
+    ?>
+
+    <?= $form->field($model, 'ID_THIETBI')->textInput() ?>
+
+    <?= $form->field($model, 'MA_NOIDUNG')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'ID_NHANVIEN')->dropDownList(ArrayHelper::map(Nhanvien::find()->all(), 'ID_NHANVIEN', 'TEN_NHANVIEN'));?>
+
+    <div class="form-group">
+        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+    </div>
+
+    <?php ActiveForm::end(); ?>
+
+
+    <p class="form-inline">
+        <div class="form-group col-md-4">
+            <label>Đợt bảo dưỡng</label>
+            <input type="text" class="form-control" id="exp" disabled="true" value="<?= $model->MA_DOTBD ; ?>">
+        </div>
+        <div class="form-group col-md-4">
+            <label>Ngày bảo dưỡng</label>
+            <input type="text" class="form-control" id="exp" disabled="true" value="<?= $model->NGAY_BD ; ?>">
+        </div>
+        <div class="form-group col-md-4">
+            <label>Nhóm trưởng</label>
+            <input type="text" class="form-control" id="exp" disabled="true" value="<?= $model->tRUONGNHOM->TEN_NHANVIEN ; ?>">
+        </div>
+    </p>
+
+    'style' => 'width: 150px'
+
+    view/kehoach.php
+    ++bid;
+    $man = $("table tbody tr:first").clone(true);
+    
+    $man.find("select").each(function(i,j) {
+        $actionname = $(j).attr("id").split("-");
+        $(j).attr("name","Kehoachbdtb"+"["+bid+"]"+"["+$actionname[2]+"]");
+        $(j).attr("id","kehoachbdtb"+"-"+bid+"-"+$actionname[2]);
+        $(this).parent().removeClass();
+        $(this).parent().addClass("form-group field-kehoachbdtb"+"-"+bid+"-"+$actionname[2]+" "+"required");
+    });
+    $("table tbody").append( $man );
