@@ -82,7 +82,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class'=>'btn btn-success',
                 'id' => '#addBtn',
                 'onclick' => '
-                    $.post("index.php?r=kehoachbdtb/create&ID_DOTBD='.$model->ID_DOTBD.'&ID_THIETBI='.$kehoachModel->ID_THIETBI.'&MA_NOIDUNG='.$kehoachModel->MA_NOIDUNG.'&ID_NHANVIEN='.$kehoachModel->ID_NHANVIEN.', 
+                     $.post("index.php?r=kehoachbdtb/create&ID_DOTBD='.$model->ID_DOTBD.'&ID_THIETBI=+$(#kehoachbdtb-id_thietbi).val()+&MA_NOIDUNG=+$(#kehoachbdtb-ma_noidung).val()+&ID_NHANVIEN=+$(#kehoachbdtb-id_nhanvien).val()", 
                         function() {
                             
                     });

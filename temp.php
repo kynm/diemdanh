@@ -73,10 +73,46 @@
 
     pk : $("#w1-container").GridView("getSelectedRows");
 
-$man.find("select").each(function(i,j) {
+man.find("select").each(function(i,j) {
     $actionname = $(j).attr("id").split("-");
     $(j).attr("name","Kehoachbdtb"+"["+bid+"]"+"["+$actionname[2]+"]");
     $(j).attr("id","kehoachbdtb"+"-"+bid+"-"+$actionname[2]);
     $(this).parent().removeClass();
     $(this).parent().addClass("form-group field-kehoachbdtb"+"-"+bid+"-"+$actionname[2]+" "+"required");
+});
+
+ $.ajax({
+        url: "test.php",
+        type: "post",
+        data: values ,
+        success: function (response) {
+           // you will get response from your php page (what you echo or print)                 
+
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+           console.log(textStatus, errorThrown);
+        }
+
+
+    });
+
+
+ $.post("index.php?r=kehoachbdtb/create&ID_DOTBD='.$model->ID_DOTBD.'&ID_THIETBI=+$(#kehoachbdtb-id_thietbi).val()+&MA_NOIDUNG=+$(#kehoachbdtb-ma_noidung).val()+&ID_NHANVIEN=+$(#kehoachbdtb-id_nhanvien).val()", 
+                        function() {
+                            
+                    });
+
+
+$.ajax({
+    url: "kehoachbdtb/create",
+    type: "post",
+    data: { 
+        "ID_DOTBD" : '.$model->ID_DOTBD.',
+        "MA_NOIDUNG" : $(#kehoachbdtb-ma_noidung).val(),
+        "ID_THIETBI" : $(#kehoachbdtb-id_thietbi).val(),
+        "ID_NHANVIEN" : $(#kehoachbdtb-id_nhanvien).val(),
+    } ,
+    success: function (response) {
+
+    },
 });
