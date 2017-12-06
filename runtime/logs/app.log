@@ -33274,3 +33274,2338 @@ $_SERVER = [
     'REQUEST_TIME_FLOAT' => 1512533189.394
     'REQUEST_TIME' => 1512533189
 ]
+2017-12-06 07:06:25 [::1][-][-][error][yii\base\ErrorException:8] yii\base\ErrorException: Trying to get property of non-object in /var/www/html/baotrinhatram/controllers/DotbaoduongController.php:116
+Stack trace:
+#0 /var/www/html/baotrinhatram/controllers/DotbaoduongController.php(116): yii\base\ErrorHandler->handleError(8, 'Trying to get p...', '/var/www/html/b...', 116, Array)
+#1 [internal function]: app\controllers\DotbaoduongController->actionKehoach('1')
+#2 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#3 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(156): yii\base\InlineAction->runWithParams(Array)
+#4 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(523): yii\base\Controller->runAction('kehoach', Array)
+#5 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Application.php(102): yii\base\Module->runAction('dotbaoduong/keh...', Array)
+#6 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Application.php(380): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/html/baotrinhatram/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2017-12-06 07:06:25 [::1][-][-][info][application] $_GET = [
+    'r' => 'dotbaoduong/kehoach'
+    'id' => '1'
+]
+
+$_POST = [
+    '_csrf' => 'QrGecQ1jKLWllEuEcESdvfnBMeJbD0xzyXCC0_LSJ74-bhZ9uVgGzqyWJZi-voXJ3-VdukLaB1R-V9gxllrNow=='
+    'Kehoachbdtb' => [
+        '1_1_101' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '103'
+            'ID_NHANVIEN' => '20'
+        ]
+        '1_1_102' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '102'
+            'ID_NHANVIEN' => '10'
+        ]
+        '1_1_104' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '104'
+            'ID_NHANVIEN' => '14'
+        ]
+        '1_2_202' => [
+            'ID_THIETBI' => '2'
+            'MA_NOIDUNG' => '202'
+            'ID_NHANVIEN' => '8'
+        ]
+        '1_2_203' => [
+            'ID_THIETBI' => '2'
+            'MA_NOIDUNG' => '203'
+            'ID_NHANVIEN' => '15'
+        ]
+    ]
+]
+
+$_COOKIE = [
+    '_csrf' => 'f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"|ßˆ´;.{	nÎút&$lXÕK\'·\'Zâdˆê\";}'
+    'PHPSESSID' => 'v95aie0lbs687vle5bfc83j5l0'
+    '_identity' => 'eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba:2:{i:0;s:9:\"_identity\";i:1;s:46:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",2592000]\";}'
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '762'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_REFERER' => 'http://localhost/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8'
+    'HTTP_COOKIE' => '_csrf=f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22%7C%DF%88%0C%B4%3B.%7B%09%02n%1C%CE%FA%18t%26%24lX%19%D5K%27%B7%27Z%E2d%88%EA%1D%22%3B%7D; PHPSESSID=v95aie0lbs687vle5bfc83j5l0; _identity=eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C2592000%5D%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.18 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.18 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www/html'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/html/baotrinhatram/web/index.php'
+    'REMOTE_PORT' => '47282'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'r=dotbaoduong/kehoach&id=1'
+    'REQUEST_URI' => '/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'SCRIPT_NAME' => '/baotrinhatram/web/index.php'
+    'PHP_SELF' => '/baotrinhatram/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1512543985.025
+    'REQUEST_TIME' => 1512543985
+]
+2017-12-06 07:06:50 [::1][-][-][error][ParseError] ParseError: syntax error, unexpected ']', expecting '(' in /var/www/html/baotrinhatram/controllers/DotbaoduongController.php:116
+Stack trace:
+#0 [internal function]: yii\BaseYii::autoload('app\\controllers...')
+#1 [internal function]: spl_autoload_call('app\\controllers...')
+#2 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(633): class_exists('app\\controllers...')
+#3 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(591): yii\base\Module->createControllerByID('dotbaoduong')
+#4 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(517): yii\base\Module->createController('kehoach')
+#5 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Application.php(102): yii\base\Module->runAction('dotbaoduong/keh...', Array)
+#6 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Application.php(380): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/html/baotrinhatram/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2017-12-06 07:06:50 [::1][-][-][info][application] $_GET = [
+    'r' => 'dotbaoduong/kehoach'
+    'id' => '1'
+]
+
+$_POST = [
+    '_csrf' => 'QrGecQ1jKLWllEuEcESdvfnBMeJbD0xzyXCC0_LSJ74-bhZ9uVgGzqyWJZi-voXJ3-VdukLaB1R-V9gxllrNow=='
+    'Kehoachbdtb' => [
+        '1_1_101' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '103'
+            'ID_NHANVIEN' => '20'
+        ]
+        '1_1_102' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '102'
+            'ID_NHANVIEN' => '10'
+        ]
+        '1_1_104' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '104'
+            'ID_NHANVIEN' => '14'
+        ]
+        '1_2_202' => [
+            'ID_THIETBI' => '2'
+            'MA_NOIDUNG' => '202'
+            'ID_NHANVIEN' => '8'
+        ]
+        '1_2_203' => [
+            'ID_THIETBI' => '2'
+            'MA_NOIDUNG' => '203'
+            'ID_NHANVIEN' => '15'
+        ]
+    ]
+]
+
+$_COOKIE = [
+    '_csrf' => 'f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"|ßˆ´;.{	nÎút&$lXÕK\'·\'Zâdˆê\";}'
+    'PHPSESSID' => 'v95aie0lbs687vle5bfc83j5l0'
+    '_identity' => 'eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba:2:{i:0;s:9:\"_identity\";i:1;s:46:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",2592000]\";}'
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '762'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_REFERER' => 'http://localhost/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8'
+    'HTTP_COOKIE' => '_csrf=f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22%7C%DF%88%0C%B4%3B.%7B%09%02n%1C%CE%FA%18t%26%24lX%19%D5K%27%B7%27Z%E2d%88%EA%1D%22%3B%7D; PHPSESSID=v95aie0lbs687vle5bfc83j5l0; _identity=eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C2592000%5D%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.18 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.18 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www/html'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/html/baotrinhatram/web/index.php'
+    'REMOTE_PORT' => '47498'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'r=dotbaoduong/kehoach&id=1'
+    'REQUEST_URI' => '/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'SCRIPT_NAME' => '/baotrinhatram/web/index.php'
+    'PHP_SELF' => '/baotrinhatram/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1512544010.183
+    'REQUEST_TIME' => 1512544010
+]
+2017-12-06 07:07:08 [::1][-][-][error][yii\base\ErrorException:8] yii\base\ErrorException: Undefined index: array in /var/www/html/baotrinhatram/controllers/DotbaoduongController.php:116
+Stack trace:
+#0 /var/www/html/baotrinhatram/controllers/DotbaoduongController.php(116): yii\base\ErrorHandler->handleError(8, 'Undefined index...', '/var/www/html/b...', 116, Array)
+#1 [internal function]: app\controllers\DotbaoduongController->actionKehoach('1')
+#2 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#3 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(156): yii\base\InlineAction->runWithParams(Array)
+#4 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(523): yii\base\Controller->runAction('kehoach', Array)
+#5 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Application.php(102): yii\base\Module->runAction('dotbaoduong/keh...', Array)
+#6 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Application.php(380): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/html/baotrinhatram/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2017-12-06 07:07:08 [::1][-][-][info][application] $_GET = [
+    'r' => 'dotbaoduong/kehoach'
+    'id' => '1'
+]
+
+$_POST = [
+    '_csrf' => 'QrGecQ1jKLWllEuEcESdvfnBMeJbD0xzyXCC0_LSJ74-bhZ9uVgGzqyWJZi-voXJ3-VdukLaB1R-V9gxllrNow=='
+    'Kehoachbdtb' => [
+        '1_1_101' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '103'
+            'ID_NHANVIEN' => '20'
+        ]
+        '1_1_102' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '102'
+            'ID_NHANVIEN' => '10'
+        ]
+        '1_1_104' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '104'
+            'ID_NHANVIEN' => '14'
+        ]
+        '1_2_202' => [
+            'ID_THIETBI' => '2'
+            'MA_NOIDUNG' => '202'
+            'ID_NHANVIEN' => '8'
+        ]
+        '1_2_203' => [
+            'ID_THIETBI' => '2'
+            'MA_NOIDUNG' => '203'
+            'ID_NHANVIEN' => '15'
+        ]
+    ]
+]
+
+$_COOKIE = [
+    '_csrf' => 'f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"|ßˆ´;.{	nÎút&$lXÕK\'·\'Zâdˆê\";}'
+    'PHPSESSID' => 'v95aie0lbs687vle5bfc83j5l0'
+    '_identity' => 'eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba:2:{i:0;s:9:\"_identity\";i:1;s:46:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",2592000]\";}'
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '762'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_REFERER' => 'http://localhost/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8'
+    'HTTP_COOKIE' => '_csrf=f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22%7C%DF%88%0C%B4%3B.%7B%09%02n%1C%CE%FA%18t%26%24lX%19%D5K%27%B7%27Z%E2d%88%EA%1D%22%3B%7D; PHPSESSID=v95aie0lbs687vle5bfc83j5l0; _identity=eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C2592000%5D%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.18 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.18 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www/html'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/html/baotrinhatram/web/index.php'
+    'REMOTE_PORT' => '47646'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'r=dotbaoduong/kehoach&id=1'
+    'REQUEST_URI' => '/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'SCRIPT_NAME' => '/baotrinhatram/web/index.php'
+    'PHP_SELF' => '/baotrinhatram/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1512544028.475
+    'REQUEST_TIME' => 1512544028
+]
+2017-12-06 07:10:25 [::1][-][-][error][yii\base\ErrorException:8] yii\base\ErrorException: Undefined offset: 1 in /var/www/html/baotrinhatram/controllers/DotbaoduongController.php:116
+Stack trace:
+#0 /var/www/html/baotrinhatram/controllers/DotbaoduongController.php(116): yii\base\ErrorHandler->handleError(8, 'Undefined offse...', '/var/www/html/b...', 116, Array)
+#1 [internal function]: app\controllers\DotbaoduongController->actionKehoach('1')
+#2 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#3 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(156): yii\base\InlineAction->runWithParams(Array)
+#4 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(523): yii\base\Controller->runAction('kehoach', Array)
+#5 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Application.php(102): yii\base\Module->runAction('dotbaoduong/keh...', Array)
+#6 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Application.php(380): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/html/baotrinhatram/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2017-12-06 07:10:25 [::1][-][-][info][application] $_GET = [
+    'r' => 'dotbaoduong/kehoach'
+    'id' => '1'
+]
+
+$_POST = [
+    '_csrf' => 'QrGecQ1jKLWllEuEcESdvfnBMeJbD0xzyXCC0_LSJ74-bhZ9uVgGzqyWJZi-voXJ3-VdukLaB1R-V9gxllrNow=='
+    'Kehoachbdtb' => [
+        '1_1_101' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '103'
+            'ID_NHANVIEN' => '20'
+        ]
+        '1_1_102' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '102'
+            'ID_NHANVIEN' => '10'
+        ]
+        '1_1_104' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '104'
+            'ID_NHANVIEN' => '14'
+        ]
+        '1_2_202' => [
+            'ID_THIETBI' => '2'
+            'MA_NOIDUNG' => '202'
+            'ID_NHANVIEN' => '8'
+        ]
+        '1_2_203' => [
+            'ID_THIETBI' => '2'
+            'MA_NOIDUNG' => '203'
+            'ID_NHANVIEN' => '15'
+        ]
+    ]
+]
+
+$_COOKIE = [
+    '_csrf' => 'f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"|ßˆ´;.{	nÎút&$lXÕK\'·\'Zâdˆê\";}'
+    'PHPSESSID' => 'v95aie0lbs687vle5bfc83j5l0'
+    '_identity' => 'eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba:2:{i:0;s:9:\"_identity\";i:1;s:46:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",2592000]\";}'
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '762'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_REFERER' => 'http://localhost/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8'
+    'HTTP_COOKIE' => '_csrf=f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22%7C%DF%88%0C%B4%3B.%7B%09%02n%1C%CE%FA%18t%26%24lX%19%D5K%27%B7%27Z%E2d%88%EA%1D%22%3B%7D; PHPSESSID=v95aie0lbs687vle5bfc83j5l0; _identity=eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C2592000%5D%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.18 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.18 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www/html'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/html/baotrinhatram/web/index.php'
+    'REMOTE_PORT' => '49234'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'r=dotbaoduong/kehoach&id=1'
+    'REQUEST_URI' => '/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'SCRIPT_NAME' => '/baotrinhatram/web/index.php'
+    'PHP_SELF' => '/baotrinhatram/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1512544225.391
+    'REQUEST_TIME' => 1512544225
+]
+2017-12-06 07:10:46 [::1][-][-][error][yii\base\ErrorException:8] yii\base\ErrorException: Undefined offset: 0 in /var/www/html/baotrinhatram/controllers/DotbaoduongController.php:116
+Stack trace:
+#0 /var/www/html/baotrinhatram/controllers/DotbaoduongController.php(116): yii\base\ErrorHandler->handleError(8, 'Undefined offse...', '/var/www/html/b...', 116, Array)
+#1 [internal function]: app\controllers\DotbaoduongController->actionKehoach('1')
+#2 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#3 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(156): yii\base\InlineAction->runWithParams(Array)
+#4 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(523): yii\base\Controller->runAction('kehoach', Array)
+#5 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Application.php(102): yii\base\Module->runAction('dotbaoduong/keh...', Array)
+#6 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Application.php(380): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/html/baotrinhatram/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2017-12-06 07:10:46 [::1][-][-][info][application] $_GET = [
+    'r' => 'dotbaoduong/kehoach'
+    'id' => '1'
+]
+
+$_POST = [
+    '_csrf' => 'QrGecQ1jKLWllEuEcESdvfnBMeJbD0xzyXCC0_LSJ74-bhZ9uVgGzqyWJZi-voXJ3-VdukLaB1R-V9gxllrNow=='
+    'Kehoachbdtb' => [
+        '1_1_101' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '103'
+            'ID_NHANVIEN' => '20'
+        ]
+        '1_1_102' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '102'
+            'ID_NHANVIEN' => '10'
+        ]
+        '1_1_104' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '104'
+            'ID_NHANVIEN' => '14'
+        ]
+        '1_2_202' => [
+            'ID_THIETBI' => '2'
+            'MA_NOIDUNG' => '202'
+            'ID_NHANVIEN' => '8'
+        ]
+        '1_2_203' => [
+            'ID_THIETBI' => '2'
+            'MA_NOIDUNG' => '203'
+            'ID_NHANVIEN' => '15'
+        ]
+    ]
+]
+
+$_COOKIE = [
+    '_csrf' => 'f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"|ßˆ´;.{	nÎút&$lXÕK\'·\'Zâdˆê\";}'
+    'PHPSESSID' => 'v95aie0lbs687vle5bfc83j5l0'
+    '_identity' => 'eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba:2:{i:0;s:9:\"_identity\";i:1;s:46:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",2592000]\";}'
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '762'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_REFERER' => 'http://localhost/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8'
+    'HTTP_COOKIE' => '_csrf=f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22%7C%DF%88%0C%B4%3B.%7B%09%02n%1C%CE%FA%18t%26%24lX%19%D5K%27%B7%27Z%E2d%88%EA%1D%22%3B%7D; PHPSESSID=v95aie0lbs687vle5bfc83j5l0; _identity=eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C2592000%5D%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.18 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.18 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www/html'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/html/baotrinhatram/web/index.php'
+    'REMOTE_PORT' => '49404'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'r=dotbaoduong/kehoach&id=1'
+    'REQUEST_URI' => '/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'SCRIPT_NAME' => '/baotrinhatram/web/index.php'
+    'PHP_SELF' => '/baotrinhatram/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1512544246.01
+    'REQUEST_TIME' => 1512544246
+]
+2017-12-06 07:15:20 [::1][-][-][error][yii\base\ErrorException:2] yii\base\ErrorException: Illegal offset type in isset or empty in /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Request.php:449
+Stack trace:
+#0 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Request.php(449): yii\base\ErrorHandler->handleError(2, 'Illegal offset ...', '/var/www/html/b...', 449, Array)
+#1 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Request.php(465): yii\web\Request->getBodyParam(Array, NULL)
+#2 /var/www/html/baotrinhatram/controllers/DotbaoduongController.php(113): yii\web\Request->post(Array)
+#3 [internal function]: app\controllers\DotbaoduongController->actionKehoach('1')
+#4 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#5 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(156): yii\base\InlineAction->runWithParams(Array)
+#6 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(523): yii\base\Controller->runAction('kehoach', Array)
+#7 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Application.php(102): yii\base\Module->runAction('dotbaoduong/keh...', Array)
+#8 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Application.php(380): yii\web\Application->handleRequest(Object(yii\web\Request))
+#9 /var/www/html/baotrinhatram/web/index.php(12): yii\base\Application->run()
+#10 {main}
+2017-12-06 07:15:20 [::1][-][-][info][application] $_GET = [
+    'r' => 'dotbaoduong/kehoach'
+    'id' => '1'
+]
+
+$_POST = [
+    '_csrf' => 'QrGecQ1jKLWllEuEcESdvfnBMeJbD0xzyXCC0_LSJ74-bhZ9uVgGzqyWJZi-voXJ3-VdukLaB1R-V9gxllrNow=='
+    'Kehoachbdtb' => [
+        '1_1_101' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '103'
+            'ID_NHANVIEN' => '20'
+        ]
+        '1_1_102' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '102'
+            'ID_NHANVIEN' => '10'
+        ]
+        '1_1_104' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '104'
+            'ID_NHANVIEN' => '14'
+        ]
+        '1_2_202' => [
+            'ID_THIETBI' => '2'
+            'MA_NOIDUNG' => '202'
+            'ID_NHANVIEN' => '8'
+        ]
+        '1_2_203' => [
+            'ID_THIETBI' => '2'
+            'MA_NOIDUNG' => '203'
+            'ID_NHANVIEN' => '15'
+        ]
+    ]
+]
+
+$_COOKIE = [
+    '_csrf' => 'f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"|ßˆ´;.{	nÎút&$lXÕK\'·\'Zâdˆê\";}'
+    'PHPSESSID' => 'v95aie0lbs687vle5bfc83j5l0'
+    '_identity' => 'eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba:2:{i:0;s:9:\"_identity\";i:1;s:46:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",2592000]\";}'
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '762'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_REFERER' => 'http://localhost/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8'
+    'HTTP_COOKIE' => '_csrf=f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22%7C%DF%88%0C%B4%3B.%7B%09%02n%1C%CE%FA%18t%26%24lX%19%D5K%27%B7%27Z%E2d%88%EA%1D%22%3B%7D; PHPSESSID=v95aie0lbs687vle5bfc83j5l0; _identity=eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C2592000%5D%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.18 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.18 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www/html'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/html/baotrinhatram/web/index.php'
+    'REMOTE_PORT' => '51674'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'r=dotbaoduong/kehoach&id=1'
+    'REQUEST_URI' => '/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'SCRIPT_NAME' => '/baotrinhatram/web/index.php'
+    'PHP_SELF' => '/baotrinhatram/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1512544520.879
+    'REQUEST_TIME' => 1512544520
+]
+2017-12-06 07:16:00 [::1][-][-][error][yii\base\ErrorException:2] yii\base\ErrorException: Invalid argument supplied for foreach() in /var/www/html/baotrinhatram/controllers/DotbaoduongController.php:116
+Stack trace:
+#0 /var/www/html/baotrinhatram/controllers/DotbaoduongController.php(116): yii\base\ErrorHandler->handleError(2, 'Invalid argumen...', '/var/www/html/b...', 116, Array)
+#1 [internal function]: app\controllers\DotbaoduongController->actionKehoach('1')
+#2 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#3 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(156): yii\base\InlineAction->runWithParams(Array)
+#4 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(523): yii\base\Controller->runAction('kehoach', Array)
+#5 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Application.php(102): yii\base\Module->runAction('dotbaoduong/keh...', Array)
+#6 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Application.php(380): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/html/baotrinhatram/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2017-12-06 07:16:00 [::1][-][-][info][application] $_GET = [
+    'r' => 'dotbaoduong/kehoach'
+    'id' => '1'
+]
+
+$_POST = [
+    '_csrf' => 'QrGecQ1jKLWllEuEcESdvfnBMeJbD0xzyXCC0_LSJ74-bhZ9uVgGzqyWJZi-voXJ3-VdukLaB1R-V9gxllrNow=='
+    'Kehoachbdtb' => [
+        '1_1_101' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '103'
+            'ID_NHANVIEN' => '20'
+        ]
+        '1_1_102' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '102'
+            'ID_NHANVIEN' => '10'
+        ]
+        '1_1_104' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '104'
+            'ID_NHANVIEN' => '14'
+        ]
+        '1_2_202' => [
+            'ID_THIETBI' => '2'
+            'MA_NOIDUNG' => '202'
+            'ID_NHANVIEN' => '8'
+        ]
+        '1_2_203' => [
+            'ID_THIETBI' => '2'
+            'MA_NOIDUNG' => '203'
+            'ID_NHANVIEN' => '15'
+        ]
+    ]
+]
+
+$_COOKIE = [
+    '_csrf' => 'f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"|ßˆ´;.{	nÎút&$lXÕK\'·\'Zâdˆê\";}'
+    'PHPSESSID' => 'v95aie0lbs687vle5bfc83j5l0'
+    '_identity' => 'eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba:2:{i:0;s:9:\"_identity\";i:1;s:46:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",2592000]\";}'
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '762'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_REFERER' => 'http://localhost/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8'
+    'HTTP_COOKIE' => '_csrf=f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22%7C%DF%88%0C%B4%3B.%7B%09%02n%1C%CE%FA%18t%26%24lX%19%D5K%27%B7%27Z%E2d%88%EA%1D%22%3B%7D; PHPSESSID=v95aie0lbs687vle5bfc83j5l0; _identity=eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C2592000%5D%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.18 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.18 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www/html'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/html/baotrinhatram/web/index.php'
+    'REMOTE_PORT' => '52000'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'r=dotbaoduong/kehoach&id=1'
+    'REQUEST_URI' => '/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'SCRIPT_NAME' => '/baotrinhatram/web/index.php'
+    'PHP_SELF' => '/baotrinhatram/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1512544560.571
+    'REQUEST_TIME' => 1512544560
+]
+2017-12-06 07:16:50 [::1][-][-][error][yii\base\ErrorException:2] yii\base\ErrorException: Illegal offset type in isset or empty in /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Request.php:449
+Stack trace:
+#0 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Request.php(449): yii\base\ErrorHandler->handleError(2, 'Illegal offset ...', '/var/www/html/b...', 449, Array)
+#1 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Request.php(465): yii\web\Request->getBodyParam(Array, NULL)
+#2 /var/www/html/baotrinhatram/controllers/DotbaoduongController.php(113): yii\web\Request->post(Array)
+#3 [internal function]: app\controllers\DotbaoduongController->actionKehoach('1')
+#4 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#5 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(156): yii\base\InlineAction->runWithParams(Array)
+#6 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(523): yii\base\Controller->runAction('kehoach', Array)
+#7 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Application.php(102): yii\base\Module->runAction('dotbaoduong/keh...', Array)
+#8 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Application.php(380): yii\web\Application->handleRequest(Object(yii\web\Request))
+#9 /var/www/html/baotrinhatram/web/index.php(12): yii\base\Application->run()
+#10 {main}
+2017-12-06 07:16:50 [::1][-][-][info][application] $_GET = [
+    'r' => 'dotbaoduong/kehoach'
+    'id' => '1'
+]
+
+$_POST = [
+    '_csrf' => '985B7fhTO-JDXdwxjJ4Onz2vUfijv-Nn5wltSrmX8i2LEcnhTGgVmUpfsi1CZBbrG4s9oLpqqEBQLjeo3R8YMA=='
+    'Kehoachbdtb' => [
+        '1_1_101' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '101'
+            'ID_NHANVIEN' => '20'
+        ]
+        '1_1_102' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '102'
+            'ID_NHANVIEN' => '10'
+        ]
+        '1_1_104' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '104'
+            'ID_NHANVIEN' => '14'
+        ]
+        '1_2_202' => [
+            'ID_THIETBI' => '2'
+            'MA_NOIDUNG' => '202'
+            'ID_NHANVIEN' => '8'
+        ]
+        '1_2_203' => [
+            'ID_THIETBI' => '2'
+            'MA_NOIDUNG' => '203'
+            'ID_NHANVIEN' => '15'
+        ]
+    ]
+]
+
+$_COOKIE = [
+    '_csrf' => 'f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"|ßˆ´;.{	nÎút&$lXÕK\'·\'Zâdˆê\";}'
+    'PHPSESSID' => 'v95aie0lbs687vle5bfc83j5l0'
+    '_identity' => 'eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba:2:{i:0;s:9:\"_identity\";i:1;s:46:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",2592000]\";}'
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '762'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_REFERER' => 'http://localhost/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8'
+    'HTTP_COOKIE' => '_csrf=f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22%7C%DF%88%0C%B4%3B.%7B%09%02n%1C%CE%FA%18t%26%24lX%19%D5K%27%B7%27Z%E2d%88%EA%1D%22%3B%7D; PHPSESSID=v95aie0lbs687vle5bfc83j5l0; _identity=eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C2592000%5D%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.18 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.18 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www/html'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/html/baotrinhatram/web/index.php'
+    'REMOTE_PORT' => '52414'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'r=dotbaoduong/kehoach&id=1'
+    'REQUEST_URI' => '/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'SCRIPT_NAME' => '/baotrinhatram/web/index.php'
+    'PHP_SELF' => '/baotrinhatram/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1512544610.8
+    'REQUEST_TIME' => 1512544610
+]
+2017-12-06 07:17:03 [::1][-][-][error][yii\base\ErrorException:2] yii\base\ErrorException: Invalid argument supplied for foreach() in /var/www/html/baotrinhatram/controllers/DotbaoduongController.php:116
+Stack trace:
+#0 /var/www/html/baotrinhatram/controllers/DotbaoduongController.php(116): yii\base\ErrorHandler->handleError(2, 'Invalid argumen...', '/var/www/html/b...', 116, Array)
+#1 [internal function]: app\controllers\DotbaoduongController->actionKehoach('1')
+#2 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#3 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(156): yii\base\InlineAction->runWithParams(Array)
+#4 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(523): yii\base\Controller->runAction('kehoach', Array)
+#5 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Application.php(102): yii\base\Module->runAction('dotbaoduong/keh...', Array)
+#6 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Application.php(380): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/html/baotrinhatram/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2017-12-06 07:17:03 [::1][-][-][info][application] $_GET = [
+    'r' => 'dotbaoduong/kehoach'
+    'id' => '1'
+]
+
+$_POST = [
+    '_csrf' => '985B7fhTO-JDXdwxjJ4Onz2vUfijv-Nn5wltSrmX8i2LEcnhTGgVmUpfsi1CZBbrG4s9oLpqqEBQLjeo3R8YMA=='
+    'Kehoachbdtb' => [
+        '1_1_101' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '101'
+            'ID_NHANVIEN' => '20'
+        ]
+        '1_1_102' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '102'
+            'ID_NHANVIEN' => '10'
+        ]
+        '1_1_104' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '104'
+            'ID_NHANVIEN' => '14'
+        ]
+        '1_2_202' => [
+            'ID_THIETBI' => '2'
+            'MA_NOIDUNG' => '202'
+            'ID_NHANVIEN' => '8'
+        ]
+        '1_2_203' => [
+            'ID_THIETBI' => '2'
+            'MA_NOIDUNG' => '203'
+            'ID_NHANVIEN' => '15'
+        ]
+    ]
+]
+
+$_COOKIE = [
+    '_csrf' => 'f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"|ßˆ´;.{	nÎút&$lXÕK\'·\'Zâdˆê\";}'
+    'PHPSESSID' => 'v95aie0lbs687vle5bfc83j5l0'
+    '_identity' => 'eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba:2:{i:0;s:9:\"_identity\";i:1;s:46:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",2592000]\";}'
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '762'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_REFERER' => 'http://localhost/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8'
+    'HTTP_COOKIE' => '_csrf=f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22%7C%DF%88%0C%B4%3B.%7B%09%02n%1C%CE%FA%18t%26%24lX%19%D5K%27%B7%27Z%E2d%88%EA%1D%22%3B%7D; PHPSESSID=v95aie0lbs687vle5bfc83j5l0; _identity=eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C2592000%5D%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.18 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.18 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www/html'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/html/baotrinhatram/web/index.php'
+    'REMOTE_PORT' => '52524'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'r=dotbaoduong/kehoach&id=1'
+    'REQUEST_URI' => '/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'SCRIPT_NAME' => '/baotrinhatram/web/index.php'
+    'PHP_SELF' => '/baotrinhatram/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1512544623.597
+    'REQUEST_TIME' => 1512544623
+]
+2017-12-06 07:41:25 [::1][-][-][error][Error] Error: Class 'app\controllers\Kehoachbdtb' not found in /var/www/html/baotrinhatram/controllers/DotbaoduongController.php:113
+Stack trace:
+#0 [internal function]: app\controllers\DotbaoduongController->actionKehoach('1')
+#1 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#2 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(156): yii\base\InlineAction->runWithParams(Array)
+#3 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(523): yii\base\Controller->runAction('kehoach', Array)
+#4 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Application.php(102): yii\base\Module->runAction('dotbaoduong/keh...', Array)
+#5 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Application.php(380): yii\web\Application->handleRequest(Object(yii\web\Request))
+#6 /var/www/html/baotrinhatram/web/index.php(12): yii\base\Application->run()
+#7 {main}
+2017-12-06 07:41:25 [::1][-][-][info][application] $_GET = [
+    'r' => 'dotbaoduong/kehoach'
+    'id' => '1'
+]
+
+$_POST = [
+    '_csrf' => '985B7fhTO-JDXdwxjJ4Onz2vUfijv-Nn5wltSrmX8i2LEcnhTGgVmUpfsi1CZBbrG4s9oLpqqEBQLjeo3R8YMA=='
+    'Kehoachbdtb' => [
+        '1_1_101' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '101'
+            'ID_NHANVIEN' => '20'
+        ]
+        '1_1_102' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '102'
+            'ID_NHANVIEN' => '10'
+        ]
+        '1_1_104' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '104'
+            'ID_NHANVIEN' => '14'
+        ]
+        '1_2_202' => [
+            'ID_THIETBI' => '2'
+            'MA_NOIDUNG' => '202'
+            'ID_NHANVIEN' => '8'
+        ]
+        '1_2_203' => [
+            'ID_THIETBI' => '2'
+            'MA_NOIDUNG' => '203'
+            'ID_NHANVIEN' => '15'
+        ]
+    ]
+]
+
+$_COOKIE = [
+    '_csrf' => 'f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"|ßˆ´;.{	nÎút&$lXÕK\'·\'Zâdˆê\";}'
+    'PHPSESSID' => 'v95aie0lbs687vle5bfc83j5l0'
+    '_identity' => 'eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba:2:{i:0;s:9:\"_identity\";i:1;s:46:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",2592000]\";}'
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '762'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_REFERER' => 'http://localhost/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8'
+    'HTTP_COOKIE' => '_csrf=f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22%7C%DF%88%0C%B4%3B.%7B%09%02n%1C%CE%FA%18t%26%24lX%19%D5K%27%B7%27Z%E2d%88%EA%1D%22%3B%7D; PHPSESSID=v95aie0lbs687vle5bfc83j5l0; _identity=eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C2592000%5D%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.18 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.18 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www/html'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/html/baotrinhatram/web/index.php'
+    'REMOTE_PORT' => '36266'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'r=dotbaoduong/kehoach&id=1'
+    'REQUEST_URI' => '/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'SCRIPT_NAME' => '/baotrinhatram/web/index.php'
+    'PHP_SELF' => '/baotrinhatram/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1512546085.586
+    'REQUEST_TIME' => 1512546085
+]
+2017-12-06 07:41:54 [::1][-][-][error][yii\base\ErrorException:2] yii\base\ErrorException: call_user_func() expects parameter 1 to be a valid callback, array must have exactly two members in /var/www/html/baotrinhatram/vendor/yiisoft/yii2/db/ActiveQueryTrait.php:145
+Stack trace:
+#0 [internal function]: yii\base\ErrorHandler->handleError(2, 'call_user_func(...', '/var/www/html/b...', 145, Array)
+#1 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/db/ActiveQueryTrait.php(145): call_user_func(Array, Object(app\models\Kehoachbdtb))
+#2 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/db/ActiveQuery.php(209): yii\db\ActiveQuery->createModels(Array)
+#3 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/db/Query.php(214): yii\db\ActiveQuery->populate(Array)
+#4 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/db/ActiveQuery.php(135): yii\db\Query->all(NULL)
+#5 /var/www/html/baotrinhatram/controllers/DotbaoduongController.php(114): yii\db\ActiveQuery->all()
+#6 [internal function]: app\controllers\DotbaoduongController->actionKehoach('1')
+#7 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#8 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(156): yii\base\InlineAction->runWithParams(Array)
+#9 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(523): yii\base\Controller->runAction('kehoach', Array)
+#10 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Application.php(102): yii\base\Module->runAction('dotbaoduong/keh...', Array)
+#11 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Application.php(380): yii\web\Application->handleRequest(Object(yii\web\Request))
+#12 /var/www/html/baotrinhatram/web/index.php(12): yii\base\Application->run()
+#13 {main}
+2017-12-06 07:41:54 [::1][-][-][info][application] $_GET = [
+    'r' => 'dotbaoduong/kehoach'
+    'id' => '1'
+]
+
+$_POST = [
+    '_csrf' => '985B7fhTO-JDXdwxjJ4Onz2vUfijv-Nn5wltSrmX8i2LEcnhTGgVmUpfsi1CZBbrG4s9oLpqqEBQLjeo3R8YMA=='
+    'Kehoachbdtb' => [
+        '1_1_101' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '101'
+            'ID_NHANVIEN' => '20'
+        ]
+        '1_1_102' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '102'
+            'ID_NHANVIEN' => '10'
+        ]
+        '1_1_104' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '104'
+            'ID_NHANVIEN' => '14'
+        ]
+        '1_2_202' => [
+            'ID_THIETBI' => '2'
+            'MA_NOIDUNG' => '202'
+            'ID_NHANVIEN' => '8'
+        ]
+        '1_2_203' => [
+            'ID_THIETBI' => '2'
+            'MA_NOIDUNG' => '203'
+            'ID_NHANVIEN' => '15'
+        ]
+    ]
+]
+
+$_COOKIE = [
+    '_csrf' => 'f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"|ßˆ´;.{	nÎút&$lXÕK\'·\'Zâdˆê\";}'
+    'PHPSESSID' => 'v95aie0lbs687vle5bfc83j5l0'
+    '_identity' => 'eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba:2:{i:0;s:9:\"_identity\";i:1;s:46:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",2592000]\";}'
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '762'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_REFERER' => 'http://localhost/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8'
+    'HTTP_COOKIE' => '_csrf=f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22%7C%DF%88%0C%B4%3B.%7B%09%02n%1C%CE%FA%18t%26%24lX%19%D5K%27%B7%27Z%E2d%88%EA%1D%22%3B%7D; PHPSESSID=v95aie0lbs687vle5bfc83j5l0; _identity=eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C2592000%5D%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.18 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.18 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www/html'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/html/baotrinhatram/web/index.php'
+    'REMOTE_PORT' => '36498'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'r=dotbaoduong/kehoach&id=1'
+    'REQUEST_URI' => '/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'SCRIPT_NAME' => '/baotrinhatram/web/index.php'
+    'PHP_SELF' => '/baotrinhatram/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1512546114.145
+    'REQUEST_TIME' => 1512546114
+]
+2017-12-06 08:11:05 [::1][-][-][error][yii\base\ErrorException:8] yii\base\ErrorException: Undefined variable: kehoach in /var/www/html/baotrinhatram/controllers/DotbaoduongController.php:115
+Stack trace:
+#0 /var/www/html/baotrinhatram/controllers/DotbaoduongController.php(115): yii\base\ErrorHandler->handleError(8, 'Undefined varia...', '/var/www/html/b...', 115, Array)
+#1 [internal function]: app\controllers\DotbaoduongController->actionKehoach('1')
+#2 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#3 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(156): yii\base\InlineAction->runWithParams(Array)
+#4 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(523): yii\base\Controller->runAction('kehoach', Array)
+#5 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Application.php(102): yii\base\Module->runAction('dotbaoduong/keh...', Array)
+#6 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Application.php(380): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/html/baotrinhatram/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2017-12-06 08:11:05 [::1][-][-][info][application] $_GET = [
+    'r' => 'dotbaoduong/kehoach'
+    'id' => '1'
+]
+
+$_POST = [
+    '_csrf' => 'WkcM4BGQKvTehgMVj2pkhvTeZGxo0LMRfHZNR66p5-gmmITspasEj9eEbQlBkHzy0voINHEF-DbLURelyiEN9Q=='
+    'Kehoachbdtb' => [
+        '1_1_101' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '101'
+            'ID_NHANVIEN' => '20'
+        ]
+        '1_1_102' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '102'
+            'ID_NHANVIEN' => '10'
+        ]
+        '1_1_104' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '104'
+            'ID_NHANVIEN' => '14'
+        ]
+        '1_2_202' => [
+            'ID_THIETBI' => '2'
+            'MA_NOIDUNG' => '202'
+            'ID_NHANVIEN' => '8'
+        ]
+        '1_2_203' => [
+            'ID_THIETBI' => '2'
+            'MA_NOIDUNG' => '203'
+            'ID_NHANVIEN' => '15'
+        ]
+    ]
+]
+
+$_COOKIE = [
+    '_csrf' => 'f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"|ßˆ´;.{	nÎút&$lXÕK\'·\'Zâdˆê\";}'
+    'PHPSESSID' => 'ge1q19r8plhtn8rg4vdkhmj0v2'
+    '_identity' => 'eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba:2:{i:0;s:9:\"_identity\";i:1;s:46:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",2592000]\";}'
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '762'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_REFERER' => 'http://localhost/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8'
+    'HTTP_COOKIE' => '_csrf=f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22%7C%DF%88%0C%B4%3B.%7B%09%02n%1C%CE%FA%18t%26%24lX%19%D5K%27%B7%27Z%E2d%88%EA%1D%22%3B%7D; PHPSESSID=ge1q19r8plhtn8rg4vdkhmj0v2; _identity=eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C2592000%5D%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.18 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.18 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www/html'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/html/baotrinhatram/web/index.php'
+    'REMOTE_PORT' => '50882'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'r=dotbaoduong/kehoach&id=1'
+    'REQUEST_URI' => '/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'SCRIPT_NAME' => '/baotrinhatram/web/index.php'
+    'PHP_SELF' => '/baotrinhatram/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1512547865.863
+    'REQUEST_TIME' => 1512547865
+]
+2017-12-06 08:31:01 [::1][-][-][error][ParseError] ParseError: syntax error, unexpected ')' in /var/www/html/baotrinhatram/controllers/DotbaoduongController.php:118
+Stack trace:
+#0 [internal function]: yii\BaseYii::autoload('app\\controllers...')
+#1 [internal function]: spl_autoload_call('app\\controllers...')
+#2 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(633): class_exists('app\\controllers...')
+#3 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(591): yii\base\Module->createControllerByID('dotbaoduong')
+#4 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(517): yii\base\Module->createController('kehoach')
+#5 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Application.php(102): yii\base\Module->runAction('dotbaoduong/keh...', Array)
+#6 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Application.php(380): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/html/baotrinhatram/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2017-12-06 08:31:01 [::1][-][-][info][application] $_GET = [
+    'r' => 'dotbaoduong/kehoach'
+    'id' => '1'
+]
+
+$_POST = [
+    '_csrf' => 'yYWodquI9HKq6EpYqy8b2N74FEKsronJWqY4el6O6KS1WiB6H7PaCaPqJERl1QOs-Nx4GrV7wu7tgWKYOgYCuQ=='
+    'Kehoachbdtb' => [
+        '1_1_101' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '101'
+            'ID_NHANVIEN' => '20'
+        ]
+        '1_1_102' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '102'
+            'ID_NHANVIEN' => '10'
+        ]
+        '1_1_104' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '103'
+            'ID_NHANVIEN' => '14'
+        ]
+        '1_2_202' => [
+            'ID_THIETBI' => '2'
+            'MA_NOIDUNG' => '202'
+            'ID_NHANVIEN' => '8'
+        ]
+        '1_2_203' => [
+            'ID_THIETBI' => '2'
+            'MA_NOIDUNG' => '203'
+            'ID_NHANVIEN' => '15'
+        ]
+    ]
+]
+
+$_COOKIE = [
+    '_csrf' => 'f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"|ßˆ´;.{	nÎút&$lXÕK\'·\'Zâdˆê\";}'
+    'PHPSESSID' => 'ge1q19r8plhtn8rg4vdkhmj0v2'
+    '_identity' => 'eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba:2:{i:0;s:9:\"_identity\";i:1;s:46:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",2592000]\";}'
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '762'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_REFERER' => 'http://localhost/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8'
+    'HTTP_COOKIE' => '_csrf=f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22%7C%DF%88%0C%B4%3B.%7B%09%02n%1C%CE%FA%18t%26%24lX%19%D5K%27%B7%27Z%E2d%88%EA%1D%22%3B%7D; PHPSESSID=ge1q19r8plhtn8rg4vdkhmj0v2; _identity=eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C2592000%5D%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.18 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.18 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www/html'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/html/baotrinhatram/web/index.php'
+    'REMOTE_PORT' => '60666'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'r=dotbaoduong/kehoach&id=1'
+    'REQUEST_URI' => '/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'SCRIPT_NAME' => '/baotrinhatram/web/index.php'
+    'PHP_SELF' => '/baotrinhatram/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1512549061.818
+    'REQUEST_TIME' => 1512549061
+]
+2017-12-06 08:34:41 [::1][-][-][error][ParseError] ParseError: syntax error, unexpected '}' in /var/www/html/baotrinhatram/controllers/DotbaoduongController.php:125
+Stack trace:
+#0 [internal function]: yii\BaseYii::autoload('app\\controllers...')
+#1 [internal function]: spl_autoload_call('app\\controllers...')
+#2 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(633): class_exists('app\\controllers...')
+#3 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(591): yii\base\Module->createControllerByID('dotbaoduong')
+#4 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(517): yii\base\Module->createController('kehoach')
+#5 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Application.php(102): yii\base\Module->runAction('dotbaoduong/keh...', Array)
+#6 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Application.php(380): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/html/baotrinhatram/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2017-12-06 08:34:41 [::1][-][-][info][application] $_GET = [
+    'r' => 'dotbaoduong/kehoach'
+    'id' => '1'
+]
+
+$_POST = [
+    '_csrf' => 'yYWodquI9HKq6EpYqy8b2N74FEKsronJWqY4el6O6KS1WiB6H7PaCaPqJERl1QOs-Nx4GrV7wu7tgWKYOgYCuQ=='
+    'Kehoachbdtb' => [
+        '1_1_101' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '101'
+            'ID_NHANVIEN' => '20'
+        ]
+        '1_1_102' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '102'
+            'ID_NHANVIEN' => '10'
+        ]
+        '1_1_104' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '103'
+            'ID_NHANVIEN' => '14'
+        ]
+        '1_2_202' => [
+            'ID_THIETBI' => '2'
+            'MA_NOIDUNG' => '202'
+            'ID_NHANVIEN' => '8'
+        ]
+        '1_2_203' => [
+            'ID_THIETBI' => '2'
+            'MA_NOIDUNG' => '203'
+            'ID_NHANVIEN' => '15'
+        ]
+    ]
+]
+
+$_COOKIE = [
+    '_csrf' => 'f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"|ßˆ´;.{	nÎút&$lXÕK\'·\'Zâdˆê\";}'
+    'PHPSESSID' => 'ge1q19r8plhtn8rg4vdkhmj0v2'
+    '_identity' => 'eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba:2:{i:0;s:9:\"_identity\";i:1;s:46:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",2592000]\";}'
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '762'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_REFERER' => 'http://localhost/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8'
+    'HTTP_COOKIE' => '_csrf=f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22%7C%DF%88%0C%B4%3B.%7B%09%02n%1C%CE%FA%18t%26%24lX%19%D5K%27%B7%27Z%E2d%88%EA%1D%22%3B%7D; PHPSESSID=ge1q19r8plhtn8rg4vdkhmj0v2; _identity=eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C2592000%5D%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.18 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.18 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www/html'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/html/baotrinhatram/web/index.php'
+    'REMOTE_PORT' => '34210'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'r=dotbaoduong/kehoach&id=1'
+    'REQUEST_URI' => '/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'SCRIPT_NAME' => '/baotrinhatram/web/index.php'
+    'PHP_SELF' => '/baotrinhatram/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1512549281.952
+    'REQUEST_TIME' => 1512549281
+]
+2017-12-06 08:35:13 [::1][-][-][error][ParseError] ParseError: syntax error, unexpected ']' in /var/www/html/baotrinhatram/controllers/DotbaoduongController.php:120
+Stack trace:
+#0 [internal function]: yii\BaseYii::autoload('app\\controllers...')
+#1 [internal function]: spl_autoload_call('app\\controllers...')
+#2 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(633): class_exists('app\\controllers...')
+#3 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(591): yii\base\Module->createControllerByID('dotbaoduong')
+#4 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(517): yii\base\Module->createController('kehoach')
+#5 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Application.php(102): yii\base\Module->runAction('dotbaoduong/keh...', Array)
+#6 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Application.php(380): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/html/baotrinhatram/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2017-12-06 08:35:13 [::1][-][-][info][application] $_GET = [
+    'r' => 'dotbaoduong/kehoach'
+    'id' => '1'
+]
+
+$_POST = [
+    '_csrf' => 'A9PBqfAkPT-_nOv1kmN1ZExj8bdZzLcbJFOiHntjMTB_DEmlRB8TRLaehelcmW0Qaked70AZ_DyTdPj8H-vbLQ=='
+    'Kehoachbdtb' => [
+        '1_1_101' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '101'
+            'ID_NHANVIEN' => '20'
+        ]
+        '1_1_102' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '102'
+            'ID_NHANVIEN' => '10'
+        ]
+        '1_1_104' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '104'
+            'ID_NHANVIEN' => '14'
+        ]
+        '1_2_202' => [
+            'ID_THIETBI' => '2'
+            'MA_NOIDUNG' => '202'
+            'ID_NHANVIEN' => '8'
+        ]
+        '1_2_203' => [
+            'ID_THIETBI' => '2'
+            'MA_NOIDUNG' => '203'
+            'ID_NHANVIEN' => '15'
+        ]
+    ]
+]
+
+$_COOKIE = [
+    '_csrf' => 'f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"|ßˆ´;.{	nÎút&$lXÕK\'·\'Zâdˆê\";}'
+    'PHPSESSID' => 'ge1q19r8plhtn8rg4vdkhmj0v2'
+    '_identity' => 'eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba:2:{i:0;s:9:\"_identity\";i:1;s:46:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",2592000]\";}'
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '762'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_REFERER' => 'http://localhost/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8'
+    'HTTP_COOKIE' => '_csrf=f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22%7C%DF%88%0C%B4%3B.%7B%09%02n%1C%CE%FA%18t%26%24lX%19%D5K%27%B7%27Z%E2d%88%EA%1D%22%3B%7D; PHPSESSID=ge1q19r8plhtn8rg4vdkhmj0v2; _identity=eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C2592000%5D%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.18 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.18 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www/html'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/html/baotrinhatram/web/index.php'
+    'REMOTE_PORT' => '34470'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'r=dotbaoduong/kehoach&id=1'
+    'REQUEST_URI' => '/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'SCRIPT_NAME' => '/baotrinhatram/web/index.php'
+    'PHP_SELF' => '/baotrinhatram/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1512549313.207
+    'REQUEST_TIME' => 1512549313
+]
+2017-12-06 08:41:29 [::1][-][-][error][yii\base\ErrorException:8] yii\base\ErrorException: Trying to get property of non-object in /var/www/html/baotrinhatram/controllers/DotbaoduongController.php:123
+Stack trace:
+#0 /var/www/html/baotrinhatram/controllers/DotbaoduongController.php(123): yii\base\ErrorHandler->handleError(8, 'Trying to get p...', '/var/www/html/b...', 123, Array)
+#1 [internal function]: app\controllers\DotbaoduongController->actionKehoach('1')
+#2 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#3 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(156): yii\base\InlineAction->runWithParams(Array)
+#4 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(523): yii\base\Controller->runAction('kehoach', Array)
+#5 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Application.php(102): yii\base\Module->runAction('dotbaoduong/keh...', Array)
+#6 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Application.php(380): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/html/baotrinhatram/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2017-12-06 08:41:29 [::1][-][-][info][application] $_GET = [
+    'r' => 'dotbaoduong/kehoach'
+    'id' => '1'
+]
+
+$_POST = [
+    '_csrf' => 'A9PBqfAkPT-_nOv1kmN1ZExj8bdZzLcbJFOiHntjMTB_DEmlRB8TRLaehelcmW0Qaked70AZ_DyTdPj8H-vbLQ=='
+    'Kehoachbdtb' => [
+        '1_1_101' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '101'
+            'ID_NHANVIEN' => '20'
+        ]
+        '1_1_102' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '102'
+            'ID_NHANVIEN' => '10'
+        ]
+        '1_1_104' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '104'
+            'ID_NHANVIEN' => '14'
+        ]
+        '1_2_202' => [
+            'ID_THIETBI' => '2'
+            'MA_NOIDUNG' => '202'
+            'ID_NHANVIEN' => '8'
+        ]
+        '1_2_203' => [
+            'ID_THIETBI' => '2'
+            'MA_NOIDUNG' => '203'
+            'ID_NHANVIEN' => '15'
+        ]
+    ]
+]
+
+$_COOKIE = [
+    '_csrf' => 'f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"|ßˆ´;.{	nÎút&$lXÕK\'·\'Zâdˆê\";}'
+    'PHPSESSID' => 'ge1q19r8plhtn8rg4vdkhmj0v2'
+    '_identity' => 'eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba:2:{i:0;s:9:\"_identity\";i:1;s:46:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",2592000]\";}'
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '762'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_REFERER' => 'http://localhost/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8'
+    'HTTP_COOKIE' => '_csrf=f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22%7C%DF%88%0C%B4%3B.%7B%09%02n%1C%CE%FA%18t%26%24lX%19%D5K%27%B7%27Z%E2d%88%EA%1D%22%3B%7D; PHPSESSID=ge1q19r8plhtn8rg4vdkhmj0v2; _identity=eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C2592000%5D%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.18 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.18 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www/html'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/html/baotrinhatram/web/index.php'
+    'REMOTE_PORT' => '37564'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'r=dotbaoduong/kehoach&id=1'
+    'REQUEST_URI' => '/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'SCRIPT_NAME' => '/baotrinhatram/web/index.php'
+    'PHP_SELF' => '/baotrinhatram/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1512549689.388
+    'REQUEST_TIME' => 1512549689
+]
+2017-12-06 08:42:00 [::1][-][-][error][yii\db\IntegrityException] PDOException: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '1-1-101' for key 'PRIMARY' in /var/www/html/baotrinhatram/vendor/yiisoft/yii2/db/Command.php:842
+Stack trace:
+#0 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/db/Command.php(842): PDOStatement->execute()
+#1 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/db/Schema.php(454): yii\db\Command->execute()
+#2 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/db/ActiveRecord.php(494): yii\db\Schema->insert('kehoachbdtb', Array)
+#3 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/db/ActiveRecord.php(461): yii\db\ActiveRecord->insertInternal(NULL)
+#4 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/db/BaseActiveRecord.php(643): yii\db\ActiveRecord->insert(true, NULL)
+#5 /var/www/html/baotrinhatram/controllers/DotbaoduongController.php(126): yii\db\BaseActiveRecord->save()
+#6 [internal function]: app\controllers\DotbaoduongController->actionKehoach('1')
+#7 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#8 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(156): yii\base\InlineAction->runWithParams(Array)
+#9 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(523): yii\base\Controller->runAction('kehoach', Array)
+#10 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Application.php(102): yii\base\Module->runAction('dotbaoduong/keh...', Array)
+#11 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Application.php(380): yii\web\Application->handleRequest(Object(yii\web\Request))
+#12 /var/www/html/baotrinhatram/web/index.php(12): yii\base\Application->run()
+#13 {main}
+
+Next yii\db\IntegrityException: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '1-1-101' for key 'PRIMARY'
+The SQL being executed was: INSERT INTO `kehoachbdtb` (`ID_DOTBD`, `ID_THIETBI`, `MA_NOIDUNG`, `ID_NHANVIEN`) VALUES (1, 1, '101', 20) in /var/www/html/baotrinhatram/vendor/yiisoft/yii2/db/Schema.php:636
+Stack trace:
+#0 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/db/Command.php(852): yii\db\Schema->convertException(Object(PDOException), 'INSERT INTO `ke...')
+#1 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/db/Schema.php(454): yii\db\Command->execute()
+#2 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/db/ActiveRecord.php(494): yii\db\Schema->insert('kehoachbdtb', Array)
+#3 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/db/ActiveRecord.php(461): yii\db\ActiveRecord->insertInternal(NULL)
+#4 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/db/BaseActiveRecord.php(643): yii\db\ActiveRecord->insert(true, NULL)
+#5 /var/www/html/baotrinhatram/controllers/DotbaoduongController.php(126): yii\db\BaseActiveRecord->save()
+#6 [internal function]: app\controllers\DotbaoduongController->actionKehoach('1')
+#7 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#8 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(156): yii\base\InlineAction->runWithParams(Array)
+#9 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(523): yii\base\Controller->runAction('kehoach', Array)
+#10 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Application.php(102): yii\base\Module->runAction('dotbaoduong/keh...', Array)
+#11 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Application.php(380): yii\web\Application->handleRequest(Object(yii\web\Request))
+#12 /var/www/html/baotrinhatram/web/index.php(12): yii\base\Application->run()
+#13 {main}
+Additional Information:
+Array
+(
+    [0] => 23000
+    [1] => 1062
+    [2] => Duplicate entry '1-1-101' for key 'PRIMARY'
+)
+
+2017-12-06 08:42:00 [::1][-][-][info][application] $_GET = [
+    'r' => 'dotbaoduong/kehoach'
+    'id' => '1'
+]
+
+$_POST = [
+    '_csrf' => 'A9PBqfAkPT-_nOv1kmN1ZExj8bdZzLcbJFOiHntjMTB_DEmlRB8TRLaehelcmW0Qaked70AZ_DyTdPj8H-vbLQ=='
+    'Kehoachbdtb' => [
+        '1_1_101' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '101'
+            'ID_NHANVIEN' => '20'
+        ]
+        '1_1_102' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '102'
+            'ID_NHANVIEN' => '10'
+        ]
+        '1_1_104' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '104'
+            'ID_NHANVIEN' => '14'
+        ]
+        '1_2_202' => [
+            'ID_THIETBI' => '2'
+            'MA_NOIDUNG' => '202'
+            'ID_NHANVIEN' => '8'
+        ]
+        '1_2_203' => [
+            'ID_THIETBI' => '2'
+            'MA_NOIDUNG' => '203'
+            'ID_NHANVIEN' => '15'
+        ]
+    ]
+]
+
+$_COOKIE = [
+    '_csrf' => 'f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"|ßˆ´;.{	nÎút&$lXÕK\'·\'Zâdˆê\";}'
+    'PHPSESSID' => 'ge1q19r8plhtn8rg4vdkhmj0v2'
+    '_identity' => 'eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba:2:{i:0;s:9:\"_identity\";i:1;s:46:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",2592000]\";}'
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '762'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_REFERER' => 'http://localhost/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8'
+    'HTTP_COOKIE' => '_csrf=f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22%7C%DF%88%0C%B4%3B.%7B%09%02n%1C%CE%FA%18t%26%24lX%19%D5K%27%B7%27Z%E2d%88%EA%1D%22%3B%7D; PHPSESSID=ge1q19r8plhtn8rg4vdkhmj0v2; _identity=eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C2592000%5D%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.18 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.18 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www/html'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/html/baotrinhatram/web/index.php'
+    'REMOTE_PORT' => '37808'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'r=dotbaoduong/kehoach&id=1'
+    'REQUEST_URI' => '/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'SCRIPT_NAME' => '/baotrinhatram/web/index.php'
+    'PHP_SELF' => '/baotrinhatram/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1512549720.105
+    'REQUEST_TIME' => 1512549720
+]
+2017-12-06 08:44:43 [::1][-][-][error][ParseError] ParseError: syntax error, unexpected 'continue' (T_CONTINUE) in /var/www/html/baotrinhatram/controllers/DotbaoduongController.php:126
+Stack trace:
+#0 [internal function]: yii\BaseYii::autoload('app\\controllers...')
+#1 [internal function]: spl_autoload_call('app\\controllers...')
+#2 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(633): class_exists('app\\controllers...')
+#3 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(591): yii\base\Module->createControllerByID('dotbaoduong')
+#4 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(517): yii\base\Module->createController('kehoach')
+#5 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Application.php(102): yii\base\Module->runAction('dotbaoduong/keh...', Array)
+#6 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Application.php(380): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/html/baotrinhatram/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2017-12-06 08:44:43 [::1][-][-][info][application] $_GET = [
+    'r' => 'dotbaoduong/kehoach'
+    'id' => '1'
+]
+
+$_POST = [
+    '_csrf' => 'A9PBqfAkPT-_nOv1kmN1ZExj8bdZzLcbJFOiHntjMTB_DEmlRB8TRLaehelcmW0Qaked70AZ_DyTdPj8H-vbLQ=='
+    'Kehoachbdtb' => [
+        '1_1_101' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '101'
+            'ID_NHANVIEN' => '20'
+        ]
+        '1_1_102' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '102'
+            'ID_NHANVIEN' => '10'
+        ]
+        '1_1_104' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '104'
+            'ID_NHANVIEN' => '14'
+        ]
+        '1_2_202' => [
+            'ID_THIETBI' => '2'
+            'MA_NOIDUNG' => '202'
+            'ID_NHANVIEN' => '8'
+        ]
+        '1_2_203' => [
+            'ID_THIETBI' => '2'
+            'MA_NOIDUNG' => '203'
+            'ID_NHANVIEN' => '15'
+        ]
+    ]
+]
+
+$_COOKIE = [
+    '_csrf' => 'f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"|ßˆ´;.{	nÎút&$lXÕK\'·\'Zâdˆê\";}'
+    'PHPSESSID' => 'ge1q19r8plhtn8rg4vdkhmj0v2'
+    '_identity' => 'eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba:2:{i:0;s:9:\"_identity\";i:1;s:46:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",2592000]\";}'
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '762'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_REFERER' => 'http://localhost/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8'
+    'HTTP_COOKIE' => '_csrf=f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22%7C%DF%88%0C%B4%3B.%7B%09%02n%1C%CE%FA%18t%26%24lX%19%D5K%27%B7%27Z%E2d%88%EA%1D%22%3B%7D; PHPSESSID=ge1q19r8plhtn8rg4vdkhmj0v2; _identity=eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C2592000%5D%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.18 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.18 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www/html'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/html/baotrinhatram/web/index.php'
+    'REMOTE_PORT' => '39150'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'r=dotbaoduong/kehoach&id=1'
+    'REQUEST_URI' => '/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'SCRIPT_NAME' => '/baotrinhatram/web/index.php'
+    'PHP_SELF' => '/baotrinhatram/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1512549883.23
+    'REQUEST_TIME' => 1512549883
+]
+2017-12-06 08:45:03 [::1][-][-][error][yii\base\UnknownMethodException] yii\base\UnknownMethodException: Calling unknown method: app\models\Kehoachbdtb::isExists() in /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Component.php:290
+Stack trace:
+#0 /var/www/html/baotrinhatram/controllers/DotbaoduongController.php(126): yii\base\Component->__call('isExists', Array)
+#1 [internal function]: app\controllers\DotbaoduongController->actionKehoach('1')
+#2 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#3 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(156): yii\base\InlineAction->runWithParams(Array)
+#4 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(523): yii\base\Controller->runAction('kehoach', Array)
+#5 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Application.php(102): yii\base\Module->runAction('dotbaoduong/keh...', Array)
+#6 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Application.php(380): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/html/baotrinhatram/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2017-12-06 08:45:03 [::1][-][-][info][application] $_GET = [
+    'r' => 'dotbaoduong/kehoach'
+    'id' => '1'
+]
+
+$_POST = [
+    '_csrf' => 'A9PBqfAkPT-_nOv1kmN1ZExj8bdZzLcbJFOiHntjMTB_DEmlRB8TRLaehelcmW0Qaked70AZ_DyTdPj8H-vbLQ=='
+    'Kehoachbdtb' => [
+        '1_1_101' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '101'
+            'ID_NHANVIEN' => '20'
+        ]
+        '1_1_102' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '102'
+            'ID_NHANVIEN' => '10'
+        ]
+        '1_1_104' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '104'
+            'ID_NHANVIEN' => '14'
+        ]
+        '1_2_202' => [
+            'ID_THIETBI' => '2'
+            'MA_NOIDUNG' => '202'
+            'ID_NHANVIEN' => '8'
+        ]
+        '1_2_203' => [
+            'ID_THIETBI' => '2'
+            'MA_NOIDUNG' => '203'
+            'ID_NHANVIEN' => '15'
+        ]
+    ]
+]
+
+$_COOKIE = [
+    '_csrf' => 'f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"|ßˆ´;.{	nÎút&$lXÕK\'·\'Zâdˆê\";}'
+    'PHPSESSID' => 'ge1q19r8plhtn8rg4vdkhmj0v2'
+    '_identity' => 'eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba:2:{i:0;s:9:\"_identity\";i:1;s:46:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",2592000]\";}'
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '762'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_REFERER' => 'http://localhost/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8'
+    'HTTP_COOKIE' => '_csrf=f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22%7C%DF%88%0C%B4%3B.%7B%09%02n%1C%CE%FA%18t%26%24lX%19%D5K%27%B7%27Z%E2d%88%EA%1D%22%3B%7D; PHPSESSID=ge1q19r8plhtn8rg4vdkhmj0v2; _identity=eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C2592000%5D%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.18 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.18 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www/html'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/html/baotrinhatram/web/index.php'
+    'REMOTE_PORT' => '39314'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'r=dotbaoduong/kehoach&id=1'
+    'REQUEST_URI' => '/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'SCRIPT_NAME' => '/baotrinhatram/web/index.php'
+    'PHP_SELF' => '/baotrinhatram/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1512549903.464
+    'REQUEST_TIME' => 1512549903
+]
+2017-12-06 09:14:39 [::1][-][-][error][yii\base\ErrorException:8] yii\base\ErrorException: Undefined index: ID_THIETBI in /var/www/html/baotrinhatram/controllers/DotbaoduongController.php:125
+Stack trace:
+#0 /var/www/html/baotrinhatram/controllers/DotbaoduongController.php(125): yii\base\ErrorHandler->handleError(8, 'Undefined index...', '/var/www/html/b...', 125, Array)
+#1 [internal function]: app\controllers\DotbaoduongController->actionKehoach('1')
+#2 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#3 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(156): yii\base\InlineAction->runWithParams(Array)
+#4 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(523): yii\base\Controller->runAction('kehoach', Array)
+#5 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Application.php(102): yii\base\Module->runAction('dotbaoduong/keh...', Array)
+#6 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Application.php(380): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/html/baotrinhatram/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2017-12-06 09:14:39 [::1][-][-][info][application] $_GET = [
+    'r' => 'dotbaoduong/kehoach'
+    'id' => '1'
+]
+
+$_POST = [
+    '_csrf' => 'jx4AfkYzYv4pTUUGo4PUeRhr7MYf8d4mtXjsK0wpblLzwYhy8ghMhSBPKxptecwNPk-AngYklQECX7bJKKGETw=='
+    'Kehoachbdtb' => [
+        6 => [
+            'id_thietbi' => '1'
+            'ma_noidung' => '104'
+            'id_nhanvien' => '12'
+        ]
+        '1_1_101' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '101'
+            'ID_NHANVIEN' => '20'
+        ]
+        '1_1_102' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '102'
+            'ID_NHANVIEN' => '10'
+        ]
+        '1_2_202' => [
+            'ID_THIETBI' => '2'
+            'MA_NOIDUNG' => '202'
+            'ID_NHANVIEN' => '8'
+        ]
+        '1_2_203' => [
+            'ID_THIETBI' => '2'
+            'MA_NOIDUNG' => '203'
+            'ID_NHANVIEN' => '15'
+        ]
+    ]
+]
+
+$_COOKIE = [
+    '_csrf' => 'f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"|ßˆ´;.{	nÎút&$lXÕK\'·\'Zâdˆê\";}'
+    'PHPSESSID' => 'ge1q19r8plhtn8rg4vdkhmj0v2'
+    '_identity' => 'eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba:2:{i:0;s:9:\"_identity\";i:1;s:46:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",2592000]\";}'
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '744'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_REFERER' => 'http://localhost/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8'
+    'HTTP_COOKIE' => '_csrf=f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22%7C%DF%88%0C%B4%3B.%7B%09%02n%1C%CE%FA%18t%26%24lX%19%D5K%27%B7%27Z%E2d%88%EA%1D%22%3B%7D; PHPSESSID=ge1q19r8plhtn8rg4vdkhmj0v2; _identity=eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C2592000%5D%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.18 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.18 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www/html'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/html/baotrinhatram/web/index.php'
+    'REMOTE_PORT' => '53642'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'r=dotbaoduong/kehoach&id=1'
+    'REQUEST_URI' => '/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'SCRIPT_NAME' => '/baotrinhatram/web/index.php'
+    'PHP_SELF' => '/baotrinhatram/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1512551679.042
+    'REQUEST_TIME' => 1512551679
+]
+2017-12-06 09:28:24 [::1][-][-][error][yii\base\ErrorException:8] yii\base\ErrorException: Undefined index: ID_THIETBI in /var/www/html/baotrinhatram/controllers/DotbaoduongController.php:125
+Stack trace:
+#0 /var/www/html/baotrinhatram/controllers/DotbaoduongController.php(125): yii\base\ErrorHandler->handleError(8, 'Undefined index...', '/var/www/html/b...', 125, Array)
+#1 [internal function]: app\controllers\DotbaoduongController->actionKehoach('1')
+#2 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#3 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(156): yii\base\InlineAction->runWithParams(Array)
+#4 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(523): yii\base\Controller->runAction('kehoach', Array)
+#5 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Application.php(102): yii\base\Module->runAction('dotbaoduong/keh...', Array)
+#6 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Application.php(380): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/html/baotrinhatram/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2017-12-06 09:28:24 [::1][-][-][info][application] $_GET = [
+    'r' => 'dotbaoduong/kehoach'
+    'id' => '1'
+]
+
+$_POST = [
+    '_csrf' => '_yr7rUegl6sMyJpMJB6lC2lEE0pdKi4O6QjfsNYIUhOD9XOh85u50AXK9FDq5L1_T2B_EkT_ZSleL4VSsoC4Dg=='
+    'Kehoachbdtb' => [
+        6 => [
+            'id_thietbi' => '1'
+            'ma_noidung' => '104'
+            'id_nhanvien' => '20'
+        ]
+        '1_1_101' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '101'
+            'ID_NHANVIEN' => '20'
+        ]
+        '1_1_102' => [
+            'ID_THIETBI' => '1'
+            'MA_NOIDUNG' => '102'
+            'ID_NHANVIEN' => '10'
+        ]
+        '1_2_202' => [
+            'ID_THIETBI' => '2'
+            'MA_NOIDUNG' => '202'
+            'ID_NHANVIEN' => '8'
+        ]
+        '1_2_203' => [
+            'ID_THIETBI' => '2'
+            'MA_NOIDUNG' => '203'
+            'ID_NHANVIEN' => '15'
+        ]
+    ]
+]
+
+$_COOKIE = [
+    '_csrf' => 'f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"|ßˆ´;.{	nÎút&$lXÕK\'·\'Zâdˆê\";}'
+    'PHPSESSID' => 'ge1q19r8plhtn8rg4vdkhmj0v2'
+    '_identity' => 'eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba:2:{i:0;s:9:\"_identity\";i:1;s:46:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",2592000]\";}'
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '744'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_REFERER' => 'http://localhost/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8'
+    'HTTP_COOKIE' => '_csrf=f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22%7C%DF%88%0C%B4%3B.%7B%09%02n%1C%CE%FA%18t%26%24lX%19%D5K%27%B7%27Z%E2d%88%EA%1D%22%3B%7D; PHPSESSID=ge1q19r8plhtn8rg4vdkhmj0v2; _identity=eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C2592000%5D%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.18 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.18 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www/html'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/html/baotrinhatram/web/index.php'
+    'REMOTE_PORT' => '60646'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'r=dotbaoduong/kehoach&id=1'
+    'REQUEST_URI' => '/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'SCRIPT_NAME' => '/baotrinhatram/web/index.php'
+    'PHP_SELF' => '/baotrinhatram/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1512552504.647
+    'REQUEST_TIME' => 1512552504
+]
+2017-12-06 09:39:15 [::1][-][-][error][Error] Error: Class 'kehoachbdtb' not found in /var/www/html/baotrinhatram/views/dotbaoduong/kehoach.php:44
+Stack trace:
+#0 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/View.php(330): require()
+#1 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/View.php(250): yii\base\View->renderPhpFile('/var/www/html/b...', Array)
+#2 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/View.php(152): yii\base\View->renderFile('/var/www/html/b...', Array, Object(app\controllers\DotbaoduongController))
+#3 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(381): yii\base\View->render('kehoach', Array, Object(app\controllers\DotbaoduongController))
+#4 /var/www/html/baotrinhatram/controllers/DotbaoduongController.php(137): yii\base\Controller->render('kehoach', Array)
+#5 [internal function]: app\controllers\DotbaoduongController->actionKehoach('1')
+#6 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#7 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(156): yii\base\InlineAction->runWithParams(Array)
+#8 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(523): yii\base\Controller->runAction('kehoach', Array)
+#9 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Application.php(102): yii\base\Module->runAction('dotbaoduong/keh...', Array)
+#10 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Application.php(380): yii\web\Application->handleRequest(Object(yii\web\Request))
+#11 /var/www/html/baotrinhatram/web/index.php(12): yii\base\Application->run()
+#12 {main}
+2017-12-06 09:39:15 [::1][-][-][info][application] $_GET = [
+    'r' => 'dotbaoduong/kehoach'
+    'id' => '1'
+]
+
+$_COOKIE = [
+    '_csrf' => 'f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"|ßˆ´;.{	nÎút&$lXÕK\'·\'Zâdˆê\";}'
+    'PHPSESSID' => 'ge1q19r8plhtn8rg4vdkhmj0v2'
+    '_identity' => 'eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba:2:{i:0;s:9:\"_identity\";i:1;s:46:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",2592000]\";}'
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8'
+    'HTTP_COOKIE' => '_csrf=f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22%7C%DF%88%0C%B4%3B.%7B%09%02n%1C%CE%FA%18t%26%24lX%19%D5K%27%B7%27Z%E2d%88%EA%1D%22%3B%7D; PHPSESSID=ge1q19r8plhtn8rg4vdkhmj0v2; _identity=eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C2592000%5D%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.18 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.18 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www/html'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/html/baotrinhatram/web/index.php'
+    'REMOTE_PORT' => '37678'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'r=dotbaoduong/kehoach&id=1'
+    'REQUEST_URI' => '/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'SCRIPT_NAME' => '/baotrinhatram/web/index.php'
+    'PHP_SELF' => '/baotrinhatram/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1512553155.482
+    'REQUEST_TIME' => 1512553155
+]
+2017-12-06 09:39:25 [::1][-][-][error][Error] Error: Class 'Kehoachbdtb' not found in /var/www/html/baotrinhatram/views/dotbaoduong/kehoach.php:44
+Stack trace:
+#0 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/View.php(330): require()
+#1 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/View.php(250): yii\base\View->renderPhpFile('/var/www/html/b...', Array)
+#2 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/View.php(152): yii\base\View->renderFile('/var/www/html/b...', Array, Object(app\controllers\DotbaoduongController))
+#3 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(381): yii\base\View->render('kehoach', Array, Object(app\controllers\DotbaoduongController))
+#4 /var/www/html/baotrinhatram/controllers/DotbaoduongController.php(137): yii\base\Controller->render('kehoach', Array)
+#5 [internal function]: app\controllers\DotbaoduongController->actionKehoach('1')
+#6 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#7 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(156): yii\base\InlineAction->runWithParams(Array)
+#8 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(523): yii\base\Controller->runAction('kehoach', Array)
+#9 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Application.php(102): yii\base\Module->runAction('dotbaoduong/keh...', Array)
+#10 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Application.php(380): yii\web\Application->handleRequest(Object(yii\web\Request))
+#11 /var/www/html/baotrinhatram/web/index.php(12): yii\base\Application->run()
+#12 {main}
+2017-12-06 09:39:25 [::1][-][-][info][application] $_GET = [
+    'r' => 'dotbaoduong/kehoach'
+    'id' => '1'
+]
+
+$_COOKIE = [
+    '_csrf' => 'f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"|ßˆ´;.{	nÎút&$lXÕK\'·\'Zâdˆê\";}'
+    'PHPSESSID' => 'ge1q19r8plhtn8rg4vdkhmj0v2'
+    '_identity' => 'eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba:2:{i:0;s:9:\"_identity\";i:1;s:46:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",2592000]\";}'
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8'
+    'HTTP_COOKIE' => '_csrf=f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22%7C%DF%88%0C%B4%3B.%7B%09%02n%1C%CE%FA%18t%26%24lX%19%D5K%27%B7%27Z%E2d%88%EA%1D%22%3B%7D; PHPSESSID=ge1q19r8plhtn8rg4vdkhmj0v2; _identity=eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C2592000%5D%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.18 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.18 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www/html'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/html/baotrinhatram/web/index.php'
+    'REMOTE_PORT' => '37762'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'r=dotbaoduong/kehoach&id=1'
+    'REQUEST_URI' => '/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'SCRIPT_NAME' => '/baotrinhatram/web/index.php'
+    'PHP_SELF' => '/baotrinhatram/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1512553165.873
+    'REQUEST_TIME' => 1512553165
+]
+2017-12-06 09:40:51 [::1][-][-][error][Error] Error: Class 'Kehoachbdtb' not found in /var/www/html/baotrinhatram/views/dotbaoduong/kehoach.php:44
+Stack trace:
+#0 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/View.php(330): require()
+#1 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/View.php(250): yii\base\View->renderPhpFile('/var/www/html/b...', Array)
+#2 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/View.php(152): yii\base\View->renderFile('/var/www/html/b...', Array, Object(app\controllers\DotbaoduongController))
+#3 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(381): yii\base\View->render('kehoach', Array, Object(app\controllers\DotbaoduongController))
+#4 /var/www/html/baotrinhatram/controllers/DotbaoduongController.php(138): yii\base\Controller->render('kehoach', Array)
+#5 [internal function]: app\controllers\DotbaoduongController->actionKehoach('1')
+#6 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#7 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(156): yii\base\InlineAction->runWithParams(Array)
+#8 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(523): yii\base\Controller->runAction('kehoach', Array)
+#9 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Application.php(102): yii\base\Module->runAction('dotbaoduong/keh...', Array)
+#10 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Application.php(380): yii\web\Application->handleRequest(Object(yii\web\Request))
+#11 /var/www/html/baotrinhatram/web/index.php(12): yii\base\Application->run()
+#12 {main}
+2017-12-06 09:40:51 [::1][-][-][info][application] $_GET = [
+    'r' => 'dotbaoduong/kehoach'
+    'id' => '1'
+]
+
+$_COOKIE = [
+    '_csrf' => 'f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"|ßˆ´;.{	nÎút&$lXÕK\'·\'Zâdˆê\";}'
+    'PHPSESSID' => 'ge1q19r8plhtn8rg4vdkhmj0v2'
+    '_identity' => 'eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba:2:{i:0;s:9:\"_identity\";i:1;s:46:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",2592000]\";}'
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8'
+    'HTTP_COOKIE' => '_csrf=f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22%7C%DF%88%0C%B4%3B.%7B%09%02n%1C%CE%FA%18t%26%24lX%19%D5K%27%B7%27Z%E2d%88%EA%1D%22%3B%7D; PHPSESSID=ge1q19r8plhtn8rg4vdkhmj0v2; _identity=eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C2592000%5D%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.18 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.18 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www/html'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/html/baotrinhatram/web/index.php'
+    'REMOTE_PORT' => '38452'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'r=dotbaoduong/kehoach&id=1'
+    'REQUEST_URI' => '/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'SCRIPT_NAME' => '/baotrinhatram/web/index.php'
+    'PHP_SELF' => '/baotrinhatram/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1512553251.316
+    'REQUEST_TIME' => 1512553251
+]
+2017-12-06 09:41:22 [::1][-][-][error][yii\base\ErrorException:8] yii\base\ErrorException: Trying to get property of non-object in /var/www/html/baotrinhatram/controllers/NoidungbaotriController.php:135
+Stack trace:
+#0 /var/www/html/baotrinhatram/controllers/NoidungbaotriController.php(135): yii\base\ErrorHandler->handleError(8, 'Trying to get p...', '/var/www/html/b...', 135, Array)
+#1 [internal function]: app\controllers\NoidungbaotriController->actionListstbt('')
+#2 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#3 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(156): yii\base\InlineAction->runWithParams(Array)
+#4 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(523): yii\base\Controller->runAction('liststbt', Array)
+#5 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Application.php(102): yii\base\Module->runAction('noidungbaotri/l...', Array)
+#6 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Application.php(380): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /var/www/html/baotrinhatram/web/index.php(12): yii\base\Application->run()
+#8 {main}
+2017-12-06 09:41:22 [::1][-][-][info][application] $_GET = [
+    'r' => 'noidungbaotri/liststbt'
+    'id' => ''
+]
+
+$_COOKIE = [
+    '_csrf' => 'f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"|ßˆ´;.{	nÎút&$lXÕK\'·\'Zâdˆê\";}'
+    'PHPSESSID' => 'ge1q19r8plhtn8rg4vdkhmj0v2'
+    '_identity' => 'eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba:2:{i:0;s:9:\"_identity\";i:1;s:46:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",2592000]\";}'
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_X_CSRF_TOKEN' => 'Lb5JVl9ArI-1ANfg-OH8hNO5BZGgS71KOvyKmnkEi_RRYcFa63uC9LwCufw2G-Tw9Z1pybme9m2N29B4HYxh6Q=='
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 Safari/537.36'
+    'HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest'
+    'HTTP_REFERER' => 'http://localhost/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8'
+    'HTTP_COOKIE' => '_csrf=f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22%7C%DF%88%0C%B4%3B.%7B%09%02n%1C%CE%FA%18t%26%24lX%19%D5K%27%B7%27Z%E2d%88%EA%1D%22%3B%7D; PHPSESSID=ge1q19r8plhtn8rg4vdkhmj0v2; _identity=eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C2592000%5D%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.18 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.18 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www/html'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/html/baotrinhatram/web/index.php'
+    'REMOTE_PORT' => '38682'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'r=noidungbaotri/liststbt&id='
+    'REQUEST_URI' => '/baotrinhatram/web/index.php?r=noidungbaotri/liststbt&id='
+    'SCRIPT_NAME' => '/baotrinhatram/web/index.php'
+    'PHP_SELF' => '/baotrinhatram/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1512553282.201
+    'REQUEST_TIME' => 1512553282
+]
+2017-12-06 09:42:56 [::1][-][-][error][Error] Error: Call to undefined method app\models\Thietbitram::lists() in /var/www/html/baotrinhatram/views/dotbaoduong/kehoach.php:48
+Stack trace:
+#0 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/View.php(330): require()
+#1 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/View.php(250): yii\base\View->renderPhpFile('/var/www/html/b...', Array)
+#2 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/View.php(152): yii\base\View->renderFile('/var/www/html/b...', Array, Object(app\controllers\DotbaoduongController))
+#3 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(381): yii\base\View->render('kehoach', Array, Object(app\controllers\DotbaoduongController))
+#4 /var/www/html/baotrinhatram/controllers/DotbaoduongController.php(138): yii\base\Controller->render('kehoach', Array)
+#5 [internal function]: app\controllers\DotbaoduongController->actionKehoach('1')
+#6 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#7 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(156): yii\base\InlineAction->runWithParams(Array)
+#8 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(523): yii\base\Controller->runAction('kehoach', Array)
+#9 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Application.php(102): yii\base\Module->runAction('dotbaoduong/keh...', Array)
+#10 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Application.php(380): yii\web\Application->handleRequest(Object(yii\web\Request))
+#11 /var/www/html/baotrinhatram/web/index.php(12): yii\base\Application->run()
+#12 {main}
+2017-12-06 09:42:56 [::1][-][-][info][application] $_GET = [
+    'r' => 'dotbaoduong/kehoach'
+    'id' => '1'
+]
+
+$_COOKIE = [
+    '_csrf' => 'f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"|ßˆ´;.{	nÎút&$lXÕK\'·\'Zâdˆê\";}'
+    'PHPSESSID' => 'ge1q19r8plhtn8rg4vdkhmj0v2'
+    '_identity' => 'eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba:2:{i:0;s:9:\"_identity\";i:1;s:46:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",2592000]\";}'
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8'
+    'HTTP_COOKIE' => '_csrf=f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22%7C%DF%88%0C%B4%3B.%7B%09%02n%1C%CE%FA%18t%26%24lX%19%D5K%27%B7%27Z%E2d%88%EA%1D%22%3B%7D; PHPSESSID=ge1q19r8plhtn8rg4vdkhmj0v2; _identity=eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C2592000%5D%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.18 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.18 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www/html'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/html/baotrinhatram/web/index.php'
+    'REMOTE_PORT' => '39470'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'r=dotbaoduong/kehoach&id=1'
+    'REQUEST_URI' => '/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'SCRIPT_NAME' => '/baotrinhatram/web/index.php'
+    'PHP_SELF' => '/baotrinhatram/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1512553376.148
+    'REQUEST_TIME' => 1512553376
+]
+2017-12-06 10:08:23 [::1][-][-][error][ParseError] ParseError: syntax error, unexpected ';', expecting ',' or ')' in /var/www/html/baotrinhatram/views/dotbaoduong/kehoach.php:80
+Stack trace:
+#0 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/View.php(250): yii\base\View->renderPhpFile('/var/www/html/b...', Array)
+#1 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/View.php(152): yii\base\View->renderFile('/var/www/html/b...', Array, Object(app\controllers\DotbaoduongController))
+#2 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(381): yii\base\View->render('kehoach', Array, Object(app\controllers\DotbaoduongController))
+#3 /var/www/html/baotrinhatram/controllers/DotbaoduongController.php(138): yii\base\Controller->render('kehoach', Array)
+#4 [internal function]: app\controllers\DotbaoduongController->actionKehoach('1')
+#5 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#6 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(156): yii\base\InlineAction->runWithParams(Array)
+#7 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(523): yii\base\Controller->runAction('kehoach', Array)
+#8 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Application.php(102): yii\base\Module->runAction('dotbaoduong/keh...', Array)
+#9 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Application.php(380): yii\web\Application->handleRequest(Object(yii\web\Request))
+#10 /var/www/html/baotrinhatram/web/index.php(12): yii\base\Application->run()
+#11 {main}
+2017-12-06 10:08:23 [::1][-][-][info][application] $_GET = [
+    'r' => 'dotbaoduong/kehoach'
+    'id' => '1'
+]
+
+$_COOKIE = [
+    '_csrf' => 'f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"|ßˆ´;.{	nÎút&$lXÕK\'·\'Zâdˆê\";}'
+    'PHPSESSID' => 'ge1q19r8plhtn8rg4vdkhmj0v2'
+    '_identity' => 'eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba:2:{i:0;s:9:\"_identity\";i:1;s:46:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",2592000]\";}'
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8'
+    'HTTP_COOKIE' => '_csrf=f1a0a720030ffc310be0c25f47654707856838c274028c26b5381c8daadded20a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22%7C%DF%88%0C%B4%3B.%7B%09%02n%1C%CE%FA%18t%26%24lX%19%D5K%27%B7%27Z%E2d%88%EA%1D%22%3B%7D; PHPSESSID=ge1q19r8plhtn8rg4vdkhmj0v2; _identity=eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C2592000%5D%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.18 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.18 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www/html'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/html/baotrinhatram/web/index.php'
+    'REMOTE_PORT' => '51904'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'r=dotbaoduong/kehoach&id=1'
+    'REQUEST_URI' => '/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=1'
+    'SCRIPT_NAME' => '/baotrinhatram/web/index.php'
+    'PHP_SELF' => '/baotrinhatram/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1512554903.616
+    'REQUEST_TIME' => 1512554903
+]

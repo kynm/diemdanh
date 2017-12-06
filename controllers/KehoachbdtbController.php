@@ -75,7 +75,8 @@ class KehoachbdtbController extends Controller
         $model = new Kehoachbdtb();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'ID_DOTBD' => $model->ID_DOTBD, 'ID_THIETBI' => $model->ID_THIETBI, 'MA_NOIDUNG' => $model->MA_NOIDUNG]);
+
+            return $this->redirect((strpos(Yii::$app->request->getReferrer(), 'create') !== false) ? ['view', 'ID_DOTBD' => $model->ID_DOTBD, 'ID_THIETBI' => $model->ID_THIETBI, 'MA_NOIDUNG' => $model->MA_NOIDUNG] : Yii::$app->request->referrer);
         } else {
             return $this->render('create', [
                 'model' => $model,

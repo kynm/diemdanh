@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Dotbaoduong;
 use app\models\DotbaoduongSearch;
+use app\models\Kehoachbdtb;
 use app\models\KehoachbdtbSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -110,18 +111,28 @@ class DotbaoduongController extends Controller
 
     public function actionKehoach($id)
     {
-        if ($post = Yii::$app->request->post()) {
-            // print_r($post);
-            foreach ($post as $each) {
-                print_r($each);
-                echo @$each['ID_THIETBI'];
+        $kehoachs = [new Kehoachbdtb()];
+            // print_r(Yii::$app->request->post('Kehoachbdtb'));
+            // Kehoachbdtb::loadMultiple($kehoachs, Yii::$app->request->post());
+            // print_r($kehoachs);
+            // die;
+        if ($kehoachs = Yii::$app->request->post('Kehoachbdtb')) {
+            foreach ($kehoachs as $each) {
+                if (Kehoachbdtb::find()->where($each)->exists()) continue;
+
+                $kehoach = new Kehoachbdtb();
+                $kehoach->ID_DOTBD = $id;
+                $kehoach->ID_THIETBI = $each['ID_THIETBI'];
+                $kehoach->MA_NOIDUNG = $each['MA_NOIDUNG'];
+                $kehoach->ID_NHANVIEN = $each['ID_NHANVIEN'];
+                $kehoach->save();
             }
-            die();
         }
         $searchModel = new KehoachbdtbSearch();
         $dataProvider = $searchModel->searchND(Yii::$app->request->queryParams);
-
+        $kehoachModel = new Kehoachbdtb();
         return $this->render('kehoach', [
+            'kehoachModel' => $kehoachModel,
             'model' => $this->findModel($id),
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

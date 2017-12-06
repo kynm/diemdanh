@@ -26,8 +26,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p class="form-inline">
         <div class="form-group col-md-4">
-            <label>Đợt bảo dưỡng</label>
-            <input type="text" class="form-control" id="exp" disabled="true" value="<?= $model->MA_DOTBD ; ?>">
+            <label>Trạm viễn thông</label>
+            <input type="text" class="form-control" id="exp" disabled="true" value="<?= $model->iDTRAMVT->MA_TRAM ; ?>">
         </div>
         <div class="form-group col-md-4">
             <label>Ngày bảo dưỡng</label>
@@ -41,6 +41,39 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php
     $form = ActiveForm::begin();
+    
+    ?>
+    <div class="form-group col-md-4">
+    <?= $form->field($kehoachModel, 'ID_THIETBI')->dropDownList(
+        ArrayHelper::map(Thietbitram::find()->where(['ID_TRAM' => $model->ID_TRAMVT])->all(), 'ID_THIETBI', 'iDLOAITB.TEN_THIETBI'),
+        [
+            'prompt' => 'Chọn thiết bị',
+            'onchange' => '
+                $.post("index.php?r=noidungbaotri/liststbt&id='.'"+$(this).val(), function( data ) {
+                    $("#kehoachbdtb-ma_noidung").html( data );
+                });
+            ',
+        ])
+    ?>
+    </div>
+    <div class="form-group col-md-4">
+    <?= $form->field($kehoachModel, 'MA_NOIDUNG')->dropDownList(
+        ArrayHelper::map(Noidungbaotri::find()->all(), 'MA_NOIDUNG', 'NOIDUNG'),
+        [
+            'prompt' => 'Chọn nội dung bảo dưỡng',
+            
+        ])
+    ?>
+    </div>
+    <div class="form-group col-md-4">
+    <?= $form->field($kehoachModel, 'ID_NHANVIEN')->dropDownList(
+        ArrayHelper::map(Nhanvien::find()->all(), 'ID_NHANVIEN', 'TEN_NHANVIEN'),
+        [
+            'prompt' => 'Chọn nhân viên bảo dưỡng',
+        ])
+    ?>
+    </div>
+<?php
     echo '<div class="text-right">'.
         Html::a(
             '<i class="glyphicon glyphicon-plus"></i> Thêm nội dung', 
@@ -49,8 +82,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class'=>'btn btn-success',
                 'id' => '#addBtn',
                 'onclick' => '
-                    var man = $("table tbody tr:first").clone(true);
-                    $("table > tbody > tr:first").before(man);
+                    $.post("index.php?r=kehoachbdtb/create&ID_DOTBD='.$model->ID_DOTBD.'&ID_THIETBI='.$kehoachModel->ID_THIETBI.'&MA_NOIDUNG='.$kehoachModel->MA_NOIDUNG.'&ID_NHANVIEN='.$kehoachModel->ID_NHANVIEN.', 
+                        function() {
+                            
+                    });
                 '
             ]
         ) . '&nbsp;' . 
@@ -95,6 +130,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'gridSettings' => [
             //'floatHeader' => true,
         ],
+        'serialColumn' => false,
         'checkboxColumn' => false,
         'actionColumn' => [
             'template' => '{delete}',
