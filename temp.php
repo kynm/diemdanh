@@ -32,11 +32,11 @@
     </p>
 
     'style' => 'width: 150px'
-
+<?php 
     view/kehoach.php
     ++bid;
     $man = $("table tbody tr:first").clone(true);
-    
+
     $man.find("select").each(function(i,j) {
         $actionname = $(j).attr("id").split("-");
         $(j).attr("name","Kehoachbdtb"+"["+bid+"]"+"["+$actionname[2]+"]");
@@ -45,3 +45,51 @@
         $(this).parent().addClass("form-group field-kehoachbdtb"+"-"+bid+"-"+$actionname[2]+" "+"required");
     });
     $("table tbody").append( $man );
+
+
+
+    'actionColumn' => [
+        'template' => '{delete}',
+        'buttons' => [
+            'delete' => function ($url, $model, $key) {
+                return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, ['data-method' => 'post']);
+            }
+        ],
+        'urlCreator' => function ($action, $model, $key, $index) {
+            if ($action === 'delete') {
+                $url ='index.php?r=kehoachbdtb/delete&ID_DOTBD='.$model->ID_DOTBD.'&ID_THIETBI='.$model->ID_THIETBI.'&MA_NOIDUNG='.$model->MA_NOIDUNG;
+                return $url;
+            }
+        }
+    ],
+
+    $.post(index.php?r=kehoachbdtb/delete&ID_DOTBD='.$model->ID_DOTBD.'&ID_THIETBI='.$model->ID_THIETBI.'&MA_NOIDUNG='.$model->MA_NOIDUNG.');
+    // $("input:checkbox:checked").parents("tr").remove();
+    
+                    $("input:checkbox:checked").parents("tr").remove();
+
+    var man = $("table tbody tr:first").clone(true);
+                    $("table > tbody > tr:first").before(man);
+
+    pk : $("#w1-container").GridView("getSelectedRows");
+
+        echo '<div class="text-right">' . 
+                Html::a(
+                    '<i class="glyphicon glyphicon-plus"></i> Add New', 
+                    '#', 
+                    ['class'=>'btn btn-success']
+                ) . '&nbsp;' . 
+                Html::a(
+                    '<i class="glyphicon glyphicon-remove"></i> Delete', 
+                    '#', 
+                    ['class'=>'btn btn-danger']
+                ) . '&nbsp;' .
+                Html::submitButton(
+                    '<i class="glyphicon glyphicon-floppy-disk"></i> Submit', 
+                    ['class'=>'btn btn-primary']
+                ).
+             '<div>';
+        ActiveForm::end();
+    ?>
+
+</div>

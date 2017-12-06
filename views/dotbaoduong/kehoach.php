@@ -11,11 +11,12 @@ use app\models\Thietbitram;
 use app\models\Noidungbaotri;
 use app\models\Nhanvien;
 use yii\web\View;
+use yii\grid\CheckboxColumn;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Dotbaoduong */
 
-$this->title = $model->ID_DOTBD;
+$this->title = 'Đợt bảo dưỡng '.$model->MA_DOTBD;
 $this->params['breadcrumbs'][] = ['label' => 'Dotbaoduongs', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -46,14 +47,13 @@ $this->params['breadcrumbs'][] = $this->title;
             '#', 
             [
                 'class'=>'btn btn-success',
-                'id' => '#add'
+                'id' => '#addBtn',
+                'onclick' => '
+                    var man = $("table tbody tr:first").clone(true);
+                    $("table > tbody > tr:first").before(man);
+                '
             ]
         ) . '&nbsp;' . 
-        Html::a(
-            '<i class="glyphicon glyphicon-trash"></i> Xóa nội dung', 
-            '#',
-            ['class'=>'btn btn-danger']
-        ) . '&nbsp;' .
         Html::a(
             '<i class="glyphicon glyphicon-remove"></i> Xóa đợt bảo dưỡng', 
             ['delete', 'id' => $model->ID_DOTBD], 
@@ -76,7 +76,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'ID_THIETBI' => [
                 'type' => TabularForm::INPUT_DROPDOWN_LIST, 
-                'items'=>ArrayHelper::map(Thietbitram::find()->all(), 'ID_THIETBI', 'iDLOAITB.TEN_THIETBI')
+                'items'=>ArrayHelper::map(Thietbitram::find()->all(), 'ID_THIETBI', 'iDLOAITB.TEN_THIETBI'),
+                // 'onchange' => '
+                //     $.post("index.php?r=noidungbaotri/lists&id='.'"+$(this).val(), function( data ) {
+                //         $("#dynamicmodel-ma_noidung").html( data );
+                //     });
+                // '
             ],
             'MA_NOIDUNG' => [
                 'type' => TabularForm::INPUT_DROPDOWN_LIST, 
@@ -89,12 +94,31 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
         'gridSettings' => [
             //'floatHeader' => true,
-        ]     
+        ],
+        'checkboxColumn' => false,
+        'actionColumn' => [
+            'template' => '{delete}',
+            'buttons' => [
+                'delete' => function ($url, $model, $key) {
+                    return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
+                            'data-method' => 'post',
+                            'onclick' => '
+                                $(this).parents("tr").remove();
+
+                            '
+                        ]);
+                }
+            ],
+            'urlCreator' => function ($action, $model, $key, $index) {
+                if ($action === 'delete') {
+                    $url = '';
+                    $url ='index.php?r=kehoachbdtb/delete&ID_DOTBD='.$model->ID_DOTBD.'&ID_THIETBI='.$model->ID_THIETBI.'&MA_NOIDUNG='.$model->MA_NOIDUNG;
+                    return $url;
+                }
+            }
+        ],
     ]); 
     ActiveForm::end(); 
-$this->registerJs("$('#add').on('click', function() { alert('Button clicked!'); });");
-
-
 ?>
 
 </div>

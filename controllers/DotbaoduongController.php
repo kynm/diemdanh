@@ -110,7 +110,15 @@ class DotbaoduongController extends Controller
 
     public function actionKehoach($id)
     {
-        $searchModel = new DotbaoduongSearch();
+        if ($post = Yii::$app->request->post()) {
+            // print_r($post);
+            foreach ($post as $each) {
+                print_r($each);
+                echo @$each['ID_THIETBI'];
+            }
+            die();
+        }
+        $searchModel = new KehoachbdtbSearch();
         $dataProvider = $searchModel->searchND(Yii::$app->request->queryParams);
 
         return $this->render('kehoach', [

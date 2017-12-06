@@ -125,11 +125,12 @@ class ThietbitramController extends Controller
         ->all();
 
         if(isset($thietbi) && count($thietbi)>0) {
+            echo "<option>Chọn thiết bị</option>";
             foreach($thietbi as $each) {
                 $loaitb = Thietbi::find()
                 ->where(['ID_THIETBI' => $each->ID_LOAITB])
                 ->one();
-                echo "<label><input type=\"checkbox\" name=\"Kehoachbdtb[ID_THIETBI][]\" value=".$each->ID_THIETBI."> ".$loaitb->TEN_THIETBI."</label>" ;
+                echo "<option value='".$each->ID_THIETBI."'>".$each->iDLOAITB->TEN_THIETBI."</option>";
             }
         }else {
             echo "-";

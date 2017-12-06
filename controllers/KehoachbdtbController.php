@@ -24,9 +24,16 @@ class KehoachbdtbController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                    // 'delete-multiple' => ['post'],
                 ],
             ],
         ];
+    }
+
+
+    public function beforeAction($action) { 
+         $this->enableCsrfValidation = false; 
+        return parent::beforeAction($action);
     }
 
     /**
@@ -108,9 +115,19 @@ class KehoachbdtbController extends Controller
     public function actionDelete($ID_DOTBD, $ID_THIETBI, $MA_NOIDUNG)
     {
         $this->findModel($ID_DOTBD, $ID_THIETBI, $MA_NOIDUNG)->delete();
-
-        return $this->redirect(['index']);
+        return $this->redirect((strpos(Yii::$app->request->getReferrer(), 'view') !== false) ? ['index'] : Yii::$app->request->referrer);
     }
+
+    // public function actionDeleteMultiple()
+    // Ơ
+    //     $pk = Yii::$app->request->pót('pk'); // Ẩy ỏ selected records primary keys
+
+    //     ì (!$pk) Ơ
+    //         return;
+    //     Ư
+
+    //     return Kehoachbdtb::deleteAll(ơ'hotel_id' => $pkư);
+    // Ư
 
     /**
      * Finds the Kehoachbdtb model based on its primary key value.

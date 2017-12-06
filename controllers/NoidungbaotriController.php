@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use Yii;
+use app\models\Thietbitram;
 use app\models\Noidungbaotri;
 use app\models\NoidungbaotriSearch;
 use yii\web\Controller;
@@ -121,6 +122,22 @@ class NoidungbaotriController extends Controller
         if(isset($noidung) && count($noidung)>0) {
             foreach($noidung as $each) {
                 echo "<label><input type=\"checkbox\" name=\"DynamicModel[MA_NOIDUNG][]\" value=".$each->MA_NOIDUNG."> ".$each->NOIDUNG."</label> <br>" ;
+            }
+        }else {
+            echo "-";
+        }
+    }
+
+    public function actionListstbt($id)
+    {
+        $tbi = Thietbitram::find()->where(['ID_THIETBI' => $id])->one();
+        $noidung = Noidungbaotri::find()
+        ->where(['ID_THIETBI'=>$tbi->ID_LOAITB])
+        ->all();
+
+        if(isset($noidung) && count($noidung)>0) {
+            foreach($noidung as $each) {
+                echo "<option value='".$each->MA_NOIDUNG."'>".$each->NOIDUNG."</option>";
             }
         }else {
             echo "-";

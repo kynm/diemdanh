@@ -47,10 +47,10 @@ class Kehoachbdtb extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'ID_DOTBD' => 'Id  Dotbd',
-            'ID_THIETBI' => 'Id  Thietbi',
-            'MA_NOIDUNG' => 'Ma  Noidung',
-            'ID_NHANVIEN' => 'Id  Nhanvien',
+            'ID_DOTBD' => 'Đợt bảo dưỡng',
+            'ID_THIETBI' => 'Thiết bị',
+            'MA_NOIDUNG' => 'Nội dung',
+            'ID_NHANVIEN' => 'Nhân viên',
         ];
     }
 
