@@ -20,6 +20,7 @@ class DotbaoduongSearch extends Dotbaoduong
     {
         return [
             [['ID_DOTBD', 'ID_TRAMVT', 'TRUONG_NHOM'], 'integer'],
+            [['MA_DOTBD', 'TRANGTHAI'], 'string', 'max' => 32],
             [['MA_DOTBD', 'NGAY_BD'], 'safe'],
         ];
     }
@@ -64,6 +65,7 @@ class DotbaoduongSearch extends Dotbaoduong
             'NGAY_BD' => $this->NGAY_BD,
             'ID_TRAMVT' => $this->ID_TRAMVT,
             'TRUONG_NHOM' => $this->TRUONG_NHOM,
+            'TRANGTHAI' => $this->TRANGTHAI,
         ]);
 
         $query->andFilterWhere(['like', 'MA_DOTBD', $this->MA_DOTBD]);

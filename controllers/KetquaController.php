@@ -82,9 +82,9 @@ class KetquaController extends Controller
      * @param integer $ID_THIETBI
      * @return mixed
      */
-    public function actionUpdate($ID_DOTBD, $ID_THIETBI)
+    public function actionUpdate($ID_DOTBD, $ID_THIETBI, $MA_NOIDUNG)
     {
-        $model = $this->findModel($ID_DOTBD, $ID_THIETBI);
+        $model = $this->findModel($ID_DOTBD, $ID_THIETBI, $MA_NOIDUNG);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'ID_DOTBD' => $model->ID_DOTBD, 'ID_THIETBI' => $model->ID_THIETBI]);
@@ -102,9 +102,9 @@ class KetquaController extends Controller
      * @param integer $ID_THIETBI
      * @return mixed
      */
-    public function actionDelete($ID_DOTBD, $ID_THIETBI)
+    public function actionDelete($ID_DOTBD, $ID_THIETBI, $MA_NOIDUNG)
     {
-        $this->findModel($ID_DOTBD, $ID_THIETBI)->delete();
+        $this->findModel($ID_DOTBD, $ID_THIETBI, $MA_NOIDUNG)->delete();
 
         return $this->redirect(['index']);
     }
@@ -117,9 +117,9 @@ class KetquaController extends Controller
      * @return Ketqua the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($ID_DOTBD, $ID_THIETBI)
+    protected function findModel($ID_DOTBD, $ID_THIETBI, $MA_NOIDUNG)
     {
-        if (($model = Ketqua::findOne(['ID_DOTBD' => $ID_DOTBD, 'ID_THIETBI' => $ID_THIETBI])) !== null) {
+        if (($model = Ketqua::findOne(['ID_DOTBD' => $ID_DOTBD, 'ID_THIETBI' => $ID_THIETBI, 'MA_NOIDUNG' => $MA_NOIDUNG])) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

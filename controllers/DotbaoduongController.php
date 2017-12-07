@@ -67,7 +67,10 @@ class DotbaoduongController extends Controller
     {
         $model = new Dotbaoduong();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            // print_r($model);
+            // die;
+            $model->save(false);
             return $this->redirect(['view', 'id' => $model->ID_DOTBD]);
         } else {
             return $this->render('create', [
@@ -111,6 +114,46 @@ class DotbaoduongController extends Controller
 
     public function actionKehoach($id)
     {
+        $kehoachs = [new Kehoachbdtb()];
+            // print_r(Yii::$app->request->post('Kehoachbdtb'));
+            // Kehoachbdtb::loadMultiple($kehoachs, Yii::$app->request->post());
+            // print_r($kehoachs);
+            // die;
+        if ($kehoachs = Yii::$app->request->post('Kehoachbdtb')) {
+            foreach ($kehoachs as $each) {
+                if (Kehoachbdtb::find()->where($each)->exists()) continue;
+
+                $kehoach = new Kehoachbdtb();
+                $kehoach->ID_DOTBD = $id;
+                $kehoach->ID_THIETBI = $each['ID_THIETBI'];
+                $kehoach->MA_NOIDUNG = $each['MA_NOIDUNG'];
+                $kehoach->ID_NHANVIEN = $each['ID_NHANVIEN'];
+                $kehoach->save();
+            }
+        }
+        $searchModel = new KehoachbdtbSearch();
+        $dataProvider = $searchModel->searchND(Yii::$app->request->queryParams);
+        $kehoachModel = new Kehoachbdtb();
+        return $this->render('kehoach', [
+            'kehoachModel' => $kehoachModel,
+            'model' => $this->findModel($id),
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionThuchien($id)
+    {
+        $dotbd = Dotbaoduong::find()->where(['ID_DOTBD' => $id])->one();
+        if ($dotbd->TRANGTHAI == 'Kế hoạch') {
+            $dotbd->TRANGTHAI = 'Đang thực hiện';
+            $dotbd->save();
+
+            $noidungkehoachs = Kehoachbdtb::find()->where(['ID_DOTBD' => $id]);
+            foreach ($noidungkehoachs as $noidungkehoach) {
+                # code...
+            }
+        }
         $kehoachs = [new Kehoachbdtb()];
             // print_r(Yii::$app->request->post('Kehoachbdtb'));
             // Kehoachbdtb::loadMultiple($kehoachs, Yii::$app->request->post());

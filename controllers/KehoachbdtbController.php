@@ -65,6 +65,17 @@ class KehoachbdtbController extends Controller
         ]);
     }
 
+    public function actionCreatePost($ID_DOTBD, $ID_THIETBI, $MA_NOIDUNG, $ID_NHANVIEN)
+    {
+        $model = new Kehoachbdtb();
+        $model->ID_DOTBD = $ID_DOTBD;
+        $model->ID_THIETBI = $ID_THIETBI;
+        $model->MA_NOIDUNG = $MA_NOIDUNG;
+        $model->ID_NHANVIEN = $ID_NHANVIEN;
+        $model->save();
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
     /**
      * Creates a new Kehoachbdtb model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -76,7 +87,7 @@ class KehoachbdtbController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
-            return $this->redirect((strpos(Yii::$app->request->getReferrer(), 'create') !== false) ? ['view', 'ID_DOTBD' => $model->ID_DOTBD, 'ID_THIETBI' => $model->ID_THIETBI, 'MA_NOIDUNG' => $model->MA_NOIDUNG] : Yii::$app->request->referrer);
+            return $this->redirect(['view', 'ID_DOTBD' => $model->ID_DOTBD, 'ID_THIETBI' => $model->ID_THIETBI, 'MA_NOIDUNG' => $model->MA_NOIDUNG]);
         } else {
             return $this->render('create', [
                 'model' => $model,

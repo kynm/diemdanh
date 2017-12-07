@@ -32,6 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'NGAY_BD',
             'iDTRAMVT.MA_TRAM',
             'tRUONGNHOM.TEN_NHANVIEN',
+            'TRANGTHAI'
         ],
     ]) ?>
 

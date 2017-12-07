@@ -33,6 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'TRUONG_NHOM',
                 'value' => 'tRUONGNHOM.TEN_NHANVIEN'
             ],
+            'TRANGTHAI',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
