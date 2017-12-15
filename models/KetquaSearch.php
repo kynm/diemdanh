@@ -18,8 +18,8 @@ class KetquaSearch extends Ketqua
     public function rules()
     {
         return [
-            [['ID_DOTBD', 'ID_THIETBI', 'KETQUA', 'ID_NHANVIEN'], 'integer'],
-            [['GHICHU', 'ANH1', 'ANH2', 'ANH3'], 'safe'],
+            [['ID_DOTBD'], 'integer'],
+            [['KETQUA', 'GHICHU', 'ANH1', 'ANH2', 'ANH3'], 'safe'],
         ];
     }
 
@@ -41,8 +41,7 @@ class KetquaSearch extends Ketqua
      */
     public function search($params)
     {
-        $query = Ketqua::find();
-
+        $query = Dotbaoduong::find()->where(['TRANGTHAI' => 'Kết thúc' ]);
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -58,17 +57,15 @@ class KetquaSearch extends Ketqua
         }
 
         // grid filtering conditions
-        $query->andFilterWhere([
-            'ID_DOTBD' => $this->ID_DOTBD,
-            'ID_THIETBI' => $this->ID_THIETBI,
-            'KETQUA' => $this->KETQUA,
-            'ID_NHANVIEN' => $this->ID_NHANVIEN,
-        ]);
+        // $query->andFilterWhere([
+        //     'ID_DOTBD' => $this->ID_DOTBD,
+        // ]);
 
-        $query->andFilterWhere(['like', 'GHICHU', $this->GHICHU])
-            ->andFilterWhere(['like', 'ANH1', $this->ANH1])
-            ->andFilterWhere(['like', 'ANH2', $this->ANH2])
-            ->andFilterWhere(['like', 'ANH3', $this->ANH3]);
+        // $query->andFilterWhere(['like', 'KETQUA', $this->KETQUA])
+        //     ->andFilterWhere(['like', 'GHICHU', $this->GHICHU])
+        //     ->andFilterWhere(['like', 'ANH1', $this->ANH1])
+        //     ->andFilterWhere(['like', 'ANH2', $this->ANH2])
+        //     ->andFilterWhere(['like', 'ANH3', $this->ANH3]);
 
         return $dataProvider;
     }

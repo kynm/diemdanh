@@ -16,7 +16,7 @@ use yii\grid\CheckboxColumn;
 /* @var $this yii\web\View */
 /* @var $model app\models\Dotbaoduong */
 
-$this->title = 'Đợt bảo dưỡng '.$model->MA_DOTBD;
+$this->title = 'Kế hoạch đợt '.$model->MA_DOTBD;
 $this->params['breadcrumbs'][] = ['label' => 'Dotbaoduongs', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -25,17 +25,21 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p class="form-inline">
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-3">
             <label>Trạm viễn thông</label>
             <input type="text" class="form-control" id="exp" disabled="true" value="<?= $model->iDTRAMVT->MA_TRAM ; ?>">
         </div>
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-3">
             <label>Ngày bảo dưỡng</label>
             <input type="text" class="form-control" id="exp" disabled="true" value="<?= $model->NGAY_BD ; ?>">
         </div>
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-3">
             <label>Nhóm trưởng</label>
             <input type="text" class="form-control" id="exp" disabled="true" value="<?= $model->tRUONGNHOM->TEN_NHANVIEN ; ?>">
+        </div>
+        <div class="form-group col-md-3">
+            <label>Trạng thái</label>
+            <input type="text" class="form-control" id="exp" disabled="true" value="<?= $model->TRANGTHAI ; ?>">
         </div>
     </p>
     
@@ -56,6 +60,17 @@ $this->params['breadcrumbs'][] = $this->title;
         Html::a(
             '<i class="glyphicon glyphicon-remove"></i> Xóa đợt bảo dưỡng', 
             ['delete', 'id' => $model->ID_DOTBD], 
+            [
+                'class'=>'btn btn-danger',
+                'data' => [
+                    'confirm' => 'Are you sure you want to delete this item?',
+                    'method' => 'post',
+                ],
+            ]
+        ) . '&nbsp;' .
+        Html::a(
+            '<i class="glyphicon glyphicon-wrench"></i> Thực hiện bảo dưỡng', 
+            ['thuchien', 'id' => $model->ID_DOTBD], 
             [
                 'class'=>'btn btn-danger',
                 'data' => [

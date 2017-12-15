@@ -7,9 +7,12 @@ use app\models\Dotbaoduong;
 use app\models\DotbaoduongSearch;
 use app\models\Kehoachbdtb;
 use app\models\KehoachbdtbSearch;
+use app\models\Thuchienbd;
+use app\models\ThuchienbdSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\Json;
 
 /**
  * DotbaoduongController implements the CRUD actions for Dotbaoduong model.
@@ -31,6 +34,11 @@ class DotbaoduongController extends Controller
         ];
     }
 
+
+    public function beforeAction($action) { 
+        $this->enableCsrfValidation = false; 
+        return parent::beforeAction($action);
+    }
     /**
      * Lists all Dotbaoduong models.
      * @return mixed
@@ -53,9 +61,12 @@ class DotbaoduongController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        $model = $this->findModel($id);
+        if ($model->TRANGTHAI == "Kế hoạch") {
+            return $this->redirect(['kehoach', 'id' => $id]);
+        } else {
+            return $this->redirect(['thuchien', 'id' => $id]);
+        }
     }
 
     /**
@@ -149,33 +160,68 @@ class DotbaoduongController extends Controller
             $dotbd->TRANGTHAI = 'Đang thực hiện';
             $dotbd->save();
 
-            $noidungkehoachs = Kehoachbdtb::find()->where(['ID_DOTBD' => $id]);
+            $noidungkehoachs = Kehoachbdtb::find()->where(['ID_DOTBD' => $id])->all();
             foreach ($noidungkehoachs as $noidungkehoach) {
-                # code...
+                $noidungthuchien = new Thuchienbd();
+                $noidungthuchien->ID_DOTBD = $noidungkehoach->ID_DOTBD;
+                $noidungthuchien->ID_THIETBI = $noidungkehoach->ID_THIETBI;
+                $noidungthuchien->MA_NOIDUNG = $noidungkehoach->MA_NOIDUNG;
+                $noidungthuchien->ID_NHANVIEN = $noidungkehoach->ID_NHANVIEN;
+                $noidungthuchien->KETQUA = 'Chưa đạt';
+                $noidungthuchien->save(false);
+                $noidungkehoach->delete();
             }
+        } elseif ($dotbd->TRANGTHAI == 'Kết thúc') {
+            return $this->redirect(['ketthuc', 'id' => $dotbd->ID_DOTBD]);
         }
-        $kehoachs = [new Kehoachbdtb()];
-            // print_r(Yii::$app->request->post('Kehoachbdtb'));
-            // Kehoachbdtb::loadMultiple($kehoachs, Yii::$app->request->post());
-            // print_r($kehoachs);
-            // die;
-        if ($kehoachs = Yii::$app->request->post('Kehoachbdtb')) {
-            foreach ($kehoachs as $each) {
-                if (Kehoachbdtb::find()->where($each)->exists()) continue;
 
-                $kehoach = new Kehoachbdtb();
-                $kehoach->ID_DOTBD = $id;
-                $kehoach->ID_THIETBI = $each['ID_THIETBI'];
-                $kehoach->MA_NOIDUNG = $each['MA_NOIDUNG'];
-                $kehoach->ID_NHANVIEN = $each['ID_NHANVIEN'];
-                $kehoach->save();
+        if(isset($_REQUEST['selection'])) {
+            $keyArr = $_REQUEST['selection'];
+            
+            foreach ($keyArr as $keyObj) {
+                $key = get_object_vars(json_decode($keyObj));
+
+                $noidungthuchiens = Thuchienbd::find()->where($key)->all();
+                foreach ($noidungthuchiens as $noidungthuchien) {
+                    $noidungthuchien->KETQUA = 'Đạt';
+                    $noidungthuchien->save(false);
+                }
             }
+            return $this->redirect(['ketthuc', 'id' => $dotbd->ID_DOTBD]);
         }
-        $searchModel = new KehoachbdtbSearch();
+
+        if (Yii::$app->request->post('hasEditable')) {
+            $idKey = Yii::$app->request->post('editableKey');
+            $idKey = json_decode($idKey);
+            $arr = get_object_vars($idKey);
+
+            $noidungthuchien = Thuchienbd::findOne($arr);
+            $out = Json::encode(['output' => '', 'message' => '']);
+            $post = [];
+            $posted = current($_POST['Thuchienbd']);
+            $post['Thuchienbd'] = $posted;
+
+            if ($noidungthuchien->load($post)) {
+                $noidungthuchien->save();
+            }
+            echo $out;
+            return;
+        }
+
+        $searchModel = new ThuchienbdSearch();
         $dataProvider = $searchModel->searchND(Yii::$app->request->queryParams);
-        $kehoachModel = new Kehoachbdtb();
-        return $this->render('kehoach', [
-            'kehoachModel' => $kehoachModel,
+        return $this->render('thuchien', [
+            'model' => $this->findModel($id),
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionKetthuc($id)
+    {
+        $searchModel = new ThuchienbdSearch();
+        $dataProvider = $searchModel->searchND(Yii::$app->request->queryParams);
+        return $this->render('ketthuc', [
             'model' => $this->findModel($id),
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

@@ -18,8 +18,8 @@ class ThuchienbdSearch extends Thuchienbd
     public function rules()
     {
         return [
-            [['ID_DOTBD', 'ID_THIETBI', 'KETQUA', 'ID_NHANVIEN'], 'integer'],
-            [['MA_NOIDUNG', 'NOIDUNGMORONG', 'GHICHU'], 'safe'],
+            [['ID_DOTBD', 'ID_THIETBI', 'ID_NHANVIEN'], 'integer'],
+            [['MA_NOIDUNG', 'NOIDUNGMORONG', 'GHICHU', 'KETQUA'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class ThuchienbdSearch extends Thuchienbd
      */
     public function search($params)
     {
-        $query = Thuchienbd::find();
+        $query = Dotbaoduong::find()->where(['TRANGTHAI' => 'Đang thực hiện']);
 
         // add conditions that should always apply here
 
@@ -68,6 +68,28 @@ class ThuchienbdSearch extends Thuchienbd
         $query->andFilterWhere(['like', 'MA_NOIDUNG', $this->MA_NOIDUNG])
             ->andFilterWhere(['like', 'NOIDUNGMORONG', $this->NOIDUNGMORONG])
             ->andFilterWhere(['like', 'GHICHU', $this->GHICHU]);
+
+        return $dataProvider;
+    }
+
+    public function searchND($params)
+    {
+        $query = Thuchienbd::find()->where(['ID_DOTBD' => $params['id']]);
+
+        // add conditions that should always apply here
+        // print_r($params);
+        // die;
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
 
         return $dataProvider;
     }

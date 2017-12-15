@@ -15,24 +15,40 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?= Html::a('Create Thuchienbd', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
 <?php Pjax::begin(); ?>    <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        // 'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
+            'MA_DOTBD',
+            'NGAY_BD',
+            [
+                'attribute' => 'ID_TRAMVT',
+                'value' => 'iDTRAMVT.MA_TRAM'
+            ],
+            [
+                'attribute' => 'TRUONG_NHOM',
+                'value' => 'tRUONGNHOM.TEN_NHANVIEN'
+            ],
+            'TRANGTHAI',
 
-            'ID_DOTBD',
-            'ID_THIETBI',
-            'MA_NOIDUNG',
-            'NOIDUNGMORONG',
-            'KETQUA',
-            // 'GHICHU',
-            // 'ID_NHANVIEN',
-
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{view} {delete}',
+                'urlCreator' => function ($action, $model, $key, $index) {
+                    if ($action === 'view') {
+                        $url = '';
+                        $url ='index.php?r=dotbaoduong/thuchien&id='.$model->ID_DOTBD;
+                        return $url;
+                    }
+                    if ($action === 'delete') {
+                        $url = '';
+                        $url ='index.php?r=dotbaoduong/delete&id='.$model->ID_DOTBD;
+                        return $url;
+                    }
+                }
+            ],
         ],
     ]); ?>
 <?php Pjax::end(); ?></div>
+

@@ -27,7 +27,7 @@ Create new test suite. Requires suite name and actor name
 ## GherkinSnippets
 
 Generates code snippets for matched feature files in a suite.
-Code snuppets are expected to be implemtned in Actor or PageOjects
+Code snippets are expected to be implemented in Actor or PageObjects
 
 Usage:
 
@@ -183,6 +183,10 @@ Auto-updates phar archive from official site: 'http://codeception.com/codecept.p
 
 
 
+## CompletionFallback
+
+
+
 ## GenerateTest
 
 Generates skeleton for Unit Test that extends `Codeception\TestCase\Test`.
@@ -235,7 +239,7 @@ Generates empty environment configuration file into envs dir:
 
  * `codecept g:env firefox`
 
-Required to have `envs` path to be specifed in `codeception.yml`
+Required to have `envs` path to be specified in `codeception.yml`
 
 
 
@@ -264,8 +268,8 @@ Generates user-friendly text scenarios from scenario-driven tests (Cest, Cept).
 
 Generates StepObject class. You will be asked for steps you want to implement.
 
-* `codecept g:step acceptance AdminSteps`
-* `codecept g:step acceptance UserSteps --silent` - skip action questions
+* `codecept g:stepobject acceptance AdminSteps`
+* `codecept g:stepobject acceptance UserSteps --silent` - skip action questions
 
 
 
@@ -289,9 +293,6 @@ codecept gherkin:steps acceptance
 ```
 
 
-
-
-## Completion
 
 
 

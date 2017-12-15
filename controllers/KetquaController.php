@@ -3,11 +3,13 @@
 namespace app\controllers;
 
 use Yii;
+use app\models\Dotbaoduong;
 use app\models\Ketqua;
 use app\models\KetquaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * KetquaController implements the CRUD actions for Ketqua model.
@@ -46,51 +48,65 @@ class KetquaController extends Controller
 
     /**
      * Displays a single Ketqua model.
-     * @param integer $ID_DOTBD
-     * @param integer $ID_THIETBI
+     * @param integer $id
      * @return mixed
      */
-    public function actionView($ID_DOTBD, $ID_THIETBI)
+    public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($ID_DOTBD, $ID_THIETBI),
+            'model' => $this->findModel($id),
         ]);
     }
 
-    /**
-     * Creates a new Ketqua model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new Ketqua();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'ID_DOTBD' => $model->ID_DOTBD, 'ID_THIETBI' => $model->ID_THIETBI]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
-    }
 
     /**
      * Updates an existing Ketqua model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $ID_DOTBD
-     * @param integer $ID_THIETBI
+     * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($ID_DOTBD, $ID_THIETBI, $MA_NOIDUNG)
+    public function actionCreate($id)
     {
-        $model = $this->findModel($ID_DOTBD, $ID_THIETBI, $MA_NOIDUNG);
+        $dotbd = Dotbaoduong::findOne($id);
+        $model = new Ketqua();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'ID_DOTBD' => $model->ID_DOTBD, 'ID_THIETBI' => $model->ID_THIETBI]);
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->ID_DOTBD = $id;
+
+            //get instances, upload files to host
+            $model->files = UploadedFile::getInstances($model, 'files');
+            $i=1;
+            foreach ($model->files as $file) {
+                $filePath = 'uploads/' . $dotbd->MA_DOTBD. '_'. $i . '.' . $file->extension;
+                $file->saveAs($filePath);
+                //save file path to database
+                switch ($i) {
+                    case '1':
+                        $model->ANH1 = $filePath;
+                        break;
+                    case '2':
+                        $model->ANH2 = $filePath;
+                        break;
+                    case '3':
+                        $model->ANH3 = $filePath;
+                        break;
+                    
+                    default:
+                        break;
+                }
+                $i++;
+            }
+
+            var_dump($model);
+            die;
+
+            $model->save();
+            return $this->redirect(['view', 'id' => $model->ID_DOTBD]);
         } else {
-            return $this->render('update', [
+            return $this->render('create', [
                 'model' => $model,
+                'dotbd' => $dotbd,
             ]);
         }
     }
@@ -98,13 +114,12 @@ class KetquaController extends Controller
     /**
      * Deletes an existing Ketqua model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $ID_DOTBD
-     * @param integer $ID_THIETBI
+     * @param integer $id
      * @return mixed
      */
-    public function actionDelete($ID_DOTBD, $ID_THIETBI, $MA_NOIDUNG)
+    public function actionDelete($id)
     {
-        $this->findModel($ID_DOTBD, $ID_THIETBI, $MA_NOIDUNG)->delete();
+        $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
@@ -112,14 +127,13 @@ class KetquaController extends Controller
     /**
      * Finds the Ketqua model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $ID_DOTBD
-     * @param integer $ID_THIETBI
+     * @param integer $id
      * @return Ketqua the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($ID_DOTBD, $ID_THIETBI, $MA_NOIDUNG)
+    protected function findModel($id)
     {
-        if (($model = Ketqua::findOne(['ID_DOTBD' => $ID_DOTBD, 'ID_THIETBI' => $ID_THIETBI, 'MA_NOIDUNG' => $MA_NOIDUNG])) !== null) {
+        if (($model = Ketqua::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

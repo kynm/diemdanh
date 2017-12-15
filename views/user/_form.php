@@ -17,19 +17,11 @@ use app\models\BoPhan;
 
     <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'fullname')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'password')->passwordInput(['minlength' => 5]) ?>
 
     <?= $form->field($model, 'role')->dropDownList(ArrayHelper::map(Role::find()->all(), 'id', 'role_name')) ?>
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'BoPhan')->dropDownList(ArrayHelper::map(BoPhan::find()->all(), 'ID', 'MaBP')) ?>
-
-    <?= $form->field($model, 'ChucVu')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'DienThoai')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

@@ -58,13 +58,17 @@ class KehoachbdtbController extends Controller
      * @param string $MA_NOIDUNG
      * @return mixed
      */
-    public function actionView($ID_DOTBD, $ID_THIETBI, $MA_NOIDUNG)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($ID_DOTBD, $ID_THIETBI, $MA_NOIDUNG),
-        ]);
-    }
+    // public function actionView($ID_DOTBD, $ID_THIETBI, $MA_NOIDUNG)
+    // {
+    //     return $this->render('view', [
+    //         'model' => $this->findModel($ID_DOTBD, $ID_THIETBI, $MA_NOIDUNG),
+    //     ]);
+    // }
 
+    /**
+     * API to create new Kehoachbdtb model with url.
+     * @return mixed
+     */
     public function actionCreatePost($ID_DOTBD, $ID_THIETBI, $MA_NOIDUNG, $ID_NHANVIEN)
     {
         $model = new Kehoachbdtb();
@@ -81,19 +85,19 @@ class KehoachbdtbController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
-        $model = new Kehoachbdtb();
+    // public function actionCreate()
+    // {
+    //     $model = new Kehoachbdtb();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+    //     if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
-            return $this->redirect(['view', 'ID_DOTBD' => $model->ID_DOTBD, 'ID_THIETBI' => $model->ID_THIETBI, 'MA_NOIDUNG' => $model->MA_NOIDUNG]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
-    }
+    //         return $this->redirect(['view', 'ID_DOTBD' => $model->ID_DOTBD, 'ID_THIETBI' => $model->ID_THIETBI, 'MA_NOIDUNG' => $model->MA_NOIDUNG]);
+    //     } else {
+    //         return $this->render('create', [
+    //             'model' => $model,
+    //         ]);
+    //     }
+    // }
 
     /**
      * Updates an existing Kehoachbdtb model.

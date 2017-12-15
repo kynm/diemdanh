@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Kehoachbdtb;
+use app\models\Dotbaoduong;
 
 /**
  * KehoachbdtbSearch represents the model behind the search form about `app\models\Kehoachbdtb`.
@@ -22,7 +23,8 @@ class KehoachbdtbSearch extends Kehoachbdtb
             [['MA_NOIDUNG'], 'safe'],
         ];
     }
-
+    // , 'MA_DOTBD', 'ID_TRAMVT', 'TRUONG_NHOM'
+    // , 'TRANGTHAI'
     /**
      * @inheritdoc
      */
@@ -41,7 +43,7 @@ class KehoachbdtbSearch extends Kehoachbdtb
      */
     public function search($params)
     {
-        $query = Kehoachbdtb::find();
+        $query = Dotbaoduong::find()->where(['TRANGTHAI' => 'Kế hoạch']);
 
         // add conditions that should always apply here
 
@@ -58,13 +60,13 @@ class KehoachbdtbSearch extends Kehoachbdtb
         }
 
         // grid filtering conditions
-        $query->andFilterWhere([
-            'ID_DOTBD' => $this->ID_DOTBD,
-            'ID_THIETBI' => $this->ID_THIETBI,
-            'ID_NHANVIEN' => $this->ID_NHANVIEN,
-        ]);
+        // $query->andFilterWhere([
+        //     'MA_DOTBD' => $this->MA_DOTBD,
+        //     'ID_TRAMVT' => $this->ID_TRAMVT,
+        //     'TRUONG_NHOM' => $this->TRUONG_NHOM,
+        // ]);
 
-        $query->andFilterWhere(['like', 'MA_NOIDUNG', $this->MA_NOIDUNG]);
+        // $query->andFilterWhere(['like', 'TRANGTHAI', $this->TRANGTHAI]);
 
         return $dataProvider;
     }

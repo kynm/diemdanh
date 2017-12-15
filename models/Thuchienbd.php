@@ -37,8 +37,8 @@ class Thuchienbd extends \yii\db\ActiveRecord
     {
         return [
             [['ID_DOTBD', 'ID_THIETBI', 'MA_NOIDUNG'], 'required'],
-            [['ID_DOTBD', 'ID_THIETBI', 'KETQUA', 'ID_NHANVIEN'], 'integer'],
-            [['MA_NOIDUNG'], 'string', 'max' => 32],
+            [['ID_DOTBD', 'ID_THIETBI', 'ID_NHANVIEN'], 'integer'],
+            [['MA_NOIDUNG', 'KETQUA'], 'string', 'max' => 32],
             [['NOIDUNGMORONG', 'GHICHU'], 'string', 'max' => 255],
             [['ID_DOTBD'], 'exist', 'skipOnError' => true, 'targetClass' => Dotbaoduong::className(), 'targetAttribute' => ['ID_DOTBD' => 'ID_DOTBD']],
             [['MA_NOIDUNG'], 'exist', 'skipOnError' => true, 'targetClass' => Noidungbaotri::className(), 'targetAttribute' => ['MA_NOIDUNG' => 'MA_NOIDUNG']],

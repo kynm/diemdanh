@@ -116,3 +116,6 @@ $.ajax({
 
     },
 });
+
+
+        $query = Dotbaoduong::find()->where(['TRANGTHAI' => 'Kết thúc' ]);
