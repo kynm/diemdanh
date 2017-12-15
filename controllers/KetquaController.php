@@ -98,9 +98,6 @@ class KetquaController extends Controller
                 $i++;
             }
 
-            var_dump($model);
-            die;
-
             $model->save();
             return $this->redirect(['view', 'id' => $model->ID_DOTBD]);
         } else {

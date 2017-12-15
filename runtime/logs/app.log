@@ -43023,3 +43023,255 @@ $_SERVER = [
     'REQUEST_TIME_FLOAT' => 1513328502.73
     'REQUEST_TIME' => 1513328502
 ]
+2017-12-15 09:49:17 [::1][1][v7ggs28o5sne7u1ef59sndn1v7][error][yii\base\ErrorException:2] yii\base\ErrorException: finfo_file(/tmp/phpY80l2w): failed to open stream: No such file or directory in /var/www/html/baotrinhatram/vendor/yiisoft/yii2/helpers/BaseFileHelper.php:149
+Stack trace:
+#0 [internal function]: yii\base\ErrorHandler->handleError(2, 'finfo_file(/tmp...', '/var/www/html/b...', 149, Array)
+#1 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/helpers/BaseFileHelper.php(149): finfo_file(Resource id #3, '/tmp/phpY80l2w')
+#2 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/validators/FileValidator.php(358): yii\helpers\BaseFileHelper::getMimeType('/tmp/phpY80l2w', NULL, false)
+#3 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/validators/FileValidator.php(251): yii\validators\FileValidator->validateExtension(Object(yii\web\UploadedFile))
+#4 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/validators/FileValidator.php(208): yii\validators\FileValidator->validateValue(Object(yii\web\UploadedFile))
+#5 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/validators/Validator.php(267): yii\validators\FileValidator->validateAttribute(Object(app\models\Ketqua), 'files')
+#6 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Model.php(360): yii\validators\Validator->validateAttributes(Object(app\models\Ketqua), Array)
+#7 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/db/ActiveRecord.php(471): yii\base\Model->validate(Array)
+#8 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/db/BaseActiveRecord.php(646): yii\db\ActiveRecord->insert(true, NULL)
+#9 /var/www/html/baotrinhatram/controllers/KetquaController.php(101): yii\db\BaseActiveRecord->save()
+#10 [internal function]: app\controllers\KetquaController->actionCreate('3')
+#11 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#12 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#13 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('create', Array)
+#14 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('ketqua/create', Array)
+#15 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#16 /var/www/html/baotrinhatram/web/index.php(12): yii\base\Application->run()
+#17 {main}
+2017-12-15 09:49:17 [::1][1][v7ggs28o5sne7u1ef59sndn1v7][info][application] $_GET = [
+    'r' => 'ketqua/create'
+    'id' => '3'
+]
+
+$_POST = [
+    '_csrf' => 'Zobze1kP9LnFy0XtIGRAfavmqfAMCdo-NrUMOn6OWmGMo0Ra_Ox-M1V4aO-JYGriUdMSwd9-q31n9lL2b_zOsA=='
+    'Ketqua' => [
+        'KETQUA' => 'Äáº¡t'
+        'files' => [
+            0 => ''
+        ]
+        'GHICHU' => ''
+    ]
+]
+
+$_FILES = [
+    'Ketqua' => [
+        'name' => [
+            'files' => [
+                0 => 'bcede.jpg'
+                1 => 'bgr.png'
+                2 => 'logo_cas.png'
+            ]
+        ]
+        'type' => [
+            'files' => [
+                0 => 'image/jpeg'
+                1 => 'image/png'
+                2 => 'image/png'
+            ]
+        ]
+        'tmp_name' => [
+            'files' => [
+                0 => '/tmp/phpY80l2w'
+                1 => '/tmp/phprc3uEh'
+                2 => '/tmp/phpL1MTg2'
+            ]
+        ]
+        'error' => [
+            'files' => [
+                0 => 0
+                1 => 0
+                2 => 0
+            ]
+        ]
+        'size' => [
+            'files' => [
+                0 => 2423790
+                1 => 510445
+                2 => 6912
+            ]
+        ]
+    ]
+]
+
+$_COOKIE = [
+    '_csrf' => '7462e19a8a415d1a47c2a47ea71c8d786d93bb9a0b3f2d30a1773a4cd9561245a:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"ê%·!¥ãŠŠ³-©*Ÿú5»1ÓwqCQC^Ìr”Ñ\";}'
+    'PHPSESSID' => 'v7ggs28o5sne7u1ef59sndn1v7'
+    '_identity' => 'eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba:2:{i:0;s:9:\"_identity\";i:1;s:46:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",2592000]\";}'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 1
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '2942130'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 Safari/537.36'
+    'CONTENT_TYPE' => 'multipart/form-data; boundary=----WebKitFormBoundaryrgACuoUoq6mTztAq'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_REFERER' => 'http://localhost/baotrinhatram/web/index.php?r=ketqua/create&id=3'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8'
+    'HTTP_COOKIE' => '_csrf=7462e19a8a415d1a47c2a47ea71c8d786d93bb9a0b3f2d30a1773a4cd9561245a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22%EA%25%B7%21%A5%E3%8A%8A%90%B3-%02%A9%04%2A%9F%FA5%BB1%D3wqCQC%5E%CC%11r%94%D1%22%3B%7D; PHPSESSID=v7ggs28o5sne7u1ef59sndn1v7; _identity=eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C2592000%5D%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.18 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.18 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www/html'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/html/baotrinhatram/web/index.php'
+    'REMOTE_PORT' => '60934'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'r=ketqua/create&id=3'
+    'REQUEST_URI' => '/baotrinhatram/web/index.php?r=ketqua/create&id=3'
+    'SCRIPT_NAME' => '/baotrinhatram/web/index.php'
+    'PHP_SELF' => '/baotrinhatram/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1513331357.894
+    'REQUEST_TIME' => 1513331357
+]
+2017-12-15 09:49:38 [::1][1][v7ggs28o5sne7u1ef59sndn1v7][error][yii\base\ErrorException:2] yii\base\ErrorException: finfo_file(/tmp/phpyANKOW): failed to open stream: No such file or directory in /var/www/html/baotrinhatram/vendor/yiisoft/yii2/helpers/BaseFileHelper.php:149
+Stack trace:
+#0 [internal function]: yii\base\ErrorHandler->handleError(2, 'finfo_file(/tmp...', '/var/www/html/b...', 149, Array)
+#1 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/helpers/BaseFileHelper.php(149): finfo_file(Resource id #2, '/tmp/phpyANKOW')
+#2 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/validators/FileValidator.php(358): yii\helpers\BaseFileHelper::getMimeType('/tmp/phpyANKOW', NULL, false)
+#3 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/validators/FileValidator.php(251): yii\validators\FileValidator->validateExtension(Object(yii\web\UploadedFile))
+#4 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/validators/FileValidator.php(208): yii\validators\FileValidator->validateValue(Object(yii\web\UploadedFile))
+#5 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/validators/Validator.php(267): yii\validators\FileValidator->validateAttribute(Object(app\models\Ketqua), 'files')
+#6 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Model.php(360): yii\validators\Validator->validateAttributes(Object(app\models\Ketqua), Array)
+#7 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/db/ActiveRecord.php(471): yii\base\Model->validate(Array)
+#8 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/db/BaseActiveRecord.php(646): yii\db\ActiveRecord->insert(true, NULL)
+#9 /var/www/html/baotrinhatram/controllers/KetquaController.php(101): yii\db\BaseActiveRecord->save()
+#10 [internal function]: app\controllers\KetquaController->actionCreate('3')
+#11 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#12 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#13 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('create', Array)
+#14 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('ketqua/create', Array)
+#15 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#16 /var/www/html/baotrinhatram/web/index.php(12): yii\base\Application->run()
+#17 {main}
+2017-12-15 09:49:38 [::1][1][v7ggs28o5sne7u1ef59sndn1v7][info][application] $_GET = [
+    'r' => 'ketqua/create'
+    'id' => '3'
+]
+
+$_POST = [
+    '_csrf' => 'Zobze1kP9LnFy0XtIGRAfavmqfAMCdo-NrUMOn6OWmGMo0Ra_Ox-M1V4aO-JYGriUdMSwd9-q31n9lL2b_zOsA=='
+    'Ketqua' => [
+        'KETQUA' => 'Äáº¡t'
+        'files' => [
+            0 => ''
+        ]
+        'GHICHU' => ''
+    ]
+]
+
+$_FILES = [
+    'Ketqua' => [
+        'name' => [
+            'files' => [
+                0 => 'bcede.jpg'
+                1 => 'bgr.png'
+                2 => 'logo_cas.png'
+            ]
+        ]
+        'type' => [
+            'files' => [
+                0 => 'image/jpeg'
+                1 => 'image/png'
+                2 => 'image/png'
+            ]
+        ]
+        'tmp_name' => [
+            'files' => [
+                0 => '/tmp/phpyANKOW'
+                1 => '/tmp/phpABWb86'
+                2 => '/tmp/php6125rh'
+            ]
+        ]
+        'error' => [
+            'files' => [
+                0 => 0
+                1 => 0
+                2 => 0
+            ]
+        ]
+        'size' => [
+            'files' => [
+                0 => 2423790
+                1 => 510445
+                2 => 6912
+            ]
+        ]
+    ]
+]
+
+$_COOKIE = [
+    '_csrf' => '7462e19a8a415d1a47c2a47ea71c8d786d93bb9a0b3f2d30a1773a4cd9561245a:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"ê%·!¥ãŠŠ³-©*Ÿú5»1ÓwqCQC^Ìr”Ñ\";}'
+    'PHPSESSID' => 'v7ggs28o5sne7u1ef59sndn1v7'
+    '_identity' => 'eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba:2:{i:0;s:9:\"_identity\";i:1;s:46:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",2592000]\";}'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 1
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '2942130'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_ORIGIN' => 'http://localhost'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 Safari/537.36'
+    'CONTENT_TYPE' => 'multipart/form-data; boundary=----WebKitFormBoundaryrgACuoUoq6mTztAq'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_REFERER' => 'http://localhost/baotrinhatram/web/index.php?r=ketqua/create&id=3'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8'
+    'HTTP_COOKIE' => '_csrf=7462e19a8a415d1a47c2a47ea71c8d786d93bb9a0b3f2d30a1773a4cd9561245a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22%EA%25%B7%21%A5%E3%8A%8A%90%B3-%02%A9%04%2A%9F%FA5%BB1%D3wqCQC%5E%CC%11r%94%D1%22%3B%7D; PHPSESSID=v7ggs28o5sne7u1ef59sndn1v7; _identity=eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C2592000%5D%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.18 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.18 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www/html'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/html/baotrinhatram/web/index.php'
+    'REMOTE_PORT' => '32868'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'r=ketqua/create&id=3'
+    'REQUEST_URI' => '/baotrinhatram/web/index.php?r=ketqua/create&id=3'
+    'SCRIPT_NAME' => '/baotrinhatram/web/index.php'
+    'PHP_SELF' => '/baotrinhatram/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1513331378.452
+    'REQUEST_TIME' => 1513331378
+]

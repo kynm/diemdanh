@@ -35,7 +35,7 @@ class Ketqua extends \yii\db\ActiveRecord
         return [
             [['ID_DOTBD', 'KETQUA'], 'required'],
             [['ID_DOTBD'], 'integer'],
-            [['files'], 'file', 'extensions' => 'png, jpg, PNG, JPG', 'maxFiles' => 3],
+            [['files'], 'file', 'extensions' => 'png, jpg, PNG, JPG', 'maxFiles' => 3, 'maxSize' => 4000 * 3000 * 25],
             [['KETQUA'], 'string', 'max' => 32],
             [['GHICHU', 'ANH1', 'ANH2', 'ANH3'], 'string', 'max' => 255],
         ];
