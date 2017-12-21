@@ -53,6 +53,7 @@ class KetquaController extends Controller
      */
     public function actionView($id)
     {
+        
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -98,7 +99,7 @@ class KetquaController extends Controller
                 $i++;
             }
 
-            $model->save();
+            $model->save(false);
             return $this->redirect(['view', 'id' => $model->ID_DOTBD]);
         } else {
             return $this->render('create', [

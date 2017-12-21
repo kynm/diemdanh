@@ -13,12 +13,15 @@ use Yii;
  * @property string $ANH1
  * @property string $ANH2
  * @property string $ANH3
+ *
+ * @property Dotbaoduong $iDDOTBD
  */
 class Ketqua extends \yii\db\ActiveRecord
 {
-    /*variable*/
+    /**
+     * @var UploadedFile[]
+     */
     public $files;
-
     /**
      * @inheritdoc
      */
@@ -35,9 +38,10 @@ class Ketqua extends \yii\db\ActiveRecord
         return [
             [['ID_DOTBD', 'KETQUA'], 'required'],
             [['ID_DOTBD'], 'integer'],
-            [['files'], 'file', 'extensions' => 'png, jpg, PNG, JPG', 'maxFiles' => 3, 'maxSize' => 4000 * 3000 * 25],
             [['KETQUA'], 'string', 'max' => 32],
+            [['files'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg', 'maxFiles' => 4],
             [['GHICHU', 'ANH1', 'ANH2', 'ANH3'], 'string', 'max' => 255],
+            [['ID_DOTBD'], 'exist', 'skipOnError' => true, 'targetClass' => Dotbaoduong::className(), 'targetAttribute' => ['ID_DOTBD' => 'ID_DOTBD']],
         ];
     }
 
@@ -54,5 +58,13 @@ class Ketqua extends \yii\db\ActiveRecord
             'ANH2' => 'Anh2',
             'ANH3' => 'Anh3',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIDDOTBD()
+    {
+        return $this->hasOne(Dotbaoduong::className(), ['ID_DOTBD' => 'ID_DOTBD']);
     }
 }

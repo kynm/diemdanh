@@ -119,3 +119,14 @@ $.ajax({
 
 
         $query = Dotbaoduong::find()->where(['TRANGTHAI' => 'Kết thúc' ]);
+
+                    <!-- 
+            <div class="form-group col-md-12">
+                <label>Tiến độ</label>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="<?= $percent ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?= $percent ?>%;">
+                        <?= $percent ?>%
+                    </div>
+                </div>    
+            </div>
+             -->
