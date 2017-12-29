@@ -42,18 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p> 
         <?php $form = ActiveForm::begin(); ?>
         <input type="hidden" name="_csrf" value="<?=Yii::$app->request->getCsrfToken()?>" />
-        <?php
-            $nhanvien = Nhanvien::find()->where(['USER_NAME' => Yii::$app->user->identity->email])->one();
 
-            if ($model->TRUONG_NHOM == $nhanvien->ID_NHANVIEN) {
-                
-                echo Html::submitButton(
-                    '<i class="glyphicon glyphicon-check"></i> Đánh gía đợt bảo dưỡng', 
-                    ['class'=>'btn btn-primary']
-                ) ;                    
-             
-            }
-    ?>
     </p>
 <?= GridView::widget([
         'dataProvider' => $dataProvider,

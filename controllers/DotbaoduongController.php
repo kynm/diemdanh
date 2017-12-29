@@ -187,7 +187,7 @@ class DotbaoduongController extends Controller
                     $noidungthuchien->save(false);
                 }
             }
-            return $this->redirect(['ketthuc', 'id' => $dotbd->ID_DOTBD]);
+            return $this->redirect(['ketqua/create', 'id' => $dotbd->ID_DOTBD]);
         }
 
         if (Yii::$app->request->post('hasEditable')) {
@@ -204,6 +204,7 @@ class DotbaoduongController extends Controller
             if ($noidungthuchien->load($post)) {
                 $noidungthuchien->save();
             }
+
             echo $out;
             return;
         }

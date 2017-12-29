@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'urlCreator' => function ($action, $model, $key, $index) {
                     if ($action === 'view') {
                         $url = '';
-                        $url ='index.php?r=dotbaoduong/ketthuc&id='.$model->ID_DOTBD;
+                        $url ='index.php?r=ketqua/view&id='.$model->ID_DOTBD;
                         return $url;
                     }
                     if ($action === 'delete') {

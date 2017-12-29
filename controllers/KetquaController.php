@@ -69,10 +69,13 @@ class KetquaController extends Controller
     public function actionCreate($id)
     {
         $dotbd = Dotbaoduong::findOne($id);
+
         $model = new Ketqua();
 
-
         if ($model->load(Yii::$app->request->post())) {
+            $dotbd->TRANGTHAI = 'Kết thúc';
+            $dotbd->save(false);
+
             $model->ID_DOTBD = $id;
 
             //get instances, upload files to host

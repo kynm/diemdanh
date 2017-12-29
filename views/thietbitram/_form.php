@@ -2,9 +2,10 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\helpers\ArrayHelper;
 use app\models\Thietbi;
 use app\models\Tramvt;
+use yii\helpers\ArrayHelper;
+use kartik\date\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Thietbitram */
@@ -14,6 +15,9 @@ use app\models\Tramvt;
 <div class="thietbitram-form">
 
     <?php $form = ActiveForm::begin(); ?>
+    <div class="form-group">
+        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+    </div>
 
     <?= $form->field($model, 'ID_LOAITB')->dropDownList(
         ArrayHelper::map(Thietbi::find()->all(), 'ID_THIETBI', 'TEN_THIETBI'),
@@ -27,17 +31,52 @@ use app\models\Tramvt;
 
     <?= $form->field($model, 'SERIAL_MAC')->textInput() ?>
 
-    <?= $form->field($model, 'NGAYSX')->textInput() ?>
-    
-    <?= $form->field($model, 'NGAYSD')->textInput() ?>
+    <div class="row" style="margin-bottom: 8px">
+        <div class="col-sm-4 col-md-4">
+            <?= DatePicker::widget([
+                'model' => $model,
+                'attribute' => 'NGAYSX',
+                'name' => 'ngaysx', 
+                'removeButton' => false,
+                'options' => ['placeholder' => 'Ngày sản xuất ...'],
+                'pluginOptions' => [
+
+                    'format' => 'yyyy-mm-dd',
+                    'todayHighlight' => true
+                ]
+            ]); ?>
+        </div>
+        <div class="col-sm-4 col-md-4">
+                <?= DatePicker::widget([
+                    'model' => $model,
+                    'attribute' => 'NGAYSD',
+                    'name' => 'ngaysd', 
+                    'removeButton' => false,
+                    'options' => ['placeholder' => 'Ngày đưa vào sử dụng ...'],
+                    'pluginOptions' => [
+
+                        'format' => 'yyyy-mm-dd',
+                        'todayHighlight' => true
+                    ]
+                ]); ?>
+        </div>
+        <div class="col-sm-4 col-md-4">
+                <?= DatePicker::widget([
+                    'model' => $model,
+                    'attribute' => 'LANBAODUONGTRUOC',
+                    'name' => 'ngaybd', 
+                    'removeButton' => false,
+                    'options' => ['placeholder' => 'Lần bảo dưỡng gần đây ...'],
+                    'pluginOptions' => [
+
+                        'format' => 'yyyy-mm-dd',
+                        'todayHighlight' => true
+                    ]
+                ]); ?>
+        </div>
+    </div>
 
     <?= $form->field($model, 'LANBD')->textInput() ?>
-
-    <?= $form->field($model, 'LANBAODUONGTRUOC')->textInput() ?>
-
-    <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-    </div>
 
     <?php ActiveForm::end(); ?>
 

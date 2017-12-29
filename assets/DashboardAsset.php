@@ -19,6 +19,7 @@ class DashboardAsset extends AssetBundle
         'css/bootstrap.min.css',
         'css/_all-skins.min.css',
         'plugins/iCheck/blue.css',
+        'css/magnific-popup.css',
         'css/site.css',
     ];
     public $js = [
@@ -29,9 +30,10 @@ class DashboardAsset extends AssetBundle
         'plugins/fastclick/fastclick.js',
         'plugins/sparkline/jquery.sparkline.min.js',
         'plugins/slimscroll/jquery.slimscroll.min.js',
+        'js/jquery.magnific-popup.min.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
+        // 'yii\bootstrap\BootstrapAsset',
     ];
 }

@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\User;
 use app\models\UserSearch;
+use app\models\Nhanvien;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -109,6 +110,60 @@ class UserController extends Controller
     {
         $this->findModel($id)->delete();
 
+        return $this->redirect(['index']);
+    }
+
+    //fucntion to add user from Nhanvien's email
+
+    public function actionAddUser()
+    {
+        $listNhanvien = Nhanvien::find()->all();
+        foreach ($listNhanvien as $nhanvien) {
+            if($nhanvien->USER_NAME == NULL) continue;
+            $exists = User::find()->where( [ 'username' => $nhanvien->USER_NAME] )->exists();                  
+            if($exists) continue;
+
+            $user = new User;
+            $user->username = $nhanvien->USER_NAME;
+            $user->email = $nhanvien->USER_NAME;
+            $user->setPassword('vnpt1234');
+            switch ($nhanvien->CHUC_VU) {
+                case 'IT':
+                    $user->role = 1;
+                    break;
+                
+                case 'Quản trị hệ thống':
+                    $user->role = 1;
+                    break;
+                
+                case 'vtt': //role 2 dành cho cán bộ vtt
+                    $user->role = 2;
+                    break;
+                
+                case 'Giám đốc Trung tâm':
+                    $user->role = 3;
+                    break;
+                
+                case 'P. GĐ Trung tâm':
+                    $user->role = 3;
+                    break;
+                
+                case 'Trưởng đài':
+                    $user->role = 4;
+                    break;
+                
+                case 'Quản lý trạm':
+                    $user->role = 5;
+                    break;
+                                                        
+                default:
+                    $user->role = 6;
+                    break;
+            }
+            $user->status = 10;
+            $user->generateAuthKey();
+            $user->save(false);
+        }
         return $this->redirect(['index']);
     }
 

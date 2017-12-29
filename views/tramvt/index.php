@@ -33,7 +33,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'ID_NHANVIEN',
                 'value' => 'iDNHANVIEN.TEN_NHANVIEN'
             ],
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+            ],
         ],
     ]); ?>
 <?php Pjax::end(); ?></div>

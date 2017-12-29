@@ -82,6 +82,15 @@ class ThietbitramController extends Controller
         }
     }
 
+    public function actionCreatePost()
+    {
+        $model = new Thietbitram();
+        $model->load(Yii::$app->request->queryParams);
+        $model->save();
+        print_r($model->ID_LOAITB);
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
     /**
      * Updates an existing Thietbitram model.
      * If update is successful, the browser will be redirected to the 'view' page.

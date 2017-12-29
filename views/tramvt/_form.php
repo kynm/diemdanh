@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\Daivt;
 use app\models\Nhanvien;
+use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Tramvt */
@@ -19,15 +20,21 @@ use app\models\Nhanvien;
 
     <?= $form->field($model, 'DIADIEM')->textInput(['maxlength' => true]) ?>
 
-	<?= $form->field($model, 'ID_DAIVT')->dropDownList(
-        ArrayHelper::map(Daivt::find()->all(), 'ID_DAI', 'TEN_DAIVT'),
-        ['promt' => 'Chọn đài quản lý']
-    ) ?>
+	<?= $form->field($model, 'ID_DAIVT')->widget(Select2::classname(), [
+        'data' => ArrayHelper::map(Daivt::find()->all(), 'ID_DAI', 'TEN_DAIVT'),
+        'options' => ['placeholder' => 'Chọn đài quản lý'],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]); ?>
 
-    <?= $form->field($model, 'ID_NHANVIEN')->dropDownList(
-        ArrayHelper::map(Nhanvien::find()->all(), 'ID_NHANVIEN', 'TEN_NHANVIEN'),
-        ['promt' => 'Chọn nhân viên quản lý']
-    ) ?>
+    <?= $form->field($model, 'ID_NHANVIEN')->widget(Select2::classname(), [
+        'data' => ArrayHelper::map(Nhanvien::find()->all(), 'ID_NHANVIEN', 'TEN_NHANVIEN'),
+        'options' => ['placeholder' => 'Chọn nhân viên quản lý'],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]); ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

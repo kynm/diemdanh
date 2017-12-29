@@ -4,7 +4,11 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
 use app\models\Thuchienbd;
+use app\models\ThuchienbdSearch;
 use app\models\Dotbaoduong;
+use yii\helpers\Url;
+use yii\bootstrap\Modal;
+use kartik\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Ketqua */
@@ -18,8 +22,53 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <div class="ketqua-form">
-    <?php $form = ActiveForm::begin(); ?>
+        
         <p class="form-inline">
+            <div class="col-md-12 form-group">                
+                <?php
+                    Modal::begin([
+                    'toggleButton' => [
+                        'label' => '<i class="glyphicon glyphicon-list"></i> Chi tiết',
+                        'class' => 'btn btn-primary'
+                    ],
+                        'size' => 'modal-lg',
+                    ]);
+                        $searchModel = new ThuchienbdSearch();
+                        $dataProvider = $searchModel->searchND(Yii::$app->request->queryParams);
+
+                    echo GridView::widget([
+                        'dataProvider' => $dataProvider,
+                        'filterModel' => $searchModel,
+                        'formatter' => [
+                            'class' => 'yii\i18n\Formatter',
+                            'nullDisplay' => '',
+                        ],
+                        'columns' => [
+                            ['class' => 'yii\grid\SerialColumn'],
+                            [ 
+                                'attribute' => 'ID_THIETBI',
+                                'value' => 'iDTHIETBI.iDLOAITB.TEN_THIETBI'
+                            ],
+                            [ 
+                                'attribute' => 'MA_NOIDUNG',
+                                'value' => 'mANOIDUNG.NOIDUNG'
+                            ],
+                            'NOIDUNGMORONG',
+                            [
+                                'attribute' => 'ID_NHANVIEN',
+                                'value' => 'iDNHANVIEN.TEN_NHANVIEN'
+                            ],
+                            [ 
+                                'attribute' => 'KETQUA',
+                                'value' => 'KETQUA',
+                            ],
+                            'GHICHU',
+                        ],
+                    ]);
+                    Modal::end(); 
+                ?>
+            </div>
+            
             <div class="form-group col-md-3 col-sm-6">
                 <label>Trạm viễn thông</label>
                 <input type="text" class="form-control" disabled="true" value="<?= $model->iDDOTBD->iDTRAMVT->MA_TRAM ; ?>">
@@ -44,26 +93,56 @@ $this->params['breadcrumbs'][] = $this->title;
                 <label>Ghi chú</label>
                 <input type="text" class="form-control" disabled="true" value="<?= $model->GHICHU ; ?>">
             </div>
-        </p>
+    
         <div class="row col-md-12">
-            <div class="col-xs-6 col-md-4">
-                <a href="#" class="thumbnail">
-                  <img src="<?= $model->ANH1 ; ?>" alt="Anh 1">
+            <div class="col-md-4 col-sm-4 col-xs-12">
+                <a href="<?= $model->ANH1 ?>" class="thumbnail">
+                    <img src="<?= $model->ANH1 ?>" alt="Anh 1">
                 </a>
             </div>
-            <div class="col-xs-6 col-md-4">
-                <a href="#" class="thumbnail">
-                  <img src="<?= $model->ANH2 ; ?>" alt="Anh 2">
+            <?= isset($model->ANH2) ? '
+            <div class="col-md-4 col-sm-4 col-xs-12">
+                <a href="'. $model->ANH2 .'" class="thumbnail">
+                  <img src="'. $model->ANH2 .'" alt="Anh 2">
                 </a>
-            </div>
-            <div class="col-xs-6 col-md-4">
-                <a href="#" class="thumbnail">
-                  <img src="<?= $model->ANH3 ; ?>" alt="Anh 3">
+            </div>' : ''
+            ?>
+            <?= isset($model->ANH3) ? '
+            <div class="col-md-4 col-sm-4 col-xs-12">
+                <a href="'. $model->ANH3 .'" class="thumbnail">
+                  <img src="'. $model->ANH3 .'" alt="Anh 3">
                 </a>
-            </div>
+            </div>' : ''
+            ?>
         </div>
-    <?php ActiveForm::end(); ?>
+        </p>
+    
     </div>
 
 
 </div>
+
+<?php
+$script = <<< JS
+    $('.row').magnificPopup({
+        delegate: 'a',
+        type: 'image',
+        gallery:{
+            enabled:true
+        },
+        removalDelay: 300,
+        mainClass: 'mfp-with-zoom', 
+
+        zoom: {
+            enabled: true, 
+
+            duration: 300, 
+            easing: 'ease-in-out', 
+            opener: function(openerElement) {
+              return openerElement.is('img') ? openerElement : openerElement.find('img');
+            }
+        }
+    });
+JS;
+$this->registerJs($script);
+?>

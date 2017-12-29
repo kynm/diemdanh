@@ -132,67 +132,67 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 </div>
-<div class="modal fade" id="themNoiDung" tabindex="-1" role="dialog" aria-labelledby="themNoiDungLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Thêm nội dung</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <?php $modalForm = ActiveForm::begin(); ?>
-      <div class="modal-body">
-        <div class="form-group col-md-4">
-            <?= $modalForm->field($kehoachModel, 'ID_THIETBI')->dropDownList(
-                ArrayHelper::map(Thietbitram::find()->where(['ID_TRAM' => $model->ID_TRAMVT])->all(), 'ID_THIETBI', 'iDLOAITB.TEN_THIETBI'),
-                [
-                    'prompt' => 'Chọn thiết bị',
-                    'onchange' => '
-                        $.post("index.php?r=noidungbaotri/liststbt&id='.'"+$(this).val(), function( data ) {
-                            $("#kehoachbdtb-ma_noidung").html( data );
-                        });
-                    ',
-                ])
-            ?>
-            </div>
-            <div class="form-group col-md-4">
-            <?= $modalForm->field($kehoachModel, 'MA_NOIDUNG')->dropDownList(
-                ArrayHelper::map(Noidungbaotri::find()->all(), 'MA_NOIDUNG', 'NOIDUNG'),
-                [
-                    'prompt' => 'Chọn nội dung bảo dưỡng',
-                    
-                ])
-            ?>
-            </div>
-            <div class="form-group col-md-4">
-            <?= $modalForm->field($kehoachModel, 'ID_NHANVIEN')->dropDownList(
-                ArrayHelper::map(Nhanvien::find()->all(), 'ID_NHANVIEN', 'TEN_NHANVIEN'),
-                [
-                    'prompt' => 'Chọn nhân viên bảo dưỡng',
-                ])
-            ?>
-            </div>
-      </div>
-      <div class="modal-footer">
-        <?= Html::a(
-            '<i class="glyphicon glyphicon-plus"></i> Lưu', 
-            '#', 
-            [
-                'class'=>'btn btn-primary',
-                'id' => '#addBtn',
-                'onclick' => '
-                    var iddotbd = '.$model->ID_DOTBD.';
-                    var idthiebi = $("#kehoachbdtb-id_thietbi").val();
-                    var manoidung = $("#kehoachbdtb-ma_noidung").val();
-                    var idnhanvien = $("#kehoachbdtb-id_nhanvien").val();
 
-                    $.post("index.php?r=kehoachbdtb/create-post&ID_DOTBD="+iddotbd+"&ID_THIETBI="+idthiebi+"&MA_NOIDUNG="+manoidung+"&ID_NHANVIEN="+idnhanvien+"");
-                '
-            ]
-        )?>
-      </div>
-      <?php ActiveForm::end(); ?>
+<div class="modal fade" id="themNoiDung" tabindex="-1" role="dialog" aria-labelledby="themNoiDungLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>   
+            </div>
+            <?php $modalForm = ActiveForm::begin(); ?>
+            <div class="modal-body">
+                <div class="form-group col-md-4">
+                    <?= $modalForm->field($kehoachModel, 'ID_THIETBI')->dropDownList(
+                        ArrayHelper::map(Thietbitram::find()->where(['ID_TRAM' => $model->ID_TRAMVT])->all(), 'ID_THIETBI', 'iDLOAITB.TEN_THIETBI'),
+                        [
+                            'prompt' => 'Chọn thiết bị',
+                            'onchange' => '
+                                $.post("index.php?r=noidungbaotri/liststbt&id='.'"+$(this).val(), function( data ) {
+                                    $("#kehoachbdtb-ma_noidung").html( data );
+                                });
+                            ',
+                        ])
+                    ?>
+                </div>
+                <div class="form-group col-md-4">
+                    <?= $modalForm->field($kehoachModel, 'MA_NOIDUNG')->dropDownList(
+                        ArrayHelper::map(Noidungbaotri::find()->all(), 'MA_NOIDUNG', 'NOIDUNG'),
+                        [
+                            'prompt' => 'Chọn nội dung bảo dưỡng',
+                            
+                        ])
+                    ?>
+                </div>
+                <div class="form-group col-md-4">
+                    <?= $modalForm->field($kehoachModel, 'ID_NHANVIEN')->dropDownList(
+                        ArrayHelper::map(Nhanvien::find()->all(), 'ID_NHANVIEN', 'TEN_NHANVIEN'),
+                        [
+                            'prompt' => 'Chọn nhân viên bảo dưỡng',
+                        ])
+                    ?>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <?= Html::a(
+                    '<i class="glyphicon glyphicon-plus"></i> Lưu', 
+                    '#', 
+                    [
+                        'class'=>'btn btn-primary',
+                        'id' => 'addBtn',
+                        'onclick' => '
+                            var iddotbd = '.$model->ID_DOTBD.';
+                            var idthiebi = $("#kehoachbdtb-id_thietbi").val();
+                            var manoidung = $("#kehoachbdtb-ma_noidung").val();
+                            var idnhanvien = $("#kehoachbdtb-id_nhanvien").val();
+
+                            $.post("index.php?r=kehoachbdtb/create-post&ID_DOTBD="+iddotbd+"&ID_THIETBI="+idthiebi+"&MA_NOIDUNG="+manoidung+"&ID_NHANVIEN="+idnhanvien+"");
+                        '
+                    ]
+                )?>
+            </div>
+          <?php ActiveForm::end(); ?>
+        </div>
     </div>
-  </div>
 </div>

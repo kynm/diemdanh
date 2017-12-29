@@ -130,3 +130,23 @@ $.ajax({
                 </div>    
             </div>
              -->
+
+
+// 'template' => '{view}{update}{delete}',
+// 'button' => [
+
+// ]
+// 'urlCreator' => function ($action, $model, $key, $index) {
+//     if ($action === 'view') {
+//         $url ='index.php?r=tramvt/view&id='.$model->ID_TRAMVT;
+//         return $url;
+//     }
+//     if ($action === 'update') {
+//         $url ='index.php?r=tramvt/update&id='.$model->ID_TRAMVT;
+//         return $url;
+//     }
+//     if ($action === 'delete') {
+//         $url ='index.php?r=tramvt/delete&id='.$model->ID_TRAMVT;
+//         return $url;
+//     }
+// }
