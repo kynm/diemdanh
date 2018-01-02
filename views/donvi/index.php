@@ -32,7 +32,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'model' => $model,
             ]);
             Modal::end(); 
-            //Html::a('Thêm đơn vị chủ quản', ['create'], ['class' => 'btn btn-success']) ?>
+            //Html::a('Thêm đơn vị chủ quản', ['create'], ['class' => 'btn btn-success']) 
+        ?>
     </p>
 <?php Pjax::begin(); ?>    <?= GridView::widget([
         'dataProvider' => $dataProvider,

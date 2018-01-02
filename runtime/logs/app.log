@@ -48021,3 +48021,519 @@ $_SERVER = [
     'REQUEST_TIME_FLOAT' => 1514540310.492
     'REQUEST_TIME' => 1514540310
 ]
+2018-01-02 03:39:26 [::1][1][8501f8lcvo0r3rjl1s25v7asi5][error][yii\base\ErrorException:8] yii\base\ErrorException: Undefined variable: content in /var/www/html/baotrinhatram/views/layouts/content.php:26
+Stack trace:
+#0 /var/www/html/baotrinhatram/views/layouts/content.php(26): yii\base\ErrorHandler->handleError(8, 'Undefined varia...', '/var/www/html/b...', 26, Array)
+#1 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/View.php(332): require('/var/www/html/b...')
+#2 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/View.php(250): yii\base\View->renderPhpFile('/var/www/html/b...', Array)
+#3 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/View.php(152): yii\base\View->renderFile('/var/www/html/b...', Array, NULL)
+#4 /var/www/html/baotrinhatram/views/layouts/main.php(30): yii\base\View->render('content', Array)
+#5 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/View.php(332): require('/var/www/html/b...')
+#6 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/View.php(250): yii\base\View->renderPhpFile('/var/www/html/b...', Array)
+#7 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(399): yii\base\View->renderFile('/var/www/html/b...', Array, Object(app\controllers\SiteController))
+#8 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(385): yii\base\Controller->renderContent('<div class="sit...')
+#9 /var/www/html/baotrinhatram/controllers/SiteController.php(67): yii\base\Controller->render('index')
+#10 [internal function]: app\controllers\SiteController->actionIndex()
+#11 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#12 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#13 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('', Array)
+#14 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('', Array)
+#15 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#16 /var/www/html/baotrinhatram/web/index.php(12): yii\base\Application->run()
+#17 {main}
+2018-01-02 03:39:26 [::1][1][8501f8lcvo0r3rjl1s25v7asi5][info][application] $_COOKIE = [
+    '_identity' => 'eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba:2:{i:0;s:9:\"_identity\";i:1;s:46:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",2592000]\";}'
+    'PHPSESSID' => 'v9ipip4srsjannso8ss3bb5sl7'
+    '_csrf' => '553dcc59d3657ca66c1b5fe28209a0ff3717713ceaea8509a8741c53650728aca:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"rÞC*0ÖxÆvŒÛ¨DÖ’J+}d>N‹<yÈÑ²²\";}'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 1
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_REFERER' => 'http://localhost/baotrinhatram/web/index.php?r=nhanvien%2Fcreate'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'HTTP_COOKIE' => '_identity=eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C2592000%5D%22%3B%7D; PHPSESSID=v9ipip4srsjannso8ss3bb5sl7; _csrf=553dcc59d3657ca66c1b5fe28209a0ff3717713ceaea8509a8741c53650728aca%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22%0Br%DEC%2A0%10%1F%D6x%C6v%8C%DB%A8D%D6%92J%2B%7Dd%3EN%8B%3Cy%C8%D1%0D%B2%B2%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.18 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.18 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www/html'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/html/baotrinhatram/web/index.php'
+    'REMOTE_PORT' => '60402'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/baotrinhatram/web/index.php'
+    'SCRIPT_NAME' => '/baotrinhatram/web/index.php'
+    'PHP_SELF' => '/baotrinhatram/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1514864366.086
+    'REQUEST_TIME' => 1514864366
+]
+2018-01-02 06:41:36 [::1][1][69m1g6t97m51fs5b7f5fdji3m5][error][Error] Error: Call to undefined function string_to_time() in /var/www/html/baotrinhatram/views/site/index.php:96
+Stack trace:
+#0 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/View.php(332): require()
+#1 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/View.php(250): yii\base\View->renderPhpFile('/var/www/html/b...', Array)
+#2 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/View.php(152): yii\base\View->renderFile('/var/www/html/b...', Array, Object(app\controllers\SiteController))
+#3 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(384): yii\base\View->render('index', Array, Object(app\controllers\SiteController))
+#4 /var/www/html/baotrinhatram/controllers/SiteController.php(67): yii\base\Controller->render('index')
+#5 [internal function]: app\controllers\SiteController->actionIndex()
+#6 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#7 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#8 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('', Array)
+#9 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('', Array)
+#10 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#11 /var/www/html/baotrinhatram/web/index.php(12): yii\base\Application->run()
+#12 {main}
+2018-01-02 06:41:36 [::1][1][69m1g6t97m51fs5b7f5fdji3m5][info][application] $_COOKIE = [
+    '_identity' => 'eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba:2:{i:0;s:9:\"_identity\";i:1;s:46:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",2592000]\";}'
+    '_csrf' => 'fb8c1056cc4f47ab600c7e79ccc1552625f8494095edbfa4a80135ec3ec35fc2a:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"tumpisDa_lJvGdw3GQAX_kv7TJ95pUXx\";}'
+    'PHPSESSID' => '69m1g6t97m51fs5b7f5fdji3m5'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 1
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_REFERER' => 'http://localhost/baotrinhatram/web/index.php?r=nhanvien%2Fcreate'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'HTTP_COOKIE' => '_identity=eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C2592000%5D%22%3B%7D; _csrf=fb8c1056cc4f47ab600c7e79ccc1552625f8494095edbfa4a80135ec3ec35fc2a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22tumpisDa_lJvGdw3GQAX_kv7TJ95pUXx%22%3B%7D; PHPSESSID=69m1g6t97m51fs5b7f5fdji3m5'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.18 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.18 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www/html'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/html/baotrinhatram/web/index.php'
+    'REMOTE_PORT' => '36160'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/baotrinhatram/web/index.php'
+    'SCRIPT_NAME' => '/baotrinhatram/web/index.php'
+    'PHP_SELF' => '/baotrinhatram/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1514875296.761
+    'REQUEST_TIME' => 1514875296
+]
+2018-01-02 07:08:21 [::1][1][69m1g6t97m51fs5b7f5fdji3m5][error][Error] Error: Class 'Url' not found in /var/www/html/baotrinhatram/views/layouts/sidebar.php:36
+Stack trace:
+#0 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/View.php(332): require()
+#1 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/View.php(250): yii\base\View->renderPhpFile('/var/www/html/b...', Array)
+#2 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/View.php(152): yii\base\View->renderFile('/var/www/html/b...', Array, NULL)
+#3 /var/www/html/baotrinhatram/views/layouts/main.php(31): yii\base\View->render('sidebar', Array)
+#4 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/View.php(332): require('/var/www/html/b...')
+#5 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/View.php(250): yii\base\View->renderPhpFile('/var/www/html/b...', Array)
+#6 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(399): yii\base\View->renderFile('/var/www/html/b...', Array, Object(app\controllers\SiteController))
+#7 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(385): yii\base\Controller->renderContent('<div class="sit...')
+#8 /var/www/html/baotrinhatram/controllers/SiteController.php(67): yii\base\Controller->render('index')
+#9 [internal function]: app\controllers\SiteController->actionIndex()
+#10 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#11 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#12 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('', Array)
+#13 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('', Array)
+#14 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#15 /var/www/html/baotrinhatram/web/index.php(12): yii\base\Application->run()
+#16 {main}
+2018-01-02 07:08:21 [::1][1][69m1g6t97m51fs5b7f5fdji3m5][info][application] $_COOKIE = [
+    '_identity' => 'eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba:2:{i:0;s:9:\"_identity\";i:1;s:46:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",2592000]\";}'
+    '_csrf' => 'fb8c1056cc4f47ab600c7e79ccc1552625f8494095edbfa4a80135ec3ec35fc2a:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"tumpisDa_lJvGdw3GQAX_kv7TJ95pUXx\";}'
+    'PHPSESSID' => '69m1g6t97m51fs5b7f5fdji3m5'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 1
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_REFERER' => 'http://localhost/baotrinhatram/web/index.php?r=nhanvien%2Fcreate'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'HTTP_COOKIE' => '_identity=eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C2592000%5D%22%3B%7D; _csrf=fb8c1056cc4f47ab600c7e79ccc1552625f8494095edbfa4a80135ec3ec35fc2a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22tumpisDa_lJvGdw3GQAX_kv7TJ95pUXx%22%3B%7D; PHPSESSID=69m1g6t97m51fs5b7f5fdji3m5'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.18 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.18 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www/html'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/html/baotrinhatram/web/index.php'
+    'REMOTE_PORT' => '49318'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/baotrinhatram/web/index.php'
+    'SCRIPT_NAME' => '/baotrinhatram/web/index.php'
+    'PHP_SELF' => '/baotrinhatram/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1514876901.508
+    'REQUEST_TIME' => 1514876901
+]
+2018-01-02 10:48:30 [::1][1][prvuk9mjn7nm3kfa7arjqnt0d3][error][ParseError] ParseError: syntax error, unexpected ''á»§e/'' (T_CONSTANT_ENCAPSED_STRING), expecting ',' or ')' in /var/www/html/baotrinhatram/views/layouts/header.php:66
+Stack trace:
+#0 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/View.php(250): yii\base\View->renderPhpFile('/var/www/html/b...', Array)
+#1 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/View.php(152): yii\base\View->renderFile('/var/www/html/b...', Array, NULL)
+#2 /var/www/html/baotrinhatram/views/layouts/main.php(30): yii\base\View->render('header', Array)
+#3 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/View.php(332): require('/var/www/html/b...')
+#4 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/View.php(250): yii\base\View->renderPhpFile('/var/www/html/b...', Array)
+#5 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(399): yii\base\View->renderFile('/var/www/html/b...', Array, Object(app\controllers\NhanvienController))
+#6 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(385): yii\base\Controller->renderContent('<div class="nha...')
+#7 /var/www/html/baotrinhatram/controllers/NhanvienController.php(43): yii\base\Controller->render('index', Array)
+#8 [internal function]: app\controllers\NhanvienController->actionIndex()
+#9 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#10 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#11 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('index', Array)
+#12 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('nhanvien/index', Array)
+#13 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#14 /var/www/html/baotrinhatram/web/index.php(12): yii\base\Application->run()
+#15 {main}
+2018-01-02 10:48:30 [::1][1][prvuk9mjn7nm3kfa7arjqnt0d3][info][application] $_GET = [
+    'r' => 'nhanvien/index'
+]
+
+$_COOKIE = [
+    '_identity' => 'eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba:2:{i:0;s:9:\"_identity\";i:1;s:46:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",2592000]\";}'
+    '_csrf' => '3f16258569dcb0e6ff84fe45945c16696bc85055d0e32ce1bced1c9115e6ac8fa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"_hO5brmCEERv2yrMqLymRajdmeRqohyK\";}'
+    'PHPSESSID' => 'prvuk9mjn7nm3kfa7arjqnt0d3'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 1
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_REFERER' => 'http://localhost/baotrinhatram/web/index.php?r=nhanvien%2Findex'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'HTTP_COOKIE' => '_identity=eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C2592000%5D%22%3B%7D; _csrf=3f16258569dcb0e6ff84fe45945c16696bc85055d0e32ce1bced1c9115e6ac8fa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22_hO5brmCEERv2yrMqLymRajdmeRqohyK%22%3B%7D; PHPSESSID=prvuk9mjn7nm3kfa7arjqnt0d3'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.18 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.18 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www/html'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/html/baotrinhatram/web/index.php'
+    'REMOTE_PORT' => '43310'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'r=nhanvien%2Findex'
+    'REQUEST_URI' => '/baotrinhatram/web/index.php?r=nhanvien%2Findex'
+    'SCRIPT_NAME' => '/baotrinhatram/web/index.php'
+    'PHP_SELF' => '/baotrinhatram/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1514890110.137
+    'REQUEST_TIME' => 1514890110
+]
+2018-01-02 10:49:10 [::1][1][prvuk9mjn7nm3kfa7arjqnt0d3][error][Error] Error: Class 'Url' not found in /var/www/html/baotrinhatram/views/layouts/header.php:66
+Stack trace:
+#0 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/View.php(332): require()
+#1 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/View.php(250): yii\base\View->renderPhpFile('/var/www/html/b...', Array)
+#2 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/View.php(152): yii\base\View->renderFile('/var/www/html/b...', Array, NULL)
+#3 /var/www/html/baotrinhatram/views/layouts/main.php(30): yii\base\View->render('header', Array)
+#4 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/View.php(332): require('/var/www/html/b...')
+#5 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/View.php(250): yii\base\View->renderPhpFile('/var/www/html/b...', Array)
+#6 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(399): yii\base\View->renderFile('/var/www/html/b...', Array, Object(app\controllers\NhanvienController))
+#7 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(385): yii\base\Controller->renderContent('<div class="nha...')
+#8 /var/www/html/baotrinhatram/controllers/NhanvienController.php(43): yii\base\Controller->render('index', Array)
+#9 [internal function]: app\controllers\NhanvienController->actionIndex()
+#10 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#11 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#12 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('index', Array)
+#13 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('nhanvien/index', Array)
+#14 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#15 /var/www/html/baotrinhatram/web/index.php(12): yii\base\Application->run()
+#16 {main}
+2018-01-02 10:49:10 [::1][1][prvuk9mjn7nm3kfa7arjqnt0d3][info][application] $_GET = [
+    'r' => 'nhanvien/index'
+]
+
+$_COOKIE = [
+    '_identity' => 'eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba:2:{i:0;s:9:\"_identity\";i:1;s:46:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",2592000]\";}'
+    '_csrf' => '3f16258569dcb0e6ff84fe45945c16696bc85055d0e32ce1bced1c9115e6ac8fa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"_hO5brmCEERv2yrMqLymRajdmeRqohyK\";}'
+    'PHPSESSID' => 'prvuk9mjn7nm3kfa7arjqnt0d3'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 1
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_REFERER' => 'http://localhost/baotrinhatram/web/index.php?r=nhanvien%2Findex'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'HTTP_COOKIE' => '_identity=eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C2592000%5D%22%3B%7D; _csrf=3f16258569dcb0e6ff84fe45945c16696bc85055d0e32ce1bced1c9115e6ac8fa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22_hO5brmCEERv2yrMqLymRajdmeRqohyK%22%3B%7D; PHPSESSID=prvuk9mjn7nm3kfa7arjqnt0d3'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.18 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.18 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www/html'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/html/baotrinhatram/web/index.php'
+    'REMOTE_PORT' => '43638'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'r=nhanvien%2Findex'
+    'REQUEST_URI' => '/baotrinhatram/web/index.php?r=nhanvien%2Findex'
+    'SCRIPT_NAME' => '/baotrinhatram/web/index.php'
+    'PHP_SELF' => '/baotrinhatram/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1514890150.14
+    'REQUEST_TIME' => 1514890150
+]
+2018-01-02 11:10:53 [::1][1][prvuk9mjn7nm3kfa7arjqnt0d3][error][yii\base\ViewNotFoundException] yii\base\ViewNotFoundException: The view file does not exist: /var/www/html/baotrinhatram/views/layouts/main.php in /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/View.php:229
+Stack trace:
+#0 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(399): yii\base\View->renderFile('/var/www/html/b...', Array, Object(app\controllers\DotbaoduongController))
+#1 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(385): yii\base\Controller->renderContent('<div class="dot...')
+#2 /var/www/html/baotrinhatram/controllers/DotbaoduongController.php(152): yii\base\Controller->render('kehoach', Array)
+#3 [internal function]: app\controllers\DotbaoduongController->actionKehoach('4')
+#4 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#5 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#6 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('kehoach', Array)
+#7 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('dotbaoduong/keh...', Array)
+#8 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#9 /var/www/html/baotrinhatram/web/index.php(12): yii\base\Application->run()
+#10 {main}
+2018-01-02 11:10:53 [::1][1][prvuk9mjn7nm3kfa7arjqnt0d3][info][application] $_GET = [
+    'r' => 'dotbaoduong/kehoach'
+    'id' => '4'
+]
+
+$_COOKIE = [
+    '_identity' => 'eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba:2:{i:0;s:9:\"_identity\";i:1;s:46:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",2592000]\";}'
+    '_csrf' => '3f16258569dcb0e6ff84fe45945c16696bc85055d0e32ce1bced1c9115e6ac8fa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"_hO5brmCEERv2yrMqLymRajdmeRqohyK\";}'
+    'PHPSESSID' => 'prvuk9mjn7nm3kfa7arjqnt0d3'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 1
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_REFERER' => 'http://localhost/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=4'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'HTTP_COOKIE' => '_identity=eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C2592000%5D%22%3B%7D; _csrf=3f16258569dcb0e6ff84fe45945c16696bc85055d0e32ce1bced1c9115e6ac8fa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22_hO5brmCEERv2yrMqLymRajdmeRqohyK%22%3B%7D; PHPSESSID=prvuk9mjn7nm3kfa7arjqnt0d3'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.18 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.18 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www/html'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/html/baotrinhatram/web/index.php'
+    'REMOTE_PORT' => '54320'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'r=dotbaoduong/kehoach&id=4'
+    'REQUEST_URI' => '/baotrinhatram/web/index.php?r=dotbaoduong/kehoach&id=4'
+    'SCRIPT_NAME' => '/baotrinhatram/web/index.php'
+    'PHP_SELF' => '/baotrinhatram/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1514891453.289
+    'REQUEST_TIME' => 1514891453
+]
+2018-01-02 11:43:33 [::1][1][prvuk9mjn7nm3kfa7arjqnt0d3][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request "nhanvien/dist/img/logo_small.png". in /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php:537
+Stack trace:
+#0 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('nhanvien/dist/i...', Array)
+#1 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#2 /var/www/html/baotrinhatram/web/index.php(12): yii\base\Application->run()
+#3 {main}
+
+Next yii\web\NotFoundHttpException: Page not found. in /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /var/www/html/baotrinhatram/web/index.php(12): yii\base\Application->run()
+#2 {main}
+2018-01-02 11:43:33 [::1][1][prvuk9mjn7nm3kfa7arjqnt0d3][info][application] $_COOKIE = [
+    '_identity' => 'eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba:2:{i:0;s:9:\"_identity\";i:1;s:46:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",2592000]\";}'
+    '_csrf' => '3f16258569dcb0e6ff84fe45945c16696bc85055d0e32ce1bced1c9115e6ac8fa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"_hO5brmCEERv2yrMqLymRajdmeRqohyK\";}'
+    'PHPSESSID' => 'prvuk9mjn7nm3kfa7arjqnt0d3'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 1
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36'
+    'HTTP_ACCEPT' => 'image/webp,image/apng,image/*,*/*;q=0.8'
+    'HTTP_REFERER' => 'http://localhost/baotrinhatram/web/index.php/nhanvien/index'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'HTTP_COOKIE' => '_identity=eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C2592000%5D%22%3B%7D; _csrf=3f16258569dcb0e6ff84fe45945c16696bc85055d0e32ce1bced1c9115e6ac8fa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22_hO5brmCEERv2yrMqLymRajdmeRqohyK%22%3B%7D; PHPSESSID=prvuk9mjn7nm3kfa7arjqnt0d3'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.18 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.18 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www/html'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/html/baotrinhatram/web/index.php'
+    'REMOTE_PORT' => '36456'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/baotrinhatram/web/index.php/nhanvien/dist/img/logo_small.png'
+    'SCRIPT_NAME' => '/baotrinhatram/web/index.php'
+    'PATH_INFO' => '/nhanvien/dist/img/logo_small.png'
+    'PATH_TRANSLATED' => '/var/www/html/nhanvien/dist/img/logo_small.png'
+    'PHP_SELF' => '/baotrinhatram/web/index.php/nhanvien/dist/img/logo_small.png'
+    'REQUEST_TIME_FLOAT' => 1514893413.733
+    'REQUEST_TIME' => 1514893413
+]
+2018-01-02 11:43:33 [::1][1][prvuk9mjn7nm3kfa7arjqnt0d3][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request "nhanvien/dist/img/default_picture.png". in /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Module.php:537
+Stack trace:
+#0 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('nhanvien/dist/i...', Array)
+#1 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#2 /var/www/html/baotrinhatram/web/index.php(12): yii\base\Application->run()
+#3 {main}
+
+Next yii\web\NotFoundHttpException: Page not found. in /var/www/html/baotrinhatram/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /var/www/html/baotrinhatram/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /var/www/html/baotrinhatram/web/index.php(12): yii\base\Application->run()
+#2 {main}
+2018-01-02 11:43:33 [::1][1][prvuk9mjn7nm3kfa7arjqnt0d3][info][application] $_COOKIE = [
+    '_identity' => 'eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba:2:{i:0;s:9:\"_identity\";i:1;s:46:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",2592000]\";}'
+    '_csrf' => '3f16258569dcb0e6ff84fe45945c16696bc85055d0e32ce1bced1c9115e6ac8fa:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"_hO5brmCEERv2yrMqLymRajdmeRqohyK\";}'
+    'PHPSESSID' => 'prvuk9mjn7nm3kfa7arjqnt0d3'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 1
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36'
+    'HTTP_ACCEPT' => 'image/webp,image/apng,image/*,*/*;q=0.8'
+    'HTTP_REFERER' => 'http://localhost/baotrinhatram/web/index.php/nhanvien/index'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'HTTP_COOKIE' => '_identity=eb53febdbe15c9c2eedbc32b55d3cbbf0a7be53c6f2fe4626a303a729e37587ba%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C2592000%5D%22%3B%7D; _csrf=3f16258569dcb0e6ff84fe45945c16696bc85055d0e32ce1bced1c9115e6ac8fa%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22_hO5brmCEERv2yrMqLymRajdmeRqohyK%22%3B%7D; PHPSESSID=prvuk9mjn7nm3kfa7arjqnt0d3'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.18 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.18 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www/html'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/html/baotrinhatram/web/index.php'
+    'REMOTE_PORT' => '36458'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/baotrinhatram/web/index.php/nhanvien/dist/img/default_picture.png'
+    'SCRIPT_NAME' => '/baotrinhatram/web/index.php'
+    'PATH_INFO' => '/nhanvien/dist/img/default_picture.png'
+    'PATH_TRANSLATED' => '/var/www/html/nhanvien/dist/img/default_picture.png'
+    'PHP_SELF' => '/baotrinhatram/web/index.php/nhanvien/dist/img/default_picture.png'
+    'REQUEST_TIME_FLOAT' => 1514893413.733
+    'REQUEST_TIME' => 1514893413
+]

@@ -32,9 +32,9 @@ DashboardAsset::register($this);
         <!-- Logo -->
         <a href="index.php" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><b>V</b>NPT</span>
+          <span class="logo-mini"><i><img src="dist/img/logo_small.png" alt="logo"></i></span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>VNPT</b>MDs</span>
+          <span class="logo-lg"><i style="float: left"><img src="dist/img/logo_small.png" alt="logo"></i> <b>VNPT</b>MDs</span>
         </a>
 
         <!-- Header Navbar -->
@@ -211,11 +211,14 @@ DashboardAsset::register($this);
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-          
-          <ol class="breadcrumb">
-            <li><a href="<?= Url::to(['site/index']) ?>"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active"><?= $this->title ?></li>
-          </ol>
+            <h1>
+            <?= $this->title ?>
+            <!-- <small>Description</small> -->
+            </h1>
+
+            <?= Breadcrumbs::widget([
+                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+            ]) ?>
         </section>
 
         <!-- Main content -->
@@ -223,6 +226,7 @@ DashboardAsset::register($this);
             <?= $content ?>
         </section>
     </div>
+    <?= $this->render('footer') ?>
 </div>
 
 <?php $this->endBody() ?>

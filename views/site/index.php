@@ -3,6 +3,7 @@
 /* @var $this yii\web\View */
 
 $this->title = 'My Yii Application';
+date_default_timezone_set('Asia/Ho_Chi_Minh');
 ?>
 <div class="site-index" style="margin-top: 15px ">
 
@@ -15,10 +16,10 @@ $this->title = 'My Yii Application';
             <div class="inner">
               <h3>150</h3>
 
-              <p>New Orders</p>
+              <p>Trạm BTS</p>
             </div>
             <div class="icon">
-              <i class="fa fa-shopping-bag"></i>
+              <i class="fa fa-map-marker"></i>
             </div>
             <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
@@ -30,7 +31,7 @@ $this->title = 'My Yii Application';
             <div class="inner">
               <h3>53<sup style="font-size: 20px">%</sup></h3>
 
-              <p>Bounce Rate</p>
+              <p>Kế hoạch</p>
             </div>
             <div class="icon">
               <i class="fa fa-bar-chart"></i>
@@ -45,7 +46,7 @@ $this->title = 'My Yii Application';
             <div class="inner">
               <h3>44</h3>
 
-              <p>User Registrations</p>
+              <p>Nhân viên</p>
             </div>
             <div class="icon">
               <i class="fa fa-user-plus"></i>
@@ -60,7 +61,7 @@ $this->title = 'My Yii Application';
             <div class="inner">
               <h3>65</h3>
 
-              <p>Unique Visitors</p>
+              <p>Tình trạng</p>
             </div>
             <div class="icon">
               <i class="fa fa-pie-chart"></i>
@@ -71,120 +72,112 @@ $this->title = 'My Yii Application';
         <!-- ./col -->
       </div>
       <!-- /.row -->
+      <!-- Recently Actions -->
+      <div class="row">
+          <div class="col-lg-8">
+            <div class="box box-primary">
+              <div class="box-header with-border">
+                <h3 class="box-title">Hoạt động gần đây</h3>
 
-        <div class="row">
-            <div class="col-lg-8">
-                <h2>Recently action</h2>
-                <ul class="timeline">
-                    <li>
-                      <div class="timeline-badge"><i class="fa fa-user-plus" aria-hidden="true"></i></div>
-                      <div class="timeline-panel">
-                        <div class="timeline-heading">
-                          <h4 class="timeline-title">Add User</h4>              
-                        </div>
-                        <div class="timeline-body">
-                            <p><strong>User1000</strong> has been added by <strong>Admin</strong></p>
-                                                                
-                        </div>
-                      </div>
-                    </li>
-                    <li class="timeline-inverted">
-                      <div class="timeline-badge warning"><i class="glyphicon glyphicon-credit-card"></i></div>
-                      <div class="timeline-panel">
-                        <div class="timeline-heading">
-                          <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-                        </div>
-                        <div class="timeline-body">
-                            
-                            <p>A flexible and secure user administration suite that lets you define different roles and control access of functions across the web app and mobile app. Default roles are admin, passengers & routes.</p>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="timeline-badge danger"><i class="glyphicon glyphicon-credit-card"></i></div>
-                      <div class="timeline-panel">
-                        <div class="timeline-heading">
-                          <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-                        </div>
-                        <div class="timeline-body">
-                            <p><u>Reports</u></p>
-                            <p>A comprehensive reports suite that helps you analyse the functioning of your fleet. Broad classification of reports are</p>
-                                                
-                        </div>
-                      </div>
-                    </li>
-                    <li class="timeline-inverted">
-                      <div class="timeline-badge warning"><i class="glyphicon glyphicon-credit-card"></i></div>
-                      <div class="timeline-panel">
-                        <div class="timeline-heading">
-                          <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-                              <img src="http://pugmarktech.com/imgs/pugmark_feeder_app.png" class="img-responsive" alt="Cinque Terre">
-                              
-                        </div>
-                        <div class="timeline-body">
-                            <p>nothing</p>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="timeline-badge info"><i class="glyphicon glyphicon-floppy-disk"></i></div>
-                      <div class="timeline-panel">
-                        <div class="timeline-heading">
-                          <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-                        </div>
-                        <div class="timeline-body">
-                         <h1>
-                        Tracker</h1>
-                    <p>
-                         </p>
-                    <p>
-                        Trackers can track the following information on a dashboard</p>
-                  
-                          <hr>
-                      
-                        </div>
-                      </div>
-                    </li>
-               
-                    <li class="timeline-inverted">
-                      <div class="timeline-badge success"><i class="glyphicon glyphicon-thumbs-up"></i></div>
-                      <div class="timeline-panel">
-                        <div class="timeline-heading">
-                          <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-                           <img src="http://pugmarktech.com/imgs/pugmark_tracker_settings.png" class="img-responsive" alt="Cinque Terre">
-                        </div>
-                        <div class="timeline-body">
-                         <p>
-                        Automatic notifications can be configured as below</p>
-                    <ul>
-                        <li style="margin-left: 36pt;">
-                            Notification mode : SMS ,App notification, Both</li>
-                        <li style="margin-left: 36pt;">
-                            Notifications X kms prior to pick up and drop off from/to home location</li>
-                        <li style="margin-left: 36pt;">
-                            Notification on trip start and completion</li>
-                    </ul>
-                    <p>
-                        Android users can download the Pugmark android app, non-android users can view the same information on the responsive web app through a browser.</p>
-                        </div>
-                      </div>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-lg-4">
-              <div class="box box-primary">
-                <h2 class="box-title">Heading</h2>
-                <div class="box-body">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                      dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                      ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                      fugiat nulla pariatur.</p>
-
-                  <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-                </div>                
+                <div class="box-tools pull-right">
+                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                </div>
               </div>
+              <!-- /.box-header -->
+              <div class="box-body">
+                <ul class="products-list product-list-in-box">
+                  <li class="item">
+                    <div class="product-img">
+                      <img src="dist/img/default-50x50.gif" alt="Product Image">
+                    </div>
+                    <div class="product-info">
+                      <a href="javascript:void(0)" class="product-title"><i class="fa fa-user-plus"></i> Thêm nhân viên
+                        <span class="label label-info pull-right"><?= date('d/m/y H:m:s', time()); ?></span></a>
+                      <span class="product-description">
+                            <b>Admin</b>. đã thêm nhân viên mới - <b>User 001</b>
+                          </span>
+                    </div>
+                  </li>
+                  <!-- /.item -->
+                  <li class="item">
+                    <div class="product-img">
+                      <img src="dist/img/default-50x50.gif" alt="Product Image">
+                    </div>
+                    <div class="product-info">
+                      <a href="javascript:void(0)" class="product-title"><i class="fa fa-list-ol"></i> Lên kế hoạch
+                        <span class="label label-info pull-right"><?= date('d/m/y H:m:s', time()); ?></span></a>
+                      <span class="product-description">
+                            <b>Admin</b>. đã lên kế hoạch bảo dưỡng - <b>NT001-Q4</b>
+                          </span>
+                    </div>
+                  </li>
+                  <!-- /.item -->
+                  <li class="item">
+                    <div class="product-img">
+                      <img src="dist/img/default-50x50.gif" alt="Product Image">
+                    </div>
+                    <div class="product-info">
+                      <a href="javascript:void(0)" class="product-title">Xbox One <span
+                          class="label label-danger pull-right">$350</span></a>
+                      <span class="product-description">
+                            Xbox One Console Bundle with Halo Master Chief Collection.
+                          </span>
+                    </div>
+                  </li>
+                  <!-- /.item -->
+                  <li class="item">
+                    <div class="product-img">
+                      <img src="dist/img/default-50x50.gif" alt="Product Image">
+                    </div>
+                    <div class="product-info">
+                      <a href="javascript:void(0)" class="product-title">PlayStation 4
+                        <span class="label label-success pull-right">$399</span></a>
+                      <span class="product-description">
+                            PlayStation 4 500GB Console (PS4)
+                          </span>
+                    </div>
+                  </li>
+                  <!-- /.item -->
+                </ul>
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer text-center">
+                <a href="javascript:void(0)" class="uppercase">View All Products</a>
+              </div>
+              <!-- /.box-footer -->
             </div>
-        </div>
+            <!-- /.box -->
+          </div>
+          <div class="col-lg-4">
+            <!-- Calendar -->
+            <div class="box box-solid bg-green-gradient">
+              <div class="box-header">
+                <i class="fa fa-calendar"></i>
+
+                <h3 class="box-title">Calendar</h3>
+                <!-- tools box -->
+                <div class="pull-right box-tools">
+                  
+                  <button type="button" class="btn btn-success btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-success btn-sm" data-widget="remove"><i class="fa fa-times"></i>
+                  </button>
+                </div>
+                <!-- /. tools -->
+              </div>
+              <!-- /.box-header -->
+              <div class="box-body no-padding">
+                <!--The calendar -->
+                <div id="calendar" style="width: 100%"></div>
+              </div>
+              <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+          </div>
+      </div>
 
     </div>
 </div>
+<?php $this->registerJS("$('#calendar').datepicker();") ?>
