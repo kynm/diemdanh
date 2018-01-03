@@ -43,7 +43,7 @@ use app\models\Noidungbaotri;
     </div>
 
     <div class="form-group">
-        <?= Html::submitButton('Create', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Create', ['class' => 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

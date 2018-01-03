@@ -11,6 +11,7 @@ use app\models\Thuchienbd;
 use app\models\ThuchienbdSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Json;
 
@@ -76,17 +77,22 @@ class DotbaoduongController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Dotbaoduong();
+        if (Yii::$app->user->can('create-dbd')) {
+            # code...
+            $model = new Dotbaoduong();
 
-        if ($model->load(Yii::$app->request->post())) {
-            // print_r($model);
-            // die;
-            $model->save(false);
-            return $this->redirect(['view', 'id' => $model->ID_DOTBD]);
+            if ($model->load(Yii::$app->request->post())) {
+                // print_r($model);
+                // die;
+                $model->save(false);
+                return $this->redirect(['view', 'id' => $model->ID_DOTBD]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
         } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            throw new ForbiddenHttpException;
         }
     }
 

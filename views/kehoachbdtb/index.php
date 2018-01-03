@@ -12,9 +12,9 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="kehoachbdtb-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    
     <p>
-        <?= Html::a('Thêm đợt bảo dưỡng', ['dotbaoduong/create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Thêm đợt bảo dưỡng', ['dotbaoduong/create'], ['class' => 'btn btn-primary']) ?>
     </p>
 
 <?php Pjax::begin(); ?>    <?= GridView::widget([

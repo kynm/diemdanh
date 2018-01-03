@@ -12,8 +12,6 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="dexuatnoidung-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
         <?= Html::a('Update', ['update', 'ID_LOAITB' => $model->ID_LOAITB, 'LAN_BD' => $model->LAN_BD, 'MA_NOIDUNG' => $model->MA_NOIDUNG], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'ID_LOAITB' => $model->ID_LOAITB, 'LAN_BD' => $model->LAN_BD, 'MA_NOIDUNG' => $model->MA_NOIDUNG], [

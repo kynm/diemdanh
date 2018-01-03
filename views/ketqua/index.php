@@ -11,10 +11,6 @@ $this->title = 'Ketquas';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="ketqua-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
 <?php Pjax::begin(); ?>    <?= GridView::widget([
         'dataProvider' => $dataProvider,
         // 'filterModel' => $searchModel,

@@ -12,11 +12,8 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="nhomtbi-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
     <p>
-        <?= Html::a('Thêm nhóm thiết bị mới', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Thêm nhóm thiết bị mới', ['create'], ['class' => 'btn btn-primary']) ?>
     </p>
 <?php Pjax::begin(); ?>    <?= GridView::widget([
         'dataProvider' => $dataProvider,

@@ -2,7 +2,7 @@
 	<div class="pull-right hidden-xs">
 	    <span class="pull-right" ><b>Phiên bản</b> 1.0</span>
 	</div>
-    <strong>&copy; 2014-<span id="ctl00_lblCurrentYear" style="font-weight:bold;">2018</span>, <a>VNPT QUẢNG NAM, TRUNG TÂM CNTT</a></strong>
+    <strong><a>VNPT QUẢNG NAM, TRUNG TÂM CNTT</a> &copy; <?= date('Y', time()); ?></strong>
     <br>
    	Địa chỉ: 02A, Phan Bội Châu, p. Tân Thạnh, tp. Tam Kỳ, Quảng Nam 
    	<br>

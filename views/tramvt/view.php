@@ -20,14 +20,14 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="tramvt-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    
 
     <p>
         <?= Html::a(
             '<i class="glyphicon glyphicon-plus"></i> Thêm thiết bị', 
             '#', 
             [
-                'class'=>'btn btn-success',
+                'class'=>'btn btn-primary',
                 'data-toggle' => 'modal',
                 'data-target' => '#themNoiDung',
             ]

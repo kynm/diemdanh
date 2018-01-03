@@ -16,6 +16,8 @@ DashboardAsset::register($this);
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
 <head>
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     <meta charset="<?= Yii::$app->charset ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -201,8 +203,7 @@ DashboardAsset::register($this);
             <li class="<?= ($this->title == 'Đề xuất nội dung') ? 'active' : '' ?>"><a href="<?= Url::to(['dexuatnoidung/index']) ?>"><i class="fa fa-list-alt"></i> <span>Đề xuất nội dung</span></a></li>
               </ul>
             </li>            
-            
-          </ul>
+            </ul>
           <!-- /.sidebar-menu -->
         </section>
         <!-- /.sidebar -->

@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="dotbaoduong-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    
 
     <p class="form-inline">
         <div class="form-group col-md-3">
@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
             '<i class="glyphicon glyphicon-plus"></i> Thêm nội dung', 
             '#', 
             [
-                'class'=>'btn btn-success',
+                'class'=>'btn btn-primary',
                 'data-toggle' => 'modal',
                 'data-target' => '#themNoiDung',
             ]

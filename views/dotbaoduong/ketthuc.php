@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="dotbaoduong-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    
 
     <p class="form-inline">
         <div class="form-group col-md-3 col-sm-6">

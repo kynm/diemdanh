@@ -15,8 +15,8 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="donvi-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    
+    
 
     <p>
         <?php
@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'model' => $model,
             ]);
             Modal::end(); 
-            //Html::a('Thêm đơn vị chủ quản', ['create'], ['class' => 'btn btn-success']) 
+            //Html::a('Thêm đơn vị chủ quản', ['create'], ['class' => 'btn btn-primary']) 
         ?>
     </p>
 <?php Pjax::begin(); ?>    <?= GridView::widget([

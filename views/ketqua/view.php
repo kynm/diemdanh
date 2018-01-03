@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="ketqua-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    
 
     <div class="ketqua-form">
         

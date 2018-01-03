@@ -2,7 +2,7 @@
 
 /* @var $this yii\web\View */
 
-$this->title = 'My Yii Application';
+$this->title = 'Dashboard';
 date_default_timezone_set('Asia/Ho_Chi_Minh');
 ?>
 <div class="site-index" style="margin-top: 15px ">
@@ -152,7 +152,7 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
           </div>
           <div class="col-lg-4">
             <!-- Calendar -->
-            <div class="box box-solid bg-green-gradient">
+            <div class="box box-solid bg-blue-gradient">
               <div class="box-header">
                 <i class="fa fa-calendar"></i>
 
@@ -160,9 +160,9 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
                 <!-- tools box -->
                 <div class="pull-right box-tools">
                   
-                  <button type="button" class="btn btn-success btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
+                  <button type="button" class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
                   </button>
-                  <button type="button" class="btn btn-success btn-sm" data-widget="remove"><i class="fa fa-times"></i>
+                  <button type="button" class="btn btn-default btn-sm" data-widget="remove"><i class="fa fa-times"></i>
                   </button>
                 </div>
                 <!-- /. tools -->

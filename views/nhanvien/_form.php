@@ -29,7 +29,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'USER_NAME')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success btn-flat' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-primary btn-flat' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
