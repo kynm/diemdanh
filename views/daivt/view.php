@@ -6,8 +6,8 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Daivt */
 
-$this->title = $model->ID_DAI;
-$this->params['breadcrumbs'][] = ['label' => 'Daivts', 'url' => ['index']];
+$this->title = $model->MA_DAI;
+$this->params['breadcrumbs'][] = ['label' => 'Đài viễn thông', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="daivt-view">

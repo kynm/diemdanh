@@ -3,12 +3,14 @@
 namespace app\controllers;
 
 use Yii;
+use app\models\Tramvt;
 use app\models\Thietbitram;
 use app\models\ThietbitramSearch;
 use app\models\Dotbaoduong;
 use app\models\Thietbi;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
 
 /**
@@ -71,14 +73,22 @@ class ThietbitramController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Thietbitram();
+        if (Yii::$app->user->can('create-tbitram')) {
+            $model = new Thietbitram();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->ID_THIETBI]);
+            if ($model->load(Yii::$app->request->post())) {
+                // print_r($model);
+                // die;
+                $model->save();
+                return $this->redirect(Yii::$app->request->referrer);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
         } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            # code...
+            throw new ForbiddenHttpException;            
         }
     }
 
@@ -99,14 +109,20 @@ class ThietbitramController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if (Yii::$app->user->can('edit-tbitram')) {
+            # code...
+            $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->ID_THIETBI]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->ID_THIETBI]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
         } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+            # code...
+            throw new ForbiddenHttpException;            
         }
     }
 
@@ -118,9 +134,15 @@ class ThietbitramController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if (Yii::$app->user->can('delete-tbitram')) {
+            # code...
+            $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index']);
+        } else {
+            # code...
+            throw new ForbiddenHttpException;            
+        }
     }
 
     public function actionLists($id)

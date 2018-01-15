@@ -7,13 +7,10 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\models\ThietbiSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Loại thiết bị';
+$this->title = 'Thiết bị';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="thietbi-index">
-
-    
-    
 
     <p>
         <?= Html::a('Thêm loại thiết bị', ['create'], ['class' => 'btn btn-primary']) ?>

@@ -3,12 +3,15 @@
 namespace app\controllers;
 
 use Yii;
+use app\models\Nhanvien;
 use app\models\Dotbaoduong;
 use app\models\DotbaoduongSearch;
 use app\models\Kehoachbdtb;
 use app\models\KehoachbdtbSearch;
 use app\models\Thuchienbd;
 use app\models\ThuchienbdSearch;
+use app\models\Ketqua;
+use app\models\KetquaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
@@ -50,6 +53,39 @@ class DotbaoduongController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionDanhsachkehoach()
+    {
+        $searchModel = new KehoachbdtbSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('danhsachkehoach', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionDanhsachthuchien()
+    {
+        $searchModel = new ThuchienbdSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('danhsachthuchien', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionDanhsachketqua()
+    {
+        $searchModel = new KetquaSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('danhsachketqua', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -104,14 +140,18 @@ class DotbaoduongController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if (Yii::$app->user->can('edit-dbd')) {
+            $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->ID_DOTBD]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->ID_DOTBD]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
         } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+            throw new ForbiddenHttpException;
         }
     }
 
@@ -123,19 +163,27 @@ class DotbaoduongController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if (Yii::$app->user->can('delete-dbd')) {
+            $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index']);
+        } else {
+            throw new ForbiddenHttpException;
+        }
     }
 
 
     public function actionKehoach($id)
     {
+        // $nhanvien = Nhanvien::find()->where(['USER_NAME' => Yii::$app->user->identity->username])->one();
+        $dotbd = Dotbaoduong::findOne($id);
+        // if ($nhanvien->ID_NHANVIEN == $dotbd->TRUONG_NHOM) {
+        //     $auth_assign = new AuthAssignment;
+        //     $auth_assign->user_id = Yii::$app->user->identity->id;
+        //     $auth_assign->item_name = 'manage-dbd';
+        // }
         $kehoachs = [new Kehoachbdtb()];
-            // print_r(Yii::$app->request->post('Kehoachbdtb'));
-            // Kehoachbdtb::loadMultiple($kehoachs, Yii::$app->request->post());
-            // print_r($kehoachs);
-            // die;
+
         if ($kehoachs = Yii::$app->request->post('Kehoachbdtb')) {
             foreach ($kehoachs as $each) {
                 if (Kehoachbdtb::find()->where($each)->exists()) continue;
@@ -157,81 +205,142 @@ class DotbaoduongController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+        // } else {
+        //     throw new ForbiddenHttpException;
+        // }
+        
     }
 
     public function actionThuchien($id)
     {
-        $dotbd = Dotbaoduong::find()->where(['ID_DOTBD' => $id])->one();
-        if ($dotbd->TRANGTHAI == 'Kế hoạch') {
-            $dotbd->TRANGTHAI = 'Đang thực hiện';
-            $dotbd->save();
+        // $nhanvien = Nhanvien::find()->where(['USER_NAME' => Yii::$app->user->identity->username])->one();
+        $dotbd = Dotbaoduong::findOne($id);
+        // if ($nhanvien->ID_NHANVIEN == $dotbd->TRUONG_NHOM) {
+            if ($dotbd->TRANGTHAI == 'Kế hoạch') {
+                $dotbd->TRANGTHAI = 'Đang thực hiện';
+                $dotbd->save();
 
-            $noidungkehoachs = Kehoachbdtb::find()->where(['ID_DOTBD' => $id])->all();
-            foreach ($noidungkehoachs as $noidungkehoach) {
-                $noidungthuchien = new Thuchienbd();
-                $noidungthuchien->ID_DOTBD = $noidungkehoach->ID_DOTBD;
-                $noidungthuchien->ID_THIETBI = $noidungkehoach->ID_THIETBI;
-                $noidungthuchien->MA_NOIDUNG = $noidungkehoach->MA_NOIDUNG;
-                $noidungthuchien->ID_NHANVIEN = $noidungkehoach->ID_NHANVIEN;
-                $noidungthuchien->KETQUA = 'Chưa đạt';
-                $noidungthuchien->save(false);
-                $noidungkehoach->delete();
-            }
-        } elseif ($dotbd->TRANGTHAI == 'Kết thúc') {
-            return $this->redirect(['ketthuc', 'id' => $dotbd->ID_DOTBD]);
-        }
-
-        if(isset($_REQUEST['selection'])) {
-            $keyArr = $_REQUEST['selection'];
-            
-            foreach ($keyArr as $keyObj) {
-                $key = get_object_vars(json_decode($keyObj));
-
-                $noidungthuchiens = Thuchienbd::find()->where($key)->all();
-                foreach ($noidungthuchiens as $noidungthuchien) {
-                    $noidungthuchien->KETQUA = 'Đạt';
+                $noidungkehoachs = Kehoachbdtb::find()->where(['ID_DOTBD' => $id])->all();
+                foreach ($noidungkehoachs as $noidungkehoach) {
+                    $noidungthuchien = new Thuchienbd();
+                    $noidungthuchien->ID_DOTBD = $noidungkehoach->ID_DOTBD;
+                    $noidungthuchien->ID_THIETBI = $noidungkehoach->ID_THIETBI;
+                    $noidungthuchien->MA_NOIDUNG = $noidungkehoach->MA_NOIDUNG;
+                    $noidungthuchien->ID_NHANVIEN = $noidungkehoach->ID_NHANVIEN;
+                    $noidungthuchien->KETQUA = 'Chưa hoàn thành';
                     $noidungthuchien->save(false);
+                    $noidungkehoach->delete();
                 }
-            }
-            return $this->redirect(['ketqua/create', 'id' => $dotbd->ID_DOTBD]);
-        }
-
-        if (Yii::$app->request->post('hasEditable')) {
-            $idKey = Yii::$app->request->post('editableKey');
-            $idKey = json_decode($idKey);
-            $arr = get_object_vars($idKey);
-
-            $noidungthuchien = Thuchienbd::findOne($arr);
-            $out = Json::encode(['output' => '', 'message' => '']);
-            $post = [];
-            $posted = current($_POST['Thuchienbd']);
-            $post['Thuchienbd'] = $posted;
-
-            if ($noidungthuchien->load($post)) {
-                $noidungthuchien->save();
+            } elseif ($dotbd->TRANGTHAI == 'Kết thúc') {
+                return $this->redirect(['ketthuc', 'id' => $dotbd->ID_DOTBD]);
             }
 
-            echo $out;
-            return;
-        }
+            if(isset($_REQUEST['selection'])) {
+                $keyArr = $_REQUEST['selection'];
+                
+                foreach ($keyArr as $keyObj) {
+                    $key = get_object_vars(json_decode($keyObj));
 
-        $searchModel = new ThuchienbdSearch();
-        $dataProvider = $searchModel->searchND(Yii::$app->request->queryParams);
-        return $this->render('thuchien', [
-            'model' => $this->findModel($id),
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+                    $noidungthuchiens = Thuchienbd::find()->where($key)->all();
+                    foreach ($noidungthuchiens as $noidungthuchien) {
+                        $noidungthuchien->KETQUA = 'Đạt';
+                        $noidungthuchien->save(false);
+                    }
+                }
+                return $this->redirect(['dotbaoduong/danhgia', 'id' => $dotbd->ID_DOTBD]);
+            }
+
+            if (Yii::$app->request->post('hasEditable')) {
+                $idKey = Yii::$app->request->post('editableKey');
+                $idKey = json_decode($idKey);
+                $arr = get_object_vars($idKey);
+
+                $noidungthuchien = Thuchienbd::findOne($arr);
+                $out = Json::encode(['output' => '', 'message' => '']);
+                $post = [];
+                $posted = current($_POST['Thuchienbd']);
+                $post['Thuchienbd'] = $posted;
+
+                if ($noidungthuchien->load($post)) {
+                    $noidungthuchien->save();
+                }
+
+                echo $out;
+                return;
+            }
+
+            $searchModel = new ThuchienbdSearch();
+            $dataProvider = $searchModel->searchND(Yii::$app->request->queryParams);
+            return $this->render('thuchien', [
+                'model' => $this->findModel($id),
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        // } else {
+        //     throw new ForbiddenHttpException;           
+        // }
     }
 
-    public function actionKetthuc($id)
+    public function actionDanhgia($id)
     {
-        $searchModel = new ThuchienbdSearch();
-        $dataProvider = $searchModel->searchND(Yii::$app->request->queryParams);
-        return $this->render('ketthuc', [
-            'model' => $this->findModel($id),
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+        $nhanvien = Nhanvien::find()->where(['USER_NAME' => Yii::$app->user->identity->username])->one();
+        $dotbd = Dotbaoduong::findOne($id);
+
+        if ($nhanvien->ID_NHANVIEN == $dotbd->TRUONG_NHOM) {
+            $model = new Ketqua();
+
+            if ($model->load(Yii::$app->request->post())) {
+                $dotbd->TRANGTHAI = 'Kết thúc';
+                $dotbd->save(false);
+
+                $model->ID_DOTBD = $id;
+
+                //get instances, upload files to host
+                $model->files = UploadedFile::getInstances($model, 'files');
+                $i=1;
+                foreach ($model->files as $file) {
+                    $filePath = 'uploads/' . $dotbd->MA_DOTBD. '_'. $i . '.' . $file->extension;
+                    // print_r($file);
+                    // echo "<br>". $file->extension;
+                    // echo "<br> ".$filePath;
+                    // die;
+                    $file->saveAs($filePath);
+                    //save file path to database
+                    switch ($i) {
+                        case '1':
+                            $model->ANH1 = $filePath;
+                            break;
+                        case '2':
+                            $model->ANH2 = $filePath;
+                            break;
+                        case '3':
+                            $model->ANH3 = $filePath;
+                            break;
+                        
+                        default:
+                            break;
+                    }
+                    $i++;
+                }
+
+                $model->save(false);
+                return $this->redirect(['ketqua', 'id' => $model->ID_DOTBD]);
+            } else {
+                return $this->render('danhgia', [
+                    'model' => $model,
+                    'dotbd' => $dotbd,
+                ]);
+            }
+        } else {
+            throw new ForbiddenHttpException;
+        }
+    }
+
+    public function actionKetqua($id)
+    {
+
+        return $this->render('ketqua', [
+            'model' => $model = Ketqua::findOne($id),
         ]);
     }
 

@@ -59,7 +59,7 @@ class Thuchienbd extends \yii\db\ActiveRecord
             'NOIDUNGMORONG' => 'Noidungmorong',
             'KETQUA' => 'Ketqua',
             'GHICHU' => 'Ghichu',
-            'ID_NHANVIEN' => 'Id  Nhanvien',
+            'ID_NHANVIEN' => 'Id Nhanvien',
         ];
     }
 

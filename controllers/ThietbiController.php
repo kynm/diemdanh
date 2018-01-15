@@ -3,11 +3,14 @@
 namespace app\controllers;
 
 use Yii;
+use app\models\Noidungbaotri;
 use app\models\Thietbi;
 use app\models\ThietbiSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
+use yii\data\ActiveDataProvider;
 
 /**
  * ThietbiController implements the CRUD actions for Thietbi model.
@@ -51,7 +54,13 @@ class ThietbiController extends Controller
      */
     public function actionView($id)
     {
+        $query = Noidungbaotri::find()->where(['ID_THIETBI' => $id]);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
         return $this->render('view', [
+            'dataProvider' => $dataProvider,
             'model' => $this->findModel($id),
         ]);
     }
@@ -63,14 +72,20 @@ class ThietbiController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Thietbi();
+        if (Yii::$app->user->can('create-loaitb')) {
+            # code...
+            $model = new Thietbi();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->ID_THIETBI]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->ID_THIETBI]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
         } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            # code...
+            throw new ForbiddenHttpException;
         }
     }
 
@@ -82,14 +97,20 @@ class ThietbiController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if (Yii::$app->user->can('edit-loaitb')) {
+            # code...
+            $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->ID_THIETBI]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->ID_THIETBI]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
         } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+            # code...
+            throw new ForbiddenHttpException;
         }
     }
 
@@ -101,9 +122,15 @@ class ThietbiController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if (Yii::$app->user->can('delete-loaitb')) {
+            # code...
+            $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index']);
+        } else {
+            # code...
+            throw new ForbiddenHttpException;
+        }
     }
 
     /**

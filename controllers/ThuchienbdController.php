@@ -3,11 +3,14 @@
 namespace app\controllers;
 
 use Yii;
+use app\models\Nhanvien;
+use app\models\Kehoachbdtb;
 use app\models\Thuchienbd;
 use app\models\ThuchienbdSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\data\ActiveDataProvider;
 
 /**
  * ThuchienbdController implements the CRUD actions for Thuchienbd model.
@@ -59,21 +62,17 @@ class ThuchienbdController extends Controller
     }
 
     /**
-     * Creates a new Thuchienbd model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
+     * Creates a new Cong viec ca nhan.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCongviec()
     {
-        $model = new Thuchienbd();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'ID_DOTBD' => $model->ID_DOTBD, 'ID_THIETBI' => $model->ID_THIETBI, 'MA_NOIDUNG' => $model->MA_NOIDUNG]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
+        $nhanvien = Nhanvien::find()->where(['USER_NAME' => Yii::$app->user->identity->username])->one();
+        $query = Thuchienbd::find()->where(['ID_NHANVIEN' => $nhanvien->ID_NHANVIEN]);
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+        return $this->render('congviec', ['dataProvider' => $dataProvider]);
     }
 
     /**
@@ -86,14 +85,19 @@ class ThuchienbdController extends Controller
      */
     public function actionUpdate($ID_DOTBD, $ID_THIETBI, $MA_NOIDUNG)
     {
+        $nhanvien = Nhanvien::find()->where(['USER_NAME' => Yii::$app->user->identity->username])->one();
         $model = $this->findModel($ID_DOTBD, $ID_THIETBI, $MA_NOIDUNG);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'ID_DOTBD' => $model->ID_DOTBD, 'ID_THIETBI' => $model->ID_THIETBI, 'MA_NOIDUNG' => $model->MA_NOIDUNG]);
+        if ($nhanvien->ID_NHANVIEN == $model->ID_NHANVIEN) {
+            # code...
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'ID_DOTBD' => $model->ID_DOTBD, 'ID_THIETBI' => $model->ID_THIETBI, 'MA_NOIDUNG' => $model->MA_NOIDUNG]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
         } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+            throw new NotFoundHttpException;
         }
     }
 

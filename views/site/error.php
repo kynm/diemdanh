@@ -24,7 +24,7 @@ switch ($exception->statusCode) {
         break;
     
     default:
-        $errMessage = 'Website đang gặp lỗi.'
+        $errMessage = 'Website đang gặp lỗi.';
         break;
 }
 ?>
@@ -37,10 +37,11 @@ switch ($exception->statusCode) {
           <h3><i class="fa fa-warning text-yellow"></i> Oops! Có lỗi xảy ra.</h3>
 
           <p>
-            Không truy cập được trang bạn yêu cầu. <br/>
-            <?=   ?> Vui lòng trở về trang chủ.
+            <?=  $errMessage ?>
+            <br/>
+            Vui lòng trở về trang chủ.
           </p>
-          <a class="btn btn-default btn-flat" href="<?= Url::to(['user/']) ?>"> <i class="fa fa-home"></i> Về trang chủ</a>
+          <a class="btn btn-default btn-flat" href="<?= Url::to(['site/']) ?>"> <i class="fa fa-home"></i> Về trang chủ</a>
         </div>
         <!-- /.error-content -->
       </div>

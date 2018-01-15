@@ -12,8 +12,9 @@ use kartik\form\ActiveForm;
 /* @var $searchModel app\models\DotbaoduongSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Thực hiện đợt '.$model->MA_DOTBD;
-$this->params['breadcrumbs'][] = ['label' => 'Dotbaoduongs', 'url' => ['index']];
+$this->title = 'Đợt '.$model->MA_DOTBD;
+$this->params['breadcrumbs'][] = ['label' => 'Các đợt bảo dưỡng', 'url' => ['danhsachkehoach']];
+$this->params['breadcrumbs'][] = ['label' => 'Thực hiện', 'url' => ['danhsachthuchien']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="dotbaoduong-index">
@@ -43,13 +44,14 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php $form = ActiveForm::begin(); ?>
         <input type="hidden" name="_csrf" value="<?=Yii::$app->request->getCsrfToken()?>" />
         <?php
-            $nhanvien = Nhanvien::find()->where(['USER_NAME' => Yii::$app->user->identity->email])->one();
-
-            if ($model->TRUONG_NHOM == $nhanvien->ID_NHANVIEN) {
-                    echo Html::submitButton(
-                        '<i class="glyphicon glyphicon-log-in"></i> Kết thúc bảo dưỡng', 
-                        ['class'=>'btn btn-primary']
-                    ) ;                    
+            @$nhanvien = Nhanvien::find()->where(['USER_NAME' => Yii::$app->user->identity->username])->one();
+            $canReview = 0;
+            if ($model->TRUONG_NHOM == @$nhanvien->ID_NHANVIEN) {
+                $canReview = 1;
+                echo Html::submitButton(
+                    '<i class="glyphicon glyphicon-log-in"></i> Kết thúc bảo dưỡng', 
+                    ['class'=>'btn btn-primary']
+                ) ;                    
                 
             }
     ?>
@@ -96,7 +98,10 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
 
 
-            ['class' => 'yii\grid\CheckboxColumn'],
+            [
+                'class' => 'yii\grid\CheckboxColumn',
+                'visible' => $canReview == 1 ? true : false,
+            ],
         ],
     ]); ?>
 <?php ActiveForm::end(); ?></div>

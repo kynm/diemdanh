@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Noidungbaotri */
 
 $this->title = $model->MA_NOIDUNG;
-$this->params['breadcrumbs'][] = ['label' => 'Noidungbaotris', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Nội dung bảo dưỡng', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="noidungbaotri-view">

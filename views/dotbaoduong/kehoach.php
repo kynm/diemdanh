@@ -16,8 +16,9 @@ use yii\grid\CheckboxColumn;
 /* @var $this yii\web\View */
 /* @var $model app\models\Dotbaoduong */
 
-$this->title = 'Kế hoạch đợt '.$model->MA_DOTBD;
-$this->params['breadcrumbs'][] = ['label' => 'Dotbaoduongs', 'url' => ['index']];
+$this->title = 'Đợt '.$model->MA_DOTBD;
+$this->params['breadcrumbs'][] = ['label' => 'Các đợt bảo dưỡng', 'url' => ['danhsachkehoach']];
+$this->params['breadcrumbs'][] = ['label' => 'Kế hoạch', 'url' => ['danhsachkehoach']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="dotbaoduong-view">
@@ -27,63 +28,56 @@ $this->params['breadcrumbs'][] = $this->title;
     <p class="form-inline">
         <div class="form-group col-md-3">
             <label>Trạm viễn thông</label>
-            <input type="text" class="form-control" id="exp" disabled="true" value="<?= $model->iDTRAMVT->MA_TRAM ; ?>">
+            <input type="text" class="form-control" disabled="true" value="<?= $model->iDTRAMVT->MA_TRAM ; ?>">
         </div>
         <div class="form-group col-md-3">
             <label>Ngày bảo dưỡng</label>
-            <input type="text" class="form-control" id="exp" disabled="true" value="<?= $model->NGAY_BD ; ?>">
+            <input type="text" class="form-control" disabled="true" value="<?= $model->NGAY_BD ; ?>">
         </div>
         <div class="form-group col-md-3">
             <label>Nhóm trưởng</label>
-            <input type="text" class="form-control" id="exp" disabled="true" value="<?= $model->tRUONGNHOM->TEN_NHANVIEN ; ?>">
+            <input type="text" class="form-control" disabled="true" value="<?= $model->tRUONGNHOM->TEN_NHANVIEN ; ?>">
         </div>
         <div class="form-group col-md-3">
             <label>Trạng thái</label>
-            <input type="text" class="form-control" id="exp" disabled="true" value="<?= $model->TRANGTHAI ; ?>">
+            <input type="text" class="form-control" disabled="true" value="<?= $model->TRANGTHAI ; ?>">
         </div>
     </p>
     
 
 <?php
     $form = ActiveForm::begin();
-    
-    echo '<div class="text-right">'.
-        Html::a(
-            '<i class="glyphicon glyphicon-plus"></i> Thêm nội dung', 
-            '#', 
-            [
-                'class'=>'btn btn-primary',
-                'data-toggle' => 'modal',
-                'data-target' => '#themNoiDung',
-            ]
-        ) . '&nbsp;' . 
-        Html::a(
-            '<i class="glyphicon glyphicon-remove"></i> Xóa đợt bảo dưỡng', 
-            ['delete', 'id' => $model->ID_DOTBD], 
-            [
-                'class'=>'btn btn-danger',
-                'data' => [
-                    'confirm' => 'Are you sure you want to delete this item?',
-                    'method' => 'post',
-                ],
-            ]
-        ) . '&nbsp;' .
-        Html::a(
-            '<i class="glyphicon glyphicon-wrench"></i> Thực hiện bảo dưỡng', 
-            ['thuchien', 'id' => $model->ID_DOTBD], 
-            [
-                'class'=>'btn btn-danger',
-                'data' => [
-                    'confirm' => 'Are you sure you want to delete this item?',
-                    'method' => 'post',
-                ],
-            ]
-        ) . '&nbsp;' .
-        Html::submitButton(
-            '<i class="glyphicon glyphicon-floppy-disk"></i> Lưu', 
-            ['class'=>'btn btn-primary']
-        )
-        . '</div>' ;
+    $nhanvien = Nhanvien::find()->where(['USER_NAME' => Yii::$app->user->identity->username])->one();
+    $canDelete = 0;
+    if ($nhanvien->ID_NHANVIEN == $model->TRUONG_NHOM) {
+        $canDelete = 1;
+        echo '<div class="text-right">'.
+            Html::a(
+                '<i class="glyphicon glyphicon-plus"></i> Thêm nội dung', 
+                '#', 
+                [
+                    'class'=>'btn btn-primary',
+                    'data-toggle' => 'modal',
+                    'data-target' => '#themNoiDung',
+                ]
+            ) . '&nbsp;' . 
+            Html::a(
+                '<i class="glyphicon glyphicon-wrench"></i> Thực hiện bảo dưỡng', 
+                ['thuchien', 'id' => $model->ID_DOTBD], 
+                [
+                    'class'=>'btn btn-primary',
+                    'data' => [
+                        'confirm' => 'Bạn muốn thực hiện đợt bảo dưỡng?',
+                        'method' => 'post',
+                    ],
+                ]
+            ) . '&nbsp;' .
+            Html::submitButton(
+                '<i class="glyphicon glyphicon-floppy-disk"></i> Lưu', 
+                ['class'=>'btn btn-primary']
+            )
+            . '</div>' ;
+    }
     echo TabularForm::widget([
         'form' => $form,
         'dataProvider' => $dataProvider,
@@ -108,6 +102,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'checkboxColumn' => false,
         'actionColumn' => [
             'template' => '{delete}',
+            'visible' => $canDelete == 1 ? true : false,
             'buttons' => [
                 'delete' => function ($url, $model, $key) {
                     return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [

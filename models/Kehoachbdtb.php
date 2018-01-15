@@ -73,6 +73,14 @@ class Kehoachbdtb extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getMANOIDUNG()
+    {
+        return $this->hasOne(Noidungbaotri::className(), ['MA_NOIDUNG' => 'MA_NOIDUNG']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getIDNHANVIEN()
     {
         return $this->hasOne(Nhanvien::className(), ['ID_NHANVIEN' => 'ID_NHANVIEN']);

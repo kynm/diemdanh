@@ -10,32 +10,31 @@ use yii\widgets\Pjax;
 $this->title = 'Trạm viễn thông';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="tramvt-index">
-
-    
-    
+<div class="tramvt-index">   
 
     <p>
         <?= Html::a('Thêm trạm viễn thông', ['create'], ['class' => 'btn btn-primary']) ?>
     </p>
-<?php Pjax::begin(); ?>    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-            'MA_TRAM',
-            'DIADIEM',
-            [
-                'attribute' => 'ID_DAIVT',
-                'value' => 'iDDAIVT.TEN_DAIVT'
+    <?php Pjax::begin(); ?>    
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
+                'MA_TRAM',
+                'DIADIEM',
+                [
+                    'attribute' => 'ID_DAIVT',
+                    'value' => 'iDDAIVT.TEN_DAIVT'
+                ],
+                [
+                    'attribute' => 'ID_NHANVIEN',
+                    'value' => 'iDNHANVIEN.TEN_NHANVIEN'
+                ],
+                [
+                    'class' => 'yii\grid\ActionColumn',
+                ],
             ],
-            [
-                'attribute' => 'ID_NHANVIEN',
-                'value' => 'iDNHANVIEN.TEN_NHANVIEN'
-            ],
-            [
-                'class' => 'yii\grid\ActionColumn',
-            ],
-        ],
-    ]); ?>
-<?php Pjax::end(); ?></div>
+        ]); ?>
+    <?php Pjax::end(); ?>
+</div>

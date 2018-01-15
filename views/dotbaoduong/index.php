@@ -35,7 +35,10 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'TRANGTHAI',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => Yii::$app->user->can('edit-dbd') ? '{view} {update} {delete}' : '{view}',
+            ],
         ],
     ]); ?>
 <?php Pjax::end(); ?></div>

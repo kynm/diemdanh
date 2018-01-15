@@ -12,23 +12,44 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'ID_DOTBD')->textInput() ?>
+    <div class="box box-primary">
+        <div class="box-body">
+            <div class="col-sm-4">
+                <?= $form->field($model, 'ID_DOTBD')->textInput(['value' => $model->iDDOTBD->MA_DOTBD, 'disabled' => true]) ?>
+            </div>
+            
+            <div class="col-sm-4">
+                <?= $form->field($model, 'ID_THIETBI')->textInput(['value' => $model->iDTHIETBI->iDLOAITB->TEN_THIETBI, 'disabled' => true]) ?>
+            </div>
+            
+            <div class="col-sm-4">
+                <?= $form->field($model, 'MA_NOIDUNG')->textInput(['value' => $model->mANOIDUNG->NOIDUNG, 'disabled' => true]) ?>
+            </div>
+            
+            <div class="col-sm-4">
+                <?= $form->field($model, 'KETQUA')->dropDownList([ 'Đạt' => 'Đạt', 'Chưa đạt' => 'Chưa đạt' ],['prompt'=>'Tự đánh giá kết quả' ]) ?>
+            </div>
+            
+            <div class="col-sm-4">
+                <?= $form->field($model, 'NOIDUNGMORONG')->textInput(['maxlength' => true]) ?>
+            </div>
+            
+            <div class="col-sm-4">
+                <?= $form->field($model, 'GHICHU')->textInput(['maxlength' => true]) ?>
+            </div>
 
-    <?= $form->field($model, 'ID_THIETBI')->textInput() ?>
-
-    <?= $form->field($model, 'MA_NOIDUNG')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'NOIDUNGMORONG')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'KETQUA')->textInput() ?>
-
-    <?= $form->field($model, 'GHICHU')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'ID_NHANVIEN')->textInput(['maxlength' => true]) ?>
-
-    <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-primary' : 'btn btn-primary']) ?>
+            <div class="col-sm-4">
+                <?= $form->field($model, 'ID_NHANVIEN')->textInput(['maxlength' => true]) ?>
+            </div>            
+        </div>
+        <div class="box-footer">
+            <div class="text-center">
+                <?= Html::submitButton('Update', ['class' => 'btn btn-primary']) ?>
+            </div>            
+        </div>
     </div>
+
+
 
     <?php ActiveForm::end(); ?>
 

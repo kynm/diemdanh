@@ -15,27 +15,28 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Thêm nhân viên', ['create'], ['class' => 'btn btn-primary']) ?>
     </p>
-<?php Pjax::begin(); ?>    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-            'MA_NHANVIEN',
-            'TEN_NHANVIEN',
-            'CHUC_VU',
-            'DIEN_THOAI',
-            [
-                'attribute' => 'ID_DONVI',
-                'value' => 'iDDONVI.TEN_DONVI'
-            ],
-            [
-                'attribute' => 'ID_DAI',
-                'value' => 'iDDAI.TEN_DAIVT'
-            ],
-            
-            'USER_NAME',
+    <?php Pjax::begin(); ?>    <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
+                'MA_NHANVIEN',
+                'TEN_NHANVIEN',
+                'CHUC_VU',
+                'DIEN_THOAI',
+                [
+                    'attribute' => 'ID_DONVI',
+                    'value' => 'iDDONVI.TEN_DONVI'
+                ],
+                [
+                    'attribute' => 'ID_DAI',
+                    'value' => 'iDDAI.TEN_DAIVT'
+                ],
+                
+                'USER_NAME',
 
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
-<?php Pjax::end(); ?></div>
+                ['class' => 'yii\grid\ActionColumn'],
+            ],
+        ]); ?>
+    <?php Pjax::end(); ?>
+</div>

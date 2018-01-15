@@ -8,6 +8,7 @@ use app\models\Noidungbaotri;
 use app\models\NoidungbaotriSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 /**
@@ -70,15 +71,22 @@ class NoidungbaotriController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Noidungbaotri();
+        if (Yii::$app->user->can('create-noidungbaotri')) {
+            # code...
+            $model = new Noidungbaotri();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->MA_NOIDUNG]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->MA_NOIDUNG]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
         } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            # code...
+            throw new ForbiddenHttpException;            
         }
+        
     }
 
     /**
@@ -89,15 +97,22 @@ class NoidungbaotriController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if (Yii::$app->user->can('edit-noidungbaotri')) {
+            # code...
+            $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->MA_NOIDUNG]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->MA_NOIDUNG]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
         } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+            # code...
+            throw new ForbiddenHttpException;      
         }
+        
     }
 
     /**
@@ -108,9 +123,17 @@ class NoidungbaotriController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if (Yii::$app->user->can('delete-noidungbaotri')) {
+            # code...
+            $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index']);
+        } else {
+            # code...
+            throw new ForbiddenHttpException;
+            
+        }
+        
     }
 
     public function actionLists($id)

@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Daivt */
 
-$this->title = 'Update Daivt: ' . $model->ID_DAI;
-$this->params['breadcrumbs'][] = ['label' => 'Daivts', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->ID_DAI, 'url' => ['view', 'id' => $model->ID_DAI]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = 'Cập nhật đài ' . $model->MA_DAIVT;
+$this->params['breadcrumbs'][] = ['label' => 'Đài viễn thông', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->MA_DAIVT, 'url' => ['view', 'id' => $model->ID_DAI]];
+$this->params['breadcrumbs'][] = 'Cập nhật';
 ?>
 <div class="daivt-update">
 

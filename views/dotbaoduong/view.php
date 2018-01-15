@@ -6,8 +6,8 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Dotbaoduong */
 
-$this->title = $model->ID_DOTBD;
-$this->params['breadcrumbs'][] = ['label' => 'Dotbaoduongs', 'url' => ['index']];
+$this->title = $model->MA_DOTBD;
+$this->params['breadcrumbs'][] = ['label' => 'Các đợt bảo dưỡng', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="dotbaoduong-view">

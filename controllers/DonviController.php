@@ -63,15 +63,19 @@ class DonviController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Donvi();
+        if (Yii::$app->user->can('create-donvi')) {
+            $model = new Donvi();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->ID_DONVI]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->ID_DONVI]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
         } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
+            throw new ForbiddentHttpException;
+        }        
     }
 
     /**
@@ -82,15 +86,19 @@ class DonviController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if (Yii::$app->user->can('edit-donvi')) {
+            $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->ID_DONVI]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->ID_DONVI]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
         } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
+            throw new ForbiddentHttpException;
+        } 
     }
 
     /**
@@ -101,9 +109,14 @@ class DonviController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if (Yii::$app->user->can('delete-donvi')) {
+            # code...
+            $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index']);
+        } else {
+            throw new ForbiddentHttpException;
+        } 
     }
 
     /**

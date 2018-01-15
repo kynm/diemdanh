@@ -17,11 +17,10 @@ use yii\web\AssetBundle;
  */
 class AppAsset extends AssetBundle
 {
-    // public $basePath = '@webroot';
-    // public $baseUrl = '@web';
-    public $sourcePath = '@bower/adminlte/';
+    public $basePath = '@webroot';
+    public $baseUrl = '@web';
+    // public $sourcePath = '@bower/adminlte/';
     public $css = [
-        // 'dist/css/site.css',
         'bower_components/bootstrap/dist/css/bootstrap.min.css',
         'bower_components/font-awesome/css/font-awesome.min.css',
         'bower_components/Ionicons/css/ionicons.min.css',
@@ -32,6 +31,8 @@ class AppAsset extends AssetBundle
         'bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css',
         'bower_components/bootstrap-daterangepicker/daterangepicker.css',
         'plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css',
+        'css/site.css',
+        'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.6/css/fileinput.min.css',
     ];
     public $js = [
         'bower_components/jquery-ui/jquery-ui.min.js',
@@ -49,6 +50,8 @@ class AppAsset extends AssetBundle
         'bower_components/fastclick/lib/fastclick.js',
         'dist/js/adminlte.min.js',        
         'dist/js/demo.js',
+        'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.5/js/plugins/piexif.min.js',
+        'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.6/js/fileinput.min.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

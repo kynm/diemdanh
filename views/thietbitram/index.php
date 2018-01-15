@@ -7,16 +7,13 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\models\ThietbitramSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Thiết bị tại trạm';
+$this->title = 'Thiết bị trạm';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="thietbitram-index">
 
-    
-    
-
     <p>
-        <?= Html::a('Thêm mới thiết bị trạm', ['create'], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Thêm thiết bị trạm', ['create'], ['class' => 'btn btn-primary']) ?>
     </p>
 <?php Pjax::begin(); ?>    <?= GridView::widget([
         'dataProvider' => $dataProvider,

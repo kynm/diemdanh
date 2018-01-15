@@ -3,10 +3,12 @@
 namespace app\controllers;
 
 use Yii;
+use app\models\ThietbiSearch;
 use app\models\Nhomtbi;
 use app\models\NhomtbiSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
 
 /**
@@ -51,8 +53,13 @@ class NhomtbiController extends Controller
      */
     public function actionView($id)
     {
+        $searchModel = new ThietbiSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -63,15 +70,22 @@ class NhomtbiController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Nhomtbi();
+        if (Yii::$app->user->can('create-nhomtb')) {
+            # code...
+            $model = new Nhomtbi();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->ID_NHOM]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->ID_NHOM]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
         } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            # code...
+            throw new ForbiddenHttpException;
         }
+        
     }
 
     /**
@@ -82,14 +96,19 @@ class NhomtbiController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if (Yii::$app->user->can('create-nhomtb')) {
+            $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->ID_NHOM]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->ID_NHOM]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
         } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+            throw new ForbiddenHttpException;
+            
         }
     }
 
@@ -101,9 +120,16 @@ class NhomtbiController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if (Yii::$app->user->can('delete-nhomtb')) {
+            # code...
+            $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index']);
+        } else {
+            # code...
+            throw new ForbiddenHttpException;            
+        }
+        
     }
 
     /**

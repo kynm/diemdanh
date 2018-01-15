@@ -28,6 +28,8 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_ACTIVE = 10;
 
     public $password;
+    public $newPassword;
+    public $confirmPassword;
     /**
      * @inheritdoc
      */
@@ -46,6 +48,8 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
 
+    public $file;
+
     /**
      * @inheritdoc
      */
@@ -54,9 +58,10 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             [['username', 'auth_key', 'email', 'created_at', 'updated_at'], 'required'],
             [['role', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['username', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
+            [['username', 'password', 'newPassword', 'confirmPassword', 'password_hash', 'avatar', 'password_reset_token', 'email'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
             [['username'], 'unique'],
+            [['file'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
             [['email'], 'unique'],
             [['password_reset_token'], 'unique'],
         ];

@@ -11,6 +11,7 @@ use app\models\Tramvt;
 use app\models\TramvtSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
 use yii\data\ArrayDataProvider;
 use yii\data\ActiveDataProvider;
@@ -42,68 +43,69 @@ class TramvtController extends Controller
     public function actionIndex()
     {
         $searchModel = new TramvtSearch();
-        $listTram = array();
-        $nhanvien = Nhanvien::find()->where(['USER_NAME' => Yii::$app->user->identity->username])->one();
-        switch (Yii::$app->user->identity->role) {
-            //role 1,2 danh cho IT va CB VTT xem toan bo cac tram
-            case '1':            
-            case '2':
-                $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-                break;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        // $listTram = array();
+        // $nhanvien = Nhanvien::find()->where(['USER_NAME' => Yii::$app->user->identity->username])->one();
+        // switch (Yii::$app->user->identity->role) {
+        //     //role 1,2 danh cho IT va CB VTT xem toan bo cac tram
+        //     case '1':            
+        //     case '2':
+        //         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        //         break;
             
-            //role 3 danh cho quan ly trung tam quan ly cac tram cua trung tam minh
-            case '3':
-                $listDai = Daivt::find()->where(['ID_DONVI' => $nhanvien->ID_DONVI])->all();
-                foreach ($listDai as $dai) {
-                    foreach ($dai->tramvts as $tram) {
-                        $listTram[] = $tram;
-                    }
-                }
-                $dataProvider = new ArrayDataProvider([
-                    'allModels' => $listTram,
-                    'sort' => [
-                        'attributes' => ['MA_TRAM', 'DIADIEM', 'ID_DAIVT', 'ID_NHANVIEN'],
-                    ],
-                    'pagination' => [
-                        'pageSize' => 20,
-                    ],
-                ]);
-                break;
+        //     //role 3 danh cho quan ly trung tam quan ly cac tram cua trung tam minh
+        //     case '3':
+        //         $listDai = Daivt::find()->where(['ID_DONVI' => $nhanvien->ID_DONVI])->all();
+        //         foreach ($listDai as $dai) {
+        //             foreach ($dai->tramvts as $tram) {
+        //                 $listTram[] = $tram;
+        //             }
+        //         }
+        //         $dataProvider = new ArrayDataProvider([
+        //             'allModels' => $listTram,
+        //             'sort' => [
+        //                 'attributes' => ['MA_TRAM', 'DIADIEM', 'ID_DAIVT', 'ID_NHANVIEN'],
+        //             ],
+        //             'pagination' => [
+        //                 'pageSize' => 20,
+        //             ],
+        //         ]);
+        //         break;
             
-            //role 4 danh cho truong dai quan ly cac tram thuoc dai minh
-            case '4':
-                $listTram = Tramvt::find()->where(['ID_DAIVT' => $nhanvien->ID_DAIVT])->all();
+        //     //role 4 danh cho truong dai quan ly cac tram thuoc dai minh
+        //     case '4':
+        //         $listTram = Tramvt::find()->where(['ID_DAIVT' => $nhanvien->ID_DAIVT])->all();
                 
-                $dataProvider = new ArrayDataProvider([
-                    'allModels' => $listTram,
-                    'sort' => [
-                        'attributes' => ['MA_TRAM', 'DIADIEM', 'ID_DAIVT', 'ID_NHANVIEN'],
-                    ],
-                    'pagination' => [
-                        'pageSize' => 20,
-                    ],
-                ]);
-                break;
+        //         $dataProvider = new ArrayDataProvider([
+        //             'allModels' => $listTram,
+        //             'sort' => [
+        //                 'attributes' => ['MA_TRAM', 'DIADIEM', 'ID_DAIVT', 'ID_NHANVIEN'],
+        //             ],
+        //             'pagination' => [
+        //                 'pageSize' => 20,
+        //             ],
+        //         ]);
+        //         break;
             
-            //role 5 danh cho quan ly tram quan ly cac tram do minh quan ly
-            case '5':
-                $listTram = Tramvt::find()->where(['ID_NHANVIEN' => $nhanvien->ID_NHANVIEN])->all();
+        //     //role 5 danh cho quan ly tram quan ly cac tram do minh quan ly
+        //     case '5':
+        //         $listTram = Tramvt::find()->where(['ID_NHANVIEN' => $nhanvien->ID_NHANVIEN])->all();
                 
-                $dataProvider = new ArrayDataProvider([
-                    'allModels' => $listTram,
-                    'sort' => [
-                        'attributes' => ['MA_TRAM', 'DIADIEM', 'ID_DAIVT', 'ID_NHANVIEN'],
-                    ],
-                    'pagination' => [
-                        'pageSize' => 20,
-                    ],
-                ]);
-                break;
+        //         $dataProvider = new ArrayDataProvider([
+        //             'allModels' => $listTram,
+        //             'sort' => [
+        //                 'attributes' => ['MA_TRAM', 'DIADIEM', 'ID_DAIVT', 'ID_NHANVIEN'],
+        //             ],
+        //             'pagination' => [
+        //                 'pageSize' => 20,
+        //             ],
+        //         ]);
+        //         break;
             
-            default:
-                return $this->redirect('site/index');
-                break;
-        }
+        //     default:
+        //         return $this->redirect('site/index');
+        //         break;
+        // }
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -137,14 +139,18 @@ class TramvtController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Tramvt();
+        if (Yii::$app->user->can('create-tramvt')) {
+            $model = new Tramvt();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->ID_TRAM]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->ID_TRAM]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
         } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            throw new ForbiddenHttpException;            
         }
     }
 
@@ -156,14 +162,18 @@ class TramvtController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if (Yii::$app->user->can('edit-tramvt')) {
+            $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->ID_TRAM]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->ID_TRAM]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
         } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+            throw new ForbiddenHttpException;            
         }
     }
 
@@ -175,9 +185,12 @@ class TramvtController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        if (Yii::$app->user->can('delete-tramvt')) {
+            $this->findModel($id)->delete();
+            return $this->redirect(['index']);
+        } else {
+            throw new ForbiddenHttpException;            
+        }
     }
 
     /**

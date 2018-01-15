@@ -15,9 +15,6 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="donvi-index">
 
-    
-    
-
     <p>
         <?php
             Modal::begin([
@@ -35,20 +32,21 @@ $this->params['breadcrumbs'][] = $this->title;
             //Html::a('Thêm đơn vị chủ quản', ['create'], ['class' => 'btn btn-primary']) 
         ?>
     </p>
-<?php Pjax::begin(); ?>    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-            'MA_DONVI',
-            'TEN_DONVI',
-            'DIA_CHI',
-            'SO_DT',
-            [
-                'attribute' => 'CAP_TREN',
-                'value' => 'cAPTREN.TEN_DONVI'
+    <?php Pjax::begin(); ?>    <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
+                'MA_DONVI',
+                'TEN_DONVI',
+                'DIA_CHI',
+                'SO_DT',
+                [
+                    'attribute' => 'CAP_TREN',
+                    'value' => 'cAPTREN.TEN_DONVI'
+                ],
+                ['class' => 'yii\grid\ActionColumn'],
             ],
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
-<?php Pjax::end(); ?></div>
+        ]); ?>
+    <?php Pjax::end(); ?>
+</div>

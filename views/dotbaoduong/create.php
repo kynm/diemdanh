@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /* @var $model app\models\Dotbaoduong */
 
 $this->title = 'Thêm đợt bảo dưỡng';
-$this->params['breadcrumbs'][] = ['label' => 'Dotbaoduongs', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Các đợt bảo dưỡng', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="dotbaoduong-create">

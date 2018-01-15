@@ -32,7 +32,7 @@ class KehoachbdtbController extends Controller
 
 
     public function beforeAction($action) { 
-         $this->enableCsrfValidation = false; 
+        $this->enableCsrfValidation = false; 
         return parent::beforeAction($action);
     }
 
@@ -58,12 +58,12 @@ class KehoachbdtbController extends Controller
      * @param string $MA_NOIDUNG
      * @return mixed
      */
-    // public function actionView($ID_DOTBD, $ID_THIETBI, $MA_NOIDUNG)
-    // {
-    //     return $this->render('view', [
-    //         'model' => $this->findModel($ID_DOTBD, $ID_THIETBI, $MA_NOIDUNG),
-    //     ]);
-    // }
+    public function actionView($ID_DOTBD, $ID_THIETBI, $MA_NOIDUNG)
+    {
+        return $this->render('view', [
+            'model' => $this->findModel($ID_DOTBD, $ID_THIETBI, $MA_NOIDUNG),
+        ]);
+    }
 
     /**
      * API to create new Kehoachbdtb model with url.
@@ -132,6 +132,20 @@ class KehoachbdtbController extends Controller
     {
         $this->findModel($ID_DOTBD, $ID_THIETBI, $MA_NOIDUNG)->delete();
         return $this->redirect((strpos(Yii::$app->request->getReferrer(), 'view') !== false) ? ['index'] : Yii::$app->request->referrer);
+    }
+
+    /**
+     * Creates a new Cong viec ca nhan.
+     * @return mixed
+     */
+    public function actionCongviec()
+    {
+        $nhanvien = Nhanvien::find()->where(['USER_NAME' => Yii::$app->user->identity->username])->one();
+        $query = Thuchienbd::find()->where(['ID_NHANVIEN' => $nhanvien->ID_NHANVIEN]);
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+        return $this->render('congviec', ['dataProvider' => $dataProvider]);
     }
 
     // public function actionDeleteMultiple()

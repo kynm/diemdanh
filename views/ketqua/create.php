@@ -59,7 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		        </div>	    
 
 			    <div class="col-md-12">
-			    	<?= $form->field($model, 'KETQUA')->textInput() ?>
+			    	<?= $form->field($model, 'KETQUA')->dropDownList([ 'Đạt' => 'Đạt', 'Chưa đạt' => 'Chưa đạt' ],['prompt'=>'Kết quả đợt bảo dưỡng' ]) ?>
 			    </div>
 			    
 			    <div class="col-md-12">

@@ -7,6 +7,7 @@ use app\models\Nhanvien;
 use app\models\NhanvienSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
 
 /**
@@ -63,15 +64,23 @@ class NhanvienController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Nhanvien();
+        if (Yii::$app->user->can('create-nhanvien')) {
+            # code...
+            $model = new Nhanvien();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->ID_NHANVIEN]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->ID_NHANVIEN]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
         } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            # code...
+            throw new ForbiddenHttpException;
+            
         }
+        
     }
 
     /**
@@ -82,15 +91,23 @@ class NhanvienController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if (Yii::$app->user->can('edit-nhanvien')) {
+            # code...
+            $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->ID_NHANVIEN]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->ID_NHANVIEN]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
         } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+            # code...
+            throw new ForbiddenHttpException;
+            
         }
+        
     }
 
     /**
@@ -101,9 +118,17 @@ class NhanvienController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if (Yii::$app->user->can('delete-nhanvien')) {
+            # code...
+            $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index']);
+        } else {
+            # code...
+            throw new ForbiddenHttpException;
+            
+        }
+        
     }
 
     /**

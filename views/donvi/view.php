@@ -6,8 +6,8 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Donvi */
 
-$this->title = $model->ID_DONVI;
-$this->params['breadcrumbs'][] = ['label' => 'Donvis', 'url' => ['index']];
+$this->title = $model->MA_DONVI;
+$this->params['breadcrumbs'][] = ['label' => 'Đơn vị chủ quản', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="donvi-view">

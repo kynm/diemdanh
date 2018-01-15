@@ -65,34 +65,37 @@ class DexuatnoidungController extends Controller
      */
     public function actionCreate()
     {
-        $model = new \yii\base\DynamicModel(['ID_LOAITB','LAN_BD','CHUKYBAODUONG','MA_NOIDUNG']);
-        // $model->attributeLabel(
-        //     return ['ID_LOAITB'=>'Loại thiết bị','LAN_BD' => 'Lần bảo dưỡng','CHUKYBAODUONG'=>'Chu kỳ bảo dưỡng','MA_NOIDUNG'=>'Mã nội dung']);
-        $model->addRule(['ID_LOAITB'], 'string')
-            ->addRule(['LAN_BD', 'CHUKYBAODUONG', 'MA_NOIDUNG'], 'string', ['max'=>32])
-            ->validate();
-        
-        if ($model->load(Yii::$app->request->post())) {
-            $listNoidung = $model->MA_NOIDUNG;
-            foreach ($listNoidung as $noidung) {
-                $exists = Dexuatnoidung::find()->where( [ 'ID_LOAITB' => $model->ID_LOAITB, 'LAN_BD' => $model->LAN_BD, 'MA_NOIDUNG' => $noidung ] )->exists();
-                if(!$exists) {
-                    $noidungModel = new Dexuatnoidung();
-                    $noidungModel->ID_LOAITB = $model->ID_LOAITB;
-                    $noidungModel->LAN_BD = $model->LAN_BD;
-                    $noidungModel->CHUKYBAODUONG = $model->CHUKYBAODUONG;
-                    $noidungModel->MA_NOIDUNG = $noidung;
-                    $noidungModel->save();                
-                } else {
-                    continue;
+        if (Yii::$app->user->can('create-dexuatnoidung')) {
+            $model = new \yii\base\DynamicModel(['ID_LOAITB','LAN_BD','CHUKYBAODUONG','MA_NOIDUNG']);
+            $model->addRule(['ID_LOAITB'], 'string')
+                ->addRule(['LAN_BD', 'CHUKYBAODUONG', 'MA_NOIDUNG'], 'string', ['max'=>32])
+                ->validate();
+            
+            if ($model->load(Yii::$app->request->post())) {
+                $listNoidung = $model->MA_NOIDUNG;
+                foreach ($listNoidung as $noidung) {
+                    $exists = Dexuatnoidung::find()->where( [ 'ID_LOAITB' => $model->ID_LOAITB, 'LAN_BD' => $model->LAN_BD, 'MA_NOIDUNG' => $noidung ] )->exists();
+                    if(!$exists) {
+                        $noidungModel = new Dexuatnoidung();
+                        $noidungModel->ID_LOAITB = $model->ID_LOAITB;
+                        $noidungModel->LAN_BD = $model->LAN_BD;
+                        $noidungModel->CHUKYBAODUONG = $model->CHUKYBAODUONG;
+                        $noidungModel->MA_NOIDUNG = $noidung;
+                        $noidungModel->save();                
+                    } else {
+                        continue;
+                    }
                 }
+                return $this->redirect(['index']);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
             }
-            return $this->redirect(['index']);
         } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            throw new ForbiddenHttpException;           
         }
+        
     }
 
     /**
@@ -105,14 +108,19 @@ class DexuatnoidungController extends Controller
      */
     public function actionUpdate($ID_LOAITB, $LAN_BD, $MA_NOIDUNG)
     {
-        $model = $this->findModel($ID_LOAITB, $LAN_BD, $MA_NOIDUNG);
+        if (Yii::$app->user->can('edit-dexuatnoidung')) {
+            $model = $this->findModel($ID_LOAITB, $LAN_BD, $MA_NOIDUNG);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'ID_LOAITB' => $model->ID_LOAITB, 'LAN_BD' => $model->LAN_BD, 'MA_NOIDUNG' => $model->MA_NOIDUNG]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'ID_LOAITB' => $model->ID_LOAITB, 'LAN_BD' => $model->LAN_BD, 'MA_NOIDUNG' => $model->MA_NOIDUNG]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
         } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+            throw new ForbiddenHttpException;
+            
         }
     }
 
@@ -126,9 +134,14 @@ class DexuatnoidungController extends Controller
      */
     public function actionDelete($ID_LOAITB, $LAN_BD, $MA_NOIDUNG)
     {
-        $this->findModel($ID_LOAITB, $LAN_BD, $MA_NOIDUNG)->delete();
+        if (Yii::$app->user->can('delete-dexuatnoidung')) {
+            $this->findModel($ID_LOAITB, $LAN_BD, $MA_NOIDUNG)->delete();
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index']);
+        } else {
+            throw new ForbiddenHttpException;
+            
+        }
     }
 
     /**

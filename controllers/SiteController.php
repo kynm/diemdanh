@@ -9,6 +9,10 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\User;
+use app\models\AuthAssignment;
+use app\models\AuthItem;
+use app\models\AuthItemChild;
 
 class SiteController extends Controller
 {
@@ -67,6 +71,20 @@ class SiteController extends Controller
         return $this->render('index');
     }
 
+    public function actionAssignRule()
+    {
+        $lv2_items = AuthItem::find()->where(['type' => 2])->all();
+        foreach ($lv2_items as $item) {
+            $exists = AuthItemChild::find()->where(['parent' => 'do-admin', 'child' => $item->name])->exists();
+            if (!$exists) {
+                $assign = new AuthItemChild;
+                $assign->parent = 'do-admin';
+                $assign->child = $item->name;
+                $assign->save();
+            }
+        }
+    }
+
     /**
      * Login action.
      *
@@ -87,6 +105,18 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
+
+    // public function beforeAction($action)
+    // {
+    //     $user = User::find()->where(['username' => Yii::$app->user->identity->username])->one();
+    //     $user->updated_at = time();
+    //     $user->save();
+    //     if (!parent::beforeAction($action)) {
+    //         return false;
+    //     }
+
+    //     return true; 
+    // }
 
     /**
      * Logout action.
@@ -127,4 +157,5 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
+
 }
