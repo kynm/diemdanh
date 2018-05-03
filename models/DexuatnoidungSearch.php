@@ -6,10 +6,9 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Dexuatnoidung;
-use yii\db\Query;
 
 /**
- * DexuatnoidungSearch represents the model behind the search form about `app\models\Dexuatnoidung`.
+ * DexuatnoidungSearch represents the model behind the search form of `app\models\Dexuatnoidung`.
  */
 class DexuatnoidungSearch extends Dexuatnoidung
 {
@@ -19,8 +18,7 @@ class DexuatnoidungSearch extends Dexuatnoidung
     public function rules()
     {
         return [
-            [['ID_LOAITB'], 'integer'],
-            [['LAN_BD', 'CHUKYBAODUONG', 'MA_NOIDUNG'], 'safe'],
+            [['MA_NOIDUNG', 'ID_LOAITB', 'CHUKYBAODUONG'], 'safe'],
         ];
     }
 
@@ -42,14 +40,19 @@ class DexuatnoidungSearch extends Dexuatnoidung
      */
     public function search($params)
     {
-        $query = Dexuatnoidung::find();
-        $query->addSelect(["ID_LOAITB", "LAN_BD", "CHUKYBAODUONG", 'GROUP_CONCAT(MA_NOIDUNG SEPARATOR "\n") AS MA_NOIDUNG '])
-        ->groupBy(["ID_LOAITB", "LAN_BD"])->all();
+        $query = Dexuatnoidung::find()->where(['ID_LOAITB' => $params['id']]);
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [ 
+                'pageSize' => 10, 
+                // 'pageParam' => 'dexuatnoidung-page-param' 
+            ],
+            // 'sort' => [
+            //     'sortParam' => 'dexuatnoidung-sort-param',
+            // ],
         ]);
 
         $this->load($params);
@@ -63,11 +66,10 @@ class DexuatnoidungSearch extends Dexuatnoidung
         // grid filtering conditions
         $query->andFilterWhere([
             'ID_LOAITB' => $this->ID_LOAITB,
+            'CHUKYBAODUONG' => $this->CHUKYBAODUONG,
         ]);
 
-        $query->andFilterWhere(['like', 'LAN_BD', $this->LAN_BD])
-            ->andFilterWhere(['like', 'CHUKYBAODUONG', $this->CHUKYBAODUONG])
-            ->andFilterWhere(['like', 'MA_NOIDUNG', $this->MA_NOIDUNG]);
+        $query->andFilterWhere(['like', 'MA_NOIDUNG', $this->MA_NOIDUNG]);
 
         return $dataProvider;
     }

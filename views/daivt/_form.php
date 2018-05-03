@@ -14,21 +14,40 @@ use app\models\Donvi;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'MA_DAIVT')->textInput(['maxlength' => true]) ?>
+    <div class="box box-primary">
+        <div class="box-body">
+            <div class="row">
+                <div class="col-sm-4">
+                    <?= $form->field($model, 'MA_DAIVT')->textInput(['maxlength' => true]) ?>
+                </div>
+                    
+                <div class="col-sm-4">
+                    <?= $form->field($model, 'TEN_DAIVT')->textInput(['maxlength' => true]) ?>
+                </div>
+                    
+                <div class="col-sm-4">
+                    <?= $form->field($model, 'DIA_CHI')->textInput(['maxlength' => true]) ?>
+                </div>
+            </div>
 
-    <?= $form->field($model, 'TEN_DAIVT')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'DIA_CHI')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'SO_DT')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'ID_DONVI')->dropDownList(
-        ArrayHelper::map(Donvi::find()->all(), 'ID_DONVI', 'TEN_DONVI'),
-        ['prompt' => 'Chọn đơn vị chủ quản']
-    ) ?>
-
-    <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-primary' : 'btn btn-primary']) ?>
+            <div class="row">
+                <div class="col-sm-4">
+                    <?= $form->field($model, 'SO_DT')->textInput(['maxlength' => true]) ?>
+                </div>
+                    
+                <div class="col-sm-4">
+                    <?= $form->field($model, 'ID_DONVI')->dropDownList(
+                        ArrayHelper::map(Donvi::find()->all(), 'ID_DONVI', 'TEN_DONVI'),
+                        ['prompt' => 'Chọn đơn vị chủ quản']
+                    ) ?>
+                </div>
+            </div>
+        </div>
+        <div class="box-footer">
+            <div class="text-center">
+                <?= Html::submitButton($model->isNewRecord ? '<i class="fa fa-plus"></i> Thêm' : '<i class="fa fa-pencil-square-o"></i> Cập nhật', ['class' => 'btn btn-primary btn-flat']) ?>
+            </div>
+        </div>
     </div>
 
     <?php ActiveForm::end(); ?>

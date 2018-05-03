@@ -80,6 +80,6 @@ class Daivt extends \yii\db\ActiveRecord
      */
     public function getTramvts()
     {
-        return $this->hasMany(Tramvt::className(), ['ID_DAIVT' => 'ID_DAI']);
+        return $this->hasMany(Tramvt::className(), ['ID_DAI' => 'ID_DAI']);
     }
 }

@@ -18,8 +18,8 @@ class NhanvienSearch extends Nhanvien
     public function rules()
     {
         return [
-            [['ID_NHANVIEN', 'ID_DONVI', 'ID_DAI'], 'integer'],
-            [['MA_NHANVIEN', 'TEN_NHANVIEN', 'CHUC_VU', 'DIEN_THOAI', 'GHI_CHU', 'USER_NAME'], 'safe'],
+            [['ID_NHANVIEN'], 'integer'],
+            [['MA_NHANVIEN', 'TEN_NHANVIEN', 'CHUC_VU', 'DIEN_THOAI', 'GHI_CHU', 'USER_NAME', 'ID_DONVI', 'ID_DAI'], 'safe'],
         ];
     }
 
@@ -57,15 +57,18 @@ class NhanvienSearch extends Nhanvien
             return $dataProvider;
         }
 
+        $query->joinWith('iDDONVI');
+        $query->joinWith('iDDAI');
+
         // grid filtering conditions
         $query->andFilterWhere([
             'ID_NHANVIEN' => $this->ID_NHANVIEN,
-            'ID_DONVI' => $this->ID_DONVI,
-            'ID_DAI' => $this->ID_DAI,
         ]);
 
         $query->andFilterWhere(['like', 'MA_NHANVIEN', $this->MA_NHANVIEN])
             ->andFilterWhere(['like', 'TEN_NHANVIEN', $this->TEN_NHANVIEN])
+            ->andFilterWhere(['like', 'donvi.TEN_DONVI', $this->ID_DONVI])
+            ->andFilterWhere(['like', 'daivt.TEN_DAIVT', $this->ID_DAI])
             ->andFilterWhere(['like', 'CHUC_VU', $this->CHUC_VU])
             ->andFilterWhere(['like', 'DIEN_THOAI', $this->DIEN_THOAI])
             ->andFilterWhere(['like', 'GHI_CHU', $this->GHI_CHU])

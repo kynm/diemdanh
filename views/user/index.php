@@ -11,26 +11,23 @@ $this->title = 'Users';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">
+    <div class="box box-primary">
+        <div class="box-body">
+            <p>
+                <?= Html::a('<i class="fa fa-plus"></i> Create User', ['create'], ['class' => 'btn btn-primary btn-flat']) ?>
+            </p>
+            <?= GridView::widget([
+                'dataProvider' => $dataProvider,
+                'filterModel' => $searchModel,
+                'columns' => [
+                    ['class' => 'yii\grid\SerialColumn'],
 
-    
-    
-
-    <p>
-        <?= Html::a('Create User', ['create'], ['class' => 'btn btn-primary']) ?>
-    </p>
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'username',
-            [
-                'attribute' => 'role',
-                'value' => 'role0.role_name'
-            ],
-            'email:email',
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+                    'username',
+                    'email:email',
+                    ['class' => 'yii\grid\ActionColumn',
+                    'template' => (Yii::$app->user->can('edit-user')) ? '{view} {update} {delete}' : '{view}'],
+                ],
+            ]); ?>
+        </div>
+    </div>
 </div>

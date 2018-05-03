@@ -3,7 +3,10 @@
 namespace app\controllers;
 
 use Yii;
+use app\models\Nhomtbi;
+use app\models\Thietbi;
 use app\models\Thietbitram;
+use app\models\Dexuatnoidung;
 use app\models\Noidungbaotri;
 use app\models\NoidungbaotriSearch;
 use yii\web\Controller;
@@ -11,6 +14,7 @@ use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
+use yii\data\ActiveDataProvider;
 /**
  * NoidungbaotriController implements the CRUD actions for Noidungbaotri model.
  */
@@ -76,7 +80,7 @@ class NoidungbaotriController extends Controller
             $model = new Noidungbaotri();
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->MA_NOIDUNG]);
+                return $this->redirect(['thietbi/view', 'id' => $model->ID_THIETBI]);
             } else {
                 return $this->render('create', [
                     'model' => $model,
@@ -87,6 +91,42 @@ class NoidungbaotriController extends Controller
             throw new ForbiddenHttpException;            
         }
         
+    }
+
+    public function actionCreatePost($MA_NOIDUNG, $ID_THIETBI, $NOIDUNG)
+    {
+        $model = new Noidungbaotri();
+        
+        $model->MA_NOIDUNG = $MA_NOIDUNG;
+        $model->ID_THIETBI = $ID_THIETBI;
+        $model->NOIDUNG = $NOIDUNG;
+        $model->save();
+        
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    public function actionAutoCreate()
+    {
+        $noidungs = Noidungbaotri::find()->all();
+        foreach ($noidungs as $noidung) {
+            $noidung->delete();
+        }
+        $groupDevices = Nhomtbi::find()->all();
+        foreach ($groupDevices as $groupDevice) {
+            $devices = Thietbi::find()->where(['ID_NHOMTB' => $groupDevice->ID_NHOM])->all();
+            $x = 1;
+            foreach ($devices as $device) {
+                for ($i=1; $i < 6 ; $i++) { 
+                    $noidung = new Noidungbaotri;
+                    $noidung->MA_NOIDUNG = $groupDevice->ID_NHOM . $x . $i;
+                    $noidung->ID_THIETBI = $device->ID_THIETBI;
+                    $noidung->NOIDUNG = 'Nội dung bảo dưỡng số '.$i.' dành cho '.$device->TEN_THIETBI;
+                    $noidung->save(false);
+                }
+                $x++;
+            }
+        }
+        $this->redirect(['index']);
     }
 
     /**
@@ -127,7 +167,7 @@ class NoidungbaotriController extends Controller
             # code...
             $this->findModel($id)->delete();
 
-            return $this->redirect(['index']);
+            return $this->redirect(Yii::$app->request->referrer);
         } else {
             # code...
             throw new ForbiddenHttpException;
@@ -138,17 +178,48 @@ class NoidungbaotriController extends Controller
 
     public function actionLists($id)
     {
-        $noidung = Noidungbaotri::find()
-        ->where(['ID_THIETBI'=>$id])
-        ->all();
+        $tbi = Thietbitram::find()->where(['ID_THIETBI' => $id])->one();
+        // $noidung = Noidungbaotri::find()
+        // ->where(['ID_THIETBI'=>$tbi->ID_LOAITB])
+        // ->all();
 
-        if(isset($noidung) && count($noidung)>0) {
-            foreach($noidung as $each) {
-                echo "<label><input type=\"checkbox\" name=\"DynamicModel[MA_NOIDUNG][]\" value=".$each->MA_NOIDUNG."> ".$each->NOIDUNG."</label> <br>" ;
+
+
+        $query = Noidungbaotri::find()->where(['ID_THIETBI'=>$tbi->ID_LOAITB]);
+        // ->all();
+        // print_r($query);
+        // die;
+        $noidungthietbiDataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [ 
+                'pageSize' => 10,
+            ],
+        ]);
+
+
+        $infoDexuat = Dexuatnoidung::find()->where(['ID_LOAITB' => $tbi->ID_LOAITB, 'LANBD' => $tbi->LANBD])->one();
+        if (isset($infoDexuat)) {
+            $return_data['info'] = '<strong>Lần bảo dưỡng số '.$infoDexuat->LANBD.', chu kỳ '.$infoDexuat->cHUKYBAODUONG->alias.'</strong> <br>';
+            $dexuatArray = Dexuatnoidung::find()->where(['ID_LOAITB' => $tbi->ID_LOAITB, 'LANBD' => $tbi->LANBD])->all();
+            foreach ($dexuatArray as $dexuat) {
+                $return_data['info'] = $return_data['info'].'<i class="fa fa-check-square-o"></i> '.$dexuat->mANOIDUNG->NOIDUNG.'<br>';
             }
-        }else {
-            echo "-";
+        } else {
+            $return_data['info'] = 'Chưa có nội dung đề xuất cho thiết bị này!!!';
         }
+        
+        
+        // $return_data['noidung'] = '';
+        // if(isset($noidung) && count($noidung)>0) {
+        //     foreach($noidung as $each) {
+        //         $return_data['noidung'] = $return_data['noidung'] . "<input type=\"checkbox\" name=\"dsnoidung[]\" value=".$each->MA_NOIDUNG."> ".$each->NOIDUNG." <br>" ;
+        //     }
+        // }else {
+        //     $return_data['noidung'] = "Không có nội dung";
+        // }
+        // echo json_encode($return_data);
+        echo json_encode($noidungthietbiDataProvider);
+        exit;
     }
 
     public function actionListstbt($id)

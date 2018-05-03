@@ -18,8 +18,8 @@ class DonviSearch extends Donvi
     public function rules()
     {
         return [
-            [['ID_DONVI', 'CAP_TREN'], 'integer'],
-            [['MA_DONVI', 'TEN_DONVI', 'DIA_CHI', 'SO_DT'], 'safe'],
+            [['ID_DONVI'], 'integer'],
+            [['MA_DONVI', 'TEN_DONVI', 'DIA_CHI', 'SO_DT', 'CAP_TREN'], 'safe'],
         ];
     }
 
@@ -60,7 +60,6 @@ class DonviSearch extends Donvi
         // grid filtering conditions
         $query->andFilterWhere([
             'ID_DONVI' => $this->ID_DONVI,
-            'CAP_TREN' => $this->CAP_TREN,
         ]);
 
         $query->andFilterWhere(['like', 'MA_DONVI', $this->MA_DONVI])

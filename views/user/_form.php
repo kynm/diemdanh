@@ -14,19 +14,27 @@ use app\models\BoPhan;
 <div class="user-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
-    <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'password')->passwordInput(['minlength' => 5]) ?>
-
-    <?= $form->field($model, 'role')->dropDownList(ArrayHelper::map(Role::find()->all(), 'id', 'role_name')) ?>
-
-    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
-
-    <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-primary' : 'btn btn-primary']) ?>
-    </div>
-
+    <div class="box box-primary">
+	    <div class="box-body">
+	        <div class="col-sm-4">
+    			<?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
+	        </div>
+	        	
+	        <div class="col-sm-4">
+    			<?= $form->field($model, 'password')->passwordInput(['minlength' => 5]) ?>
+	        </div>
+	        	
+	        <div class="col-sm-4">
+    			<?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+	        </div>
+	        	
+	    </div>
+	    <div class="box-footer">
+		    <div class="text-center">
+		        <?= Html::submitButton($model->isNewRecord ? '<i class="fa fa-plus"></i> Thêm' : '<i class="fa fa-pencil-square-o"></i> Cập nhật', ['class' => 'btn btn-primary btn-flat']) ?>
+		    </div>
+	    </div>
+	</div>
     <?php ActiveForm::end(); ?>
 
 </div>

@@ -18,8 +18,8 @@ class ThietbiSearch extends Thietbi
     public function rules()
     {
         return [
-            [['ID_THIETBI', 'ID_NHOMTB'], 'integer'],
-            [['MA_THIETBI', 'TEN_THIETBI', 'HANGSX', 'THONGSOKT', 'PHUKIEN'], 'safe'],
+            [['ID_THIETBI'], 'integer'],
+            [['MA_THIETBI', 'TEN_THIETBI', 'HANGSX', 'THONGSOKT', 'PHUKIEN', 'ID_NHOMTB'], 'safe'],
         ];
     }
 
@@ -57,15 +57,59 @@ class ThietbiSearch extends Thietbi
             return $dataProvider;
         }
 
+        $query->joinWith('iDNHOMTB');
+
         // grid filtering conditions
         $query->andFilterWhere([
             'ID_THIETBI' => $this->ID_THIETBI,
-            'ID_NHOMTB' => $this->ID_NHOMTB,
         ]);
 
         $query->andFilterWhere(['like', 'MA_THIETBI', $this->MA_THIETBI])
             ->andFilterWhere(['like', 'TEN_THIETBI', $this->TEN_THIETBI])
             ->andFilterWhere(['like', 'HANGSX', $this->HANGSX])
+            ->andFilterWhere(['like', 'nhomtbi.TEN_NHOM', $this->ID_NHOMTB])
+            ->andFilterWhere(['like', 'THONGSOKT', $this->THONGSOKT])
+            ->andFilterWhere(['like', 'PHUKIEN', $this->PHUKIEN]);
+
+        return $dataProvider;
+    }
+
+    /**
+     * Creates data provider instance with search query applied
+     *
+     * @param array $params
+     *
+     * @return ActiveDataProvider
+     */
+    public function searchNhom($params)
+    {
+        $query = Thietbi::find()->where(['ID_NHOMTB' => $params['id']]);
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        $query->joinWith('iDNHOMTB');
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'ID_THIETBI' => $this->ID_THIETBI,
+        ]);
+
+        $query->andFilterWhere(['like', 'MA_THIETBI', $this->MA_THIETBI])
+            ->andFilterWhere(['like', 'TEN_THIETBI', $this->TEN_THIETBI])
+            ->andFilterWhere(['like', 'HANGSX', $this->HANGSX])
+            ->andFilterWhere(['like', 'nhomtbi.TEN_NHOM', $this->ID_NHOMTB])
             ->andFilterWhere(['like', 'THONGSOKT', $this->THONGSOKT])
             ->andFilterWhere(['like', 'PHUKIEN', $this->PHUKIEN]);
 

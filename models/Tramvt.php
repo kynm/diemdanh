@@ -7,16 +7,18 @@ use Yii;
 /**
  * This is the model class for table "tramvt".
  *
- * @property integer $ID_TRAM
+ * @property int $ID_TRAM
  * @property string $MA_TRAM
  * @property string $DIADIEM
- * @property integer $ID_DAIVT
- * @property string $ID_NHANVIEN
+ * @property double $KINH_DO
+ * @property double $VI_DO
+ * @property int $ID_DAI
+ * @property int $ID_NHANVIEN
  *
  * @property Dotbaoduong[] $dotbaoduongs
  * @property Thietbitram[] $thietbitrams
- * @property Daivt $iDDAIVT
- * @property Nhanvien $iDNHANVIEN
+ * @property Daivt $dAI
+ * @property Nhanvien $nHANVIEN
  */
 class Tramvt extends \yii\db\ActiveRecord
 {
@@ -35,10 +37,11 @@ class Tramvt extends \yii\db\ActiveRecord
     {
         return [
             [['MA_TRAM'], 'required'],
-            [['ID_DAIVT', 'ID_NHANVIEN'], 'integer'],
+            [['KINH_DO', 'VI_DO'], 'number'],
+            [['ID_DAI', 'ID_NHANVIEN'], 'integer'],
             [['MA_TRAM'], 'string', 'max' => 32],
             [['DIADIEM'], 'string', 'max' => 255],
-            [['ID_DAIVT'], 'exist', 'skipOnError' => true, 'targetClass' => Daivt::className(), 'targetAttribute' => ['ID_DAIVT' => 'ID_DAI']],
+            [['ID_DAI'], 'exist', 'skipOnError' => true, 'targetClass' => Daivt::className(), 'targetAttribute' => ['ID_DAI' => 'ID_DAI']],
             [['ID_NHANVIEN'], 'exist', 'skipOnError' => true, 'targetClass' => Nhanvien::className(), 'targetAttribute' => ['ID_NHANVIEN' => 'ID_NHANVIEN']],
         ];
     }
@@ -49,10 +52,12 @@ class Tramvt extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'ID_TRAM' => 'ID Trạm',
+            'ID_TRAM' => 'ID',
             'MA_TRAM' => 'Mã trạm',
             'DIADIEM' => 'Địa điểm',
-            'ID_DAIVT' => 'Đài quản lý',
+            'KINH_DO' => 'Kinh độ',
+            'VI_DO' => 'Vĩ độ',
+            'ID_DAI' => 'Đài quản lý',
             'ID_NHANVIEN' => 'Nhân viên quản lý',
         ];
     }
@@ -76,9 +81,9 @@ class Tramvt extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIDDAIVT()
+    public function getIDDAI()
     {
-        return $this->hasOne(Daivt::className(), ['ID_DAI' => 'ID_DAIVT']);
+        return $this->hasOne(Daivt::className(), ['ID_DAI' => 'ID_DAI']);
     }
 
     /**

@@ -18,8 +18,8 @@ class DaivtSearch extends Daivt
     public function rules()
     {
         return [
-            [['ID_DAI', 'ID_DONVI'], 'integer'],
-            [['MA_DAIVT', 'TEN_DAIVT', 'DIA_CHI', 'SO_DT'], 'safe'],
+            [['ID_DAI'], 'integer'],
+            [['MA_DAIVT', 'TEN_DAIVT', 'DIA_CHI', 'SO_DT', 'ID_DONVI'], 'safe'],
         ];
     }
 
@@ -57,15 +57,17 @@ class DaivtSearch extends Daivt
             return $dataProvider;
         }
 
+        $query->joinWith('iDDONVI');
+
         // grid filtering conditions
         $query->andFilterWhere([
             'ID_DAI' => $this->ID_DAI,
-            'ID_DONVI' => $this->ID_DONVI,
         ]);
 
         $query->andFilterWhere(['like', 'MA_DAIVT', $this->MA_DAIVT])
             ->andFilterWhere(['like', 'TEN_DAIVT', $this->TEN_DAIVT])
             ->andFilterWhere(['like', 'DIA_CHI', $this->DIA_CHI])
+            ->andFilterWhere(['like', 'TEN_DONVI', $this->ID_DONVI])
             ->andFilterWhere(['like', 'SO_DT', $this->SO_DT]);
 
         return $dataProvider;

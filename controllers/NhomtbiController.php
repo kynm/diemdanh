@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\ThietbiSearch;
+use app\models\ActivitiesLog;
 use app\models\Nhomtbi;
 use app\models\NhomtbiSearch;
 use yii\web\Controller;
@@ -54,7 +55,7 @@ class NhomtbiController extends Controller
     public function actionView($id)
     {
         $searchModel = new ThietbiSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->searchNhom(Yii::$app->request->queryParams);
 
         return $this->render('view', [
             'model' => $this->findModel($id),
@@ -75,7 +76,13 @@ class NhomtbiController extends Controller
             $model = new Nhomtbi();
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->ID_NHOM]);
+                $log = new ActivitiesLog;
+                $log->activity_type = 'device-add';
+                $log->description = Yii::$app->user->identity->nhanvien->TEN_NHANVIEN." đã thêm nhóm thiết bị ". $model->MA_NHOM;
+                $log->user_id = Yii::$app->user->identity->id;
+                $log->create_at = time();
+                $log->save();
+                return $this->redirect(['index']);
             } else {
                 return $this->render('create', [
                     'model' => $model,
@@ -86,6 +93,21 @@ class NhomtbiController extends Controller
             throw new ForbiddenHttpException;
         }
         
+    }
+
+    public function actionCreatePost($MA_NHOM, $TEN_NHOM)
+    {
+        $model = new Nhomtbi;
+        $model->MA_NHOM = $MA_NHOM;
+        $model->TEN_NHOM = $TEN_NHOM;
+        $model->save();
+        $log = new ActivitiesLog;
+        $log->activity_type = 'device-add';
+        $log->description = Yii::$app->user->identity->nhanvien->TEN_NHANVIEN." đã thêm nhóm thiết bị ". $model->MA_NHOM;
+        $log->user_id = Yii::$app->user->identity->id;
+        $log->create_at = time();
+        $log->save();
+        return $this->redirect(['nhomtbi/index']);
     }
 
     /**
@@ -123,7 +145,7 @@ class NhomtbiController extends Controller
         if (Yii::$app->user->can('delete-nhomtb')) {
             # code...
             $this->findModel($id)->delete();
-
+            
             return $this->redirect(['index']);
         } else {
             # code...

@@ -3,7 +3,11 @@
 namespace app\controllers;
 
 use Yii;
+use app\models\ActivitiesLog;
 use app\models\Tramvt;
+use app\models\Dexuatnoidung;
+use app\models\Noidungcongviec;
+use app\models\Dieuchuyenthietbi;
 use app\models\Thietbitram;
 use app\models\ThietbitramSearch;
 use app\models\Dotbaoduong;
@@ -12,6 +16,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
+use yii\data\ActiveDataProvider;
 
 /**
  * ThietbitramController implements the CRUD actions for Thietbitram model.
@@ -61,8 +66,36 @@ class ThietbitramController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+
+        // $transDevice = new Dieuchuyenthietbi;
+
+        // if ($transDevice->load(Yii::$app->request->post())) {
+        //     $transDevice->ID_THIETBI = $model->ID_THIETBI;
+        //     $transDevice->ID_TRAM_NGUON = $model->ID_TRAM;
+        //     $transDevice->save(false);
+
+        //     $model->ID_TRAM = $transDevice->ID_TRAM_DICH;
+        //     $model->save(false);
+        // }
+
+        $query1 = Noidungcongviec::find()->where(['ID_THIETBI' => $id]);
+
+        $lsbaoduongProvider = new ActiveDataProvider([
+            'query' => $query1,
+        ]);
+
+        $query2 = Dieuchuyenthietbi::find()->where(['ID_THIETBI' => $id]);
+
+        $dieuchuyenProvider = new ActiveDataProvider([
+            'query' => $query2,
+        ]);
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            // 'transDevice' => $transDevice,
+            'lsbaoduongProvider' => $lsbaoduongProvider,
+            'dieuchuyenProvider' => $dieuchuyenProvider,
         ]);
     }
 
@@ -77,10 +110,46 @@ class ThietbitramController extends Controller
             $model = new Thietbitram();
 
             if ($model->load(Yii::$app->request->post())) {
-                // print_r($model);
-                // die;
+                $chukyArray = Dexuatnoidung::find()
+                ->where(['ID_LOAITB' => $model->ID_LOAITB])
+                ->groupBy('CHUKYBAODUONG')
+                ->orderBy(['CHUKYBAODUONG' => SORT_ASC])
+                ->all();
+                foreach ($chukyArray as $chuky) {
+                    // echo $chuky->cHUKYBAODUONG->value."<br>";
+                    $ngaysosanh = strtotime(date('d-m-Y',strtotime("- ".$chuky->cHUKYBAODUONG->value)));
+                    if ($ngaysosanh <= strtotime($model->NGAYSD)) {
+                        $model->LANBD = $chuky->LANBD;
+                        
+                        //////////Them ngay bao duong tiep theo de xuat
+                        if ($model->LANBAODUONGTIEP == NULL) {
+                            $ngaybaoduong = date_create($model->NGAYSD);
+                            date_add($ngaybaoduong, date_interval_create_from_date_string($chuky->cHUKYBAODUONG->value));
+                            $model->LANBAODUONGTIEP = date_format($ngaybaoduong, 'Y-m-d');
+                        }
+                        
+                        //////////Them ngay bao duong gan nhat theo de xuat
+                        if ($model->LANBAODUONGTRUOC) {
+                            $lanbdtruoc = $model->LANBD - 1;
+                            $chukygannhat = Dexuatnoidung::find()->where(['ID_LOAITB' => $model->ID_LOAITB, 'LANBD' => $lanbdtruoc])->one();
+                            $ngaybaoduongtruoc = date_create($model->NGAYSD);
+                            date_add($ngaybaoduongtruoc, date_interval_create_from_date_string($chukygannhat->cHUKYBAODUONG->value));
+                            $model->LANBAODUONGTRUOC = date_format($ngaybaoduongtruoc, 'Y-m-d');
+                        }
+                        break;
+                    }
+                }
+
+
                 $model->save();
-                return $this->redirect(Yii::$app->request->referrer);
+                $log = new ActivitiesLog;
+                $log->activity_type = 'device-add';
+                $log->description = Yii::$app->user->identity->nhanvien->TEN_NHANVIEN." đã thêm thiết bị ". $model->iDLOAITB->TEN_THIETBI ." vào trạm ". $model->iDTRAM->MA_TRAM;
+                $log->user_id = Yii::$app->user->identity->id;
+                $log->create_at = time();
+                $log->save();
+
+                return $this->redirect(['tramvt/view', 'id' => $model->ID_TRAM]);
             } else {
                 return $this->render('create', [
                     'model' => $model,
@@ -97,7 +166,6 @@ class ThietbitramController extends Controller
         $model = new Thietbitram();
         $model->load(Yii::$app->request->queryParams);
         $model->save();
-        print_r($model->ID_LOAITB);
         return $this->redirect(Yii::$app->request->referrer);
     }
 
@@ -109,11 +177,11 @@ class ThietbitramController extends Controller
      */
     public function actionUpdate($id)
     {
+        $model = $this->findModel($id);
         if (Yii::$app->user->can('edit-tbitram')) {
-            # code...
-            $model = $this->findModel($id);
-
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            
+            if ($model->load(Yii::$app->request->post())) {
+                $model->save();
                 return $this->redirect(['view', 'id' => $model->ID_THIETBI]);
             } else {
                 return $this->render('update', [
@@ -137,8 +205,8 @@ class ThietbitramController extends Controller
         if (Yii::$app->user->can('delete-tbitram')) {
             # code...
             $this->findModel($id)->delete();
-
-            return $this->redirect(['index']);
+            
+            return $this->redirect(Yii::$app->request->referrer);
         } else {
             # code...
             throw new ForbiddenHttpException;            
@@ -163,11 +231,38 @@ class ThietbitramController extends Controller
                 ->one();
                 echo "<option value='".$each->ID_THIETBI."'>".$each->iDLOAITB->TEN_THIETBI."</option>";
             }
+            return;
         }else {
             echo "-";
         }
     }
 
+
+    public function actionCheckDate()
+    {
+        $thietbiArrayModel = Thietbitram::find()->all();
+        foreach ($thietbiArrayModel as $model) {
+            $chukyArray = Dexuatnoidung::find()
+            ->where(['ID_LOAITB' => $model->ID_LOAITB])
+            ->groupBy('CHUKYBAODUONG')
+            ->orderBy(['CHUKYBAODUONG' => SORT_ASC])
+            ->all();
+            foreach ($chukyArray as $chuky) {
+                $ngaysosanh = strtotime(date('d-m-Y',strtotime("- ".$chuky->cHUKYBAODUONG->value)));
+                if ($ngaysosanh <= strtotime($model->NGAYSD)) {
+                    
+                    $model->LANBD = $chuky->LANBD;
+                    $ngaybaoduong = date_create($model->NGAYSD);
+
+                    date_add($ngaybaoduong, date_interval_create_from_date_string($chuky->cHUKYBAODUONG->value));
+                    $model->LANBAODUONGTIEP = date_format($ngaybaoduong, 'Y-m-d');
+                    break;
+                }
+            }
+            $model->save();
+        }
+        return $this->redirect(['index']);
+    }
 
     /**
      * Finds the Thietbitram model based on its primary key value.

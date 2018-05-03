@@ -24,7 +24,7 @@ use app\models\Thietbi;
                 <?= $form->field($model, 'ID_THIETBI')->dropDownList(
                     ArrayHelper::map(Thietbi::find()->all(), 'ID_THIETBI', 'TEN_THIETBI'),
                     [
-                        'prompt' => 'Chọn nhóm thiết bị',
+                        'prompt' => 'Chọn loại thiết bị',
                         'options' => [@$_GET['id'] => ['Selected'=>'selected']]
                     ]) ?>
             </div>
@@ -34,7 +34,7 @@ use app\models\Thietbi;
         </div>
         <div class="box-footer">
             <div class="text-center">
-                <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-primary' : 'btn btn-primary']) ?>
+                <?= Html::submitButton($model->isNewRecord ? '<i class="fa fa-plus"></i> Thêm' : '<i class="fa fa-pencil-square-o"></i> Cập nhật', ['class' => 'btn btn-primary btn-flat']) ?>
             </div>            
         </div>
     

@@ -40,14 +40,15 @@ class Nhanvien extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['MA_NHANVIEN', 'TEN_NHANVIEN', 'DIEN_THOAI', 'ID_DONVI'], 'required'],
-            [['ID_DONVI', 'ID_DAI'], 'integer'],
+            [['MA_NHANVIEN', 'TEN_NHANVIEN', 'ID_DONVI'], 'required'],
+            [['ID_DONVI'], 'integer'],
             [['MA_NHANVIEN'], 'string', 'max' => 10],
             [['TEN_NHANVIEN'], 'string', 'max' => 100],
             [['CHUC_VU', 'USER_NAME'], 'string', 'max' => 50],
             [['DIEN_THOAI'], 'string', 'max' => 15],
             [['GHI_CHU'], 'string', 'max' => 200],
-            [['MA_NHANVIEN'], 'unique'],
+            [['ID_DAI', 'DIEN_THOAI'], 'safe'],
+            [['MA_NHANVIEN', 'USER_NAME'], 'unique'],
             [['ID_DAI'], 'exist', 'skipOnError' => true, 'targetClass' => Daivt::className(), 'targetAttribute' => ['ID_DAI' => 'ID_DAI']],
             [['ID_DONVI'], 'exist', 'skipOnError' => true, 'targetClass' => Donvi::className(), 'targetAttribute' => ['ID_DONVI' => 'ID_DONVI']],
         ];
@@ -90,6 +91,14 @@ class Nhanvien extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['username' => 'USER_NAME']);
+    }    
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getIDDAI()
     {
         return $this->hasOne(Daivt::className(), ['ID_DAI' => 'ID_DAI']);
@@ -101,6 +110,14 @@ class Nhanvien extends \yii\db\ActiveRecord
     public function getIDDONVI()
     {
         return $this->hasOne(Donvi::className(), ['ID_DONVI' => 'ID_DONVI']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getChucvu()
+    {
+        return $this->hasOne(Chucvu::className(), ['id' => 'CHUC_VU']);
     }
 
     /**

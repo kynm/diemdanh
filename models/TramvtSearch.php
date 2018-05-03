@@ -18,8 +18,8 @@ class TramvtSearch extends Tramvt
     public function rules()
     {
         return [
-            [['ID_TRAM', 'ID_DAIVT', 'ID_NHANVIEN'], 'integer'],
-            [['MA_TRAM', 'DIADIEM'], 'safe'],
+            [['ID_TRAM'], 'integer'],
+            [['MA_TRAM', 'DIADIEM', 'ID_DAI', 'ID_NHANVIEN'], 'safe'],
         ];
     }
 
@@ -57,14 +57,17 @@ class TramvtSearch extends Tramvt
             return $dataProvider;
         }
 
+        $query->joinWith('iDDAI');
+        $query->joinWith('iDNHANVIEN');
+
         // grid filtering conditions
         $query->andFilterWhere([
             'ID_TRAM' => $this->ID_TRAM,
-            'ID_DAIVT' => $this->ID_DAIVT,
-            'ID_NHANVIEN' => $this->ID_NHANVIEN,
         ]);
 
         $query->andFilterWhere(['like', 'MA_TRAM', $this->MA_TRAM])
+            ->andFilterWhere(['like', 'daivt.TEN_DAIVT', $this->ID_DAI])
+            ->andFilterWhere(['like', 'nhanvien.TEN_NHANVIEN', $this->ID_NHANVIEN])
             ->andFilterWhere(['like', 'DIADIEM', $this->DIADIEM]);
 
         return $dataProvider;

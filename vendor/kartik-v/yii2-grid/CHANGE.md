@@ -5,7 +5,17 @@ Change Log: `yii2-grid`
 
 **Date:** _work in progress_
 
+- (bug #791): Correct PHP Doc for `getDataCellValue` method in `ColumnTrait`.
+- (enh #787): Correct grid group summary decimal formatting for whole numbers.
+- (enh #786): Correct docs for grid group footer/header `customCallback`.
+- (enh #781): Add deprecated support for `ActionColumnAsset`.
+- (enh #770, #771): Add grid filter support for the Krajee NumberControl.
+- (enh #767): Add capability to format ExportMenu spreadsheet cells.
+- Update copyright year to current.
+- (enh #766): Correct export for EditableColumn when `asPopover = false`.
+- (enh #760): Use request `getQueryParam` instead of `$_GET`.
 - (enh #756): Correct default CSS class for `toolbarContainer`.
+- (bug #755): Correct grid group summary row to consider `hiddenFromExport` and `hidden` properties.
 - (enh #754): Enhance group summary number formatting for integers.
 - (bug #752): Correct string position validation for layout tokens.
 - (enh #747): Remove unnecessary variable declaration `$grid`.

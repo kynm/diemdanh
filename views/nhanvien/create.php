@@ -7,7 +7,8 @@ use yii\helpers\Html;
 /* @var $model app\models\Nhanvien */
 
 $this->title = 'Thêm nhân viên';
-$this->params['breadcrumbs'][] = ['label' => 'Nhanviens', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Đơn vị', 'url' => ['donvi/index']];
+$this->params['breadcrumbs'][] = ['label' => 'Nhân viên', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="nhanvien-create">
@@ -16,6 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
+        'authModel' => $authModel,
     ]) ?>
 
 </div>

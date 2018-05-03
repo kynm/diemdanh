@@ -5,39 +5,42 @@
 /* @var $model app\models\LoginForm */
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
 
 $this->title = 'Login';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-login">
     
+<div class="login-form">
 
-    <p>Please fill out the following fields to login:</p>
+    <img class="img-responsive col-sm-offset-3" src="<?= Url::to(Yii::$app->homeUrl) ?>/dist/img/logo.png">
+        
+    <div class="col-sm-4 col-sm-offset-4">
+        <?php $form = ActiveForm::begin([
+            'id' => 'login-form',
+            'layout' => 'horizontal',
+            'fieldConfig' => [
+                'template' => "{label}\n{input}\n{error}",
+                // 'labelOptions' => ['class' => 'col-sm-1 control-label'],
+            ],
+        ]); ?>
 
-    <?php $form = ActiveForm::begin([
-        'id' => 'login-form',
-        'layout' => 'horizontal',
-        'fieldConfig' => [
-            'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
-            'labelOptions' => ['class' => 'col-lg-1 control-label'],
-        ],
-    ]); ?>
+            <?= $form->field($model, 'username')->textInput(['autofocus' => false, 'placeholder' => 'Tên đăng nhập' ])->label(false) ?>
 
-        <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+            <?= $form->field($model, 'password')->passwordInput(['placeholder' => 'Mật khẩu' ])->label(false) ?>
 
-        <?= $form->field($model, 'password')->passwordInput() ?>
+            <?= $form->field($model, 'rememberMe')->checkbox([
+                'template' => "{input} {label}\n{error}",
+            ]) ?>
 
-        <?= $form->field($model, 'rememberMe')->checkbox([
-            'template' => "<div class=\"col-lg-offset-1 col-lg-3\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>",
-        ]) ?>
-
-        <div class="form-group">
-            <div class="col-lg-offset-1 col-lg-11">
-                <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+            <div class="form-group">
+                <div class="text-center">
+                    <?= Html::submitButton('Đăng nhập', ['class' => 'btn btn-primary btn-flat', 'name' => 'login-button']) ?>
+                </div>
             </div>
-        </div>
 
-    <?php ActiveForm::end(); ?>
+        <?php ActiveForm::end(); ?>
+    </div>
 
 </div>

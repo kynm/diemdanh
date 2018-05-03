@@ -1,12 +1,14 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 use kartik\form\ActiveForm;
 use app\models\Thietbitram;
 use app\models\Thietbi;
 use app\models\Tramvt;
+use app\models\Dotbaoduong;
 use yii\helpers\ArrayHelper;
 use kartik\date\DatePicker;
 
@@ -14,169 +16,118 @@ use kartik\date\DatePicker;
 /* @var $this yii\web\View */
 /* @var $model app\models\Tramvt */
 
-$this->title = $model->ID_TRAM;
-$this->params['breadcrumbs'][] = ['label' => 'Tramvts', 'url' => ['index']];
+$this->title = 'Trạm '.$model->MA_TRAM;
+$this->params['breadcrumbs'][] = ['label' => 'Quản lý thiết bị', 'url' => ['nhomtbi/index']];
+$this->params['breadcrumbs'][] = ['label' => 'Quản lý thiết bị theo trạm', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
+$visible = false;
+if (Yii::$app->user->can('edit-tramvt')) {
+    switch (Yii::$app->user->identity->nhanvien->chucvu->cap) {
+        case '1':
+            $visible = true;
+            break;
+        case '2':
+            if ($model->iDDAI->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+                $visible = true;
+            }
+            break;
+        case '3':
+            if ($model->ID_DAI == Yii::$app->user->identity->nhanvien->ID_DAI) {
+                $visible = true;
+            }
+            break;
+        case '4':
+            if ($model->ID_NHANVIEN == Yii::$app->user->identity->nhanvien->ID_NHANVIEN) {
+                $visible = true;
+            }
+            break;
+        case '5':
+            if ($model->ID_DAI == Yii::$app->user->identity->nhanvien->ID_DAI) {
+                $visible = true;
+            }
+            break;
+        
+        default:
+            $visible = false;
+            break;
+    }
+}
+
 ?>
 <div class="tramvt-view">
-    <p>
-        <?= Html::a(
-            '<i class="glyphicon glyphicon-plus"></i> Thêm thiết bị', 
-            ['thietbitram/create', 'id' => $model->ID_TRAM], 
-            [
-                'class'=>'btn btn-primary'
-            ]
-        ) ?>
-    </p>
 
-    <?php Pjax::begin(); ?>    <?= GridView::widget([
-            'dataProvider' => $dataProvider,
-            'filterModel' => $searchModel,
-            'columns' => [
-                ['class' => 'yii\grid\SerialColumn'],
-
-                [
-                    'attribute' => 'ID_LOAITB',
-                    'value' => 'iDLOAITB.TEN_THIETBI'
-                ],
-                [
-                    'attribute' => 'ID_TRAM',
-                    'value' => 'iDTRAM.MA_TRAM'
-                ],
-                'LANBAODUONGTRUOC',
-                'LANBAODUONGTIEP',
-
-                [
-                    'class' => 'yii\grid\ActionColumn',
-                    'template' => Yii::$app->user->can('create-tramvt') ? '{view} {update} {delete}' : '{view}',
-                    
-                    'urlCreator' => function ($action, $model, $key, $index) {
-                        if ($action === 'view') {
-                            $url ='index.php?r=thietbitram/view&id='.$key;
-                            return $url;
-                        }
-                        if ($action === 'update') {
-                            $url ='index.php?r=thietbitram/update&id='.$key;
-                            return $url;
-                        }
-                        if ($action === 'delete') {
-                            $url ='index.php?r=thietbitram/delete&id='.$key;
-                            return $url;
-                        }
-                    }
-                ],
-            ],
-        ]); ?>
-    <?php Pjax::end(); ?>
-
-</div>
-
-
-<div class="modal fade" id="themNoiDung" tabindex="-1" role="dialog" aria-labelledby="themNoiDungLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+    <div class="box box-primary">
+        <div class="box-body">
+            <div class="row">
+            
+                <?php
+                $form = ActiveForm::begin(['method' => 'get']);
+                if ($visible) {
+                    echo '<div class="col-sm-3">'
+                        .Html::dropDownList('action', NULL,
+                            [
+                                1 => 'Thêm thiết bị',
+                                2 => 'Điều chuyển thiết bị',
+                                3 => 'Xóa nhiều thiết bị'
+                            ], 
+                            [
+                                'prompt' => 'Chọn hành động',
+                                'class' => 'form-control'
+                            ]).
+                        '</div>'
+                        .Html::submitButton(
+                            '<i class="glyphicon glyphicon-play"></i> Thực hiện', 
+                            [
+                                'class'=>'btn btn-primary btn-flat',
+                            ]);
+                } 
+                ?>
+            
             </div>
-            <?php $modalForm = ActiveForm::begin();
-                $tbiModel = new Thietbitram;
-            ?>
-            <div class="modal-body"> 
-                <div class="col-sm-6 col-md-6">       
-                    <?= $modalForm->field($tbiModel, 'ID_LOAITB')->dropDownList(
-                        ArrayHelper::map(Thietbi::find()->all(), 'ID_THIETBI', 'TEN_THIETBI'),
-                        ['prompt' => 'Chọn loại thiết bị']
-                    ) ?>
-                </div>
+            <br>
 
-                <div class="col-sm-6 col-md-6">
-                    <?= $modalForm->field($tbiModel, 'ID_TRAM')->dropDownList(
-                        ArrayHelper::map(Tramvt::find()->all(), 'ID_TRAM', 'MA_TRAM'),
-                        ['prompt' => 'Chọn trạm']
-                    ) ?>
-                </div>
-                
-                <div class="col-sm-12 col-md-12">
-                    <?= 
-                        $modalForm->field($tbiModel, 'SERIAL_MAC')->textInput() 
-                    ?>
-                </div>
-                
-                <div class="row col-md-12" style="margin-bottom: 8px">
-                    <div class="col-sm-4 col-md-4">
-                        <?= DatePicker::widget([
-                            'model' => $tbiModel,
-                            'attribute' => 'NGAYSX',
-                            'name' => 'ngaysx', 
-                            'removeButton' => false,
-                            'options' => ['placeholder' => 'Ngày sản xuất ...'],
-                            'pluginOptions' => [
+            <?php Pjax::begin(); ?>    <?= GridView::widget([
+                    'dataProvider' => $dataProvider,
+                    'filterModel' => $searchModel,
+                    'layout' => '{items}{pager}',
+                    'columns' => [
+                        ['class' => 'yii\grid\CheckboxColumn', 'visible' => $visible],
+                        ['class' => 'yii\grid\SerialColumn', 'visible' => !$visible],
 
-                                'format' => 'yyyy-mm-dd',
-                                'todayHighlight' => true
-                            ]
-                        ]); ?>
-                    </div>
-                    <div class="col-sm-4 col-md-4">
-                            <?= DatePicker::widget([
-                                'model' => $tbiModel,
-                                'attribute' => 'NGAYSD',
-                                'name' => 'ngaysd', 
-                                'removeButton' => false,
-                                'options' => ['placeholder' => 'Ngày đưa vào sử dụng ...'],
-                                'pluginOptions' => [
+                        [
+                            'attribute' => 'ID_LOAITB',
+                            'value' => 'iDLOAITB.TEN_THIETBI'
+                        ],
+                        [
+                            'attribute' => 'ID_TRAM',
+                            'value' => 'iDTRAM.MA_TRAM'
+                        ],
+                        'LANBAODUONGTRUOC',
+                        'LANBAODUONGTIEP',
 
-                                    'format' => 'yyyy-mm-dd',
-                                    'todayHighlight' => true
-                                ]
-                            ]); ?>
-                    </div>
-                    <div class="col-sm-4 col-md-4">
-                            <?= DatePicker::widget([
-                                'model' => $tbiModel,
-                                'attribute' => 'LANBAODUONGTRUOC',
-                                'name' => 'ngaybd', 
-                                'removeButton' => false,
-                                'options' => ['placeholder' => 'Lần bảo dưỡng gần đây ...'],
-                                'pluginOptions' => [
-
-                                    'format' => 'yyyy-mm-dd',
-                                    'todayHighlight' => true
-                                ]
-                            ]); ?>
-                    </div>
-                </div>
-
-                <div class="col-sm-12 col-md-12">
-                    <?= 
-                        $modalForm->field($tbiModel, 'LANBD')->dropDownList(array_combine(range(1, 15), range(1, 15))) 
-                    ?>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <?= Html::a(
-                    '<i class="glyphicon glyphicon-plus"></i> Thêm', 
-                    '#', 
-                    [
-                        'class'=>'btn btn-primary',
-                        'id' => 'addBtn',
-                        'onclick' => '
-                            var idloaitb = '.$tbiModel->ID_LOAITB.';
-                            var idtram = $("#thietbitram-id_tram").val();
-                            var serialNum = $("#thietbitram-serial_mac").val();
-                            var ngaysx = $("#thietbitram-ngaysx").val();
-                            var ngaysd = $("#thietbitram-ngaysd").val();
-                            var ngaybd = $("#thietbitram-lanbaoduongtruoc").val();
-                            var lanbd = $("#thietbitram-lanbd").val();
-
-                            $.post("index.php?r=thietbitram/create-post&ID_LOAITB="+idloaitb+"&ID_TRAM="+idtram+"SERIAL_MAC="+serialNum+"&NGAYSX="+ngaysx+"&NGAYSD="+ngaysd+"&LANBAODUONGTRUOC="+ngaybd+"&LANBD="+lanbd+"");
-                        ',
-                    ]
-                )?>
-            </div>
-            <?php ActiveForm::end(); ?>
+                        [
+                            'class' => 'yii\grid\ActionColumn',
+                            'template' => ($visible) ? '{view} {update} {delete}' : '{view}',
+                            
+                            'urlCreator' => function ($action, $model, $key, $index) {
+                                if ($action === 'view') {
+                                    $url = Url::to(['thietbitram/view', 'id' => $key]);
+                                    return $url;
+                                }
+                                if ($action === 'update') {
+                                    $url = Url::to(['thietbitram/update', 'id' => $key]);
+                                    return $url;
+                                }
+                                if ($action === 'delete') {
+                                    $url = Url::to(['thietbitram/delete', 'id' => $key]);
+                                    return $url;
+                                }
+                            }
+                        ],
+                    ],
+                ]); ?>
+            <?php Pjax::end(); ActiveForm::end(); ?>
         </div>
     </div>
 </div>

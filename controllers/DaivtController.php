@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use Yii;
+use app\models\ActivitiesLog;
 use app\models\Daivt;
 use app\models\DaivtSearch;
 use yii\web\Controller;
@@ -68,6 +69,12 @@ class DaivtController extends Controller
             $model = new Daivt();
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                $log = new ActivitiesLog;
+                $log->activity_type = 'unit-add';
+                $log->description = Yii::$app->user->identity->nhanvien->TEN_NHANVIEN." đã thêm đơn vị ". $model->MA_DAIVT;
+                $log->user_id = Yii::$app->user->identity->id;
+                $log->create_at = time();
+                $log->save();
                 return $this->redirect(['view', 'id' => $model->ID_DAI]);
             } else {
                 return $this->render('create', [

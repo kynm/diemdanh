@@ -4,11 +4,19 @@ $params = require(__DIR__ . '/params.php');
 $db = require(__DIR__ . '/db.php');
 
 $config = [
-    'id' => 'basic',
+    'timeZone' => 'Asia/Ho_Chi_Minh',
+    'id' => 'vnpt_qnm_mds',
+    // 'app_secret' => '2d7a04685aa24a9ae64421107c1aafca', //MD5 VNPT_QNM_MDs
+    // set target language to be Vietnamese
+    'language' => 'vi',
+    
+    // set source language to be English
+    'sourceLanguage' => 'en-US',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'components' => [
         'request' => [
+            // 'baseUrl' => '',
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'BaoTriNhaTram',
         ],
@@ -17,8 +25,8 @@ $config = [
         ],
         'user' => [
             'identityClass' => 'app\models\User',
-            'enableAutoLogin' => false,
-            'authTimeout' => 3600,
+            'enableAutoLogin' => true,
+            // 'authTimeout' => 3600,
         ],
         'session' => [
             'class' => 'yii\web\Session',
@@ -45,19 +53,39 @@ $config = [
                 ],
             ],
         ],
+        // 'i18n' => [
+        //     'translations' => [
+        //     'app*' => [
+        //         'class' => 'yii\i18n\PhpMessageSource',
+        //         'basePath' => '@app/messages',
+        //         // 'sourceLanguage' => 'en_US',
+        //         'fileMap' => [
+        //             'app' => 'app.php'
+        //             ],
+        //         ],
+        //     ],
+        // ],
         'db' => $db,
+
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
             'defaultRoles' => ['guest'],
+
+            // 'class' => 'yii\rbac\PhpManager'
         ],
         
-        // 'urlManager' => [
-        //     'enablePrettyUrl' => true,
-        //     'showScriptName' => false,
-        //     'rules' => [
-        //         '<alias:\w+>' => 'site/<alias>',
-        //     ],
-        // ],
+        'urlManager' => [
+            'class' => 'yii\web\UrlManager',
+            // Disable index.php
+            'showScriptName' => false,
+            // Disable r= routes
+            'enablePrettyUrl' => true,
+            'rules' => array(
+                    // '<controller:\w+>/<id:\d+>' => '<controller>/view',
+                    // '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+                    // '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
+            ),
+        ],
         
     ],
     'as beforeRequest' => [
@@ -72,6 +100,7 @@ $config = [
                 'roles' => ['@'],
             ],
         ],
+        'except' => ['api/*'],
         'denyCallback' => function () {
             return Yii::$app->response->redirect(['site/login']);
         },
@@ -80,23 +109,71 @@ $config = [
     'modules' => [
         'gridview' =>  [
             'class' => '\kartik\grid\Module'
-            // enter optional module parameters below - only if you need to  
-            // use your own export download action or custom translation 
-            // message source
+
             // 'downloadAction' => 'gridview/export/download',
             // 'i18n' => []
-        ]
+        ],
+        'admin' => [
+            'class' => 'mdm\admin\Module',
+            'as access' => [
+                'class' => 'yii\filters\AccessControl',
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['Administrator'],
+                    ],
+                ],
+            ],
+            'layout' => 'left-menu', // it can be '@path/to/your/layout'.
+            'controllerMap' => [
+                'assignment' => [
+                    'class' => 'mdm\admin\controllers\AssignmentController',
+                    'userClassName' => 'app\models\User',
+                    'idField' => 'user_id'
+                ],
+                // add another controller
+                // 'other' => [
+                //     'class' => 'path\to\OtherController', 
+                // ],
+            ],
+            'menus' => [
+                'assignment' => [
+                    'label' => 'Grand Access' // change label
+                ],
+                'route' => null, // disable menu route
+            ]
+        ],
+        'api' => [
+            'class' => 'app\modules\api\Api',
+            'as access' => [
+                'class' => 'yii\filters\AccessControl',
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['?', '@'],
+                    ],
+                ],
+            ],
+        ], 
+    ],
+    'as access' => [
+        'class' => 'mdm\admin\components\AccessControl',
+        'allowActions' => [
+            // 'admin/*', // add or remove allowed actions to this list
+            '*',
+        ],
+        
     ],
 ];
 
 if (YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment
-    $config['bootstrap'][] = 'debug';
-    $config['modules']['debug'] = [
-        'class' => 'yii\debug\Module',
-        // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['127.0.0.1', '::1'],
-    ];
+    // $config['bootstrap'][] = 'debug';
+    // $config['modules']['debug'] = [
+    //     'class' => 'yii\debug\Module',
+    //     // uncomment the following to add your IP if you are not connecting from localhost.
+    //     //'allowedIPs' => ['127.0.0.1', '::1'],
+    // ];
 
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [

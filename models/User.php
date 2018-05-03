@@ -56,9 +56,9 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'auth_key', 'email', 'created_at', 'updated_at'], 'required'],
-            [['role', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['username', 'password', 'newPassword', 'confirmPassword', 'password_hash', 'avatar', 'password_reset_token', 'email'], 'string', 'max' => 255],
+            [['username', 'auth_key', 'access_token', 'email', 'created_at', 'updated_at'], 'required'],
+            [['status', 'created_at', 'updated_at'], 'integer'],
+            [['username', 'password', 'newPassword', 'confirmPassword', 'password_hash', 'avatar', 'access_token', 'password_reset_token', 'email'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
             [['username'], 'unique'],
             [['file'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
@@ -80,7 +80,8 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
+        return static::findOne(['access_token' => $token]);
+        // throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
     }
 
     /**
@@ -183,6 +184,14 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     * Generates "access_token" authentication key
+     */
+    public function generateAccessToken()
+    {
+        $this->access_token = Yii::$app->security->generateRandomString();
+    }
+
+    /**
      * Generates new password reset token
      */
     public function generatePasswordResetToken()
@@ -209,7 +218,6 @@ class User extends ActiveRecord implements IdentityInterface
             'auth_key' => 'Auth Key',
             'password_hash' => 'Password Hash',
             'password_reset_token' => 'Password Reset Token',
-            'role' => 'Role',
             'email' => 'Email',
             'status' => 'Status',
             'created_at' => 'Created At',
@@ -220,8 +228,16 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getRole0()
+    public function getNhanvien()
     {
-        return $this->hasOne(Role::className(), ['id' => 'role']);
+        return $this->hasOne(Nhanvien::className(), ['USER_NAME' => 'username']);
+    }
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getActivitiesLogs()
+    {
+        return $this->hasMany(ActivitiesLog::className(), ['user_id' => 'id']);
     }
 }

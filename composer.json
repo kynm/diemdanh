@@ -25,7 +25,13 @@
         "kartik-v/yii2-grid": "@dev",
         "kartik-v/yii2-editable": "@dev",
         "kartik-v/yii2-widget-datepicker": "@dev",
-        "kartik-v/bootstrap-fileinput": "@dev"
+        "kartik-v/bootstrap-fileinput": "@dev",
+        "nepstor/yii2-datetime-compare-validator": "^2.0",
+        "empathy/yii2-datetime-compare": "^2.2",
+        "kartik-v/yii2-tabs-x": "*",
+        "dmstr/yii2-adminlte-asset": "^2.1",
+        "mdmsoft/yii2-admin": "~2.0",
+        "kartik-v/yii2-widget-depdrop": "@dev"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

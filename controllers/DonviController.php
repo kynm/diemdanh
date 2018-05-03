@@ -3,10 +3,12 @@
 namespace app\controllers;
 
 use Yii;
+use app\models\ActivitiesLog;
 use app\models\Donvi;
 use app\models\DonviSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
 
 /**
@@ -66,7 +68,14 @@ class DonviController extends Controller
         if (Yii::$app->user->can('create-donvi')) {
             $model = new Donvi();
 
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if ($model->load(Yii::$app->request->post())) {
+                $model->save(false);
+                $log = new ActivitiesLog;
+                $log->activity_type = 'unit-add';
+                $log->description = Yii::$app->user->identity->nhanvien->TEN_NHANVIEN." đã thêm đơn vị ". $model->TEN_DONVI;
+                $log->user_id = Yii::$app->user->identity->id;
+                $log->create_at = time();
+                $log->save();
                 return $this->redirect(['view', 'id' => $model->ID_DONVI]);
             } else {
                 return $this->render('create', [
@@ -74,7 +83,7 @@ class DonviController extends Controller
                 ]);
             }
         } else {
-            throw new ForbiddentHttpException;
+            throw new ForbiddenHttpException;
         }        
     }
 
@@ -97,7 +106,7 @@ class DonviController extends Controller
                 ]);
             }
         } else {
-            throw new ForbiddentHttpException;
+            throw new ForbiddenHttpException;
         } 
     }
 
@@ -112,10 +121,10 @@ class DonviController extends Controller
         if (Yii::$app->user->can('delete-donvi')) {
             # code...
             $this->findModel($id)->delete();
-
+            
             return $this->redirect(['index']);
         } else {
-            throw new ForbiddentHttpException;
+            throw new ForbiddenHttpException;
         } 
     }
 

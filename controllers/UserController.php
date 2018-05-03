@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\User;
 use app\models\UserSearch;
+use app\models\AuthAssignment;
 use app\models\Nhanvien;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -37,13 +38,19 @@ class UserController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new UserSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if (Yii::$app->user->can('edit-user')) {
+            # code...
+            $searchModel = new UserSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        } else {
+            return $this->redirect('edit-profile');
+        }
+        
     }
 
     /**
@@ -53,9 +60,15 @@ class UserController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if (Yii::$app->user->can('edit-user')) {
+            # code...
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        } else {
+            return $this->redirect('edit-profile');
+        }
+        
     }
 
     /**
@@ -133,59 +146,20 @@ class UserController extends Controller
         
     }
 
-    //fucntion to add user from Nhanvien's email
+    /** 
+     *  fucntion to add user access token
+     */
 
-    public function actionAddUser()
-    {
-        $listNhanvien = Nhanvien::find()->all();
-        foreach ($listNhanvien as $nhanvien) {
-            if($nhanvien->USER_NAME == NULL) continue;
-            $exists = User::find()->where( [ 'username' => $nhanvien->USER_NAME] )->exists();                  
-            if($exists) continue;
-
-            $user = new User;
-            $user->username = $nhanvien->USER_NAME;
-            $user->email = $nhanvien->USER_NAME;
-            $user->setPassword('vnpt1234');
-            switch ($nhanvien->CHUC_VU) {
-                case 'IT':
-                    $user->role = 1;
-                    break;
-                
-                case 'Quản trị hệ thống':
-                    $user->role = 1;
-                    break;
-                
-                case 'vtt': //role 2 dành cho cán bộ vtt
-                    $user->role = 2;
-                    break;
-                
-                case 'Giám đốc Trung tâm':
-                    $user->role = 3;
-                    break;
-                
-                case 'P. GĐ Trung tâm':
-                    $user->role = 3;
-                    break;
-                
-                case 'Trưởng đài':
-                    $user->role = 4;
-                    break;
-                
-                case 'Quản lý trạm':
-                    $user->role = 5;
-                    break;
-                                                        
-                default:
-                    $user->role = 6;
-                    break;
-            }
-            $user->status = 10;
-            $user->generateAuthKey();
-            $user->save(false);
-        }
-        return $this->redirect(['index']);
-    }
+    // public function actionUpdateToken()
+    // {
+    //     $users = User::find()->all();
+    //     foreach ($users as $user) {
+    //         $user->generateAccessToken();
+            
+    //         $user->save(false);
+    //     }
+    //     return $this->redirect(['index']);
+    // }
 
     /**
      * Edit user infomation
@@ -197,6 +171,7 @@ class UserController extends Controller
         $user = User::findOne(Yii::$app->user->identity->id);
         $nhanvien = Nhanvien::find()->where(['USER_NAME' => $user->username])->one();
         $alert = '';
+        
 
         if (Yii::$app->request->post()) {
             
@@ -212,6 +187,7 @@ class UserController extends Controller
                     if(!($user->newPassword == '') && !($user->confirmPassword == '')) {
                         if($user->newPassword == $user->confirmPassword) {
                             $user->setPassword($user->newPassword);
+                            $user->generateAccessToken();
                             $alert = 'Đổi mật khẩu thành cmn công.';
                         } else {
                             $alert = 'Mật khẩu không khớp. Vui lòng thử lại!!!';
@@ -235,14 +211,33 @@ class UserController extends Controller
                 //save filePath to DB
                 $user->avatar = $filePath;
             }
-
             $user->save(false);
+
+            return $this->redirect(['edit-profile']);
         } 
         return $this->render('profile', [
             'alert' => $alert,
             'user' => $user,
             'nhanvien' => $nhanvien,
         ]);                
+    }
+
+    public function actionRoleSetting()
+    {
+        if (Yii::$app->user->can('create-user')) {
+            # code...
+            $model = new AuthAssignment;
+
+            if ($model->load(Yii::$app->request->post())) {
+                $model->save();
+            }
+            return $this->render('role-setting', ['model' => $model]);
+            
+        } else {
+            # code...
+            throw new ForbiddenHttpException;            
+        }
+        
     }
 
     /**

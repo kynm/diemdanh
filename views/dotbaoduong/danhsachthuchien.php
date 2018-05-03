@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use app\models\Nhanvien;
+
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ThuchienbdSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -14,40 +16,57 @@ $this->params['breadcrumbs'][] = $this->title;
 // die;
 ?>
 <div class="thuchienbd-index">
-<?php Pjax::begin(); ?>    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        // 'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-            'MA_DOTBD',
-            'NGAY_BD',
-            [
-                'attribute' => 'ID_TRAMVT',
-                'value' => 'iDTRAMVT.MA_TRAM'
-            ],
-            [
-                'attribute' => 'TRUONG_NHOM',
-                'value' => 'tRUONGNHOM.TEN_NHANVIEN'
-            ],
-            'TRANGTHAI',
+    <div class="box box-primary">
+        <div class="box-body">
+            <?php Pjax::begin(); ?>    <?= GridView::widget([
+                    'dataProvider' => $dataProvider,
+                    'filterModel' => $searchModel,
+                    'columns' => [
+                        ['class' => 'yii\grid\SerialColumn'],
+                        'MA_DOTBD',
+                        [
+                            'attribute' => 'NGAY_BD',
+                            'format' => ['date', 'php:d/m/Y'],
+                        ],
+                        [
+                            'attribute' => 'ID_TRAMVT',
+                            'value' => 'tRAMVT.MA_TRAM'
+                        ],
+                        [
+                            'attribute' => 'TRUONG_NHOM',
+                            'value' => 'tRUONGNHOM.TEN_NHANVIEN'
+                        ],
+                        'TRANGTHAI',
 
-            [
-                'class' => 'yii\grid\ActionColumn',
-                'template' => '{view} {delete}',
-                'urlCreator' => function ($action, $model, $key, $index) {
-                    if ($action === 'view') {
-                        $url = '';
-                        $url ='index.php?r=dotbaoduong/thuchien&id='.$model->ID_DOTBD;
-                        return $url;
-                    }
-                    if ($action === 'delete') {
-                        $url = '';
-                        $url ='index.php?r=dotbaoduong/delete&id='.$model->ID_DOTBD;
-                        return $url;
-                    }
-                }
-            ],
-        ],
-    ]); ?>
-<?php Pjax::end(); ?></div>
+                        [
+                            'class' => 'yii\grid\ActionColumn',
+                            'template' => '{view} {delete}',
+                            'buttons' => [
+                                
+                                'delete' => function ($url, $model) {
+                                    
+                                    if (Yii::$app->user->can('delete-dbd')) {
+                                        return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, ['data-method' => 'post']);
+                                    } else {
+                                        return '';
+                                    }    
+                                }
 
+                            ],
+                            'urlCreator' => function ($action, $model, $key, $index) {
+                                if ($action === 'view') {
+                                    $url = ['dotbaoduong/view', 'id' => $model->ID_DOTBD];
+                                    return $url;
+                                }
+                                if ($action === 'delete') {
+                                    $url = ['dotbaoduong/delete', 'id' => $model->ID_DOTBD];
+                                    return $url;
+                                }
+                            }
+                        ],
+                    ],
+                ]); ?>
+            <?php Pjax::end(); ?>
+        </div>
+    </div>
+</div>

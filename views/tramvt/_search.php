@@ -21,12 +21,12 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'DIADIEM') ?>
 
-    <?= $form->field($model, 'ID_DAIVT') ?>
+    <?= $form->field($model, 'ID_DAI') ?>
 
     <?= $form->field($model, 'ID_NHANVIEN') ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton('Search', ['class' => 'btn btn-primary btn-flat']) ?>
         <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
     </div>
 

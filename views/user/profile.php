@@ -6,8 +6,10 @@ use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
 use app\models\User;
 use app\models\Nhanvien;
+use app\models\AuthItem;
 use app\models\Donvi;
 use app\models\Daivt;
+use kartik\select2\Select2;
 
 $this->title = 'Thông tin cá nhân';
 $this->params['breadcrumbs'][] = $this->title;
@@ -24,13 +26,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <!-- Profile Image -->
     <div class="box box-primary">
       <div class="box-body box-profile">
-        <img class="profile-user-img img-responsive img-circle" id="avatar" src="<?= Yii::$app->user->identity->avatar ?>" alt="User profile picture" style="height: 100px" > 
+        <img class="profile-user-img img-responsive img-circle" id="avatar" src="<?= Yii::getAlias('@web') ?>/<?= Yii::$app->user->identity->avatar ?>" alt="User profile picture" style="height: 100px" > 
 
         <h3 class="profile-username text-center"><?= $nhanvien->TEN_NHANVIEN ?></h3>
 
-        <p class="text-muted text-center"><?= $nhanvien->iDDAI->TEN_DAIVT ?></p>
+        <p class="text-muted text-center"><?= $nhanvien->chucvu->ten_chucvu ?></p>
         
-        <div class="btn btn-default btn-file btn-block">
+        <div class="btn btn-default btn-file btn-block btn-flat">
             <i class="fa fa-image"></i> Chọn ảnh đại diện
             <input type="file" name="User[file]" id="user-file">
         </div> <br>
@@ -72,7 +74,7 @@ $this->params['breadcrumbs'][] = $this->title;
           </div>
 
           <div class="col-sm-4 col-md-4"> 
-            <?= $form->field($nhanvien, 'CHUC_VU')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($nhanvien->chucvu, 'ten_chucvu')->textInput(['maxlength' => true, 'disabled' => true]) ?>
           </div>
 
           <div class="col-sm-4 col-md-4"> 
@@ -96,12 +98,13 @@ $this->params['breadcrumbs'][] = $this->title;
           <div class="col-sm-4 col-md-4"> 
             <?= $form->field($nhanvien, 'GHI_CHU')->textInput(['maxlength' => true]) ?>
           </div>
+        
       </div>
       <!-- /.box-body -->
       <div class="box-footer">
           <div class="text-center">
-            <?= Html::a('<i class="fa fa-reply"></i> Trở về', Url::to(['site/index']), ['class' => 'btn btn-danger']) ?>
-            <?= Html::submitButton('<i class="fa fa-save"></i> Lưu', ['class' => 'btn btn-primary']) ?>
+            <?= Html::a('<i class="fa fa-reply"></i> Trở về', Url::to(['site/index']), ['class' => 'btn btn-danger btn-flat']) ?>
+            <?= Html::submitButton('<i class="fa fa-save"></i> Lưu', ['class' => 'btn btn-primary btn-flat']) ?>
           </div>
       </div>
     </div>

@@ -10,36 +10,72 @@ use kartik\select2\Select2;
 /* @var $this yii\web\View */
 /* @var $model app\models\Tramvt */
 /* @var $form yii\widgets\ActiveForm */
+
+switch (Yii::$app->user->identity->nhanvien->chucvu->cap) {
+    case '1':
+        $listDaivt = ArrayHelper::map(Daivt::find()->all(), 'ID_DAI', 'TEN_DAIVT');
+        break;
+    case '2':
+        $listDaivt = ArrayHelper::map(Daivt::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->all(), 'ID_DAI', 'TEN_DAIVT');
+        break;
+    case '3':
+        $listDaivt = ArrayHelper::map(Daivt::find()->where(['ID_DAI' => Yii::$app->user->identity->nhanvien->ID_DAI])->all(), 'ID_DAI', 'TEN_DAIVT');
+        break;
+    case '4':
+        $listDaivt = [];
+        break;
+    case '5': //Tạm thời để giống cấp 3
+        $listDaivt = ArrayHelper::map(Daivt::find()->where(['ID_DAI' => Yii::$app->user->identity->nhanvien->ID_DAI])->all(), 'ID_DAI', 'TEN_DAIVT');
+        break;
+    default:
+        # code...
+        break;
+}
+
 ?>
 
 <div class="tramvt-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'MA_TRAM')->textInput(['maxlength' => true]) ?>
+    <div class="box box-primary">
+        <div class="box-body">
+            <div class="col-sm-6">
+                <?= $form->field($model, 'MA_TRAM')->textInput(['maxlength' => true]) ?>
+            </div>
 
-    <?= $form->field($model, 'DIADIEM')->textInput(['maxlength' => true]) ?>
-
-	<?= $form->field($model, 'ID_DAIVT')->widget(Select2::classname(), [
-        'data' => ArrayHelper::map(Daivt::find()->all(), 'ID_DAI', 'TEN_DAIVT'),
-        'options' => ['placeholder' => 'Chọn đài quản lý'],
-        'pluginOptions' => [
-            'allowClear' => true
-        ],
-    ]); ?>
-
-    <?= $form->field($model, 'ID_NHANVIEN')->widget(Select2::classname(), [
-        'data' => ArrayHelper::map(Nhanvien::find()->all(), 'ID_NHANVIEN', 'TEN_NHANVIEN'),
-        'options' => ['placeholder' => 'Chọn nhân viên quản lý'],
-        'pluginOptions' => [
-            'allowClear' => true
-        ],
-    ]); ?>
-
-    <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-primary' : 'btn btn-primary']) ?>
+            <div class="col-sm-6">
+                <?= $form->field($model, 'DIADIEM')->textInput(['maxlength' => true]) ?>
+            </div>
+                
+            <div class="col-sm-6">
+            	<?= $form->field($model, 'ID_DAI')->widget(Select2::classname(), [
+                    'data' => $listDaivt,
+                    'options' => ['placeholder' => 'Chọn đài quản lý'],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]); ?>
+            </div>
+                
+            <div class="col-sm-6">
+                <?= $form->field($model, 'ID_NHANVIEN')->widget(Select2::classname(), [
+                    'data' => ArrayHelper::map(Nhanvien::find()->all(), 'ID_NHANVIEN', 'TEN_NHANVIEN'),
+                    'options' => ['placeholder' => 'Chọn nhân viên quản lý'],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]); ?>
+            </div>
+                
+        </div>
+        <div class="box-footer">
+            <div class="text-center">
+                <?= Html::submitButton($model->isNewRecord ? '<i class="fa fa-plus"></i> Thêm' : '<i class="fa fa-pencil-square-o"></i> Cập nhật', ['class' => 'btn btn-primary btn-flat']) ?>
+            </div>
+        </div>
     </div>
-
+            
     <?php ActiveForm::end(); ?>
 
 </div>

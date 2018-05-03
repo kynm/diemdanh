@@ -3,7 +3,7 @@
 /**
  * @package   yii2-grid
  * @author    Kartik Visweswaran <kartikv2@gmail.com>
- * @copyright Copyright &copy; Kartik Visweswaran, Krajee.com, 2014 - 2017
+ * @copyright Copyright &copy; Kartik Visweswaran, Krajee.com, 2014 - 2018
  * @version   3.1.8
  */
 
@@ -21,6 +21,7 @@ use yii\helpers\Html;
 use yii\helpers\Json;
 use yii\helpers\Url;
 use yii\web\JsExpression;
+use yii\web\Request;
 use yii\web\View;
 use yii\widgets\Pjax;
 
@@ -204,6 +205,10 @@ class GridView extends YiiGridView
      * Grid filter input type for [[\kartik\money\MaskMoney]] widget
      */
     const FILTER_MONEY = '\kartik\money\MaskMoney';
+    /**
+     * Grid filter input type for [[\kartik\number\NumberControl]] widget
+     */
+    const FILTER_NUMBER = '\kartik\number\NumberControl';
     /**
      * Grid filter input type for [[\kartik\checkbox\CheckboxX]] widget
      */
@@ -971,17 +976,6 @@ HTML;
         if (empty($this->options['id'])) {
             $this->options['id'] = $this->getId();
         }
-        if (!$this->toggleData) {
-            parent::init();
-            return;
-        }
-        $this->_toggleDataKey = '_tog' . hash('crc32', $this->options['id']);
-        $this->_isShowAll = ArrayHelper::getValue($_GET, $this->_toggleDataKey, $this->defaultPagination) === 'all';
-        if ($this->_isShowAll) {
-            /** @noinspection PhpUndefinedFieldInspection */
-            $this->dataProvider->pagination = false;
-        }
-        $this->_toggleButtonId = $this->options['id'] . '-togdata-' . ($this->_isShowAll ? 'all' : 'page');
         if (!isset($this->itemLabelSingle)) {
             $this->itemLabelSingle = Yii::t('kvgrid', 'item');
         }
@@ -994,6 +988,24 @@ HTML;
         if (!isset($this->itemLabelMany)) {
             $this->itemLabelMany = Yii::t('kvgrid', 'items-many');
         }
+        if (!$this->toggleData) {
+            parent::init();
+            return;
+        }
+        $this->_toggleDataKey = '_tog' . hash('crc32', $this->options['id']);
+        /**
+         * @var Request $request
+         */
+        $request = $this->_module->get('request', false);
+        if ($request === null || !($request instanceof Request)) {
+            $request = Yii::$app->request;
+        }
+        $this->_isShowAll = $request->getQueryParam($this->_toggleDataKey, $this->defaultPagination) === 'all';
+        if ($this->_isShowAll) {
+            /** @noinspection PhpUndefinedFieldInspection */
+            $this->dataProvider->pagination = false;
+        }
+        $this->_toggleButtonId = $this->options['id'] . '-togdata-' . ($this->_isShowAll ? 'all' : 'page');
         parent::init();
     }
 
@@ -1970,7 +1982,7 @@ HTML;
             // integrate resizeableColumns with floatThead
             if ($this->resizableColumns) {
                 $script .= "{$container}.off('{$NS}').on('column:resize{$NS}', function(e){" .
-                    'jQuery("#{$gridId} .kv-grid-table:nth-child(2)").floatThead("reflow");' .
+                      "jQuery('#{$gridId} .kv-grid-table:nth-child(2)').floatThead('reflow');" .
                     '});';
             }
         }
