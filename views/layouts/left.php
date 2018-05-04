@@ -54,7 +54,7 @@ use yii\helpers\Url;
                         'url' => '#',
                         'items' => [
                             ['label' => 'Nhóm thiết bị', 'icon' => 'caret-right', 'url' => Url::to(['nhomtbi/'])],
-                            ['label' => 'Loại thiết bị', 'icon' => 'caret-right', 'url' => Url::to(['thietbi/'])],
+                            // ['label' => 'Loại thiết bị', 'icon' => 'caret-right', 'url' => Url::to(['thietbi/'])],
                             ['label' => 'Thiết bị theo trạm', 'icon' => 'caret-right', 'url' => Url::to(['tramvt/'])],
                         ]
                     ],

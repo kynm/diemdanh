@@ -73,6 +73,11 @@ $config = [
 
             // 'class' => 'yii\rbac\PhpManager'
         ],
+
+        'formatter' => [
+            'class' => 'yii\i18n\Formatter',
+            'nullDisplay' => '',
+        ],
         
         'urlManager' => [
             'class' => 'yii\web\UrlManager',
@@ -109,7 +114,7 @@ $config = [
     'modules' => [
         'gridview' =>  [
             'class' => '\kartik\grid\Module'
-
+            
             // 'downloadAction' => 'gridview/export/download',
             // 'i18n' => []
         ],

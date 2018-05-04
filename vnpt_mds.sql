@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 23, 2018 at 05:10 AM
+-- Generation Time: May 03, 2018 at 06:11 AM
 -- Server version: 10.1.31-MariaDB
--- PHP Version: 7.2.4
+-- PHP Version: 7.0.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -151,7 +151,10 @@ INSERT INTO `activities_log` (`activity_log_id`, `activity_type`, `description`,
 (111, 'maintenance-do', '<b>Chậm tiến độ!!!</b> <br>Đợt bảo dưỡng TamPhuocT3 đang được thực hiện bởi Tét văn Te', 90, 1523584360),
 (112, 'device-add', 'Nguyễn Đình Châu đã thêm thiết bị Switch Cisco 48 port vào trạm SMO', 1, 1524216061),
 (113, 'maintenance-create', 'Nguyễn Đình Châu đã tạo đợt bảo dưỡng SMO-T5-2018, Nguyễn Thành làm nhóm trưởng.', 1, 1524217318),
-(114, 'maintenance-finish', 'Tét văn Te đã kết thúc đợt bảo dưỡng TamPhuocT3', 90, 1524218131);
+(114, 'maintenance-finish', 'Tét văn Te đã kết thúc đợt bảo dưỡng TamPhuocT3', 90, 1524218131),
+(115, 'maintenance-create', 'Nguyễn Đình Châu đã tạo đợt bảo dưỡng SMO-T5-2018, Nguyễn Đình Châu làm nhóm trưởng.', 1, 1524711535),
+(116, 'maintenance-do', '<b>Thực hiện sớm so với kế hoạch!</b> <br>Đợt bảo dưỡng SMO-T5-2018 đang được thực hiện bởi Nguyễn Thành', 13, 1524714444),
+(117, 'maintenance-finish', 'Nguyễn Thành đã kết thúc đợt bảo dưỡng SMO-T5-2018', 13, 1524726432);
 
 -- --------------------------------------------------------
 
@@ -198,20 +201,19 @@ CREATE TABLE `auth_assignment` (
 
 INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
 ('Administrator', 1, NULL),
-('Administrator', 2, 1523503658),
 ('Administrator', 12, 1522745048),
 ('Administrator', 13, NULL),
 ('Administrator', 89, NULL),
 ('Administrator', 90, NULL),
 ('Administrator', 92, NULL),
 ('Administrator', 98, NULL),
-('create-daivt', 12, 1522745043),
 ('create-dbd', 100, 1523505896),
 ('create-tbitram', 100, 1523505896),
 ('create-tramvt', 100, 1523505896),
 ('Role xxx', 93, NULL),
 ('Role xxx', 101, NULL),
 ('Root', 94, 1523497429),
+('Viewer', 2, 1523503658),
 ('Viewer', 11, NULL);
 
 -- --------------------------------------------------------
@@ -409,7 +411,8 @@ INSERT INTO `baocao` (`ID_DOTBD`, `KETQUA`, `GHICHU`, `ANH1`, `ANH2`, `ANH3`) VA
 (10, 'Chưa đạt', 'Đợt bảo dưỡng chưa hoàn thành', 'uploads/SMO-T2-2018_1.png', NULL, NULL),
 (21, 'Đạt', '', 'uploads/NT-001_T3-2018_1.png', 'uploads/NT-001_T3-2018_2.jpg', 'uploads/NT-001_T3-2018_3.jpg'),
 (26, 'Đạt', '', 'uploads/TamPhuocT3_1.png', 'uploads/TamPhuocT3_2.png', 'uploads/TamPhuocT3_3.png'),
-(28, 'Đạt', '', 'uploads/TamLoc T4_1.png', 'uploads/TamLoc T4_2.jpg', 'uploads/TamLoc T4_3.jpg');
+(28, 'Đạt', '', 'uploads/TamLoc T4_1.png', 'uploads/TamLoc T4_2.jpg', 'uploads/TamLoc T4_3.jpg'),
+(29, 'Đạt', 'Hoàn thành xuất sắc', 'uploads/SMO-T5-2018_1.png', 'uploads/SMO-T5-2018_2.png', 'uploads/SMO-T5-2018_3.png');
 
 -- --------------------------------------------------------
 
@@ -741,7 +744,9 @@ INSERT INTO `dieuchuyenthietbi` (`ID`, `ID_THIETBI`, `NGAY_CHUYEN`, `ID_TRAM_NGU
 (7, 22, '2018-03-27', 1, 22, 'AAAA'),
 (8, 28, '2018-03-27', 1, 22, 'AAAA'),
 (9, 2, '2018-03-30', 2, 1, 'Chuyển chơi'),
-(10, 2, '2018-03-31', 2, 1, 'Chuyển hay');
+(10, 2, '2018-03-31', 2, 1, 'Chuyển hay'),
+(11, 18, '2018-04-26', 6, 3, 'Cho mượn demo ^^'),
+(12, 19, '2018-04-26', 6, 3, 'Cho mượn demo ^^');
 
 -- --------------------------------------------------------
 
@@ -800,7 +805,7 @@ INSERT INTO `dotbaoduong` (`ID_DOTBD`, `MA_DOTBD`, `NGAY_DUKIEN`, `NGAY_BD`, `ID
 (26, 'TamPhuocT3', '2018-03-31', '2018-04-13', 21, 'Kết thúc', 110),
 (27, 'TamThanht4', '2018-03-31', '2018-03-31', 23, 'Đang thực hiện', 18),
 (28, 'TamLoc T4', '2018-04-01', '2018-04-01', 8, 'Kết thúc', 7),
-(29, 'SMO-T5-2018', '2018-05-01', '2018-05-01', 3, 'Kế hoạch', 6);
+(29, 'SMO-T5-2018', '2018-05-01', '2018-04-26', 3, 'Kết thúc', 6);
 
 -- --------------------------------------------------------
 
@@ -830,7 +835,24 @@ INSERT INTO `lencongviec` (`ID_DOTBD`, `ID_THIETBI`, `MA_NOIDUNG`, `IS_SUGGESTED
 (23, 19, '542', 0, 1),
 (23, 19, '543', 0, 1),
 (23, 19, '544', 0, 0),
-(23, 19, '545', 0, 0);
+(23, 19, '545', 0, 0),
+(30, 6, '111', 1, 1),
+(30, 6, '112', 1, 0),
+(30, 6, '113', 1, 1),
+(30, 6, '114', 0, 0),
+(30, 6, '115', 0, 0),
+(30, 6, '116', 0, 0),
+(30, 6, '117', 0, 0),
+(30, 6, '118', 0, 0),
+(30, 6, '119', 0, 0),
+(30, 9, '411', 1, 0),
+(30, 9, '4112', 0, 0),
+(30, 9, '412', 1, 0),
+(30, 9, '413', 1, 0),
+(30, 9, '414', 1, 0),
+(30, 9, '415', 1, 0),
+(30, 9, '416', 0, 0),
+(30, 9, '417', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -859,7 +881,7 @@ INSERT INTO `nhanvien` (`ID_NHANVIEN`, `MA_NHANVIEN`, `TEN_NHANVIEN`, `CHUC_VU`,
 (1, 'TKY004', 'Phan Thành Long ', 9, '0911017999 ', 4, 1, 1, '', 'longpt.qnm@vnpt.vn'),
 (5, 'QNM002', 'OMC', 2, '0914136999', 1, NULL, 0, '', 'omc'),
 (6, 'QNM000', 'Nguyễn Thành', 1, '0914136999', 1, NULL, 0, '', 'nguyenthanh'),
-(7, 'QNM001', 'Nguyễn Đình Châu', 1, '0945226904', 2, NULL, 0, '', 'admin'),
+(7, 'QNM001', 'Nguyễn Đình Châu', 1, '0945226904', 4, 1, 0, '', 'admin'),
 (8, 'TT1001', 'Trần Như Hoàng', 4, '0913407000 ', 4, NULL, 0, '', 'hoangtn.qnm@vnpt.vn'),
 (10, 'TKY002', 'Trần Ngọc Nam', 9, '0935637637', 4, NULL, 0, '', 'namtn.qnm@vnpt.vn'),
 (11, 'NTH002', 'Nguyễn Văn Tiến', 9, '0914353474', 4, 3, 1, '', 'tiennv.qnm@vnpt.vn'),
@@ -933,7 +955,7 @@ INSERT INTO `nhanvien` (`ID_NHANVIEN`, `MA_NHANVIEN`, `TEN_NHANVIEN`, `CHUC_VU`,
 (104, 'DHTT012', 'Huỳnh Ngọc Việt', 11, '0942007089', 1, NULL, 0, '', 'viethn.qnm@vnpt.vn'),
 (105, 'PNH005', 'Lê Tấn Triều', 9, '0914947557', 4, 1, 1, '', 'trieult.qnm@vnpt.vn'),
 (106, 'TKY007', 'Trần Tân Thiên', 9, ' 0949321125', 4, 1, 1, '', 'thientt.qnm@vnpt.vn'),
-(107, '111', 'Ng Đi Ti Ci li', 7, '0911354345', 4, 3, 0, '', 'noname'),
+(107, '111', 'Ng Đi Ti Ci li', 11, '0911354345', 4, 3, 0, '', 'noname'),
 (108, 'CNTT111', 'Nguyễn Đình Châu 1', 1, '0915365078', 2, NULL, 0, '', 'ndchau1.qnm@vnpt.vn'),
 (110, 'CNTT0TEST', 'Tét văn Te', 1, '0911222333', 2, NULL, 0, '', 'testvante'),
 (111, 'CNTT11123', 'Test ', 9, '0915151515', 1, NULL, 0, '', 'test11123'),
@@ -1159,41 +1181,17 @@ INSERT INTO `noidungcongviec` (`ID_DOTBD`, `ID_THIETBI`, `MA_NOIDUNG`, `GHICHU`,
 (28, 11, '111', NULL, 'Hoàn thành', 7, 'Đạt'),
 (28, 11, '112', NULL, 'Hoàn thành', 7, 'Đạt'),
 (28, 11, '113', 'điện áp ổn định, cần châm dầu....', 'Hoàn thành', 18, 'Đạt'),
-(29, 5, '111', NULL, 'Kế hoạch', 70, NULL),
-(29, 5, '112', NULL, 'Kế hoạch', 70, NULL),
-(29, 5, '113', NULL, 'Kế hoạch', 70, NULL),
-(29, 6, '111', NULL, 'Kế hoạch', 70, NULL),
-(29, 6, '112', NULL, 'Kế hoạch', 70, NULL),
-(29, 6, '113', NULL, 'Kế hoạch', 70, NULL),
-(29, 9, '411', NULL, 'Kế hoạch', 7, NULL),
-(29, 9, '412', NULL, 'Kế hoạch', 7, NULL),
-(29, 9, '413', NULL, 'Kế hoạch', 7, NULL),
-(29, 9, '414', NULL, 'Kế hoạch', 7, NULL),
-(29, 9, '415', NULL, 'Kế hoạch', 7, NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `role`
---
-
-CREATE TABLE `role` (
-  `id` int(11) NOT NULL,
-  `role_name` varchar(15) NOT NULL,
-  `decription` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `role`
---
-
-INSERT INTO `role` (`id`, `role_name`, `decription`) VALUES
-(1, 'Administrators', 'Can do any thing in web app'),
-(2, 'vtt', 'Can add or update some devices'),
-(3, 'qlytrungtam', 'Quản lý trung tâm'),
-(4, 'qlydai', 'Quản lý đài'),
-(5, 'qlytram', 'Quản lý trạm'),
-(6, 'nhanvien', 'Nhân viên');
+(29, 5, '111', 'abc', 'Hoàn thành', 70, 'Đạt'),
+(29, 5, '112', NULL, 'Hoàn thành', 70, 'Đạt'),
+(29, 5, '113', NULL, 'Hoàn thành', 70, 'Đạt'),
+(29, 6, '111', NULL, 'Hoàn thành', 70, 'Đạt'),
+(29, 6, '112', NULL, 'Hoàn thành', 70, 'Đạt'),
+(29, 6, '113', NULL, 'Hoàn thành', 70, 'Đạt'),
+(29, 9, '411', NULL, 'Hoàn thành', 7, 'Đạt'),
+(29, 9, '412', NULL, 'Hoàn thành', 7, 'Đạt'),
+(29, 9, '413', NULL, 'Hoàn thành', 7, 'Đạt'),
+(29, 9, '414', NULL, 'Hoàn thành', 7, 'Đạt'),
+(29, 9, '415', NULL, 'Hoàn thành', 7, 'Đạt');
 
 -- --------------------------------------------------------
 
@@ -1265,15 +1263,15 @@ INSERT INTO `thietbitram` (`ID_THIETBI`, `ID_LOAITB`, `ID_TRAM`, `SERIAL_MAC`, `
 (2, 2, 1, '1231ad12121', '2017-05-10', '2017-10-01', 5, '2018-03-23', '2018-10-01'),
 (3, 2, 2, '312312efs', '2017-05-10', '2017-10-10', 5, '2018-03-23', '2018-10-10'),
 (4, 3, 2, '24451211NBBBB', '2017-05-10', '2017-10-01', 3, '2018-03-23', NULL),
-(5, 1, 3, '1231212113213', '2017-05-10', '2017-10-01', 5, '2018-03-20', '2018-10-01'),
-(6, 1, 3, '12312124564', '2017-05-10', '2017-10-10', 5, '2018-03-20', '2018-10-10'),
+(5, 1, 3, '1231212113213', '2017-05-10', '2017-10-01', 6, '2018-04-26', '2019-04-01'),
+(6, 1, 3, '12312124564', '2017-05-10', '2017-10-10', 6, '2018-04-26', '2019-04-10'),
 (7, 2, 21, '1231212456411', '2017-05-10', '2017-10-10', 6, '2018-04-20', '2018-10-10'),
 (8, 1, 4, '12312124564123', '2018-01-01', '2018-01-01', 4, '2018-01-10', '2018-07-01'),
-(9, 2, 3, '123weqwe123', '2018-01-01', '2018-01-01', 3, '2018-01-10', '2018-04-01'),
+(9, 2, 3, '123weqwe123', '2018-01-01', '2018-01-01', 4, '2018-04-26', '2019-01-01'),
 (10, 2, 1, '12312eqwe', '2018-01-01', '2018-01-01', 3, '2018-01-07', '2018-04-01'),
 (11, 1, 8, '1112531253512351', '2018-01-01', '2018-01-01', 5, '2018-03-27', '2019-01-01'),
-(18, 6, 6, '13213264646', '2018-01-01', '2018-01-10', 3, '2018-01-30', '2018-04-10'),
-(19, 12, 6, '11111', '2018-01-01', '2018-01-10', 1, '2018-01-30', NULL),
+(18, 6, 3, '13213264646', '2018-01-01', '2018-01-10', 3, '2018-01-30', '2018-04-10'),
+(19, 12, 3, '11111', '2018-01-01', '2018-01-10', 1, '2018-01-30', NULL),
 (21, 10, 21, '132465465465', '2017-03-01', '2017-04-01', 7, NULL, '2018-04-01'),
 (22, 10, 22, '1231231', '2017-03-01', '2017-04-01', 7, NULL, '2018-04-01'),
 (23, 15, 23, '135525411311231', '2017-03-14', '2017-07-19', NULL, '2018-03-01', NULL),
@@ -1348,7 +1346,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `access_token`, `auth_key`, `password_hash`, `password_reset_token`, `email`, `avatar`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'IE0xJNokPy6bTDIXnLWadMvvCneUAto_', 'uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl', '$2y$13$0z3c9DRdl1xCAT.5qHWL.eBmhXWp9pbiivdgMwRwP4agmQU4FzMpC', NULL, 'admin@vnpt.vn', 'dist/img/1_ava.jpg', 10, 1506495817, 1523868939),
+(1, 'admin', 'IE0xJNokPy6bTDIXnLWadMvvCneUAto_', 'uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl', '$2y$13$RyfbnGQ5itJUfFlYr.c1MOhY1XXG7G7rjeKbcnJBWGQercuL3/Do6', NULL, 'admin@vnpt.vn', 'dist/img/1_ava.jpg', 10, 1506495817, 1524470447),
 (2, 'noname', 'DAM4bdWzv8p8VTtreMYizS9qOir3TYro', '', '$2y$13$PW7OY5Bn6V0gZWCCS6WzleqO92L0cQT.0/oaYfzB7YNy6v6tOyey6', NULL, 'noname@gmail.com', 'dist/img/2_ava.jpg', 10, 1506498107, 1523868939),
 (3, 'dinhchau2603', 'VxbOn48HqdzmzxGjzHzCsHxW_qxkD4l8', 'JJEJ8_4qxauIvqy8xMHYUf8swwCKpXOb', '$2y$13$IeUCU8CxXrfFguAeLwRxUe1aVXYsbhuKoydUX2lbhtcahWT0NDfui', NULL, 'dinhchau2603@gmail.com', 'dist/img/default_picture.png', 10, 1506498107, 1523868939),
 (4, 'user02', '8-BKSr0a3CvXbcWXHWFCUyhSupXS02kH', 'Cj9STRuuy1idcdTTaq4eBrNQGsGuN1jM', '$2y$13$vhThpvJJZqHtTZNZVBzjueZVkHru8Mp21iWPhjQ.6MLdyBPipXskW', NULL, 'user02@gmail.com', 'dist/img/default_picture.png', 10, 1507177087, 1523868939),
@@ -1588,12 +1586,6 @@ ALTER TABLE `noidungcongviec`
   ADD KEY `fk_cv_nv` (`ID_NHANVIEN`);
 
 --
--- Indexes for table `role`
---
-ALTER TABLE `role`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `thietbi`
 --
 ALTER TABLE `thietbi`
@@ -1634,7 +1626,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `activities_log`
 --
 ALTER TABLE `activities_log`
-  MODIFY `activity_log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
+  MODIFY `activity_log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
 
 --
 -- AUTO_INCREMENT for table `chucvu`
@@ -1658,7 +1650,7 @@ ALTER TABLE `daivt`
 -- AUTO_INCREMENT for table `dieuchuyenthietbi`
 --
 ALTER TABLE `dieuchuyenthietbi`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `donvi`
@@ -1683,12 +1675,6 @@ ALTER TABLE `nhanvien`
 --
 ALTER TABLE `nhomtbi`
   MODIFY `ID_NHOM` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT for table `role`
---
-ALTER TABLE `role`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `thietbi`

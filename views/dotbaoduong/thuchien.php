@@ -110,6 +110,9 @@ $this->params['breadcrumbs'][] = $this->title;
                             [
                                 'class' => 'yii\grid\CheckboxColumn',
                                 'visible' => $canReview == 1 ? true : false,
+                                'checkboxOptions' =>function($model) {
+                                    return ['checked' => $model->TRANGTHAI == 'Hoàn thành' ? true : false ];
+                                }
                             ],
                         ],
                     ]); ?>

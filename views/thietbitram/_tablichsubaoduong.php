@@ -19,8 +19,11 @@ echo GridView::widget([
             'attribute' => 'MA_NOIDUNG',
             'value' => 'mANOIDUNG.NOIDUNG'
         ],
-        'TRANGTHAI',
         'KETQUA',
+        [
+            'attribute' => 'ID_NHANVIEN',
+            'value' => 'nHANVIEN.TEN_NHANVIEN'
+        ],
         [
             'class' => 'yii\grid\ActionColumn',
             'template' => Yii::$app->user->can('create-tramvt') ? '{view} {update} {delete}' : '{view}',

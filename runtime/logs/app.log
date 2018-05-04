@@ -50849,3 +50849,578 @@ $_SERVER = [
     'REQUEST_TIME_FLOAT' => 1524470447.824
     'REQUEST_TIME' => 1524470447
 ]
+2018-04-24 16:23:06 [::1][1][-][warning][yii\i18n\PhpMessageSource::loadMessages] The message file for category 'app' does not exist: C:\xampp\htdocs\vnpt_mds/messages/vi/app.php
+    in C:\xampp\htdocs\vnpt_mds\views\nhanvien\view.php:25
+    in C:\xampp\htdocs\vnpt_mds\controllers\NhanvienController.php:63
+2018-04-24 16:23:06 [::1][1][-][info][application] $_GET = [
+    'id' => '7'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_identity' => '2b4bc6b9d1e42cc4bfcaf688743497ef436676d78aa42c8482d6ccd1aff0947fa:2:{i:0;s:9:\"_identity\";i:1;s:45:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",604800]\";}'
+    '_csrf' => 'cbf380183674dfeaa4992aedc745c423a9942afc4f8c485ec75fdd7f48f730c3a:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"W2sc-IzbXq5g3H8Gv3fUvZ_mlICYI49m\";}'
+    'PHPSESSID' => 'fobap57u369quc9qolb8jgedi1'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 1
+]
+
+$_SERVER = [
+    'REDIRECT_MIBDIRS' => 'C:/xampp/php/extras/mibs'
+    'REDIRECT_MYSQL_HOME' => '\\xampp\\mysql\\bin'
+    'REDIRECT_OPENSSL_CONF' => 'C:/xampp/apache/bin/openssl.cnf'
+    'REDIRECT_PHP_PEAR_SYSCONF_DIR' => '\\xampp\\php'
+    'REDIRECT_PHPRC' => '\\xampp\\php'
+    'REDIRECT_TMP' => '\\xampp\\tmp'
+    'REDIRECT_STATUS' => '200'
+    'MIBDIRS' => 'C:/xampp/php/extras/mibs'
+    'MYSQL_HOME' => '\\xampp\\mysql\\bin'
+    'OPENSSL_CONF' => 'C:/xampp/apache/bin/openssl.cnf'
+    'PHP_PEAR_SYSCONF_DIR' => '\\xampp\\php'
+    'PHPRC' => '\\xampp\\php'
+    'TMP' => '\\xampp\\tmp'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_REFERER' => 'http://localhost/vnpt_mds/nhanvien/update?id=7'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9,vi;q=0.8'
+    'HTTP_COOKIE' => '_identity=2b4bc6b9d1e42cc4bfcaf688743497ef436676d78aa42c8482d6ccd1aff0947fa%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A45%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C604800%5D%22%3B%7D; _csrf=cbf380183674dfeaa4992aedc745c423a9942afc4f8c485ec75fdd7f48f730c3a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22W2sc-IzbXq5g3H8Gv3fUvZ_mlICYI49m%22%3B%7D; PHPSESSID=fobap57u369quc9qolb8jgedi1'
+    'PATH' => 'C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Users\\ASUS\\AppData\\Local\\Microsoft\\WindowsApps;'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.33 (Win32) OpenSSL/1.0.2n PHP/7.0.29 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.33 (Win32) OpenSSL/1.0.2n PHP/7.0.29'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'SERVER_ADMIN' => 'postmaster@localhost'
+    'SCRIPT_FILENAME' => 'C:/xampp/htdocs/vnpt_mds/index.php'
+    'REMOTE_PORT' => '55018'
+    'REDIRECT_URL' => '/vnpt_mds/nhanvien/view'
+    'REDIRECT_QUERY_STRING' => 'id=7'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'id=7'
+    'REQUEST_URI' => '/vnpt_mds/nhanvien/view?id=7'
+    'SCRIPT_NAME' => '/vnpt_mds/index.php'
+    'PHP_SELF' => '/vnpt_mds/index.php'
+    'REQUEST_TIME_FLOAT' => 1524561786.622
+    'REQUEST_TIME' => 1524561786
+]
+2018-04-24 16:34:39 [::1][1][-][warning][yii\i18n\PhpMessageSource::loadMessages] The message file for category 'app' does not exist: C:\xampp\htdocs\vnpt_mds/messages/vi/app.php
+    in C:\xampp\htdocs\vnpt_mds\views\nhanvien\view.php:25
+    in C:\xampp\htdocs\vnpt_mds\controllers\NhanvienController.php:63
+2018-04-24 16:34:39 [::1][1][-][info][application] $_GET = [
+    'id' => '7'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_identity' => '2b4bc6b9d1e42cc4bfcaf688743497ef436676d78aa42c8482d6ccd1aff0947fa:2:{i:0;s:9:\"_identity\";i:1;s:45:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",604800]\";}'
+    '_csrf' => 'cbf380183674dfeaa4992aedc745c423a9942afc4f8c485ec75fdd7f48f730c3a:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"W2sc-IzbXq5g3H8Gv3fUvZ_mlICYI49m\";}'
+    'PHPSESSID' => 'fobap57u369quc9qolb8jgedi1'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 1
+]
+
+$_SERVER = [
+    'REDIRECT_MIBDIRS' => 'C:/xampp/php/extras/mibs'
+    'REDIRECT_MYSQL_HOME' => '\\xampp\\mysql\\bin'
+    'REDIRECT_OPENSSL_CONF' => 'C:/xampp/apache/bin/openssl.cnf'
+    'REDIRECT_PHP_PEAR_SYSCONF_DIR' => '\\xampp\\php'
+    'REDIRECT_PHPRC' => '\\xampp\\php'
+    'REDIRECT_TMP' => '\\xampp\\tmp'
+    'REDIRECT_STATUS' => '200'
+    'MIBDIRS' => 'C:/xampp/php/extras/mibs'
+    'MYSQL_HOME' => '\\xampp\\mysql\\bin'
+    'OPENSSL_CONF' => 'C:/xampp/apache/bin/openssl.cnf'
+    'PHP_PEAR_SYSCONF_DIR' => '\\xampp\\php'
+    'PHPRC' => '\\xampp\\php'
+    'TMP' => '\\xampp\\tmp'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_REFERER' => 'http://localhost/vnpt_mds/nhanvien/update?id=7'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9,vi;q=0.8'
+    'HTTP_COOKIE' => '_identity=2b4bc6b9d1e42cc4bfcaf688743497ef436676d78aa42c8482d6ccd1aff0947fa%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A45%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C604800%5D%22%3B%7D; _csrf=cbf380183674dfeaa4992aedc745c423a9942afc4f8c485ec75fdd7f48f730c3a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22W2sc-IzbXq5g3H8Gv3fUvZ_mlICYI49m%22%3B%7D; PHPSESSID=fobap57u369quc9qolb8jgedi1'
+    'PATH' => 'C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Users\\ASUS\\AppData\\Local\\Microsoft\\WindowsApps;'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.33 (Win32) OpenSSL/1.0.2n PHP/7.0.29 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.33 (Win32) OpenSSL/1.0.2n PHP/7.0.29'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'SERVER_ADMIN' => 'postmaster@localhost'
+    'SCRIPT_FILENAME' => 'C:/xampp/htdocs/vnpt_mds/index.php'
+    'REMOTE_PORT' => '55206'
+    'REDIRECT_URL' => '/vnpt_mds/nhanvien/view'
+    'REDIRECT_QUERY_STRING' => 'id=7'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'id=7'
+    'REQUEST_URI' => '/vnpt_mds/nhanvien/view?id=7'
+    'SCRIPT_NAME' => '/vnpt_mds/index.php'
+    'PHP_SELF' => '/vnpt_mds/index.php'
+    'REQUEST_TIME_FLOAT' => 1524562479.086
+    'REQUEST_TIME' => 1524562479
+]
+2018-04-24 16:35:43 [::1][1][-][warning][yii\i18n\PhpMessageSource::loadMessages] The message file for category 'app' does not exist: C:\xampp\htdocs\vnpt_mds/messages/vi/app.php
+    in C:\xampp\htdocs\vnpt_mds\views\nhanvien\view.php:25
+    in C:\xampp\htdocs\vnpt_mds\controllers\NhanvienController.php:63
+2018-04-24 16:35:43 [::1][1][-][info][application] $_GET = [
+    'id' => '107'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_identity' => '2b4bc6b9d1e42cc4bfcaf688743497ef436676d78aa42c8482d6ccd1aff0947fa:2:{i:0;s:9:\"_identity\";i:1;s:45:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",604800]\";}'
+    '_csrf' => 'cbf380183674dfeaa4992aedc745c423a9942afc4f8c485ec75fdd7f48f730c3a:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"W2sc-IzbXq5g3H8Gv3fUvZ_mlICYI49m\";}'
+    'PHPSESSID' => 'fobap57u369quc9qolb8jgedi1'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 1
+]
+
+$_SERVER = [
+    'REDIRECT_MIBDIRS' => 'C:/xampp/php/extras/mibs'
+    'REDIRECT_MYSQL_HOME' => '\\xampp\\mysql\\bin'
+    'REDIRECT_OPENSSL_CONF' => 'C:/xampp/apache/bin/openssl.cnf'
+    'REDIRECT_PHP_PEAR_SYSCONF_DIR' => '\\xampp\\php'
+    'REDIRECT_PHPRC' => '\\xampp\\php'
+    'REDIRECT_TMP' => '\\xampp\\tmp'
+    'REDIRECT_STATUS' => '200'
+    'MIBDIRS' => 'C:/xampp/php/extras/mibs'
+    'MYSQL_HOME' => '\\xampp\\mysql\\bin'
+    'OPENSSL_CONF' => 'C:/xampp/apache/bin/openssl.cnf'
+    'PHP_PEAR_SYSCONF_DIR' => '\\xampp\\php'
+    'PHPRC' => '\\xampp\\php'
+    'TMP' => '\\xampp\\tmp'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_REFERER' => 'http://localhost/vnpt_mds/nhanvien/update?id=107'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9,vi;q=0.8'
+    'HTTP_COOKIE' => '_identity=2b4bc6b9d1e42cc4bfcaf688743497ef436676d78aa42c8482d6ccd1aff0947fa%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A45%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C604800%5D%22%3B%7D; _csrf=cbf380183674dfeaa4992aedc745c423a9942afc4f8c485ec75fdd7f48f730c3a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22W2sc-IzbXq5g3H8Gv3fUvZ_mlICYI49m%22%3B%7D; PHPSESSID=fobap57u369quc9qolb8jgedi1'
+    'PATH' => 'C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Users\\ASUS\\AppData\\Local\\Microsoft\\WindowsApps;'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.33 (Win32) OpenSSL/1.0.2n PHP/7.0.29 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.33 (Win32) OpenSSL/1.0.2n PHP/7.0.29'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'SERVER_ADMIN' => 'postmaster@localhost'
+    'SCRIPT_FILENAME' => 'C:/xampp/htdocs/vnpt_mds/index.php'
+    'REMOTE_PORT' => '55254'
+    'REDIRECT_URL' => '/vnpt_mds/nhanvien/view'
+    'REDIRECT_QUERY_STRING' => 'id=107'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'id=107'
+    'REQUEST_URI' => '/vnpt_mds/nhanvien/view?id=107'
+    'SCRIPT_NAME' => '/vnpt_mds/index.php'
+    'PHP_SELF' => '/vnpt_mds/index.php'
+    'REQUEST_TIME_FLOAT' => 1524562543.009
+    'REQUEST_TIME' => 1524562543
+]
+2018-04-24 16:36:19 [::1][1][-][warning][yii\i18n\PhpMessageSource::loadMessages] The message file for category 'app' does not exist: C:\xampp\htdocs\vnpt_mds/messages/vi/app.php
+    in C:\xampp\htdocs\vnpt_mds\views\nhanvien\view.php:25
+    in C:\xampp\htdocs\vnpt_mds\controllers\NhanvienController.php:63
+2018-04-24 16:36:19 [::1][1][-][info][application] $_GET = [
+    'id' => '107'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_identity' => '2b4bc6b9d1e42cc4bfcaf688743497ef436676d78aa42c8482d6ccd1aff0947fa:2:{i:0;s:9:\"_identity\";i:1;s:45:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",604800]\";}'
+    '_csrf' => 'cbf380183674dfeaa4992aedc745c423a9942afc4f8c485ec75fdd7f48f730c3a:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"W2sc-IzbXq5g3H8Gv3fUvZ_mlICYI49m\";}'
+    'PHPSESSID' => 'fobap57u369quc9qolb8jgedi1'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 1
+]
+
+$_SERVER = [
+    'REDIRECT_MIBDIRS' => 'C:/xampp/php/extras/mibs'
+    'REDIRECT_MYSQL_HOME' => '\\xampp\\mysql\\bin'
+    'REDIRECT_OPENSSL_CONF' => 'C:/xampp/apache/bin/openssl.cnf'
+    'REDIRECT_PHP_PEAR_SYSCONF_DIR' => '\\xampp\\php'
+    'REDIRECT_PHPRC' => '\\xampp\\php'
+    'REDIRECT_TMP' => '\\xampp\\tmp'
+    'REDIRECT_STATUS' => '200'
+    'MIBDIRS' => 'C:/xampp/php/extras/mibs'
+    'MYSQL_HOME' => '\\xampp\\mysql\\bin'
+    'OPENSSL_CONF' => 'C:/xampp/apache/bin/openssl.cnf'
+    'PHP_PEAR_SYSCONF_DIR' => '\\xampp\\php'
+    'PHPRC' => '\\xampp\\php'
+    'TMP' => '\\xampp\\tmp'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_REFERER' => 'http://localhost/vnpt_mds/nhanvien/update?id=107'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9,vi;q=0.8'
+    'HTTP_COOKIE' => '_identity=2b4bc6b9d1e42cc4bfcaf688743497ef436676d78aa42c8482d6ccd1aff0947fa%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A45%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C604800%5D%22%3B%7D; _csrf=cbf380183674dfeaa4992aedc745c423a9942afc4f8c485ec75fdd7f48f730c3a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22W2sc-IzbXq5g3H8Gv3fUvZ_mlICYI49m%22%3B%7D; PHPSESSID=fobap57u369quc9qolb8jgedi1'
+    'PATH' => 'C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Users\\ASUS\\AppData\\Local\\Microsoft\\WindowsApps;'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.33 (Win32) OpenSSL/1.0.2n PHP/7.0.29 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.33 (Win32) OpenSSL/1.0.2n PHP/7.0.29'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'SERVER_ADMIN' => 'postmaster@localhost'
+    'SCRIPT_FILENAME' => 'C:/xampp/htdocs/vnpt_mds/index.php'
+    'REMOTE_PORT' => '55270'
+    'REDIRECT_URL' => '/vnpt_mds/nhanvien/view'
+    'REDIRECT_QUERY_STRING' => 'id=107'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'id=107'
+    'REQUEST_URI' => '/vnpt_mds/nhanvien/view?id=107'
+    'SCRIPT_NAME' => '/vnpt_mds/index.php'
+    'PHP_SELF' => '/vnpt_mds/index.php'
+    'REQUEST_TIME_FLOAT' => 1524562579.897
+    'REQUEST_TIME' => 1524562579
+]
+2018-04-26 17:00:17 [::1][1][t57q0c5icubvan67qo84dn3n65][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request: admin/user/changepassword in C:\xampp\htdocs\vnpt_mds\vendor\yiisoft\yii2\base\Controller.php:128
+Stack trace:
+#0 C:\xampp\htdocs\vnpt_mds\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('changepassword', Array)
+#1 C:\xampp\htdocs\vnpt_mds\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('admin/user/chan...', Array)
+#2 C:\xampp\htdocs\vnpt_mds\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#3 C:\xampp\htdocs\vnpt_mds\index.php(12): yii\base\Application->run()
+#4 {main}
+
+Next yii\web\NotFoundHttpException: Không tìm thấy trang. in C:\xampp\htdocs\vnpt_mds\vendor\yiisoft\yii2\web\Application.php:115
+Stack trace:
+#0 C:\xampp\htdocs\vnpt_mds\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 C:\xampp\htdocs\vnpt_mds\index.php(12): yii\base\Application->run()
+#2 {main}
+2018-04-26 17:00:17 [::1][1][t57q0c5icubvan67qo84dn3n65][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_identity' => '2b4bc6b9d1e42cc4bfcaf688743497ef436676d78aa42c8482d6ccd1aff0947fa:2:{i:0;s:9:\"_identity\";i:1;s:45:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",604800]\";}'
+    '_csrf' => 'cbf380183674dfeaa4992aedc745c423a9942afc4f8c485ec75fdd7f48f730c3a:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"W2sc-IzbXq5g3H8Gv3fUvZ_mlICYI49m\";}'
+    'PHPSESSID' => 't57q0c5icubvan67qo84dn3n65'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 1
+]
+
+$_SERVER = [
+    'REDIRECT_MIBDIRS' => 'C:/xampp/php/extras/mibs'
+    'REDIRECT_MYSQL_HOME' => '\\xampp\\mysql\\bin'
+    'REDIRECT_OPENSSL_CONF' => 'C:/xampp/apache/bin/openssl.cnf'
+    'REDIRECT_PHP_PEAR_SYSCONF_DIR' => '\\xampp\\php'
+    'REDIRECT_PHPRC' => '\\xampp\\php'
+    'REDIRECT_TMP' => '\\xampp\\tmp'
+    'REDIRECT_STATUS' => '200'
+    'MIBDIRS' => 'C:/xampp/php/extras/mibs'
+    'MYSQL_HOME' => '\\xampp\\mysql\\bin'
+    'OPENSSL_CONF' => 'C:/xampp/apache/bin/openssl.cnf'
+    'PHP_PEAR_SYSCONF_DIR' => '\\xampp\\php'
+    'PHPRC' => '\\xampp\\php'
+    'TMP' => '\\xampp\\tmp'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9,vi;q=0.8'
+    'HTTP_COOKIE' => '_identity=2b4bc6b9d1e42cc4bfcaf688743497ef436676d78aa42c8482d6ccd1aff0947fa%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A45%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C604800%5D%22%3B%7D; _csrf=cbf380183674dfeaa4992aedc745c423a9942afc4f8c485ec75fdd7f48f730c3a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22W2sc-IzbXq5g3H8Gv3fUvZ_mlICYI49m%22%3B%7D; PHPSESSID=t57q0c5icubvan67qo84dn3n65'
+    'PATH' => 'C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files\\Git\\cmd;C:\\Users\\ASUS\\AppData\\Local\\Microsoft\\WindowsApps;;C:\\Program Files\\Microsoft VS Code\\bin'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.33 (Win32) OpenSSL/1.0.2n PHP/7.0.29 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.33 (Win32) OpenSSL/1.0.2n PHP/7.0.29'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'SERVER_ADMIN' => 'postmaster@localhost'
+    'SCRIPT_FILENAME' => 'C:/xampp/htdocs/vnpt_mds/index.php'
+    'REMOTE_PORT' => '60291'
+    'REDIRECT_URL' => '/vnpt_mds/admin/user/changepassword'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/vnpt_mds/admin/user/changepassword'
+    'SCRIPT_NAME' => '/vnpt_mds/index.php'
+    'PHP_SELF' => '/vnpt_mds/index.php'
+    'REQUEST_TIME_FLOAT' => 1524736817.026
+    'REQUEST_TIME' => 1524736817
+]
+2018-04-26 17:05:21 [::1][1][t57q0c5icubvan67qo84dn3n65][error][yii\base\UnknownPropertyException] yii\base\UnknownPropertyException: Getting unknown property: app\models\User::user in C:\xampp\htdocs\vnpt_mds\vendor\yiisoft\yii2\base\Component.php:154
+Stack trace:
+#0 C:\xampp\htdocs\vnpt_mds\vendor\yiisoft\yii2\db\BaseActiveRecord.php(296): yii\base\Component->__get('user')
+#1 C:\xampp\htdocs\vnpt_mds\vendor\yiisoft\yii2\helpers\BaseArrayHelper.php(208): yii\db\BaseActiveRecord->__get('user')
+#2 C:\xampp\htdocs\vnpt_mds\vendor\yiisoft\yii2\helpers\BaseArrayHelper.php(201): yii\helpers\BaseArrayHelper::getValue(Object(app\models\User), 'user', NULL)
+#3 C:\xampp\htdocs\vnpt_mds\vendor\yiisoft\yii2\helpers\BaseArrayHelper.php(201): yii\helpers\BaseArrayHelper::getValue(Object(app\models\User), 'user.nhanvien', NULL)
+#4 C:\xampp\htdocs\vnpt_mds\vendor\yiisoft\yii2\grid\DataColumn.php(232): yii\helpers\BaseArrayHelper::getValue(Object(app\models\User), 'user.nhanvien.T...')
+#5 C:\xampp\htdocs\vnpt_mds\vendor\yiisoft\yii2\grid\DataColumn.php(244): yii\grid\DataColumn->getDataCellValue(Object(app\models\User), 1, 0)
+#6 C:\xampp\htdocs\vnpt_mds\vendor\yiisoft\yii2\grid\Column.php(111): yii\grid\DataColumn->renderDataCellContent(Object(app\models\User), 1, 0)
+#7 C:\xampp\htdocs\vnpt_mds\vendor\yiisoft\yii2\grid\GridView.php(520): yii\grid\Column->renderDataCell(Object(app\models\User), 1, 0)
+#8 C:\xampp\htdocs\vnpt_mds\vendor\yiisoft\yii2\grid\GridView.php(489): yii\grid\GridView->renderTableRow(Object(app\models\User), 1, 0)
+#9 C:\xampp\htdocs\vnpt_mds\vendor\yiisoft\yii2\grid\GridView.php(353): yii\grid\GridView->renderTableBody()
+#10 C:\xampp\htdocs\vnpt_mds\vendor\yiisoft\yii2\widgets\BaseListView.php(160): yii\grid\GridView->renderItems()
+#11 C:\xampp\htdocs\vnpt_mds\vendor\yiisoft\yii2\grid\GridView.php(321): yii\widgets\BaseListView->renderSection('{items}')
+#12 C:\xampp\htdocs\vnpt_mds\vendor\yiisoft\yii2\widgets\BaseListView.php(135): yii\grid\GridView->renderSection('{items}')
+#13 [internal function]: yii\widgets\BaseListView->yii\widgets\{closure}(Array)
+#14 C:\xampp\htdocs\vnpt_mds\vendor\yiisoft\yii2\widgets\BaseListView.php(138): preg_replace_callback('/{\\w+}/', Object(Closure), '{items}{pager}')
+#15 C:\xampp\htdocs\vnpt_mds\vendor\yiisoft\yii2\grid\GridView.php(296): yii\widgets\BaseListView->run()
+#16 C:\xampp\htdocs\vnpt_mds\vendor\yiisoft\yii2\base\Widget.php(140): yii\grid\GridView->run()
+#17 C:\xampp\htdocs\vnpt_mds\vendor\mdmsoft\yii2-admin\views\assignment\index.php(60): yii\base\Widget::widget(Array)
+#18 C:\xampp\htdocs\vnpt_mds\vendor\yiisoft\yii2\base\View.php(336): require('C:\\xampp\\htdocs...')
+#19 C:\xampp\htdocs\vnpt_mds\vendor\yiisoft\yii2\base\View.php(254): yii\base\View->renderPhpFile('C:\\xampp\\htdocs...', Array)
+#20 C:\xampp\htdocs\vnpt_mds\vendor\yiisoft\yii2\base\View.php(156): yii\base\View->renderFile('C:\\xampp\\htdocs...', Array, Object(mdm\admin\controllers\AssignmentController))
+#21 C:\xampp\htdocs\vnpt_mds\vendor\yiisoft\yii2\base\Controller.php(384): yii\base\View->render('index', Array, Object(mdm\admin\controllers\AssignmentController))
+#22 C:\xampp\htdocs\vnpt_mds\vendor\mdmsoft\yii2-admin\controllers\AssignmentController.php(88): yii\base\Controller->render('index', Array)
+#23 [internal function]: mdm\admin\controllers\AssignmentController->actionIndex()
+#24 C:\xampp\htdocs\vnpt_mds\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#25 C:\xampp\htdocs\vnpt_mds\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#26 C:\xampp\htdocs\vnpt_mds\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('', Array)
+#27 C:\xampp\htdocs\vnpt_mds\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('admin/assignmen...', Array)
+#28 C:\xampp\htdocs\vnpt_mds\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#29 C:\xampp\htdocs\vnpt_mds\index.php(12): yii\base\Application->run()
+#30 {main}
+2018-04-26 17:05:20 [::1][1][t57q0c5icubvan67qo84dn3n65][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_identity' => '2b4bc6b9d1e42cc4bfcaf688743497ef436676d78aa42c8482d6ccd1aff0947fa:2:{i:0;s:9:\"_identity\";i:1;s:45:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",604800]\";}'
+    '_csrf' => 'cbf380183674dfeaa4992aedc745c423a9942afc4f8c485ec75fdd7f48f730c3a:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"W2sc-IzbXq5g3H8Gv3fUvZ_mlICYI49m\";}'
+    'PHPSESSID' => 't57q0c5icubvan67qo84dn3n65'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 1
+]
+
+$_SERVER = [
+    'REDIRECT_MIBDIRS' => 'C:/xampp/php/extras/mibs'
+    'REDIRECT_MYSQL_HOME' => '\\xampp\\mysql\\bin'
+    'REDIRECT_OPENSSL_CONF' => 'C:/xampp/apache/bin/openssl.cnf'
+    'REDIRECT_PHP_PEAR_SYSCONF_DIR' => '\\xampp\\php'
+    'REDIRECT_PHPRC' => '\\xampp\\php'
+    'REDIRECT_TMP' => '\\xampp\\tmp'
+    'REDIRECT_STATUS' => '200'
+    'MIBDIRS' => 'C:/xampp/php/extras/mibs'
+    'MYSQL_HOME' => '\\xampp\\mysql\\bin'
+    'OPENSSL_CONF' => 'C:/xampp/apache/bin/openssl.cnf'
+    'PHP_PEAR_SYSCONF_DIR' => '\\xampp\\php'
+    'PHPRC' => '\\xampp\\php'
+    'TMP' => '\\xampp\\tmp'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_REFERER' => 'http://localhost/vnpt_mds/admin/user'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9,vi;q=0.8'
+    'HTTP_COOKIE' => '_identity=2b4bc6b9d1e42cc4bfcaf688743497ef436676d78aa42c8482d6ccd1aff0947fa%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A45%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C604800%5D%22%3B%7D; _csrf=cbf380183674dfeaa4992aedc745c423a9942afc4f8c485ec75fdd7f48f730c3a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22W2sc-IzbXq5g3H8Gv3fUvZ_mlICYI49m%22%3B%7D; PHPSESSID=t57q0c5icubvan67qo84dn3n65'
+    'PATH' => 'C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files\\Git\\cmd;C:\\Users\\ASUS\\AppData\\Local\\Microsoft\\WindowsApps;;C:\\Program Files\\Microsoft VS Code\\bin'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.33 (Win32) OpenSSL/1.0.2n PHP/7.0.29 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.33 (Win32) OpenSSL/1.0.2n PHP/7.0.29'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'SERVER_ADMIN' => 'postmaster@localhost'
+    'SCRIPT_FILENAME' => 'C:/xampp/htdocs/vnpt_mds/index.php'
+    'REMOTE_PORT' => '60333'
+    'REDIRECT_URL' => '/vnpt_mds/admin/assignment'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/vnpt_mds/admin/assignment'
+    'SCRIPT_NAME' => '/vnpt_mds/index.php'
+    'PHP_SELF' => '/vnpt_mds/index.php'
+    'REQUEST_TIME_FLOAT' => 1524737120.857
+    'REQUEST_TIME' => 1524737120
+]
+2018-05-02 17:10:38 [::1][1][u92j76ludovo95hoihk7kh24p2][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request "requirement.php". in C:\xampp\htdocs\vnpt_mds\vendor\yiisoft\yii2\base\Module.php:537
+Stack trace:
+#0 C:\xampp\htdocs\vnpt_mds\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('requirement.php', Array)
+#1 C:\xampp\htdocs\vnpt_mds\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#2 C:\xampp\htdocs\vnpt_mds\index.php(12): yii\base\Application->run()
+#3 {main}
+
+Next yii\web\NotFoundHttpException: Không tìm thấy trang. in C:\xampp\htdocs\vnpt_mds\vendor\yiisoft\yii2\web\Application.php:115
+Stack trace:
+#0 C:\xampp\htdocs\vnpt_mds\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 C:\xampp\htdocs\vnpt_mds\index.php(12): yii\base\Application->run()
+#2 {main}
+2018-05-02 17:10:37 [::1][1][u92j76ludovo95hoihk7kh24p2][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_identity' => '2b4bc6b9d1e42cc4bfcaf688743497ef436676d78aa42c8482d6ccd1aff0947fa:2:{i:0;s:9:\"_identity\";i:1;s:45:\"[1,\"uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl\",604800]\";}'
+    '_csrf' => 'cbf380183674dfeaa4992aedc745c423a9942afc4f8c485ec75fdd7f48f730c3a:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"W2sc-IzbXq5g3H8Gv3fUvZ_mlICYI49m\";}'
+    'PHPSESSID' => 'u92j76ludovo95hoihk7kh24p2'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 1
+]
+
+$_SERVER = [
+    'REDIRECT_MIBDIRS' => 'C:/xampp/php/extras/mibs'
+    'REDIRECT_MYSQL_HOME' => '\\xampp\\mysql\\bin'
+    'REDIRECT_OPENSSL_CONF' => 'C:/xampp/apache/bin/openssl.cnf'
+    'REDIRECT_PHP_PEAR_SYSCONF_DIR' => '\\xampp\\php'
+    'REDIRECT_PHPRC' => '\\xampp\\php'
+    'REDIRECT_TMP' => '\\xampp\\tmp'
+    'REDIRECT_STATUS' => '200'
+    'MIBDIRS' => 'C:/xampp/php/extras/mibs'
+    'MYSQL_HOME' => '\\xampp\\mysql\\bin'
+    'OPENSSL_CONF' => 'C:/xampp/apache/bin/openssl.cnf'
+    'PHP_PEAR_SYSCONF_DIR' => '\\xampp\\php'
+    'PHPRC' => '\\xampp\\php'
+    'TMP' => '\\xampp\\tmp'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9,vi;q=0.8'
+    'HTTP_COOKIE' => '_identity=2b4bc6b9d1e42cc4bfcaf688743497ef436676d78aa42c8482d6ccd1aff0947fa%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A45%3A%22%5B1%2C%22uGB7E0DTPhSfyQpVaVaGcTuI7umlteNl%22%2C604800%5D%22%3B%7D; _csrf=cbf380183674dfeaa4992aedc745c423a9942afc4f8c485ec75fdd7f48f730c3a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22W2sc-IzbXq5g3H8Gv3fUvZ_mlICYI49m%22%3B%7D; PHPSESSID=u92j76ludovo95hoihk7kh24p2'
+    'PATH' => 'C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files\\Git\\cmd;C:\\Users\\ASUS\\AppData\\Local\\Microsoft\\WindowsApps;;C:\\Program Files\\Microsoft VS Code\\bin'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.33 (Win32) OpenSSL/1.0.2n PHP/7.0.29 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.33 (Win32) OpenSSL/1.0.2n PHP/7.0.29'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'C:/xampp/htdocs'
+    'SERVER_ADMIN' => 'postmaster@localhost'
+    'SCRIPT_FILENAME' => 'C:/xampp/htdocs/vnpt_mds/index.php'
+    'REMOTE_PORT' => '51401'
+    'REDIRECT_URL' => '/vnpt_mds/requirement.php'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/vnpt_mds/requirement.php'
+    'SCRIPT_NAME' => '/vnpt_mds/index.php'
+    'PHP_SELF' => '/vnpt_mds/index.php'
+    'REQUEST_TIME_FLOAT' => 1525255837.735
+    'REQUEST_TIME' => 1525255837
+]

@@ -548,10 +548,7 @@ class DotbaoduongController extends Controller
                 foreach ($noidungcongviecs as $noidungcongviec) {
                     $noidungcongviec->TRANGTHAI = 'Chưa hoàn thành';
                     $noidungcongviec->KETQUA = 'Chưa đạt';
-                    $noidungcongviec->save(false);               
-                    // $thietbitram = Thietbitram::findOne(['ID_THIETBI' => $noidungcongviec->ID_THIETBI]);
-                    // $thietbitram->LANBAODUONGTRUOC = date("y-m-d");
-                    // $thietbitram->LANBD += 1;    
+                    $noidungcongviec->save(false);                 
                 }
             }
         }
