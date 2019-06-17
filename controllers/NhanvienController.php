@@ -3,10 +3,13 @@
 namespace app\controllers;
 
 use Yii;
+use app\models\Temp;
 use app\models\ActivitiesLog;
 use app\models\AuthAssignment;
 use app\models\User;
 use app\models\Daivt;
+use app\models\Donvi;
+use app\models\Tramvt;
 use app\models\Nhanvien;
 use app\models\NhanvienSearch;
 use yii\web\Controller;
@@ -31,6 +34,7 @@ class NhanvienController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                    'get-nhanvien' => ['POST'],
                     // 'getDai' => ['POST'],
                 ],
             ],
@@ -74,11 +78,11 @@ class NhanvienController extends Controller
         if (Yii::$app->user->can('create-nhanvien')) {
             # code...
             $model = new Nhanvien();
-            $authModel = new AuthAssignment;
+            // $authModel = new AuthAssignment;
             $user = new User;
 
             if ($model->load(Yii::$app->request->post())) {
-                if (!Nhanvien::find()->where(['MA_NHANVIEN' =>$model->MA_NHANVIEN])->exists()) {
+                // if (!Nhanvien::find()->where(['MA_NHANVIEN' =>$model->MA_NHANVIEN])->exists()) {
                     if (User::find()->where(['username' => $model->USER_NAME])->exists() == false) {
                         //Luu thong tin nhan vien
                         $model->save();
@@ -89,11 +93,11 @@ class NhanvienController extends Controller
 
                         // $user = new User;
                         $user->username = $model->USER_NAME;
-                        $user->email = $model->USER_NAME;
+                        $user->email = $model->USER_NAME."@vnpt.vn";
                         $user->setPassword('vnpt1234');
                         $user->generateAuthKey();
-                        $user->generateAccessToken();
                         $user->status = 10;
+                        $user->created_at = time();
                         $user->save(false);
                         
 
@@ -104,18 +108,18 @@ class NhanvienController extends Controller
                         $log->user_id = Yii::$app->user->identity->id;
                         $log->create_at = time();
                         $log->save();
-                        return $this->redirect(['view', 'id' => $model->ID_NHANVIEN]);
+                        return $this->redirect(['index']);
                     }
-                }
+                // }
             } 
             return $this->render('create', [
                 'model' => $model,
-                'authModel' => $authModel,
+                // 'authModel' => $authModel,
                 'user' => $user,
             ]);
         } else {
             # code...
-            throw new ForbiddenHttpException;
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
             
         }
         
@@ -134,18 +138,11 @@ class NhanvienController extends Controller
             $model = $this->findModel($id);
             $user = User::find()->where(['username' => $model->USER_NAME])->one();
             
-            // print_r($user);
-            // die;
-            if (!AuthAssignment::find()->where(['user_id' => $user->id])->exists()) {
-                $authModel = new AuthAssignment;
-            } else {
-                $authModel = AuthAssignment::find()->where(['user_id' => $user->id ])->one();
-            }
             $data = Yii::$app->request->post();
             if ($model->load($data) && $model->save()) {
-                $authModel->user_id = $user->id;
-                $authModel->load($data);
-                $authModel->save(false);
+                // $authModel->user_id = $user->id;
+                // $authModel->load($data);
+                // $authModel->save(false);
                 if ($data['User']['password']) {
                     $user->setPassword($data['User']['password']);
                     $user->save(false);
@@ -154,13 +151,13 @@ class NhanvienController extends Controller
             } else {
                 return $this->render('update', [
                     'model' => $model,
-                    'authModel' => $authModel,
+                    // 'authModel' => $authModel,
                     'user' => $user,
                 ]);
             }
         } else {
             # code...
-            throw new ForbiddenHttpException;
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
             
         }
         
@@ -176,54 +173,24 @@ class NhanvienController extends Controller
     {
         if (Yii::$app->user->can('delete-nhanvien')) {
             # code...
-            $this->findModel($id)->delete();
+            $model = $this->findModel($id);
+            $user = User::findOne(['username' => $model->USER_NAME]);
+            $user->delete();
+            $model->delete();
             
             return $this->redirect(['index']);
         } else {
             # code...
-            throw new ForbiddenHttpException;
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
             
         }
         
     }
 
-    public function actionMultiDelete()
-    {
-        $nhanviens = Nhanvien::find()->where(['USER_NAME' => ''])->all();
-        foreach ($nhanviens as $nhanvien) {
-            $nhanvien->delete();
-        }
-        return $this->redirect(['index']);
-    }
-
     public function actionList($id) {
-        // $out = [];
-        // if (isset($_POST['depdrop_parents'])) {
-        //     $id_donvi = end($_POST['depdrop_parents']);
-        //     $list = Daivt::find()->select('ID_DAI, TEN_DAIVT')->where(['ID_DONVI'=>$id_donvi])->asArray()->all();
-        //     $selected  = null;
-        //     if ($id_donvi != null && count($list) > 0) {
-        //         $selected = '';
-        //         foreach ($list as $i => $daivt) {
-        //             $out[] = ['ID_DAI' => $daivt['ID_DAI'], 'TEN_DAIVT' => $daivt['TEN_DAIVT']];
-        //             if ($i == 0) {
-        //                 $selected = $daivt['ID_DAI'];
-        //             }
-        //         }
-        //         // var_dump($out);
-        //         // echo '<hr>';
-        //         // var_dump($selected);
-        //         // die;
-        //         echo Json::encode(['output' => $out, 'selected'=>$selected]);
-        //         return;
-        //     }
-        // }
-        // echo Json::encode(['output' => '', 'selected'=>'']);
         $danhsachdai = Daivt::find()
         ->where(['ID_DONVI' => $id])
         ->all();
-        // var_dump($danhsachdai);
-        // die;
 
         if(isset($danhsachdai) && count($danhsachdai)>0) {
             echo "<option value=''>Chọn đài viễn thông</option>";
@@ -233,6 +200,70 @@ class NhanvienController extends Controller
             return;
         }else {
             echo "<option value=''>Chọn đài viễn thông</option>";
+        }
+    }
+
+    public function actionImport()
+    {
+        ini_set('max_execution_time', 0);
+        // $filename = 'data/nhanvien.csv';
+        $handle = fopen($filename, "r");
+        $list = [];
+        while (($fileop = fgetcsv($handle, 5000, ",")) !== false) 
+        {
+                // 0       1       2           3        4
+            //Họ tên,Chức vụ,Điện thoại,Đài (nếu có),TTVT
+            $model = new Nhanvien;
+            $model->TEN_NHANVIEN = $fileop[0];
+            $model->CHUC_VU = $fileop[1];
+            $model->DIEN_THOAI = $fileop[2];
+            $model->ID_DAI = $fileop[3];
+            $model->ID_DONVI = $fileop[4];
+            $model->USER_NAME = Nhanvien::makeEmail(Nhanvien::stripUnicode($model->TEN_NHANVIEN));
+
+            $model->save(false);
+
+            if (User::find()->where(['username' => $model->USER_NAME])->exists()) {
+                $list[] = $model->TEN_NHANVIEN;
+                continue;
+            }
+            $user = new User;
+            $user->username = $model->USER_NAME;
+            $user->setPassword('vnpt1234');
+            $user->generateAuthKey();
+            $user->status = 10;
+            $user->created_at = time();
+            $user->save(false);
+        }
+        echo "Success! \n";
+        print_r($list);
+    }
+
+
+    public function actionExport()
+    {
+        ini_set('max_execution_time', 0);
+        $filename = 'data/tram_update.csv';
+        // $handle = fopen($filename, "w");
+        $users = User::find()->all();
+        foreach ($users as $user) {
+            echo "<br>$user->username, vnpt1234, ".$user->nhanvien->TEN_NHANVIEN.", ".$user->nhanvien->chucvu->ten_chucvu.", ".$user->nhanvien->iDDAI->TEN_DAIVT;
+            
+        }
+        // echo "Success!";
+    }
+
+    public function actionGanquyen()
+    {
+        ini_set('max_execution_time', 0);
+        $list = Nhanvien::find()->all();
+        foreach ($list as $nhanvien) {
+            if ($nhanvien->CHUC_VU == 3) {
+                $assign = new AuthAssignment;
+                $assign->user_id = $nhanvien->user->id;
+                $assign->item_name = 'lvl2makecampaign';
+                $assign->save();
+            }
         }
     }
 

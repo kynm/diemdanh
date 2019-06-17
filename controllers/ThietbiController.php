@@ -6,8 +6,9 @@ use Yii;
 use app\models\ActivitiesLog;
 use app\models\Noidungbaotri;
 use app\models\NoidungbaotriSearch;
-use app\models\Dexuatnoidung;
-use app\models\DexuatnoidungSearch;
+use app\models\Noidungbaotrinhomtbi;
+use app\models\Chuyennoidung;
+use app\models\Tramvt;
 use app\models\Thietbi;
 use app\models\ThietbiSearch;
 use yii\web\Controller;
@@ -58,14 +59,23 @@ class ThietbiController extends Controller
      */
     public function actionView($id)
     {
-        $query = Noidungbaotri::find()->where(['ID_THIETBI' => $id]);
+        $model = $this->findModel($id);
+        $list = $model->thietbitrams;
 
+        $query = Noidungbaotrinhomtbi::find()->where(['ID_NHOM' => $model->ID_NHOM]);
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+        $query_tram = Tramvt::find()->joinWith('thietbitrams')->where(['thietbitram.ID_LOAITB' => $id]);
+        $tramDataProvider = new ActiveDataProvider([
+            'query' => $query_tram,
+        ]);
+        
         return $this->render('view', [
             'dataProvider' => $dataProvider,
-            'model' => $this->findModel($id),
+            'tramDataProvider' => $tramDataProvider,
+            'model' => $model,
         ]);
     }
 
@@ -95,7 +105,7 @@ class ThietbiController extends Controller
             }
         } else {
             # code...
-            throw new ForbiddenHttpException;
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
         }
     }
 
@@ -120,7 +130,7 @@ class ThietbiController extends Controller
             }
         } else {
             # code...
-            throw new ForbiddenHttpException;
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
         }
     }
 
@@ -139,145 +149,106 @@ class ThietbiController extends Controller
             return $this->redirect(['index']);
         } else {
             # code...
-            throw new ForbiddenHttpException;
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
         }
     }
 
 
     public function actionDexuatnoidung($id)
     {
-        $model = $this->findModel($id);
+        $thietbi = $this->findModel($id);
+        if (Chuyennoidung::find()->where(['ID_NHOM' => $thietbi->ID_NHOM])->exists() === false) {
+            $list = Noidungbaotrinhomtbi::findAll(['ID_NHOM' => $thietbi->ID_NHOM]);
+            foreach ($list as $noiDung) {
+                Yii::$app->db->createCommand("
+                    INSERT INTO `chuyennoidung` (ID_NHOM, MA_NOIDUNG, NOIDUNG, CHUKY, QLTRAM, YEUCAUNHAP, IS_SELECTED)
+                        VALUES ($thietbi->ID_NHOM, '$noiDung->MA_NOIDUNG', '$noiDung->NOIDUNG', $noiDung->CHUKY, $noiDung->QLTRAM, '$noiDung->YEUCAUNHAP', 0)
+                ")->execute();
+            }
+            $listNDTB = Noidungbaotri::findAll(['ID_THIETBI'=> $id]);
+            foreach ($listNDTB as $ND) {
+                $MA_NOIDUNG = $ND->MA_NOIDUNG;
+                Yii::$app->db->createCommand("
+                    UPDATE `chuyennoidung`
+                        SET IS_SELECTED = 1 
+                        WHERE MA_NOIDUNG = '".$MA_NOIDUNG."'
+                ")->execute();
+            }
+        }
 
-        //Thêm nội dung vào nội dung đề xuất
-        if (Yii::$app->request->post('addkeylist') && Yii::$app->request->post('chuky')) {
-            $chukybaoduong = Yii::$app->request->post('chuky');
+
+        if (Yii::$app->request->post('addkeylist')) {
             $selection = Yii::$app->request->post('addkeylist');
             
-            foreach($selection as $manoidung){            
-                    
-                if(Dexuatnoidung::find()->where(['ID_LOAITB' => $id, 'CHUKYBAODUONG' => $chukybaoduong, 'MA_NOIDUNG' => $manoidung])->exists()) continue;
+            foreach($selection as $key){            
                 
-                $dexuat = new Dexuatnoidung;
-                $dexuat->CHUKYBAODUONG = $chukybaoduong;
-                $dexuat->MA_NOIDUNG = $manoidung;
-                $dexuat->ID_LOAITB = $id;
+                $noiDungChuyen = Chuyennoidung::find()->where(['MA_NOIDUNG' => $key])->one();
+
+                $noiDungChuyen->IS_SELECTED = 1;
+                $noiDungChuyen->save(false);
                 
-                $dexuat->save(false);
+                $noidung = new Noidungbaotri();
+
+                $noidung->MA_NOIDUNG = $key;
+                $noidung->ID_THIETBI = $thietbi->ID_THIETBI;
+                $noidung->NOIDUNG = $noiDungChuyen->NOIDUNG;
+                $noidung->CHUKY = $noiDungChuyen->CHUKY;
+                $noidung->QLTRAM = $noiDungChuyen->QLTRAM;
+                $noidung->YEUCAUNHAP = $noiDungChuyen->YEUCAUNHAP;
+
+                $noidung->save(false);
+                
             }
         }
-
-
-        //Tự động sắp xếp lại chu kỳ và đặt lần bảo dưỡng
-            
-        $dexuattbi = Dexuatnoidung::find()->where(['ID_LOAITB' => $id])->groupBy(['CHUKYBAODUONG'])->orderBy(['CHUKYBAODUONG' => SORT_ASC])->all();
-        if ($dexuattbi) {
-            foreach ($dexuattbi as $each) {
-                $chukyArr[] = $each->CHUKYBAODUONG;
-            }
-            $i = 1;
-            foreach ($chukyArr as $chuky) {
-                $dexuatchuky = Dexuatnoidung::find()->where(['ID_LOAITB' => $id, 'CHUKYBAODUONG' => $chuky])->all();
-                foreach ($dexuatchuky as $noidung) {
-                    $noidung->LANBD = $i;
-                    $noidung->save();
-                    
-                }
-                $i++;
-            }
-        }
-        
-        // tat ca noi dung bao tri cho thiet bi
-        $noidungSearchModel = new NoidungbaotriSearch();
-        $noidungProvider = $noidungSearchModel->searchThietbi(Yii::$app->request->queryParams);
 
         if (Yii::$app->request->post('rmvkeylist')) {
             $selection = Yii::$app->request->post('rmvkeylist');
+            // var_dump($selection); die;
             
-            foreach($selection as $object){            
-                    
-                $delModel = Dexuatnoidung::find()->where(['ID_LOAITB' => $object['ID_LOAITB'], 'CHUKYBAODUONG' => $object['CHUKYBAODUONG'], 'MA_NOIDUNG' => $object['MA_NOIDUNG']])->one();
-                $delModel->delete();
+            foreach($selection as $key){
+            // var_dump($key); die;                
+                $noiDungChuyen = Chuyennoidung::find()->where(['MA_NOIDUNG' => $key])->one();
+                $noiDungChuyen->IS_SELECTED = 0;
+                
+                $noiDungChuyen->save(false);
 
+                $noidung = Noidungbaotri::findOne(['MA_NOIDUNG' => $key, 'ID_THIETBI' => $id]);
+                $noidung->delete();
             }
         }
 
-
-        //ajax filter theo chu kỳ bảo dưỡng
-        if (Yii::$app->request->get('chuky') != null) {
-            $query = Dexuatnoidung::find()
-            ->where(['ID_LOAITB'=>$id, 'CHUKYBAODUONG' => $_GET['chuky']]);        
-            $khuyennghiProvider = new ActiveDataProvider([
-                'query' => $query,
-                'pagination' => [ 
-                    'pageSize' => 10,
-                ],
-            ]);
-        } else {
-            $khuyennghiSearchModel = new DexuatnoidungSearch;
-            $khuyennghiProvider = $khuyennghiSearchModel->search(Yii::$app->request->queryParams);
-        }
-            
-        return $this->render('dexuatnoidung', [
-            'model' => $model,
-            // 'noidungSearchModel' => $noidungSearchModel,
-            'noidungProvider' => $noidungProvider,
-            // 'khuyennghiSearchModel' => $khuyennghiSearchModel,
-            'khuyennghiProvider' => $khuyennghiProvider,
-        ]);
-    }
-
-    public function actionMultiDelete()
-    {
-        $id = Yii::$app->request->post('id');
-        $model = Thietbi::findOne($id);
-        $selection = Yii::$app->request->post('rmvkeylist');
-        
-        foreach($selection as $object){            
-                
-            $delModel = Dexuatnoidung::find()->where(['ID_LOAITB' => $object['ID_LOAITB'], 'CHUKYBAODUONG' => $object['CHUKYBAODUONG'], 'MA_NOIDUNG' => $object['MA_NOIDUNG']])->one();
-            $delModel->delete();
-
-        }
-
-        return $this->redirect(Yii::$app->request->referrer);
-        
-        $query1 = Dexuatnoidung::find()
-        ->where(['ID_LOAITB'=>$id]);        
-        $khuyennghiProvider = new ActiveDataProvider([
+        $query1 = Chuyennoidung::find()->where(['ID_NHOM' => $thietbi->ID_NHOM, 'IS_SELECTED' => 0]);
+        $unselectedProvider = new ActiveDataProvider([
             'query' => $query1,
-            'pagination' => [ 
-                'pageSize' => 10, 
-            ],
         ]);
 
-        $query2 = Noidungbaotri::find()
-        ->where(['ID_THIETBI'=>$id]);        
-        $noidungProvider = new ActiveDataProvider([
+        $query2 = Chuyennoidung::find()->where(['ID_NHOM' => $thietbi->ID_NHOM, 'IS_SELECTED' => 1]);
+        $selectedDataProvider = new ActiveDataProvider([
             'query' => $query2,
-            'pagination' => [ 
-                'pageSize' => 10, 
-            ],
         ]);
-                
+
         return $this->render('dexuatnoidung', [
-            'model' => $model,
-            'noidungProvider' => $noidungProvider,
-            'khuyennghiProvider' => $khuyennghiProvider,
+            'thietbi' => $thietbi,
+            'unselectedProvider' => $unselectedProvider,
+            'selectedDataProvider' => $selectedDataProvider,
         ]);
     }
 
-    public function actionMultiAdd()
+    public function actionList($id)
     {
-        $selection=(array)Yii::$app->request->post('AddSelection');
+        $idsNhom = explode(',', $id);
+        $listThietbi = Thietbi::find()
+        ->where(['ID_NHOM' => $idsNhom])
+        ->all();
 
-        // print_r($selection);
-        // die;
-        foreach($selection as $idObj){
-            $id = get_object_vars(json_decode($idObj));
-            $delModel = Dexuatnoidung::find()->where($id)->one();
-            $delModel->delete();
+        if(isset($listThietbi) && count($listThietbi)>0) {
+            foreach($listThietbi as $each) {
+                echo "<option value='".$each->ID_THIETBI."'>".$each->TEN_THIETBI."</option>";
+            }
+            return;
+        }else {
+            echo "<option value=''>Chọn đài viễn thông</option>";
         }
-        return $this->redirect(Yii::$app->request->referrer);
     }
 
     /**

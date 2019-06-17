@@ -14,9 +14,9 @@ $this->params['breadcrumbs'][] = $this->title;
     
 <div class="login-form">
 
-    <img class="img-responsive col-sm-offset-3" src="<?= Url::to(Yii::$app->homeUrl) ?>/dist/img/logo.png">
-        
     <div class="col-sm-4 col-sm-offset-4">
+        
+        <img class="img-responsive" style="margin-bottom: 10px; vertical-align: middle" src="<?= Url::to(Yii::$app->homeUrl) ?>/dist/img/logo.png">
         <?php $form = ActiveForm::begin([
             'id' => 'login-form',
             'layout' => 'horizontal',

@@ -17,7 +17,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'ID_TRAM') ?>
 
-    <?= $form->field($model, 'MA_TRAM') ?>
+    <?= $form->field($model, 'TEN_TRAM') ?>
 
     <?= $form->field($model, 'DIADIEM') ?>
 

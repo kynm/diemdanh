@@ -3,10 +3,21 @@
 namespace app\controllers;
 
 use Yii;
+use DateTime;
+use yii\data\ActiveDataProvider;
 use app\models\ThietbiSearch;
 use app\models\ActivitiesLog;
 use app\models\Nhomtbi;
+use app\models\Thietbi;
+use app\models\Dotbaoduong;
+use app\models\Nhanvien;
+use app\models\Thietbitram;
+use app\models\LogKiemtranhatram;
+use app\models\Noidungcongviec;
+use app\models\Tramvt;
 use app\models\NhomtbiSearch;
+use app\models\Noidungbaotrinhomtbi;
+use app\models\Noidungbaotri;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
@@ -54,13 +65,19 @@ class NhomtbiController extends Controller
      */
     public function actionView($id)
     {
-        $searchModel = new ThietbiSearch();
-        $dataProvider = $searchModel->searchNhom(Yii::$app->request->queryParams);
+        $devicesSearchModel = new ThietbiSearch();
+        $devicesProvider = $devicesSearchModel->searchNhom(Yii::$app->request->queryParams);
+
+        $query = Noidungbaotrinhomtbi::find()->where(['ID_NHOM' => $id]);
+        $contentsProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
 
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'contentsProvider' => $contentsProvider,
+            'devicesSearchModel' => $devicesSearchModel,
+            'devicesProvider' => $devicesProvider,
         ]);
     }
 
@@ -90,24 +107,48 @@ class NhomtbiController extends Controller
             }
         } else {
             # code...
-            throw new ForbiddenHttpException;
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
         }
         
     }
 
-    public function actionCreatePost($MA_NHOM, $TEN_NHOM)
+    public function actionCheckktnt()
     {
-        $model = new Nhomtbi;
-        $model->MA_NHOM = $MA_NHOM;
-        $model->TEN_NHOM = $TEN_NHOM;
-        $model->save();
-        $log = new ActivitiesLog;
-        $log->activity_type = 'device-add';
-        $log->description = Yii::$app->user->identity->nhanvien->TEN_NHANVIEN." đã thêm nhóm thiết bị ". $model->MA_NHOM;
-        $log->user_id = Yii::$app->user->identity->id;
-        $log->create_at = time();
-        $log->save();
-        return $this->redirect(['nhomtbi/index']);
+        $listCongviec = Noidungcongviec::findAll(['ID_NHANVIEN' => 0]);
+        var_dump($listCongviec);
+        echo "<br>Success!!";
+    }
+
+    
+    public function actionImport()
+    {
+        ini_set('max_execution_time', 0);
+        // $filename = 'data/tram_update.csv';
+        // $handle = fopen($filename, "r");
+        // // Mã trạm,Nhân viên quản lý,Điện thoại,Loại trạm
+        // while (($fileop = fgetcsv($handle, 5000, ",")) !== false) 
+        // {
+        //     $tram = Tramvt::findOne(['MA_TRAM' => $fileop[0]]);
+        //     $tram->LOAITRAM = $fileop[3];
+        //     if ($fileop[1] == '#N/A') {
+        //         $tram->save();
+        //         continue;
+        //     }
+        //     if (!Nhanvien::find()->where(['TEN_NHANVIEN' => $fileop[1]])->exists()) {
+        //         if (!Nhanvien::find()->where(['DIEN_THOAI' => $fileop[2]])->exists()) {
+        //             $tram->ID_NHANVIEN = null;
+        //             $tram->save();
+        //             continue;
+        //         } else {
+        //             $nhanvien = Nhanvien::find()->where(['DIEN_THOAI' => $fileop[2]])->one();
+        //         }
+        //     } else {
+        //         $nhanvien = Nhanvien::find()->where(['TEN_NHANVIEN' => $fileop[1]])->one();
+        //     }
+        //     $tram->ID_NHANVIEN = $nhanvien->ID_NHANVIEN;
+        //     $tram->save();
+        // }
+        
     }
 
     /**
@@ -129,7 +170,7 @@ class NhomtbiController extends Controller
                 ]);
             }
         } else {
-            throw new ForbiddenHttpException;
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
             
         }
     }
@@ -149,7 +190,7 @@ class NhomtbiController extends Controller
             return $this->redirect(['index']);
         } else {
             # code...
-            throw new ForbiddenHttpException;            
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');            
         }
         
     }

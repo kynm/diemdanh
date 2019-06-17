@@ -10,7 +10,7 @@ use kartik\tabs\TabsX;
 $this->title = $model->iDLOAITB->TEN_THIETBI;
 $this->params['breadcrumbs'][] = ['label' => 'Quản lý thiết bị', 'url' => ['nhomtbi/index']];
 $this->params['breadcrumbs'][] = ['label' => 'Quản lý thiết bị theo trạm', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => 'Trạm '.$model->iDTRAM->MA_TRAM, 'url' => ['tramvt/view', 'id' => $model->ID_TRAM]];
+$this->params['breadcrumbs'][] = ['label' => 'Trạm '.$model->iDTRAM->TEN_TRAM, 'url' => ['tramvt/view', 'id' => $model->ID_TRAM]];
 $this->params['breadcrumbs'][] = $this->title;
 
 $visible = false;
@@ -47,8 +47,7 @@ if (Yii::$app->user->can('edit-tramvt')) {
 }
 ?>
 <div class="thietbitram-view">
-    <div class="box box-primary">
-        <div class="box-body">
+    
             <p>
                 <?php 
                 if ($visible) { ?>
@@ -73,9 +72,10 @@ if (Yii::$app->user->can('edit-tramvt')) {
                     'active'=>true
                 ],
                 [
-                    'label'=>'<i class="fa fa-cogs"></i> Lịch sử bảo dưỡng',
+                    'label'=>'<i class="fa fa-cogs"></i> Trạng thái bảo dưỡng',
                     'content'=>$this->render('_tablichsubaoduong', [
-                        'lsbaoduongProvider' => $lsbaoduongProvider 
+                        // 'thiebi' => $model,
+                        'lsbaoduongProvider' => $lsbaoduongProvider,
                     ]),
                 ],
                 [
@@ -95,8 +95,6 @@ if (Yii::$app->user->can('edit-tramvt')) {
                 'items'=>$items,
                 'encodeLabels'=>false
             ]);
-            ?>            
-        </div>
-    </div>
+            ?>
 </div>
 

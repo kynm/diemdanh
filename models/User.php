@@ -56,12 +56,12 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'auth_key', 'access_token', 'email', 'created_at', 'updated_at'], 'required'],
+            [['username', 'auth_key', 'email', 'created_at', 'updated_at'], 'required'],
             [['status', 'created_at', 'updated_at'], 'integer'],
             [['username', 'password', 'newPassword', 'confirmPassword', 'password_hash', 'avatar', 'access_token', 'password_reset_token', 'email'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
             [['username'], 'unique'],
-            [['file'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
+            [['file'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, gif'],
             [['email'], 'unique'],
             [['password_reset_token'], 'unique'],
         ];
@@ -93,6 +93,17 @@ class User extends ActiveRecord implements IdentityInterface
     public static function findByUsername($username)
     {
         return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
+    }
+
+    /**
+     * Finds user by email
+     *
+     * @param string $email
+     * @return static|null
+     */
+    public static function findByEmail($email)
+    {
+        return static::findOne(['email' => $email, 'status' => self::STATUS_ACTIVE]);
     }
 
     /**
@@ -181,14 +192,6 @@ class User extends ActiveRecord implements IdentityInterface
     public function generateAuthKey()
     {
         $this->auth_key = Yii::$app->security->generateRandomString();
-    }
-
-    /**
-     * Generates "access_token" authentication key
-     */
-    public function generateAccessToken()
-    {
-        $this->access_token = Yii::$app->security->generateRandomString();
     }
 
     /**

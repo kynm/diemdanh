@@ -21,12 +21,7 @@ use dmstr\widgets\Alert;
             </h1>
         <?php } ?>
 
-        <?=
-        Breadcrumbs::widget(
-            [
-                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-            ]
-        ) ?>
+        
     </section>
 
     <section class="content">
@@ -37,7 +32,7 @@ use dmstr\widgets\Alert;
 
 <footer class="main-footer">
     <div class="pull-right hidden-xs">
-        <span class="pull-right" ><b>Phiên bản</b> 0.1</span>
+        <span class="pull-right" ><b>Phiên bản</b> 1.0</span>
     </div>
     <strong><a>VNPT QUẢNG NAM, TRUNG TÂM CNTT</a> &copy; <?= date('Y', time()); ?></strong>
     <br>

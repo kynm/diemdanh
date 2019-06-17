@@ -12,11 +12,11 @@ $this->params['breadcrumbs'][] = ['label' => 'Quản lý thiết bị', 'url' =>
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="noidungbaotri-index">
+    <p>
+        <?= Html::a('<i class="fa fa-plus"></i> Thêm nội dung', ['create'], ['class' => 'btn btn-primary btn-flat']) ?>
+    </p>
     <div class="box box-primary">
         <div class="box-body">
-            <p>
-                <?= Html::a('<i class="fa fa-plus"></i> Thêm nội dung', ['create'], ['class' => 'btn btn-primary btn-flat']) ?>
-            </p>
             <?php Pjax::begin(); ?>    <?= GridView::widget([
                     'dataProvider' => $dataProvider,
                     'filterModel' => $searchModel,

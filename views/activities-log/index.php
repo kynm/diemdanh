@@ -20,19 +20,22 @@ $this->params['breadcrumbs'][] = $this->title;
                 ['class' => 'yii\grid\SerialColumn'],
 
                 [
-                  'attribute' => 'description',
-                  'format' => 'raw',
+                    'attribute' => 'description',
+                    'format' => 'raw',
                 ],
                 [
-                   'attribute' => 'user_id',
-                   'value' => 'user.nhanvien.TEN_NHANVIEN',
+                    'attribute' => 'user_id',
+                    'value' => 'user.nhanvien.TEN_NHANVIEN',
                 ],
                 [
-                   'attribute' => 'create_at',
-                   'format' => ['date', 'php:d-m-Y H:m:s'],
+                    'attribute' => 'create_at',
+                    'format' => ['date', 'php:d-m-Y H:i:s'],
                 ],
 
-                ['class' => 'yii\grid\ActionColumn'],
+                [
+                    'class' => 'yii\grid\ActionColumn',
+                    'template' => '{delete}'
+                ],
             ],
         ]); ?>
       </div>

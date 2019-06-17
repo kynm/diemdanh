@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $model app\models\Nhomtbi */
 
 $this->title = 'Cập nhật ' . $model->TEN_NHOM;
-$this->params['breadcrumbs'][] = ['label' => 'Quản lý thiết bị', 'url' => ['nhomtbi/index']];
+$this->params['breadcrumbs'][] = ['label' => 'Nhóm thiết bị', 'url' => ['nhomtbi/index']];
 $this->params['breadcrumbs'][] = ['label' => $model->TEN_NHOM, 'url' => ['view', 'id' => $model->ID_NHOM]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>

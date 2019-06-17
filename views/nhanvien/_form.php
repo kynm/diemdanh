@@ -52,7 +52,7 @@ use kartik\depdrop\DepDrop;
                 </div>
                     
                 <div class="col-sm-4">
-                <?= $form->field($model, 'ID_DAI')->dropDownList(ArrayHelper::map(Daivt::find()->all(), 'ID_DAI', 'TEN_DAIVT'), ['prompt' => 'Chọn đài viễn thông' ]); ?> 
+                    <?= $form->field($model, 'ID_DAI')->dropDownList(ArrayHelper::map(Daivt::find()->all(), 'ID_DAI', 'TEN_DAIVT'), ['prompt' => 'Chọn đài viễn thông' ]); ?> 
                 </div>
             </div>
                 
@@ -62,17 +62,9 @@ use kartik\depdrop\DepDrop;
                 </div>
 
                 <div class="col-sm-4">
-                    <?= $form->field($authModel, 'item_name')->widget(Select2::classname(), [
-                        'data' => ArrayHelper::map(AuthItem::find()->where(['type' => 1 ])->andWhere(['not', ['name' => 'Root']])->all(), 'name', 'name'),
-                        'options' => ['placeholder' => 'Chọn  vai trò', 'disabled' => !Yii::$app->user->can('edit-nhanvien') ],
-                        'pluginOptions' => [
-                            'allowClear' => true
-                        ],
-                    ]); ?>
-                </div>
-
-                <div class="col-sm-4">
-                    <?= $form->field($model->user, 'password')->passwordInput(['maxlength' => true]) ?>
+                    <?php if (!$model->isNewRecord) {
+                        echo $form->field($model->user, 'password')->passwordInput(['maxlength' => true]);
+                    }  ?>
                 </div>
             </div>                
         </div>

@@ -2,8 +2,10 @@
 
 $params = require(__DIR__ . '/params.php');
 $db = require(__DIR__ . '/db.php');
+$db_sms = require(__DIR__ . '/db_sms.php');
 
 $config = [
+    'timeZone' => 'Asia/Ho_Chi_Minh',
     'id' => 'basic-console',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
@@ -21,6 +23,7 @@ $config = [
             ],
         ],
         'db' => $db,
+        'db_sms' => $db_sms,
     ],
     'params' => $params,
     /*

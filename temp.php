@@ -2,6 +2,30 @@
 
 http://10.51.138.24/vnpt_mds/web/index.php
 
+//DotbaoduongController
+
+    public function actionCreatePost($MA_DOTBD, $ID_TRAM, $NGAY_BD, $ID_NHANVIEN)
+    {
+        if (Yii::$app->user->can('create-dbd')) {
+            
+            $model = new Dotbaoduong();
+            $model->MA_DOTBD = $MA_DOTBD;
+            $model->ID_TRAM = $ID_TRAM;
+            $model->NGAY_BD = $NGAY_BD;
+            $model->ID_NHANVIEN = $ID_NHANVIEN;
+            $model->save(false);
+            $log = new ActivitiesLog;
+            $log->activity_type = 'maintenance-create';
+            $log->description = Yii::$app->user->identity->nhanvien->TEN_NHANVIEN." đã tạo đợt bảo dưỡng ". $model->MA_DOTBD . ", ". $model->nHANVIEN->TEN_NHANVIEN ." làm nhóm trưởng.";
+            $log->user_id = Yii::$app->user->identity->id;
+            $log->create_at = time();
+            $log->save();
+
+            return $this->redirect(Yii::$app->request->referrer);
+        } else {
+            throw new ForbiddenHttpException;
+        }
+    }
 '
                                         $.ajax({
                                             type: "POST",

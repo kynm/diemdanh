@@ -47,6 +47,7 @@ class Lencongviec extends \yii\db\ActiveRecord
             'MA_NOIDUNG' => 'Nội dung',
             'IS_SUGGESTED' => 'Khuyến nghị?',
             'IS_SELECTED' => 'Được chọn?',
+            'CHUKY' => "Chu kỳ (tháng)",
         ];
     }
 

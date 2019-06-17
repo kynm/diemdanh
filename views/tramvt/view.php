@@ -16,7 +16,7 @@ use kartik\date\DatePicker;
 /* @var $this yii\web\View */
 /* @var $model app\models\Tramvt */
 
-$this->title = 'Trạm '.$model->MA_TRAM;
+$this->title = 'Trạm '.$model->TEN_TRAM;
 $this->params['breadcrumbs'][] = ['label' => 'Quản lý thiết bị', 'url' => ['nhomtbi/index']];
 $this->params['breadcrumbs'][] = ['label' => 'Quản lý thiết bị theo trạm', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -101,7 +101,7 @@ if (Yii::$app->user->can('edit-tramvt')) {
                         ],
                         [
                             'attribute' => 'ID_TRAM',
-                            'value' => 'iDTRAM.MA_TRAM'
+                            'value' => 'iDTRAM.TEN_TRAM'
                         ],
                         'LANBAODUONGTRUOC',
                         'LANBAODUONGTIEP',

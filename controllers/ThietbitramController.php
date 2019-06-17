@@ -5,7 +5,6 @@ namespace app\controllers;
 use Yii;
 use app\models\ActivitiesLog;
 use app\models\Tramvt;
-use app\models\Dexuatnoidung;
 use app\models\Noidungcongviec;
 use app\models\Dieuchuyenthietbi;
 use app\models\Thietbitram;
@@ -17,6 +16,7 @@ use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
 use yii\data\ActiveDataProvider;
+use yii\data\ArrayDataProvider;
 
 /**
  * ThietbitramController implements the CRUD actions for Thietbitram model.
@@ -68,23 +68,12 @@ class ThietbitramController extends Controller
     {
         $model = $this->findModel($id);
 
-        // $transDevice = new Dieuchuyenthietbi;
-
-        // if ($transDevice->load(Yii::$app->request->post())) {
-        //     $transDevice->ID_THIETBI = $model->ID_THIETBI;
-        //     $transDevice->ID_TRAM_NGUON = $model->ID_TRAM;
-        //     $transDevice->save(false);
-
-        //     $model->ID_TRAM = $transDevice->ID_TRAM_DICH;
-        //     $model->save(false);
-        // }
-
-        $query1 = Noidungcongviec::find()->where(['ID_THIETBI' => $id]);
-
+        $query1 = Dotbaoduong::find()->joinWith('noidungcongviecs')->where(['ID_THIETBI' => $id])->groupBy('dotbaoduong.ID_DOTBD');
+        // print_r($query1); die;
         $lsbaoduongProvider = new ActiveDataProvider([
             'query' => $query1,
         ]);
-
+        
         $query2 = Dieuchuyenthietbi::find()->where(['ID_THIETBI' => $id]);
 
         $dieuchuyenProvider = new ActiveDataProvider([
@@ -110,44 +99,27 @@ class ThietbitramController extends Controller
             $model = new Thietbitram();
 
             if ($model->load(Yii::$app->request->post())) {
-                $chukyArray = Dexuatnoidung::find()
-                ->where(['ID_LOAITB' => $model->ID_LOAITB])
-                ->groupBy('CHUKYBAODUONG')
-                ->orderBy(['CHUKYBAODUONG' => SORT_ASC])
-                ->all();
-                foreach ($chukyArray as $chuky) {
-                    // echo $chuky->cHUKYBAODUONG->value."<br>";
-                    $ngaysosanh = strtotime(date('d-m-Y',strtotime("- ".$chuky->cHUKYBAODUONG->value)));
-                    if ($ngaysosanh <= strtotime($model->NGAYSD)) {
-                        $model->LANBD = $chuky->LANBD;
-                        
-                        //////////Them ngay bao duong tiep theo de xuat
-                        if ($model->LANBAODUONGTIEP == NULL) {
-                            $ngaybaoduong = date_create($model->NGAYSD);
-                            date_add($ngaybaoduong, date_interval_create_from_date_string($chuky->cHUKYBAODUONG->value));
-                            $model->LANBAODUONGTIEP = date_format($ngaybaoduong, 'Y-m-d');
-                        }
-                        
-                        //////////Them ngay bao duong gan nhat theo de xuat
-                        if ($model->LANBAODUONGTRUOC) {
-                            $lanbdtruoc = $model->LANBD - 1;
-                            $chukygannhat = Dexuatnoidung::find()->where(['ID_LOAITB' => $model->ID_LOAITB, 'LANBD' => $lanbdtruoc])->one();
-                            $ngaybaoduongtruoc = date_create($model->NGAYSD);
-                            date_add($ngaybaoduongtruoc, date_interval_create_from_date_string($chukygannhat->cHUKYBAODUONG->value));
-                            $model->LANBAODUONGTRUOC = date_format($ngaybaoduongtruoc, 'Y-m-d');
-                        }
-                        break;
-                    }
+                
+                if ($model->save()) {
+                    $thietbi = new Dieuchuyenthietbi;
+                    $thietbi->ID_THIETBI = $model->ID_THIETBI;
+                    $thietbi->NGAY_CHUYEN = $model->NGAYSD;
+                    $thietbi->ID_TRAM_NGUON = null;
+                    $thietbi->ID_TRAM_DICH = $model->ID_TRAM;
+                    $thietbi->LY_DO = "Thêm mới<br>$model->VB";
+                    $thietbi->save(false);
+
+                    $log = new ActivitiesLog;
+                    $log->activity_type = 'device-add';
+                    $log->description = Yii::$app->user->identity->nhanvien->TEN_NHANVIEN." đã thêm thiết bị ". $model->iDLOAITB->TEN_THIETBI ." vào trạm ". $model->iDTRAM->TEN_TRAM;
+                    $log->user_id = Yii::$app->user->identity->id;
+                    $log->create_at = time();
+                    $log->save();
+                } else {
+                    var_dump($model->errors);
+                    die;
                 }
 
-
-                $model->save();
-                $log = new ActivitiesLog;
-                $log->activity_type = 'device-add';
-                $log->description = Yii::$app->user->identity->nhanvien->TEN_NHANVIEN." đã thêm thiết bị ". $model->iDLOAITB->TEN_THIETBI ." vào trạm ". $model->iDTRAM->MA_TRAM;
-                $log->user_id = Yii::$app->user->identity->id;
-                $log->create_at = time();
-                $log->save();
 
                 return $this->redirect(['tramvt/view', 'id' => $model->ID_TRAM]);
             } else {
@@ -157,16 +129,36 @@ class ThietbitramController extends Controller
             }
         } else {
             # code...
-            throw new ForbiddenHttpException;            
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');            
         }
     }
 
-    public function actionCreatePost()
+    // public function actionNhap()
+    // {
+    //     $list = Thietbitram::find()->all();
+    //     foreach ($list as $device) {
+    //         $device->LANBAODUONGTIEP = date('Y-m-d', strtotime("+ 1 month", strtotime($device->LANBAODUONGTRUOC)));
+    //         $device->save(false);
+    //     }
+    //     echo "Done!!!";
+    // }
+
+    public function actionBaoduongsaptoi()
     {
-        $model = new Thietbitram();
-        $model->load(Yii::$app->request->queryParams);
-        $model->save();
-        return $this->redirect(Yii::$app->request->referrer);
+        $now = date('Y-m-d');
+        $next2weeks = date('Y-m-d', strtotime("+ 2 weeks"));
+        
+        $query = Thietbitram::find()
+            ->where(['>', 'LANBAODUONGTIEP', $now])
+            ->andWhere(['<', 'LANBAODUONGTIEP', $next2weeks]);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+        
+        return $this->render('baoduongsaptoi', [
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     /**
@@ -190,7 +182,7 @@ class ThietbitramController extends Controller
             }
         } else {
             # code...
-            throw new ForbiddenHttpException;            
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');            
         }
     }
 
@@ -209,18 +201,18 @@ class ThietbitramController extends Controller
             return $this->redirect(Yii::$app->request->referrer);
         } else {
             # code...
-            throw new ForbiddenHttpException;            
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');            
         }
     }
 
-    public function actionLists($id)
+    public function actionLists($id) //không quan trọng
     {
         $dotbaoduong = Dotbaoduong::find()
         ->where(['ID_DOTBD'=>$id])
         ->one();
 
         $thietbi = Thietbitram::find()
-        ->where(['ID_TRAM' => $dotbaoduong->ID_TRAMVT])
+        ->where(['ID_TRAM' => $dotbaoduong->ID_TRAM])
         ->all();
 
         if(isset($thietbi) && count($thietbi)>0) {
@@ -237,31 +229,26 @@ class ThietbitramController extends Controller
         }
     }
 
-
-    public function actionCheckDate()
+    public function actionSearch($donvi='', $dai='', $thietbi='')
     {
-        $thietbiArrayModel = Thietbitram::find()->all();
-        foreach ($thietbiArrayModel as $model) {
-            $chukyArray = Dexuatnoidung::find()
-            ->where(['ID_LOAITB' => $model->ID_LOAITB])
-            ->groupBy('CHUKYBAODUONG')
-            ->orderBy(['CHUKYBAODUONG' => SORT_ASC])
-            ->all();
-            foreach ($chukyArray as $chuky) {
-                $ngaysosanh = strtotime(date('d-m-Y',strtotime("- ".$chuky->cHUKYBAODUONG->value)));
-                if ($ngaysosanh <= strtotime($model->NGAYSD)) {
-                    
-                    $model->LANBD = $chuky->LANBD;
-                    $ngaybaoduong = date_create($model->NGAYSD);
-
-                    date_add($ngaybaoduong, date_interval_create_from_date_string($chuky->cHUKYBAODUONG->value));
-                    $model->LANBAODUONGTIEP = date_format($ngaybaoduong, 'Y-m-d');
-                    break;
-                }
+        $arr = explode(',', $thietbi);
+        
+        $query = Tramvt::find()->joinWith('thietbitrams')->joinWith('iDDAI')
+            ->andWhere(['in', 'thietbitram.ID_LOAITB', $arr]);
+        
+        if ($donvi !== '') {
+            if ($dai == "") {
+                $query->andWhere(['daivt.ID_DONVI' => $donvi]);
+                
+            } else {
+                $query->andWhere(['tramvt.ID_DAI' => $dai]);
             }
-            $model->save();
         }
-        return $this->redirect(['index']);
+        $danhsachtram = $query->all();
+        foreach($danhsachtram as $each) {
+            echo "<option value='".$each->ID_TRAM."'>".$each->TEN_TRAM."</option>";
+        }
+        return;
     }
 
     /**

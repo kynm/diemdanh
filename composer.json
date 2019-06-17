@@ -1,6 +1,6 @@
 {
-    "name": "yiisoft/yii2-app-basic",
-    "description": "Yii 2 Basic Project Template",
+    "name": "VNPT Maintain Devices",
+    "description": "Manage maintain devices",
     "keywords": ["yii2", "framework", "basic", "project template"],
     "homepage": "http://www.yiiframework.com/",
     "type": "project",
@@ -15,7 +15,7 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=5.4.0",
-        "yiisoft/yii2": "~2.0.5",
+        "yiisoft/yii2": "~2.0.15",
         "yiisoft/yii2-bootstrap": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0",
         "kartik-v/yii2-widget-select2": "^2.1",
@@ -31,7 +31,11 @@
         "kartik-v/yii2-tabs-x": "*",
         "dmstr/yii2-adminlte-asset": "^2.1",
         "mdmsoft/yii2-admin": "~2.0",
-        "kartik-v/yii2-widget-depdrop": "@dev"
+        "kartik-v/yii2-widget-depdrop": "@dev",
+        "kop/yii2-scroll-pager": "dev-master",
+        "2amigos/yii2-chartjs-widget" : "~2.0",
+        "kartik-v/yii2-export": "dev-master",
+        "moonlandsoft/yii2-phpexcel": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

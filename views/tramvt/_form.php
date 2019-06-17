@@ -21,14 +21,8 @@ switch (Yii::$app->user->identity->nhanvien->chucvu->cap) {
     case '3':
         $listDaivt = ArrayHelper::map(Daivt::find()->where(['ID_DAI' => Yii::$app->user->identity->nhanvien->ID_DAI])->all(), 'ID_DAI', 'TEN_DAIVT');
         break;
-    case '4':
-        $listDaivt = [];
-        break;
-    case '5': //Tạm thời để giống cấp 3
-        $listDaivt = ArrayHelper::map(Daivt::find()->where(['ID_DAI' => Yii::$app->user->identity->nhanvien->ID_DAI])->all(), 'ID_DAI', 'TEN_DAIVT');
-        break;
     default:
-        # code...
+        $listDaivt = [];
         break;
 }
 
@@ -45,7 +39,15 @@ switch (Yii::$app->user->identity->nhanvien->chucvu->cap) {
             </div>
 
             <div class="col-sm-6">
+                <?= $form->field($model, 'TEN_TRAM')->textInput(['maxlength' => true]) ?>
+            </div>
+
+            <div class="col-sm-6">
                 <?= $form->field($model, 'DIADIEM')->textInput(['maxlength' => true]) ?>
+            </div>
+
+            <div class="col-sm-6">
+                <?= $form->field($model, 'LOAITRAM')->dropDownList(['0' => 'Trạm tập trung', '1' => 'Trạm loại 1', '2' => 'Trạm loại 2', '3' => 'Trạm loại 3']) ?>
             </div>
                 
             <div class="col-sm-6">
@@ -60,14 +62,21 @@ switch (Yii::$app->user->identity->nhanvien->chucvu->cap) {
                 
             <div class="col-sm-6">
                 <?= $form->field($model, 'ID_NHANVIEN')->widget(Select2::classname(), [
-                    'data' => ArrayHelper::map(Nhanvien::find()->all(), 'ID_NHANVIEN', 'TEN_NHANVIEN'),
+                    'data' => ArrayHelper::map(Nhanvien::find()->where(['>', 'ID_NHANVIEN', 0])->all(), 'ID_NHANVIEN', 'TEN_NHANVIEN'),
                     'options' => ['placeholder' => 'Chọn nhân viên quản lý'],
                     'pluginOptions' => [
                         'allowClear' => true
                     ],
                 ]); ?>
             </div>
+
+            <div class="col-sm-6">
+                <?= $form->field($model, 'KINH_DO')->textInput(['maxlength' => true, 'type' => 'number', 'step' => 'any', 'disabled' => ! Yii::$app->user->can('Administrator')]) ?>
+            </div>
                 
+            <div class="col-sm-6">
+                <?= $form->field($model, 'VI_DO')->textInput(['maxlength' => true, 'type' => 'number', 'step' => 'any', 'disabled' => ! Yii::$app->user->can('Administrator')]) ?>
+            </div>
         </div>
         <div class="box-footer">
             <div class="text-center">

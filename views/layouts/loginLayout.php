@@ -36,7 +36,6 @@ LoginAsset::register($this);
     <div class="container">
         <p class="pull-left">&copy; <a>VNPT QUẢNG NAM, TRUNG TÂM CNTT</a> <?= date('Y') ?></p>
 
-        <p class="pull-right"><?= Yii::powered() ?></p>
     </div>
 </footer>
 

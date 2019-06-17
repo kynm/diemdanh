@@ -1,189 +1,266 @@
 <?php
 
-use app\models\ActivitiesLog;
-use app\models\Tramvt;
-use app\models\Dotbaoduong;
+use yii\helpers\Html;
+use yii\grid\GridView;
+use yii\widgets\ActiveForm;
+use yii\widgets\Pjax;
+use kartik\select2\Select2;
 use yii\helpers\Url;
+use yii\helpers\ArrayHelper;
+use dosamigos\chartjs\ChartJs;
+use app\models\ActivitiesLog;
+use app\models\Baoduongtong;
+use app\models\Daivt;
+use app\models\Donvi;
+use app\models\Dotbaoduong;
+use app\models\Images;
+use app\models\Nhomtbi;
+use app\models\Noidungcongviec;
+use app\models\Tramvt;
 
 /* @var $this yii\web\View */
-
-$countTramvt = Tramvt::find()->count();
-$countKehoach = Dotbaoduong::find()->where(['TRANGTHAI' => 'Kế hoạch' ])->count();
-$countThuchien = Dotbaoduong::find()->where(['TRANGTHAI' => 'Đang thực hiện' ])->count();
-$countHoanthanh = Dotbaoduong::find()->where(['TRANGTHAI' => 'Kết thúc' ])->count();
+/* @var $searchModel app\models\DotbaoduongSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Dashboard';
 ?>
-<div class="site-index" style="margin-top: 15px ">
-    <div class="body-content">
-      <!-- Small boxes (Stat box) -->
-      <div class="row">
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-aqua">
-            <div class="inner">
-              <h3><?= $countTramvt ?></h3>
+<div class="index">
+    <div class="row">
+        <div class="col-lg-7">
+            <div class="box box-primary collapsed-box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Hoạt động gần đây</h3>
 
-              <p>Trạm BTS</p>
-            </div>
-            <div class="icon">
-              <i class="fa fa-map-marker"></i>
-            </div>
-            <a href="<?= Url::to(['tramvt/index']) ?>" class="small-box-footer">Xem thêm <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-green">
-            <div class="inner">
-              <h3><?= $countKehoach ?><sup style="font-size: 20px"> đợt</sup></h3>
-
-              <p>Kế hoạch</p>
-            </div>
-            <div class="icon">
-              <i class="fa fa-bar-chart"></i>
-            </div>
-            <a href="<?= Url::to(['dotbaoduong/danhsachkehoach']) ?>" class="small-box-footer">Xem thêm <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-yellow">
-            <div class="inner">
-              <h3><?= $countThuchien ?><sup style="font-size: 20px"> đợt</sup></h3>
-
-              <p>Đang thực hiện</p>
-            </div>
-            <div class="icon">
-              <i class="fa fa-cogs"></i>
-            </div>
-            <a href="<?= Url::to(['dotbaoduong/danhsachthuchien']) ?>" class="small-box-footer">Xem thêm <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-red">
-            <div class="inner">
-              <h3><?= $countHoanthanh ?><sup style="font-size: 20px"> đợt</sup></h3>
-
-              <p>Hoàn thành</p>
-            </div>
-            <div class="icon">
-              <i class="fa fa-pie-chart"></i>
-            </div>
-            <a href="<?= Url::to(['dotbaoduong/danhsachketqua']) ?>" class="small-box-footer">Xem thêm <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-      </div>
-      <!-- /.row -->
-      <!-- Recently Actions -->
-      <div class="row">
-          <div class="col-lg-7">
-            <div class="box box-primary">
-              <div class="box-header with-border">
-                <h3 class="box-title">Hoạt động gần đây</h3>
-
-                <div class="box-tools pull-right">
-                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
                 </div>
-              </div>
-              <!-- /.box-header -->
-              <div class="box-body">
-                <ul class="products-list product-list-in-box">
-                <?php $activities = ActivitiesLog::find()->orderBy(['activity_log_id' => SORT_DESC])->limit(5)->all(); 
-                  foreach ($activities as $activity) {
-                    echo '<li class="item">
-                    <div class="product-img">
-                      <img src="'. Yii::getAlias('@web').'/'.$activity->user->avatar .'" class="img-circle" alt="Avatar Image">
-                    </div>
-                    <div class="product-info">
-                      <a href="javascript:void(0)" class="product-title"><i class="'. $activity->activityType->class .'"></i> '. $activity->activityType->activity_name .'
-                        <span class="label label-info pull-right">'.date("d/m/y H:m:s", $activity->create_at) .'</span></a>
-                      <span class="product-description">
-                            '. $activity->description .'
-                          </span>
-                    </div>
-                  </li>';
-                  }
-                ?>
-                  <!-- /.item -->
-                </ul>
-              </div>
-              <!-- /.box-body -->
-              <div class="box-footer text-center">
-                <a href="<?= Url::to(['activities-log/index']) ?>" class="uppercase">Xem tất cả</a>
-              </div>
-              <!-- /.box-footer -->
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <ul class="products-list product-list-in-box">
+                        <?php $activities = ActivitiesLog::find()->orderBy(['activity_log_id' => SORT_DESC])->limit(5)->all(); 
+                        foreach ($activities as $activity) {
+                            echo '<li class="item">
+                                <div class="product-img">
+                                    <img src="'. Yii::getAlias('@web').'/'.$activity->user->avatar .'" class="img-circle" alt="Avatar Image">
+                                </div>
+                                <div class="product-info">
+                                    <a href="javascript:void(0)" class="product-title"><i class="'. $activity->activityType->class .'"></i> '. $activity->activityType->activity_name .'
+                                        <span class="label label-info pull-right">'.date("d/m/y H:i:s", $activity->create_at) .'</span></a>
+                                    <span class="product-description">
+                                        '. $activity->description .'
+                                    </span>
+                                </div>
+                          </li>';
+                        }
+                        ?>
+                        <!-- /.item -->
+                    </ul>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer text-center">
+                    <a href="<?= Url::to(['activities-log/index']) ?>" class="uppercase">Xem tất cả</a>
+                </div>
+                <!-- /.box-footer -->
             </div>
             <!-- /.box -->
-          </div>
-          <div class="col-lg-5">
-            
-            <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">Các đợt bảo dưỡng sắp tới</h3>
+        </div>
+        <div class="col-lg-5">
+            <div class="box box-primary collapsed-box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Tài liệu hướng dẫn và phần mềm</h3>
 
-              <div class="box-tools pull-right">
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <ul>
+                        <li>Phiên bản website
+                            <ul>
+                                <iframe src="https://www.youtube.com/embed/bUiQB9LHBC4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            
+                            </ul>
+                        </li>
+                        <li>Phiên bản mobile
+                            <ul>
+                                <li>
+                                    <a href="https://tinyurl.com/mdsmobile-huongdan" class="uppercase">Hướng dẫn cài đặt và sử dụng</a>
+                                </li>
+                                <li>
+                                    <a href="https://tinyurl.com/mdsmobile-caidat" class="uppercase">File cài đặt</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+    <?php if (isset($data)) { ?>
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title"><?= $bdt->MA_BDT .': '. $bdt->MO_TA ?></h3>
+
+            <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                 </button>
                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
             </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-              <div class="table-responsive">
-                <table class="table no-margin">
-                  <thead>
-                  <tr>
-                    <th>Đợt bảo dưỡng</th>
-                    <th>Trưởng nhóm</th>
-                    <th>Trạng thái</th>
-                    <th>Thời gian</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <?php $dotbds = Dotbaoduong::find()->orderBy(['NGAY_BD' => SORT_ASC])->all();
-                  $i = 0;
-                  foreach ($dotbds as $dotbd) {
-                    if (($dotbd->NGAY_BD >= date('Y-m-d')) && true) {
-                      if ($i == 5) {
-                        break;
-                      }
-                      $i++;
-                  ?>
-                    <tr>
-                      <td><a href="<?= Url::to(['dotbaoduong/view', 'id' => $dotbd->ID_DOTBD]) ?>"><?= $dotbd->MA_DOTBD ?></a></td>
-                      <td><?= $dotbd->tRUONGNHOM->TEN_NHANVIEN ?></td>
-                      <td><span class="label <?= ($dotbd->TRANGTHAI == 'Kế hoạch') ? 'label-success' : '' ?> <?= ($dotbd->TRANGTHAI == 'Đang thực hiện') ? 'label-warning' : '' ?> <?= ($dotbd->TRANGTHAI == 'Kết thúc') ? 'label-danger' : '' ?>"><?= $dotbd->TRANGTHAI ?></span></td>
-                      <td>
-                        <div class="sparkbar"><?= $dotbd->NGAY_BD ?></div>
-                      </td>
-                    </tr>
-                  <?php }
-                    
-                  } ?>
-                  </tbody>
-                </table>
-              </div>
-              <!-- /.table-responsive -->
-            </div>
-            <!-- /.box-body -->
-            <div class="box-footer clearfix">
-              <div class="text-center">
-                <a href="<?= Url::to(['dotbaoduong/danhsachkehoach']) ?>" class="btn btn-sm btn-default btn-flat">Xem tất cả</a>
-              </div>
-            </div>
-            <!-- /.box-footer -->
-          </div>
-          </div>
-      </div>
+        </div>
+        <div class="box-body">
+            <?php foreach ($data as $each) { ?>
+                <div class='col-md-3 col-sm-6'>
+                    <div>
+                        <?= ChartJs::widget([
+                            'type' => 'doughnut',
+                            'id' => 'structurePie'.$each['id'],
+                            'options' => [
+                                'height' => 200
+                            ],
+                            'data' => [
+                                'radius' =>  "90%",
+                                'labels' => $each['labels'],
+                                'datasets' => [
+                                    [
+                                        'data' => $each['dataset'], // Your dataset
+                                        'label' => '',
+                                        'backgroundColor' => [
+                                            'blue',
+                                            'purple',
+                                            '#DD4B39',
+                                            '#F39C12',
+                                            '#00A65A',
+                                        ],
+                                        'borderColor' =>  [
+                                                '#fff',
+                                                '#fff',
+                                                '#fff',
+                                                '#fff',
+                                                '#fff'
+                                        ],
+                                        'borderWidth' => 1,
+                                        'hoverBorderColor'=>["#999","#999","#999"],                
+                                    ]
+                                ]
+                            ],
+                            'clientOptions' => [
+                                'legend' => [
+                                    'display' => false,
+                                    // 'position' => 'bottom',
+                                    // 'labels' => [
+                                    //     'fontSize' => 14,
+                                    //     'fontColor' => "#425062",
+                                    // ]
+                                ],
+                                'tooltips' => [
+                                    'enabled' => true,
+                                    'intersect' => true
+                                ],
+                                'hover' => [
+                                    'mode' => false
+                                ],
+                                'maintainAspectRatio' => false,
 
+                            ],
+                        ]);?>
+                    </div>
+                    <div class="chart-title"> <?= $each['name'] ?> </div>
+                    <div class="chart-title"><?= $each['tyle'] ?></div>
+                </div>
+            <?php } ?>
+        </div>
     </div>
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title"><?= 'Chi tiết '. $bdt->MO_TA ?></h3>
+        </div>
+            <div class="table-responsive">
+                <?php 
+                    Pjax::begin();
+                    echo GridView::widget([
+                        'dataProvider' => $dataProvider,
+                        'filterModel' => $searchModel,
+                        'columns' => [
+                            ['class' => 'yii\grid\SerialColumn'],
+                            'MA_DOTBD',
+                            [
+                                'attribute' => 'ID_TRAM',
+                                'value' => 'tRAMVT.TEN_TRAM'
+                            ],
+                            [
+                                'attribute' => 'ID_DAI',
+                                'filter' => ArrayHelper::map(Daivt::find()->where(['<', 'ID_DAI', 16])->all(), 'ID_DAI', 'TEN_DAIVT'),
+                                'value' => 'tRAMVT.iDDAI.TEN_DAIVT',
+                            ],
+                            [
+                                'attribute' => 'ID_DONVI',
+                                'value' => 'tRAMVT.iDDAI.iDDONVI.TEN_DONVI',
+                                'filter' => ArrayHelper::map(Donvi::find()->where(['>', 'ID_DONVI', 3])->all(), 'ID_DONVI', 'TEN_DONVI'),
+                            ],
+                            [
+                                'attribute' => 'ID_NHANVIEN',
+                                'value' => 'nHANVIEN.TEN_NHANVIEN'
+                            ],
+                            [
+                                'attribute' => 'TRANGTHAI',
+                                'filter' => [
+                                    "chuathuchien"=>"Chưa thực hiện",
+                                    "chuahoanthanh"=>"Chưa hoàn thành",
+                                    "ketthuc"=>"Kết thúc",
+                                    "dangthuchien" => "Đang thực hiện",
+                                    "kehoach" => "Kế hoạch"
+                                ],
+                                'value' => function($model) {
+                                    switch ($model->TRANGTHAI) {
+                                        case 'chuathuchien':
+                                            return 'Chưa thực hiện';
+                                        case 'chuahoanthanh':
+                                            return 'Chưa hoàn thành';
+                                        case 'ketthuc':
+                                            return 'Kết thúc';
+                                        case 'dangthuchien':
+                                            return 'Đang thực hiện';
+                                        case 'kehoach':
+                                            return 'Kế hoạch';
+                                    }
+                                }
+                            ],
+                            [
+                                'attribute' => 'hinh_anh',
+                                'value' => function ($model) {
+                                    return Images::find()->where(['MA_DOTBD' => $model->MA_DOTBD])->count();
+                                }
+                            ],
+                            [
+                                'attribute' => 'cong_viec',
+                                'value' => function ($model) {
+                                    return Noidungcongviec::find()->where(['ID_DOTBD' => $model->ID_DOTBD])->andWhere(['<>', 'TRANGTHAI', 'NULL'])->count() ."/". Noidungcongviec::find()->where(['ID_DOTBD' => $model->ID_DOTBD])->count();
+                                }
+                            ],
+                            [
+                                'class' => 'yii\grid\ActionColumn',
+                                'template' => '{view}',
+                                'urlCreator' =>function ($action, $model, $key, $index) {
+                                    if ($action === 'view') {
+                                        $url = ['dotbaoduong/view', 'id' => $model->ID_DOTBD];
+                                        return $url;
+                                    }
+                                }
+                            ],
+                        ],
+                    ]);
+                Pjax::end();
+                ?>
+            </div>
+        </div>
+    </div>
+    <?php } ?>
 </div>
-<?php $this->registerJS("$('#calendar').datepicker();") ?>

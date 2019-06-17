@@ -1,7 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\helpers\Url;
-
+use app\models\Thietbitram;
 ?>
     <header class="main-header">
         <!-- Logo -->
@@ -21,14 +21,10 @@ use yii\helpers\Url;
           <!-- Navbar Right Menu -->
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
-
-              <!-- Notifications Menu -->
-              <li class="notifications-menu">
-                <!-- Menu toggle button -->
+              <li class="task-menu">
                 <a href="<?= Url::to(['site/logout'])?>" data-method="post">
                   <i class="fa fa-sign-out"></i> Đăng xuất
                 </a>
-                
               </li>
             </ul>
           </div>

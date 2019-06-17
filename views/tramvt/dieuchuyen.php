@@ -61,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'name' => 'idtramdich',
                         'id' => 'idtramdich',
                         // 'value' => '',
-                        'data' => ArrayHelper::map(Tramvt::find()->all(), 'ID_TRAM', 'MA_TRAM'),
+                        'data' => ArrayHelper::map(Tramvt::find()->all(), 'ID_TRAM', 'TEN_TRAM'),
                         'options' => [
                             'placeholder' => 'Chọn trạm đích ...', 
                             ]
@@ -150,7 +150,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ],
                                 [
                                     'attribute' => 'ID_TRAM_DICH',
-                                    'value' => 'iDTRAMDICH.MA_TRAM',
+                                    'value' => 'iDTRAMDICH.TEN_TRAM',
                                 ],
                             ],
                         ]) ?>

@@ -3,28 +3,22 @@
 namespace app\models;
 
 use Yii;
-// use nepstor\validators\DateTimeCompareValidator;
 use Empathy\Validators\DateTimeCompareValidator;
 
 /**
  * This is the model class for table "thietbitram".
  *
- * @property integer $ID_THIETBI
- * @property integer $ID_LOAITB
- * @property integer $ID_TRAM
+ * @property int $ID_THIETBI
+ * @property int $ID_LOAITB
+ * @property int $ID_TRAM
  * @property string $SERIAL_MAC
  * @property string $NGAYSX
  * @property string $NGAYSD
- * @property integer $LANBD
  * @property string $LANBAODUONGTRUOC
  * @property string $LANBAODUONGTIEP
  *
- * @property Kehoachbdtb[] $kehoachbdtbs
- * @property Ketqua[] $ketquas
- * @property Dotbaoduong[] $iDDOTBDs
- * @property Thietbi $iDLOAITB
- * @property Tramvt $iDTRAM
- * @property Thuchienbd[] $thuchienbds
+ * @property Thietbi $lOAITB
+ * @property Tramvt $tRAM
  */
 class Thietbitram extends \yii\db\ActiveRecord
 {
@@ -36,17 +30,17 @@ class Thietbitram extends \yii\db\ActiveRecord
         return 'thietbitram';
     }
 
-
+    public $VB;
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['ID_LOAITB', 'ID_TRAM', 'LANBD', 'ID_THIETBI'], 'integer'],
+            [['ID_LOAITB', 'ID_TRAM', 'ID_THIETBI'], 'integer'],
             [['ID_LOAITB', 'ID_TRAM', 'SERIAL_MAC', 'NGAYSX', 'NGAYSD'], 'required'],
             [['NGAYSX', 'NGAYSD', 'LANBAODUONGTRUOC', 'LANBAODUONGTIEP'], 'safe'],
-            [['SERIAL_MAC'], 'string', 'max' => 255],
+            [['SERIAL_MAC', 'VB'], 'string', 'max' => 255],
             [['SERIAL_MAC'], 'unique'],
             [['ID_LOAITB'], 'exist', 'skipOnError' => true, 'targetClass' => Thietbi::className(), 'targetAttribute' => ['ID_LOAITB' => 'ID_THIETBI']],
             [['ID_TRAM'], 'exist', 'skipOnError' => true, 'targetClass' => Tramvt::className(), 'targetAttribute' => ['ID_TRAM' => 'ID_TRAM']],
@@ -75,18 +69,10 @@ class Thietbitram extends \yii\db\ActiveRecord
             'SERIAL_MAC' => 'Serial  Mac',
             'NGAYSX' => 'Ngày sản xuất',
             'NGAYSD' => 'Ngày sử dụng',
-            'LANBD' => 'Lần bảo dưỡng',
             'LANBAODUONGTRUOC' => 'Ngày bảo dưỡng gần nhất',
             'LANBAODUONGTIEP' => 'Ngày bảo dưỡng tới',
+            'VB' => 'Thêm mới theo dự án / văn bản'
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getIDDOTBDs()
-    {
-        return $this->hasMany(Dotbaoduong::className(), ['ID_DOTBD' => 'ID_DOTBD'])->viaTable('noidungcongviec', ['ID_THIETBI' => 'ID_THIETBI']);
     }
 
     /**
@@ -105,4 +91,37 @@ class Thietbitram extends \yii\db\ActiveRecord
         return $this->hasOne(Tramvt::className(), ['ID_TRAM' => 'ID_TRAM']);
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIDDOTBDs()
+    {
+        return $this->hasMany(Dotbaoduong::className(), ['ID_DOTBD' => 'ID_DOTBD'])->viaTable('noidungcongviec', ['ID_THIETBI' => 'ID_THIETBI']);
+    }
+
+    /**
+     * tao cong viec dinh ky
+     */
+    public function congviecdinhky($time, $id)
+    {
+        $date_DK = new \DateTime($time);
+        $date_SD = new \DateTime($this->NGAYSD);
+        $diff = $date_DK->diff($date_SD);
+        $months = round($diff->days / 30);
+        $listNoidung = Noidungbaotrinhomtbi::findAll(['ID_NHOM' => $this->iDLOAITB->ID_NHOM]);
+        foreach ($listNoidung as $noidung) {
+            if (($noidung->CHUKY !== 0) && ($months % $noidung->CHUKY == 0)) {
+                $congviec = new Noidungcongviec;
+                $congviec->ID_DOTBD = $id;
+                $congviec->ID_THIETBI = $this->ID_THIETBI;
+                $congviec->MA_NOIDUNG = $noidung->MA_NOIDUNG;
+                if ($noidung->QLTRAM == 1) {
+                    $congviec->ID_NHANVIEN = $this->iDTRAM->ID_NHANVIEN;
+                } else {
+                    $congviec->ID_NHANVIEN = 0;
+                }
+                $congviec->save(false);
+            }
+        }
+    }
 }

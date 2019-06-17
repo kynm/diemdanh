@@ -12,12 +12,12 @@ $this->params['breadcrumbs'][] = ['label' => 'Đơn vị', 'url' => ['donvi/inde
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="daivt-index">
+    <p>
+        <?= (Yii::$app->user->can('create-daivt')) ? Html::a('<i class="fa fa-plus"></i> Thêm đài viễn thông', ['create'], ['class' => 'btn btn-primary btn-flat']) :'' ?>
+    </p>
 
     <div class="box box-primary">
         <div class="box-body">
-        <p>
-            <?= (Yii::$app->user->can('create-daivt')) ? Html::a('<i class="fa fa-plus"></i> Thêm đài viễn thông', ['create'], ['class' => 'btn btn-primary btn-flat']) :'' ?>
-        </p>
             <?php Pjax::begin(); ?>    <?= GridView::widget([
                     'dataProvider' => $dataProvider,
                     'filterModel' => $searchModel,

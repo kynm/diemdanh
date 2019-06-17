@@ -82,7 +82,7 @@ class DaivtController extends Controller
                 ]);
             }
         } else {
-            throw new ForbiddenHttpException();           
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');           
         }
     }
 
@@ -105,7 +105,7 @@ class DaivtController extends Controller
                 ]);
             }
         } else {
-            throw new ForbiddenHttpException;
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
         }
     }
 
@@ -122,7 +122,7 @@ class DaivtController extends Controller
             
             return $this->redirect(['index']);
         } else {
-            throw new ForbiddenHttpException;
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
         }
     }
 

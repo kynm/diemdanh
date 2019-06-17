@@ -95,7 +95,7 @@ class UserController extends Controller
             }
         } else {
             # code...
-            throw new ForbiddenHttpException;            
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');            
         }
     }
 
@@ -122,7 +122,7 @@ class UserController extends Controller
             }
         } else {
             # code...
-            throw new ForbiddenHttpException;            
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');            
         }
     }
 
@@ -141,25 +141,31 @@ class UserController extends Controller
             return $this->redirect(['index']);
         } else {
             # code...
-            throw new ForbiddenHttpException;            
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');            
         }
         
     }
 
     /** 
-     *  fucntion to add user access token
+     *  fucntion
      */
 
-    // public function actionUpdateToken()
-    // {
-    //     $users = User::find()->all();
-    //     foreach ($users as $user) {
-    //         $user->generateAccessToken();
-            
-    //         $user->save(false);
-    //     }
-    //     return $this->redirect(['index']);
-    // }
+    public function actionEditNhaTram()
+    {
+        $models = User::find()->joinWith('nhanvien')->where(['CHUC_VU' => 7])->orWhere(['CHUC_VU' => 8])->orWhere(['CHUC_VU' => 5])->all();
+        // print_r($models); die;
+        foreach ($models as $model) {
+            $exists = AuthAssignment::find()->where(['item_name' => 'edit-tramvt', 'user_id' => $model->id])->exists();
+            if (!$exists) {
+                $permit = new AuthAssignment;
+                $permit->item_name = 'edit-tramvt';
+                $permit->user_id = $model->id;
+                $permit->created_at = time();
+                $permit->save();
+            }
+        }
+        echo "Successful";
+    }
 
     /**
      * Edit user infomation
@@ -177,7 +183,9 @@ class UserController extends Controller
             
             //Update Nhanvien's Infomations
             $nhanvien->load(Yii::$app->request->post());
-            $nhanvien->save();
+            if (!$nhanvien->save()) {
+                var_dump($nhanvien->errors); die;
+            }
 
             $user->load(Yii::$app->request->post());
 
@@ -187,7 +195,7 @@ class UserController extends Controller
                     if(!($user->newPassword == '') && !($user->confirmPassword == '')) {
                         if($user->newPassword == $user->confirmPassword) {
                             $user->setPassword($user->newPassword);
-                            $user->generateAccessToken();
+                            
                             $alert = 'Đổi mật khẩu thành cmn công.';
                         } else {
                             $alert = 'Mật khẩu không khớp. Vui lòng thử lại!!!';
@@ -220,24 +228,6 @@ class UserController extends Controller
             'user' => $user,
             'nhanvien' => $nhanvien,
         ]);                
-    }
-
-    public function actionRoleSetting()
-    {
-        if (Yii::$app->user->can('create-user')) {
-            # code...
-            $model = new AuthAssignment;
-
-            if ($model->load(Yii::$app->request->post())) {
-                $model->save();
-            }
-            return $this->render('role-setting', ['model' => $model]);
-            
-        } else {
-            # code...
-            throw new ForbiddenHttpException;            
-        }
-        
     }
 
     /**

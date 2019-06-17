@@ -1,6 +1,6 @@
 <?php
 use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 use yii\widgets\Pjax;
 use app\models\Tramvt;
 use app\models\Nhomtbi;
@@ -19,14 +19,17 @@ echo GridView::widget([
 
         [
             'attribute' => 'ID_TRAM_NGUON',
-            'value' => 'iDTRAMNGUON.MA_TRAM'
+            'value' => 'iDTRAMNGUON.TEN_TRAM'
         ],
         [
             'attribute' => 'ID_TRAM_DICH',
-            'value' => 'iDTRAMDICH.MA_TRAM'
+            'value' => 'iDTRAMDICH.TEN_TRAM'
         ],
         'NGAY_CHUYEN',
-        'LY_DO',
+        [
+            'attribute' => 'LY_DO',
+            'format' => 'raw'
+        ],
 
         // ['class' => 'yii\grid\ActionColumn',
         // 'template' => (Yii::$app->user->can('edit-nhomtb')) ? '{view} {update} {delete}' : '{view}'],

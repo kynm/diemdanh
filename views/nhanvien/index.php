@@ -12,11 +12,12 @@ $this->params['breadcrumbs'][] = ['label' => 'Đơn vị', 'url' => ['donvi/inde
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="nhanvien-index">
+    <p>
+        <?= (Yii::$app->user->can('Administrator')) ? Html::a('<i class="fa fa-plus"></i> Thêm nhân viên', ['create'], ['class' => 'btn btn-primary btn-flat']) : '' ?>
+    </p>
     <div class="box box-primary">
         <div class="box-body">
-            <p>
-                <?= (Yii::$app->user->can('Administrator')) ? Html::a('<i class="fa fa-plus"></i> Thêm nhân viên', ['create'], ['class' => 'btn btn-primary btn-flat']) : '' ?>
-            </p>
+            <div class="table-responsive">
             <?php Pjax::begin(); ?>    <?= GridView::widget([
                     'dataProvider' => $dataProvider,
                     'filterModel' => $searchModel,
@@ -26,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     // ],
                     'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
-                        'MA_NHANVIEN',
+                        // 'MA_NHANVIEN',
                         'TEN_NHANVIEN',
                         [
                             'attribute' => 'CHUC_VU',
@@ -49,6 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                 ]); ?>
             <?php Pjax::end(); ?>
+            </div>
         </div>
     </div>
 </div>

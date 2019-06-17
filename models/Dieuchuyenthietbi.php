@@ -30,7 +30,7 @@ class Dieuchuyenthietbi extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ID_THIETBI', 'NGAY_CHUYEN', 'ID_TRAM_NGUON', 'ID_TRAM_DICH'], 'required'],
+            [['ID_THIETBI', 'NGAY_CHUYEN', 'ID_TRAM_DICH'], 'required'],
             [['ID_THIETBI', 'ID_TRAM_NGUON', 'ID_TRAM_DICH'], 'integer'],
             [['NGAY_CHUYEN', 'LY_DO'], 'safe'],
             [['LY_DO'], 'string', 'max' => 255],
@@ -48,7 +48,7 @@ class Dieuchuyenthietbi extends \yii\db\ActiveRecord
             'NGAY_CHUYEN' => 'Ngày điều chuyển',
             'ID_TRAM_NGUON' => 'Trạm nguồn',
             'ID_TRAM_DICH' => 'Trạm đích',
-            'LY_DO' => 'Lý do',
+            'LY_DO' => 'Lý do/ Văn bản/ Dự án',
         ];
     }
 

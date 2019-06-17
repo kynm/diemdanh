@@ -6,6 +6,7 @@ use app\models\Thietbi;
 use app\models\Tramvt;
 use yii\helpers\ArrayHelper;
 use kartik\date\DatePicker;
+use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Thietbitram */
@@ -16,22 +17,38 @@ use kartik\date\DatePicker;
     <div class="box box-primary">
         <div class="box-body">
             <?php $form = ActiveForm::begin(); ?>
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <?= $form->field($model, 'ID_LOAITB')->widget(Select2::classname(), [
+                        'data' => ArrayHelper::map(Thietbi::find()->all(), 'ID_THIETBI', 'TEN_THIETBI'),
+                        'theme' => Select2::THEME_BOOTSTRAP,
+                        'pluginOptions' => [
+                            'placeholder' => 'Chọn loại thiết bị',
+                            'allowClear' => true
+                        ],
+                    ]); ?>        
+                </div>
+                    
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <?= $form->field($model, 'SERIAL_MAC')->textInput(['maxlength' => true]) ?>
+                </div>
 
-            <?= $form->field($model, 'ID_LOAITB')->dropDownList(
-                ArrayHelper::map(Thietbi::find()->all(), 'ID_THIETBI', 'TEN_THIETBI'),
-                ['prompt' => 'Chọn loại thiết bị']
-            ) ?>
-
-            <?= $form->field($model, 'ID_TRAM')->dropDownList(
-                ArrayHelper::map(Tramvt::find()->all(), 'ID_TRAM', 'MA_TRAM'),
-                [
-                'options' => [@$_GET['id'] => ['Selected'=>'selected']],
-                'prompt' => 'Chọn trạm'
-                ]) ?>
-
-            <?= $form->field($model, 'SERIAL_MAC')->textInput() ?>
-
-            <div class="row" style="margin-bottom: 8px">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <?= $model->isNewRecord ? $form->field($model, 'ID_TRAM')->dropDownList(
+                        ArrayHelper::map(Tramvt::find()->where(['ID_TRAM' => @$_GET['id_tram']])->all(), 'ID_TRAM', 'TEN_TRAM'),
+                        [
+                            'options' => [@$_GET['id_tram'] => ['Selected'=>'selected']],
+                            'prompt' => 'Chọn trạm'
+                        ]) : $form->field($model, 'ID_TRAM')->widget(Select2::classname(), [
+                        'data' => ArrayHelper::map(Tramvt::find()->all(), 'ID_TRAM', 'TEN_TRAM'),
+                        'theme' => Select2::THEME_BOOTSTRAP,
+                        'pluginOptions' => [
+                            'placeholder' => 'Chọn trạm',
+                            'allowClear' => true,
+                            'disabled' => true
+                        ],
+                    ]); ?>
+                </div>
+            
                 <div class="col-sm-4 col-md-4">
                     <label>Ngày sản xuất</label>
                     <?= DatePicker::widget([
@@ -80,6 +97,9 @@ use kartik\date\DatePicker;
                 <div id="message-nsx" class="col-sm-12"></div>
                 <div id="message-nsd" class="col-sm-12"></div>
                 <div id="message-nbd" class="col-sm-12"></div>
+            
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <?= $form->field($model, 'VB')->textArea(['maxlength' => true]) ?>
             </div>
         </div>
         <div class="box-footer">

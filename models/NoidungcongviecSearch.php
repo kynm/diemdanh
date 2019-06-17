@@ -15,10 +15,14 @@ class NoidungcongviecSearch extends Noidungcongviec
     /**
      * @inheritdoc
      */
+    public $ID_TRAM;
+    public $ID_DAI;
+    public $ID_DONVI;
+
     public function rules()
     {
         return [
-            [['ID_DOTBD', 'ID_THIETBI', 'ID_NHANVIEN', 'MA_NOIDUNG', 'GHICHU', 'TRANGTHAI', 'KETQUA'], 'safe'],
+            [['ID_DOTBD', 'ID_THIETBI', 'ID_NHANVIEN', 'MA_NOIDUNG', 'GHICHU', 'TRANGTHAI', 'KETQUA', 'ID_TRAM', 'ID_DAI', 'ID_DONVI'], 'safe'],
         ];
     }
 
@@ -40,12 +44,18 @@ class NoidungcongviecSearch extends Noidungcongviec
      */
     public function search($params)
     {
-        $query = Noidungcongviec::find();
+        $query = Noidungcongviec::find()->where(['noidungcongviec.ID_NHANVIEN' => 0]);
 
         // add conditions that should always apply here
+        if (Yii::$app->user->identity->nhanvien->ID_DONVI > 3) {
+            $query->andWhere(['donvi.ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI]);
+        }
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [ 
+                'pageSize' => 50, 
+            ],
         ]);
 
         $this->load($params);
@@ -58,27 +68,32 @@ class NoidungcongviecSearch extends Noidungcongviec
 
         // grid filtering conditions
 
-        // $query->joinWith('tHIETBI.iDLOAITB');
-        $query->joinWith('dOTBD');
+        $query->joinWith('tHIETBI.iDLOAITB');
+        $query->joinWith('dOTBD.tRAMVT.iDDAI.iDDONVI');
         $query->joinWith('mANOIDUNG');
 
         $query->andFilterWhere([
             'ID_NHANVIEN' => $this->ID_NHANVIEN,
         ]);
 
-        $query->andFilterWhere(['like', 'noidungbaotri.NOIDUNG', $this->MA_NOIDUNG])
+        $query
+            ->andFilterWhere(['like', 'noidungbaotrinhomtbi.NOIDUNG', $this->MA_NOIDUNG])
             ->andFilterWhere(['like', 'GHICHU', $this->GHICHU])
             ->andFilterWhere(['like', 'noidungcongviec.TRANGTHAI', $this->TRANGTHAI])
             ->andFilterWhere(['like', 'KETQUA', $this->KETQUA])
             ->andFilterWhere(['like', 'dotbaoduong.MA_DOTBD', $this->ID_DOTBD])
-            ->andFilterWhere(['like', 'thietbi.TEN_THIETBI', $this->ID_THIETBI]);
+            ->andFilterWhere(['like', 'thietbi.TEN_THIETBI', $this->ID_THIETBI])
+            ->andFilterWhere(['like', 'tramvt.TEN_TRAM', $this->ID_TRAM])
+            ->andFilterWhere(['like', 'daivt.TEN_DAIVT', $this->ID_DAI])
+            ->andFilterWhere(['like', 'donvi.TEN_DONVI', $this->ID_DONVI])
+            ;
 
         return $dataProvider;
     }
 
     public function searchDbd($params)
     {
-        $query = Noidungcongviec::find()->where(['ID_DOTBD'=>$_GET['id']]);
+        $query = Noidungcongviec::find()->where(['ID_DOTBD'=>$_GET['id']])->orderBy(['noidungcongviec.TRANGTHAI' => SORT_ASC]);
 
         // add conditions that should always apply here
 
@@ -100,7 +115,8 @@ class NoidungcongviecSearch extends Noidungcongviec
 
         // grid filtering conditions
 
-        $query->andFilterWhere(['like', 'noidungbaotri.NOIDUNG', $this->MA_NOIDUNG])
+        $query
+            ->andFilterWhere(['like', 'noidungbaotrinhomtbi.NOIDUNG', $this->MA_NOIDUNG])
             ->andFilterWhere(['like', 'GHICHU', $this->GHICHU])
             ->andFilterWhere(['like', 'thietbi.TEN_THIETBI', $this->ID_THIETBI])
             ->andFilterWhere(['like', 'nhanvien.TEN_NHANVIEN', $this->ID_NHANVIEN])
@@ -113,7 +129,7 @@ class NoidungcongviecSearch extends Noidungcongviec
     public function searchPlan($params)
     {
         $nhanvien = Nhanvien::find()->where(['USER_NAME' => Yii::$app->user->identity->username])->one();
-        $query = Noidungcongviec::find()->where(['ID_NHANVIEN'=> $nhanvien->ID_NHANVIEN, 'dotbaoduong.TRANGTHAI' => 'Kế hoạch' ]);
+        $query = Noidungcongviec::find()->where(['noidungcongviec.ID_NHANVIEN'=> $nhanvien->ID_NHANVIEN, 'dotbaoduong.TRANGTHAI' => 'kehoach' ]);
 
         // add conditions that should always apply here
 
@@ -135,7 +151,8 @@ class NoidungcongviecSearch extends Noidungcongviec
 
         // grid filtering conditions
 
-        $query->andFilterWhere(['like', 'noidungbaotri.NOIDUNG', $this->MA_NOIDUNG])
+        $query
+            ->andFilterWhere(['like', 'noidungbaotrinhomtbi.NOIDUNG', $this->MA_NOIDUNG])
             ->andFilterWhere(['like', 'GHICHU', $this->GHICHU])
             ->andFilterWhere(['like', 'thietbi.TEN_THIETBI', $this->ID_THIETBI])
             ->andFilterWhere(['like', 'dotbaoduong.MA_DOTBD', $this->ID_DOTBD])
@@ -148,7 +165,7 @@ class NoidungcongviecSearch extends Noidungcongviec
     public function searchInProgress($params)
     {
         $nhanvien = Nhanvien::find()->where(['USER_NAME' => Yii::$app->user->identity->username])->one();
-        $query = Noidungcongviec::find()->where(['ID_NHANVIEN'=> $nhanvien->ID_NHANVIEN, 'dotbaoduong.TRANGTHAI' => 'Đang thực hiện' ]);
+        $query = Noidungcongviec::find()->where(['noidungcongviec.ID_NHANVIEN'=> $nhanvien->ID_NHANVIEN, 'dotbaoduong.TRANGTHAI' => 'dangthuchien' ])->orderBy(['noidungcongviec.TRANGTHAI' => SORT_ASC]);
 
         // add conditions that should always apply here
 
@@ -170,7 +187,7 @@ class NoidungcongviecSearch extends Noidungcongviec
 
         // grid filtering conditions
 
-        $query->andFilterWhere(['like', 'noidungbaotri.NOIDUNG', $this->MA_NOIDUNG])
+        $query->andFilterWhere(['like', 'noidungbaotrinhomtbi.NOIDUNG', $this->MA_NOIDUNG])
             ->andFilterWhere(['like', 'GHICHU', $this->GHICHU])
             ->andFilterWhere(['like', 'thietbi.TEN_THIETBI', $this->ID_THIETBI])
             ->andFilterWhere(['like', 'dotbaoduong.MA_DOTBD', $this->ID_DOTBD])
@@ -183,7 +200,7 @@ class NoidungcongviecSearch extends Noidungcongviec
     public function searchFinished($params)
     {
         $nhanvien = Nhanvien::find()->where(['USER_NAME' => Yii::$app->user->identity->username])->one();
-        $query = Noidungcongviec::find()->where(['ID_NHANVIEN'=> $nhanvien->ID_NHANVIEN, 'dotbaoduong.TRANGTHAI' => 'Kết thúc' ]);
+        $query = Noidungcongviec::find()->where(['noidungcongviec.ID_NHANVIEN'=> $nhanvien->ID_NHANVIEN, 'dotbaoduong.TRANGTHAI' => 'ketthuc' ]);
 
         // add conditions that should always apply here
 
@@ -205,7 +222,7 @@ class NoidungcongviecSearch extends Noidungcongviec
 
         // grid filtering conditions
 
-        $query->andFilterWhere(['like', 'noidungbaotri.NOIDUNG', $this->MA_NOIDUNG])
+        $query->andFilterWhere(['like', 'noidungbaotrinhomtbi.NOIDUNG', $this->MA_NOIDUNG])
             ->andFilterWhere(['like', 'GHICHU', $this->GHICHU])
             ->andFilterWhere(['like', 'thietbi.TEN_THIETBI', $this->ID_THIETBI])
             ->andFilterWhere(['like', 'dotbaoduong.MA_DOTBD', $this->ID_DOTBD])

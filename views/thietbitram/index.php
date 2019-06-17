@@ -12,11 +12,11 @@ $this->params['breadcrumbs'][] = ['label' => 'Quản lý thiết bị', 'url' =>
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="thietbitram-index">
+    <p>
+        <?= Html::a('<i class="fa fa-plus"></i> Thêm thiết bị trạm', ['create'], ['class' => 'btn btn-primary btn-flat']) ?>
+    </p>
     <div class="box box-primary">
         <div class="box-body">
-            <p>
-                <?= Html::a('<i class="fa fa-plus"></i> Thêm thiết bị trạm', ['create'], ['class' => 'btn btn-primary btn-flat']) ?>
-            </p>
             <?php Pjax::begin(); ?>    <?= GridView::widget([
                     'dataProvider' => $dataProvider,
                     'filterModel' => $searchModel,
@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                         [
                             'attribute' => 'ID_TRAM',
-                            'value' => 'iDTRAM.MA_TRAM'
+                            'value' => 'iDTRAM.TEN_TRAM'
                         ],
                         'LANBAODUONGTRUOC',
                         'LANBAODUONGTIEP',

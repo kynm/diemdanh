@@ -2,6 +2,7 @@
 
 $params = require(__DIR__ . '/params.php');
 $db = require(__DIR__ . '/db.php');
+$db_sms = require(__DIR__ . '/db_sms.php');
 
 $config = [
     'timeZone' => 'Asia/Ho_Chi_Minh',
@@ -18,7 +19,12 @@ $config = [
         'request' => [
             // 'baseUrl' => '',
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'BaoTriNhaTram',
+            // 'cookieValidationKey' => 'BaoTriNhaTram',
+            'enableCookieValidation' => false,
+            
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ]
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -66,6 +72,7 @@ $config = [
         //     ],
         // ],
         'db' => $db,
+        'db_sms' => $db_sms,
 
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
@@ -85,10 +92,8 @@ $config = [
             'showScriptName' => false,
             // Disable r= routes
             'enablePrettyUrl' => true,
+            // 'enableStrictParsing' => true,
             'rules' => array(
-                    // '<controller:\w+>/<id:\d+>' => '<controller>/view',
-                    // '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
-                    // '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
             ),
         ],
         
@@ -148,18 +153,7 @@ $config = [
                 'route' => null, // disable menu route
             ]
         ],
-        'api' => [
-            'class' => 'app\modules\api\Api',
-            'as access' => [
-                'class' => 'yii\filters\AccessControl',
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'roles' => ['?', '@'],
-                    ],
-                ],
-            ],
-        ], 
+         
     ],
     'as access' => [
         'class' => 'mdm\admin\components\AccessControl',
@@ -173,12 +167,12 @@ $config = [
 
 if (YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment
-    // $config['bootstrap'][] = 'debug';
-    // $config['modules']['debug'] = [
-    //     'class' => 'yii\debug\Module',
-    //     // uncomment the following to add your IP if you are not connecting from localhost.
-    //     //'allowedIPs' => ['127.0.0.1', '::1'],
-    // ];
+    $config['bootstrap'][] = 'debug';
+    $config['modules']['debug'] = [
+        'class' => 'yii\debug\Module',
+        // uncomment the following to add your IP if you are not connecting from localhost.
+        //'allowedIPs' => ['127.0.0.1', '::1'],
+    ];
 
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [

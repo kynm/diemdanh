@@ -7,11 +7,11 @@ use Yii;
 /**
  * This is the model class for table "nhomtbi".
  *
- * @property integer $ID_NHOM
+ * @property int $ID_NHOM
  * @property string $MA_NHOM
  * @property string $TEN_NHOM
  *
- * @property Noidungbaotri[] $noidungbaotris
+ * @property Noidungbaotrinhomtbi[] $noidungbaotrinhomtbis
  * @property Thietbi[] $thietbis
  */
 class Nhomtbi extends \yii\db\ActiveRecord
@@ -53,7 +53,7 @@ class Nhomtbi extends \yii\db\ActiveRecord
      */
     public function getNoidungbaotris()
     {
-        return $this->hasMany(Noidungbaotri::className(), ['ID_NHOM' => 'ID_NHOM']);
+        return $this->hasMany(Noidungbaotrinhomtbi::className(), ['ID_NHOM' => 'ID_NHOM']);
     }
 
     /**
@@ -61,6 +61,6 @@ class Nhomtbi extends \yii\db\ActiveRecord
      */
     public function getThietbis()
     {
-        return $this->hasMany(Thietbi::className(), ['ID_NHOMTB' => 'ID_NHOM']);
+        return $this->hasMany(Thietbi::className(), ['ID_NHOM' => 'ID_NHOM']);
     }
 }

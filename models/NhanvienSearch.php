@@ -41,7 +41,7 @@ class NhanvienSearch extends Nhanvien
      */
     public function search($params)
     {
-        $query = Nhanvien::find();
+        $query = Nhanvien::find()->where(['>', 'ID_NHANVIEN', 0]);
 
         // add conditions that should always apply here
 

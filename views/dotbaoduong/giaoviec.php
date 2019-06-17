@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <p class="form-inline">
                 <div class="form-group col-md-4">
                     <label>Trạm viễn thông</label>
-                    <input type="text" class="form-control" disabled="true" value="<?= $model->tRAMVT->MA_TRAM ; ?>">
+                    <input type="text" class="form-control" disabled="true" value="<?= $model->tRAMVT->TEN_TRAM ; ?>">
                 </div>
                 <div class="form-group col-md-4">
                     <label>Ngày bảo dưỡng</label>
@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <div class="form-group col-md-4">
                     <label>Nhóm trưởng</label>
-                    <input type="text" class="form-control" disabled="true" value="<?= $model->tRUONGNHOM->TEN_NHANVIEN ; ?>">
+                    <input type="text" class="form-control" disabled="true" value="<?= $model->nHANVIEN->TEN_NHANVIEN ; ?>">
                 </div>
             </p>
             <?php Pjax::begin(); ?>
@@ -71,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         $nhanvien->addRule(['ID_NHANVIEN'], 'integer');
                     ?>
                     <?= $form->field($nhanvien, 'ID_NHANVIEN')->widget(Select2::classname(), [
-                            'data' => ArrayHelper::map(Nhanvien::find()->all(), 'ID_NHANVIEN', 'TEN_NHANVIEN'),
+                            'data' => ArrayHelper::map(Nhanvien::find()->where(['ID_DAI' => $model->tRAMVT->ID_DAI])->all(), 'ID_NHANVIEN', 'TEN_NHANVIEN'),
                             'options' => ['placeholder' => 'Chọn nhân viên'],
                             'pluginOptions' => [
                                 'allowClear' => true

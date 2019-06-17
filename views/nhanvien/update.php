@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = 'Cập nhật';
 
     <?= $this->render('_form', [
         'model' => $model,
-        'authModel' => $authModel,
+        // 'authModel' => $authModel,
     ]) ?>
 
 </div>

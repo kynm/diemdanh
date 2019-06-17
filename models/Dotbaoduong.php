@@ -5,21 +5,23 @@ namespace app\models;
 use Yii;
 use Empathy\Validators\DateTimeCompareValidator;
 
-
 /**
  * This is the model class for table "dotbaoduong".
  *
  * @property int $ID_DOTBD
  * @property string $MA_DOTBD
+ * @property string $NGAY_DUKIEN
  * @property string $NGAY_BD
- * @property int $ID_TRAMVT
+ * @property string $NGAY_KT_DUKIEN
+ * @property string $NGAY_KT
+ * @property int $ID_TRAM
  * @property string $TRANGTHAI
- * @property int $TRUONG_NHOM
+ * @property string $ID_NHANVIEN
+ * @property int $ID_BDT
  *
  * @property Baocao $baocao
- * @property Tramvt $tRAMVT
- * @property Nhanvien $tRUONGNHOM
- * @property Noidungcongviec[] $noidungcongviecs
+ * @property Tramvt $tRAM
+ * @property Nhanvien $nHANVIEN
  */
 class Dotbaoduong extends \yii\db\ActiveRecord
 {
@@ -31,19 +33,23 @@ class Dotbaoduong extends \yii\db\ActiveRecord
         return 'dotbaoduong';
     }
 
+    public $donvi;
+    public $dai;
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['MA_DOTBD', 'NGAY_BD'], 'required'],
-            [['NGAY_BD'], 'safe'],
-            [['ID_TRAMVT', 'TRUONG_NHOM'], 'integer'],
+            [['MA_DOTBD', 'NGAY_DUKIEN', 'NGAY_KT_DUKIEN', 'ID_TRAM'], 'required'],
+            [['NGAY_DUKIEN', 'NGAY_BD', 'NGAY_KT_DUKIEN', 'NGAY_KT'], 'safe'],
+            [['ID_TRAM', 'ID_NHANVIEN', 'ID_BDT'], 'integer'],
             [['MA_DOTBD', 'TRANGTHAI'], 'string', 'max' => 32],
-            [['ID_TRAMVT'], 'exist', 'skipOnError' => true, 'targetClass' => Tramvt::className(), 'targetAttribute' => ['ID_TRAMVT' => 'ID_TRAM']],
-            [['TRUONG_NHOM'], 'exist', 'skipOnError' => true, 'targetClass' => Nhanvien::className(), 'targetAttribute' => ['TRUONG_NHOM' => 'ID_NHANVIEN']],
-            ['NGAY_BD', DateTimeCompareValidator::className(), 'compareValue' => date('Y-m-d'), 'operator' => '>'],
+            [['ID_TRAM'], 'exist', 'skipOnError' => true, 'targetClass' => Tramvt::className(), 'targetAttribute' => ['ID_TRAM' => 'ID_TRAM']],
+            [['ID_NHANVIEN'], 'exist', 'skipOnError' => true, 'targetClass' => Nhanvien::className(), 'targetAttribute' => ['ID_NHANVIEN' => 'ID_NHANVIEN']],
+            ['NGAY_DUKIEN', DateTimeCompareValidator::className(), 'compareValue' => date('Y-m-d'), 'operator' => '>='],
+            ['NGAY_KT_DUKIEN', DateTimeCompareValidator::className(), 'compareValue' => 'NGAY_DUKIEN', 'operator' => '>='],
         ];
     }
 
@@ -53,13 +59,23 @@ class Dotbaoduong extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'ID_DOTBD' => 'Id đợt bảo dưỡng',
+            'ID_DOTBD' => 'ID đợt bảo dưỡng',
             'MA_DOTBD' => 'Mã đợt bảo dưỡng',
-            'NGAY_BD' => 'Ngày bảo dưỡng',
-            'NGAY_DUKIEN' => 'Ngày dự kiến',
-            'ID_TRAMVT' => 'Trạm',
+            'NGAY_BD' => 'Ngày bắt đầu',
+            'NGAY_DUKIEN' => 'Ngày bắt đầu dự kiến',
+            'NGAY_KT' => 'Ngày kết thúc',
+            'NGAY_KT_DUKIEN' => 'Ngày kết thúc dự kiến',
+            'ID_TRAM' => 'Trạm',
+            'ID_DAI' => 'Đài',
+            'ID_DONVI' => 'Đơn vị',
             'TRANGTHAI' => 'Trạng thái',
-            'TRUONG_NHOM' => 'Nhóm trưởng',
+            'ID_NHANVIEN' => 'Tổ trưởng',
+            'donvi' => 'Đơn vị',
+            'dai' => 'Đài viễn thông',
+            'ID_BDT' => 'Bảo dưỡng tổng',
+            'TTGV' => 'Trạng thái giao việc',
+            'hinh_anh' => 'Hình ảnh',
+            'cong_viec' => 'Công việc',
         ];
     }
 
@@ -76,15 +92,15 @@ class Dotbaoduong extends \yii\db\ActiveRecord
      */
     public function getTRAMVT()
     {
-        return $this->hasOne(Tramvt::className(), ['ID_TRAM' => 'ID_TRAMVT']);
+        return $this->hasOne(Tramvt::className(), ['ID_TRAM' => 'ID_TRAM']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getTRUONGNHOM()
+    public function getNHANVIEN()
     {
-        return $this->hasOne(Nhanvien::className(), ['ID_NHANVIEN' => 'TRUONG_NHOM']);
+        return $this->hasOne(Nhanvien::className(), ['ID_NHANVIEN' => 'ID_NHANVIEN']);
     }
 
     /**
@@ -93,5 +109,13 @@ class Dotbaoduong extends \yii\db\ActiveRecord
     public function getNoidungcongviecs()
     {
         return $this->hasMany(Noidungcongviec::className(), ['ID_DOTBD' => 'ID_DOTBD']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBaoduongtong()
+    {
+        return $this->hasOne(Baoduongtong::className(), ['ID_BDT' => 'ID_BDT']);
     }
 }

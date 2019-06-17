@@ -6,6 +6,7 @@ use kartik\editable\Editable;
 use yii\widgets\Pjax;
 use app\models\Nhanvien;
 use app\models\User;
+use yii\helpers\Url;
 use app\models\Thuchienbd;
 use kartik\form\ActiveForm;
 /* @var $this yii\web\View */
@@ -13,8 +14,7 @@ use kartik\form\ActiveForm;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Đợt '.$model->MA_DOTBD;
-$this->params['breadcrumbs'][] = ['label' => 'Các đợt bảo dưỡng', 'url' => ['danhsachkehoach']];
-$this->params['breadcrumbs'][] = ['label' => 'Thực hiện', 'url' => ['danhsachthuchien']];
+$this->params['breadcrumbs'][] = ['label' => 'Các đợt bảo dưỡng', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="dotbaoduong-index">
@@ -25,15 +25,19 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?php $form = ActiveForm::begin(); ?>
                     <input type="hidden" name="_csrf" value="<?=Yii::$app->request->getCsrfToken()?>" />
                     <?php
-                        @$nhanvien = Nhanvien::find()->where(['USER_NAME' => Yii::$app->user->identity->username])->one();
-                        $canReview = 0;
-                        if ($model->TRUONG_NHOM == @$nhanvien->ID_NHANVIEN) {
-                            $canReview = 1;
-                            echo Html::submitButton(
-                                '<i class="glyphicon glyphicon-log-in"></i> Kết thúc bảo dưỡng', 
+                        if ($model->ID_NHANVIEN == Yii::$app->user->identity->nhanvien->ID_NHANVIEN || Yii::$app->user->identity->nhanvien->chucvu->cap == 2 || Yii::$app->user->identity->nhanvien->chucvu->cap == 3 || Yii::$app->user->can('Administrator') ) {
+                            $canReview = true;
+                            echo Html::a(
+                                '<i class="glyphicon glyphicon-check"></i> Xác nhận tất cả', 
+                                Url::to(['congviec/xacnhantatca', 'id' => $model->ID_DOTBD]),
                                 ['class'=>'btn btn-primary btn-flat']
-                            ) ;                    
-                            
+                            ) .' '; 
+
+                            echo Html::a(
+                                '<i class="glyphicon glyphicon-log-in"></i> Kết thúc bảo dưỡng', 
+                                Url::to(['dotbaoduong/ketthuc', 'id' => $model->ID_DOTBD]),
+                                ['class'=>'btn btn-primary btn-flat']
+                            ) ;
                         }
                     ?>
                 </p>
@@ -41,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <p class="form-inline">
                     <div class="form-group col-md-3 col-sm-6">
                         <label>Trạm viễn thông</label>
-                        <input type="text" class="form-control" id="exp" disabled="true" value="<?= $model->tRAMVT->MA_TRAM ; ?>">
+                        <input type="text" class="form-control" id="exp" disabled="true" value="<?= $model->tRAMVT->TEN_TRAM ; ?>">
                     </div>
                     <div class="form-group col-md-3 col-sm-6">
                         <label>Ngày bảo dưỡng</label>
@@ -49,11 +53,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
                     <div class="form-group col-md-3 col-sm-6">
                         <label>Nhóm trưởng</label>
-                        <input type="text" class="form-control" id="exp" disabled="true" value="<?= $model->tRUONGNHOM->TEN_NHANVIEN ; ?>">
+                        <input type="text" class="form-control" id="exp" disabled="true" value="<?= $model->nHANVIEN->TEN_NHANVIEN ; ?>">
                     </div>
                     <div class="form-group col-md-3 col-sm-6">
                         <label>Trạng thái</label>
-                        <input type="text" class="form-control" id="exp" disabled="true" value="<?= $model->TRANGTHAI ; ?>">
+                        <input type="text" class="form-control" id="exp" disabled="true" value="Đang thực hiện">
                     </div>
                 </p>
 
@@ -65,7 +69,11 @@ $this->params['breadcrumbs'][] = $this->title;
                             'nullDisplay' => '',
                         ],
                         'rowOptions' => function ($model) {
-                            if ($model->TRANGTHAI == 'Chưa hoàn thành') {
+                            if ($model->TRANGTHAI == 'Chờ xác nhận') {
+                                return ['class' => 'warning'];
+                            } elseif ($model->TRANGTHAI == 'Hoàn thành') {
+                                return ['class' => 'success'];
+                            } else {
                                 return ['class' => 'danger'];
                             }
                         },
@@ -80,43 +88,54 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'value' => 'mANOIDUNG.NOIDUNG'
                             ],
                             'TRANGTHAI',
-                            [
-                                'class' => 'kartik\grid\EditableColumn',
-                                'attribute' => 'ID_THIETBI', 
-                                'header' => '&nbsp;',
-                                'width'=>'0px',
-                                'hidden' => true,
-                                'content' => function($data){
-                                    return '&nbsp;';
-                                },
-                                'editableOptions'=>['header'=>'Name', 'size'=>'sm'],
-                            ],
-                            [
-                                'class' => 'kartik\grid\EditableColumn',
-                                'attribute' => 'GHICHU', 
-                                'hAlign' => 'right', 
-                                'vAlign' => 'middle',
-                                'width' => '7%',
-                                'editableOptions' => [
-                                    'disabled' => $canReview == 1 ? false : true,
-                                ],
-                            ],
+                            'GHICHU',
                             [
                                 'attribute' => 'ID_NHANVIEN',
                                 'value' => 'nHANVIEN.TEN_NHANVIEN'
                             ],
-
-
                             [
-                                'class' => 'yii\grid\CheckboxColumn',
-                                'visible' => $canReview == 1 ? true : false,
-                                'checkboxOptions' =>function($model) {
-                                    return ['checked' => $model->TRANGTHAI == 'Hoàn thành' ? true : false ];
+                                'attribute' => 'xacnhan',
+                                'format' => 'raw',
+                                'visible' => $canReview,
+                                'value' => function ($model) {
+                                    if ($model->TRANGTHAI == 'Chờ xác nhận') {
+                                        return Html::a(
+                                            'Xác nhận', 
+                                            Url::to(['congviec/xacnhan', 'ID_DOTBD' => $model->ID_DOTBD, 'ID_THIETBI' => $model->ID_THIETBI, 'MA_NOIDUNG' => $model->MA_NOIDUNG]),
+                                            ['class'=>'btn btn-primary btn-flat']
+                                        ) ;
+                                    } elseif ($model->TRANGTHAI == 'Hoàn thành') {
+                                        return Html::a(
+                                            'Hủy xác nhận', 
+                                            Url::to(['congviec/huyxacnhan', 'ID_DOTBD' => $model->ID_DOTBD, 'ID_THIETBI' => $model->ID_THIETBI, 'MA_NOIDUNG' => $model->MA_NOIDUNG]),
+                                            ['class'=>'btn btn-primary btn-flat']
+                                        ) ;
+                                    } else {
+                                        return Html::button(
+                                            'Xác nhận', 
+                                            [
+                                                'class'=>'btn btn-primary btn-flat',
+                                                'disabled' => true,
+                                                'onclick' => 'alert("Công việc chưa hoàn thành. Không xác nhận được!")'
+                                            ]
+                                        ) ;
+                                    }
                                 }
                             ],
                         ],
                     ]); ?>
                 <?php ActiveForm::end(); ?>
+                
+                <div class="row">
+                    <?php foreach ($images as $image) {  ?>
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            <a href="<?= Yii::$app->homeUrl .'uploads/'.$image->ANH ?>" class="thumbnail">
+                                <img src="<?= Yii::$app->homeUrl .'uploads/'.$image->ANH ?>" class="img-responsive">
+                            </a>
+                            <p class="text-center"> <?= $image->nHANVIEN->TEN_NHANVIEN ?> - <?= $image->type == 1 ? 'Tổ trưởng' : 'Nhân viên' ?></p>
+                        </div>
+                    <?php } ?>
+                </div>
             </div>
         </div>
     </div>

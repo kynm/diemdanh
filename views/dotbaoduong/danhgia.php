@@ -10,7 +10,7 @@ use app\models\Noidungcongviec;
 /* @var $model app\models\Ketqua */
 
 $this->title = 'Đánh giá';
-$this->params['breadcrumbs'][] = ['label' => 'Các đợt bảo dưỡng', 'url' => ['danhsachkehoach']];
+$this->params['breadcrumbs'][] = ['label' => 'Các đợt bảo dưỡng', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="ketqua-create">
@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			    <p class="form-inline">
 			        <div class="form-group col-md-3 col-sm-6">
 			            <label>Trạm viễn thông</label>
-			            <input type="text" class="form-control" id="exp" disabled="true" value="<?= $dotbd->tRAMVT->MA_TRAM ; ?>">
+			            <input type="text" class="form-control" id="exp" disabled="true" value="<?= $dotbd->tRAMVT->TEN_TRAM ; ?>">
 			        </div>
 			        <div class="form-group col-md-3 col-sm-6">
 			            <label>Ngày bảo dưỡng</label>
@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			        </div>
 			        <div class="form-group col-md-3 col-sm-6">
 			            <label>Nhóm trưởng</label>
-			            <input type="text" class="form-control" id="exp" disabled="true" value="<?= $dotbd->tRUONGNHOM->TEN_NHANVIEN ; ?>">
+			            <input type="text" class="form-control" id="exp" disabled="true" value="<?= $dotbd->nHANVIEN->TEN_NHANVIEN ; ?>">
 			        </div>
 			        <div class="form-group col-md-3 col-sm-6">
 			            <label>Trạng thái</label>

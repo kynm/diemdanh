@@ -24,7 +24,7 @@ use app\models\Nhomtbi;
                     <?= $form->field($model, 'TEN_THIETBI')->textInput(['maxlength' => true]) ?>
                 </div>
                 <div class="col-sm-3">                
-                    <?= $form->field($model, 'ID_NHOMTB')->dropDownList(
+                    <?= $form->field($model, 'ID_NHOM')->dropDownList(
                         ArrayHelper::map(Nhomtbi::find()->all(), 'ID_NHOM', 'TEN_NHOM'),
                         [
                             'options' => [@$_GET['id'] => ['Selected'=>'selected']],

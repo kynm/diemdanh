@@ -36,13 +36,13 @@ class Noidungcongviec extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ID_DOTBD', 'ID_THIETBI', 'MA_NOIDUNG', 'ID_NHANVIEN'], 'required'],
+            [['ID_DOTBD', 'ID_THIETBI', 'MA_NOIDUNG'], 'required'],
             [['ID_DOTBD', 'ID_THIETBI', 'ID_NHANVIEN'], 'integer'],
             [['GHICHU'], 'string'],
             [['MA_NOIDUNG', 'TRANGTHAI', 'KETQUA'], 'string', 'max' => 32],
             [['ID_DOTBD', 'ID_THIETBI', 'MA_NOIDUNG', 'ID_NHANVIEN'], 'unique', 'targetAttribute' => ['ID_DOTBD', 'ID_THIETBI', 'MA_NOIDUNG', 'ID_NHANVIEN']],
             [['ID_DOTBD'], 'exist', 'skipOnError' => true, 'targetClass' => Dotbaoduong::className(), 'targetAttribute' => ['ID_DOTBD' => 'ID_DOTBD']],
-            [['MA_NOIDUNG'], 'exist', 'skipOnError' => true, 'targetClass' => Noidungbaotri::className(), 'targetAttribute' => ['MA_NOIDUNG' => 'MA_NOIDUNG']],
+            [['MA_NOIDUNG'], 'exist', 'skipOnError' => true, 'targetClass' => Noidungbaotrinhomtbi::className(), 'targetAttribute' => ['MA_NOIDUNG' => 'MA_NOIDUNG']],
             [['ID_NHANVIEN'], 'exist', 'skipOnError' => true, 'targetClass' => Nhanvien::className(), 'targetAttribute' => ['ID_NHANVIEN' => 'ID_NHANVIEN']],
             [['ID_THIETBI'], 'exist', 'skipOnError' => true, 'targetClass' => Thietbitram::className(), 'targetAttribute' => ['ID_THIETBI' => 'ID_THIETBI']],
         ];
@@ -61,6 +61,13 @@ class Noidungcongviec extends \yii\db\ActiveRecord
             'TRANGTHAI' => 'Trạng thái',
             'ID_NHANVIEN' => 'Nhân viên',
             'KETQUA' => 'Kết quả',
+            'NOIDUNG' => 'Nội dung',
+            'NGAY_BD' => 'Ngày bảo dưỡng',
+            // 'NGAY_KT' => 'Ngày kết thúc bảo dưỡng',
+            'ID_TRAM' => 'Trạm',
+            'ID_DAI' => 'Đài',
+            'ID_DONVI' => 'Đơn vị',
+            'xacnhan' => 'Xác nhận'
         ];
     }
 
@@ -77,7 +84,7 @@ class Noidungcongviec extends \yii\db\ActiveRecord
      */
     public function getMANOIDUNG()
     {
-        return $this->hasOne(Noidungbaotri::className(), ['MA_NOIDUNG' => 'MA_NOIDUNG']);
+        return $this->hasOne(Noidungbaotrinhomtbi::className(), ['MA_NOIDUNG' => 'MA_NOIDUNG']);
     }
 
     /**

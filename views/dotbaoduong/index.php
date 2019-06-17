@@ -3,44 +3,48 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use kartik\tabs\TabsX;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\DotbaoduongSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Các đợt bảo dưỡng';
+$this->title = 'Các đợt bảo dưỡng thiết bị';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="dotbaoduong-index">
+    <?php
+        $items = [
+            [
+                'label'=>'<i class="fa fa-bar-chart"></i> Trong kế hoạch',
+                'content'=>$this->render('_tab_plan', [
+                    'searchModel' => $searchModel,
+                    'planProvider' => $planProvider 
+                ]),
+                'active'=>true
+            ],
+            [
+                'label'=>'<i class="fa fa-cogs"></i> Đang thực hiện',
+                'content'=>$this->render('_tab_inProgress', [
+                    'searchModel' => $searchModel,
+                    'inprogressProvider' => $inprogressProvider 
+                ]),
+            ],
+            [
+                'label'=>'<i class="fa fa-pie-chart"></i> Hoàn thành',
+                'content'=>$this->render('_tab_finished', [
+                    'searchModel' => $searchModel,
+                    'finishedProvider' => $finishedProvider 
+                ]),
+            ],
+        ];
 
-    <div class="box box-primary">
-        <div class="box-body">
-            <p>
-                <?= Html::a('<i class="fa fa-plus"></i> Thêm đợt bảo dưỡng', ['create'], ['class' => 'btn btn-primary btn-flat']) ?>
-            </p>
-            <?php Pjax::begin(); ?>    <?= GridView::widget([
-                    'dataProvider' => $dataProvider,
-                    'filterModel' => $searchModel,
-                    'columns' => [
-                        ['class' => 'yii\grid\SerialColumn'],
-                        'MA_DOTBD',
-                        'NGAY_BD',
-                        [
-                            'attribute' => 'ID_TRAMVT',
-                            'value' => 'tRAMVT.MA_TRAM'
-                        ],
-                        [
-                            'attribute' => 'TRUONG_NHOM',
-                            'value' => 'tRUONGNHOM.TEN_NHANVIEN'
-                        ],
-                        'TRANGTHAI',
-
-                        [
-                            'class' => 'yii\grid\ActionColumn',
-                            'template' => Yii::$app->user->can('edit-dbd') ? '{view} {update} {delete}' : '{view}',
-                        ],
-                    ],
-                ]); ?>
-            <?php Pjax::end(); ?>
-        </div>
-    </div>
+        echo TabsX::widget([
+            'position'=>TabsX::POS_ABOVE,
+            'containerOptions' => [
+                'class' => 'nav-tabs-custom',
+            ],
+            'items'=>$items,
+            'encodeLabels'=>false
+        ]);
+    ?>       
 </div>

@@ -15,12 +15,12 @@ $this->params['breadcrumbs'][] = ['label' => 'Đơn vị', 'url' => ['donvi/inde
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="donvi-index">
+    <p>
+        <?= (Yii::$app->user->can('create-donvi')) ? Html::a('<i class="fa fa-plus"></i> Thêm đơn vị', ['create'], ['class' => 'btn btn-primary btn-flat']) : ''?>
+    </p>
+
     <div class="box box-primary">
         <div class="box-body">
-
-            <p>
-                <?= (Yii::$app->user->can('create-donvi')) ? Html::a('<i class="fa fa-plus"></i> Thêm đơn vị', ['create'], ['class' => 'btn btn-primary btn-flat']) : ''?>
-            </p>
             <?php Pjax::begin(); ?>    <?= GridView::widget([
                     'dataProvider' => $dataProvider,
                     'filterModel' => $searchModel,

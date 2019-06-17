@@ -25,22 +25,22 @@ $this->params['breadcrumbs'][] = $this->title;
             <p class="form-inline">
                 <div class="form-group col-md-4">
                     <label>Trạm viễn thông</label>
-                    <input type="text" class="form-control" disabled="true" value="<?= $model->tRAMVT->MA_TRAM ; ?>">
+                    <input type="text" class="form-control" disabled="true" value="<?= $model->tRAMVT->TEN_TRAM ; ?>">
                 </div>
                 <div class="form-group col-md-4">
                     <label>Ngày bảo dưỡng</label>
-                    <input type="text" class="form-control" disabled="true" value="<?= $model->NGAY_BD ; ?>">
+                    <input type="text" class="form-control" disabled="true" value="<?= date('d-m-Y', strtotime($model->NGAY_DUKIEN)) ; ?>">
                 </div>
                 <div class="form-group col-md-4">
                     <label>Nhóm trưởng</label>
-                    <input type="text" class="form-control" disabled="true" value="<?= $model->tRUONGNHOM->TEN_NHANVIEN ; ?>">
+                    <input type="text" class="form-control" disabled="true" value="<?= $model->nHANVIEN->TEN_NHANVIEN ; ?>">
                 </div>
             </p>
             <?php Pjax::begin(); ?>
             <div class="col-md-3">
                 <?php
                     $congviec = new Noidungcongviec();
-                    echo $form->field($congviec, 'ID_THIETBI')->dropDownList(ArrayHelper::map(Thietbitram::find()->where(['ID_TRAM' => $model->ID_TRAMVT ])->all(), 'ID_THIETBI', 'iDLOAITB.TEN_THIETBI'),
+                    echo $form->field($congviec, 'ID_THIETBI')->dropDownList(ArrayHelper::map(Thietbitram::find()->where(['ID_TRAM' => $model->ID_TRAM ])->all(), 'ID_THIETBI', 'iDLOAITB.TEN_THIETBI'),
                         [
                             'prompt' => 'Chọn thiết bị',
                             'onchange' => '
@@ -58,16 +58,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 
                 <div class="box box-warning">
                     <div class="box-header with-border">
-                        <strong>Nội dung khuyến nghị</strong>
+                        <strong>Thông tin</strong>
                     </div>
                     <div class="box-body">
-                        <div class="col-md-6 pull-right">
-                            Chu kỳ: 
-                            <strong><?= @$infoData['chuky'] ?></strong>
-                        </div>
-                        <div class="col-md-6">
-                            Lần bảo dưỡng: 
-                            <strong><?= @$infoData['LANBD'] ?></strong>
+                        <div class="col-md-12">
+                            Thiết bị sử dụng trong: 
+                            <strong><?= @$infoData['months'] ?></strong> tháng
                         </div>
                         <hr>
                         <?= GridView::widget([
@@ -110,6 +106,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                     [
                                         'attribute' => 'MA_NOIDUNG',
                                         'value' => 'mANOIDUNG.NOIDUNG',
+                                    ],
+                                    [
+                                        'attribute' => 'CHUKY',
+                                        'value' => function ($model) {
+                                            return $model->mANOIDUNG->CHUKY . ' tháng';
+                                        }
                                     ],
                                 ],
                             ]) ?>
@@ -177,7 +179,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                         'attribute' => 'MA_NOIDUNG',
                                         'value' => 'mANOIDUNG.NOIDUNG',
                                     ],
-                                    
+                                    [
+                                        'attribute' => 'CHUKY',
+                                        'value' => function ($model) {
+                                            return $model->mANOIDUNG->CHUKY . ' tháng';
+                                        }
+                                    ],
                                 ],
                             ]) ?>
                         </div>

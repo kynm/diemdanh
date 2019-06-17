@@ -83,7 +83,7 @@ class DonviController extends Controller
                 ]);
             }
         } else {
-            throw new ForbiddenHttpException;
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
         }        
     }
 
@@ -106,7 +106,7 @@ class DonviController extends Controller
                 ]);
             }
         } else {
-            throw new ForbiddenHttpException;
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
         } 
     }
 
@@ -124,7 +124,7 @@ class DonviController extends Controller
             
             return $this->redirect(['index']);
         } else {
-            throw new ForbiddenHttpException;
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
         } 
     }
 

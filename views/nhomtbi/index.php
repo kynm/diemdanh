@@ -12,7 +12,6 @@ use yii\widgets\ActiveForm;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Nhóm thiết bị';
-$this->params['breadcrumbs'][] = ['label' => 'Quản lý thiết bị', 'url' => ['nhomtbi/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="nhomtbi-index">

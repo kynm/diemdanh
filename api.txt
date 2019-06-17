@@ -1,0 +1,213 @@
+# Dang nhap:
+B1: Authorize
+## Request
+    http://localhost/apiv2/authorize 
+    POST params ["username", "password"]
+##Response
+    json: {
+    "status": 1,
+    "data": {
+        "authorization_code": "12e501f4f0940cf62d155c0814dd71cc",
+        "expires_at": 1527841368
+    }
+}
+B2: lay token
+##Request
+    http://localhost/apiv2/accesstoken
+    POST params ["authorization_code"]
+##Response
+    json: {
+    "status": 1,
+    "data": {
+        "access_token": "1865c45190377c58c380dd62dff74f83",
+        "expires_at": 1527927204
+    }
+}
+=> co access token <=> dang nhap thanh cong.
+
+||==============================================================||
+||==============================================================||
+||  AccessToken yeu cau phai duoc gui kem bat ky request nao    ||
+||  AceessToken co the dc gui theo 2 cach:                      ||
+||      - GET param: access-token hoac access_token             ||
+||      - HEADER: x-access-token hoac x-access_token            ||
+||                                                              ||
+||==============================================================||
+||==============================================================||
+
+
+
+=================
+# Dang xuat
+    http://localhost/apiv2/logout
+    POST method
+    header "x-access-token" 
+
+=================
+# Lay thong tin ca nhan
+##  Request
+    http://localhost/apiv2/me
+    GET method
+    params ["access_token"]
+##  Response
+    json: {
+    "status": 1,
+    "data": {
+        "id": 1,
+        "username": "admin",
+        "email": "admin@vnpt.vn",
+        "avatar": "dist/img/1_ava.jpg",
+        "status": 10,
+        "created_at": 1506495817,
+        "updated_at": 1523868939
+    }
+}
+
+=================
+# Lay danh sach dai
+##  Request
+    http://localhost/apiv2/daivt/index
+    GET method
+    params ["access_token"]
+    
+    //tu dong lay theo don vi va chuc vu cua nguoi dung
+    
+=================
+# Lay danh sach tram
+##  Request
+    http://localhost/apiv2/tramvt/index
+    GET method
+    params ["access_token", "daivt"]
+    
+    //daivt = ID_DAI, neu dai vien thong trong thi liet ke toan bo.
+
+=================
+# Lay danh sach dot bao duong ma nhan vien lam to truong
+##  Request
+    http://localhost/apiv2/dotbaoduong/danhsach
+    GET method
+    params ["access_token", "daivt", "tramvt", "trangthai"]
+
+=================
+# Lay danh sach dot bao duong ma nhan vien tham gia cong viec
+##  Request
+    http://localhost/apiv2/dotbaoduong/danhsachcanhan
+    GET method
+    params ["access_token", "daivt", "tramvt", "trangthai"]
+
+=================
+# Lay danh sach cong viec theo dotbaoduong
+##  Request
+    http://localhost/apiv2/dotbaoduong/xem
+    GET method
+    params ["id", "canhan", "access_token"]
+    
+    //id = ID_DOTBD 
+    //canhan = 1: xem cong viec cua ca nhan
+    //to truong se xem duoc tat ca cong viec, nhan vien chi xem cong viec ca nhan
+
+=================
+# Lay danh sach lich su dot bao duong
+##  Request
+    http://localhost/apiv2/dotbaoduong/lichsu
+    GET method
+    params ["access_token", "daivt", "tramvt", "start", "end"]
+
+=================
+# Danh sach cong viec theo dotbaoduong da ket thuc (Xem lichsu dot bao duong)
+##  Request
+    http://localhost/apiv2/dotbaoduong/xemlichsu
+    GET method
+    params ["id", "access_token"]
+    
+    //id = ID_DOTBD 
+    //to truong se xem duoc tat ca cong viec, nhan vien chi xem cong viec ca nhan
+
+=================
+# Ra lenh thuc hien dot bao duong
+## Request
+    http://localhost/apiv2/dotbaoduong/thuchien
+    param ["access_token", "id"]
+    GET method
+    id = ID_DOTBD
+
+=================
+# Ra lenh hoan thanh dot bao duong
+## Request
+    http://localhost/apiv2/dotbaoduong/hoanthanh
+    param ["access_token", "id"]
+    GET method
+    id = ID_DOTBD
+
+=================
+# Luu cong viec 
+## Request
+    http://localhost/apiv2/congviec/luu
+    GET param ["access_token"]
+    POST method
+    params ["ID_DOTBD", "ID_THIETBI", "MA_NOIDUNG", "ID_NHANVIEN", "GHICHU = ''"]
+    
+    //GHICHU co the co hoac khong
+
+=================
+# Hoan thanh cong viec (Nhan vien hoan thanh tai muc cong viec ca nhan)
+## Request
+    http://localhost/apiv2/congviec/hoanthanh
+    GET param ["access_token"]
+    POST method
+    params ["ID_DOTBD", "ID_THIETBI", "MA_NOIDUNG", "ID_NHANVIEN"]
+    
+    // primary key cua cong viec
+    //GHICHU co the co hoac khong
+
+=================
+# Xac nhan cong viec (To truong xac nhan tai Dotbaoduong Dangthuchien)
+## Request
+    http://localhost/apiv2/congviec/xacnhan
+    GET param ["access_token"]
+    POST method
+    POST params ["ID_DOTBD", "ID_THIETBI", "MA_NOIDUNG", "ID_NHANVIEN", "KETQUA"]
+    //KETQUA = 0: Chua dat
+    //KETQUA = 1: Dat
+
+=================
+# Xac nhan toan bo cong viec (To truong xac nhan tai Dotbaoduong Dangthuchien)
+## Request
+    http://localhost/apiv2/congviec/xacnhantatca
+    GET param ["access_token"]
+    POST method
+    POST params ["ID_DOTBD", "KETQUA"]
+    //KETQUA = 0: Chua dat
+    //KETQUA = 1: Dat
+
+=================
+# Upload File anh 
+## Request
+    http://localhost/apiv2/congviec/upload
+    param ["access_token"]
+    POST method
+    POST body ["ID_DOTBD", "STT", "type", file ]
+    //type = 0: Ca nhan
+    //type = 1: To truong
+## Response
+    Return stt: success / failed
+
+=================
+# Get anh 
+## Request
+    http://localhost/apiv2/dotbaoduong/get-images
+    GET param ["access_token", "id", "type"]
+    
+    //type == 0 => Get anh nhan vien
+    //type == 1 => Get anh to truong
+    //type == 2 => Get lich su (anh 1 nhan vien + to truong)
+    //type == '' (bo qua) => Get toan bo anh
+    //Link anh: "http://localhost/vnpt_mds/uploads/" + ten_anh
+
+=================
+# Get nhan vien 
+## Request
+    http://localhost/apiv2/dotbaoduong/get-nhanvien
+    GET param ["access_token", "id"]
+    
+    //Lay danh sach nhan vien co cong viec trong dot bao duong

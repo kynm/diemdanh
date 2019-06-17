@@ -11,11 +11,11 @@ $this->title = 'Users';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">
+    <p>
+        <?= Html::a('<i class="fa fa-plus"></i> Create User', ['create'], ['class' => 'btn btn-primary btn-flat']) ?>
+    </p>
     <div class="box box-primary">
         <div class="box-body">
-            <p>
-                <?= Html::a('<i class="fa fa-plus"></i> Create User', ['create'], ['class' => 'btn btn-primary btn-flat']) ?>
-            </p>
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,

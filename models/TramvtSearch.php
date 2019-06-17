@@ -19,7 +19,7 @@ class TramvtSearch extends Tramvt
     {
         return [
             [['ID_TRAM'], 'integer'],
-            [['MA_TRAM', 'DIADIEM', 'ID_DAI', 'ID_NHANVIEN'], 'safe'],
+            [['MA_TRAM', 'TEN_TRAM', 'DIADIEM', 'ID_DAI', 'ID_NHANVIEN'], 'safe'],
         ];
     }
 
@@ -44,6 +44,16 @@ class TramvtSearch extends Tramvt
         $query = Tramvt::find();
 
         // add conditions that should always apply here
+        if (Yii::$app->user->identity->nhanvien->chucvu->cap == 2) {
+            $query->andWhere(['daivt.ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI]);
+        }
+        if (Yii::$app->user->identity->nhanvien->chucvu->cap == 3) {
+            $query->andWhere(['tramvt.ID_DAI' => Yii::$app->user->identity->nhanvien->ID_DAI]);
+        }
+        if (Yii::$app->user->identity->nhanvien->chucvu->cap >= 4) {
+            $query->andWhere(['tramvt.ID_NHANVIEN' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN]);
+        }
+
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -67,6 +77,7 @@ class TramvtSearch extends Tramvt
 
         $query->andFilterWhere(['like', 'MA_TRAM', $this->MA_TRAM])
             ->andFilterWhere(['like', 'daivt.TEN_DAIVT', $this->ID_DAI])
+            ->andFilterWhere(['like', 'TEN_TRAM', $this->TEN_TRAM])
             ->andFilterWhere(['like', 'nhanvien.TEN_NHANVIEN', $this->ID_NHANVIEN])
             ->andFilterWhere(['like', 'DIADIEM', $this->DIADIEM]);
 

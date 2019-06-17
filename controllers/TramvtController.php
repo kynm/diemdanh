@@ -72,7 +72,7 @@ class TramvtController extends Controller
         if (Yii::$app->request->get()) {
             switch (Yii::$app->request->get('action')) {
                 case '1':
-                    return $this->redirect(['thietbitram/create', 'id' => $id]);
+                    return $this->redirect(['thietbitram/create', 'id_tram' => $id]);
                     
                 case '2':
                     if (Yii::$app->request->get('selection')) {
@@ -139,7 +139,7 @@ class TramvtController extends Controller
                 ]);
             }
         } else {
-            throw new ForbiddenHttpException;            
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');            
         }
     }
 
@@ -153,16 +153,25 @@ class TramvtController extends Controller
     {
         if (Yii::$app->user->can('edit-tramvt')) {
             $model = $this->findModel($id);
-
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->ID_TRAM]);
+            $nhanvien = Nhanvien::findOne($model->ID_NHANVIEN);
+            
+            if ($model->load(Yii::$app->request->post())) {
+                $model->save();
+                $log = new ActivitiesLog;
+                $log->activity_type = 'unit-update';
+                $log->description = Yii::$app->user->identity->nhanvien->TEN_NHANVIEN." đã cập nhật nhà trạm ". $model->TEN_TRAM;
+                $log->user_id = Yii::$app->user->identity->id;
+                $log->create_at = time();
+                $log->save();
+                return $this->redirect(['index']);
             } else {
                 return $this->render('update', [
                     'model' => $model,
+                    'nhanvien' => $nhanvien
                 ]);
             }
         } else {
-            throw new ForbiddenHttpException;            
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');            
         }
     }
 
@@ -221,7 +230,7 @@ class TramvtController extends Controller
                 'selectedProvider' => $selectedProvider,
             ]);
         } else {
-            throw new ForbiddenHttpException;            
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');            
         }
     }
 
@@ -262,37 +271,57 @@ class TramvtController extends Controller
             
             return $this->redirect(['index']);
         } else {
-            throw new ForbiddenHttpException;            
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');            
         }
     }
 
-
-    public function actionImportExcel()
+    public function actionSearch($donvi, $dai)
     {
-        $inputFile = 'uploads/nhatram.xls';
-        try {
-            $inputFileType = \PHPExcel_IOFactory::identify($inputFile);
-            $objReader = \PHPExcel_IOFactory::createReader($inputFileType);
-            $objPHPExcel = $objReader->load($inputFile);
-        } catch(Exception $e) {
-            die("error!!! ". $e);
+        if ($donvi == '') {
+            $danhsachtram = Tramvt::find()->all();
+            foreach($danhsachtram as $each) {
+                echo "<option value='".$each->ID_TRAM."'>".$each->TEN_TRAM."</option>";
+            }
+            return;
         }
-        $sheetTKPN = $objPHPExcel->getSheet(0);
-        $highestRow = $sheetTKPN->getHighestRow();
-        $highestColumn = $sheetTKPN->getHighestColumn();
-        
-        for ($row=6; $row < $highestRow ; $row++) { 
-            $rowData = $sheetTKPN->rangeToArray('A'.$row.':'.$highestColumn.$row,NULL,TRUE,FALSE);
-            if (Tramvt::find()->where(['MA_TRAM' => $rowData[0][0]])->exists()) continue;
-            $tramvt = new Tramvt;
-            $tramvt->MA_TRAM = $rowData[0][0];
-            $tramvt->DIADIEM = $rowData[0][1];
-            $tramvt->ID_DAI = 1;
-            $nhanvien = Nhanvien::find()->where(['like', 'TEN_NHANVIEN', $rowData[0][2]])->one();
-            if (!$nhanvien) continue;
-            $tramvt->ID_NHANVIEN = $nhanvien->ID_NHANVIEN;
-            $tramvt->save(false);
+        if ($dai == "") {
+            $danhsachtram = Tramvt::find()->joinWith('iDDAI')->where(['daivt.ID_DONVI' => $donvi])->all();
+            foreach($danhsachtram as $each) {
+                echo "<option value='".$each->ID_TRAM."'>".$each->TEN_TRAM."</option>";
+            }
+        } else {
+            $danhsachtram = Tramvt::find()->where(['ID_DAI' => $dai])->all();
+            foreach($danhsachtram as $each) {
+                echo "<option value='".$each->ID_TRAM."'>".$each->TEN_TRAM."</option>";
+            }
         }
+        return;
+    }
+
+    public function actionImport()
+    {
+        ini_set('max_execution_time', 0);
+        // $filename = 'NhaTramMoi.csv';
+        $handle = fopen($filename, "r");
+        $list = [];
+        while (($fileop = fgetcsv($handle, 5000, ",")) !== false) 
+        {
+            // 0   1   2    3        4,  5,   6    7
+            //Mã,Tên,Đơn vị,Đài,Địa chỉ,Long,Lat,Loại trạm
+            $model = new Tramvt;
+            $model->MA_TRAM = $fileop[0];
+            $model->TEN_TRAM = $fileop[1];
+            $model->ID_DAI = $fileop[3];
+            $model->DIADIEM = $fileop[4];
+            $model->KINH_DO = $fileop[5];
+            $model->VI_DO = $fileop[6];
+            $model->LOAITRAM = $fileop[7];
+            $model->ID_NHANVIEN = 0;
+
+            $model->save(false);
+        }
+        echo "Success! \n";
+        print_r($list);
     }
 
     /**

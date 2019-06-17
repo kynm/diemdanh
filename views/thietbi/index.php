@@ -13,12 +13,12 @@ $this->params['breadcrumbs'][] = ['label' => 'Quản lý thiết bị', 'url' =>
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="thietbi-index">
+    <p>
+        <?= Html::a('<i class="fa fa-plus"></i> Thêm thiết bị', ['create'], ['class' => 'btn btn-primary btn-flat']) ?>
+    </p>
     <div class="box box-primary">
         <div class="box-body">
-            <p>
-                <?= Html::a('<i class="fa fa-plus"></i> Thêm thiết bị', ['create'], ['class' => 'btn btn-primary btn-flat']) ?>
-            </p>
-<?= GridView::widget([
+            <?= GridView::widget([
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
                 'columns' => [
@@ -26,8 +26,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     'MA_THIETBI',
                     'TEN_THIETBI',
                     [
-                        'attribute' => 'ID_NHOMTB',
-                        'value' => 'iDNHOMTB.TEN_NHOM'
+                        'attribute' => 'ID_NHOM',
+                        'value' => 'iDNHOM.TEN_NHOM'
                     ],
                     'HANGSX',
 

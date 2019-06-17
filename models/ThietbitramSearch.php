@@ -18,7 +18,7 @@ class ThietbitramSearch extends Thietbitram
     public function rules()
     {
         return [
-            [['ID_THIETBI', 'LANBD'], 'integer'],
+            [['ID_THIETBI'], 'integer'],
             [['SERIAL_MAC', 'NGAYSX', 'NGAYSD', 'LANBAODUONGTRUOC', 'LANBAODUONGTIEP', 'ID_LOAITB', 'ID_TRAM'], 'safe'],
         ];
     }
@@ -64,7 +64,6 @@ class ThietbitramSearch extends Thietbitram
         $query->andFilterWhere([
             'NGAYSX' => $this->NGAYSX,
             'NGAYSD' => $this->NGAYSD,
-            'LANBD' => $this->LANBD,
             'LANBAODUONGTRUOC' => $this->LANBAODUONGTRUOC,
             'LANBAODUONGTIEP' => $this->LANBAODUONGTIEP,
         ]);
@@ -109,7 +108,6 @@ class ThietbitramSearch extends Thietbitram
         $query->andFilterWhere([
             'NGAYSX' => $this->NGAYSX,
             'NGAYSD' => $this->NGAYSD,
-            'LANBD' => $this->LANBD,
             'LANBAODUONGTRUOC' => $this->LANBAODUONGTRUOC,
             'LANBAODUONGTIEP' => $this->LANBAODUONGTIEP,
         ]);

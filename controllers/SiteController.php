@@ -13,6 +13,16 @@ use app\models\User;
 use app\models\AuthAssignment;
 use app\models\AuthItem;
 use app\models\AuthItemChild;
+use app\models\Baoduongtong;
+use app\models\Donvi;
+use app\models\Nhanvien;
+use app\models\Dotbaoduong;
+use app\models\DotbaoduongSearch;
+use app\models\Nhomtbi;
+use app\models\Thietbi;
+use app\models\Thietbitram;
+use app\models\Tramvt;
+use moonland\phpexcel\Excel;
 
 class SiteController extends Controller
 {
@@ -67,8 +77,42 @@ class SiteController extends Controller
     {
         if (Yii::$app->user->isGuest) {
             return $this->redirect(['login']);
+        } else {
+            $month = sprintf('%02d', date('m', strtotime('first day of this month')));
+            $exists = Baoduongtong::find()->where(['MA_BDT' => 'KTNT_T'.$month.'-2019'])->exists();
+            if ($exists) {
+                $bdt = Baoduongtong::find()->where(['MA_BDT' => 'KTNT_T'.$month.'-2019'])->one();
+            } else {
+                $month = sprintf('%02d', date('m', strtotime('first day of last month')));
+                $bdt = Baoduongtong::find()->where(['MA_BDT' => 'KTNT_T'.$month.'-2019'])->one();
+            }
+            
+            $searchModel = new DotbaoduongSearch();
+            $dataProvider = $searchModel->searchBaocaoktnt($bdt->ID_BDT, Yii::$app->request->queryParams);
+            for ($i=4; $i<=7 ; $i++) {
+                $each = [];
+                $ttvt = Donvi::findOne($i);
+                $each['name'] = $ttvt->TEN_DONVI;
+                $each['id'] = $i;
+                $each['labels'] = ['Kế hoạch', 'Đang thực hiện', 'Chưa thực hiện', 'Chưa hoàn thành', 'Kết thúc'];
+                $each['dataset'][] = round(100 * Dotbaoduong::find()->where(['ID_BDT' => $bdt->ID_BDT, 'TRANGTHAI' => 'kehoach'])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count() / Dotbaoduong::find()->where(['ID_BDT' => $bdt->ID_BDT])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count(), 2);
+                $each['dataset'][] = round(100 * Dotbaoduong::find()->where(['ID_BDT' => $bdt->ID_BDT, 'TRANGTHAI' => 'dangthuchien'])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count() / Dotbaoduong::find()->where(['ID_BDT' => $bdt->ID_BDT])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count(), 2);
+                $each['dataset'][] = round(100 * Dotbaoduong::find()->where(['ID_BDT' => $bdt->ID_BDT, 'TRANGTHAI' => 'chuathuchien'])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count() / Dotbaoduong::find()->where(['ID_BDT' => $bdt->ID_BDT])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count(), 2);
+                $each['dataset'][] = round(100 * Dotbaoduong::find()->where(['ID_BDT' => $bdt->ID_BDT, 'TRANGTHAI' => 'chuahoanthanh'])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count() / Dotbaoduong::find()->where(['ID_BDT' => $bdt->ID_BDT])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count(), 2);
+                $each['dataset'][] = round(100 * Dotbaoduong::find()->where(['ID_BDT' => $bdt->ID_BDT, 'TRANGTHAI' => 'ketthuc'])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count() / Dotbaoduong::find()->where(['ID_BDT' => $bdt->ID_BDT])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count(), 2);
+                $each['tyle'] = Dotbaoduong::find()->where(['ID_BDT' => $bdt->ID_BDT, 'TRANGTHAI' => 'ketthuc'])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count() ."/". Dotbaoduong::find()->where(['ID_BDT' => $bdt->ID_BDT])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count();
+                $data[] = $each;
+                // print_r($each); echo "<hr>";
+            }
+            // exit;
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'data' => $data,
+                'bdt' => $bdt
+            ]); 
         }
-        return $this->render('index');
+        // return $this->render('index');
     }
 
     public function actionAssignRule()
@@ -158,4 +202,53 @@ class SiteController extends Controller
         return $this->render('about');
     }
 
+    public function actionImport()
+    {
+        ini_set('max_execution_time', 0);
+        $file = 'data/ImportThietbi.xlsx';
+        $data = Excel::import($file);
+        $count = 1;
+        $imported = 0;
+        foreach ($data as $record) {
+            $count++;
+            if ( Nhomtbi::find()->where(['MA_NHOM' => $record['MA_NHOM']])->exists() ) {
+                $nhomtbi = Nhomtbi::find()->where(['MA_NHOM' => $record['MA_NHOM']])->one();
+            } else {
+                $nhomtbi = new Nhomtbi;
+                $nhomtbi->MA_NHOM = $record['MA_NHOM'];
+                $nhomtbi->TEN_NHOM = $record['TEN_NHOM'];
+                $nhomtbi->save(false);
+            }
+            if ( Thietbi::find()->where(['MA_THIETBI' => $record['MA_THIETBI']])->exists() ) {
+                $thietbi = Thietbi::find()->where(['MA_THIETBI' => $record['MA_THIETBI']])->one();
+            } else {
+                $thietbi = new Thietbi;
+                $thietbi->MA_THIETBI = $record['MA_THIETBI'];
+                $thietbi->TEN_THIETBI = $record['TEN_THIETBI'];
+                $thietbi->ID_NHOM = $nhomtbi->ID_NHOM;
+                $thietbi->HANGSX = $record['HANGSX'];
+                $thietbi->THONGSOKT = $record['THONGSOKT'];
+                $thietbi->PHUKIEN = $record['PHUKIEN'];
+                $thietbi->save(false);
+            }
+            if (!Tramvt::find()->where(['MA_TRAM' => $record['MA_TRAM']])->exists()) {
+                echo "Mã trạm tại dòng $count không đúng. Yêu cầu xem lại!<br>";
+                continue;
+            } else {
+                $tram = Tramvt::find()->where(['MA_TRAM' => $record['MA_TRAM']])->one();
+            }
+            if ( Thietbitram::find()->where(['SERIAL_MAC' => $record['SERIAL_MAC']])->exists() ) {
+                echo "Thiết bị tại dòng $count bị trùng serial / mac.<br>";
+                continue;
+            } else {
+                $thietbitram = new Thietbitram;
+                $thietbitram->ID_LOAITB = $thietbi->ID_THIETBI;
+                $thietbitram->ID_TRAM = $record['TEN_THIETBI'];
+                $thietbitram->SERIAL_MAC = $record['SERIAL_MAC'];
+                $thietbitram->NGAYSX = $record['NGAYSX'];
+                $thietbitram->NGAYSD = $record['NGAYSD'];
+                $thietbitram->save(false);
+            }
+        }
+    }
 }

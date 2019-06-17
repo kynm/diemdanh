@@ -9,7 +9,6 @@ use kartik\form\ActiveForm;
 use app\models\Thietbitram;
 use app\models\Dotbaoduong;
 use app\models\Noidungcongviec;
-use app\models\Noidungbaotri;
 use app\models\Nhanvien;
 use yii\web\View;
 use yii\grid\CheckboxColumn;
@@ -19,47 +18,33 @@ use kartik\select2\Select2;
 /* @var $model app\models\Dotbaoduong */
 
 $this->title = 'Đợt '.$model->MA_DOTBD;
-$this->params['breadcrumbs'][] = ['label' => 'Các đợt bảo dưỡng', 'url' => ['danhsachkehoach']];
-$this->params['breadcrumbs'][] = ['label' => 'Kế hoạch', 'url' => ['danhsachkehoach']];
+$this->params['breadcrumbs'][] = ['label' => 'Các đợt bảo dưỡng', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="dotbaoduong-view">
-
     <div class="box box-primary">
         <div class="box-body">
-            <?php
-                $form = ActiveForm::begin();
-                if (Yii::$app->user->identity->nhanvien->ID_NHANVIEN == $model->TRUONG_NHOM) {
-                    echo 
-                        Html::a(
-                            '<i class="glyphicon glyphicon-wrench"></i> Thực hiện bảo dưỡng', 
-                            ['thuchien', 'id' => $model->ID_DOTBD], 
-                            [
-                                'class'=>'btn btn-primary btn-flat',
-                                'data' => [
-                                    'confirm' => 'Bạn muốn thực hiện đợt bảo dưỡng?',
-                                    'method' => 'post',
-                                ],
-                            ]
-                        );
-                } 
-            ?>
+            <?= ($model->ID_NHANVIEN === Yii::$app->user->identity->nhanvien->ID_NHANVIEN) ? Html::a(
+                    '<i class="glyphicon glyphicon-log-in"></i> Thực hiện bảo dưỡng',
+                    Url::to(['dotbaoduong/thuchien', 'id' => $model->ID_DOTBD]),
+                    ['class'=>'btn btn-primary btn-flat']
+                ) : '' ?>
             <p class="form-inline">
                 <div class="form-group col-md-3">
                     <label>Trạm viễn thông</label>
-                    <input type="text" class="form-control" disabled="true" value="<?= $model->tRAMVT->MA_TRAM ; ?>">
+                    <input type="text" class="form-control" disabled="true" value="<?= $model->tRAMVT->TEN_TRAM ; ?>">
                 </div>
                 <div class="form-group col-md-3">
                     <label>Ngày bảo dưỡng</label>
-                    <input type="text" class="form-control" disabled="true" value="<?= $model->NGAY_BD ; ?>">
+                    <input type="text" class="form-control" disabled="true" value="<?= $model->NGAY_DUKIEN ; ?>">
                 </div>
                 <div class="form-group col-md-3">
                     <label>Nhóm trưởng</label>
-                    <input type="text" class="form-control" disabled="true" value="<?= $model->tRUONGNHOM->TEN_NHANVIEN ; ?>">
+                    <input type="text" class="form-control" disabled="true" value="<?= $model->nHANVIEN->TEN_NHANVIEN ; ?>">
                 </div>
                 <div class="form-group col-md-3">
                     <label>Trạng thái</label>
-                    <input type="text" class="form-control" disabled="true" value="<?= $model->TRANGTHAI ; ?>">
+                    <input type="text" class="form-control" disabled="true" value="Kế hoạch">
                 </div>
             </p>
             
@@ -67,6 +52,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 echo GridView::widget([
                     'dataProvider' => $dataProvider,
                     'filterModel' => $searchModel,
+                    'rowOptions' => function ($model) {
+                        if ($model->TRANGTHAI == 'Chờ xác nhận') {
+                            return ['class' => 'warning'];
+                        } elseif ($model->TRANGTHAI == 'Hoàn thành') {
+                            return ['class' => 'success'];
+                        } else {
+                            return ['class' => 'danger'];
+                        }
+                    },
                     'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
 
@@ -78,6 +72,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             'attribute' => 'MA_NOIDUNG',
                             'value' => 'mANOIDUNG.NOIDUNG'
                         ],
+                        'TRANGTHAI',
+                        'GHICHU',
                         [
                             'attribute' => 'ID_NHANVIEN',
                             'value' => 'nHANVIEN.TEN_NHANVIEN'
@@ -106,8 +102,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                     ],
                 ]);
-
-                ActiveForm::end(); 
             ?>
         </div>
     </div>

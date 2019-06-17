@@ -19,7 +19,7 @@ class ThietbiSearch extends Thietbi
     {
         return [
             [['ID_THIETBI'], 'integer'],
-            [['MA_THIETBI', 'TEN_THIETBI', 'HANGSX', 'THONGSOKT', 'PHUKIEN', 'ID_NHOMTB'], 'safe'],
+            [['MA_THIETBI', 'TEN_THIETBI', 'HANGSX', 'THONGSOKT', 'PHUKIEN', 'ID_NHOM'], 'safe'],
         ];
     }
 
@@ -57,7 +57,7 @@ class ThietbiSearch extends Thietbi
             return $dataProvider;
         }
 
-        $query->joinWith('iDNHOMTB');
+        $query->joinWith('iDNHOM');
 
         // grid filtering conditions
         $query->andFilterWhere([
@@ -67,7 +67,7 @@ class ThietbiSearch extends Thietbi
         $query->andFilterWhere(['like', 'MA_THIETBI', $this->MA_THIETBI])
             ->andFilterWhere(['like', 'TEN_THIETBI', $this->TEN_THIETBI])
             ->andFilterWhere(['like', 'HANGSX', $this->HANGSX])
-            ->andFilterWhere(['like', 'nhomtbi.TEN_NHOM', $this->ID_NHOMTB])
+            ->andFilterWhere(['like', 'nhomtbi.TEN_NHOM', $this->ID_NHOM])
             ->andFilterWhere(['like', 'THONGSOKT', $this->THONGSOKT])
             ->andFilterWhere(['like', 'PHUKIEN', $this->PHUKIEN]);
 
@@ -83,7 +83,7 @@ class ThietbiSearch extends Thietbi
      */
     public function searchNhom($params)
     {
-        $query = Thietbi::find()->where(['ID_NHOMTB' => $params['id']]);
+        $query = Thietbi::find()->where(['thietbi.ID_NHOM' => $params['id']]);
 
         // add conditions that should always apply here
 
@@ -99,7 +99,7 @@ class ThietbiSearch extends Thietbi
             return $dataProvider;
         }
 
-        $query->joinWith('iDNHOMTB');
+        $query->joinWith('iDNHOM');
 
         // grid filtering conditions
         $query->andFilterWhere([
@@ -109,7 +109,7 @@ class ThietbiSearch extends Thietbi
         $query->andFilterWhere(['like', 'MA_THIETBI', $this->MA_THIETBI])
             ->andFilterWhere(['like', 'TEN_THIETBI', $this->TEN_THIETBI])
             ->andFilterWhere(['like', 'HANGSX', $this->HANGSX])
-            ->andFilterWhere(['like', 'nhomtbi.TEN_NHOM', $this->ID_NHOMTB])
+            ->andFilterWhere(['like', 'nhomtbi.TEN_NHOM', $this->ID_NHOM])
             ->andFilterWhere(['like', 'THONGSOKT', $this->THONGSOKT])
             ->andFilterWhere(['like', 'PHUKIEN', $this->PHUKIEN]);
 

@@ -7,7 +7,6 @@ use yii\helpers\Html;
 /* @var $model app\models\Nhomtbi */
 
 $this->title = 'Thêm nhóm thiết bị';
-$this->params['breadcrumbs'][] = ['label' => 'Quản lý thiết bị', 'url' => ['nhomtbi/index']];
 $this->params['breadcrumbs'][] = ['label' => 'Nhóm thiết bị', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
