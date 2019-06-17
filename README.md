@@ -1,12 +1,16 @@
+CONFIGURATION
+-------------
+
 ### Clone this repository
 
 ```bash
 git clone https://github.com/batuoc263/baotrinhatram
 ```
 
-
-CONFIGURATION
--------------
+### Make directory 
+```mkdir uploads```
+or
+```New>New Folder>uploads```
 
 ### Database
 
