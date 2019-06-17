@@ -4,7 +4,7 @@ CONFIGURATION
 ### Clone this repository
 
 ```bash
-git clone https://github.com/batuoc263/baotrinhatram
+git clone https://github.com/batuoc263/vnpt_mds
 ```
 
 ### Make directory 
