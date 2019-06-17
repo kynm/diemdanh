@@ -33,6 +33,3 @@ temp.php
 # uploads dir
 /uploads/*
 vendor/kartik-v/yii2-builder
-
-# data dir
-/data/*
