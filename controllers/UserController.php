@@ -230,6 +230,20 @@ class UserController extends Controller
         ]);                
     }
 
+    public function actionTest($value='')
+    {
+        if ($value == 1) {
+            $command= Yii::$app->db_sms->createCommand(
+                "INSERT INTO SMS_SEND 
+                    (ALARMID,TIMECREATE,SMSTYPE,SMSMOBILE,CONTENT,SENDED,USERNAME)
+                VALUES (911911911,sysdate,'SMARTBASE','0888011544','Test SMS',0,'SMAPID')");        
+            echo "Da test!";
+        } else {
+            echo "Khong thuc hien!";
+        }
+        exit;
+    }
+
     /**
      * Finds the User model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

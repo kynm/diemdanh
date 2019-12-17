@@ -118,4 +118,23 @@ class Dotbaoduong extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Baoduongtong::className(), ['ID_BDT' => 'ID_BDT']);
     }
+
+        /**
+     * action tao dot ktvsnt
+     */
+    public function taobaoduong($id_nhom, $id_profile)
+    {
+        $listThietbi = Thietbitram::find()->joinWith('iDLOAITB')->where(['thietbi.ID_NHOM' => $id_nhom, 'ID_TRAM' => $this->ID_TRAM])->all();
+        $listNoidungbaotri = ProfileBaoduongNoidung::findAll(['ID_PROFILE' => $id_profile]);
+        foreach ($listThietbi as $thietbi) {
+            foreach ($listNoidungbaotri as $noidung) {
+                $congviec = new Noidungcongviec;
+                $congviec->ID_DOTBD = $this->ID_DOTBD;
+                $congviec->ID_THIETBI = $thietbi->ID_THIETBI;
+                $congviec->MA_NOIDUNG = $noidung->MA_NOIDUNG;
+                $congviec->ID_NHANVIEN = 0;
+                $congviec->save();
+            }
+        }
+    }
 }

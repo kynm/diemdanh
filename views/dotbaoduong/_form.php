@@ -4,12 +4,8 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
 use app\models\Tramvt;
-use app\models\Nhanvien;
 use kartik\select2\Select2;
 use kartik\date\DatePicker;
-use yii\helpers\Url;
-use yii\widgets\Pjax;
-use kartik\depdrop\DepDrop;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Dotbaoduong */

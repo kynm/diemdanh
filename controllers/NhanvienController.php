@@ -125,6 +125,21 @@ class NhanvienController extends Controller
         
     }
 
+    public function actionGenerateUser()
+    {
+        $models = Nhanvien::find()->all();
+        foreach ($models as $model) {
+            $user = new User;
+            $user->username = $model->USER_NAME;
+            $user->email = $model->USER_NAME."@vnpt.vn";
+            $user->setPassword('Vnpt@123');
+            $user->generateAuthKey();
+            $user->status = 10;
+            $user->created_at = time();
+            $user->save(false);
+        }
+    }
+
     /**
      * Updates an existing Nhanvien model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -146,6 +161,12 @@ class NhanvienController extends Controller
                 if ($data['User']['password']) {
                     $user->setPassword($data['User']['password']);
                     $user->save(false);
+                }
+                if ($model->ID_DONVI == 6) {
+                    $assign = new AuthAssignment;
+                    $assign->user_id = $model->user->id;
+                    $assign->item_name = '-dotbaoduong';
+                    $assign->save();
                 }
                 return $this->redirect(['view', 'id' => $model->ID_NHANVIEN]);
             } else {
@@ -258,10 +279,10 @@ class NhanvienController extends Controller
         ini_set('max_execution_time', 0);
         $list = Nhanvien::find()->all();
         foreach ($list as $nhanvien) {
-            if ($nhanvien->CHUC_VU == 3) {
+            if ($nhanvien->ID_DONVI == 6) {
                 $assign = new AuthAssignment;
                 $assign->user_id = $nhanvien->user->id;
-                $assign->item_name = 'lvl2makecampaign';
+                $assign->item_name = '-dotbaoduong';
                 $assign->save();
             }
         }

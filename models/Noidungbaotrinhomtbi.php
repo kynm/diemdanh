@@ -13,31 +13,37 @@ use Yii;
  * @property int $CHUKY
  * @property int $QLTRAM
  * @property string $YEUCAUNHAP
+ * @property int $IS_PARENT
+ * @property string $ID_PARENT
+ * @property int $IMAGES
+ * @property string $SAMPLE_RESULT
  *
- * @property Nhomtbi $nHOM
+ * @property ProfileBaoduongNoidung[] $profileBaoduongNoidungs
+ * @property ProfileBaoduong[] $pROFILEs
  */
 class Noidungbaotrinhomtbi extends \yii\db\ActiveRecord
 {
-    public $type;
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function tableName()
     {
         return 'noidungbaotrinhomtbi';
     }
 
+    public $type;
+
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
         return [
             [['ID_NHOM', 'MA_NOIDUNG', 'NOIDUNG', 'CHUKY', 'QLTRAM'], 'required'],
-            [['ID_NHOM', 'CHUKY'], 'integer'],
-            [['MA_NOIDUNG'], 'string', 'max' => 32],
+            [['ID_NHOM', 'CHUKY', 'QLTRAM', 'IS_PARENT', 'IMAGES'], 'integer'],
+            [['SAMPLE_RESULT'], 'string'],
+            [['MA_NOIDUNG', 'ID_PARENT'], 'string', 'max' => 32],
             [['NOIDUNG', 'YEUCAUNHAP'], 'string', 'max' => 255],
-            [['QLTRAM'], 'string', 'max' => 1],
             [['MA_NOIDUNG'], 'unique'],
             [['ID_NHOM'], 'exist', 'skipOnError' => true, 'targetClass' => Nhomtbi::className(), 'targetAttribute' => ['ID_NHOM' => 'ID_NHOM']],
         ];
@@ -55,6 +61,11 @@ class Noidungbaotrinhomtbi extends \yii\db\ActiveRecord
             'CHUKY' => 'Chu kỳ',
             'QLTRAM' => 'Chịu trách nhiệm bảo dưỡng',
             'YEUCAUNHAP' => 'Yêu cầu kết quả',
+
+            'IS_PARENT' => 'Is parent?',
+            'ID_PARENT' => 'Nội dung cấp trên',
+            'IMAGES' => 'Yêu cầu hình ảnh',
+            'SAMPLE_RESULT' => 'Kết quả mẫu',
         ];
     }
 
@@ -64,5 +75,21 @@ class Noidungbaotrinhomtbi extends \yii\db\ActiveRecord
     public function getNHOM()
     {
         return $this->hasOne(Nhomtbi::className(), ['ID_NHOM' => 'ID_NHOM']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProfileBaoduongNoidungs()
+    {
+        return $this->hasMany(ProfileBaoduongNoidung::className(), ['MA_NOIDUNG' => 'MA_NOIDUNG']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPROFILEs()
+    {
+        return $this->hasMany(ProfileBaoduong::className(), ['ID' => 'ID_PROFILE'])->viaTable('profile_baoduong_noidung', ['MA_NOIDUNG' => 'MA_NOIDUNG']);
     }
 }

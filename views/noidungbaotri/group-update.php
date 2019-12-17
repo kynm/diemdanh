@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\Nhomtbi;
+use kartik\select2\Select2;
+use app\models\Noidungbaotrinhomtbi;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Noidungbaotri */
@@ -29,8 +31,32 @@ $this->params['breadcrumbs'][] = 'Cập nhật';
             <div class="col-sm-12">
                 <?= $form->field($model, 'NOIDUNG')->textArea(['cols' => 6]) ?>
             </div>
-            <div class="col-sm-12">
+            <div class="col-md-3">
                 <?= $form->field($model, 'CHUKY')->textInput(['maxlength' => true, 'type' => 'number'])->label('Chu kỳ (tháng)') ?>
+            </div>
+            <div class="col-md-3">
+                <?= $form->field($model, 'IMAGES')->dropDownList(
+                                [
+                                    0 => 'Không',
+                                    1 => 'Có'
+                                ]) ?>         
+            </div>
+            <div class="col-md-3">
+                <?= $form->field($model, 'IS_PARENT')->dropDownList(
+                    [
+                        0 => 'Không',
+                        1 => 'Có'
+                    ])->label('Nội dung này có phân cấp?');
+                ?>
+            </div>
+            <div class="col-md-3">
+                <?= $form->field($model, 'ID_PARENT')->widget(Select2::classname(), [
+                    'data' => ArrayHelper::map(Noidungbaotrinhomtbi::find()->where(['IS_PARENT' => 1])->all(), 'MA_NOIDUNG', 'NOIDUNG'),
+                    'options' => ['placeholder' => 'Chọn nội dung cấp trên'],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]); ?>
             </div>
             <div class="col-sm-12">
                 <?= $form->field($model, 'QLTRAM')->dropDownList(
@@ -54,6 +80,9 @@ $this->params['breadcrumbs'][] = 'Cập nhật';
             </div>
             <div class="col-sm-12" id="yeucaunhap" hidden>
                 <?= $form->field($model, 'YEUCAUNHAP')->textArea(['placeholder' => 'Nhập điện áp/số dòng/thời gian xả...v.v...'])->label('Nội dung yêu cầu') ?>
+            </div>
+            <div class="col-sm-12">
+                <?= $form->field($model, 'SAMPLE_RESULT')->textArea(['placeholder' => 'Nhập nội dung kết quả mẫu']) ?>
             </div>
         </div>
         <div class="box-footer">

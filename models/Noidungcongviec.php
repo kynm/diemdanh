@@ -38,8 +38,8 @@ class Noidungcongviec extends \yii\db\ActiveRecord
         return [
             [['ID_DOTBD', 'ID_THIETBI', 'MA_NOIDUNG'], 'required'],
             [['ID_DOTBD', 'ID_THIETBI', 'ID_NHANVIEN'], 'integer'],
-            [['GHICHU'], 'string'],
-            [['MA_NOIDUNG', 'TRANGTHAI', 'KETQUA'], 'string', 'max' => 32],
+            [['GHICHU', 'KIENNGHI', 'SOLIEUTHUCTE', 'ANH'], 'string'],
+            [['MA_NOIDUNG', 'TRANGTHAI', 'KETQUA', 'KETQUAXULY'], 'string', 'max' => 32],
             [['ID_DOTBD', 'ID_THIETBI', 'MA_NOIDUNG', 'ID_NHANVIEN'], 'unique', 'targetAttribute' => ['ID_DOTBD', 'ID_THIETBI', 'MA_NOIDUNG', 'ID_NHANVIEN']],
             [['ID_DOTBD'], 'exist', 'skipOnError' => true, 'targetClass' => Dotbaoduong::className(), 'targetAttribute' => ['ID_DOTBD' => 'ID_DOTBD']],
             [['MA_NOIDUNG'], 'exist', 'skipOnError' => true, 'targetClass' => Noidungbaotrinhomtbi::className(), 'targetAttribute' => ['MA_NOIDUNG' => 'MA_NOIDUNG']],
@@ -60,14 +60,18 @@ class Noidungcongviec extends \yii\db\ActiveRecord
             'GHICHU' => 'Ghi chú',
             'TRANGTHAI' => 'Trạng thái',
             'ID_NHANVIEN' => 'Nhân viên',
-            'KETQUA' => 'Kết quả',
             'NOIDUNG' => 'Nội dung',
             'NGAY_BD' => 'Ngày bảo dưỡng',
-            // 'NGAY_KT' => 'Ngày kết thúc bảo dưỡng',
+            
             'ID_TRAM' => 'Trạm',
             'ID_DAI' => 'Đài',
             'ID_DONVI' => 'Đơn vị',
-            'xacnhan' => 'Xác nhận'
+            'xacnhan' => 'Xác nhận',
+            'ANH' => 'Ảnh',
+            'KIENNGHI' => 'Kiến nghị',
+            'KETQUA' => 'Kết quả',
+            'SOLIEUTHUCTE' => 'Số liệu thực tế',
+            'KETQUAXULY' => 'Kết quả sau xử lý'
         ];
     }
 

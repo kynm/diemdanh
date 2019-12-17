@@ -1,15 +1,11 @@
 <?php
 
 use yii\helpers\Html;
-use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
-use app\models\AuthItem;
 use app\models\Donvi;
 use app\models\Daivt;
 use app\models\Chucvu;
-use kartik\select2\Select2;
-use kartik\depdrop\DepDrop;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Nhanvien */

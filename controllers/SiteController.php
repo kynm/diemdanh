@@ -78,14 +78,7 @@ class SiteController extends Controller
         if (Yii::$app->user->isGuest) {
             return $this->redirect(['login']);
         } else {
-            $month = sprintf('%02d', date('m', strtotime('first day of this month')));
-            $exists = Baoduongtong::find()->where(['MA_BDT' => 'KTNT_T'.$month.'-2019'])->exists();
-            if ($exists) {
-                $bdt = Baoduongtong::find()->where(['MA_BDT' => 'KTNT_T'.$month.'-2019'])->one();
-            } else {
-                $month = sprintf('%02d', date('m', strtotime('first day of last month')));
-                $bdt = Baoduongtong::find()->where(['MA_BDT' => 'KTNT_T'.$month.'-2019'])->one();
-            }
+            $bdt = Baoduongtong::find()->where(['TYPE' => 2])->orderBy(['ID_BDT' => SORT_DESC])->one();
             
             $searchModel = new DotbaoduongSearch();
             $dataProvider = $searchModel->searchBaocaoktnt($bdt->ID_BDT, Yii::$app->request->queryParams);

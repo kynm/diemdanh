@@ -6,6 +6,7 @@ use yii\grid\GridView;
 use yii\widgets\Pjax;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
+use kartik\select2\Select2;
 
 use app\models\Nhomtbi;
 use app\models\Noidungbaotrinhomtbi;
@@ -41,6 +42,30 @@ use app\models\Noidungbaotrinhomtbi;
                             <?= $addForm->field($noidungAdd, 'CHUKY')->textInput(['maxlength' => true, 'type' => 'number'])->label('Chu kỳ (tháng)') ?>
                         </div>
                         <div class="col-sm-12">
+                            <?= $addForm->field($noidungAdd, 'IMAGES')->dropDownList(
+                                [
+                                    0 => 'Không',
+                                    1 => 'Có'
+                                ]) ?>
+                        </div>
+                        <div class="col-sm-12">
+                            <?= $addForm->field($noidungAdd, 'IS_PARENT')->dropDownList(
+                                [
+                                    0 => 'Không',
+                                    1 => 'Có'
+                                ])->label('Nội dung này có phân cấp?');
+                            ?>
+                        </div>
+                        <div class="col-sm-12">
+                            <?= $addForm->field($noidungAdd, 'ID_PARENT')->widget(Select2::classname(), [
+                                'data' => ArrayHelper::map(Noidungbaotrinhomtbi::find()->where(['IS_PARENT' => 1])->all(), 'MA_NOIDUNG', 'NOIDUNG'),
+                                'options' => ['placeholder' => 'Chọn nội dung cấp trên'],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ]); ?>
+                        </div>
+                        <div class="col-sm-12">
                             <?= $addForm->field($noidungAdd, 'QLTRAM')->dropDownList(
                                 [
                                     0 => 'Đội BDUCTT',
@@ -62,6 +87,9 @@ use app\models\Noidungbaotrinhomtbi;
                         </div>
                         <div class="col-sm-12" id="yeucaunhap" hidden>
                             <?= $addForm->field($noidungAdd, 'YEUCAUNHAP')->textArea(['placeholder' => 'Nhập điện áp/số dòng/thời gian xả...v.v...'])->label('Nội dung yêu cầu') ?>
+                        </div>
+                        <div class="col-sm-12">
+                            <?= $addForm->field($noidungAdd, 'SAMPLE_RESULT')->textArea(['placeholder' => 'Nhập nội dung kết quả mẫu']) ?>
                         </div>
                     
                         <div class="col-md-12">

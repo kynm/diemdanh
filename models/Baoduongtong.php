@@ -33,7 +33,7 @@ class Baoduongtong extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['MA_BDT', 'TYPE', 'TRANGTHAI', 'ID_NHANVIEN'], 'required'],
+            [['MA_BDT'], 'required'],
             [['TYPE', 'ID_NHANVIEN'], 'integer'],
             [['MA_BDT', 'TRANGTHAI'], 'string', 'max' => 32],
             [['MO_TA'], 'string', 'max' => 255],

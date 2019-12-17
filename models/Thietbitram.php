@@ -40,7 +40,7 @@ class Thietbitram extends \yii\db\ActiveRecord
             [['ID_LOAITB', 'ID_TRAM', 'ID_THIETBI'], 'integer'],
             [['ID_LOAITB', 'ID_TRAM', 'SERIAL_MAC', 'NGAYSX', 'NGAYSD'], 'required'],
             [['NGAYSX', 'NGAYSD', 'LANBAODUONGTRUOC', 'LANBAODUONGTIEP'], 'safe'],
-            [['SERIAL_MAC', 'VB'], 'string', 'max' => 255],
+            [['SERIAL_MAC', 'VB', 'TEN_MA'], 'string', 'max' => 255],
             [['SERIAL_MAC'], 'unique'],
             [['ID_LOAITB'], 'exist', 'skipOnError' => true, 'targetClass' => Thietbi::className(), 'targetAttribute' => ['ID_LOAITB' => 'ID_THIETBI']],
             [['ID_TRAM'], 'exist', 'skipOnError' => true, 'targetClass' => Tramvt::className(), 'targetAttribute' => ['ID_TRAM' => 'ID_TRAM']],

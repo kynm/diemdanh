@@ -7,6 +7,7 @@ use app\models\Nhomtbi;
 use app\models\Thietbi;
 use app\models\Thietbitram;
 use app\models\Noidungbaotrinhomtbi;
+use app\models\ProfileBaoduongNoidung;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
@@ -142,21 +143,61 @@ class NoidungbaotriController extends Controller
         }
     }
 
-    // public function actionListstbt($id)
-    // {
-    //     $tbi = Thietbitram::find()->where(['ID_THIETBI' => $id])->one();
-    //     $noidung = Noidungbaotrinhomtbi::find()
-    //     ->where(['ID_THIETBI'=>$tbi->iDLOAITB->ID_NHOM])
-    //     ->all();
+    public function actionList($id)
+    {
+        $query = Yii::$app->db->createCommand("
+            SELECT `noidungbaotrinhomtbi`.`ID_NHOM`, `nhomtbi`.`TEN_NHOM`, `noidungbaotrinhomtbi`.`MA_NOIDUNG`, `NOIDUNG`, `pn`.`ID_PROFILE`  
+            FROM `noidungbaotrinhomtbi` 
+            JOIN `nhomtbi` ON `noidungbaotrinhomtbi`.`ID_NHOM` = `nhomtbi`.`ID_NHOM`
+            LEFT JOIN (
+                SELECT * FROM `profile_baoduong_noidung` 
+                WHERE `ID_PROFILE` = :id
+            ) AS `pn` 
+            ON `noidungbaotrinhomtbi`.MA_NOIDUNG = `pn`.MA_NOIDUNG",
+            [':id' => $id]);
+        $array = $query->queryAll();
+        
+        foreach ($array as $element) {
+            $result[$element['ID_NHOM']]['TEN_NHOM'] = $element['TEN_NHOM'];
+            $result[$element['ID_NHOM']]['DS_ND'][] = $element;
+        }
 
-    //     if(isset($noidung) && count($noidung)>0) {
-    //         foreach($noidung as $each) {
-    //             echo "<option value='".$each->MA_NOIDUNG."'>".$each->NOIDUNG."</option>";
-    //         }
-    //     }else {
-    //         echo "-";
-    //     }
-    // }
+        // foreach ($array as $element) {
+        //     foreach ($result[$element['ID_NHOM']]['DS_ND']  as $item) {
+        //         if ($item['ID_PROFILE'] != null) {
+        //             $check = true;
+        //         }
+        //     }
+        //     $result[$element['ID_NHOM']]['TEN_NHOM'] = $element['TEN_NHOM'];
+        //     $result[$element['ID_NHOM']]['DS_ND'][] = $element;
+        // }
+        // foreach ($result as $key => $element) {
+        //     echo in_array($id, $element['DS_ND']) ? "True<hr>" : "False<hr>";
+        // }
+        // die();
+        return json_encode($result, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    }
+
+    /**
+     * Import new Noidungbaotrinhomtbi models.
+     * If importion is successful, the browser will be redirected to the 'index' page.
+     * @return mixed
+     */
+    public function actionImport()
+    {
+        $fileName = "uploads/noidunginout.xlsx";
+        $data = \moonland\phpexcel\Excel::import($fileName);
+        foreach ($data as $element) {
+            $model = new Noidungbaotrinhomtbi;
+            $model->ID_NHOM = 14;
+            $model->MA_NOIDUNG = $element["Code"];
+            $model->NOIDUNG = $element["Noidung"];
+            $model->CHUKY = 12;
+            $model->QLTRAM = 0;
+            // $model->save(false);
+        }
+        return $this->redirect(['index']);
+    }
 
     /**
      * Finds the Noidungbaotri model based on its primary key value.

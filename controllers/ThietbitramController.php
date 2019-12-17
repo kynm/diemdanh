@@ -99,7 +99,7 @@ class ThietbitramController extends Controller
             $model = new Thietbitram();
 
             if ($model->load(Yii::$app->request->post())) {
-                
+
                 if ($model->save()) {
                     $thietbi = new Dieuchuyenthietbi;
                     $thietbi->ID_THIETBI = $model->ID_THIETBI;
@@ -149,8 +149,8 @@ class ThietbitramController extends Controller
         $next2weeks = date('Y-m-d', strtotime("+ 2 weeks"));
         
         $query = Thietbitram::find()
-            ->where(['>', 'LANBAODUONGTIEP', $now])
-            ->andWhere(['<', 'LANBAODUONGTIEP', $next2weeks]);
+        ->where(['>', 'LANBAODUONGTIEP', $now])
+        ->andWhere(['<', 'LANBAODUONGTIEP', $next2weeks]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -171,7 +171,7 @@ class ThietbitramController extends Controller
     {
         $model = $this->findModel($id);
         if (Yii::$app->user->can('edit-tbitram')) {
-            
+
             if ($model->load(Yii::$app->request->post())) {
                 $model->save();
                 return $this->redirect(['view', 'id' => $model->ID_THIETBI]);
@@ -234,7 +234,7 @@ class ThietbitramController extends Controller
         $arr = explode(',', $thietbi);
         
         $query = Tramvt::find()->joinWith('thietbitrams')->joinWith('iDDAI')
-            ->andWhere(['in', 'thietbitram.ID_LOAITB', $arr]);
+        ->andWhere(['in', 'thietbitram.ID_LOAITB', $arr]);
         
         if ($donvi !== '') {
             if ($dai == "") {
@@ -249,6 +249,57 @@ class ThietbitramController extends Controller
             echo "<option value='".$each->ID_TRAM."'>".$each->TEN_TRAM."</option>";
         }
         return;
+    }
+
+    public function actionImport()
+    {
+        ini_set('max_execution_time', 0);
+        $fileName = "data/BTS.xlsx";
+        $data = \moonland\phpexcel\Excel::import($fileName, [
+            'setFirstRecordAsKeys' => true,
+            'setIndexSheetByName' => true,
+            'getOnlySheet' => 'dsBTS',
+        ]);
+        foreach ($data as $element) {
+            // var_dump($element); die;
+            $tramvt = Tramvt::findOne(['MA_TRAM' => $element['CSHT']]);
+            if (is_null($tramvt)) {
+                echo $element['CSHT'] . ' không tìm thấy trong CSDL<br>';
+                continue;
+            }
+            $tramvt->TEN_TRAM2 = $element['Ten2'];
+            $tramvt->save();
+            if (!is_null($element['2G'])) {
+                $tbi2g = new Thietbitram();
+                $tbi2g->ID_LOAITB = 112;
+                $tbi2g->ID_TRAM = $tramvt->ID_TRAM;
+                $tbi2g->TEN_MA = $element['2G'];
+                $tbi2g->SERIAL_MAC = md5(uniqid());
+                $tbi2g->NGAYSX = '2018-01-01';
+                $tbi2g->NGAYSD = '2018-01-01';
+                $tbi2g->save(false);
+            }
+            if (!is_null($element['3G'])) {
+                $tbi3g = new Thietbitram();
+                $tbi3g->ID_LOAITB = 113;
+                $tbi3g->ID_TRAM = $tramvt->ID_TRAM;
+                $tbi3g->TEN_MA = $element['3G'];
+                $tbi3g->SERIAL_MAC = md5(uniqid());
+                $tbi3g->NGAYSX = '2018-01-01';
+                $tbi3g->NGAYSD = '2018-01-01';
+                $tbi3g->save(false);
+            }
+            if (!is_null($element['4G'])) {
+                $tbi4g = new Thietbitram();
+                $tbi4g->ID_LOAITB = 114;
+                $tbi4g->ID_TRAM = $tramvt->ID_TRAM;
+                $tbi4g->TEN_MA = $element['4G'];
+                $tbi4g->SERIAL_MAC = md5(uniqid());
+                $tbi4g->NGAYSX = '2018-01-01';
+                $tbi4g->NGAYSD = '2018-01-01';
+                $tbi4g->save(false);
+            }
+        }
     }
 
     /**

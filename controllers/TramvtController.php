@@ -60,6 +60,42 @@ class TramvtController extends Controller
         ]);
     }
 
+    public function actionShow()
+    {
+        $list_tram = Tramvt::find()->all();
+        echo '<table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Mã CSHT</th>
+                <th>Mã quản lý</th>
+                <th>Tên</th>
+                <th>Địa điểm</th>
+                <th>Tọa độ</th>
+                <th>Đài</th>
+                <th>Trung tâm</th>
+                <th>Nhân viên</th>
+                <th>Điện thoại</th>
+            </tr>
+        </thead>
+        <tbody>';
+        foreach ($list_tram as $tram) {
+            echo "<tr>
+            <td>" . $tram->MA_TRAM . "</td>
+            <td>" . $tram->TEN_TRAM2 . "</td>
+            <td>" . $tram->TEN_TRAM . "</td>
+            <td>" . $tram->DIADIEM . "</td>
+            <td>" . $tram->VI_DO .','. $tram->KINH_DO . "</td>
+            <td>" . $tram->iDDAI->TEN_DAIVT . "</td>
+            <td>" . $tram->iDDAI->iDDONVI->TEN_DONVI . "</td>
+            <td>" . $tram->iDNHANVIEN->TEN_NHANVIEN . "</td>
+            <td>" . $tram->iDNHANVIEN->DIEN_THOAI . "</td>
+        </tr>";
+        }
+        echo '</tbody>
+        </table>';
+        exit;
+    }
+
     /**
      * Displays a single Tramvt model.
      * @param integer $id
@@ -301,7 +337,7 @@ class TramvtController extends Controller
     public function actionImport()
     {
         ini_set('max_execution_time', 0);
-        // $filename = 'NhaTramMoi.csv';
+        $filename = 'NhaTramMoi.csv';
         $handle = fopen($filename, "r");
         $list = [];
         while (($fileop = fgetcsv($handle, 5000, ",")) !== false) 
@@ -318,7 +354,7 @@ class TramvtController extends Controller
             $model->LOAITRAM = $fileop[7];
             $model->ID_NHANVIEN = 0;
 
-            $model->save(false);
+            // $model->save(false);
         }
         echo "Success! \n";
         print_r($list);

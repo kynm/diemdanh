@@ -90,6 +90,13 @@ $this->params['breadcrumbs'][] = $this->title;
                             'TRANGTHAI',
                             'GHICHU',
                             [
+                                'attribute' => 'ANH',
+                                'format' => 'raw',
+                                'value' => function ($model) {
+                                    return is_null($model->ANH) ? 'Không hình ảnh' : '<a class="imagecv btn btn-primary btn-flat" href="'. Yii::$app->homeUrl ."uploads/".$model->ANH .'">Xem ảnh</a>';
+                                }
+                            ],
+                            [
                                 'attribute' => 'ID_NHANVIEN',
                                 'value' => 'nHANVIEN.TEN_NHANVIEN'
                             ],
@@ -140,3 +147,32 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+
+<?php
+$script = <<< JS
+    $('.row').magnificPopup({
+        delegate: 'a',
+        type: 'image',
+        gallery:{
+            enabled:true
+        },
+        removalDelay: 300,
+        mainClass: 'mfp-with-zoom', 
+
+        zoom: {
+            enabled: true, 
+
+            duration: 300, 
+            easing: 'ease-in-out', 
+            opener: function(openerElement) {
+              return openerElement.is('img') ? openerElement : openerElement.find('img');
+            }
+        }
+    });
+    $('.imagecv').magnificPopup({
+        type: 'image'
+        
+    });
+JS;
+$this->registerJs($script);
+?>

@@ -193,6 +193,16 @@ B2: lay token
     Return stt: success / failed
 
 =================
+# Upload File anh theo noi dung cong viec
+## Request
+    http://localhost/apiv2/congviec/uploadv2
+    param ["access_token"]
+    POST method
+    POST body ["ID_DOTBD", "ID_THIETBI", "MA_NOIDUNG", file ]
+## Response
+    Return stt: success / failed
+
+=================
 # Get anh 
 ## Request
     http://localhost/apiv2/dotbaoduong/get-images

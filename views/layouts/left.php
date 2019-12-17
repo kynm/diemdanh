@@ -53,7 +53,7 @@ use yii\helpers\Url;
                         'url' => '#',
                         'items' => [
                             [
-                                'label' => 'Thêm đợt bảo dưỡng', 'icon' => 'caret-right', 'url' => Url::to(['dotbaoduong/taodotbaoduong'])
+                                'label' => 'Thêm đợt bảo dưỡng', 'icon' => 'caret-right', 'url' => Url::to(['dotbaoduong/create'])
                             ],
                             [
                                 'label' => 'Tổ trưởng giao việc', 'icon' => 'caret-right', 'url' => Url::to(['dotbaoduong/phe-duyet'])

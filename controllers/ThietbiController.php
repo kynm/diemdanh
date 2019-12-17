@@ -165,7 +165,7 @@ class ThietbiController extends Controller
                         VALUES ($thietbi->ID_NHOM, '$noiDung->MA_NOIDUNG', '$noiDung->NOIDUNG', $noiDung->CHUKY, $noiDung->QLTRAM, '$noiDung->YEUCAUNHAP', 0)
                 ")->execute();
             }
-            $listNDTB = Noidungbaotri::findAll(['ID_THIETBI'=> $id]);
+            $listNDTB = Noidungbaotrinhomtbi::findAll(['ID_THIETBI'=> $id]);
             foreach ($listNDTB as $ND) {
                 $MA_NOIDUNG = $ND->MA_NOIDUNG;
                 Yii::$app->db->createCommand("
@@ -187,7 +187,7 @@ class ThietbiController extends Controller
                 $noiDungChuyen->IS_SELECTED = 1;
                 $noiDungChuyen->save(false);
                 
-                $noidung = new Noidungbaotri();
+                $noidung = new Noidungbaotrinhomtbi();
 
                 $noidung->MA_NOIDUNG = $key;
                 $noidung->ID_THIETBI = $thietbi->ID_THIETBI;
@@ -212,7 +212,7 @@ class ThietbiController extends Controller
                 
                 $noiDungChuyen->save(false);
 
-                $noidung = Noidungbaotri::findOne(['MA_NOIDUNG' => $key, 'ID_THIETBI' => $id]);
+                $noidung = Noidungbaotrinhomtbi::findOne(['MA_NOIDUNG' => $key, 'ID_THIETBI' => $id]);
                 $noidung->delete();
             }
         }

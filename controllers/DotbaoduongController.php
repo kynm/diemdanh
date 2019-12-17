@@ -14,7 +14,7 @@ use app\models\Donvi;
 use app\models\Tramvt;
 use app\models\Dotbaoduong;
 use app\models\DotbaoduongSearch;
-use app\models\Noidungbaotri;
+use app\models\ProfileBaoduongNoidung;
 use app\models\Noidungcongviec;
 use app\models\NoidungcongviecSearch;
 use yii\web\Controller;
@@ -81,10 +81,82 @@ class DotbaoduongController extends Controller
             ->andWhere(['<', 'ID_TRAM', $end])
             ->all();
         foreach ($listTram as $tram) {
-            if ($tram->ID_TRAM == 351 || $tram->ID_TRAM == 287 || $tram->ID_TRAM == 167) continue;
+            if ($tram->ID_TRAM == 351 || $tram->ID_TRAM == 287 || $tram->ID_TRAM == 167 || $tram->ID_TRAM == 448 || $tram->ID_TRAM == 369) continue;
             $tram->taodotktnt($id);
         }
         echo "Done!";
+    }
+
+    public function actionCreate()
+    {
+        ini_set('max_execution_time', 0);
+        if (Yii::$app->user->can('create-dbd')) {
+            $model = new Dotbaoduong();
+            $bdt = new Baoduongtong();
+            $query = Nhanvien::find()
+                ->where(['>', 'ID_DONVI', 2])
+                ->orderBy(['ID_DAI' => SORT_ASC]);
+            if (Yii::$app->user->identity->nhanvien->ID_DONVI > 3) {
+                $query->andWhere(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI]);
+            }
+            $dsNhanvien = $query->all();
+            foreach ($dsNhanvien as $each) {
+                $list[] = ['ID_NHANVIEN' => $each->ID_NHANVIEN, 'TEN_NHANVIEN' => $each->TEN_NHANVIEN . ' - ' . $each->chucvu->ten_chucvu .' - '. $each->iDDAI->TEN_DAIVT];
+            }
+
+            $listNhanvien = ArrayHelper::map($list, 'ID_NHANVIEN', 'TEN_NHANVIEN');
+            if (Yii::$app->user->identity->nhanvien->ID_DONVI < 4) {
+                $donVi = Donvi::find()->where(['>', 'ID_DONVI', 3])->all();
+            } else {
+                $donVi = Donvi::findAll(Yii::$app->user->identity->nhanvien->ID_DONVI);
+            }
+            $listDonvi = ArrayHelper::map($donVi, 'ID_DONVI', 'TEN_DONVI');
+            $listTram = ArrayHelper::map(Tramvt::find()->all(), 'ID_TRAM', 'TEN_TRAM');
+            if ($model->load(Yii::$app->request->post())) {
+                ini_set('max_execution_time', 0);
+                ini_set('memory_limit', '-1');
+                $post = Yii::$app->request->post();
+                switch ($post['profile_baoduong']) {
+                    case '1':
+                        $id_nhom = 14;
+                        break;
+                    case '2':
+                        $id_nhom = 14;
+                        break;
+                    case '3':
+                        $id_nhom = 13;
+                        break;
+                    
+                    default:
+                        $id_nhom = 14;
+                        break;
+                }
+                $str = implode(',', $post['Dotbaoduong']['ID_TRAM']);
+                $sql = "SELECT DISTINCT ID_TRAM FROM `thietbitram` LEFT JOIN `thietbi` ON `thietbitram`.`ID_LOAITB` = `thietbi`.`ID_THIETBI` WHERE (`thietbi`.`ID_NHOM`=14) AND (`ID_TRAM` IN ($str))";
+                $all = Yii::$app->db->createCommand($sql)->queryAll();
+                $bdt = Baoduongtong::findOne($post['Dotbaoduong']['ID_BDT']);
+                foreach ($all as $tram) {
+                        $dbd = new Dotbaoduong;
+                        $dbd->load($post);
+                        $dbd->MA_DOTBD = $bdt->MA_BDT . '_' .$tram['ID_TRAM'];
+                        $dbd->ID_TRAM = $tram['ID_TRAM'];
+                        $dbd->ID_NHANVIEN = 0;
+                        $dbd->save(false);
+                        $dbd->taobaoduong($id_nhom, $post['profile_baoduong']);
+                }
+                
+                return $this->redirect(['#']);
+            } else {
+                return $this->render('create_new', [
+                    'model' => $model,
+                    'listNhanvien' => $listNhanvien,
+                    'listDonvi' => $listDonvi,
+                    'listTram' => $listTram,
+                ]);
+            }
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
+        }
     }
 
     public function actionKetthucthang($id)
@@ -451,41 +523,6 @@ class DotbaoduongController extends Controller
         } else {
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
         }
-    }
-
-    public function actionDai()
-    {
-        $out = [];
-        if (isset($_POST['depdrop_parents'])) {
-            $parents = $_POST['depdrop_parents'];
-            if ($parents != null) {
-                $ID_DAI = $parents[0];
-                $list = Daivt::find()->andWhere(['parent'=>$ID_DAI])->asArray()->all();
-                $selected  = null;
-                if (count($list) > 0) {
-                    $selected = '';
-                    foreach ($list as $daivt) {
-                        $out[] = ['id' => $daivt['ID_DAI'], 'name' => $daivt['TEN_DAIVT']];
-                        if ($i == 0) {
-                            $selected = $daivt['ID_DAI'];
-                        }
-                    }
-                    // Shows how you can preselect a value
-                    // return;
-                }
-                // $out = self::getSubCatList($ID_DAI); 
-                // the getSubCatList function will query the database based on the
-                // cat_id and return an array like below:
-                // [
-                //    ['id'=>'<sub-cat-id-1>', 'name'=>'<sub-cat-name1>'],
-                //    ['id'=>'<sub-cat_id_2>', 'name'=>'<sub-cat-name2>']
-                // ]
-                echo Json::encode(['output' => $out, 'selected'=>$selected]);
-                // echo Json::encode(['output'=>$out, 'selected'=>'']);
-                return;
-            }
-        }
-        echo Json::encode(['output'=>'', 'selected'=>'']);
     }
 
     /**
