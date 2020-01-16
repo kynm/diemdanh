@@ -52,16 +52,16 @@ $this->title = "Giao công việc trong đợt bảo dưỡng";
                 <div class="panel panel-primary affix">
                   <div class="panel-body">
                     <div class="col-sm-12">
-                      <?= Select2::widget([
-                          'name' => 'ID_NHANVIEN',
-                          'data' => ArrayHelper::map($listNhanvien, 'ID_NHANVIEN', 'TEN_NHANVIEN'),
-                          'theme' => Select2::THEME_BOOTSTRAP,
-                          'pluginOptions' => [
-                              'placeholder' => 'Chọn nhân viên thực hiện',
-                              'allowClear' => true
-                          ],
-                        ]);
-                      ?>
+                        <?= Select2::widget([
+                            'name' => 'ID_NHANVIEN',
+                            'data' => ArrayHelper::map($listNhanvien, 'ID_NHANVIEN', 'TEN_NHANVIEN'),
+                            'theme' => Select2::THEME_BOOTSTRAP,
+                            'pluginOptions' => [
+                                'placeholder' => 'Chọn nhân viên thực hiện',
+                                'allowClear' => true
+                            ],
+                            ]);
+                        ?>
                     </div>
                       
                     <div class="col-sm-12" style="margin-top: 15px">

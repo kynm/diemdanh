@@ -334,32 +334,46 @@ class TramvtController extends Controller
         return;
     }
 
-    public function actionImport()
+    public function actionUpdateFromExcel()
     {
         ini_set('max_execution_time', 0);
-        $filename = 'NhaTramMoi.csv';
-        $handle = fopen($filename, "r");
-        $list = [];
-        while (($fileop = fgetcsv($handle, 5000, ",")) !== false) 
-        {
-            // 0   1   2    3        4,  5,   6    7
-            //Mã,Tên,Đơn vị,Đài,Địa chỉ,Long,Lat,Loại trạm
-            $model = new Tramvt;
-            $model->MA_TRAM = $fileop[0];
-            $model->TEN_TRAM = $fileop[1];
-            $model->ID_DAI = $fileop[3];
-            $model->DIADIEM = $fileop[4];
-            $model->KINH_DO = $fileop[5];
-            $model->VI_DO = $fileop[6];
-            $model->LOAITRAM = $fileop[7];
-            $model->ID_NHANVIEN = 0;
-
-            // $model->save(false);
+        $fileName = 'data/BTS.xlsx';
+        $data = \moonland\phpexcel\Excel::import($fileName, [
+            'setFirstRecordAsKeys' => true, 
+            'setIndexSheetByName' => true, 
+            'getOnlySheet' => 'CSHT', 
+        ]);
+        
+        $count = 0;
+        foreach ($data as $row) {
+            // var_dump($row); die;
+            if (is_null($model = Tramvt::findOne(['MA_TRAM' => $row["MaCSHT"]]))) {
+                $model = new Tramvt;
+                $model->MA_TRAM = $row["MaCSHT"];
+                $model->TEN_TRAM = $row["CSHT"];
+                // $model->TEN_TRAM2 = $row["Mã CSHT"];
+                $model->DIADIEM = $row["DiaChi"];
+                $model->QUANHUYEN = $row["Quan"];
+                $model->XAPHUONG = $row["Xa"];
+                $model->NGAYHD = date('Y-m-d', strtotime($row["NgayHD"]));
+                $model->KINH_DO = $row["Longitude"];
+                $model->VI_DO = $row["Latitude"];
+                $model->ID_DAI = $row["Dai"];
+                $model->ID_NHANVIEN = 0;
+                $model->LOAITRAM = $row["Nhom"];
+                // $model->KIEUTRAM = "";
+                $model->save(false);
+                $count++;
+                continue;
+            } else {
+                $model->QUANHUYEN = $row["Quan"];
+                $model->XAPHUONG = $row["Xa"];
+                $model->NGAYHD = date('Y-m-d', strtotime($row["NgayHD"]));
+                $model->save(false);
+            }
+        echo "Done! $count trạm đc thêm!"; exit;
         }
-        echo "Success! \n";
-        print_r($list);
     }
-
     /**
      * Finds the Tramvt model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

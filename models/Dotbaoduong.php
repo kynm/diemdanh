@@ -44,7 +44,7 @@ class Dotbaoduong extends \yii\db\ActiveRecord
         return [
             [['MA_DOTBD', 'NGAY_DUKIEN', 'NGAY_KT_DUKIEN', 'ID_TRAM'], 'required'],
             [['NGAY_DUKIEN', 'NGAY_BD', 'NGAY_KT_DUKIEN', 'NGAY_KT'], 'safe'],
-            [['ID_TRAM', 'ID_NHANVIEN', 'ID_BDT'], 'integer'],
+            [['ID_TRAM', 'ID_NHANVIEN', 'ID_BDT', 'CREATED_AT', 'CREATED_BY'], 'integer'],
             [['MA_DOTBD', 'TRANGTHAI'], 'string', 'max' => 32],
             [['ID_TRAM'], 'exist', 'skipOnError' => true, 'targetClass' => Tramvt::className(), 'targetAttribute' => ['ID_TRAM' => 'ID_TRAM']],
             [['ID_NHANVIEN'], 'exist', 'skipOnError' => true, 'targetClass' => Nhanvien::className(), 'targetAttribute' => ['ID_NHANVIEN' => 'ID_NHANVIEN']],
@@ -122,10 +122,15 @@ class Dotbaoduong extends \yii\db\ActiveRecord
         /**
      * action tao dot ktvsnt
      */
-    public function taobaoduong($id_nhom, $id_profile)
+    public function taobaoduong($arr_nhomtbi, $id_profile)
     {
-        $listThietbi = Thietbitram::find()->joinWith('iDLOAITB')->where(['thietbi.ID_NHOM' => $id_nhom, 'ID_TRAM' => $this->ID_TRAM])->all();
+        $listThietbi = Thietbitram::find()->joinWith('iDLOAITB')->where(['thietbi.ID_NHOM' => $arr_nhomtbi, 'ID_TRAM' => $this->ID_TRAM])->all();
         $listNoidungbaotri = ProfileBaoduongNoidung::findAll(['ID_PROFILE' => $id_profile]);
+
+        $list_noidung = Yii::$app->db->createCommand("
+            SELECT * FROM profile_baoduong_noidung JOIN noidungbaotrinhomtbi ON profile_baoduong_noidung.MA_NOIDUNG = noidungbaotrinhomtbi.MA_NOIDUNG WHERE profile_baoduong_noidung.ID_PROFILE = $id_profile
+        ")->queryAll();
+
         foreach ($listThietbi as $thietbi) {
             foreach ($listNoidungbaotri as $noidung) {
                 $congviec = new Noidungcongviec;

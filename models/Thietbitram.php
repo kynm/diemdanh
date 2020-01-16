@@ -96,7 +96,7 @@ class Thietbitram extends \yii\db\ActiveRecord
      */
     public function getIDDOTBDs()
     {
-        return $this->hasMany(Dotbaoduong::className(), ['ID_DOTBD' => 'ID_DOTBD'])->viaTable('noidungcongviec', ['ID_THIETBI' => 'ID_THIETBI']);
+        return $this->hasMany(Dotbaoduong::className(), ['ID_TRAM' => 'ID_TRAM'])->viaTable('tramvt', ['ID_TRAM' => 'ID_TRAM']);
     }
 
     /**

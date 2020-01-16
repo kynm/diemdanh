@@ -41,7 +41,7 @@ class Tramvt extends \yii\db\ActiveRecord
             [['NGAY_KTNT'], 'safe'],
             [['ID_DAI', 'ID_NHANVIEN', 'LOAITRAM'], 'integer'],
             [['MA_TRAM'], 'string', 'max' => 32],
-            [['TEN_TRAM', 'TEN_TRAM2'], 'string', 'max' => 255],
+            [['TEN_TRAM', 'TEN_TRAM2', 'KIEUTRAM'], 'string', 'max' => 255],
             [['KINH_DO', 'VI_DO'], 'string', 'max' => 10],
             [['ID_DAI'], 'exist', 'skipOnError' => true, 'targetClass' => Daivt::className(), 'targetAttribute' => ['ID_DAI' => 'ID_DAI']],
             [['ID_NHANVIEN'], 'exist', 'skipOnError' => true, 'targetClass' => Nhanvien::className(), 'targetAttribute' => ['ID_NHANVIEN' => 'ID_NHANVIEN']],

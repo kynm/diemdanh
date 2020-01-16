@@ -251,6 +251,60 @@ class ThietbitramController extends Controller
         return;
     }
 
+    public function actionImp() {
+        ini_set('max_execution_time', 0);
+        $fileName = "data/MANE_OLT.xlsx";
+        $data = \moonland\phpexcel\Excel::import($fileName, [
+            'setFirstRecordAsKeys' => true,
+            'setIndexSheetByName' => true,
+            // 'getOnlySheet' => 'dsBTS',
+        ]);
+        // var_dump($data["MAN-E"]); exit;
+        $ma_olt = 7;
+        $ma_mane = 8;
+
+        foreach ($data["OLT"] as $device) {
+            // var_dump($device); die;
+            // var_dump($device["TypeDevice"]); die;
+            
+            if (is_null($tramvt = Tramvt::findOne(["TEN_TRAM" => $device["Trạm VT"]]))) {
+                if (is_null($tramvt = Tramvt::findOne(["TEN_TRAM" => str_replace("Trạm ", "", $device["Trạm VT"])]))) {
+                    echo $device["Trạm VT"]." không tìm thấy trong CSDL.<br>";
+                    continue;
+                }
+            }
+            if (is_null($thietbi = Thietbi::findOne(["MA_THIETBI" => $device["Hardware"]]))) {
+                $thietbi = new Thietbi;
+            }
+            $thietbi->MA_THIETBI = $device["Hardware"];
+            $thietbi->TEN_THIETBI = $device["Hardware"];
+            $thietbi->ID_NHOM = 7;
+            $thietbi->HANGSX = $device["Hãng"];
+            $thietbi->THONGSOKT = "Type Device: ".$device["TypeDevice"];
+            $thietbi->save();
+
+            if (is_null($thietbitram = Thietbitram::findOne(["ID_LOAITB" => $thietbi->ID_THIETBI, "ID_TRAM" => $tramvt->ID_TRAM]))) {
+                $thietbitram = new Thietbitram;
+                $thietbitram->ID_LOAITB = $thietbi->ID_THIETBI;
+                $thietbitram->ID_TRAM = $tramvt->ID_TRAM;
+                $thietbitram->TEN_MA = $device["SYSNAME"];
+                is_null( $device["IP ADDRESS"]) ? $thietbitram->SERIAL_MAC = md5(uniqid()) : $thietbitram->SERIAL_MAC = $device["IP ADDRESS"];
+                $thietbitram->NGAYSX = "2019/01/01";
+                $thietbitram->NGAYSD = "2019/01/01";
+                
+                if ($thietbitram->save()) {
+                    echo "Thêm thành công thiết bị $thietbitram->TEN_MA cho trạm ". $device["Trạm VT"] ."<br>";
+                } else {
+                    echo "Thêm thiết bị cho trạm ". $device["Trạm VT"] ." không thành công<br>";
+                    var_dump($thietbitram->errors);
+                }
+            } else {
+                echo "Đã có thiết bị ". $thietbitram->TEN_MA ."<br>";
+            }
+        }
+        exit;
+    }
+
     public function actionImport()
     {
         ini_set('max_execution_time', 0);

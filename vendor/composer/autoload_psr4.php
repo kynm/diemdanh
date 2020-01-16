@@ -14,8 +14,9 @@ return array(
     'yii\\composer\\' => array($vendorDir . '/yiisoft/yii2-composer'),
     'yii\\bootstrap\\' => array($vendorDir . '/yiisoft/yii2-bootstrap/src'),
     'yii\\' => array($vendorDir . '/yiisoft/yii2'),
+    'sfedosimov\\oci8pdo\\' => array($vendorDir . '/sfedosimov/yii2-oci8pdo'),
     'rmrevin\\yii\\fontawesome\\' => array($vendorDir . '/rmrevin/yii2-fontawesome'),
-    'phpDocumentor\\Reflection\\' => array($vendorDir . '/phpdocumentor/reflection-common/src', $vendorDir . '/phpdocumentor/type-resolver/src', $vendorDir . '/phpdocumentor/reflection-docblock/src'),
+    'phpDocumentor\\Reflection\\' => array($vendorDir . '/phpdocumentor/reflection-common/src', $vendorDir . '/phpdocumentor/reflection-docblock/src', $vendorDir . '/phpdocumentor/type-resolver/src'),
     'nepstor\\validators\\' => array($vendorDir . '/nepstor/yii2-datetime-compare-validator/src'),
     'moonland\\phpexcel\\' => array($vendorDir . '/moonlandsoft/yii2-phpexcel'),
     'mdm\\admin\\' => array($vendorDir . '/mdmsoft/yii2-admin'),
@@ -70,5 +71,5 @@ return array(
     'Complex\\' => array($vendorDir . '/markbaker/complex/classes/src'),
     'Codeception\\PHPUnit\\' => array($vendorDir . '/codeception/phpunit-wrapper/src'),
     'Codeception\\Extension\\' => array($vendorDir . '/codeception/base/ext'),
-    'Codeception\\' => array($vendorDir . '/codeception/stub/src', $vendorDir . '/codeception/base/src/Codeception'),
+    'Codeception\\' => array($vendorDir . '/codeception/base/src/Codeception', $vendorDir . '/codeception/stub/src'),
 );

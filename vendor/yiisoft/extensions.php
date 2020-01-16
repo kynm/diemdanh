@@ -291,4 +291,13 @@ return array (
       '@yii/bootstrap' => $vendorDir . '/yiisoft/yii2-bootstrap/src',
     ),
   ),
+  'sfedosimov/yii2-oci8pdo' => 
+  array (
+    'name' => 'sfedosimov/yii2-oci8pdo',
+    'version' => '1.0.0.0',
+    'alias' => 
+    array (
+      '@sfedosimov/oci8pdo' => $vendorDir . '/sfedosimov/yii2-oci8pdo',
+    ),
+  ),
 );

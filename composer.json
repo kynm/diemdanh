@@ -36,7 +36,9 @@
         "2amigos/yii2-chartjs-widget": "~2.0",
         "kartik-v/yii2-export": "dev-master",
         "moonlandsoft/yii2-phpexcel": "*",
-        "sfedosimov/yii2-oci8pdo": "*"
+        "sfedosimov/yii2-oci8pdo": "*",
+        "markbaker/matrix": "^1.2",
+        "phpoffice/phpspreadsheet": "^1.10"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

@@ -12,6 +12,7 @@ use app\models\Nhanvien;
 use app\models\Thietbitram;
 use app\models\Donvi;
 use app\models\Tramvt;
+use app\models\TramvtSearch;
 use app\models\Dotbaoduong;
 use app\models\DotbaoduongSearch;
 use app\models\ProfileBaoduongNoidung;
@@ -87,6 +88,24 @@ class DotbaoduongController extends Controller
         echo "Done!";
     }
 
+    public function actionDangKyBaoDuong()
+    {
+        $list_baoduongtong = Baoduongtong::find()->all(); 
+        $list_nhanvien = Nhanvien::findAll(["ID_DONVI" => Yii::$app->user->identity->nhanvien->ID_DONVI]);
+        $list_tram = Tramvt::find()->joinWith("iDDAI")->where(["ID_DONVI" => Yii::$app->user->identity->nhanvien->ID_DONVI])->all();
+        
+        $searchModel = new TramvtSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render("dang-ky-bao-duong", [
+            "list_baoduongtong" => $list_baoduongtong,
+            "list_nhanvien" => $list_nhanvien,
+            "list_tram" => $list_tram,
+            "searchModel" => $searchModel,
+            "dataProvider" => $dataProvider,
+        ]);
+    }
+
     public function actionCreate()
     {
         ini_set('max_execution_time', 0);
@@ -116,23 +135,18 @@ class DotbaoduongController extends Controller
                 ini_set('max_execution_time', 0);
                 ini_set('memory_limit', '-1');
                 $post = Yii::$app->request->post();
-                switch ($post['profile_baoduong']) {
-                    case '1':
-                        $id_nhom = 14;
-                        break;
-                    case '2':
-                        $id_nhom = 14;
-                        break;
-                    case '3':
-                        $id_nhom = 13;
-                        break;
-                    
-                    default:
-                        $id_nhom = 14;
-                        break;
+                
+                $nhomtbi = Yii::$app->db->createCommand("
+                    SELECT ID_NHOM FROM profile_baoduong_noidung JOIN noidungbaotrinhomtbi ON profile_baoduong_noidung.MA_NOIDUNG = noidungbaotrinhomtbi.MA_NOIDUNG WHERE profile_baoduong_noidung.ID_PROFILE = ".$post['profile_baoduong']." GROUP BY noidungbaotrinhomtbi.ID_NHOM
+                ")->queryAll();
+                $arr_nhomtbi = [];
+                foreach ($nhomtbi as $each) {
+                    $arr_nhomtbi[] = $each["ID_NHOM"];
                 }
-                $str = implode(',', $post['Dotbaoduong']['ID_TRAM']);
-                $sql = "SELECT DISTINCT ID_TRAM FROM `thietbitram` LEFT JOIN `thietbi` ON `thietbitram`.`ID_LOAITB` = `thietbi`.`ID_THIETBI` WHERE (`thietbi`.`ID_NHOM`=14) AND (`ID_TRAM` IN ($str))";
+                $str_nhomtbi = implode(',', $arr_nhomtbi);
+                // var_dump($str_nhomtbi); die;
+                $str_tram = implode(',', $post['Dotbaoduong']['ID_TRAM']);
+                $sql = "SELECT DISTINCT ID_TRAM FROM `thietbitram` LEFT JOIN `thietbi` ON `thietbitram`.`ID_LOAITB` = `thietbi`.`ID_THIETBI` WHERE (`thietbi`.`ID_NHOM` IN ($str_tram)) AND (`ID_TRAM` IN ($str_tram))";
                 $all = Yii::$app->db->createCommand($sql)->queryAll();
                 $bdt = Baoduongtong::findOne($post['Dotbaoduong']['ID_BDT']);
                 foreach ($all as $tram) {
@@ -141,8 +155,10 @@ class DotbaoduongController extends Controller
                         $dbd->MA_DOTBD = $bdt->MA_BDT . '_' .$tram['ID_TRAM'];
                         $dbd->ID_TRAM = $tram['ID_TRAM'];
                         $dbd->ID_NHANVIEN = 0;
+                        $dbd->CREATED_AT = time();
+                        $dbd->CREATED_BY = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
                         $dbd->save(false);
-                        $dbd->taobaoduong($id_nhom, $post['profile_baoduong']);
+                        $dbd->taobaoduong($arr_nhomtbi, $post['profile_baoduong']);
                 }
                 
                 return $this->redirect(['#']);

@@ -10,6 +10,7 @@ use app\models\Thietbitram;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 
 /**
  * BaoduongtongController implements the CRUD actions for Baoduongtong model.
@@ -134,23 +135,24 @@ class BaoduongtongController extends Controller
 
     public function actionExport2($id)
     {
-        $start = time();
-        $list_thietbitram = Thietbitram::find()
-            // ->select('thietbitram.*, dotbaoduong.*')
-            ->joinWith('iDDOTBDs')
-            ->where(['dotbaoduong.ID_BDT' => $id])
-            ->all();
-        // var_dump($list_thietbitram[0]->iDDOTBDs[0]->noidungcongviecs); die;
+        
+        $list_thietbitram = Yii::$app->db->createCommand('SELECT noidungcongviec.*, dotbaoduong.*, nhanvien.TEN_NHANVIEN, tramvt.*, donvi.TEN_DONVI, thietbitram.* FROM `noidungcongviec` JOIN dotbaoduong ON dotbaoduong.ID_DOTBD = noidungcongviec.ID_DOTBD JOIN tramvt ON dotbaoduong.ID_TRAM = tramvt.ID_TRAM JOIN nhanvien ON dotbaoduong.ID_NHANVIEN = nhanvien.ID_NHANVIEN JOIN donvi ON nhanvien.ID_DONVI = donvi.ID_DONVI JOIN thietbitram ON noidungcongviec.ID_THIETBI = thietbitram.ID_THIETBI WHERE dotbaoduong.ID_BDT = '.$id.' GROUP BY thietbitram.ID_THIETBI')->queryAll();
+
+        $list_noidung = Yii::$app->db->createCommand('SELECT noidungbaotrinhomtbi.MA_NOIDUNG, noidungbaotrinhomtbi.NOIDUNG FROM (SELECT MA_NOIDUNG FROM `noidungcongviec` JOIN dotbaoduong ON dotbaoduong.ID_DOTBD = noidungcongviec.ID_DOTBD WHERE dotbaoduong.ID_BDT = ' . $id . ' GROUP BY MA_NOIDUNG) AS t JOIN noidungbaotrinhomtbi ON t.MA_NOIDUNG = noidungbaotrinhomtbi.MA_NOIDUNG')->queryAll();
+        
+        $list_congviec = Yii::$app->db->createCommand('SELECT noidungcongviec.*, dotbaoduong.*, nhanvien.TEN_NHANVIEN, tramvt.*, donvi.TEN_DONVI FROM `noidungcongviec` JOIN dotbaoduong ON dotbaoduong.ID_DOTBD = noidungcongviec.ID_DOTBD JOIN tramvt ON dotbaoduong.ID_TRAM = tramvt.ID_TRAM JOIN nhanvien ON dotbaoduong.ID_NHANVIEN = nhanvien.ID_NHANVIEN JOIN donvi ON nhanvien.ID_DONVI = donvi.ID_DONVI WHERE dotbaoduong.ID_BDT = ' . $id)->queryAll();
+        
+        // var_dump($list_congviec); die;
         $array[0][] = 'STT';
         $array[0][] = 'Mã trạm';
         $array[0][] = 'Tên trạm';
         $array[0][] = 'Tên trạm (HT)';
         $array[0][] = 'Băng tần';
         
-        $list_noidung = Noidungcongviec::find()->where(['ID_DOTBD' => $list_thietbitram[0]->iDDOTBDs[0]->ID_DOTBD])->groupBy('MA_NOIDUNG')->all();
         foreach ($list_noidung as $noidung) {
-            $array[0][] = $noidung->mANOIDUNG->NOIDUNG;
+            $array[0][] = $noidung["NOIDUNG"];
         }
+
         $array[0][] = 'Tồn tại';
         $array[0][] = 'Kiến nghị';
         $array[0][] = 'Người bảo dưỡng';
@@ -168,21 +170,109 @@ class BaoduongtongController extends Controller
         $array[0][] = 'Loại trạm';
         $array[0][] = 'Người ĐK';
         $array[0][] = 'Thời gian gửi ĐK';
-        $array[0][] = 'Tháng dự kiến DB';
+        $array[0][] = 'Tháng dự kiến BD';
         $array[0][] = 'Trạng thái';
-        echo '<table class="table table-bordered table-hover">
-        <tbody>';
-        foreach ($array as $row) {
-            echo '<tr>';
-            foreach ($row as $column) {
-                echo "<td>$column</td>";
+
+        $row = 1;
+        foreach ($list_thietbitram as $thietbitram) { 
+            // foreach ($thietbitram as $key => $value) {
+            //     echo "<br>$key :";
+            //     var_dump($value);
+            // }
+            // exit;
+            $array[$row][] = $row;
+            $array[$row][] = $thietbitram["TEN_MA"];
+            $array[$row][] = $thietbitram["TEN_TRAM2"];
+            $array[$row][] = $thietbitram["TEN_MA"];
+            $array[$row][] = 'GMS900/U900...';
+            
+            $tontai = ''; $kiennghi = '';
+            foreach ($list_noidung as $noidung) {
+                // var_dump($thietbitram);
+                $result = Yii::$app->arrayhelper->search($list_congviec, ['ID_THIETBI' => $thietbitram["ID_THIETBI"], 'MA_NOIDUNG' => $noidung["MA_NOIDUNG"]]);
+                // die(var_dump($result[0]));
+                $result = $result[0];
+                is_null($result["SOLIEUTHUCTE"]) ? $array[$row][] = $result["KETQUA"] : $array[$row][] = $result["SOLIEUTHUCTE"];
+                
+                if(!is_null($result["GHICHU"]))  {
+                    $tontai .= $result["GHICHU"] . ". ";
+                }
+
+
+                if(is_null($result["KIENNGHI"]) || $result["KIENNGHI"] == "" )  {
+                    continue;
+                } else {
+                    $kiennghi .= $result["KIENNGHI"] . ". ";
+                }
             }
-            echo '</tr>';
+            
+            $array[$row][] = $tontai;
+            $array[$row][] = $kiennghi;
+            
+            $array[$row][] = $thietbitram["TEN_NHANVIEN"];
+            $array[$row][] = $thietbitram["TEN_DONVI"];
+            $array[$row][] = $thietbitram["NGAY_KT"];
+            $array[$row][] = $thietbitram["TEN_NHANVIEN"];
+            $array[$row][] = $thietbitram["NGAY_KT"];
+            $array[$row][] = $thietbitram["MA_TRAM"];
+            $array[$row][] = $thietbitram["TEN_TRAM"];
+            $array[$row][] = $thietbitram["XAPHUONG"]; //xa
+            $array[$row][] = $thietbitram["QUANHUYEN"]; //huyen
+            $array[$row][] = $thietbitram["KINH_DO"]; //longtitude
+            $array[$row][] = $thietbitram["VI_DO"]; //latitude
+            $array[$row][] = $thietbitram["NGAYHD"]; //NGAYHD
+            $array[$row][] = $thietbitram["KIEUTRAM"]; 
+            $array[$row][] = $thietbitram["CREATED_BY"]; 
+            $array[$row][] = date('d/m/Y H:i', $thietbitram["CREATED_AT"]); 
+            $array[$row][] = $thietbitram["NGAY_KT_DUKIEN"]; 
+            $array[$row][] = $thietbitram["TRANGTHAI"]; 
+
+
+
+            //////////
+            $row++;
         }
-        echo '</tbody>
-        </table>';
-        exit;
+        
+        // write to excel
+
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->fromArray(
+            $array,
+            '',
+            'A1'         
+        );
+
+        // foreach ($array as $row_num => $row) {
+        //     foreach ($row as $col_num => $cell_value) {
+        //         $sheet->getCellByColumnAndRow($col_num, $row_num)->setValue($cell_value);
+        //     }
+        // }
+
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $file_name = "Export_".date('Ymd_His');
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="'.$file_name.'.xlsx"');
+        header('Cache-Control: max-age=0');
+
+        $writer->save("php://output");
+        
+        ////Echo to test
+        // echo '<table class="table table-bordered table-hover">
+        // <tbody>';
+        // foreach ($array as $row) {
+        //     echo '<tr>';
+        //     foreach ($row as $column) {
+        //         echo "<td>$column</td>";
+        //     }
+        //     echo '</tr>';
+        // }
+        // echo '</tbody>
+        // </table>';
+        
         // echo sizeof($list_thietbitram[0]->iDDOTBDs[0]->noidungcongviecs) . " records with " . (int) (time() - $start);
+        exit;
     }
 
     /**
