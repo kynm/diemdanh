@@ -181,6 +181,10 @@ $this->title = 'Dashboard';
     <div class="box box-primary">
         <div class="box-header with-border">
             <h3 class="box-title"><?= 'Chi tiết '. $bdt->MO_TA ?></h3>
+            <div class="box-tools pull-right">
+                <button type="button" onclick='updateQLT()' class="btn"><i class="fa fa-refresh"></i> Cập nhật điều chỉnh QLT
+                </button>
+            </div>
         </div>
             <div class="table-responsive">
                 <?php 
@@ -264,3 +268,15 @@ $this->title = 'Dashboard';
     </div>
     <?php } ?>
 </div>
+<script>
+function updateQLT() {
+    $.ajax({
+        url: 'vnpt_mds/dotbaoduong/reload?id='+<?= $bdt->ID_BDT ?>,
+        data: '',
+        success:function(data){
+               alert(data);
+               $.pjax.reload({container:'#p0'});
+        }
+    });
+}
+</script>

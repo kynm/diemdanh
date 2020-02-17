@@ -34,7 +34,7 @@ $this->registerJs('$("#searchBtn").children("i.fa-spin").hide();')
 		<div class="box-body">
 			<div class="col col-md-4">
 				<div class="col-sm-12">
-					<?= $form->field($model, 'ID_BDT')->dropDownList(ArrayHelper::map(Baoduongtong::find()->all(), 'ID_BDT', 'MO_TA')) ?>
+					<?= $form->field($model, 'ID_BDT')->dropDownList(ArrayHelper::map(Baoduongtong::find()->where(['TYPE' => 0])->all(), 'ID_BDT', 'MO_TA')) ?>
 				</div>
 				<div class="col-sm-12">
 					<a class="modalButton" href="<?=Url::to(['baoduongtong/create'])?>">Thêm mới</a>

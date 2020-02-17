@@ -146,7 +146,7 @@ class DotbaoduongController extends Controller
                 $str_nhomtbi = implode(',', $arr_nhomtbi);
                 // var_dump($str_nhomtbi); die;
                 $str_tram = implode(',', $post['Dotbaoduong']['ID_TRAM']);
-                $sql = "SELECT DISTINCT ID_TRAM FROM `thietbitram` LEFT JOIN `thietbi` ON `thietbitram`.`ID_LOAITB` = `thietbi`.`ID_THIETBI` WHERE (`thietbi`.`ID_NHOM` IN ($str_tram)) AND (`ID_TRAM` IN ($str_tram))";
+                $sql = "SELECT DISTINCT ID_TRAM FROM `thietbitram` LEFT JOIN `thietbi` ON `thietbitram`.`ID_LOAITB` = `thietbi`.`ID_THIETBI` WHERE (`thietbi`.`ID_NHOM` IN ($str_nhomtbi)) AND (`ID_TRAM` IN ($str_tram))";
                 $all = Yii::$app->db->createCommand($sql)->queryAll();
                 $bdt = Baoduongtong::findOne($post['Dotbaoduong']['ID_BDT']);
                 foreach ($all as $tram) {
@@ -199,21 +199,31 @@ class DotbaoduongController extends Controller
 
     public function actionReload($id)
     {
-        $listDotbd = Dotbaoduong::findAll(['ID_BDT' => $id]);
-        $i = 0;
-        foreach ($listDotbd as $dbd) {
-            if ($dbd->ID_NHANVIEN !== $dbd->tRAMVT->ID_NHANVIEN) {
-                $dbd->ID_NHANVIEN = $dbd->tRAMVT->ID_NHANVIEN;
-                $dbd->save(false);
-                Yii::$app->db->createCommand('
-                    UPDATE `noidungcongviec` 
-                        SET `ID_NHANVIEN` = '.$dbd->tRAMVT->ID_NHANVIEN.' 
-                        WHERE `noidungcongviec`.`ID_DOTBD` = '.$dbd->ID_DOTBD
-                )->execute();
-                $i++;
+        if (Yii::$app->user->can("edit-tramvt")) {
+            $bdt = Baoduongtong::findOne($id);
+            if ($bdt->TRANGTHAI == 'dangthuchien') {
+                $listDotbd = Dotbaoduong::findAll(['ID_BDT' => $id]);
+                $i = 0;
+                foreach ($listDotbd as $dbd) {
+                    if ($dbd->ID_NHANVIEN !== $dbd->tRAMVT->ID_NHANVIEN) {
+                        $dbd->ID_NHANVIEN = $dbd->tRAMVT->ID_NHANVIEN;
+                        $dbd->save(false);
+                        Yii::$app->db->createCommand('
+                            UPDATE `noidungcongviec` 
+                                SET `ID_NHANVIEN` = '.$dbd->tRAMVT->ID_NHANVIEN.' 
+                                WHERE `noidungcongviec`.`ID_DOTBD` = '.$dbd->ID_DOTBD
+                        )->execute();
+                        $i++;
+                    }
+                }
+                echo "Đã cập nhật quản lý cho $i trạm trong đợt KTNT này.";
+            } else {
+                echo "Đợt bảo dưỡng ko được phép thay đổi quản lý trạm."; exit;
             }
+        } else {
+            echo "Tài khoản không có quyền cập nhật.";
+            exit;
         }
-        echo "Done! $i";
     }
 
     /**

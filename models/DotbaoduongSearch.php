@@ -130,14 +130,15 @@ class DotbaoduongSearch extends Dotbaoduong
 
     public function searchGiaonhiemvu($params)
     {
-        $query = Dotbaoduong::find()->where(['dotbaoduong.TRANGTHAI' => 'kehoach'])->orderBy(['NGAY_BD' => SORT_ASC]);
+        $query = Dotbaoduong::find()
+            ->joinWith('baoduongtong')
+            ->where(['dotbaoduong.TRANGTHAI' => ['dangthuchien', 'kehoach'], 'baoduongtong.TYPE' => 0])->orderBy(['NGAY_BD' => SORT_ASC]);
 
         // add conditions that should always apply here
         $query->joinWith('tRAMVT');
         $query->joinWith('tRAMVT.iDDAI');
         $query->joinWith('nHANVIEN');
-        $query->joinWith('baoduongtong');
-        // $query->andWhere(['<>', 'baoduongtong.TYPE', 2]);
+        // $query
         
         if (Yii::$app->user->identity->nhanvien->chucvu->cap == 2) {
             $query->andWhere(['daivt.ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI]);

@@ -42,7 +42,7 @@ $this->title = "Giao nhiệm vụ cho tổ trưởng";
                         [
                             'attribute' => 'ID_BDT',
                             'value' => 'baoduongtong.MA_BDT',
-                            'filter'=>ArrayHelper::map(Baoduongtong::find()->asArray()->all(), 'MA_BDT', 'MA_BDT'),
+                            'filter'=>ArrayHelper::map(Baoduongtong::find()->where(["TYPE" => 0])->asArray()->all(), 'MA_BDT', 'MA_BDT'),
                         ],
                     ],
                   ]); ?>

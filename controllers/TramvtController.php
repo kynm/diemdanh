@@ -347,7 +347,10 @@ class TramvtController extends Controller
         $count = 0;
         foreach ($data as $row) {
             // var_dump($row); die;
+            $model = Tramvt::findOne(['MA_TRAM' => $row["MaCSHT"]]);
+            // var_dump($model); die;
             if (is_null($model = Tramvt::findOne(['MA_TRAM' => $row["MaCSHT"]]))) {
+                echo "Chưa có trạm ".$row["CSHT"];
                 $model = new Tramvt;
                 $model->MA_TRAM = $row["MaCSHT"];
                 $model->TEN_TRAM = $row["CSHT"];
@@ -362,17 +365,19 @@ class TramvtController extends Controller
                 $model->ID_NHANVIEN = 0;
                 $model->LOAITRAM = $row["Nhom"];
                 // $model->KIEUTRAM = "";
-                $model->save(false);
+                $model->save();
+                echo " - Đã thêm<br>";
                 $count++;
                 continue;
             } else {
+                echo "Đã có trạm ".$row["CSHT"]."<br>";
                 $model->QUANHUYEN = $row["Quan"];
                 $model->XAPHUONG = $row["Xa"];
                 $model->NGAYHD = date('Y-m-d', strtotime($row["NgayHD"]));
                 $model->save(false);
             }
-        echo "Done! $count trạm đc thêm!"; exit;
         }
+        echo "Done! $count trạm đc thêm!"; exit;
     }
     /**
      * Finds the Tramvt model based on its primary key value.

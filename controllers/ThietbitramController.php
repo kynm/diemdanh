@@ -356,6 +356,26 @@ class ThietbitramController extends Controller
         }
     }
 
+    public function actionAddCsht($begin)
+    {
+        $list_tram = Tramvt::find()->where(['>', 'ID_TRAM', $begin])->asArray()->all();
+        // var_dump($list_tram); exit;
+        foreach ($list_tram as $tram) {
+            if(is_null(Thietbitram::findOne(['ID_TRAM' => $tram['ID_TRAM'], 'ID_LOAITB' => 111]))) {
+                $csht = new Thietbitram;
+                $csht->ID_LOAITB = 111;
+                $csht->ID_TRAM = $tram['ID_TRAM'];
+                $csht->SERIAL_MAC = $tram['MA_TRAM'];
+                $csht->NGAYSX = "2019-06-01";
+                $csht->NGAYSD = "2019-06-01";
+                $csht->save(false);
+            } else {
+                echo "Đã có CSHT <br>";
+            }
+        }
+        exit;
+    }
+
     /**
      * Finds the Thietbitram model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

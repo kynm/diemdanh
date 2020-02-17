@@ -96,6 +96,11 @@ class CongviecController extends Controller
                     $model = Dotbaoduong::findOne(['ID_DOTBD' => $each]);
                     $model->ID_NHANVIEN = Yii::$app->request->get('ID_NHANVIEN');
                     $model->save(false);
+                    Yii::$app->db->createCommand('
+                        UPDATE `noidungcongviec` 
+                            SET `ID_NHANVIEN` = '.Yii::$app->request->get('ID_NHANVIEN').' 
+                            WHERE `noidungcongviec`.`ID_DOTBD` = '.$each
+                    )->execute();
                     $i++;
                 }
                 Yii::$app->session->setFlash('success', "Giao thành công $i đợt bảo dưỡng.");
