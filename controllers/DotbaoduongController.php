@@ -144,7 +144,6 @@ class DotbaoduongController extends Controller
                     $arr_nhomtbi[] = $each["ID_NHOM"];
                 }
                 $str_nhomtbi = implode(',', $arr_nhomtbi);
-                // var_dump($str_nhomtbi); die;
                 $str_tram = implode(',', $post['Dotbaoduong']['ID_TRAM']);
                 $sql = "SELECT DISTINCT ID_TRAM FROM `thietbitram` LEFT JOIN `thietbi` ON `thietbitram`.`ID_LOAITB` = `thietbi`.`ID_THIETBI` WHERE (`thietbi`.`ID_NHOM` IN ($str_nhomtbi)) AND (`ID_TRAM` IN ($str_tram))";
                 $all = Yii::$app->db->createCommand($sql)->queryAll();

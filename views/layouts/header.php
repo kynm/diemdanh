@@ -21,10 +21,14 @@ use app\models\Thietbitram;
           <!-- Navbar Right Menu -->
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
+              <li><a href="<?= Url::to(['site/baoduong'])?>">
+                  Bảo dưỡng
+                </a></li>
               <li class="task-menu">
                 <a href="<?= Url::to(['site/logout'])?>" data-method="post">
                   <i class="fa fa-sign-out"></i> Đăng xuất
                 </a>
+
               </li>
             </ul>
           </div>
