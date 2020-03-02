@@ -4,6 +4,8 @@ use yii\helpers\Url;
 use yii\widgets\LinkPager;
 ?>
 <input type="hidden" name="url" id="url" value="<?= Url::to(['congvieccanhan/hoanthanh']) ?>">
+<input type="hidden" name="urlxacnhan" id="urlxacnhan" value="<?= Url::to(['congvieccanhan/xacnhantatca']) ?>">
+<input type="hidden" name="ID_DOTBD" value="<?= Html::encode("{$data['THONGTIN_DBD']['ID_DOTBD']}") ?>" id="ID_DOTBD">
 <h1><?= Html::encode("{$data['THONGTIN_DBD']['TRAMVT']->TEN_TRAM}  --  {$data['THONGTIN_DBD']['TRAMVT']->DIADIEM}")?></h1>
 <h1>Danh sách công việc</h1>
 <h3><?= Html::encode("{$data['THONGTIN_DBD']['MA_DOTBD']} -  {$data['THONGTIN_DBD']['TRANGTHAI']} -  {$data['THONGTIN_DBD']['NGAY_BD']}  -   {$data['THONGTIN_DBD']['NGAY_KT']}")?></h3>
@@ -16,14 +18,37 @@ use yii\widgets\LinkPager;
   <ul class="todo-list">
     <?php foreach ($dscongviec as $congviec): ?>
         <li>
-            <input onclick="xulycongviec(<?= Html::encode("{$congviec['ID_DOTBD']}") ?>, <?= Html::encode("{$congviec['ID_THIETBI']}") ?>, '<?= Html::encode("{$congviec['NOIDUNG']['MA_NOIDUNG']}") ?>')" type="checkbox" <?php echo $congviec['TRANGTHAI'] == 'cho_xac_nhan' ? 'checked' : ''; ?> >
+            <input onclick="xulycongviec(<?= Html::encode("{$congviec['ID_DOTBD']}") ?>, <?= Html::encode("{$congviec['ID_THIETBI']}") ?>, '<?= Html::encode("{$congviec['NOIDUNG']['MA_NOIDUNG']}") ?>')" type="checkbox" <?php echo $congviec['TRANGTHAI'] ? 'checked' : ''; ?> >
             <span class="text"><?= Html::encode("{$congviec['NOIDUNG']['NOIDUNG']} ({$congviec['NOIDUNG']['MA_NOIDUNG']})") ?></span>
             <span class="text"><?= Html::encode("{$congviec['ID_DOTBD']} {$congviec['ID_THIETBI']}") ?></span>
             <small class="label label-danger"><i class="fa fa-clock-o"></i> </small>
         </li>
      <?php endforeach; ?>
+     <li>
+           
+     </li>
   </ul>
 </div>
+</div>
+<?php endforeach; ?>
+<div class="box box-primary">
+    <div class="box-header">
+        <h3 class="box-title">Hình ảnh đợt bảo dưỡng</h3>
+    </div>
+    <div class="box-body">
+        <ul class="todo-list">
+            <input type="file" id="img1" name="img1" accept="image/*">
+            <input type="file" id="img2" name="img2" accept="image/*">
+            <input type="file" id="img3" name="img3" accept="image/*">
+        </ul>
+    </div>
+</div>
+<div class="box">
+    <div class="box-body">
+        <ul class="todo-list">
+            <button class="btn btn-default btn-primary" id="xacnhantatca">Xác nhận</button>
+        </ul>
+    </div>
 </div>
 <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
  <div class="modal-dialog">
@@ -35,7 +60,6 @@ use yii\widgets\LinkPager;
       <div class="modal-body">
         <div class="form-group">
             <label>Kết quả</label>
-            <input type="hidden" name="ID_DOTBD" value="" id="ID_DOTBD">
             <input type="hidden" name="ID_THIETBI" id="ID_THIETBI">
             <input type="hidden" name="MA_NOIDUNG" id="MA_NOIDUNG">
             <select id="KETQUABAODUONG" class="form-control" id="KETQUABAODUONG">
@@ -55,7 +79,6 @@ use yii\widgets\LinkPager;
     </div>
   </div>
 </div>
-<?php endforeach; ?>
 <script type="text/javascript">
     function xulycongviec(ID_DOTBD, ID_THIETBI, MA_NOIDUNG) {
         var url = $("#url").val();
@@ -85,6 +108,24 @@ use yii\widgets\LinkPager;
 <?php
 $script = <<< JS
     $( document ).ready(function() {
+        $("#xacnhantatca").on( "click", function() {
+          var ID_DOTBD = $("#ID_DOTBD").val();
+          var urlxacnhan = $("#urlxacnhan").val();
+          var KETQUABAODUONG = $("#KETQUABAODUONG").val();
+            $.ajax({
+                url: urlxacnhan ,
+                method: 'post',
+                data: {
+                    ID_DOTBD: ID_DOTBD,
+                    KETQUA: 1,
+                },
+                success:function(data) {
+                    console.log(data);
+                }
+            });
+        });
+
+
         $("#hoanthanhconviec").on( "click", function() {
           var ID_DOTBD = $("#ID_DOTBD").val();
           var ID_THIETBI = $("#ID_THIETBI").val();

@@ -225,7 +225,6 @@ class DotbaoduongcanhanController extends Controller
             $congviec[$each->tHIETBI->iDLOAITB->TEN_THIETBI][] = $array;
         }
         $data["DS_CONGVIEC"] = $congviec;
-        
         return $this->render('xemdotbaoduong', [
             'data' => $data,
         ]);

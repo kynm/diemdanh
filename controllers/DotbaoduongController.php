@@ -258,12 +258,19 @@ class DotbaoduongController extends Controller
                 $each['name'] = $ttvt->TEN_DONVI;
                 $each['id'] = $i;
                 $each['labels'] = ['Kế hoạch', 'Đang thực hiện', 'Chưa thực hiện', 'Chưa hoàn thành', 'Kết thúc'];
-                $each['dataset'][] = round(100 * Dotbaoduong::find()->where(['ID_BDT' => $id, 'TRANGTHAI' => 'kehoach'])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count() / Dotbaoduong::find()->where(['ID_BDT' => $id])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count(), 2);
-                $each['dataset'][] = round(100 * Dotbaoduong::find()->where(['ID_BDT' => $id, 'TRANGTHAI' => 'dangthuchien'])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count() / Dotbaoduong::find()->where(['ID_BDT' => $id])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count(), 2);
-                $each['dataset'][] = round(100 * Dotbaoduong::find()->where(['ID_BDT' => $id, 'TRANGTHAI' => 'chuathuchien'])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count() / Dotbaoduong::find()->where(['ID_BDT' => $id])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count(), 2);
-                $each['dataset'][] = round(100 * Dotbaoduong::find()->where(['ID_BDT' => $id, 'TRANGTHAI' => 'chuahoanthanh'])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count() / Dotbaoduong::find()->where(['ID_BDT' => $id])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count(), 2);
-                $each['dataset'][] = round(100 * Dotbaoduong::find()->where(['ID_BDT' => $id, 'TRANGTHAI' => 'ketthuc'])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count() / Dotbaoduong::find()->where(['ID_BDT' => $id])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count(), 2);
-                $each['tyle'] = Dotbaoduong::find()->where(['ID_BDT' => $id, 'TRANGTHAI' => 'ketthuc'])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count() ."/". Dotbaoduong::find()->where(['ID_BDT' => $id])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count();
+                $sodotbaoduongtram = Dotbaoduong::find()->where(['ID_BDT' => $id])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count();
+                $sodotbaoduongkehoach = Dotbaoduong::find()->where(['ID_BDT' => $id, 'TRANGTHAI' => 'kehoach'])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count();
+                $sodotbaoduongdantthuchien = Dotbaoduong::find()->where(['ID_BDT' => $id, 'TRANGTHAI' => 'dangthuchien'])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count();
+                $sodotbaoduongchuahoanthanh = Dotbaoduong::find()->where(['ID_BDT' => $id, 'TRANGTHAI' => 'chuahoanthanh'])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count();
+                $sodotbaoduonghoanthanh = Dotbaoduong::find()->where(['ID_BDT' => $id, 'TRANGTHAI' => 'ketthuc'])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count();
+                $each['dataset'] = [];
+                if ($sodotbaoduongtram) {
+                    $each['dataset'][] = round(100 *  $sodotbaoduongkehoach / $sodotbaoduongtram, 2);
+                    $each['dataset'][] = round(100 * $sodotbaoduongdantthuchien / $sodotbaoduongtram, 2);
+                    $each['dataset'][] = round(100 * $sodotbaoduongchuahoanthanh / $sodotbaoduongtram, 2);
+                    $each['dataset'][] = round(100 * $sodotbaoduonghoanthanh / $sodotbaoduongtram, 2);
+                }
+                $each['tyle'] = Dotbaoduong::find()->where(['ID_BDT' => $id, 'TRANGTHAI' => 'ketthuc'])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count() ."/". $sodotbaoduongtram;
                 $data[] = $each;
                 // print_r($each); echo "<hr>";
             }

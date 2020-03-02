@@ -131,7 +131,7 @@ class CongvieccanhanController extends Controller
             foreach ($listNoidung as $noidung) {
                 if ($noidung->TRANGTHAI === NULL) {
                     $count++;
-                } elseif ($noidung->TRANGTHAI === 'Hoàn thành') {
+                } elseif ($noidung->TRANGTHAI === 'hoan_thanh') {
                     continue;
                 } else {
                     $noidung->TRANGTHAI = "hoan_thanh";
@@ -143,7 +143,7 @@ class CongvieccanhanController extends Controller
             foreach ($listNoidung as $noidung) {
                 if ($noidung->TRANGTHAI === NULL) {
                     $count++;
-                } elseif ($noidung->TRANGTHAI === 'Hoàn thành') {
+                } elseif ($noidung->TRANGTHAI === 'hoan_thanh') {
                     continue;
                 } else {   
                     $noidung->TRANGTHAI = "hoan_thanh";
@@ -152,8 +152,10 @@ class CongvieccanhanController extends Controller
                 }
             }
         }
+
+
+        return json_encode(["message" => "False!","error" => "0"], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
                 
-        Yii::$app->api->sendSuccessResponse(["message" =>"Còn $count nội dung nhân viên chưa hoàn thành!"]);
     }
 
     public function actionUpload()

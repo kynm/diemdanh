@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'name' => 'ID_BDT',
                 'id' => 'ID_BDT',
                 'value' => '',
-                'data' => ArrayHelper::map(Baoduongtong::find()->where(['type' => 2])->all(), 'ID_BDT', 'MA_BDT'),
+                'data' => ArrayHelper::map(Baoduongtong::find()->where(['type' => 0])->all(), 'ID_BDT', 'MA_BDT'),
                 'theme' => Select2::THEME_BOOTSTRAP,
                 'options' => ['placeholder' => 'Chọn đợt kiểm tra nhà trạm...'],
                 'pluginOptions' => [

@@ -40,6 +40,7 @@ if (Yii::$app->controller->action->id === 'login') {
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
         <base href="/"> 
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     </head>
     <body>
     <?php $this->beginBody() ?>
