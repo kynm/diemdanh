@@ -208,7 +208,6 @@ class BaoduongtongController extends Controller
             
             $array[$row][] = $tontai;
             $array[$row][] = $kiennghi;
-            
             $array[$row][] = $thietbitram["TEN_NHANVIEN"];
             $array[$row][] = $thietbitram["TEN_DONVI"];
             $array[$row][] = $thietbitram["NGAY_KT"];
@@ -226,10 +225,6 @@ class BaoduongtongController extends Controller
             $array[$row][] = date('d/m/Y H:i', $thietbitram["CREATED_AT"]); 
             $array[$row][] = $thietbitram["NGAY_KT_DUKIEN"]; 
             $array[$row][] = $thietbitram["TRANGTHAI"]; 
-
-
-
-            //////////
             $row++;
         }
         

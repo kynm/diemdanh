@@ -99,7 +99,7 @@ class ThietbitramController extends Controller
             $model = new Thietbitram();
 
             if ($model->load(Yii::$app->request->post())) {
-
+                $model->TEN_MA = '';
                 if ($model->save()) {
                     $thietbi = new Dieuchuyenthietbi;
                     $thietbi->ID_THIETBI = $model->ID_THIETBI;

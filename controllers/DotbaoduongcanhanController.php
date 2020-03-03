@@ -34,7 +34,7 @@ class DotbaoduongcanhanController extends Controller
                     // 'danhsachcanhan' => ['GET'],
                     'index' => ['GET'],
                     'thuchien' => ['GET'],
-                    'hoanthanh' => ['GET'],
+                    'hoanthanh' => ['POST'],
                     'upload' => ['POST'],
                 ],
             ],
@@ -278,20 +278,26 @@ class DotbaoduongcanhanController extends Controller
         }
     }
         
-    public function actionHoanthanh($id)
+    public function actionHoanthanh()
     {
+        $key = Yii::$app->request->bodyParams;
+        $id = $key['ID_DOTBD'];
         $dotbd = Dotbaoduong::findOne($id);
         $hoanthanh = Noidungcongviec::find()->where(['ID_DOTBD' => $id])
-            ->andWhere(['TRANGTHAI' => 'Hoàn thành'])
+            ->andWhere(['TRANGTHAI' => 'hoan_thanh'])
             ->count();
         $all = Noidungcongviec::find()->where(['ID_DOTBD' => $id])
             ->count();
         // $check_image = Images::find()->where(['MA_DOTBD' => $dotbd->MA_DOTBD, 'type' => 0])->exists();
         $count = Images::find()->where(['MA_DOTBD' => $dotbd->MA_DOTBD, 'type' => 0])->count();
+        $errors = [
+            'error' => 1,
+            'message' => '',
+        ];
         if ($hoanthanh !== $all) {
-            Yii::$app->api->sendFailedResponse("Còn nội dung công việc chưa hoàn thành!");
-        } elseif ($count < 3) {
-            Yii::$app->api->sendFailedResponse("Nhân viên bảo dưỡng chưa upload đủ hình ảnh");
+            $errors['message'] = 'Còn nội dung công việc chưa hoàn thành!';
+        } elseif ($count < 0) {
+            $errors['message'] = 'Nhân viên bảo dưỡng chưa upload đủ hình ảnh';
         } else {
             $dotbd->NGAY_KT = date('Y-m-d');
             $dotbd->TRANGTHAI = 'ketthuc';
@@ -301,11 +307,13 @@ class DotbaoduongcanhanController extends Controller
                 $tramvt->NGAY_KTNT = $dotbd->NGAY_KT;
                 $tramvt->save(false);
             }
-            Yii::$app->api->sendSuccessResponse("Success");
+            $errors['error'] = 0;
+            $errors['message'] = 'Success';
         }
+
+        return json_encode($errors, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+
     }
-        
-            
 
     public function actionGetImages($id, $type = '')
     {

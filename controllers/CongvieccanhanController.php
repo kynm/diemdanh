@@ -93,7 +93,7 @@ class CongvieccanhanController extends Controller
         if(!$model) {
         return json_encode(["message" => "Success!","error" => "1"], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
         }
-        
+
         $model->TRANGTHAI = "cho_xac_nhan";
         $model->KETQUA = NULL;
         $model->save(false);

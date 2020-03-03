@@ -5,6 +5,7 @@ use yii\widgets\LinkPager;
 ?>
 <input type="hidden" name="url" id="url" value="<?= Url::to(['congvieccanhan/hoanthanh']) ?>">
 <input type="hidden" name="urlxacnhan" id="urlxacnhan" value="<?= Url::to(['congvieccanhan/xacnhantatca']) ?>">
+<input type="hidden" name="urlketthuc" id="urlketthuc" value="<?= Url::to(['dotbaoduongcanhan/hoanthanh']) ?>">
 <input type="hidden" name="ID_DOTBD" value="<?= Html::encode("{$data['THONGTIN_DBD']['ID_DOTBD']}") ?>" id="ID_DOTBD">
 <h1><?= Html::encode("{$data['THONGTIN_DBD']['TRAMVT']->TEN_TRAM}  --  {$data['THONGTIN_DBD']['TRAMVT']->DIADIEM}")?></h1>
 <h1>Danh sách công việc</h1>
@@ -46,7 +47,8 @@ use yii\widgets\LinkPager;
 <div class="box">
     <div class="box-body">
         <ul class="todo-list">
-            <button class="btn btn-default btn-primary" id="xacnhantatca">Xác nhận</button>
+            <button class="btn btn-default btn-primary" id="xacnhantatca">Xác nhận tổ trưởng</button>
+            <button class="btn btn-default btn-success" id="ketthucdotbaoduong">Kết thúc đợt bảo dưỡng</button>
         </ul>
     </div>
 </div>
@@ -92,7 +94,7 @@ use yii\widgets\LinkPager;
             },
             success:function(data) {
                 if (!data.error) {
-                    alert('Đã cập nhật');
+                    Swal.fire('Đã cập nhật');
                 }
                 // $('#myModal').modal('hide');
             }
@@ -125,6 +127,21 @@ $script = <<< JS
             });
         });
 
+        $("#ketthucdotbaoduong").on( "click", function() {
+          var ID_DOTBD = $("#ID_DOTBD").val();
+          var urlketthuc = $("#urlketthuc").val();
+          var KETQUABAODUONG = $("#KETQUABAODUONG").val();
+            $.ajax({
+                url: urlketthuc ,
+                method: 'post',
+                data: {
+                    ID_DOTBD: ID_DOTBD,
+                },
+                success:function(data) {
+                    console.log(data);
+                }
+            });
+        });
 
         $("#hoanthanhconviec").on( "click", function() {
           var ID_DOTBD = $("#ID_DOTBD").val();

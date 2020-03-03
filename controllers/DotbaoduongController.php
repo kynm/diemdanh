@@ -120,7 +120,7 @@ class DotbaoduongController extends Controller
             }
             $dsNhanvien = $query->all();
             foreach ($dsNhanvien as $each) {
-                $list[] = ['ID_NHANVIEN' => $each->ID_NHANVIEN, 'TEN_NHANVIEN' => $each->TEN_NHANVIEN . ' - ' . $each->chucvu->ten_chucvu .' - '. $each->iDDAI->TEN_DAIVT];
+                $list[] = ['ID_NHANVIEN' => $each->ID_NHANVIEN, 'TEN_NHANVIEN' => $each->TEN_NHANVIEN . ' - ' . $each->chucvu->ten_chucvu .' - '. ($each->iDDAI->TEN_DAIVT ?? '')];
             }
 
             $listNhanvien = ArrayHelper::map($list, 'ID_NHANVIEN', 'TEN_NHANVIEN');
@@ -252,7 +252,7 @@ class DotbaoduongController extends Controller
             $bdt = Baoduongtong::findOne($id);
             $searchModel = new DotbaoduongSearch();
             $dataProvider = $searchModel->searchBaocaoktnt($id, Yii::$app->request->queryParams);
-            for ($i=4; $i<=7 ; $i++) {
+            for ($i=2; $i<=7 ; $i++) {
                 $each = [];
                 $ttvt = Donvi::findOne($i);
                 $each['name'] = $ttvt->TEN_DONVI;
@@ -261,12 +261,13 @@ class DotbaoduongController extends Controller
                 $sodotbaoduongtram = Dotbaoduong::find()->where(['ID_BDT' => $id])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count();
                 $sodotbaoduongkehoach = Dotbaoduong::find()->where(['ID_BDT' => $id, 'TRANGTHAI' => 'kehoach'])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count();
                 $sodotbaoduongdantthuchien = Dotbaoduong::find()->where(['ID_BDT' => $id, 'TRANGTHAI' => 'dangthuchien'])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count();
-                $sodotbaoduongchuahoanthanh = Dotbaoduong::find()->where(['ID_BDT' => $id, 'TRANGTHAI' => 'chuahoanthanh'])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count();
+                $sodotbaoduongchuahoanthanh = Dotbaoduong::find()->where(['ID_BDT' => $id, 'TRANGTHAI' => 'hoan_thanh'])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count();
                 $sodotbaoduonghoanthanh = Dotbaoduong::find()->where(['ID_BDT' => $id, 'TRANGTHAI' => 'ketthuc'])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count();
                 $each['dataset'] = [];
                 if ($sodotbaoduongtram) {
                     $each['dataset'][] = round(100 *  $sodotbaoduongkehoach / $sodotbaoduongtram, 2);
                     $each['dataset'][] = round(100 * $sodotbaoduongdantthuchien / $sodotbaoduongtram, 2);
+                    $each['dataset'][] = round(100 * $sodotbaoduongchuahoanthanh / $sodotbaoduongtram, 2);
                     $each['dataset'][] = round(100 * $sodotbaoduongchuahoanthanh / $sodotbaoduongtram, 2);
                     $each['dataset'][] = round(100 * $sodotbaoduonghoanthanh / $sodotbaoduongtram, 2);
                 }
