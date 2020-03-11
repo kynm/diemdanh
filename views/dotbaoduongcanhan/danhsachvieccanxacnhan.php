@@ -37,15 +37,19 @@ use yii\widgets\LinkPager;
     <!-- /.box-header -->
     <div class="box-body">
       <ul class="products-list product-list-in-box">
-        <?php foreach ($baoduong['DS_DotBaoDuong'] as $dotbaodung): ?>
+        <?php foreach ($baoduong['DS_DotBaoDuong'] as $dotbaoduong): ?>
             <li class="item">
               <div>
-                <span href="javascript:void(0)" class="product-title"><?= Html::encode("{$dotbaodung->MA_DOTBD} ({$dotbaodung->ID_NHANVIEN})") ?></span>
+                <span href="javascript:void(0)" class="product-title"><?= Html::encode("{$dotbaoduong->MA_DOTBD} ({$dotbaoduong->ID_NHANVIEN})") ?></span>
                   <span class=" pull-right">
-                    <?= Html::a('Xác nhận', ['dotbaoduongcanhan/xacnhancongviec', 'id' => $dotbaodung->ID_DOTBD], ['class' => 'btn btn-warning']) ?>
+                    <?php if($dotbaoduong->TRANGTHAI == 'ketthuc') {?>
+                      <button class="btn btn-success">Đã xác nhận</button>
+                    <?php } elseif($dotbaoduong->TRANGTHAI == 'chuahoanthanh') {?>
+                      <?= Html::a('Xác nhận', ['dotbaoduongcanhan/xacnhancongviec', 'id' => $dotbaoduong->ID_DOTBD], ['class' => 'btn btn-warning']) ?>
+                    <?php }?>
                 </span>
                 <span class="product-description">
-                    <?= Html::encode("{$dotbaodung->TRANGTHAI}") ?>
+                    <?= Html::encode("{$dotbaoduong->TRANGTHAI}") ?>
                     </span>
               </div>
             </li>
