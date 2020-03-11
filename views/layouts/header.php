@@ -28,7 +28,6 @@ use app\models\Thietbitram;
                 <a href="<?= Url::to(['site/logout'])?>" data-method="post">
                   <i class="fa fa-sign-out"></i> Đăng xuất
                 </a>
-
               </li>
             </ul>
           </div>

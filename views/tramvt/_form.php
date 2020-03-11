@@ -47,7 +47,7 @@ switch (Yii::$app->user->identity->nhanvien->chucvu->cap) {
             </div>
 
             <div class="col-sm-6">
-                <?= $form->field($model, 'LOAITRAM')->dropDownList(['0' => 'Trạm tập trung', '1' => 'Trạm loại 1', '2' => 'Trạm loại 2', '3' => 'Trạm loại 3']) ?>
+                <?= $form->field($model, 'LOAITRAM')->dropDownList([1 => 'Indoor', 2 => 'Outdoor',]) ?>
             </div>
                 
             <div class="col-sm-6">

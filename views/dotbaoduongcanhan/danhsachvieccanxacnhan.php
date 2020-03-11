@@ -6,33 +6,22 @@ use yii\widgets\LinkPager;
 <h1>Danh sách bảo dưỡng cá nhân</h1>
 <div class="row">
     <div class="col-md-6 col-sm-6 col-xs-12">
-        <a href="<?= Url::to(['dotbaoduongcanhan/danhsach']) ?>">
+        <a href="<?= Url::to(['dotbaoduongcanhan/danhsachvieccanxacnhan']) ?>">
             <div class="info-box">
             <span class="info-box-icon bg-red"><i class="fa fa-clock-o"></i></span>
             <div class="info-box-content">
-              <span class="info-box-text">Công việc trong kế hoạch</span>
+              <span class="info-box-text">Danh sách công việc chưa xác nhận</span>
               <span class="info-box-number"><small>%</small></span>
             </div>
             </div>
         </a>
     </div>
     <div class="col-md-6 col-sm-6 col-xs-12">
-        <a href="<?= Url::to(['dotbaoduongcanhan/danhsach', 'trangthai' => 'dangthuchien']) ?>">
+        <a href="<?= Url::to(['dotbaoduongcanhan/danhsachvieccanxacnhan', 'trangthai' => 'ketthuc']) ?>">
             <div class="info-box">
             <span class="info-box-icon bg-yellow"><i class="fa fa-clock-o"></i></span>
             <div class="info-box-content">
-              <span class="info-box-text">Công việc đang thực hiện</span>
-              <span class="info-box-number"><small>%</small></span>
-            </div>
-            </div>
-        </a>
-    </div>
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        <a href="<?= Url::to(['dotbaoduongcanhan/danhsach', 'trangthai' => 'chuahoanthanh']) ?>">
-            <div class="info-box">
-            <span class="info-box-icon bg-aqua"><i class="fa fa-clock-o"></i></span>
-            <div class="info-box-content">
-              <span class="info-box-text">Chờ tổ trưởng xác nhận</span>
+              <span class="info-box-text">Công việc đã xác nhận</span>
               <span class="info-box-number"><small>%</small></span>
             </div>
             </div>
@@ -53,10 +42,7 @@ use yii\widgets\LinkPager;
               <div>
                 <span href="javascript:void(0)" class="product-title"><?= Html::encode("{$dotbaodung->MA_DOTBD} ({$dotbaodung->ID_NHANVIEN})") ?></span>
                   <span class=" pull-right">
-                    <?php if($trangthai == 'kehoach') {?>
-                        <?= Html::a('Thực hiện', ['dotbaoduongcanhan/thuchien', 'id' => $dotbaodung->ID_DOTBD], ['class' => 'btn btn-success']) ?>
-                    <?php };?>
-                    <?= Html::a('Chi tiết', ['dotbaoduongcanhan/xem', 'id' => $dotbaodung->ID_DOTBD], ['class' => 'btn btn-warning']) ?>
+                    <?= Html::a('Xác nhận', ['dotbaoduongcanhan/xacnhancongviec', 'id' => $dotbaodung->ID_DOTBD], ['class' => 'btn btn-warning']) ?>
                 </span>
                 <span class="product-description">
                     <?= Html::encode("{$dotbaodung->TRANGTHAI}") ?>

@@ -16,6 +16,7 @@ use app\models\Noidungcongviec;
 use app\models\AuthorizationCodes;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
+use app\models\MultipleUploadForm;
 
 class DotbaoduongcanhanController extends Controller
 {
@@ -35,7 +36,8 @@ class DotbaoduongcanhanController extends Controller
                     'index' => ['GET'],
                     'thuchien' => ['GET'],
                     'hoanthanh' => ['POST'],
-                    'upload' => ['POST'],
+                    'uploadanhdotbaoduong' => ['POST'],
+                    'nhanvienhoanthanh' => ['POST'],
                 ],
             ],
         ];
@@ -60,6 +62,38 @@ class DotbaoduongcanhanController extends Controller
     }
 
     public $imageFile;
+
+    public function actionDanhsachvieccanxacnhan($trangthai = '', $daivt='', $tramvt='')
+    {
+        $trangthai = $trangthai ? $trangthai : 'chuahoanthanh';
+
+        $query = Dotbaoduong::find()->select('dotbaoduong.ID_TRAM')->where(['dotbaoduong.ID_NHANVIEN' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN, 'TRANGTHAI' => $trangthai])->groupBy('dotbaoduong.ID_TRAM');
+
+        $query->joinWith('tRAMVT.iDDAI');
+
+        if ($daivt!=='') {
+            $query->andWhere(['tramvt.ID_DAI' => $daivt]);
+        }
+
+        if ($tramvt!=='') {
+            if ($tramvt !== 'all') {
+                $query->andWhere(['dotbaoduong.ID_TRAM' => $tramvt]);
+            }
+        }
+        $ids = $query->orderBy(['tramvt.TEN_TRAM' => SORT_ASC])->all();
+        $data = [];
+        foreach ($ids as $id) {
+            $tram = Tramvt::findOne($id["ID_TRAM"]);
+            $list['ThongTinTram'] = $tram;
+            $list['DS_DotBaoDuong'] = Dotbaoduong::findAll(['ID_TRAM' => $id["ID_TRAM"], 'TRANGTHAI' => $trangthai, 'dotbaoduong.ID_NHANVIEN' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN]);
+            $data[] = $list;
+        }
+
+        return $this->render('danhsachvieccanxacnhan', [
+            'data' => $data,
+            'trangthai' => $trangthai,
+        ]);
+    }
 
     public function actionDanhsach($trangthai = '', $daivt='', $tramvt='')
     {
@@ -86,8 +120,6 @@ class DotbaoduongcanhanController extends Controller
             $list['DS_DotBaoDuong'] = Dotbaoduong::findAll(['ID_TRAM' => $id["ID_TRAM"], 'TRANGTHAI' => $trangthai, 'dotbaoduong.ID_NHANVIEN' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN]);
             $data[] = $list;
         }
-        // echo "<pre>";
-        // var_dump($data);
         return $this->render('danhsach', [
             'data' => $data,
             'trangthai' => $trangthai,
@@ -119,12 +151,9 @@ class DotbaoduongcanhanController extends Controller
             $list['DS_DotBaoDuong'] = Dotbaoduong::find()->joinWith('noidungcongviecs')->where(['dotbaoduong.ID_TRAM' => $id["ID_TRAM"], 'noidungcongviec.ID_NHANVIEN' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN, 'dotbaoduong.TRANGTHAI' => $trangthai])->groupBy('dotbaoduong.ID_DOTBD')->all();
             $data[] = $list;
         }
-        
+
         return $this->render('danhsachcanhan', [
             'data' => $data,
-            // 'planProvider' => $planProvider,
-            // 'inprogressProvider' => $inprogressProvider,
-            // 'finishedProvider' => $finishedProvider
         ]);
     }
 
@@ -144,7 +173,6 @@ class DotbaoduongcanhanController extends Controller
             ->groupBy('dotbaoduong.ID_TRAM');
     
         $query->joinWith('tRAMVT.iDDAI');
-        
 
         if ($daivt!=='') {
             $query->andWhere(['tramvt.ID_DAI' => $daivt]);
@@ -199,7 +227,6 @@ class DotbaoduongcanhanController extends Controller
             $list['DS_DotBaoDuong'] = $array;
             $data[] = $list;
         }
-        
         Yii::$app->api->sendSuccessResponse($data);
     }
 
@@ -215,7 +242,7 @@ class DotbaoduongcanhanController extends Controller
         }
         $listCongViec = $query->all();
         
-        $array = array();
+        $array = [];
         foreach ($listCongViec as $each) {
             $array = $each->attributes;
             $array['NOIDUNG'] = $each->mANOIDUNG->attributes;
@@ -227,6 +254,31 @@ class DotbaoduongcanhanController extends Controller
         $data["DS_CONGVIEC"] = $congviec;
         return $this->render('xemdotbaoduong', [
             'data' => $data,
+            'dotbd' => $dotbd,
+        ]);
+    }
+
+    public function actionXacnhancongviec($id)
+    {
+        $dotbd = Dotbaoduong::findOne(['ID_DOTBD' => $id]);
+        $data["THONGTIN_DBD"] = $dotbd->attributes;
+        unset($data["THONGTIN_DBD"]["ID_TRAM"]);
+        $data["THONGTIN_DBD"]["TRAMVT"] = $dotbd->tRAMVT;
+        $query = Noidungcongviec::find()->where(['ID_DOTBD' => $dotbd->ID_DOTBD]);
+        $listCongViec = $query->all();
+        $array = [];
+        foreach ($listCongViec as $each) {
+            $array = $each->attributes;
+            $array['NOIDUNG'] = $each->mANOIDUNG->attributes;
+            $array['NHANVIEN'] = $each->nHANVIEN->TEN_NHANVIEN;
+            unset($array['MA_NOIDUNG']);
+            unset($array['NOIDUNG']['ID_THIETBI']);
+            $congviec[$each->tHIETBI->iDLOAITB->TEN_THIETBI][] = $array;
+        }
+        $data["DS_CONGVIEC"] = $congviec;
+        return $this->render('xacnhancongviec', [
+            'data' => $data,
+            'dotbd' => $dotbd,
         ]);
     }
 
@@ -242,7 +294,7 @@ class DotbaoduongcanhanController extends Controller
         }
         $listCongViec = $query->all();
         
-        $array = array();
+        $array = [];
         foreach ($listCongViec as $each) {
             $array = $each->attributes;
             $array['NOIDUNG'] = $each->mANOIDUNG->attributes;
@@ -266,18 +318,54 @@ class DotbaoduongcanhanController extends Controller
                 $dotbd->NGAY_BD = date('Y-m-d');
                 $dotbd->TRANGTHAI = "dangthuchien";
                 $dotbd->save(false);
-                // $danhsachcongviec = Noidungcongviec::find()->where(['ID_DOTBD' => $id])->all();
-                // foreach ($danhsachcongviec as $congviec) {
-                //     $congviec->KETQUA = 'Chưa đạt';
-                //     $congviec->save(false);
-                // }
+
                 return $this->redirect(['xem', 'id' => $id]);
             }
         } else {
             return $this->redirect(['xem', 'id' => $id]);
         }
     }
-        
+
+    public function actionNhanvienhoanthanh()
+    {
+        $inputs = Yii::$app->request->bodyParams;
+        $id = $inputs['ID_DOTBD'];
+        $dotbd = Dotbaoduong::findOne(['ID_DOTBD' => $id]);
+        $errors = [
+            'error' => 0,
+            'message' => '',
+        ];
+        if ($dotbd->TRANGTHAI == "dangthuchien") {
+            if ($dotbd->ID_NHANVIEN !== Yii::$app->user->identity->nhanvien->ID_NHANVIEN) {
+                $errors['error'] = 1;
+                $errors['message'] = 'Bạn không có quyền hoàn thành đợt bảo dưỡng';
+            }
+
+            $hoanthanh = Noidungcongviec::find()->where(['ID_DOTBD' => $id])
+                ->andWhere(['TRANGTHAI' => 'cho_xac_nhan'])
+                ->count();
+            $all = Noidungcongviec::find()->where(['ID_DOTBD' => $id])
+                ->count();
+            if ($hoanthanh !== $all) {
+                $errors['error'] = 1;
+                $errors['message'] = 'Còn nội dung công việc chưa hoàn thành!';
+            }
+
+            if ($errors['error']) {
+                return json_encode($errors, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            } else {
+                $dotbd->TRANGTHAI = "chuahoanthanh";
+                $dotbd->save(false);
+                return json_encode($errors, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            }
+
+        } else {
+            $errors['error'] = 1;
+            $errors['message'] = 'Bạn không có quyền hoàn thành đợt bảo dưỡng';
+            return json_encode($errors, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        }
+    }
+
     public function actionHoanthanh()
     {
         $key = Yii::$app->request->bodyParams;
@@ -288,7 +376,6 @@ class DotbaoduongcanhanController extends Controller
             ->count();
         $all = Noidungcongviec::find()->where(['ID_DOTBD' => $id])
             ->count();
-        // $check_image = Images::find()->where(['MA_DOTBD' => $dotbd->MA_DOTBD, 'type' => 0])->exists();
         $count = Images::find()->where(['MA_DOTBD' => $dotbd->MA_DOTBD, 'type' => 0])->count();
         $errors = [
             'error' => 1,
@@ -348,5 +435,47 @@ class DotbaoduongcanhanController extends Controller
             $data[] = ['ID_NHANVIEN' => $each->ID_NHANVIEN, 'TEN_NHANVIEN' => $each->nHANVIEN->TEN_NHANVIEN];
         }
         Yii::$app->api->sendSuccessResponse($data);
+    }
+
+    public function actionUploadanhdotbaoduong()
+    {
+        $model = new MultipleUploadForm();
+        // $file = UploadedFile::getInstanceByName('file');
+
+        // $id = Yii::$app->request->post('ID_DOTBD');
+        $inputs = Yii::$app->request->bodyParams;
+        echo "<pre>";
+        die(var_dump($inputs));
+        $dotbd = Dotbaoduong::findOne($id);
+        // var_dump(Yii::$app->request->post()); die;
+
+        $MA_DOTBD = $dotbd->MA_DOTBD;
+        $STT = Yii::$app->request->post('STT');
+        $type = Yii::$app->request->post('type');
+        $username = Yii::$app->user->identity->username;
+
+        $filename = "$MA_DOTBD-$username-$STT-$type";
+        $path = 'C:\xampp\htdocs\vnpt_mds\uploads\\';
+        // var_dump(Yii::$app->request->post('file')); die;
+        $file = Yii::$app->convert->base64_to_image(Yii::$app->request->post('file'), $path, $filename);
+
+        // var_dump($file); die;
+        
+        if ($file) {
+            if (!Images::find()->where(['MA_DOTBD' => $MA_DOTBD, 'STT' => $STT, 'ID_NHANVIEN' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN, 'type' => $type])->exists()) {
+                $image = new Images();
+            } else {
+                $image = Images::find()->where(['MA_DOTBD' => $MA_DOTBD, 'STT' => $STT, 'ID_NHANVIEN' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN, 'type' => $type])->one();
+            }
+            $image->MA_DOTBD = $MA_DOTBD;
+            $image->ANH = $file;
+            $image->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
+            $image->STT = $STT; 
+            $image->type = $type;
+            $image->save(false);
+            Yii::$app->api->sendSuccessResponse(['filename' => $file]);
+        } else {
+            Yii::$app->api->sendFailedResponse('Failed!');
+        }
     }
 }

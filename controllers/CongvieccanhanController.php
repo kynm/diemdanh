@@ -91,7 +91,7 @@ class CongvieccanhanController extends Controller
         $key = Yii::$app->request->bodyParams;
         $model = Noidungcongviec::find()->where($key)->one();
         if(!$model) {
-        return json_encode(["message" => "Success!","error" => "1"], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        return json_encode(["message" => "Công việc không tồn tại","error" => "1"], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
         }
 
         $model->TRANGTHAI = "cho_xac_nhan";
@@ -216,48 +216,9 @@ class CongvieccanhanController extends Controller
         }
     }
 
-    public function actionUploadBase64()
-    {
-        // $file = UploadedFile::getInstanceByName('file');
-
-        $id = Yii::$app->request->post('ID_DOTBD');
-        $dotbd = Dotbaoduong::findOne($id);
-        // var_dump(Yii::$app->request->post()); die;
-
-        $MA_DOTBD = $dotbd->MA_DOTBD;
-        $STT = Yii::$app->request->post('STT');
-        $type = Yii::$app->request->post('type');
-        $username = Yii::$app->user->identity->username;
-
-        $filename = "$MA_DOTBD-$username-$STT-$type";
-        // $path = '/volume1/web/vnpt_mds/uploads/'.$filename;
-        $path = 'C:\xampp\htdocs\vnpt_mds\uploads\\';
-        // var_dump(Yii::$app->request->post('file')); die;
-        $file = Yii::$app->convert->base64_to_image(Yii::$app->request->post('file'), $path, $filename);
-
-        // var_dump($file); die;
-        
-        if ($file) {
-            if (!Images::find()->where(['MA_DOTBD' => $MA_DOTBD, 'STT' => $STT, 'ID_NHANVIEN' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN, 'type' => $type])->exists()) {
-                $image = new Images();
-            } else {
-                $image = Images::find()->where(['MA_DOTBD' => $MA_DOTBD, 'STT' => $STT, 'ID_NHANVIEN' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN, 'type' => $type])->one();
-            }
-            $image->MA_DOTBD = $MA_DOTBD;
-            $image->ANH = $file;
-            $image->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
-            $image->STT = $STT; 
-            $image->type = $type;
-            $image->save(false);
-            Yii::$app->api->sendSuccessResponse(['filename' => $file]);
-        } else {
-            Yii::$app->api->sendFailedResponse('Failed!');
-        }
-    }
-
     public function actionUploadBase64v2()
     {
-        $key = Yii::$app->request->bodyParams;
+        $inputs = Yii::$app->request->post()->get();
         // $file = UploadedFile::getInstanceByName('file');
 
         $id = Yii::$app->request->post('ID_DOTBD');

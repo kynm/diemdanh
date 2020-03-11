@@ -10,14 +10,17 @@ use app\models\Thietbitram;
     </a>
     <?= Html::csrfMetaTags() ?>
     <nav class="">
-      <div class="navbar navbar-static-top">
-        <ul class="nav navbar-nav">
-          <li class="task-menu">
-            <a href="<?= Url::to(['site/logout'])?>" data-method="post">
-              <i class="fa fa-sign-out"></i> Đăng xuất
-            </a>
-          </li>
-        </ul>
+        <div class="navbar-custom-menu">
+          <ul class="nav navbar-nav">
+            <li><a href="<?= Url::to(['site/baoduong'])?>">
+                Bảo dưỡng
+              </a></li>
+            <li class="task-menu">
+              <a href="<?= Url::to(['site/logout'])?>" data-method="post">
+                <i class="fa fa-sign-out"></i> Đăng xuất
+              </a>
+            </li>
+          </ul>
       </div>
     </nav>
 </header>

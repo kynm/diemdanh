@@ -62,7 +62,6 @@ class Noidungcongviec extends \yii\db\ActiveRecord
             'ID_NHANVIEN' => 'Nhân viên',
             'NOIDUNG' => 'Nội dung',
             'NGAY_BD' => 'Ngày bảo dưỡng',
-            
             'ID_TRAM' => 'Trạm',
             'ID_DAI' => 'Đài',
             'ID_DONVI' => 'Đơn vị',
