@@ -89,12 +89,14 @@ class CongvieccanhanController extends Controller
     public function actionHoanthanh()
     {
         $key = Yii::$app->request->bodyParams;
+        $isDone = $key['IS_DONE'];
+        unset($key['IS_DONE']);
         $model = Noidungcongviec::find()->where($key)->one();
         if(!$model) {
         return json_encode(["message" => "Công việc không tồn tại","error" => "1"], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
         }
 
-        $model->TRANGTHAI = "cho_xac_nhan";
+        $model->TRANGTHAI = $isDone ? "cho_xac_nhan" : NULL;
         $model->KETQUA = NULL;
         $model->save(false);
         $thietbi = Thietbitram::findOne(['ID_THIETBI' => $model->ID_THIETBI]);
@@ -152,7 +154,6 @@ class CongvieccanhanController extends Controller
                 }
             }
         }
-
 
         return json_encode(["message" => "False!","error" => "0"], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
                 

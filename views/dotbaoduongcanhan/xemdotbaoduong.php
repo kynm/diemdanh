@@ -23,9 +23,8 @@ use app\models\Images;
     <?php foreach ($dscongviec as $congviec): ?>
         <li>
             <?php if($dotbd->TRANGTHAI == 'dangthuchien') {?>
-            <input onclick="xulycongviec(<?= Html::encode("{$congviec['ID_DOTBD']}") ?>, <?= Html::encode("{$congviec['ID_THIETBI']}") ?>, '<?= Html::encode("{$congviec['NOIDUNG']['MA_NOIDUNG']}") ?>')" type="checkbox" <?php echo $congviec['TRANGTHAI'] ? 'checked' : ''; ?> >
+            <input class="xulycongviec" type="checkbox" <?php echo $congviec['TRANGTHAI'] ? 'checked' : ''; ?> data-ID_DOTBD="<?= Html::encode("{$congviec['ID_DOTBD']}") ?>" data-ID_THIETBI="<?= Html::encode("{$congviec['ID_THIETBI']}") ?>" data-MA_NOIDUNG="<?= Html::encode("{$congviec['NOIDUNG']['MA_NOIDUNG']}") ?>">
         <?php }?>
-
             <span class="text"><?= Html::encode("{$congviec['NOIDUNG']['NOIDUNG']} ({$congviec['NOIDUNG']['MA_NOIDUNG']})") ?></span>
             <span class="text"><?= Html::encode("{$congviec['ID_DOTBD']} {$congviec['ID_THIETBI']}") ?></span>
             <?php if($dotbd['TRANGTHAI'] == 'hoanthanh') {?>
@@ -116,6 +115,28 @@ use app\models\Images;
 </script>
 <?php
 $script = <<< JS
+        $(".xulycongviec").on( "click", function() {
+            var ID_DOTBD = this.dataset.id_dotbd;
+            var ID_THIETBI = this.dataset.id_thietbi;
+            var MA_NOIDUNG = this.dataset.ma_noidung;
+            var url = $("#url").val();
+            var check = $(this).prop('checked') ? 1 : 0;
+            $.ajax({
+                url: url,
+                method: 'post',
+                data: {
+                    ID_DOTBD: ID_DOTBD,
+                    ID_THIETBI: ID_THIETBI,
+                    MA_NOIDUNG: MA_NOIDUNG,
+                    IS_DONE: check,
+                },
+                success:function(data) {
+                    if (!data.error) {
+                        Swal.fire('Đã cập nhật');
+                    }
+                }
+            });
+        });
         $("#xacnhantatca").on( "click", function() {
           var ID_DOTBD = $("#ID_DOTBD").val();
           var urlxacnhan = $("#urlxacnhan").val();
