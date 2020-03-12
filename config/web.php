@@ -6,7 +6,7 @@ $db_sms = require(__DIR__ . '/db_sms.php');
 
 $config = [
     'timeZone' => 'Asia/Ho_Chi_Minh',
-    'id' => 'vnpt_qnm_mds',
+    'id' => 'vnpt_hnm_mds',
     // 'app_secret' => '2d7a04685aa24a9ae64421107c1aafca', //MD5 VNPT_QNM_MDs
     // set target language to be Vietnamese
     'language' => 'vi',

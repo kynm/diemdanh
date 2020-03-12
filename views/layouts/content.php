@@ -34,9 +34,8 @@ use dmstr\widgets\Alert;
     <div class="pull-right hidden-xs">
         <span class="pull-right" ><b>Phiên bản</b> 1.0</span>
     </div>
-    <strong><a>VNPT QUẢNG NAM, TRUNG TÂM CNTT</a> &copy; <?= date('Y', time()); ?></strong>
+    <strong><a>VNPT Hà Nam NAM, TRUNG TÂM CNTT</a> &copy; <?= date('Y', time()); ?></strong>
     <br>
-    Địa chỉ: 02A, Phan Bội Châu, p. Tân Thạnh, tp. Tam Kỳ, Quảng Nam 
+    Địa chỉ: 144 Trần Phú, Quang Trung, Phủ Lý, Hà Nam.
     <br>
-    Điện thoại hỗ trợ : <a href='tel:02353812119'  style='color:#444;'><i class='fa fa-phone-square'></i> 0235.3 812 119</a>
 </footer>

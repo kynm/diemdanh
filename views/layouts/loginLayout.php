@@ -34,7 +34,7 @@ LoginAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; <a>VNPT QUẢNG NAM, TRUNG TÂM CNTT</a> <?= date('Y') ?></p>
+        <p class="pull-left">&copy; <a>VNPT HÀ NAM, TRUNG TÂM CNTT</a> <?= date('Y') ?></p>
 
     </div>
 </footer>
