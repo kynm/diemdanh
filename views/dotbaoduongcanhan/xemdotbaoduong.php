@@ -161,6 +161,7 @@ $script = <<< JS
                 $("#KIENNGHI").val('');
                 $("#ID_THIETBI").val('');
                 $("#MA_NOIDUNG").val('');
+                $("#KETQUABAODUONG").val('dat');
                 $("#IS_DONE").val('');
                 $('#myModal').modal('hide');
                 if (!data.error) {
@@ -224,7 +225,12 @@ $script = <<< JS
                 data = jQuery.parseJSON(data);
                 console.log(data);
                 if (data.error) {
-                    Swal.fire(data.message);
+                    Swal.fire({
+                        icon: 'error',
+                        title: data.message,
+                        buttons: true,
+                        dangerMode: true
+                    });
                 } else {
                     $('#nhanvienhoanthanh').remove();
                     Swal.fire('Hoàn thành bảo dưỡng!');
