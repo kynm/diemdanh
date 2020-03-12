@@ -89,19 +89,32 @@ class CongvieccanhanController extends Controller
     public function actionHoanthanh()
     {
         $key = Yii::$app->request->bodyParams;
+        $condition = [
+            'ID_DOTBD' => $key['ID_DOTBD'], 
+            'ID_THIETBI' => $key['ID_THIETBI'], 
+            'MA_NOIDUNG' => $key['MA_NOIDUNG'], 
+        ];
         $isDone = $key['IS_DONE'];
-        unset($key['IS_DONE']);
-        $model = Noidungcongviec::find()->where($key)->one();
+        $model = Noidungcongviec::find()->where($condition)->one();
         if(!$model) {
         return json_encode(["message" => "Công việc không tồn tại","error" => "1"], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
         }
 
-        $model->TRANGTHAI = $isDone ? "cho_xac_nhan" : NULL;
-        $model->KETQUA = NULL;
-        $model->save(false);
-        $thietbi = Thietbitram::findOne(['ID_THIETBI' => $model->ID_THIETBI]);
-        $thietbi->LANBAODUONGTRUOC = date('Y-m-d');
-        $thietbi->save(false);
+        if ($isDone) {
+            $model->TRANGTHAI = "cho_xac_nhan";
+            $model->KETQUA = $key['KETQUABAODUONG'];
+            $model->KIENNGHI = $key['KIENNGHI'];
+            $model->save(false);
+            $thietbi = Thietbitram::findOne(['ID_THIETBI' => $model->ID_THIETBI]);
+            $thietbi->LANBAODUONGTRUOC = date('Y-m-d');
+            $thietbi->save(false);
+        } else {
+            $model->TRANGTHAI = NULL;
+            $model->KETQUA = NULL;
+            $model->KIENNGHI = NULL;
+            $model->save(false);
+        }
+
         return json_encode(["message" => "False!","error" => "0"], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
     }
 
@@ -112,13 +125,13 @@ class CongvieccanhanController extends Controller
             unset($key['KETQUA']);
             $model = Noidungcongviec::find()->where($key)->one();
             $model->TRANGTHAI = "hoan_thanh";
-            $model->KETQUA = "dat";
+            // $model->KETQUA = "dat";
             $model->save(false);
         } else {
             unset($key['KETQUA']);
             $model = Noidungcongviec::find()->where($key)->one();
             $model->TRANGTHAI = "hoan_thanh";
-            $model->KETQUA = "khong_dat";
+            // $model->KETQUA = "khong_dat";
             $model->save(false);
         }
         Yii::$app->api->sendSuccessResponse(["message" => "Success!"]);

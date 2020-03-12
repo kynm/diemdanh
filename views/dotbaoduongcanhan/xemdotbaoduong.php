@@ -74,14 +74,15 @@ use app\models\Images;
             <label>Kết quả</label>
             <input type="hidden" name="ID_THIETBI" id="ID_THIETBI">
             <input type="hidden" name="MA_NOIDUNG" id="MA_NOIDUNG">
+            <input type="hidden" name="IS_DONE" id="IS_DONE">
             <select id="KETQUABAODUONG" class="form-control" id="KETQUABAODUONG">
-                <option value="1">Đạt</option>
-                <option value="0">Không đạt</option>
+                <option value="dat">Đạt</option>
+                <option value="khong_dat">Không đạt</option>
             </select>
         </div>
         <div class="form-group">
             <label>Kiến nghị</label>
-            <input type="text" name="KIENNGHI" class="form-control">
+            <input type="text" name="KIENNGHI" class="form-control" id="KIENNGHI">
         </div>
       </div>
       <div class="modal-footer">
@@ -91,32 +92,6 @@ use app\models\Images;
     </div>
   </div>
 </div>
-<script type="text/javascript">
-    function xulycongviec(ID_DOTBD, ID_THIETBI, MA_NOIDUNG) {
-        var url = $("#url").val();
-        $.ajax({
-            url: url,
-            method: 'post',
-            data: {
-                ID_DOTBD: ID_DOTBD,
-                ID_THIETBI: ID_THIETBI,
-                MA_NOIDUNG: MA_NOIDUNG
-            },
-            success:function(data) {
-                if (!data.error) {
-                    Swal.fire('Đã cập nhật');
-                }
-                // $('#myModal').modal('hide');
-            }
-        });
-        return 1;
-        $("#ID_DOTBD").val(ID_DOTBD);
-        $("#ID_THIETBI").val(ID_THIETBI);
-        $("#MA_NOIDUNG").val(MA_NOIDUNG);
-        console.log(ID_DOTBD + '-' + ID_THIETBI + '-' + MA_NOIDUNG);
-        $('#myModal').modal('show');
-    }
-</script>
 <?php
 $script = <<< JS
     $(".xulycongviec").on( "click", function() {
@@ -124,19 +99,77 @@ $script = <<< JS
         var ID_THIETBI = this.dataset.id_thietbi;
         var MA_NOIDUNG = this.dataset.ma_noidung;
         var url = $("#url").val();
-        var check = $(this).prop('checked') ? 1 : 0;
+        var IS_DONE = $(this).prop('checked') ? 1 : 0;
+        if (!IS_DONE) {
+            $.ajax({
+                url: url,
+                method: 'post',
+                data: {
+                    ID_DOTBD: ID_DOTBD,
+                    ID_THIETBI: ID_THIETBI,
+                    IS_DONE: IS_DONE,
+                    KETQUABAODUONG: '',
+                    KIENNGHI: '',
+                    MA_NOIDUNG: MA_NOIDUNG
+                },
+                success:function(data) {
+                    $("#ID_DOTBD").val('');
+                    $("#ID_THIETBI").val('');
+                    $("#MA_NOIDUNG").val('');
+                    $("#IS_DONE").val('');
+                    $('#myModal').modal('hide');
+                    if (!data.error) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Đã hủy hoàn thành',
+                            showConfirmButton: false,
+                            timer: 500
+                        });
+                    }
+                }
+            });
+
+            return 1;
+        }
+        $("#ID_DOTBD").val(ID_DOTBD);
+        $("#ID_THIETBI").val(ID_THIETBI);
+        $("#MA_NOIDUNG").val(MA_NOIDUNG);
+        $("#IS_DONE").val(IS_DONE);
+        $('#myModal').modal('show');
+    });
+
+    $("#hoanthanhconviec").on( "click", function() {
+        var ID_DOTBD = $("#ID_DOTBD").val();
+        var ID_THIETBI = $("#ID_THIETBI").val();
+        var MA_NOIDUNG = $("#MA_NOIDUNG").val();
+        var KETQUABAODUONG = $("#KETQUABAODUONG").val();
+        var KIENNGHI = $("#KIENNGHI").val();
+        var IS_DONE = $("#IS_DONE").val();
+        var url = $("#url").val();
         $.ajax({
             url: url,
             method: 'post',
             data: {
                 ID_DOTBD: ID_DOTBD,
                 ID_THIETBI: ID_THIETBI,
-                MA_NOIDUNG: MA_NOIDUNG,
-                IS_DONE: check,
+                IS_DONE: IS_DONE,
+                KETQUABAODUONG: KETQUABAODUONG,
+                KIENNGHI: KIENNGHI,
+                MA_NOIDUNG: MA_NOIDUNG
             },
             success:function(data) {
+                $("#KIENNGHI").val('');
+                $("#ID_THIETBI").val('');
+                $("#MA_NOIDUNG").val('');
+                $("#IS_DONE").val('');
+                $('#myModal').modal('hide');
                 if (!data.error) {
-                    Swal.fire('Đã cập nhật');
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Đã hoàn thành công việc',
+                        showConfirmButton: false,
+                        timer: 1000
+                    });
                 }
             }
         });
@@ -195,29 +228,6 @@ $script = <<< JS
                 } else {
                     $('#nhanvienhoanthanh').remove();
                     Swal.fire('Hoàn thành bảo dưỡng!');
-                }
-            }
-        });
-    });
-
-    $("#hoanthanhconviec").on( "click", function() {
-      var ID_DOTBD = $("#ID_DOTBD").val();
-      var ID_THIETBI = $("#ID_THIETBI").val();
-      var MA_NOIDUNG = $("#MA_NOIDUNG").val();
-      var url = $("#url").val();
-      var KETQUABAODUONG = $("#KETQUABAODUONG").val();
-      console.log(ID_DOTBD + '-' + ID_THIETBI + '-' + KETQUABAODUONG + '-' + MA_NOIDUNG);
-        $.ajax({
-            url: url,
-            method: 'post',
-            data: {
-                ID_DOTBD: ID_DOTBD,
-                ID_THIETBI: ID_THIETBI,
-                MA_NOIDUNG: MA_NOIDUNG
-            },
-            success:function(data) {
-                if (!data.error) {
-                    Swal.fire('Đã hoàn thành công việc');
                 }
             }
         });
