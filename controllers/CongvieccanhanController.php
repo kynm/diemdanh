@@ -95,6 +95,10 @@ class CongvieccanhanController extends Controller
             'MA_NOIDUNG' => $key['MA_NOIDUNG'], 
         ];
         $isDone = $key['IS_DONE'];
+        $dobd = Dotbaoduong::findOne($key['ID_DOTBD']);
+        if ($dobd->TRANGTHAI != 'dangthuchien') {
+            return json_encode(["message" => "Bạn không thể sửa đổi công việc","error" => "1"], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        }
         $model = Noidungcongviec::find()->where($condition)->one();
         if(!$model) {
         return json_encode(["message" => "Công việc không tồn tại","error" => "1"], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);

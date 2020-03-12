@@ -191,10 +191,7 @@ class DotbaoduongcanhanController extends Controller
         }
 
         $ids = $query->orderBy(['TEN_TRAM' => SORT_ASC])->all();
-
-        if (empty($ids)) {
-            Yii::$app->api->sendFailedResponse("Không có đợt bảo dưỡng!");
-        }
+        $data = [];
         foreach ($ids as $id) {
             $tram = Tramvt::findOne($id["ID_TRAM"]);
             $list['ThongTinTram'] = $tram;
@@ -227,7 +224,9 @@ class DotbaoduongcanhanController extends Controller
             $list['DS_DotBaoDuong'] = $array;
             $data[] = $list;
         }
-        Yii::$app->api->sendSuccessResponse($data);
+        return $this->render('lichsu', [
+            'data' => $data,
+        ]);
     }
 
     public function actionXem($id, $canhan = 0)
