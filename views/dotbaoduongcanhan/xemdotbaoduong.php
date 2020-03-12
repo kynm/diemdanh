@@ -22,13 +22,14 @@ use app\models\Images;
   <ul class="todo-list">
     <?php foreach ($dscongviec as $congviec): ?>
         <li>
-            <?php if($dotbd->TRANGTHAI == 'dangthuchien') {?>
+            <?php
+             if($dotbd->TRANGTHAI == 'dangthuchien') {?>
                 <input class="xulycongviec" type="checkbox" <?php echo $congviec['TRANGTHAI'] ? 'checked' : ''; ?> data-ID_DOTBD="<?= Html::encode("{$congviec['ID_DOTBD']}") ?>" data-ID_THIETBI="<?= Html::encode("{$congviec['ID_THIETBI']}") ?>" data-MA_NOIDUNG="<?= Html::encode("{$congviec['NOIDUNG']['MA_NOIDUNG']}") ?>">
             <?php }?>
             <span class="text"><?= Html::encode("{$congviec['NOIDUNG']['NOIDUNG']} ({$congviec['NOIDUNG']['MA_NOIDUNG']})") ?></span>
             <span class="text"><?= Html::encode("{$congviec['ID_DOTBD']} {$congviec['ID_THIETBI']}") ?></span>
-            <?php if($dotbd['TRANGTHAI'] == 'hoanthanh') {?>
-                <small class="label label-danger"><i class="fa fa-thumbs-o-up"></i> </small>
+            <?php if($congviec['TRANGTHAI']) {?>
+                <small class="label label-success"><i class="fa fa-thumbs-o-up"></i> </small>
             <?php } else {?>
                 <small class="label label-danger"><i class="fa fa-clock-o"></i> </small>
             <?php }?>

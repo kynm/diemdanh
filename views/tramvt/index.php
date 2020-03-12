@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'attribute' => 'ID_NHANVIEN',
                                 'format' => 'raw',
                                 'value' => function ($model) {
-                                    return Html::a($model->iDNHANVIEN->TEN_NHANVIEN, Url::to(['nhanvien/view', 'id' => $model->ID_NHANVIEN]));
+                                    return $model->iDNHANVIEN ? Html::a($model->iDNHANVIEN->TEN_NHANVIEN, Url::to(['nhanvien/view', 'id' => $model->ID_NHANVIEN])) : '#';
                                 }
                             ],
                             [

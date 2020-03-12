@@ -7708,3 +7708,744 @@ $_SERVER = [
     'REQUEST_TIME_FLOAT' => 1584003615.454
     'REQUEST_TIME' => 1584003615
 ]
+2020-03-12 19:15:55 [::1][1][irb4kho9ah71cg7i21s6e8l9o9][error][yii\base\ErrorException:8] yii\base\ErrorException: Trying to get property 'TEN_NHANVIEN' of non-object in C:\wamp64\www\vnpt_mds\views\tramvt\index.php:49
+Stack trace:
+#0 C:\wamp64\www\vnpt_mds\views\tramvt\index.php(49): yii\web\ErrorHandler->handleError()
+#1 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\DataColumn.php(230): yii\web\View->{closure:C:\wamp64\www\vnpt_mds\views\tramvt\index.php:48-50}()
+#2 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\DataColumn.php(230): ::call_user_func:{C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\DataColumn.php:230}()
+#3 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\DataColumn.php(244): yii\grid\DataColumn->getDataCellValue()
+#4 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\Column.php(111): yii\grid\DataColumn->renderDataCellContent()
+#5 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\GridView.php(525): yii\grid\DataColumn->renderDataCell()
+#6 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\GridView.php(494): yii\grid\GridView->renderTableRow()
+#7 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\GridView.php(358): yii\grid\GridView->renderTableBody()
+#8 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\widgets\BaseListView.php(160): yii\grid\GridView->renderItems()
+#9 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\GridView.php(326): yii\grid\GridView->renderSection()
+#10 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\widgets\BaseListView.php(135): yii\grid\GridView->renderSection()
+#11 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\widgets\BaseListView.php(138): yii\grid\GridView->yii\widgets\{closure}()
+#12 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\widgets\BaseListView.php(138): ::preg_replace_callback()
+#13 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\GridView.php(301): yii\grid\GridView->run()
+#14 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\Widget.php(140): yii\grid\GridView->run()
+#15 C:\wamp64\www\vnpt_mds\views\tramvt\index.php(135): yii\base\Widget::widget()
+#16 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\View.php(348): yii\web\View->unknown()
+#17 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\View.php(257): yii\web\View->renderPhpFile()
+#18 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\View.php(156): yii\web\View->renderFile()
+#19 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\Controller.php(386): yii\web\View->render()
+#20 C:\wamp64\www\vnpt_mds\controllers\TramvtController.php(59): app\controllers\TramvtController->render()
+#21 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\InlineAction.php(57): app\controllers\TramvtController->actionIndex()
+#22 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\InlineAction.php(57): ::call_user_func_array:{C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\InlineAction.php:57}()
+#23 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams()
+#24 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\Module.php(528): app\controllers\TramvtController->runAction()
+#25 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\web\Application.php(103): yii\web\Application->runAction()
+#26 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest()
+#27 C:\wamp64\www\vnpt_mds\index.php(12): yii\web\Application->run()
+#28 {main}
+2020-03-12 19:15:55 [::1][1][irb4kho9ah71cg7i21s6e8l9o9][info][application] $_GET = [
+    'TramvtSearch' => [
+        'MA_TRAM' => ''
+        'TEN_TRAM' => 'Phù Vân'
+        'DIADIEM' => ''
+        'ID_DAI' => ''
+        'ID_NHANVIEN' => ''
+    ]
+    '_pjax' => '#p0'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'googtrans' => '/en/vi'
+    'mailchimp_cart_current_email' => 'ngainguyendv@gmail.com'
+    'mailchimp_cart_previous_email' => 'ngainguyendv@gmail.com'
+    'gridcookie' => 'grid'
+    '_pk_id_432_1fff' => 'c51e5cd3473037c8.1582620770.13.1583411940.1583411940.'
+    'PHPSESSID' => 'irb4kho9ah71cg7i21s6e8l9o9'
+    '_identity' => '[1,\"RyxR8FTNrhX2E6eGrhBfXjc6iPrFFqgZ\",604800]'
+    '_csrf' => 'wLGSdA6w2MhNcJJPKsyHqYQQbexXfSK6'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 1
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_X_CSRF_TOKEN' => 'xQdbZx5i6v6aUKLJjymnKFzl9YJjjNbZmkk1Q2IFi1CySxw0eiPciagdyofsY-14F5aMyhLVh4j4LE0bBFbAZg=='
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded; charset=UTF-8'
+    'HTTP_ACCEPT' => 'text/html, */*; q=0.01'
+    'HTTP_SEC_FETCH_DEST' => 'empty'
+    'HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest'
+    'HTTP_X_PJAX' => 'true'
+    'HTTP_X_PJAX_CONTAINER' => '#p0'
+    'HTTP_SEC_FETCH_SITE' => 'same-origin'
+    'HTTP_SEC_FETCH_MODE' => 'cors'
+    'HTTP_REFERER' => 'http://localhost/vnpt_mds/tramvt?TramvtSearch%5BMA_TRAM%5D=&TramvtSearch%5BTEN_TRAM%5D=Ph%C3%B9%20V%C3%A2n%20(X%C3%B3m%202)&TramvtSearch%5BDIADIEM%5D=&TramvtSearch%5BID_DAI%5D=&TramvtSearch%5BID_NHANVIEN%5D='
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'vi,en-US;q=0.9,en;q=0.8'
+    'HTTP_COOKIE' => 'googtrans=/en/vi; mailchimp.cart.current_email=ngainguyendv@gmail.com; mailchimp.cart.previous_email=ngainguyendv@gmail.com; gridcookie=grid; _pk_id.432.1fff=c51e5cd3473037c8.1582620770.13.1583411940.1583411940.; PHPSESSID=irb4kho9ah71cg7i21s6e8l9o9; _identity=%5B1%2C%22RyxR8FTNrhX2E6eGrhBfXjc6iPrFFqgZ%22%2C604800%5D; _csrf=wLGSdA6w2MhNcJJPKsyHqYQQbexXfSK6'
+    'PATH' => 'MAVEN_HOME\\bin;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\DevHomes\\envs\\apache-ant-1.8.2\\bin;C:\\DevHomes\\envs\\java\\jdk1.7.0_80\\bin;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files\\TortoiseSVN\\bin;C:\\Program Files (x86)\\Windows Kits\\8.1\\Windows Performance Toolkit\\;C:\\wamp64\\bin\\php\\php7.0.10;C:\\Program Files\\nodejs\\;C:\\Program Files\\Git\\cmd;C:\\Program Files (x86)\\Common Files\\Acronis\\SnapAPI\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Users\\Admin\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\Admin\\AppData\\Roaming\\Composer\\vendor\\bin;C:\\Users\\Admin\\AppData\\Roaming\\npm;C:\\adb;C:\\wamp64\\bin\\php\\php7.2.8;C:\\ProgramData\\ComposerSetup\\bin;C:\\instantclient_12_2;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files\\Intel\\WiFi\\bin\\;C:\\Program Files\\Common Files\\Intel\\WirelessCommon\\;C:\\Program Files\\PuTTY\\;C:\\sqlite;C:\\WINDOWS\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\WINDOWS'
+    'COMSPEC' => 'C:\\WINDOWS\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\WINDOWS'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.27 (Win64) PHP/7.2.8 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.27 (Win64) PHP/7.2.8'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'C:/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'C:/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'C:/wamp64/www/vnpt_mds/index.php'
+    'REMOTE_PORT' => '46034'
+    'REDIRECT_URL' => '/vnpt_mds/tramvt'
+    'REDIRECT_QUERY_STRING' => 'TramvtSearch%5BMA_TRAM%5D=&TramvtSearch%5BTEN_TRAM%5D=Ph%C3%B9%20V%C3%A2n&TramvtSearch%5BDIADIEM%5D=&TramvtSearch%5BID_DAI%5D=&TramvtSearch%5BID_NHANVIEN%5D=&_pjax=%23p0'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'TramvtSearch%5BMA_TRAM%5D=&TramvtSearch%5BTEN_TRAM%5D=Ph%C3%B9%20V%C3%A2n&TramvtSearch%5BDIADIEM%5D=&TramvtSearch%5BID_DAI%5D=&TramvtSearch%5BID_NHANVIEN%5D=&_pjax=%23p0'
+    'REQUEST_URI' => '/vnpt_mds/tramvt?TramvtSearch%5BMA_TRAM%5D=&TramvtSearch%5BTEN_TRAM%5D=Ph%C3%B9%20V%C3%A2n&TramvtSearch%5BDIADIEM%5D=&TramvtSearch%5BID_DAI%5D=&TramvtSearch%5BID_NHANVIEN%5D=&_pjax=%23p0'
+    'SCRIPT_NAME' => '/vnpt_mds/index.php'
+    'PHP_SELF' => '/vnpt_mds/index.php'
+    'REQUEST_TIME_FLOAT' => 1584015355.72
+    'REQUEST_TIME' => 1584015355
+]
+2020-03-12 19:15:56 [::1][1][irb4kho9ah71cg7i21s6e8l9o9][error][yii\base\ErrorException:8] yii\base\ErrorException: Trying to get property 'TEN_NHANVIEN' of non-object in C:\wamp64\www\vnpt_mds\views\tramvt\index.php:49
+Stack trace:
+#0 C:\wamp64\www\vnpt_mds\views\tramvt\index.php(49): yii\web\ErrorHandler->handleError()
+#1 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\DataColumn.php(230): yii\web\View->{closure:C:\wamp64\www\vnpt_mds\views\tramvt\index.php:48-50}()
+#2 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\DataColumn.php(230): ::call_user_func:{C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\DataColumn.php:230}()
+#3 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\DataColumn.php(244): yii\grid\DataColumn->getDataCellValue()
+#4 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\Column.php(111): yii\grid\DataColumn->renderDataCellContent()
+#5 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\GridView.php(525): yii\grid\DataColumn->renderDataCell()
+#6 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\GridView.php(494): yii\grid\GridView->renderTableRow()
+#7 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\GridView.php(358): yii\grid\GridView->renderTableBody()
+#8 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\widgets\BaseListView.php(160): yii\grid\GridView->renderItems()
+#9 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\GridView.php(326): yii\grid\GridView->renderSection()
+#10 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\widgets\BaseListView.php(135): yii\grid\GridView->renderSection()
+#11 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\widgets\BaseListView.php(138): yii\grid\GridView->yii\widgets\{closure}()
+#12 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\widgets\BaseListView.php(138): ::preg_replace_callback()
+#13 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\GridView.php(301): yii\grid\GridView->run()
+#14 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\Widget.php(140): yii\grid\GridView->run()
+#15 C:\wamp64\www\vnpt_mds\views\tramvt\index.php(135): yii\base\Widget::widget()
+#16 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\View.php(348): yii\web\View->unknown()
+#17 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\View.php(257): yii\web\View->renderPhpFile()
+#18 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\View.php(156): yii\web\View->renderFile()
+#19 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\Controller.php(386): yii\web\View->render()
+#20 C:\wamp64\www\vnpt_mds\controllers\TramvtController.php(59): app\controllers\TramvtController->render()
+#21 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\InlineAction.php(57): app\controllers\TramvtController->actionIndex()
+#22 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\InlineAction.php(57): ::call_user_func_array:{C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\InlineAction.php:57}()
+#23 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams()
+#24 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\Module.php(528): app\controllers\TramvtController->runAction()
+#25 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\web\Application.php(103): yii\web\Application->runAction()
+#26 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest()
+#27 C:\wamp64\www\vnpt_mds\index.php(12): yii\web\Application->run()
+#28 {main}
+2020-03-12 19:15:56 [::1][1][irb4kho9ah71cg7i21s6e8l9o9][info][application] $_GET = [
+    'TramvtSearch' => [
+        'MA_TRAM' => ''
+        'TEN_TRAM' => 'Phù Vân'
+        'DIADIEM' => ''
+        'ID_DAI' => ''
+        'ID_NHANVIEN' => ''
+    ]
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'googtrans' => '/en/vi'
+    'mailchimp_cart_current_email' => 'ngainguyendv@gmail.com'
+    'mailchimp_cart_previous_email' => 'ngainguyendv@gmail.com'
+    'gridcookie' => 'grid'
+    '_pk_id_432_1fff' => 'c51e5cd3473037c8.1582620770.13.1583411940.1583411940.'
+    'PHPSESSID' => 'irb4kho9ah71cg7i21s6e8l9o9'
+    '_identity' => '[1,\"RyxR8FTNrhX2E6eGrhBfXjc6iPrFFqgZ\",604800]'
+    '_csrf' => 'wLGSdA6w2MhNcJJPKsyHqYQQbexXfSK6'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 1
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
+    'HTTP_SEC_FETCH_SITE' => 'same-origin'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_REFERER' => 'http://localhost/vnpt_mds/tramvt?TramvtSearch%5BMA_TRAM%5D=&TramvtSearch%5BTEN_TRAM%5D=Ph%C3%B9%20V%C3%A2n%20(X%C3%B3m%202)&TramvtSearch%5BDIADIEM%5D=&TramvtSearch%5BID_DAI%5D=&TramvtSearch%5BID_NHANVIEN%5D='
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'vi,en-US;q=0.9,en;q=0.8'
+    'HTTP_COOKIE' => 'googtrans=/en/vi; mailchimp.cart.current_email=ngainguyendv@gmail.com; mailchimp.cart.previous_email=ngainguyendv@gmail.com; gridcookie=grid; _pk_id.432.1fff=c51e5cd3473037c8.1582620770.13.1583411940.1583411940.; PHPSESSID=irb4kho9ah71cg7i21s6e8l9o9; _identity=%5B1%2C%22RyxR8FTNrhX2E6eGrhBfXjc6iPrFFqgZ%22%2C604800%5D; _csrf=wLGSdA6w2MhNcJJPKsyHqYQQbexXfSK6'
+    'PATH' => 'MAVEN_HOME\\bin;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\DevHomes\\envs\\apache-ant-1.8.2\\bin;C:\\DevHomes\\envs\\java\\jdk1.7.0_80\\bin;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files\\TortoiseSVN\\bin;C:\\Program Files (x86)\\Windows Kits\\8.1\\Windows Performance Toolkit\\;C:\\wamp64\\bin\\php\\php7.0.10;C:\\Program Files\\nodejs\\;C:\\Program Files\\Git\\cmd;C:\\Program Files (x86)\\Common Files\\Acronis\\SnapAPI\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Users\\Admin\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\Admin\\AppData\\Roaming\\Composer\\vendor\\bin;C:\\Users\\Admin\\AppData\\Roaming\\npm;C:\\adb;C:\\wamp64\\bin\\php\\php7.2.8;C:\\ProgramData\\ComposerSetup\\bin;C:\\instantclient_12_2;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files\\Intel\\WiFi\\bin\\;C:\\Program Files\\Common Files\\Intel\\WirelessCommon\\;C:\\Program Files\\PuTTY\\;C:\\sqlite;C:\\WINDOWS\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\WINDOWS'
+    'COMSPEC' => 'C:\\WINDOWS\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\WINDOWS'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.27 (Win64) PHP/7.2.8 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.27 (Win64) PHP/7.2.8'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'C:/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'C:/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'C:/wamp64/www/vnpt_mds/index.php'
+    'REMOTE_PORT' => '46037'
+    'REDIRECT_URL' => '/vnpt_mds/tramvt'
+    'REDIRECT_QUERY_STRING' => 'TramvtSearch%5BMA_TRAM%5D=&TramvtSearch%5BTEN_TRAM%5D=Ph%C3%B9%20V%C3%A2n&TramvtSearch%5BDIADIEM%5D=&TramvtSearch%5BID_DAI%5D=&TramvtSearch%5BID_NHANVIEN%5D='
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'TramvtSearch%5BMA_TRAM%5D=&TramvtSearch%5BTEN_TRAM%5D=Ph%C3%B9%20V%C3%A2n&TramvtSearch%5BDIADIEM%5D=&TramvtSearch%5BID_DAI%5D=&TramvtSearch%5BID_NHANVIEN%5D='
+    'REQUEST_URI' => '/vnpt_mds/tramvt?TramvtSearch%5BMA_TRAM%5D=&TramvtSearch%5BTEN_TRAM%5D=Ph%C3%B9%20V%C3%A2n&TramvtSearch%5BDIADIEM%5D=&TramvtSearch%5BID_DAI%5D=&TramvtSearch%5BID_NHANVIEN%5D='
+    'SCRIPT_NAME' => '/vnpt_mds/index.php'
+    'PHP_SELF' => '/vnpt_mds/index.php'
+    'REQUEST_TIME_FLOAT' => 1584015356.035
+    'REQUEST_TIME' => 1584015356
+]
+2020-03-12 19:16:03 [::1][1][irb4kho9ah71cg7i21s6e8l9o9][error][yii\base\ErrorException:8] yii\base\ErrorException: Trying to get property 'TEN_NHANVIEN' of non-object in C:\wamp64\www\vnpt_mds\views\tramvt\index.php:49
+Stack trace:
+#0 C:\wamp64\www\vnpt_mds\views\tramvt\index.php(49): yii\web\ErrorHandler->handleError()
+#1 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\DataColumn.php(230): yii\web\View->{closure:C:\wamp64\www\vnpt_mds\views\tramvt\index.php:48-50}()
+#2 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\DataColumn.php(230): ::call_user_func:{C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\DataColumn.php:230}()
+#3 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\DataColumn.php(244): yii\grid\DataColumn->getDataCellValue()
+#4 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\Column.php(111): yii\grid\DataColumn->renderDataCellContent()
+#5 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\GridView.php(525): yii\grid\DataColumn->renderDataCell()
+#6 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\GridView.php(494): yii\grid\GridView->renderTableRow()
+#7 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\GridView.php(358): yii\grid\GridView->renderTableBody()
+#8 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\widgets\BaseListView.php(160): yii\grid\GridView->renderItems()
+#9 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\GridView.php(326): yii\grid\GridView->renderSection()
+#10 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\widgets\BaseListView.php(135): yii\grid\GridView->renderSection()
+#11 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\widgets\BaseListView.php(138): yii\grid\GridView->yii\widgets\{closure}()
+#12 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\widgets\BaseListView.php(138): ::preg_replace_callback()
+#13 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\GridView.php(301): yii\grid\GridView->run()
+#14 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\Widget.php(140): yii\grid\GridView->run()
+#15 C:\wamp64\www\vnpt_mds\views\tramvt\index.php(135): yii\base\Widget::widget()
+#16 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\View.php(348): yii\web\View->unknown()
+#17 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\View.php(257): yii\web\View->renderPhpFile()
+#18 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\View.php(156): yii\web\View->renderFile()
+#19 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\Controller.php(386): yii\web\View->render()
+#20 C:\wamp64\www\vnpt_mds\controllers\TramvtController.php(59): app\controllers\TramvtController->render()
+#21 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\InlineAction.php(57): app\controllers\TramvtController->actionIndex()
+#22 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\InlineAction.php(57): ::call_user_func_array:{C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\InlineAction.php:57}()
+#23 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams()
+#24 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\Module.php(528): app\controllers\TramvtController->runAction()
+#25 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\web\Application.php(103): yii\web\Application->runAction()
+#26 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest()
+#27 C:\wamp64\www\vnpt_mds\index.php(12): yii\web\Application->run()
+#28 {main}
+2020-03-12 19:16:02 [::1][1][irb4kho9ah71cg7i21s6e8l9o9][info][application] $_GET = [
+    'TramvtSearch' => [
+        'MA_TRAM' => ''
+        'TEN_TRAM' => 'Phù Vân'
+        'DIADIEM' => ''
+        'ID_DAI' => ''
+        'ID_NHANVIEN' => ''
+    ]
+    '_pjax' => '#p0'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'googtrans' => '/en/vi'
+    'mailchimp_cart_current_email' => 'ngainguyendv@gmail.com'
+    'mailchimp_cart_previous_email' => 'ngainguyendv@gmail.com'
+    'gridcookie' => 'grid'
+    '_pk_id_432_1fff' => 'c51e5cd3473037c8.1582620770.13.1583411940.1583411940.'
+    'PHPSESSID' => 'irb4kho9ah71cg7i21s6e8l9o9'
+    '_identity' => '[1,\"RyxR8FTNrhX2E6eGrhBfXjc6iPrFFqgZ\",604800]'
+    '_csrf' => 'wLGSdA6w2MhNcJJPKsyHqYQQbexXfSK6'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 1
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_X_CSRF_TOKEN' => 'sHTzWBOskE0aD_YGKCMbYPFm1uY-1vvog8KW8T7NnynHOLQLd-2mOihCnkhLaVEwuhWvrk-Pqrnhp-6pWJ7UHw=='
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded; charset=UTF-8'
+    'HTTP_ACCEPT' => 'text/html, */*; q=0.01'
+    'HTTP_SEC_FETCH_DEST' => 'empty'
+    'HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest'
+    'HTTP_X_PJAX' => 'true'
+    'HTTP_X_PJAX_CONTAINER' => '#p0'
+    'HTTP_SEC_FETCH_SITE' => 'same-origin'
+    'HTTP_SEC_FETCH_MODE' => 'cors'
+    'HTTP_REFERER' => 'http://localhost/vnpt_mds/tramvt?TramvtSearch%5BMA_TRAM%5D=&TramvtSearch%5BTEN_TRAM%5D=Ph%C3%B9%20V%C3%A2n%20(X%C3%B3m%202)&TramvtSearch%5BDIADIEM%5D=&TramvtSearch%5BID_DAI%5D=&TramvtSearch%5BID_NHANVIEN%5D='
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'vi,en-US;q=0.9,en;q=0.8'
+    'HTTP_COOKIE' => 'googtrans=/en/vi; mailchimp.cart.current_email=ngainguyendv@gmail.com; mailchimp.cart.previous_email=ngainguyendv@gmail.com; gridcookie=grid; _pk_id.432.1fff=c51e5cd3473037c8.1582620770.13.1583411940.1583411940.; PHPSESSID=irb4kho9ah71cg7i21s6e8l9o9; _identity=%5B1%2C%22RyxR8FTNrhX2E6eGrhBfXjc6iPrFFqgZ%22%2C604800%5D; _csrf=wLGSdA6w2MhNcJJPKsyHqYQQbexXfSK6'
+    'PATH' => 'MAVEN_HOME\\bin;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\DevHomes\\envs\\apache-ant-1.8.2\\bin;C:\\DevHomes\\envs\\java\\jdk1.7.0_80\\bin;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files\\TortoiseSVN\\bin;C:\\Program Files (x86)\\Windows Kits\\8.1\\Windows Performance Toolkit\\;C:\\wamp64\\bin\\php\\php7.0.10;C:\\Program Files\\nodejs\\;C:\\Program Files\\Git\\cmd;C:\\Program Files (x86)\\Common Files\\Acronis\\SnapAPI\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Users\\Admin\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\Admin\\AppData\\Roaming\\Composer\\vendor\\bin;C:\\Users\\Admin\\AppData\\Roaming\\npm;C:\\adb;C:\\wamp64\\bin\\php\\php7.2.8;C:\\ProgramData\\ComposerSetup\\bin;C:\\instantclient_12_2;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files\\Intel\\WiFi\\bin\\;C:\\Program Files\\Common Files\\Intel\\WirelessCommon\\;C:\\Program Files\\PuTTY\\;C:\\sqlite;C:\\WINDOWS\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\WINDOWS'
+    'COMSPEC' => 'C:\\WINDOWS\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\WINDOWS'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.27 (Win64) PHP/7.2.8 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.27 (Win64) PHP/7.2.8'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'C:/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'C:/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'C:/wamp64/www/vnpt_mds/index.php'
+    'REMOTE_PORT' => '46040'
+    'REDIRECT_URL' => '/vnpt_mds/tramvt'
+    'REDIRECT_QUERY_STRING' => 'TramvtSearch%5BMA_TRAM%5D=&TramvtSearch%5BTEN_TRAM%5D=Ph%C3%B9%20V%C3%A2n&TramvtSearch%5BDIADIEM%5D=&TramvtSearch%5BID_DAI%5D=&TramvtSearch%5BID_NHANVIEN%5D=&_pjax=%23p0'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'TramvtSearch%5BMA_TRAM%5D=&TramvtSearch%5BTEN_TRAM%5D=Ph%C3%B9%20V%C3%A2n&TramvtSearch%5BDIADIEM%5D=&TramvtSearch%5BID_DAI%5D=&TramvtSearch%5BID_NHANVIEN%5D=&_pjax=%23p0'
+    'REQUEST_URI' => '/vnpt_mds/tramvt?TramvtSearch%5BMA_TRAM%5D=&TramvtSearch%5BTEN_TRAM%5D=Ph%C3%B9%20V%C3%A2n&TramvtSearch%5BDIADIEM%5D=&TramvtSearch%5BID_DAI%5D=&TramvtSearch%5BID_NHANVIEN%5D=&_pjax=%23p0'
+    'SCRIPT_NAME' => '/vnpt_mds/index.php'
+    'PHP_SELF' => '/vnpt_mds/index.php'
+    'REQUEST_TIME_FLOAT' => 1584015362.87
+    'REQUEST_TIME' => 1584015362
+]
+2020-03-12 19:16:03 [::1][1][irb4kho9ah71cg7i21s6e8l9o9][error][yii\base\ErrorException:8] yii\base\ErrorException: Trying to get property 'TEN_NHANVIEN' of non-object in C:\wamp64\www\vnpt_mds\views\tramvt\index.php:49
+Stack trace:
+#0 C:\wamp64\www\vnpt_mds\views\tramvt\index.php(49): yii\web\ErrorHandler->handleError()
+#1 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\DataColumn.php(230): yii\web\View->{closure:C:\wamp64\www\vnpt_mds\views\tramvt\index.php:48-50}()
+#2 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\DataColumn.php(230): ::call_user_func:{C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\DataColumn.php:230}()
+#3 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\DataColumn.php(244): yii\grid\DataColumn->getDataCellValue()
+#4 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\Column.php(111): yii\grid\DataColumn->renderDataCellContent()
+#5 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\GridView.php(525): yii\grid\DataColumn->renderDataCell()
+#6 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\GridView.php(494): yii\grid\GridView->renderTableRow()
+#7 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\GridView.php(358): yii\grid\GridView->renderTableBody()
+#8 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\widgets\BaseListView.php(160): yii\grid\GridView->renderItems()
+#9 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\GridView.php(326): yii\grid\GridView->renderSection()
+#10 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\widgets\BaseListView.php(135): yii\grid\GridView->renderSection()
+#11 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\widgets\BaseListView.php(138): yii\grid\GridView->yii\widgets\{closure}()
+#12 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\widgets\BaseListView.php(138): ::preg_replace_callback()
+#13 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\GridView.php(301): yii\grid\GridView->run()
+#14 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\Widget.php(140): yii\grid\GridView->run()
+#15 C:\wamp64\www\vnpt_mds\views\tramvt\index.php(135): yii\base\Widget::widget()
+#16 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\View.php(348): yii\web\View->unknown()
+#17 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\View.php(257): yii\web\View->renderPhpFile()
+#18 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\View.php(156): yii\web\View->renderFile()
+#19 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\Controller.php(386): yii\web\View->render()
+#20 C:\wamp64\www\vnpt_mds\controllers\TramvtController.php(59): app\controllers\TramvtController->render()
+#21 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\InlineAction.php(57): app\controllers\TramvtController->actionIndex()
+#22 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\InlineAction.php(57): ::call_user_func_array:{C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\InlineAction.php:57}()
+#23 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams()
+#24 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\Module.php(528): app\controllers\TramvtController->runAction()
+#25 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\web\Application.php(103): yii\web\Application->runAction()
+#26 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest()
+#27 C:\wamp64\www\vnpt_mds\index.php(12): yii\web\Application->run()
+#28 {main}
+2020-03-12 19:16:03 [::1][1][irb4kho9ah71cg7i21s6e8l9o9][info][application] $_GET = [
+    'TramvtSearch' => [
+        'MA_TRAM' => ''
+        'TEN_TRAM' => 'Phù Vân'
+        'DIADIEM' => ''
+        'ID_DAI' => ''
+        'ID_NHANVIEN' => ''
+    ]
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'googtrans' => '/en/vi'
+    'mailchimp_cart_current_email' => 'ngainguyendv@gmail.com'
+    'mailchimp_cart_previous_email' => 'ngainguyendv@gmail.com'
+    'gridcookie' => 'grid'
+    '_pk_id_432_1fff' => 'c51e5cd3473037c8.1582620770.13.1583411940.1583411940.'
+    'PHPSESSID' => 'irb4kho9ah71cg7i21s6e8l9o9'
+    '_identity' => '[1,\"RyxR8FTNrhX2E6eGrhBfXjc6iPrFFqgZ\",604800]'
+    '_csrf' => 'wLGSdA6w2MhNcJJPKsyHqYQQbexXfSK6'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 1
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
+    'HTTP_SEC_FETCH_SITE' => 'same-origin'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_REFERER' => 'http://localhost/vnpt_mds/tramvt?TramvtSearch%5BMA_TRAM%5D=&TramvtSearch%5BTEN_TRAM%5D=Ph%C3%B9%20V%C3%A2n%20(X%C3%B3m%202)&TramvtSearch%5BDIADIEM%5D=&TramvtSearch%5BID_DAI%5D=&TramvtSearch%5BID_NHANVIEN%5D='
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'vi,en-US;q=0.9,en;q=0.8'
+    'HTTP_COOKIE' => 'googtrans=/en/vi; mailchimp.cart.current_email=ngainguyendv@gmail.com; mailchimp.cart.previous_email=ngainguyendv@gmail.com; gridcookie=grid; _pk_id.432.1fff=c51e5cd3473037c8.1582620770.13.1583411940.1583411940.; PHPSESSID=irb4kho9ah71cg7i21s6e8l9o9; _identity=%5B1%2C%22RyxR8FTNrhX2E6eGrhBfXjc6iPrFFqgZ%22%2C604800%5D; _csrf=wLGSdA6w2MhNcJJPKsyHqYQQbexXfSK6'
+    'PATH' => 'MAVEN_HOME\\bin;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\DevHomes\\envs\\apache-ant-1.8.2\\bin;C:\\DevHomes\\envs\\java\\jdk1.7.0_80\\bin;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files\\TortoiseSVN\\bin;C:\\Program Files (x86)\\Windows Kits\\8.1\\Windows Performance Toolkit\\;C:\\wamp64\\bin\\php\\php7.0.10;C:\\Program Files\\nodejs\\;C:\\Program Files\\Git\\cmd;C:\\Program Files (x86)\\Common Files\\Acronis\\SnapAPI\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Users\\Admin\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\Admin\\AppData\\Roaming\\Composer\\vendor\\bin;C:\\Users\\Admin\\AppData\\Roaming\\npm;C:\\adb;C:\\wamp64\\bin\\php\\php7.2.8;C:\\ProgramData\\ComposerSetup\\bin;C:\\instantclient_12_2;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files\\Intel\\WiFi\\bin\\;C:\\Program Files\\Common Files\\Intel\\WirelessCommon\\;C:\\Program Files\\PuTTY\\;C:\\sqlite;C:\\WINDOWS\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\WINDOWS'
+    'COMSPEC' => 'C:\\WINDOWS\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\WINDOWS'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.27 (Win64) PHP/7.2.8 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.27 (Win64) PHP/7.2.8'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'C:/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'C:/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'C:/wamp64/www/vnpt_mds/index.php'
+    'REMOTE_PORT' => '46045'
+    'REDIRECT_URL' => '/vnpt_mds/tramvt'
+    'REDIRECT_QUERY_STRING' => 'TramvtSearch%5BMA_TRAM%5D=&TramvtSearch%5BTEN_TRAM%5D=Ph%C3%B9%20V%C3%A2n&TramvtSearch%5BDIADIEM%5D=&TramvtSearch%5BID_DAI%5D=&TramvtSearch%5BID_NHANVIEN%5D='
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'TramvtSearch%5BMA_TRAM%5D=&TramvtSearch%5BTEN_TRAM%5D=Ph%C3%B9%20V%C3%A2n&TramvtSearch%5BDIADIEM%5D=&TramvtSearch%5BID_DAI%5D=&TramvtSearch%5BID_NHANVIEN%5D='
+    'REQUEST_URI' => '/vnpt_mds/tramvt?TramvtSearch%5BMA_TRAM%5D=&TramvtSearch%5BTEN_TRAM%5D=Ph%C3%B9%20V%C3%A2n&TramvtSearch%5BDIADIEM%5D=&TramvtSearch%5BID_DAI%5D=&TramvtSearch%5BID_NHANVIEN%5D='
+    'SCRIPT_NAME' => '/vnpt_mds/index.php'
+    'PHP_SELF' => '/vnpt_mds/index.php'
+    'REQUEST_TIME_FLOAT' => 1584015363.223
+    'REQUEST_TIME' => 1584015363
+]
+2020-03-12 21:11:33 [::1][1][jjgvkfeoplj4r8f2jsciqk6hcu][error][yii\base\ErrorException:8] yii\base\ErrorException: Trying to get property 'TEN_NHANVIEN' of non-object in C:\wamp64\www\vnpt_mds\views\tramvt\index.php:49
+Stack trace:
+#0 C:\wamp64\www\vnpt_mds\views\tramvt\index.php(49): yii\web\ErrorHandler->handleError()
+#1 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\DataColumn.php(230): yii\web\View->{closure:C:\wamp64\www\vnpt_mds\views\tramvt\index.php:48-50}()
+#2 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\DataColumn.php(230): ::call_user_func:{C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\DataColumn.php:230}()
+#3 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\DataColumn.php(244): yii\grid\DataColumn->getDataCellValue()
+#4 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\Column.php(111): yii\grid\DataColumn->renderDataCellContent()
+#5 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\GridView.php(525): yii\grid\DataColumn->renderDataCell()
+#6 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\GridView.php(494): yii\grid\GridView->renderTableRow()
+#7 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\GridView.php(358): yii\grid\GridView->renderTableBody()
+#8 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\widgets\BaseListView.php(160): yii\grid\GridView->renderItems()
+#9 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\GridView.php(326): yii\grid\GridView->renderSection()
+#10 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\widgets\BaseListView.php(135): yii\grid\GridView->renderSection()
+#11 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\widgets\BaseListView.php(138): yii\grid\GridView->yii\widgets\{closure}()
+#12 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\widgets\BaseListView.php(138): ::preg_replace_callback()
+#13 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\GridView.php(301): yii\grid\GridView->run()
+#14 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\Widget.php(140): yii\grid\GridView->run()
+#15 C:\wamp64\www\vnpt_mds\views\tramvt\index.php(135): yii\base\Widget::widget()
+#16 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\View.php(348): yii\web\View->unknown()
+#17 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\View.php(257): yii\web\View->renderPhpFile()
+#18 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\View.php(156): yii\web\View->renderFile()
+#19 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\Controller.php(386): yii\web\View->render()
+#20 C:\wamp64\www\vnpt_mds\controllers\TramvtController.php(59): app\controllers\TramvtController->render()
+#21 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\InlineAction.php(57): app\controllers\TramvtController->actionIndex()
+#22 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\InlineAction.php(57): ::call_user_func_array:{C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\InlineAction.php:57}()
+#23 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams()
+#24 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\Module.php(528): app\controllers\TramvtController->runAction()
+#25 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\web\Application.php(103): yii\web\Application->runAction()
+#26 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest()
+#27 C:\wamp64\www\vnpt_mds\index.php(12): yii\web\Application->run()
+#28 {main}
+2020-03-12 21:11:33 [::1][1][jjgvkfeoplj4r8f2jsciqk6hcu][info][application] $_GET = [
+    'TramvtSearch' => [
+        'MA_TRAM' => ''
+        'TEN_TRAM' => 'phù vân'
+        'DIADIEM' => ''
+        'ID_DAI' => ''
+        'ID_NHANVIEN' => ''
+    ]
+    '_pjax' => '#p0'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'googtrans' => '/en/vi'
+    'mailchimp_cart_current_email' => 'ngainguyendv@gmail.com'
+    'mailchimp_cart_previous_email' => 'ngainguyendv@gmail.com'
+    'gridcookie' => 'grid'
+    'PHPSESSID' => 'jjgvkfeoplj4r8f2jsciqk6hcu'
+    '_identity' => '[1,\"RyxR8FTNrhX2E6eGrhBfXjc6iPrFFqgZ\",604800]'
+    '_csrf' => '-f4npEJxKcHQ2ntsN-AMlknzoVpTrncV'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 1
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_X_CSRF_TOKEN' => '37vwzACuv-nxViuQwQX3JOR--1eBoK3eCQcIadxR-Yzy3cSicOv1kbo1Y8Hza4NXqlO6Gu3Lw6RmUXg9rj-a2g=='
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded; charset=UTF-8'
+    'HTTP_ACCEPT' => 'text/html, */*; q=0.01'
+    'HTTP_SEC_FETCH_DEST' => 'empty'
+    'HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest'
+    'HTTP_X_PJAX' => 'true'
+    'HTTP_X_PJAX_CONTAINER' => '#p0'
+    'HTTP_SEC_FETCH_SITE' => 'same-origin'
+    'HTTP_SEC_FETCH_MODE' => 'cors'
+    'HTTP_REFERER' => 'http://localhost/vnpt_mds/tramvt'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'vi,en-US;q=0.9,en;q=0.8'
+    'HTTP_COOKIE' => 'googtrans=/en/vi; mailchimp.cart.current_email=ngainguyendv@gmail.com; mailchimp.cart.previous_email=ngainguyendv@gmail.com; gridcookie=grid; PHPSESSID=jjgvkfeoplj4r8f2jsciqk6hcu; _identity=%5B1%2C%22RyxR8FTNrhX2E6eGrhBfXjc6iPrFFqgZ%22%2C604800%5D; _csrf=-f4npEJxKcHQ2ntsN-AMlknzoVpTrncV'
+    'PATH' => 'MAVEN_HOME\\bin;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\DevHomes\\envs\\apache-ant-1.8.2\\bin;C:\\DevHomes\\envs\\java\\jdk1.7.0_80\\bin;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files\\TortoiseSVN\\bin;C:\\Program Files (x86)\\Windows Kits\\8.1\\Windows Performance Toolkit\\;C:\\wamp64\\bin\\php\\php7.0.10;C:\\Program Files\\nodejs\\;C:\\Program Files\\Git\\cmd;C:\\Program Files (x86)\\Common Files\\Acronis\\SnapAPI\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Users\\Admin\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\Admin\\AppData\\Roaming\\Composer\\vendor\\bin;C:\\Users\\Admin\\AppData\\Roaming\\npm;C:\\adb;C:\\wamp64\\bin\\php\\php7.2.8;C:\\ProgramData\\ComposerSetup\\bin;C:\\instantclient_12_2;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files\\Intel\\WiFi\\bin\\;C:\\Program Files\\Common Files\\Intel\\WirelessCommon\\;C:\\Program Files\\PuTTY\\;C:\\sqlite;C:\\WINDOWS\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\WINDOWS'
+    'COMSPEC' => 'C:\\WINDOWS\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\WINDOWS'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.27 (Win64) PHP/7.2.8 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.27 (Win64) PHP/7.2.8'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'C:/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'C:/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'C:/wamp64/www/vnpt_mds/index.php'
+    'REMOTE_PORT' => '49530'
+    'REDIRECT_URL' => '/vnpt_mds/tramvt'
+    'REDIRECT_QUERY_STRING' => 'TramvtSearch%5BMA_TRAM%5D=&TramvtSearch%5BTEN_TRAM%5D=ph%C3%B9%20v%C3%A2n&TramvtSearch%5BDIADIEM%5D=&TramvtSearch%5BID_DAI%5D=&TramvtSearch%5BID_NHANVIEN%5D=&_pjax=%23p0'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'TramvtSearch%5BMA_TRAM%5D=&TramvtSearch%5BTEN_TRAM%5D=ph%C3%B9%20v%C3%A2n&TramvtSearch%5BDIADIEM%5D=&TramvtSearch%5BID_DAI%5D=&TramvtSearch%5BID_NHANVIEN%5D=&_pjax=%23p0'
+    'REQUEST_URI' => '/vnpt_mds/tramvt?TramvtSearch%5BMA_TRAM%5D=&TramvtSearch%5BTEN_TRAM%5D=ph%C3%B9%20v%C3%A2n&TramvtSearch%5BDIADIEM%5D=&TramvtSearch%5BID_DAI%5D=&TramvtSearch%5BID_NHANVIEN%5D=&_pjax=%23p0'
+    'SCRIPT_NAME' => '/vnpt_mds/index.php'
+    'PHP_SELF' => '/vnpt_mds/index.php'
+    'REQUEST_TIME_FLOAT' => 1584022293.297
+    'REQUEST_TIME' => 1584022293
+]
+2020-03-12 21:11:33 [::1][1][jjgvkfeoplj4r8f2jsciqk6hcu][error][yii\base\ErrorException:8] yii\base\ErrorException: Trying to get property 'TEN_NHANVIEN' of non-object in C:\wamp64\www\vnpt_mds\views\tramvt\index.php:49
+Stack trace:
+#0 C:\wamp64\www\vnpt_mds\views\tramvt\index.php(49): yii\web\ErrorHandler->handleError()
+#1 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\DataColumn.php(230): yii\web\View->{closure:C:\wamp64\www\vnpt_mds\views\tramvt\index.php:48-50}()
+#2 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\DataColumn.php(230): ::call_user_func:{C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\DataColumn.php:230}()
+#3 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\DataColumn.php(244): yii\grid\DataColumn->getDataCellValue()
+#4 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\Column.php(111): yii\grid\DataColumn->renderDataCellContent()
+#5 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\GridView.php(525): yii\grid\DataColumn->renderDataCell()
+#6 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\GridView.php(494): yii\grid\GridView->renderTableRow()
+#7 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\GridView.php(358): yii\grid\GridView->renderTableBody()
+#8 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\widgets\BaseListView.php(160): yii\grid\GridView->renderItems()
+#9 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\GridView.php(326): yii\grid\GridView->renderSection()
+#10 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\widgets\BaseListView.php(135): yii\grid\GridView->renderSection()
+#11 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\widgets\BaseListView.php(138): yii\grid\GridView->yii\widgets\{closure}()
+#12 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\widgets\BaseListView.php(138): ::preg_replace_callback()
+#13 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\grid\GridView.php(301): yii\grid\GridView->run()
+#14 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\Widget.php(140): yii\grid\GridView->run()
+#15 C:\wamp64\www\vnpt_mds\views\tramvt\index.php(135): yii\base\Widget::widget()
+#16 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\View.php(348): yii\web\View->unknown()
+#17 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\View.php(257): yii\web\View->renderPhpFile()
+#18 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\View.php(156): yii\web\View->renderFile()
+#19 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\Controller.php(386): yii\web\View->render()
+#20 C:\wamp64\www\vnpt_mds\controllers\TramvtController.php(59): app\controllers\TramvtController->render()
+#21 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\InlineAction.php(57): app\controllers\TramvtController->actionIndex()
+#22 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\InlineAction.php(57): ::call_user_func_array:{C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\InlineAction.php:57}()
+#23 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams()
+#24 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\Module.php(528): app\controllers\TramvtController->runAction()
+#25 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\web\Application.php(103): yii\web\Application->runAction()
+#26 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest()
+#27 C:\wamp64\www\vnpt_mds\index.php(12): yii\web\Application->run()
+#28 {main}
+2020-03-12 21:11:33 [::1][1][jjgvkfeoplj4r8f2jsciqk6hcu][info][application] $_GET = [
+    'TramvtSearch' => [
+        'MA_TRAM' => ''
+        'TEN_TRAM' => 'phù vân'
+        'DIADIEM' => ''
+        'ID_DAI' => ''
+        'ID_NHANVIEN' => ''
+    ]
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'googtrans' => '/en/vi'
+    'mailchimp_cart_current_email' => 'ngainguyendv@gmail.com'
+    'mailchimp_cart_previous_email' => 'ngainguyendv@gmail.com'
+    'gridcookie' => 'grid'
+    'PHPSESSID' => 'jjgvkfeoplj4r8f2jsciqk6hcu'
+    '_identity' => '[1,\"RyxR8FTNrhX2E6eGrhBfXjc6iPrFFqgZ\",604800]'
+    '_csrf' => '-f4npEJxKcHQ2ntsN-AMlknzoVpTrncV'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 1
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
+    'HTTP_SEC_FETCH_SITE' => 'same-origin'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_REFERER' => 'http://localhost/vnpt_mds/tramvt'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'vi,en-US;q=0.9,en;q=0.8'
+    'HTTP_COOKIE' => 'googtrans=/en/vi; mailchimp.cart.current_email=ngainguyendv@gmail.com; mailchimp.cart.previous_email=ngainguyendv@gmail.com; gridcookie=grid; PHPSESSID=jjgvkfeoplj4r8f2jsciqk6hcu; _identity=%5B1%2C%22RyxR8FTNrhX2E6eGrhBfXjc6iPrFFqgZ%22%2C604800%5D; _csrf=-f4npEJxKcHQ2ntsN-AMlknzoVpTrncV'
+    'PATH' => 'MAVEN_HOME\\bin;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\DevHomes\\envs\\apache-ant-1.8.2\\bin;C:\\DevHomes\\envs\\java\\jdk1.7.0_80\\bin;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files\\TortoiseSVN\\bin;C:\\Program Files (x86)\\Windows Kits\\8.1\\Windows Performance Toolkit\\;C:\\wamp64\\bin\\php\\php7.0.10;C:\\Program Files\\nodejs\\;C:\\Program Files\\Git\\cmd;C:\\Program Files (x86)\\Common Files\\Acronis\\SnapAPI\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Users\\Admin\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\Admin\\AppData\\Roaming\\Composer\\vendor\\bin;C:\\Users\\Admin\\AppData\\Roaming\\npm;C:\\adb;C:\\wamp64\\bin\\php\\php7.2.8;C:\\ProgramData\\ComposerSetup\\bin;C:\\instantclient_12_2;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files\\Intel\\WiFi\\bin\\;C:\\Program Files\\Common Files\\Intel\\WirelessCommon\\;C:\\Program Files\\PuTTY\\;C:\\sqlite;C:\\WINDOWS\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\WINDOWS'
+    'COMSPEC' => 'C:\\WINDOWS\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\WINDOWS'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.27 (Win64) PHP/7.2.8 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.27 (Win64) PHP/7.2.8'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'C:/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'C:/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'C:/wamp64/www/vnpt_mds/index.php'
+    'REMOTE_PORT' => '49532'
+    'REDIRECT_URL' => '/vnpt_mds/tramvt'
+    'REDIRECT_QUERY_STRING' => 'TramvtSearch%5BMA_TRAM%5D=&TramvtSearch%5BTEN_TRAM%5D=ph%C3%B9%20v%C3%A2n&TramvtSearch%5BDIADIEM%5D=&TramvtSearch%5BID_DAI%5D=&TramvtSearch%5BID_NHANVIEN%5D='
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'TramvtSearch%5BMA_TRAM%5D=&TramvtSearch%5BTEN_TRAM%5D=ph%C3%B9%20v%C3%A2n&TramvtSearch%5BDIADIEM%5D=&TramvtSearch%5BID_DAI%5D=&TramvtSearch%5BID_NHANVIEN%5D='
+    'REQUEST_URI' => '/vnpt_mds/tramvt?TramvtSearch%5BMA_TRAM%5D=&TramvtSearch%5BTEN_TRAM%5D=ph%C3%B9%20v%C3%A2n&TramvtSearch%5BDIADIEM%5D=&TramvtSearch%5BID_DAI%5D=&TramvtSearch%5BID_NHANVIEN%5D='
+    'SCRIPT_NAME' => '/vnpt_mds/index.php'
+    'PHP_SELF' => '/vnpt_mds/index.php'
+    'REQUEST_TIME_FLOAT' => 1584022293.584
+    'REQUEST_TIME' => 1584022293
+]
+2020-03-12 21:13:10 [::1][1][jjgvkfeoplj4r8f2jsciqk6hcu][error][ParseError] ParseError: syntax error, unexpected ']', expecting ',' or ')' in C:\wamp64\www\vnpt_mds\views\tramvt\index.php:49
+Stack trace:
+#0 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\View.php(257): yii\base\View->renderPhpFile('C:\\wamp64\\www\\v...', Array)
+#1 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\View.php(156): yii\base\View->renderFile('C:\\wamp64\\www\\v...', Array, Object(app\controllers\TramvtController))
+#2 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\Controller.php(386): yii\base\View->render('index', Array, Object(app\controllers\TramvtController))
+#3 C:\wamp64\www\vnpt_mds\controllers\TramvtController.php(59): yii\base\Controller->render('index', Array)
+#4 [internal function]: app\controllers\TramvtController->actionIndex()
+#5 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#6 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#7 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\Module.php(528): yii\base\Controller->runAction('', Array)
+#8 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('tramvt', Array)
+#9 C:\wamp64\www\vnpt_mds\vendor\yiisoft\yii2\base\Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#10 C:\wamp64\www\vnpt_mds\index.php(12): yii\base\Application->run()
+#11 {main}
+2020-03-12 21:13:10 [::1][1][jjgvkfeoplj4r8f2jsciqk6hcu][info][application] $_GET = [
+    'TramvtSearch' => [
+        'MA_TRAM' => ''
+        'TEN_TRAM' => 'phù vân'
+        'DIADIEM' => ''
+        'ID_DAI' => ''
+        'ID_NHANVIEN' => ''
+    ]
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'googtrans' => '/en/vi'
+    'mailchimp_cart_current_email' => 'ngainguyendv@gmail.com'
+    'mailchimp_cart_previous_email' => 'ngainguyendv@gmail.com'
+    'gridcookie' => 'grid'
+    'PHPSESSID' => 'jjgvkfeoplj4r8f2jsciqk6hcu'
+    '_identity' => '[1,\"RyxR8FTNrhX2E6eGrhBfXjc6iPrFFqgZ\",604800]'
+    '_csrf' => '-f4npEJxKcHQ2ntsN-AMlknzoVpTrncV'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 1
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'vi,en-US;q=0.9,en;q=0.8'
+    'HTTP_COOKIE' => 'googtrans=/en/vi; mailchimp.cart.current_email=ngainguyendv@gmail.com; mailchimp.cart.previous_email=ngainguyendv@gmail.com; gridcookie=grid; PHPSESSID=jjgvkfeoplj4r8f2jsciqk6hcu; _identity=%5B1%2C%22RyxR8FTNrhX2E6eGrhBfXjc6iPrFFqgZ%22%2C604800%5D; _csrf=-f4npEJxKcHQ2ntsN-AMlknzoVpTrncV'
+    'PATH' => 'MAVEN_HOME\\bin;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\DevHomes\\envs\\apache-ant-1.8.2\\bin;C:\\DevHomes\\envs\\java\\jdk1.7.0_80\\bin;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files\\TortoiseSVN\\bin;C:\\Program Files (x86)\\Windows Kits\\8.1\\Windows Performance Toolkit\\;C:\\wamp64\\bin\\php\\php7.0.10;C:\\Program Files\\nodejs\\;C:\\Program Files\\Git\\cmd;C:\\Program Files (x86)\\Common Files\\Acronis\\SnapAPI\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Users\\Admin\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\Admin\\AppData\\Roaming\\Composer\\vendor\\bin;C:\\Users\\Admin\\AppData\\Roaming\\npm;C:\\adb;C:\\wamp64\\bin\\php\\php7.2.8;C:\\ProgramData\\ComposerSetup\\bin;C:\\instantclient_12_2;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files\\Intel\\WiFi\\bin\\;C:\\Program Files\\Common Files\\Intel\\WirelessCommon\\;C:\\Program Files\\PuTTY\\;C:\\sqlite;C:\\WINDOWS\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\WINDOWS'
+    'COMSPEC' => 'C:\\WINDOWS\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\WINDOWS'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.27 (Win64) PHP/7.2.8 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.27 (Win64) PHP/7.2.8'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'C:/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'C:/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'C:/wamp64/www/vnpt_mds/index.php'
+    'REMOTE_PORT' => '49543'
+    'REDIRECT_URL' => '/vnpt_mds/tramvt'
+    'REDIRECT_QUERY_STRING' => 'TramvtSearch%5BMA_TRAM%5D=&TramvtSearch%5BTEN_TRAM%5D=ph%C3%B9%20v%C3%A2n&TramvtSearch%5BDIADIEM%5D=&TramvtSearch%5BID_DAI%5D=&TramvtSearch%5BID_NHANVIEN%5D='
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'TramvtSearch%5BMA_TRAM%5D=&TramvtSearch%5BTEN_TRAM%5D=ph%C3%B9%20v%C3%A2n&TramvtSearch%5BDIADIEM%5D=&TramvtSearch%5BID_DAI%5D=&TramvtSearch%5BID_NHANVIEN%5D='
+    'REQUEST_URI' => '/vnpt_mds/tramvt?TramvtSearch%5BMA_TRAM%5D=&TramvtSearch%5BTEN_TRAM%5D=ph%C3%B9%20v%C3%A2n&TramvtSearch%5BDIADIEM%5D=&TramvtSearch%5BID_DAI%5D=&TramvtSearch%5BID_NHANVIEN%5D='
+    'SCRIPT_NAME' => '/vnpt_mds/index.php'
+    'PHP_SELF' => '/vnpt_mds/index.php'
+    'REQUEST_TIME_FLOAT' => 1584022390.076
+    'REQUEST_TIME' => 1584022390
+]

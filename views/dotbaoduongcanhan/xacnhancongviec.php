@@ -65,7 +65,9 @@ $script = <<< JS
                     KETQUA: 1,
                 },
                 success:function(data) {
-                    console.log(data);
+                  if (!data.error) {
+                      Swal.fire('Xác nhận thành công');
+                  }
                 }
             });
         });
@@ -81,7 +83,9 @@ $script = <<< JS
                     ID_DOTBD: ID_DOTBD,
                 },
                 success:function(data) {
-                    console.log(data);
+                  if (!data.error) {
+                      Swal.fire('Kết thúc bảo dưỡng!');
+                  }
                 }
             });
         });
