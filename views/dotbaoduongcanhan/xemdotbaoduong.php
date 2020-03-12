@@ -23,8 +23,8 @@ use app\models\Images;
     <?php foreach ($dscongviec as $congviec): ?>
         <li>
             <?php if($dotbd->TRANGTHAI == 'dangthuchien') {?>
-            <input class="xulycongviec" type="checkbox" <?php echo $congviec['TRANGTHAI'] ? 'checked' : ''; ?> data-ID_DOTBD="<?= Html::encode("{$congviec['ID_DOTBD']}") ?>" data-ID_THIETBI="<?= Html::encode("{$congviec['ID_THIETBI']}") ?>" data-MA_NOIDUNG="<?= Html::encode("{$congviec['NOIDUNG']['MA_NOIDUNG']}") ?>">
-        <?php }?>
+                <input class="xulycongviec" type="checkbox" <?php echo $congviec['TRANGTHAI'] ? 'checked' : ''; ?> data-ID_DOTBD="<?= Html::encode("{$congviec['ID_DOTBD']}") ?>" data-ID_THIETBI="<?= Html::encode("{$congviec['ID_THIETBI']}") ?>" data-MA_NOIDUNG="<?= Html::encode("{$congviec['NOIDUNG']['MA_NOIDUNG']}") ?>">
+            <?php }?>
             <span class="text"><?= Html::encode("{$congviec['NOIDUNG']['NOIDUNG']} ({$congviec['NOIDUNG']['MA_NOIDUNG']})") ?></span>
             <span class="text"><?= Html::encode("{$congviec['ID_DOTBD']} {$congviec['ID_THIETBI']}") ?></span>
             <?php if($dotbd['TRANGTHAI'] == 'hoanthanh') {?>
@@ -46,6 +46,10 @@ use app\models\Images;
     </div>
     <div class="box-body">
         <ul class="todo-list">
+        <form method="post" enctype="multipart/form-data">
+            <input type="file" name="my_file[]" id="image-dotbaoduong" multiple>
+            <input type="submit" value="Upload">
+        </form>
         </ul>
     </div>
 </div>
@@ -115,103 +119,131 @@ use app\models\Images;
 </script>
 <?php
 $script = <<< JS
-        $(".xulycongviec").on( "click", function() {
-            var ID_DOTBD = this.dataset.id_dotbd;
-            var ID_THIETBI = this.dataset.id_thietbi;
-            var MA_NOIDUNG = this.dataset.ma_noidung;
-            var url = $("#url").val();
-            var check = $(this).prop('checked') ? 1 : 0;
-            $.ajax({
-                url: url,
-                method: 'post',
-                data: {
-                    ID_DOTBD: ID_DOTBD,
-                    ID_THIETBI: ID_THIETBI,
-                    MA_NOIDUNG: MA_NOIDUNG,
-                    IS_DONE: check,
-                },
-                success:function(data) {
-                    if (!data.error) {
-                        Swal.fire('Đã cập nhật');
-                    }
+    $(".xulycongviec").on( "click", function() {
+        var ID_DOTBD = this.dataset.id_dotbd;
+        var ID_THIETBI = this.dataset.id_thietbi;
+        var MA_NOIDUNG = this.dataset.ma_noidung;
+        var url = $("#url").val();
+        var check = $(this).prop('checked') ? 1 : 0;
+        $.ajax({
+            url: url,
+            method: 'post',
+            data: {
+                ID_DOTBD: ID_DOTBD,
+                ID_THIETBI: ID_THIETBI,
+                MA_NOIDUNG: MA_NOIDUNG,
+                IS_DONE: check,
+            },
+            success:function(data) {
+                if (!data.error) {
+                    Swal.fire('Đã cập nhật');
                 }
-            });
+            }
         });
-        $("#xacnhantatca").on( "click", function() {
-          var ID_DOTBD = $("#ID_DOTBD").val();
-          var urlxacnhan = $("#urlxacnhan").val();
-          var KETQUABAODUONG = $("#KETQUABAODUONG").val();
+    });
+    $("#xacnhantatca").on( "click", function() {
+      var ID_DOTBD = $("#ID_DOTBD").val();
+      var urlxacnhan = $("#urlxacnhan").val();
+      var KETQUABAODUONG = $("#KETQUABAODUONG").val();
+        $.ajax({
+            url: urlxacnhan ,
+            method: 'post',
+            data: {
+                ID_DOTBD: ID_DOTBD,
+                KETQUA: 1,
+            },
+            success:function(data) {
+                if (!data.error) {
+                    Swal.fire('Xác nhận thành công');
+                }
+            }
+        });
+    });
+
+    $("#ketthucdotbaoduong").on( "click", function() {
+      var ID_DOTBD = $("#ID_DOTBD").val();
+      var urlketthuc = $("#urlketthuc").val();
+      var KETQUABAODUONG = $("#KETQUABAODUONG").val();
+        $.ajax({
+            url: urlketthuc ,
+            method: 'post',
+            data: {
+                ID_DOTBD: ID_DOTBD,
+            },
+            success:function(data) {
+                if (!data.error) {
+                    Swal.fire('Xác nhận thành công');
+                }
+            }
+        });
+    });
+
+    $("#nhanvienhoanthanh").on( "click", function() {
+      var ID_DOTBD = $("#ID_DOTBD").val();
+      var urlnhanvienhoanthanh = $("#urlnhanvienhoanthanh").val();
+        $.ajax({
+            url: urlnhanvienhoanthanh ,
+            method: 'post',
+            data: {
+                ID_DOTBD: ID_DOTBD,
+            },
+            success:function(data) {
+                data = jQuery.parseJSON(data);
+                console.log(data);
+                if (data.error) {
+                    Swal.fire(data.message);
+                } else {
+                    $('#nhanvienhoanthanh').remove();
+                    Swal.fire('Hoàn thành bảo dưỡng!');
+                }
+            }
+        });
+    });
+
+    $("#hoanthanhconviec").on( "click", function() {
+      var ID_DOTBD = $("#ID_DOTBD").val();
+      var ID_THIETBI = $("#ID_THIETBI").val();
+      var MA_NOIDUNG = $("#MA_NOIDUNG").val();
+      var url = $("#url").val();
+      var KETQUABAODUONG = $("#KETQUABAODUONG").val();
+      console.log(ID_DOTBD + '-' + ID_THIETBI + '-' + KETQUABAODUONG + '-' + MA_NOIDUNG);
+        $.ajax({
+            url: url,
+            method: 'post',
+            data: {
+                ID_DOTBD: ID_DOTBD,
+                ID_THIETBI: ID_THIETBI,
+                MA_NOIDUNG: MA_NOIDUNG
+            },
+            success:function(data) {
+                if (!data.error) {
+                    Swal.fire('Đã hoàn thành công việc');
+                }
+            }
+        });
+    });
+
+    function readURL(input) {
+        var formData = new FormData(input);
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            var ID_DOTBD = $("#ID_DOTBD").val();
             $.ajax({
-                url: urlxacnhan ,
+                url: 'dotbaoduongcanhan/uploadanhdotbaoduong',
                 method: 'post',
                 data: {
-                    ID_DOTBD: ID_DOTBD,
-                    KETQUA: 1,
+                    formData: formData,
+                    ID_DOTBD: ID_DOTBD
                 },
                 success:function(data) {
                     console.log(data);
                 }
             });
-        });
-
-        $("#ketthucdotbaoduong").on( "click", function() {
-          var ID_DOTBD = $("#ID_DOTBD").val();
-          var urlketthuc = $("#urlketthuc").val();
-          var KETQUABAODUONG = $("#KETQUABAODUONG").val();
-            $.ajax({
-                url: urlketthuc ,
-                method: 'post',
-                data: {
-                    ID_DOTBD: ID_DOTBD,
-                },
-                success:function(data) {
-                    console.log(data);
-                }
-            });
-        });
-
-        $("#nhanvienhoanthanh").on( "click", function() {
-          var ID_DOTBD = $("#ID_DOTBD").val();
-          var urlnhanvienhoanthanh = $("#urlnhanvienhoanthanh").val();
-            $.ajax({
-                url: urlnhanvienhoanthanh ,
-                method: 'post',
-                data: {
-                    ID_DOTBD: ID_DOTBD,
-                },
-                success:function(data) {
-                    data = jQuery.parseJSON(data);
-                    console.log(data);
-                    if (data.error) {
-                        Swal.fire(data.message);
-                    } else {
-                        $('#nhanvienhoanthanh').remove();
-                        Swal.fire('Hoàn thành bảo dưỡng!');
-                    }
-                }
-            });
-        });
-
-        $("#hoanthanhconviec").on( "click", function() {
-          var ID_DOTBD = $("#ID_DOTBD").val();
-          var ID_THIETBI = $("#ID_THIETBI").val();
-          var MA_NOIDUNG = $("#MA_NOIDUNG").val();
-          var url = $("#url").val();
-          var KETQUABAODUONG = $("#KETQUABAODUONG").val();
-          console.log(ID_DOTBD + '-' + ID_THIETBI + '-' + KETQUABAODUONG + '-' + MA_NOIDUNG);
-            $.ajax({
-                url: url,
-                method: 'post',
-                data: {
-                    ID_DOTBD: ID_DOTBD,
-                    ID_THIETBI: ID_THIETBI,
-                    MA_NOIDUNG: MA_NOIDUNG
-                },
-                success:function(data) {
-                    $('#myModal').modal('hide');
-                }
-            });
-        });
+        }
+    }
+    $("#image-dotbaoduong").change(function() {
+    readURL(this);
+    });
 JS;
 $this->registerJs($script);
 ?>
