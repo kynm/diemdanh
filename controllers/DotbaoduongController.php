@@ -124,13 +124,15 @@ class DotbaoduongController extends Controller
             }
 
             $listNhanvien = ArrayHelper::map($list, 'ID_NHANVIEN', 'TEN_NHANVIEN');
-            if (Yii::$app->user->identity->nhanvien->ID_DONVI < 4) {
+            if (Yii::$app->user->identity->nhanvien->ID_DONVI < 2) {
                 $donVi = Donvi::find()->where(['>', 'ID_DONVI', 3])->all();
             } else {
                 $donVi = Donvi::findAll(Yii::$app->user->identity->nhanvien->ID_DONVI);
             }
             $listDonvi = ArrayHelper::map($donVi, 'ID_DONVI', 'TEN_DONVI');
-            $listTram = ArrayHelper::map(Tramvt::find()->all(), 'ID_TRAM', 'TEN_TRAM');
+
+            $idsDai = ArrayHelper::map(Daivt::find()->where(['in', 'ID_DONVI', array_keys($listDonvi)])->all(), 'ID_DAI', 'ID_DAI');
+            $listTram = ArrayHelper::map(Tramvt::find()->where(['in', 'ID_DAI', $idsDai])->all(), 'ID_TRAM', 'TEN_TRAM');
             if ($model->load(Yii::$app->request->post())) {
                 ini_set('max_execution_time', 0);
                 ini_set('memory_limit', '-1');

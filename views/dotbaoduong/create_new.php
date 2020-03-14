@@ -90,6 +90,11 @@ $this->registerJs('$("#searchBtn").children("i.fa-spin").hide();')
 						<?= $form->field($model, 'donvi')->dropDownList($listDonvi, [
 							'prompt' => "Chọn đơn vị / Tất cả",
 							'onchange' => '
+							donvi = $("#dotbaoduong-donvi").val();
+							dai = "";
+							$.post("'.Yii::$app->homeUrl.'tramvt/search?donvi="+donvi+"&dai="+dai, function( data ) {
+								$("#dotbaoduong-id_tram").html( data );
+							});
 							$.post("'.Yii::$app->homeUrl.'nhanvien/list?id="+$(this).val(), function( data ) {
 								$("#dotbaoduong-dai").html( data );
 							});'
