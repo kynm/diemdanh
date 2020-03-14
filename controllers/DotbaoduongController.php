@@ -184,7 +184,7 @@ class DotbaoduongController extends Controller
             UPDATE `baoduongtong`
                 SET `TRANGTHAI` = "ketthuc"
                 WHERE `ID_BDT` = '.$id
-        )->execute();    
+        )->execute();
         Yii::$app->db->createCommand('
             UPDATE `dotbaoduong`
                 SET `TRANGTHAI` = "chuathuchien"

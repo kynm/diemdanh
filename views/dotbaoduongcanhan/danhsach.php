@@ -1,9 +1,12 @@
 <?php
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\widgets\LinkPager;
+use yii\grid\GridView;
+use yii\widgets\Pjax;
+use app\models\Baoduongtong;
+use yii\helpers\ArrayHelper;
 ?>
-<h1>Danh sách bảo dưỡng cá nhân</h1>
+<h3>Danh sách bảo dưỡng cá nhân</h3>
 <div class="row">
     <div class="col-md-6 col-sm-6 col-xs-12">
         <a href="<?= Url::to(['dotbaoduongcanhan/danhsach']) ?>">
@@ -39,34 +42,45 @@ use yii\widgets\LinkPager;
         </a>
     </div>
 </div>
-<?php foreach ($data as $baoduong): ?>
-
 <div class="box box-primary">
-    <div class="box-header with-border">
-      <h3 class="box-title"><?= Html::encode("{$baoduong['ThongTinTram']->TEN_TRAM}") ?></h3>
+    <div class="table-responsive">
+    <?php
+    Pjax::begin();
+        echo GridView::widget([
+            'dataProvider' => $planProvider,
+            'filterModel' => $searchModel,
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
+                'MA_DOTBD',
+                [
+                    'attribute' => 'ID_TRAM',
+                    'value' => 'tRAMVT.TEN_TRAM'
+                ],
+                [
+                    'attribute' => 'ID_NHANVIEN',
+                    'value' => 'nHANVIEN.TEN_NHANVIEN'
+                ],
+                [
+                    'class' => 'yii\grid\ActionColumn',
+                    'template' => '{thuchien} {xem}',
+                    'buttons' => [
+                        'xem' => function ($url, $model) {
+                            return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, [
+                                        'title' => Yii::t('app', 'lead-view'),
+                            ]);
+                        },
+                        'thuchien' => function ($url, $model) {
+                            return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
+                                        'title' => Yii::t('app', 'lead-update'),
+                            ]);
+                        },
+
+                    ],
+                ],
+            ],
+        ]);
+    Pjax::end();
+    ?>
     </div>
-    <!-- /.box-header -->
-    <div class="box-body">
-      <ul class="products-list product-list-in-box">
-        <?php foreach ($baoduong['DS_DotBaoDuong'] as $dotbaodung): ?>
-            <li class="item">
-              <div>
-                <span href="javascript:void(0)" class="product-title"><?= Html::encode("{$dotbaodung->MA_DOTBD} ({$dotbaodung->ID_NHANVIEN})") ?></span>
-                  <span class=" pull-right">
-                    <?php if($trangthai == 'kehoach') {?>
-                        <?= Html::a('Thực hiện', ['dotbaoduongcanhan/thuchien', 'id' => $dotbaodung->ID_DOTBD], ['class' => 'btn btn-success']) ?>
-                    <?php };?>
-                    <?= Html::a('Chi tiết', ['dotbaoduongcanhan/xem', 'id' => $dotbaodung->ID_DOTBD], ['class' => 'btn btn-warning']) ?>
-                </span>
-                <span class="product-description">
-                    <?= Html::encode("{$dotbaodung->TRANGTHAI}") ?>
-                    </span>
-              </div>
-            </li>
-        <?php endforeach; ?>
-        <!-- /.item -->
-      </ul>
-    </div>
-    <!-- /.box-footer -->
-    </div>
-<?php endforeach; ?>
+</div>
+

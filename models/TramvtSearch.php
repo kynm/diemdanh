@@ -54,7 +54,6 @@ class TramvtSearch extends Tramvt
             $query->andWhere(['tramvt.ID_NHANVIEN' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN]);
         }
 
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);

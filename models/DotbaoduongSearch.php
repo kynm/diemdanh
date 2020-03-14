@@ -358,7 +358,7 @@ class DotbaoduongSearch extends Dotbaoduong
         $query->joinWith('tRAMVT.iDDAI');
         $query->joinWith('nHANVIEN');
         $query->joinWith('baoduongtong');
-        $query->andWhere(['baoduongtong.TYPE' => 2]);
+        // $query->andWhere(['baoduongtong.TYPE' => 2]);
         
         if (Yii::$app->user->identity->nhanvien->chucvu->cap == 2) {
             $query->andWhere(['daivt.ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI]);

@@ -13,6 +13,7 @@ use app\models\Tramvt;
 use app\models\Dotbaoduong;
 use app\models\Images;
 use app\models\Noidungcongviec;
+use app\models\DotbaoduongCanhanSearch;
 use app\models\AuthorizationCodes;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
@@ -67,61 +68,49 @@ class DotbaoduongcanhanController extends Controller
     {
         $trangthai = $trangthai ? $trangthai : 'chuahoanthanh';
 
-        $query = Dotbaoduong::find()->select('dotbaoduong.ID_TRAM')->where(['dotbaoduong.ID_NHANVIEN' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN, 'TRANGTHAI' => $trangthai])->groupBy('dotbaoduong.ID_TRAM');
-
-        $query->joinWith('tRAMVT.iDDAI');
-
-        if ($daivt!=='') {
-            $query->andWhere(['tramvt.ID_DAI' => $daivt]);
-        }
-
-        if ($tramvt!=='') {
-            if ($tramvt !== 'all') {
-                $query->andWhere(['dotbaoduong.ID_TRAM' => $tramvt]);
-            }
-        }
-        $ids = $query->orderBy(['tramvt.TEN_TRAM' => SORT_ASC])->all();
-        $data = [];
-        foreach ($ids as $id) {
-            $tram = Tramvt::findOne($id["ID_TRAM"]);
-            $list['ThongTinTram'] = $tram;
-            $list['DS_DotBaoDuong'] = Dotbaoduong::findAll(['ID_TRAM' => $id["ID_TRAM"], 'TRANGTHAI' => $trangthai, 'dotbaoduong.ID_NHANVIEN' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN]);
-            $data[] = $list;
+        $searchModel = new DotbaoduongCanhanSearch();
+        switch ($trangthai) {
+            case 'chuahoanthanh':
+                $planProvider = $searchModel->searchChxn(Yii::$app->request->queryParams);
+                break;
+            case 'ketthuc':
+                $planProvider = $searchModel->searchKtbd(Yii::$app->request->queryParams);
+                break;
+            default:
+                $planProvider = $searchModel->searchDskh(Yii::$app->request->queryParams);
+                break;
         }
 
         return $this->render('danhsachvieccanxacnhan', [
-            'data' => $data,
+            'searchModel' => $searchModel,
+            'planProvider' => $planProvider,
             'trangthai' => $trangthai,
         ]);
     }
 
     public function actionDanhsach($trangthai = '', $daivt='', $tramvt='')
     {
+
         $trangthai = $trangthai ? $trangthai : 'kehoach';
-
-        $query = Dotbaoduong::find()->select('dotbaoduong.ID_TRAM')->where(['dotbaoduong.ID_NHANVIEN' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN, 'TRANGTHAI' => $trangthai])->groupBy('dotbaoduong.ID_TRAM');
-
-        $query->joinWith('tRAMVT.iDDAI');
-
-        if ($daivt!=='') {
-            $query->andWhere(['tramvt.ID_DAI' => $daivt]);
+        $searchModel = new DotbaoduongCanhanSearch();
+        switch ($trangthai) {
+            case 'kehoach':
+                $planProvider = $searchModel->searchDskh(Yii::$app->request->queryParams);
+                break;
+            case 'dangthuchien':
+                $planProvider = $searchModel->searchDsth(Yii::$app->request->queryParams);
+                break;
+            case 'chuahoanthanh':
+                $planProvider = $searchModel->searchChxn(Yii::$app->request->queryParams);
+                break;
+            default:
+                $planProvider = $searchModel->searchDskh(Yii::$app->request->queryParams);
+                break;
         }
 
-        if ($tramvt!=='') {
-            if ($tramvt !== 'all') {
-                $query->andWhere(['dotbaoduong.ID_TRAM' => $tramvt]);
-            }
-        }
-        $ids = $query->orderBy(['tramvt.TEN_TRAM' => SORT_ASC])->all();
-        $data = [];
-        foreach ($ids as $id) {
-            $tram = Tramvt::findOne($id["ID_TRAM"]);
-            $list['ThongTinTram'] = $tram;
-            $list['DS_DotBaoDuong'] = Dotbaoduong::findAll(['ID_TRAM' => $id["ID_TRAM"], 'TRANGTHAI' => $trangthai, 'dotbaoduong.ID_NHANVIEN' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN]);
-            $data[] = $list;
-        }
         return $this->render('danhsach', [
-            'data' => $data,
+            'searchModel' => $searchModel,
+            'planProvider' => $planProvider,
             'trangthai' => $trangthai,
         ]);
     }
