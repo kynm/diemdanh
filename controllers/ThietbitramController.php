@@ -73,7 +73,7 @@ class ThietbitramController extends Controller
         $lsbaoduongProvider = new ActiveDataProvider([
             'query' => $query1,
         ]);
-        
+
         $query2 = Dieuchuyenthietbi::find()->where(['ID_THIETBI' => $id]);
 
         $dieuchuyenProvider = new ActiveDataProvider([
@@ -173,6 +173,11 @@ class ThietbitramController extends Controller
         if (Yii::$app->user->can('edit-tbitram')) {
 
             if ($model->load(Yii::$app->request->post())) {
+                $input = Yii::$app->request->bodyParams;
+                if (isset($input['DINH_MUC'])) {
+                    $json = json_encode(['DINH_MUC' => $input['DINH_MUC']]);
+                    $model->THAMSOTHIETBI = $json;
+                }
                 $model->save();
                 return $this->redirect(['view', 'id' => $model->ID_THIETBI]);
             } else {

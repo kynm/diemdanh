@@ -85,7 +85,7 @@ if (Yii::$app->user->can('edit-tramvt')) {
                             'template' => '{update}',
                             'urlCreator' => function ($action, $model, $key, $index) {
                                 if ($action === 'update') {
-                                    $url = Url::to(['quanlymayno/update', 'id' => $key]);
+                                    $url = Url::to(['quanlymayno/update', 'id' => $model->ID_THIETBI]);
                                     return $url;
                                 }
                             }

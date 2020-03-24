@@ -12,7 +12,6 @@ $this->params['breadcrumbs'][] = ['label' => 'Quản lý thiết bị theo trạ
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="thietbitram-create">
-
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>

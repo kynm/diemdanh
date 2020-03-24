@@ -96,6 +96,16 @@ use yii\helpers\Url;
                         ]
                     ],
                     [
+                        'label' => 'Quản lý máy nổ',
+                        'icon' => 'tablet',
+                        'url' => '#',
+                        'items' => [
+                            [
+                                'label' => 'Điều hành máy nổ', 'icon' => 'caret-right', 'url' => Url::to(['quanlymayno/'])
+                            ],
+                        ]
+                    ],
+                    [
                         'label' => 'Thông tin cá nhân', 'icon' => 'user', 'url' => Url::to(['user/edit-profile'])
                     ],
                 ],

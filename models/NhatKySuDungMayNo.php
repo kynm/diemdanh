@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use app\models\Nhanvien;
 
 /**
  * This is the model class for table "baoduongtong".
@@ -34,10 +35,11 @@ class NhatKySuDungMayNo extends \yii\db\ActiveRecord
     {
         return [
             [['DINHMUC'], 'required'],
+            [['THOIGIANBATDAU'], 'required'],
+            [['ID_THIETBITRAM'], 'required'],
+            [['DINHMUC'], 'required'],
             [['ID_NV_DIEUHANH', 'ID_NV_VANHANH', 'ID_TRAM'], 'integer'],
-            [['MA_BDT', 'TRANGTHAI'], 'string', 'max' => 32],
-            [['GHICHU'], 'string', 'max' => 255],
-            // [['ID_NV_DIEUHANH','ID_NV_VANHANH'], 'exist', 'skipOnError' => true, 'targetClass' => Nhanvien::className()],
+            [['THOIGIANKETTHUC'], 'string', 'max' => 255],
         ];
     }
 
@@ -55,15 +57,20 @@ class NhatKySuDungMayNo extends \yii\db\ActiveRecord
             'GIATIEN' => 'Đơn giá',
             'THOIGIANBATDAU' => 'Thời gian bắt đầu',
             'THOIGIANKETTHUC' => 'Thời gian kết thúc',
-            'GHICHU' => 'Sự cố',
+            'GHICHU' => 'Nội dung sự cố',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getNHANVIEN()
+    public function getNHANVIENDIEUHANH()
     {
-        return $this->hasOne(Nhanvien::className(), ['ID_NHANVIEN' => 'ID_NHANVIEN']);
+        return $this->hasOne(Nhanvien::className(), ['ID_NHANVIEN' => 'ID_NV_DIEUHANH']);
+    }
+
+    public function getNHANVIENVANHANH()
+    {
+        return $this->hasOne(Nhanvien::className(), ['ID_NHANVIEN' => 'ID_NV_VANHANH']);
     }
 }

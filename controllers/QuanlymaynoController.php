@@ -9,6 +9,7 @@ use app\models\ThietbitramSearch;
 use app\models\Nhanvien;
 use app\models\Daivt;
 use app\models\NhatKySuDungMayNo;
+use app\models\NhatKySuDungMayNoSearch;
 use app\models\Tramvt;
 use app\models\TramvtSearch;
 use yii\web\Controller;
@@ -37,7 +38,6 @@ class QuanlymaynoController extends Controller
             ],
         ];
     }
-
 
     public function beforeAction($action) { 
         $this->enableCsrfValidation = false; 
@@ -77,27 +77,35 @@ class QuanlymaynoController extends Controller
         ]);
     }
 
-    /**
-     * Creates a new Tramvt model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
+    public function actionDeletenhatky($id)
     {
-        if (Yii::$app->user->can('create-tramvt')) {
-            $model = new Tramvt();
+        if (Yii::$app->user->can('delete-nkmayno')) {
+            NhatKySuDungMayNo::findOne($id)->delete();
 
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(Yii::$app->request->referrer);
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
+        }
+    }
+
+    public function actionUpdatenhatky($id)
+    {
+        if (Yii::$app->user->can('edit-nkmayno')) {
+            $model = NhatKySuDungMayNo::findOne($id);
+            $thietbitram = Thietbitram::findOne($model->ID_THIETBITRAM);
+            if ($model->load(Yii::$app->request->post())) {
+                $model->save();
                 $log = new ActivitiesLog;
-                $log->activity_type = 'unit-add';
-                $log->description = Yii::$app->user->identity->nhanvien->TEN_NHANVIEN." đã thêm đơn vị ". $model->MA_TRAM;
+                $log->activity_type = 'unit-update';
+                $log->description = Yii::$app->user->identity->nhanvien->TEN_NHANVIEN." đã yêu cầu sử dụng máy nổ";
                 $log->user_id = Yii::$app->user->identity->id;
                 $log->create_at = time();
                 $log->save();
-                return $this->redirect(['view', 'id' => $model->ID_TRAM]);
+                return $this->redirect(['update', 'id' => $model->ID_THIETBITRAM]);
             } else {
-                return $this->render('create', [
+                return $this->render('updatenhatky', [
                     'model' => $model,
+                    'thietbitram' => $thietbitram,
                 ]);
             }
         } else {
@@ -113,25 +121,25 @@ class QuanlymaynoController extends Controller
      */
     public function actionUpdate($id)
     {
-        if (Yii::$app->user->can('edit-tramvt')) {
+        if (Yii::$app->user->can('add-nkmayno')) {
             $model = new NhatKySuDungMayNo();
             $thietbitram = Thietbitram::findOne($id);
-
-            if (Yii::$app->request->post()) {
-                $inputs = Yii::$app->request->bodyParams;
-                die(var_dump($inputs));
-                $model->save();
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 $log = new ActivitiesLog;
                 $log->activity_type = 'unit-update';
-                $log->description = Yii::$app->user->identity->nhanvien->TEN_NHANVIEN." đã cập nhật nhà trạm ". $model->TEN_TRAM;
+                $log->description = Yii::$app->user->identity->nhanvien->TEN_NHANVIEN." đã yêu cầu sử dụng máy nổ";
                 $log->user_id = Yii::$app->user->identity->id;
                 $log->create_at = time();
                 $log->save();
-                return $this->redirect(['index']);
+                return $this->redirect(['update', 'id' => $id]);
             } else {
+                $searchModel = new NhatKySuDungMayNoSearch();
+                $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
                 return $this->render('update', [
                     'model' => $model,
                     'thietbitram' => $thietbitram,
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
                 ]);
             }
         } else {

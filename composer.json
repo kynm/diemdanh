@@ -26,6 +26,7 @@
         "kartik-v/yii2-editable": "@dev",
         "kartik-v/yii2-widget-datepicker": "@dev",
         "kartik-v/bootstrap-fileinput": "@dev",
+        "kartik-v/yii2-widget-datetimepicker": "@dev",
         "nepstor/yii2-datetime-compare-validator": "^2.0",
         "empathy/yii2-datetime-compare": "^2.2",
         "kartik-v/yii2-tabs-x": "*",

@@ -94,6 +94,15 @@ use kartik\select2\Select2;
                             ]
                         ]); ?>
                 </div>
+                <?php if($model->iDLOAITB && $model->iDLOAITB->ID_NHOM == 1) {?>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                        <div class="form-group field-DINH_MUC required has-success">
+                        <label class="control-label" for="thietbitram-serial_mac">ĐỊNH MỨC</label>
+                            <input type="text" id="DINH_MUC" class="form-control" name="DINH_MUC" value="<?php echo $model->THAMSOTHIETBI ? json_decode($model->THAMSOTHIETBI)->DINH_MUC : ''?>" maxlength="255" aria-required="true" aria-invalid="false">
+                            <div class="help-block"></div>
+                        </div>
+                    </div>
+                <?php }?>
                 <div id="message-nsx" class="col-sm-12"></div>
                 <div id="message-nsd" class="col-sm-12"></div>
                 <div id="message-nbd" class="col-sm-12"></div>

@@ -6,6 +6,7 @@ use yii\helpers\ArrayHelper;
 use app\models\Tramvt;
 use app\models\Nhanvien;
 use kartik\select2\Select2;
+use kartik\datetime\DateTimePicker;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Tramvt */
@@ -18,6 +19,9 @@ $listtramvt = ArrayHelper::map(Tramvt::find()->all(), 'ID_TRAM', 'TEN_TRAM');
 
     <?php $form = ActiveForm::begin(); ?>
 
+    <?= $form->field($model, 'ID_THIETBITRAM')->hiddenInput(['value'=> $thietbitram->ID_THIETBI])->label(false);?>
+    <?= $form->field($model, 'ID_NV_DIEUHANH')->hiddenInput(['value'=> Yii::$app->user->identity->nhanvien->ID_NHANVIEN])->label(false);?>
+    <?= $form->field($model, 'DINHMUC')->hiddenInput(['value'=> json_decode($thietbitram->THAMSOTHIETBI)->DINH_MUC])->label(false);?>
     <div class="box box-primary">
         <div class="box-body">
             <div class="col-sm-3">
@@ -39,16 +43,33 @@ $listtramvt = ArrayHelper::map(Tramvt::find()->all(), 'ID_TRAM', 'TEN_TRAM');
                 ]); ?>
             </div>
             <div class="col-sm-3">
-                <?= $form->field($model, 'DINHMUC')->textInput(['maxlength' => true]) ?>
+                <div class="form-group field-DINH_MUC required">
+                    <label class="control-label" for="thietbitram-serial_mac">ĐỊNH MỨC</label>
+                    <input type="text" class="form-control" name="" disabled="" value="<?php echo json_decode($thietbitram->THAMSOTHIETBI)->DINH_MUC;?>">
+                    <div class="help-block"></div>
+                </div>
+                
             </div>
             <div class="col-sm-3">
                 <?= $form->field($model, 'GIATIEN')->textInput(['maxlength' => true]) ?>
             </div>
             <div class="col-sm-3">
-                <?= $form->field($model, 'THOIGIANBATDAU')->textInput(['type' => 'datetime']) ?>
+                <?= $form->field($model, 'THOIGIANBATDAU')->widget(DateTimePicker::classname(), [
+                    'options' => ['placeholder' => 'Dự kiến bắt đầu'],
+                    'pluginOptions' => [
+                        'autoclose' => true
+                        ]
+                    ]);
+                ?>
             </div>
             <div class="col-sm-3">
-                <?= $form->field($model, 'THOIGIANKETTHUC')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model, 'THOIGIANKETTHUC')->widget(DateTimePicker::classname(), [
+                    'options' => ['placeholder' => 'Dự kiến bắt đầu'],
+                    'pluginOptions' => [
+                        'autoclose' => true
+                        ]
+                    ]);
+                ?>
             </div>
             <div class="col-sm-6">
                 <?= $form->field($model, 'GHICHU')->textInput(['maxlength' => true]) ?>
