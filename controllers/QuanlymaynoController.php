@@ -8,6 +8,7 @@ use app\models\Thietbitram;
 use app\models\ThietbitramSearch;
 use app\models\Nhanvien;
 use app\models\Daivt;
+use app\models\Dongiamayno;
 use app\models\NhatKySuDungMayNo;
 use app\models\NhatKySuDungMayNoSearch;
 use app\models\Tramvt;
@@ -18,6 +19,8 @@ use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
 use yii\data\ArrayDataProvider;
 use yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
+use moonland\phpexcel\Excel;
 
 /**
  * TramvtController implements the CRUD actions for Tramvt model.
@@ -147,106 +150,6 @@ class QuanlymaynoController extends Controller
         }
     }
 
-    /**
-     * Dieu chuyen nhieu thiet bi trong tram
-    **/
-    public function actionDieuchuyen($id)
-    {
-        if (Yii::$app->user->can('edit-tramvt')) {
-            $model = $this->findModel($id);
-
-            if (Yii::$app->request->post('idtramdich')) {
-                $idtramdich = Yii::$app->request->post('idtramdich');
-                $lydodieuchuyen = Yii::$app->request->post('lydodieuchuyen');
-                $ngaychuyen = Yii::$app->request->post('ngaychuyen');
-                if (Yii::$app->request->post('addkeylist')) {
-                    $selection = Yii::$app->request->post('addkeylist');
-                    
-                    foreach ($selection as $key) {
-                        $tbidieuchuyen = Chontbidieuchuyen::findOne($key);
-                        $tbidieuchuyen->ID_TRAM_DICH = $idtramdich;
-                        $tbidieuchuyen->NGAY_CHUYEN = $ngaychuyen;
-                        $tbidieuchuyen->LY_DO = $lydodieuchuyen;
-                        $tbidieuchuyen->IS_SELECTED = 1;
-                        $tbidieuchuyen->save(false);
-                    }
-                }
-            }
-
-            if (Yii::$app->request->post('rmvkeylist')) {
-                $selection = Yii::$app->request->post('rmvkeylist');
-            
-                foreach ($selection as $key) {
-                    $tbidieuchuyen = Chontbidieuchuyen::findOne($key);
-                    $tbidieuchuyen->ID_TRAM_DICH = NULL;
-                    $tbidieuchuyen->NGAY_CHUYEN = NULL;
-                    $tbidieuchuyen->LY_DO = NULL;
-                    $tbidieuchuyen->IS_SELECTED = 0;
-                    $tbidieuchuyen->save(false);
-                }
-            }
-
-            $query1 = Chontbidieuchuyen::find()->where(['IS_SELECTED' => 0]);
-            $unselectedProvider = new ActiveDataProvider([
-                'query' => $query1,
-            ]);
-
-            $query2 = Chontbidieuchuyen::find()->where(['IS_SELECTED' => 1]);
-            $selectedProvider = new ActiveDataProvider([
-                'query' => $query2,
-            ]);
-
-            return $this->render('dieuchuyen', [
-                'model' => $model,
-                'unselectedProvider' => $unselectedProvider,
-                'selectedProvider' => $selectedProvider,
-            ]);
-        } else {
-            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');            
-        }
-    }
-
-    public function actionHoantatdieuchuyen($id)
-    {
-        $selectedDevices = Chontbidieuchuyen::find()->where(['IS_SELECTED' => 1])->all();
-        foreach ($selectedDevices as $device) {
-            $tbi = new Dieuchuyenthietbi;
-            $tbi->ID_THIETBI = $device->ID_THIETBI;
-            $tbi->NGAY_CHUYEN = $device->NGAY_CHUYEN;
-            $tbi->ID_TRAM_NGUON = $device->ID_TRAM_NGUON;
-            $tbi->ID_TRAM_DICH = $device->ID_TRAM_DICH;
-            $tbi->LY_DO = $device->LY_DO;
-
-            $tbi->save(false);
-
-            $tbitram = Thietbitram::findOne($device->ID_THIETBI);
-            $tbitram->ID_TRAM = $device->ID_TRAM_DICH;
-            $tbitram->save(false);
-        }
-
-        Chontbidieuchuyen::deleteAll();
-
-        return $this->redirect(['view', 'id' => $id]);
-    }
-
-
-    /**
-     * Deletes an existing Tramvt model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
-    // public function actionDelete($id)
-    // {
-    //     if (Yii::$app->user->can('delete-tramvt')) {
-    //         $this->findModel($id)->delete();
-            
-    //         return $this->redirect(['index']);
-    //     } else {
-    //         throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');            
-    //     }
-    // }
-
     public function actionSearch($donvi, $dai)
     {
         if ($donvi == '') {
@@ -270,64 +173,52 @@ class QuanlymaynoController extends Controller
         return;
     }
 
-    public function actionUpdateFromExcel()
+    public function actionThongkeketoan()
     {
-        ini_set('max_execution_time', 0);
-        $fileName = 'data/BTS.xlsx';
-        $data = \moonland\phpexcel\Excel::import($fileName, [
-            'setFirstRecordAsKeys' => true, 
-            'setIndexSheetByName' => true, 
-            'getOnlySheet' => 'CSHT', 
-        ]);
-        
-        $count = 0;
-        foreach ($data as $row) {
-            // var_dump($row); die;
-            $model = Tramvt::findOne(['MA_TRAM' => $row["MaCSHT"]]);
-            // var_dump($model); die;
-            if (is_null($model = Tramvt::findOne(['MA_TRAM' => $row["MaCSHT"]]))) {
-                echo "Chưa có trạm ".$row["CSHT"];
-                $model = new Tramvt;
-                $model->MA_TRAM = $row["MaCSHT"];
-                $model->TEN_TRAM = $row["CSHT"];
-                // $model->TEN_TRAM2 = $row["Mã CSHT"];
-                $model->DIADIEM = $row["DiaChi"];
-                $model->QUANHUYEN = $row["Quan"];
-                $model->XAPHUONG = $row["Xa"];
-                $model->NGAYHD = date('Y-m-d', strtotime($row["NgayHD"]));
-                $model->KINH_DO = $row["Longitude"];
-                $model->VI_DO = $row["Latitude"];
-                $model->ID_DAI = $row["Dai"];
-                $model->ID_NHANVIEN = 0;
-                $model->LOAITRAM = $row["Nhom"];
-                // $model->KIEUTRAM = "";
-                $model->save();
-                echo " - Đã thêm<br>";
-                $count++;
-                continue;
-            } else {
-                echo "Đã có trạm ".$row["CSHT"]."<br>";
-                $model->QUANHUYEN = $row["Quan"];
-                $model->XAPHUONG = $row["Xa"];
-                $model->NGAYHD = date('Y-m-d', strtotime($row["NgayHD"]));
-                $model->save(false);
-            }
+        $months = [];
+        $data = [];
+        $inputs = [
+            'ID_DONVI' => 2,
+            'THANG' => date('m'),
+            'NAM' => date('Y'),
+        ];
+        $dongiamayno = [];
+        for ($i = 0; $i < 12; $i++) {
+            $months[date('m', strtotime("+$i month"))] = date('m', strtotime("+$i month"));
         }
-        echo "Done! $count trạm đc thêm!"; exit;
+        $nowY = date("Y");
+        $years = [
+            $nowY => $nowY,
+            $nowY - 1 => $nowY - 1,
+        ];
+        if (Yii::$app->request->post()) {
+            $inputs = Yii::$app->request->bodyParams;
+            $dongiamayno = ArrayHelper::map(Dongiamayno::find()
+                ->where(['THANG' => $inputs['THANG'], 'NAM' => $inputs['NAM']])->all(), 'LOAI_NHIENLIEU', 'DONGIA');
+            $dsdai = ArrayHelper::map(Daivt::find()->where(['ID_DONVI' => $inputs['ID_DONVI']])->all(), 'ID_DAI', 'ID_DAI');
+            $danhsachtram = ArrayHelper::map(Tramvt::find()->where(['in', 'ID_DAI', $dsdai])->all(), 'ID_TRAM', 'ID_TRAM');
+            $query = NhatKySuDungMayNo::find();
+            $query->joinWith('tHIETBITRAM')->where(['in','tHIETBITRAM.ID_TRAM', $danhsachtram]);
+            $query->andWhere('year(THOIGIANBATDAU) = ' . $inputs['NAM']);
+            $query->andWhere('MONTH(THOIGIANBATDAU) = ' . $inputs['THANG']);
+            
+            $data = $query->all();
+        }
+        return $this->render('thongkeketoan', [
+            'data' => $data,
+            'months' => $months,
+            'years' => $years,
+            'inputs' => $inputs,
+            'dongiamayno' => $dongiamayno,
+            ]);
     }
-    /**
-     * Finds the Tramvt model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Tramvt the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+
     protected function findModel($id)
     {
         if (($model = Tramvt::findOne($id)) !== null) {
             return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
         }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

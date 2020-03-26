@@ -175,7 +175,11 @@ class ThietbitramController extends Controller
             if ($model->load(Yii::$app->request->post())) {
                 $input = Yii::$app->request->bodyParams;
                 if (isset($input['DINH_MUC'])) {
-                    $json = json_encode(['DINH_MUC' => $input['DINH_MUC']]);
+                    $json = json_encode(
+                        [
+                            'DINH_MUC' => $input['DINH_MUC'],
+                            'LOAINHIENLIEU' => $input['LOAINHIENLIEU'],
+                        ]);
                     $model->THAMSOTHIETBI = $json;
                 }
                 $model->save();

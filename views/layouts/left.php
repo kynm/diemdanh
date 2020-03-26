@@ -103,6 +103,9 @@ use yii\helpers\Url;
                             [
                                 'label' => 'Điều hành máy nổ', 'icon' => 'caret-right', 'url' => Url::to(['quanlymayno/'])
                             ],
+                            [
+                                'label' => 'Thống kê kế toán', 'icon' => 'caret-right', 'url' => Url::to(['quanlymayno/thongkeketoan'])
+                            ],
                         ]
                     ],
                     [

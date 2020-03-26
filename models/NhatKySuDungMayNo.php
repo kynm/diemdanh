@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use app\models\Nhanvien;
+use app\models\Thietbitram;
 
 /**
  * This is the model class for table "baoduongtong".
@@ -67,6 +68,11 @@ class NhatKySuDungMayNo extends \yii\db\ActiveRecord
     public function getNHANVIENDIEUHANH()
     {
         return $this->hasOne(Nhanvien::className(), ['ID_NHANVIEN' => 'ID_NV_DIEUHANH']);
+    }
+
+    public function getTHIETBITRAM()
+    {
+        return $this->hasOne(Thietbitram::className(), ['ID_THIETBI' => 'ID_THIETBITRAM']);
     }
 
     public function getNHANVIENVANHANH()

@@ -43,11 +43,11 @@ $this->params['breadcrumbs'][] = 'Cập nhật';
                         ],
                         [
                             'attribute' => 'THOIGIANBATDAU',
-                            'format' => ['date', 'php:d/m/Y H:i:s'],
+                            // 'format' => ['date', 'php:d/m/Y H:i'],
                         ],
                         [
                             'attribute' => 'THOIGIANKETTHUC',
-                            'format' => ['date', 'php:d/m/Y H:i:s'],
+                            // 'format' => ['date', 'php:d/m/Y H:i'],
                         ],
                         [
                             'class' => 'yii\grid\ActionColumn',

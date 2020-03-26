@@ -39,6 +39,39 @@ class NhatKySuDungMayNoSearch extends NhatKySuDungMayNo
      *
      * @return ActiveDataProvider
      */
+
+    public function searchKetoan($params)
+    {
+        $query = NhatKySuDungMayNo::find();
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // $query->joinWith('nHANVIENDIEUHANH');
+        $query->joinWith('tHIETBITRAM');
+
+        $query->andFilterWhere(['in', 'tHIETBITRAM.ID_TRAM', [141,20,205]])
+            // ->andFilterWhere(['like', 'TEN_NHANVIEN', $this->TEN_NHANVIEN])
+            // ->andFilterWhere(['like', 'donvi.TEN_DONVI', $this->ID_DONVI])
+            // ->andFilterWhere(['like', 'daivt.TEN_DAIVT', $this->ID_DAI])
+            // ->andFilterWhere(['like', 'CHUC_VU', $this->CHUC_VU])
+            // ->andFilterWhere(['like', 'DIEN_THOAI', $this->DIEN_THOAI])
+            // ->andFilterWhere(['like', 'GHI_CHU', $this->GHI_CHU])
+            ->andFilterWhere(['>=' , 'THOIGIANBATDAU', $params['THANG']]);
+
+        return $dataProvider;    
+    }
     public function search($params)
     {
         $query = NhatKySuDungMayNo::find();
