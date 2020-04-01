@@ -20,8 +20,6 @@ use dmstr\widgets\Alert;
                 } ?>
             </h1>
         <?php } ?>
-
-        
     </section>
 
     <section class="content">

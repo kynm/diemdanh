@@ -12,10 +12,7 @@ $this->params['breadcrumbs'][] = ['label' => $model->ID_NHANVIEN, 'url' => ['vie
 $this->params['breadcrumbs'][] = 'Cập nhật';
 ?>
 <div class="nhanvien-update">
-
     <?= $this->render('_form', [
         'model' => $model,
-        // 'authModel' => $authModel,
     ]) ?>
-
 </div>

@@ -10,6 +10,9 @@ use yii\widgets\Pjax;
 use yii\helpers\Url;
 use yii\grid\GridView;
 ?>
+    <a class="btn btn-primary btn-flat" href="<?= Url::to(['quanlymayno/gianhienlieu'])?>" target="_blank">Xem giá nhiên liệu</a>
+    <br>
+    <br>
 <div class="tramvt-search">
 
     <div class="row">
@@ -30,7 +33,7 @@ use yii\grid\GridView;
                 ]
             ]); ?>
         </div>
-        <div class="col-md-3 col-xs-3">
+        <div class="col-md-2 col-xs-2">
             <?= Select2::widget([
                 'name' => 'THANG',
                 'id' => 'THANG',
@@ -43,7 +46,7 @@ use yii\grid\GridView;
                 ]
             ]); ?>
         </div>
-        <div class="col-md-3 col-xs-3">
+        <div class="col-md-2 col-xs-2">
             <?= Select2::widget([
                 'name' => 'NAM',
                 'id' => 'NAM',
@@ -56,7 +59,7 @@ use yii\grid\GridView;
                 ]
             ]); ?>
         </div>
-        <div class="col-md-4 col-xs-4">
+        <div class="col-md-2 col-xs-2">
             <?= Html::submitButton(
                 '<i class="fa fa-search"></i> Xem báo cáo', 
                 [
@@ -67,6 +70,11 @@ use yii\grid\GridView;
             ?>
         </div>
         <?php ActiveForm::end(); ?>
+        <?php if($isprint) { ?>
+            <div class="col-md-2 col-xs-2">
+                <a class="btn btn-primary btn-flat" href="<?= Url::to(['quanlymayno/inbaoduongthang?ID_DONVI=' . $inputs['ID_DONVI'] . '&NAM=' . $inputs['NAM'] . '&THANG=' . $inputs['THANG']])?>" target="_blank">In kết quả</a>
+            </div>
+        <?php }?>
     </div>
 </div>
 
