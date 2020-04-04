@@ -129,9 +129,11 @@ class QuanlymaynoController extends Controller
         if (Yii::$app->user->can('add-nkmayno')) {
             $model = new NhatKySuDungMayNo();
             $thietbitram = Thietbitram::findOne($id);
+            $model->ID_TRAM = $thietbitram->ID_TRAM;
+            $model->ID_NV_VANHANH = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 $log = new ActivitiesLog;
-                $log->activity_type = 'unit-update';
+                $log->activity_type = 'add-nkmayno';
                 $log->description = Yii::$app->user->identity->nhanvien->TEN_NHANVIEN." đã yêu cầu sử dụng máy nổ";
                 $log->user_id = Yii::$app->user->identity->id;
                 $log->create_at = time();

@@ -51,9 +51,6 @@ $listtramvt = ArrayHelper::map(Tramvt::find()->all(), 'ID_TRAM', 'TEN_TRAM');
                 
             </div>
             <div class="col-sm-3">
-                <?= $form->field($model, 'GIATIEN')->textInput(['maxlength' => true]) ?>
-            </div>
-            <div class="col-sm-3">
                 <?= $form->field($model, 'THOIGIANBATDAU')->widget(DateTimePicker::classname(), [
                     'options' => ['placeholder' => 'Dự kiến bắt đầu'],
                     'pluginOptions' => [
