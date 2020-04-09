@@ -43,14 +43,6 @@ $listtramvt = ArrayHelper::map(Tramvt::find()->all(), 'ID_TRAM', 'TEN_TRAM');
                 ]); ?>
             </div>
             <div class="col-sm-3">
-                <div class="form-group field-DINH_MUC required">
-                    <label class="control-label" for="thietbitram-serial_mac">ĐỊNH MỨC</label>
-                    <input type="text" class="form-control" name="" disabled="" value="<?php echo json_decode($thietbitram->THAMSOTHIETBI)->DINH_MUC;?>">
-                    <div class="help-block"></div>
-                </div>
-                
-            </div>
-            <div class="col-sm-3">
                 <?= $form->field($model, 'THOIGIANBATDAU')->widget(DateTimePicker::classname(), [
                     'options' => ['placeholder' => 'Dự kiến bắt đầu'],
                     'pluginOptions' => [

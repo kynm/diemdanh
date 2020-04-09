@@ -86,13 +86,29 @@ class CongvieccanhanController extends Controller
         Yii::$app->api->sendSuccessResponse($data);
     }
 
+    
+    public function actionUrlgetmodal()
+    {
+        $key = Yii::$app->request->bodyParams;
+        $condition = [
+            'ID_DOTBD' => $key['ID_DOTBD'], 
+            'ID_THIETBI' => $key['ID_THIETBI'],
+            'MA_NOIDUNG' => $key['MA_NOIDUNG'],
+        ];
+        $model = Noidungcongviec::find()->where($condition)->one();
+        return $this->renderPartial('_aj_ketquacongviec',[
+            'model'=>$model,
+            'condition'=>$key,
+        ]);
+    }
+
     public function actionHoanthanh()
     {
         $key = Yii::$app->request->bodyParams;
         $condition = [
             'ID_DOTBD' => $key['ID_DOTBD'], 
-            'ID_THIETBI' => $key['ID_THIETBI'], 
-            'MA_NOIDUNG' => $key['MA_NOIDUNG'], 
+            'ID_THIETBI' => $key['ID_THIETBI'],
+            'MA_NOIDUNG' => $key['MA_NOIDUNG'],
         ];
         $isDone = $key['IS_DONE'];
         $dobd = Dotbaoduong::findOne($key['ID_DOTBD']);

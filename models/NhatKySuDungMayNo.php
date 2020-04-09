@@ -36,14 +36,20 @@ class NhatKySuDungMayNo extends \yii\db\ActiveRecord
     {
         return [
             [['DINHMUC'], 'required'],
-            [['THOIGIANBATDAU'], 'required'],
             [['ID_THIETBITRAM'], 'required'],
             [['DINHMUC'], 'required'],
             [['ID_NV_DIEUHANH', 'ID_NV_VANHANH', 'ID_TRAM'], 'integer'],
-            [['THOIGIANKETTHUC'], 'string', 'max' => 255],
+            [['THOIGIANBATDAU', 'THOIGIANKETTHUC'], 'required'],
+            ['THOIGIANBATDAU','validateDates'],
         ];
     }
 
+    public function validateDates(){
+        if(strtotime($this->THOIGIANKETTHUC) <= strtotime($this->THOIGIANBATDAU)){
+            $this->addError('THOIGIANBATDAU', 'Thời gian bắt đầu phải lớn hơn thời gian kết thúc');
+            $this->addError('THOIGIANKETTHUC','Thời gian bắt đầu phải lớn hơn thời gian kết thúc');
+        }
+    }
     /**
      * @inheritdoc
      */

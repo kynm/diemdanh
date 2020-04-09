@@ -5,6 +5,7 @@ use yii\widgets\LinkPager;
 use yii\widgets\ActiveForm;
 use app\models\Images;
 ?>
+<input type="hidden" name="urlgetmodal" id="urlgetmodal" value="<?= Url::to(['congvieccanhan/urlgetmodal']) ?>">
 <input type="hidden" name="url" id="url" value="<?= Url::to(['congvieccanhan/hoanthanh']) ?>">
 <input type="hidden" name="urlxacnhan" id="urlxacnhan" value="<?= Url::to(['congvieccanhan/xacnhantatca']) ?>">
 <input type="hidden" name="urlketthuc" id="urlketthuc" value="<?= Url::to(['dotbaoduongcanhan/hoanthanh']) ?>">
@@ -68,9 +69,9 @@ use app\models\Images;
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;  </button>
-        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+        <h4 class="modal-title" id="myModalLabel">Cập nhật kết quả bảo dưỡng</h4>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" id="ketquabaoduong">
         <div class="form-group">
             <label>Kết quả</label>
             <input type="hidden" name="ID_THIETBI" id="ID_THIETBI">
@@ -100,6 +101,7 @@ $script = <<< JS
         var ID_THIETBI = this.dataset.id_thietbi;
         var MA_NOIDUNG = this.dataset.ma_noidung;
         var url = $("#url").val();
+        var urlgetmodal = $("#urlgetmodal").val();
         var IS_DONE = $(this).prop('checked') ? 1 : 0;
         if (!IS_DONE) {
             $.ajax({
@@ -132,11 +134,22 @@ $script = <<< JS
 
             return 1;
         }
-        $("#ID_DOTBD").val(ID_DOTBD);
-        $("#ID_THIETBI").val(ID_THIETBI);
-        $("#MA_NOIDUNG").val(MA_NOIDUNG);
-        $("#IS_DONE").val(IS_DONE);
-        $('#myModal').modal('show');
+
+        $.ajax({
+            url: urlgetmodal,
+            method: 'post',
+            data: {
+                ID_DOTBD: ID_DOTBD,
+                ID_THIETBI: ID_THIETBI,
+                IS_DONE: IS_DONE,
+                MA_NOIDUNG: MA_NOIDUNG
+            },
+            success:function(data) {
+                $('#ketquabaoduong').html(data);
+                $('#myModal').modal('show');
+            }
+        });
+        
     });
 
     $("#hoanthanhconviec").on( "click", function() {
