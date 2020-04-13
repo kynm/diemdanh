@@ -88,23 +88,36 @@ class NoidungbaotriController extends Controller
         if (Yii::$app->user->can('edit-noidungbaotri')) {
             # code...
             $model = Noidungbaotrinhomtbi::findOne($id);
+            // var_dump($model->arraySampleResult);
+            // die();
             
             $params = Yii::$app->request->post();
             if ($model->load($params)) {
-                
-                switch ($params['Noidungbaotrinhomtbi']['type']) {
-                    case '0':
-                        $model->YEUCAUNHAP = '0';
-                        break;
-                    case '1':
-                        if ($model->YEUCAUNHAP == '0')
-                            $model->YEUCAUNHAP =  'Nhập kết quả';
-                        break;
-                    
-                    default:
-                        $model->YEUCAUNHAP = '0';
-                        break;
+                $model->YEUCAUNHAP = '0';
+                foreach ($params['SOLIEUTHUCTE'] as $key => $value) {
+                    if (!$value['label']) {
+                        unset($params['SOLIEUTHUCTE'][$key]);
+                    }
                 }
+                $congviec = [
+                    'KETQUABAODUONG' => [
+                        'type' => 'select',
+                        'value' => explode(',', $params['Noidungbaotrinhomtbi']['type']),
+                    ],
+                    'GHICHU' => [
+                        'type' => 'input',
+                        'value' => '',
+                    ],
+                    'KIENNGHI' => [
+                        'type' => 'input',
+                        'value' => '',
+                    ],
+                    'SOLIEUTHUCTE' => [
+                        'type' => 'multiple_field',
+                        'fields' => $params['SOLIEUTHUCTE']
+                    ],
+                ];
+                $model->SAMPLE_RESULT = json_encode($congviec);
                 $model->save();
                 return $this->redirect(['group-view', 'id' => $model->MA_NOIDUNG]);
             } else {

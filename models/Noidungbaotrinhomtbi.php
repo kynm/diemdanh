@@ -92,4 +92,15 @@ class Noidungbaotrinhomtbi extends \yii\db\ActiveRecord
     {
         return $this->hasMany(ProfileBaoduong::className(), ['ID' => 'ID_PROFILE'])->viaTable('profile_baoduong_noidung', ['MA_NOIDUNG' => 'MA_NOIDUNG']);
     }
+
+    public function getSolieuthucte()
+    {
+        $result = json_decode($this->SAMPLE_RESULT, true);
+        return $result['SOLIEUTHUCTE'] ? $result['SOLIEUTHUCTE']['fields'] : [];
+    }
+    public function getArrayResult()
+    {
+        $result = json_decode($this->SAMPLE_RESULT, true);
+        return $result;
+    }
 }

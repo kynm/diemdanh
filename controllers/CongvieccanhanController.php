@@ -10,6 +10,7 @@ use yii\web\Response;
 use app\models\User;
 use app\models\Thietbitram;
 use app\models\Dotbaoduong;
+use app\models\Noidungbaotrinhomtbi;
 use app\models\Noidungcongviec;
 use app\models\Noidungbaotri;
 use app\models\AuthorizationCodes;
@@ -95,9 +96,11 @@ class CongvieccanhanController extends Controller
             'ID_THIETBI' => $key['ID_THIETBI'],
             'MA_NOIDUNG' => $key['MA_NOIDUNG'],
         ];
-        $model = Noidungcongviec::find()->where($condition)->one();
+        $model = Noidungbaotrinhomtbi::find()->where(['MA_NOIDUNG' => $key['MA_NOIDUNG']])->one();
+        $congviec = json_decode($model->SAMPLE_RESULT, true);
         return $this->renderPartial('_aj_ketquacongviec',[
             'model'=>$model,
+            'congviec'=>$congviec,
             'condition'=>$key,
         ]);
     }
@@ -123,7 +126,9 @@ class CongvieccanhanController extends Controller
         if ($isDone) {
             $model->TRANGTHAI = "cho_xac_nhan";
             $model->KETQUA = $key['KETQUABAODUONG'];
+            $model->KETQUAXULY = json_encode($key['SOLIEUTHUCTE']);
             $model->KIENNGHI = $key['KIENNGHI'];
+            $model->GHICHU = $key['GHICHU'];
             $model->save(false);
             $thietbi = Thietbitram::findOne(['ID_THIETBI' => $model->ID_THIETBI]);
             $thietbi->LANBAODUONGTRUOC = date('Y-m-d');
@@ -132,6 +137,8 @@ class CongvieccanhanController extends Controller
             $model->TRANGTHAI = NULL;
             $model->KETQUA = NULL;
             $model->KIENNGHI = NULL;
+            $model->KETQUAXULY = NULL;
+            $model->GHICHU = NULL;
             $model->save(false);
         }
 

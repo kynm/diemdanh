@@ -71,18 +71,28 @@ $this->params['breadcrumbs'][] = 'Cập nhật';
             <div class="col-sm-12">
                 <?= $form->field($model, 'type')->dropDownList(
                     [
-                        0 => 'Đạt / Không đạt',
-                        1 => 'Nhập kết quả'
+                        'dat,khong_dat' => 'Đạt / Không đạt',
+                        'tot,kem' => 'Tốt/ Kém',
                     ],
                     [
-                        'prompt' => 'Yêu cầu kết quả công việc',
+                        'value' => $model->arrayResult['KETQUABAODUONG']['value']
                     ])->label('Yêu cầu kết quả công việc') ?>
             </div>
             <div class="col-sm-12" id="yeucaunhap" hidden>
                 <?= $form->field($model, 'YEUCAUNHAP')->textArea(['placeholder' => 'Nhập điện áp/số dòng/thời gian xả...v.v...'])->label('Nội dung yêu cầu') ?>
             </div>
             <div class="col-sm-12">
-                <?= $form->field($model, 'SAMPLE_RESULT')->textArea(['placeholder' => 'Nhập nội dung kết quả mẫu']) ?>
+                <?php foreach($model->solieuthucte as $key => $sl) :?>
+                    <div class="form-group">
+                        <label>Thông số cần nhập: </label>
+                        <input type="input" name="SOLIEUTHUCTE[][label]" value="<?php echo $sl['label']?>">
+                    </div>
+                <?php endforeach; ?>
+                <?php for($i = 0; $i < 4 - count($model->solieuthucte); $i ++) :?>
+                    <div class="form-group">
+                        <label>Thông số cần nhập: </label><input type="input" name="SOLIEUTHUCTE[][label]" value="">
+                    </div>
+                <?php endfor;?>
             </div>
         </div>
         <div class="box-footer">

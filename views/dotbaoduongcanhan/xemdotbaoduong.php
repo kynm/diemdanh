@@ -11,9 +11,8 @@ use app\models\Images;
 <input type="hidden" name="urlketthuc" id="urlketthuc" value="<?= Url::to(['dotbaoduongcanhan/hoanthanh']) ?>">
 <input type="hidden" name="urlnhanvienhoanthanh" id="urlnhanvienhoanthanh" value="<?= Url::to(['dotbaoduongcanhan/nhanvienhoanthanh']) ?>">
 <input type="hidden" name="ID_DOTBD" value="<?= Html::encode("{$data['THONGTIN_DBD']['ID_DOTBD']}") ?>" id="ID_DOTBD">
-<h1><?= Html::encode("{$data['THONGTIN_DBD']['TRAMVT']->TEN_TRAM}  --  {$data['THONGTIN_DBD']['TRAMVT']->DIADIEM}")?></h1>
-<h1>Danh sách công việc</h1>
-<h3><?= Html::encode("{$data['THONGTIN_DBD']['MA_DOTBD']} -  {$data['THONGTIN_DBD']['TRANGTHAI']} -  {$data['THONGTIN_DBD']['NGAY_BD']}  -   {$data['THONGTIN_DBD']['NGAY_KT']}")?></h3>
+<h3><?= Html::encode("{$data['THONGTIN_DBD']['TRAMVT']->TEN_TRAM}  --  {$data['THONGTIN_DBD']['TRAMVT']->DIADIEM} -----{$data['THONGTIN_DBD']['MA_DOTBD']}")?></h3>
+<h3>Danh sách công việc</h3>
 <?php foreach ($data['DS_CONGVIEC'] as $loaitb => $dscongviec): ?>
 <div class="box box-primary">
 <div class="box-header">
@@ -72,20 +71,6 @@ use app\models\Images;
         <h4 class="modal-title" id="myModalLabel">Cập nhật kết quả bảo dưỡng</h4>
       </div>
       <div class="modal-body" id="ketquabaoduong">
-        <div class="form-group">
-            <label>Kết quả</label>
-            <input type="hidden" name="ID_THIETBI" id="ID_THIETBI">
-            <input type="hidden" name="MA_NOIDUNG" id="MA_NOIDUNG">
-            <input type="hidden" name="IS_DONE" id="IS_DONE">
-            <select id="KETQUABAODUONG" class="form-control" id="KETQUABAODUONG">
-                <option value="dat">Đạt</option>
-                <option value="khong_dat">Không đạt</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label>Kiến nghị</label>
-            <input type="text" name="KIENNGHI" class="form-control" id="KIENNGHI">
-        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -158,8 +143,14 @@ $script = <<< JS
         var MA_NOIDUNG = $("#MA_NOIDUNG").val();
         var KETQUABAODUONG = $("#KETQUABAODUONG").val();
         var KIENNGHI = $("#KIENNGHI").val();
+        var GHICHU = $("#GHICHU").val();
         var IS_DONE = $("#IS_DONE").val();
         var url = $("#url").val();
+        var SOLIEUTHUCTE = {};
+        $("input[name*='SOLIEUTHUCTE']").each(function(){
+            SOLIEUTHUCTE[this.id] = $(this).val();
+        });
+
         $.ajax({
             url: url,
             method: 'post',
@@ -169,6 +160,8 @@ $script = <<< JS
                 IS_DONE: IS_DONE,
                 KETQUABAODUONG: KETQUABAODUONG,
                 KIENNGHI: KIENNGHI,
+                SOLIEUTHUCTE: SOLIEUTHUCTE,
+                GHICHU: GHICHU,
                 MA_NOIDUNG: MA_NOIDUNG
             },
             success:function(data) {
