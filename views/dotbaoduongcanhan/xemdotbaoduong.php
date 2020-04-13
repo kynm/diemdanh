@@ -47,10 +47,16 @@ use app\models\Images;
     </div>
     <div class="box-body">
         <ul class="todo-list">
-        <form method="post" enctype="multipart/form-data">
-            <input type="file" name="my_file[]" id="image-dotbaoduong" multiple>
-            <input type="submit" value="Upload">
-        </form>
+        <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
+            <div class="col-md-6 col-sm-6">
+                <?= $form->field($dotbd, 'files[]')->fileInput(['multiple' => true, 'accept' => 'image/*']) ?>
+            </div>
+            <div class="box-footer">
+                <div class="text-center">
+                    <?= Html::submitButton('<i class="fa fa-check"></i> Hoàn thành', ['class' => 'btn btn-primary btn-flat']) ?>
+                </div>
+            </div>          
+            <?php ActiveForm::end(); ?>
         </ul>
     </div>
 </div>
