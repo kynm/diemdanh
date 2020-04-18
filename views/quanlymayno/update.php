@@ -52,17 +52,23 @@ $this->params['breadcrumbs'][] = 'Cập nhật';
                         [
                             'class' => 'yii\grid\ActionColumn',
                             'template' => '{update} {delete}',
-                            'urlCreator' => function ($action, $model, $key, $index) {
-                                if ($action ==  'update') {
-                                    $url = Url::to(['quanlymayno/updatenhatky', 'id' => $model->ID]);
-                                    return $url;
-                                }
-                                if ($action ==  'delete') {
-                                    $url = Url::to(['quanlymayno/deletenhatky', 'id' => $model->ID]);
-                                    return $url;
-                                }
+                            'buttons' => [
+                                'update' => function ($url,$model) {
+                                    if (!$model->IS_CHECKED) {
+                                        $url = Url::to(['quanlymayno/updatenhatky', 'id' => $model->ID]);
+                                        return Html::a('<span class="glyphicon glyphicon-pencil"> </span>', $url, ['title' => 'Điều chỉnh nội dung' ]);
+                                    }
 
-                            }
+                                    return '';
+                                },
+                                'delete' => function ($url,$model,$key) {
+                                    if (!$model->IS_CHECKED) {
+                                        $url = Url::to(['quanlymayno/deletenhatky', 'id' => $model->ID]);
+                                        return Html::a('<span class="glyphicon glyphicon-trash"> </span>', $url, ['title' => 'Điều chỉnh nội dung' ]);
+                                    }
+                                        return '';
+                                },
+                            ],
                         ],
                     ],
                 ]); ?>

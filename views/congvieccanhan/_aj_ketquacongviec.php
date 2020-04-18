@@ -1,4 +1,3 @@
-    <input type="hidden" name="ID_DOTBD" id="ID_DOTBD" value="<?php echo $condition['ID_DOTBD']?>">
     <input type="hidden" name="ID_THIETBI" id="ID_THIETBI" value="<?php echo $condition['ID_THIETBI']?>">
     <input type="hidden" name="MA_NOIDUNG" id="MA_NOIDUNG"value="<?php echo $condition['MA_NOIDUNG']?>">
     <input type="hidden" name="IS_DONE" id="IS_DONE" value="<?php echo $condition['IS_DONE']?>">

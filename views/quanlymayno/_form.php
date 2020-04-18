@@ -63,6 +63,9 @@ $listtramvt = ArrayHelper::map(Tramvt::find()->all(), 'ID_TRAM', 'TEN_TRAM');
             <div class="col-sm-6">
                 <?= $form->field($model, 'GHICHU')->textInput(['maxlength' => true]) ?>
             </div>
+            <div class="col-sm-6">
+                <?= $form->field($model, 'IS_CHECKED')->checkBox(['label' => 'Xác nhận']) ?>
+            </div>
         </div>
         <div class="box-footer">
             <div class="text-center">

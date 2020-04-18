@@ -135,7 +135,6 @@ class Dotbaoduong extends \yii\db\ActiveRecord
         $list_noidung = Yii::$app->db->createCommand("
             SELECT * FROM profile_baoduong_noidung JOIN noidungbaotrinhomtbi ON profile_baoduong_noidung.MA_NOIDUNG = noidungbaotrinhomtbi.MA_NOIDUNG WHERE profile_baoduong_noidung.ID_PROFILE = $id_profile
         ")->queryAll();
-
         foreach ($listThietbi as $thietbi) {
             foreach ($listNoidungbaotri as $noidung) {
                 $congviec = new Noidungcongviec;

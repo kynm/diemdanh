@@ -158,6 +158,34 @@ class NoidungbaotriController extends Controller
 
     public function actionList($id)
     {
+        $all = Noidungbaotrinhomtbi::find()->all();
+        $congviec = [
+            'KETQUABAODUONG' => [
+                'type' => 'select',
+                'value' => ['dat', 'khong_dat'],
+            ],
+            'GHICHU' => [
+                'type' => 'input',
+                'value' => '',
+            ],
+            'KIENNGHI' => [
+                'type' => 'input',
+                'value' => '',
+            ],
+            'SOLIEUTHUCTE' => [
+                'type' => 'multiple_field',
+                'fields' => []
+            ],
+        ];
+        foreach ($all as $key => $value) {
+            $value->SAMPLE_RESULT = json_encode($congviec);
+            $value->save();
+        }
+        $json = '"{\"KETQUABAODUONG\":{\"type\":\"select\",\"value\":[\"dat\",\"khong_dat\"]},\"GHICHU\":{\"type\":\"input\",\"value\":\"\"},\"KIENNGHI\":{\"type\":\"input\",\"value\":\"\"},\"SOLIEUTHUCTE\":{\"type\":\"multiple_field\",\"fields\":[]}}"';
+        $json = json_decode($json, true);
+echo "<pre>";
+        var_dump($json);
+        die();
         $query = Yii::$app->db->createCommand("
             SELECT `noidungbaotrinhomtbi`.`ID_NHOM`, `nhomtbi`.`TEN_NHOM`, `noidungbaotrinhomtbi`.`MA_NOIDUNG`, `NOIDUNG`, `pn`.`ID_PROFILE`  
             FROM `noidungbaotrinhomtbi` 

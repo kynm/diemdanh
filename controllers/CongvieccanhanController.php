@@ -126,7 +126,9 @@ class CongvieccanhanController extends Controller
         if ($isDone) {
             $model->TRANGTHAI = "cho_xac_nhan";
             $model->KETQUA = $key['KETQUABAODUONG'];
-            $model->KETQUAXULY = json_encode($key['SOLIEUTHUCTE']);
+            if (isset($key['SOLIEUTHUCTE'])) {
+                $model->KETQUAXULY = json_encode($key['SOLIEUTHUCTE']);
+            }
             $model->KIENNGHI = $key['KIENNGHI'];
             $model->GHICHU = $key['GHICHU'];
             $model->save(false);

@@ -5,6 +5,7 @@ namespace app\models;
 use Yii;
 use app\models\Nhanvien;
 use app\models\Thietbitram;
+use app\models\TramVT;
 
 /**
  * This is the model class for table "baoduongtong".
@@ -35,6 +36,7 @@ class NhatKySuDungMayNo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['IS_CHECKED'], 'required'],
             [['DINHMUC'], 'required'],
             [['ID_THIETBITRAM'], 'required'],
             [['DINHMUC'], 'required'],
@@ -79,6 +81,11 @@ class NhatKySuDungMayNo extends \yii\db\ActiveRecord
     public function getTHIETBITRAM()
     {
         return $this->hasOne(Thietbitram::className(), ['ID_THIETBI' => 'ID_THIETBITRAM']);
+    }
+
+    public function getTRAMVANHANH()
+    {
+        return $this->hasOne(TramVT::className(), ['ID_TRAM' => 'ID_TRAM']);
     }
 
     public function getNHANVIENVANHANH()

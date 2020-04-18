@@ -28,7 +28,7 @@ $tongtien = 0;
                 <tbody>
                   <tr>
                     <?php foreach ($data as $value): ?>
-                    <td><?php echo $value->tHIETBITRAM->iDTRAM->TEN_TRAM;?></td>
+                    <td><?php echo $value->tRAMVANHANH->TEN_TRAM;?></td>
                     <td><?php echo $value->tHIETBITRAM->iDLOAITB->TEN_THIETBI;?></td>
                     <td>Cell</td>
                     <?php

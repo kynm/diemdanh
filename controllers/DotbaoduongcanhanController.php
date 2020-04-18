@@ -224,13 +224,14 @@ class DotbaoduongcanhanController extends Controller
         $data["THONGTIN_DBD"] = $dotbd->attributes;
         unset($data["THONGTIN_DBD"]["ID_TRAM"]);
         $data["THONGTIN_DBD"]["TRAMVT"] = $dotbd->tRAMVT;
-        $query = Noidungcongviec::find()->where(['ID_DOTBD' => $dotbd->ID_DOTBD]);
+        $query = Noidungcongviec::find()->where(['ID_DOTBD' => $id]);
         if ($canhan == 1) {
             $query->andWhere(['ID_NHANVIEN' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN]);
         }
+
         $listCongViec = $query->all();
-        
         $array = [];
+        $congviec = [];
         foreach ($listCongViec as $each) {
             $array = $each->attributes;
             $array['NOIDUNG'] = $each->mANOIDUNG->attributes;
@@ -253,7 +254,7 @@ class DotbaoduongcanhanController extends Controller
         $data["THONGTIN_DBD"] = $dotbd->attributes;
         unset($data["THONGTIN_DBD"]["ID_TRAM"]);
         $data["THONGTIN_DBD"]["TRAMVT"] = $dotbd->tRAMVT;
-        $query = Noidungcongviec::find()->where(['ID_DOTBD' => $dotbd->ID_DOTBD]);
+        $query = Noidungcongviec::find()->where(['ID_DOTBD' => $id]);
         $listCongViec = $query->all();
         $array = [];
         foreach ($listCongViec as $each) {

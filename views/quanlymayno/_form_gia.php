@@ -21,7 +21,7 @@ use kartik\datetime\DateTimePicker;
                 $nowY - 1 => $nowY - 1,
             ];
             $loainhienlieu = [
-                1 => 'Diel',
+                1 => 'Diesel',
                 2 => 'Xăng',
             ]
 ?>

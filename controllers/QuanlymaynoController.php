@@ -130,6 +130,7 @@ class QuanlymaynoController extends Controller
             $model = new NhatKySuDungMayNo();
             $thietbitram = Thietbitram::findOne($id);
             $model->ID_TRAM = $thietbitram->ID_TRAM;
+            $model->IS_CHECKED = true;
             $model->ID_NV_VANHANH = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 $log = new ActivitiesLog;
