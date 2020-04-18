@@ -2,8 +2,10 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\helpers\ArrayHelper;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use app\models\Daivt;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\TramvtSearch */
@@ -23,7 +25,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         'filterModel' => $searchModel,
                         'columns' => [
                             ['class' => 'yii\grid\SerialColumn'],
-                            'MA_TRAM',
                             [
                                 'attribute' => 'TEN_TRAM',
                                 'format' => 'raw',
@@ -31,17 +32,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     return $model->TEN_TRAM;
                                 }
                             ],
-                            'DIADIEM',
                             [
                                 'attribute' => 'ID_DAI',
-                                'value' => 'iDDAI.TEN_DAIVT'
-                            ],
-                            [
-                                'attribute' => 'ID_NHANVIEN',
-                                'format' => 'raw',
-                                'value' => function ($model) {
-                                    return '#';
-                                }
+                                'value' => 'iDDAI.TEN_DAIVT',
+                                'filter'=>ArrayHelper::map(Daivt::find()->asArray()->all(), 'TEN_DAIVT', 'TEN_DAIVT'),
                             ],
                             [
                                 'class' => 'yii\grid\ActionColumn',

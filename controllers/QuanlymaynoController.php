@@ -56,7 +56,7 @@ class QuanlymaynoController extends Controller
     public function actionIndex()
     {
         $searchModel = new TramvtSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->searchMayno(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
