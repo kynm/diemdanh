@@ -17,8 +17,8 @@ use kartik\date\DatePicker;
 /* @var $model app\models\Tramvt */
 
 $this->title = 'Trạm '.$model->TEN_TRAM;
-$this->params['breadcrumbs'][] = ['label' => 'Quản lý thiết bị', 'url' => ['nhomtbi/index']];
-$this->params['breadcrumbs'][] = ['label' => 'Quản lý thiết bị theo trạm', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Quản lý máy nổ', 'url' => ['nhomtbi/index']];
+$this->params['breadcrumbs'][] = ['label' => 'Quản lý máy nổ theo trạm', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 $visible = false;
@@ -56,17 +56,14 @@ if (Yii::$app->user->can('edit-tramvt')) {
 
 ?>
 <div class="tramvt-view">
-
     <div class="box box-primary">
         <div class="box-body">
             <br>
-
             <?php Pjax::begin(); ?>    <?= GridView::widget([
                     'dataProvider' => $dataProvider,
                     'filterModel' => $searchModel,
                     'layout' => '{items}{pager}',
                     'columns' => [
-                        ['class' => 'yii\grid\CheckboxColumn', 'visible' => $visible],
                         ['class' => 'yii\grid\SerialColumn', 'visible' => !$visible],
 
                         [
@@ -77,9 +74,6 @@ if (Yii::$app->user->can('edit-tramvt')) {
                             'attribute' => 'ID_TRAM',
                             'value' => 'iDTRAM.TEN_TRAM'
                         ],
-                        'LANBAODUONGTRUOC',
-                        'LANBAODUONGTIEP',
-
                         [
                             'class' => 'yii\grid\ActionColumn',
                             'template' => '{update}',
