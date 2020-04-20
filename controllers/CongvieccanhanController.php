@@ -113,7 +113,7 @@ class CongvieccanhanController extends Controller
             'ID_THIETBI' => $key['ID_THIETBI'],
             'MA_NOIDUNG' => $key['MA_NOIDUNG'],
         ];
-        $isDone = $key['IS_DONE'];
+        $isDone = $key['IS_DONE'] ? 1 : 0;
         $dobd = Dotbaoduong::findOne($key['ID_DOTBD']);
         if ($dobd->TRANGTHAI != 'dangthuchien') {
             return json_encode(["message" => "Bạn không thể sửa đổi công việc","error" => "1"], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
@@ -144,7 +144,13 @@ class CongvieccanhanController extends Controller
             $model->save(false);
         }
 
-        return json_encode(["message" => "False!","error" => "0"], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        return json_encode([
+            "message" => "False!",
+            "ID_THIETBI" => $key['ID_THIETBI'],
+            "MA_NOIDUNG" => $key['MA_NOIDUNG'],
+            "IS_DONE" => $isDone,
+            "error" => false
+        ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
     }
 
     public function actionXacnhan()

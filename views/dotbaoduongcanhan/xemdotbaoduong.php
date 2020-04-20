@@ -29,9 +29,9 @@ use app\models\Images;
             <span class="text"><?= Html::encode("{$congviec['NOIDUNG']['NOIDUNG']} ({$congviec['NOIDUNG']['MA_NOIDUNG']})") ?></span>
             <span class="text"><?= Html::encode("{$congviec['ID_DOTBD']} {$congviec['ID_THIETBI']}") ?></span>
             <?php if($congviec['TRANGTHAI']) {?>
-                <small class="label label-success"><i class="fa fa-thumbs-o-up"></i> </small>
+                <small class="label label-success" id="trangthai-<?= Html::encode("{$congviec['NOIDUNG']['MA_NOIDUNG']}-{$congviec['ID_THIETBI']}") ?>"><i class="fa fa-thumbs-o-up"></i> </small>
             <?php } else {?>
-                <small class="label label-danger"><i class="fa fa-clock-o"></i> </small>
+                <small class="label label-danger" id="trangthai-<?= Html::encode("{$congviec['NOIDUNG']['MA_NOIDUNG']}-{$congviec['ID_THIETBI']}") ?>"><i class="fa fa-clock-o"></i> </small>
             <?php }?>
         </li>
      <?php endforeach; ?>
@@ -107,12 +107,19 @@ $script = <<< JS
                     MA_NOIDUNG: MA_NOIDUNG
                 },
                 success:function(data) {
-                    $("#ID_DOTBD").val('');
-                    $("#ID_THIETBI").val('');
-                    $("#MA_NOIDUNG").val('');
-                    $("#IS_DONE").val('');
+                    // $("#ID_DOTBD").val('');
+                    // $("#ID_THIETBI").val('');
+                    // $("#MA_NOIDUNG").val('');
+                    // $("#IS_DONE").val('');
                     $('#myModal').modal('hide');
+                    data = jQuery.parseJSON(data);
                     if (!data.error) {
+                        if(data.IS_DONE) {
+                            $('#' + 'trangthai-' + data.MA_NOIDUNG + '-' + data.ID_THIETBI).removeClass('label-danger').addClass('label-success').html('<i class="fa fa-thumbs-o-up"></i>');
+                        } else {
+                            $('#' + 'trangthai-' + data.MA_NOIDUNG + '-' + data.ID_THIETBI).removeClass('label-success').addClass('label-danger').html('<i class="fa fa-clock-o"></i>');
+
+                        }
                         Swal.fire({
                             icon: 'error',
                             title: 'Đã hủy hoàn thành',
@@ -120,6 +127,7 @@ $script = <<< JS
                             timer: 500
                         });
                     }
+                    return 1;
                 }
             });
 
@@ -171,13 +179,20 @@ $script = <<< JS
                 MA_NOIDUNG: MA_NOIDUNG
             },
             success:function(data) {
-                $("#KIENNGHI").val('');
-                $("#ID_THIETBI").val('');
-                $("#MA_NOIDUNG").val('');
-                $("#KETQUABAODUONG").val('dat');
-                $("#IS_DONE").val('');
+                // $("#KIENNGHI").val('');
+                // $("#ID_THIETBI").val('');
+                // $("#MA_NOIDUNG").val('');
+                // $("#KETQUABAODUONG").val('dat');
+                // $("#IS_DONE").val('');
                 $('#myModal').modal('hide');
+                data = jQuery.parseJSON(data);
                 if (!data.error) {
+                    if(data.IS_DONE) {
+                        $('#' + 'trangthai-' + data.MA_NOIDUNG + '-' + data.ID_THIETBI).removeClass('label-danger').addClass('label-success').html('<i class="fa fa-thumbs-o-up"></i>');
+                    } else {
+                        $('#' + 'trangthai-' + data.MA_NOIDUNG + '-' + data.ID_THIETBI).removeClass('label-success').addClass('label-danger').html('<i class="fa fa-clock-o"></i>');
+
+                    }
                     Swal.fire({
                         icon: 'success',
                         title: 'Đã hoàn thành công việc',

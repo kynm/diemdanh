@@ -130,17 +130,16 @@ class Dotbaoduong extends \yii\db\ActiveRecord
     public function taobaoduong($arr_nhomtbi, $id_profile)
     {
         $listThietbi = Thietbitram::find()->joinWith('iDLOAITB')->where(['thietbi.ID_NHOM' => $arr_nhomtbi, 'ID_TRAM' => $this->ID_TRAM])->all();
-        $listNoidungbaotri = ProfileBaoduongNoidung::findAll(['ID_PROFILE' => $id_profile]);
 
-        $list_noidung = Yii::$app->db->createCommand("
-            SELECT * FROM profile_baoduong_noidung JOIN noidungbaotrinhomtbi ON profile_baoduong_noidung.MA_NOIDUNG = noidungbaotrinhomtbi.MA_NOIDUNG WHERE profile_baoduong_noidung.ID_PROFILE = $id_profile
-        ")->queryAll();
         foreach ($listThietbi as $thietbi) {
-            foreach ($listNoidungbaotri as $noidung) {
+            $nhomTB = $thietbi->iDLOAITB->ID_NHOM;
+            $list_noidung = Yii::$app->db->createCommand("
+            SELECT b.MA_NOIDUNG FROM profile_baoduong_noidung a, noidungbaotrinhomtbi b WHERE a.MA_NOIDUNG = b.MA_NOIDUNG and a.ID_PROFILE = $id_profile and b.ID_NHOM = $nhomTB")->queryAll();
+            foreach ($list_noidung as $noidung) {
                 $congviec = new Noidungcongviec;
                 $congviec->ID_DOTBD = $this->ID_DOTBD;
                 $congviec->ID_THIETBI = $thietbi->ID_THIETBI;
-                $congviec->MA_NOIDUNG = $noidung->MA_NOIDUNG;
+                $congviec->MA_NOIDUNG = $noidung['MA_NOIDUNG'];
                 $congviec->ID_NHANVIEN = 0;
                 $congviec->save();
             }
