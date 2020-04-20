@@ -39,8 +39,11 @@ class NhatKySuDungMayNo extends \yii\db\ActiveRecord
             [['IS_CHECKED'], 'required'],
             [['DINHMUC'], 'required'],
             [['ID_THIETBITRAM'], 'required'],
+            [['USER_ID'], 'required'],
             [['DINHMUC'], 'required'],
+            [['LOAI_SU_CO'], 'required'],
             [['ID_NV_DIEUHANH', 'ID_NV_VANHANH', 'ID_TRAM'], 'integer'],
+            [['ID_NV_DIEUHANH', 'ID_NV_VANHANH', 'ID_TRAM'], 'required'],
             [['THOIGIANBATDAU', 'THOIGIANKETTHUC'], 'required'],
             ['THOIGIANBATDAU','validateDates'],
         ];
@@ -67,6 +70,7 @@ class NhatKySuDungMayNo extends \yii\db\ActiveRecord
             'THOIGIANBATDAU' => 'Thời gian bắt đầu',
             'THOIGIANKETTHUC' => 'Thời gian kết thúc',
             'GHICHU' => 'Nội dung sự cố',
+            'LOAI_SU_CO' => 'Loại sự cố',
         ];
     }
 
@@ -76,6 +80,11 @@ class NhatKySuDungMayNo extends \yii\db\ActiveRecord
     public function getNHANVIENDIEUHANH()
     {
         return $this->hasOne(Nhanvien::className(), ['ID_NHANVIEN' => 'ID_NV_DIEUHANH']);
+    }
+
+    public function getNGUOITAO()
+    {
+        return $this->hasOne(Nhanvien::className(), ['ID_NHANVIEN' => 'USER_ID']);
     }
 
     public function getTHIETBITRAM()

@@ -13,6 +13,10 @@ use kartik\datetime\DateTimePicker;
 /* @var $form yii\widgets\ActiveForm */
 
 $listtramvt = ArrayHelper::map(Tramvt::find()->all(), 'ID_TRAM', 'TEN_TRAM');
+$listloaisuco = [
+    1 => 'Mất điện',
+    2 => 'Bảo dưỡng thiết bị',
+];
 ?>
 
 <div class="tramvt-form">
@@ -20,10 +24,19 @@ $listtramvt = ArrayHelper::map(Tramvt::find()->all(), 'ID_TRAM', 'TEN_TRAM');
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'ID_THIETBITRAM')->hiddenInput(['value'=> $thietbitram->ID_THIETBI])->label(false);?>
-    <?= $form->field($model, 'ID_NV_DIEUHANH')->hiddenInput(['value'=> Yii::$app->user->identity->nhanvien->ID_NHANVIEN])->label(false);?>
+    <?= $form->field($model, 'USER_ID')->hiddenInput(['value'=> Yii::$app->user->identity->nhanvien->ID_NHANVIEN])->label(false);?>
     <?= $form->field($model, 'DINHMUC')->hiddenInput(['value'=> json_decode($thietbitram->THAMSOTHIETBI)->DINH_MUC])->label(false);?>
     <div class="box box-primary">
         <div class="box-body">
+            <div class="col-sm-3">
+                <?= $form->field($model, 'ID_NV_DIEUHANH')->widget(Select2::classname(), [
+                    'data' => ArrayHelper::map(Nhanvien::find()->where(['>', 'ID_NHANVIEN', 0])->all(), 'ID_NHANVIEN', 'TEN_NHANVIEN'),
+                    'options' => ['placeholder' => 'Nhân viên điều hành'],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]); ?>
+            </div>
             <div class="col-sm-3">
                 <?= $form->field($model, 'ID_NV_VANHANH')->widget(Select2::classname(), [
                     'data' => ArrayHelper::map(Nhanvien::find()->where(['>', 'ID_NHANVIEN', 0])->all(), 'ID_NHANVIEN', 'TEN_NHANVIEN'),
@@ -37,6 +50,15 @@ $listtramvt = ArrayHelper::map(Tramvt::find()->all(), 'ID_TRAM', 'TEN_TRAM');
                 <?= $form->field($model, 'ID_TRAM')->widget(Select2::classname(), [
                     'data' => $listtramvt,
                     'options' => ['placeholder' => 'Chọn trạm'],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]); ?>
+            </div>
+            <div class="col-sm-3">
+                <?= $form->field($model, 'LOAI_SU_CO')->widget(Select2::classname(), [
+                    'data' => $listloaisuco,
+                    'options' => ['placeholder' => 'Chọn loại sự cố'],
                     'pluginOptions' => [
                         'allowClear' => true
                     ],

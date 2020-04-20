@@ -131,7 +131,9 @@ class QuanlymaynoController extends Controller
             $thietbitram = Thietbitram::findOne($id);
             $model->ID_TRAM = $thietbitram->ID_TRAM;
             $model->IS_CHECKED = true;
-            $model->ID_NV_VANHANH = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
+            $model->LOAI_SU_CO = 1;
+            $model->ID_NV_DIEUHANH = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
+            $model->ID_NV_VANHANH = $thietbitram->iDTRAM->ID_NHANVIEN;
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 $log = new ActivitiesLog;
                 $log->activity_type = 'add-nkmayno';
