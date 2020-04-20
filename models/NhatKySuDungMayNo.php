@@ -63,7 +63,7 @@ class NhatKySuDungMayNo extends \yii\db\ActiveRecord
         return [
             'ID' => 'ID',
             'ID_NV_DIEUHANH' => 'Nhân viên điều hành',
-            'ID_NV_VANHANH' => 'Nhân viên vận hành',
+            'ID_NV_VANHANH' => 'Người chạy máy nổ',
             'ID_TRAM' => 'Trạm vận hành',
             'DINHMUC' => 'Định mức',
             'GIATIEN' => 'Đơn giá',
