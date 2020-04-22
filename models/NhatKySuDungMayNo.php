@@ -71,6 +71,7 @@ class NhatKySuDungMayNo extends \yii\db\ActiveRecord
             'THOIGIANKETTHUC' => 'Thời gian kết thúc',
             'GHICHU' => 'Nội dung sự cố',
             'LOAI_SU_CO' => 'Loại sự cố',
+            'soluong' => 'Số lượng (L)',
         ];
     }
 
@@ -80,6 +81,28 @@ class NhatKySuDungMayNo extends \yii\db\ActiveRecord
     public function getNHANVIENDIEUHANH()
     {
         return $this->hasOne(Nhanvien::className(), ['ID_NHANVIEN' => 'ID_NV_DIEUHANH']);
+    }
+
+    public function getHous()
+    {
+        $dinhmuc = json_decode($this->tHIETBITRAM->THAMSOTHIETBI)->DINH_MUC;
+        $expectedStartTime = new \DateTime($this->THOIGIANBATDAU);
+        $expectedEndTime = new \DateTime($this->THOIGIANKETTHUC);
+        $diff = $expectedEndTime->diff($expectedStartTime, true);
+
+        return ($diff->i + ($diff->h*60)+ ($diff->d*24*60));
+    }
+
+    public function getSoluong()
+    {
+        return $this->hous * json_decode($this->tHIETBITRAM->THAMSOTHIETBI)->DINH_MUC / 60;
+    }
+
+    public function getThanhtien()
+    {
+        $LOAINHIENLIEU = json_decode($value->tHIETBITRAM->THAMSOTHIETBI)->LOAINHIENLIEU;
+
+        return $dongiamayno[$LOAINHIENLIEU] * $this->soluong;
     }
 
     public function getNGUOITAO()

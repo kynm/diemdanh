@@ -29,17 +29,12 @@ $this->params['breadcrumbs'][] = 'Cập nhật';
                     'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
                         [
-                            'attribute' => 'ID_THIETBITRAM',
-                            'value' => 'ID_THIETBITRAM'
-                        ],
-                        [
                             'attribute' => 'ID_NV_VANHANH',
                             'value' => 'nHANVIENVANHANH.TEN_NHANVIEN'
                         ],
-                        'DINHMUC',
                         [
-                            'attribute' => 'GIATIEN',
-                            'value' => 'GIATIEN'
+                            'attribute' => 'ID_TRAM',
+                            'value' => 'tRAMVANHANH.TEN_TRAM'
                         ],
                         [
                             'attribute' => 'THOIGIANBATDAU',
@@ -47,6 +42,11 @@ $this->params['breadcrumbs'][] = 'Cập nhật';
                         ],
                         [
                             'attribute' => 'THOIGIANKETTHUC',
+                            // 'format' => ['date', 'php:d/m/Y H:i'],
+                        ],
+                        'DINHMUC',
+                        [
+                            'attribute' => 'soluong',
                             // 'format' => ['date', 'php:d/m/Y H:i'],
                         ],
                         [

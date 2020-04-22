@@ -144,7 +144,9 @@ class QuanlymaynoController extends Controller
                 return $this->redirect(['update', 'id' => $id]);
             } else {
                 $searchModel = new NhatKySuDungMayNoSearch();
-                $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+                $params = Yii::$app->request->queryParams;
+                $params['ID_THIETBITRAM'] = $thietbitram->ID_THIETBI;
+                $dataProvider = $searchModel->search($params);
                 return $this->render('update', [
                     'model' => $model,
                     'thietbitram' => $thietbitram,

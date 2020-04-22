@@ -32,19 +32,11 @@ $tongtien = 0;
                     <td><?php echo $value->tHIETBITRAM->iDLOAITB->TEN_THIETBI;?></td>
                     <td>Cell</td>
                     <?php
-                        $dinhmuc = json_decode($value->tHIETBITRAM->THAMSOTHIETBI)->DINH_MUC;
-                        $LOAINHIENLIEU = json_decode($value->tHIETBITRAM->THAMSOTHIETBI)->LOAINHIENLIEU;
-                        $expectedStartTime = new DateTime($value->THOIGIANBATDAU);
-                        $expectedEndTime = new DateTime($value->THOIGIANKETTHUC);
-                        $diff = $expectedEndTime->diff($expectedStartTime, true);
-                        $hous = ($diff->i + ($diff->h*60)+ ($diff->d*24*60));
-                        $soluong = $hous * $dinhmuc / 60;
-                        $thanhtien = $dongiamayno[$LOAINHIENLIEU] * $soluong;
-                        $tongtien +=$thanhtien;
+                        $tongtien +=$value->thanhtien;
                     ?>
-                    <td><?php echo $dinhmuc?></td>
-                    <td><?php echo $hous;?></td>
-                    <td><?php echo $soluong;?></td>
+                    <td><?php echo json_decode($value->tHIETBITRAM->THAMSOTHIETBI)->DINH_MUC;?></td>
+                    <td><?php echo $value->hous;?></td>
+                    <td><?php echo $value->soluong;?></td>
                     <td><?php echo $dongiamayno[$LOAINHIENLIEU];?></td>
                     <td><?php echo $thanhtien?></td>
                   </tr>
