@@ -124,7 +124,7 @@ public function searchMayno($params)
             'ID_TRAM' => $this->ID_TRAM,
         ]);
 
-        $query->andFilterWhere(['like', 'daivt.TEN_DAIVT', $this->ID_DAI])
+        $query->andFilterWhere(['=', 'daivt.ID_DAI', $this->ID_DAI])
             ->andFilterWhere(['in', 'ID_TRAM', $allIdsTramMayno])
             ->andFilterWhere(['like', 'TEN_TRAM', $this->TEN_TRAM]);
 

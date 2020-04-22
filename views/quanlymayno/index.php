@@ -3,10 +3,12 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
-use yii\grid\GridView;
+// use yii\grid\GridView;
+use kartik\grid\GridView;
 use yii\widgets\Pjax;
 use app\models\Daivt;
 use app\models\Tramvt;
+use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\TramvtSearch */
@@ -15,6 +17,7 @@ use app\models\Tramvt;
 $this->title = 'Quản lý thiết bị theo trạm';
 $this->params['breadcrumbs'][] = ['label' => 'Quản lý thiết bị', 'url' => ['nhomtbi/index']];
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="tramvt-index">
     <div class="box box-primary">
@@ -29,7 +32,12 @@ $this->params['breadcrumbs'][] = $this->title;
                             [
                                 'attribute' => 'ID_DAI',
                                 'value' => 'iDDAI.TEN_DAIVT',
-                                'filter'=>ArrayHelper::map(Daivt::find()->asArray()->all(), 'TEN_DAIVT', 'TEN_DAIVT'),
+                                'filter'=>ArrayHelper::map(Daivt::find()->asArray()->all(), 'ID_DAI', 'TEN_DAIVT'),
+                                'filterType' => GridView::FILTER_SELECT2,
+                                'filterWidgetOptions' => [
+                                    'options' => ['prompt' => ''],
+                                    'pluginOptions' => ['allowClear' => true],
+                                ],
                             ],
                             [
                                 'attribute' => 'TEN_TRAM',
@@ -37,7 +45,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'value' => function ($model) {
                                     return $model->TEN_TRAM;
                                 },
-                                'filter'=>ArrayHelper::map(Tramvt::find()->asArray()->all(), 'TEN_TRAM', 'TEN_TRAM'),
+                                'filter'=> $listTram,
+                                'filterType' => GridView::FILTER_SELECT2,
+                                'filterWidgetOptions' => [
+                                    'options' => ['prompt' => ''],
+                                    'pluginOptions' => ['allowClear' => true],
+                                ],
                             ],
                             [
                                 'class' => 'yii\grid\ActionColumn',

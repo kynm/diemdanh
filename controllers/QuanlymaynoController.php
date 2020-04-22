@@ -56,11 +56,18 @@ class QuanlymaynoController extends Controller
     public function actionIndex()
     {
         $searchModel = new TramvtSearch();
-        $dataProvider = $searchModel->searchMayno(Yii::$app->request->queryParams);
+        $params = Yii::$app->request->queryParams;
+        $dataProvider = $searchModel->searchMayno($params);
+        if (isset($params['TramvtSearch']) && $params['TramvtSearch']['ID_DAI']) {
+            $listTram = ArrayHelper::map(Tramvt::find()->where(['ID_DAI' => $params['TramvtSearch']['ID_DAI']])->asArray()->all(), 'TEN_TRAM', 'TEN_TRAM');
+        } else {
+            $listTram = ArrayHelper::map(Tramvt::find()->asArray()->all(), 'TEN_TRAM', 'TEN_TRAM');
+        }
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'listTram' => $listTram,
         ]);
     }
 
