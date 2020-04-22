@@ -95,7 +95,7 @@ class NhatKySuDungMayNoSearch extends NhatKySuDungMayNo
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'USER_ID' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN,
+            // 'USER_ID' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN,
             'ID_THIETBITRAM' => $params['ID_THIETBITRAM'],
         ]);
 
