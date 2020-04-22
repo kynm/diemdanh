@@ -94,15 +94,15 @@ public function searchMayno($params)
 
         $query = Tramvt::find();
 
-        if (Yii::$app->user->identity->nhanvien->chucvu->cap == 2) {
-            $query->andWhere(['daivt.ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI]);
-        }
-        if (Yii::$app->user->identity->nhanvien->chucvu->cap == 3) {
-            $query->andWhere(['tramvt.ID_DAI' => Yii::$app->user->identity->nhanvien->ID_DAI]);
-        }
-        if (Yii::$app->user->identity->nhanvien->chucvu->cap >= 4) {
-            $query->andWhere(['tramvt.ID_NHANVIEN' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN]);
-        }
+            // if (Yii::$app->user->identity->nhanvien->chucvu->cap == 2) {
+            //     $query->andWhere(['daivt.ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI]);
+            // }
+            // if (Yii::$app->user->identity->nhanvien->chucvu->cap == 3) {
+            //     $query->andWhere(['tramvt.ID_DAI' => Yii::$app->user->identity->nhanvien->ID_DAI]);
+            // }
+            // if (Yii::$app->user->identity->nhanvien->chucvu->cap >= 4) {
+            //     $query->andWhere(['tramvt.ID_NHANVIEN' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN]);
+            // }
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
