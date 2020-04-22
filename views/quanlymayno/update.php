@@ -29,6 +29,10 @@ $this->params['breadcrumbs'][] = 'Cập nhật';
                     'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
                         [
+                            'attribute' => 'USER_ID',
+                            'value' => 'nGUOITAO.TEN_NHANVIEN'
+                        ],
+                        [
                             'attribute' => 'ID_NV_VANHANH',
                             'value' => 'nHANVIENVANHANH.TEN_NHANVIEN'
                         ],
