@@ -38,6 +38,9 @@ class Tramvt extends \yii\db\ActiveRecord
         return [
             [['MA_TRAM', 'TEN_TRAM', 'ID_NHANVIEN', 'ID_DAI'], 'required'],
             [['DIADIEM'], 'string'],
+            [['MA_CSHT'], 'string'],
+            [['MA_DIENLUC'], 'string'],
+            [['MA_HD_CSHT'], 'string'],
             [['NGAY_KTNT'], 'safe'],
             [['ID_DAI', 'ID_NHANVIEN', 'LOAITRAM'], 'integer'],
             [['MA_TRAM'], 'string', 'max' => 32],
@@ -65,7 +68,10 @@ class Tramvt extends \yii\db\ActiveRecord
             'ID_DAI' => 'Đài quản lý',
             'ID_NHANVIEN' => 'Nhân viên quản lý',
             'LOAITRAM' => 'Loại trạm',
-            'DIEN_THOAI' => 'Điện thoại'
+            'DIEN_THOAI' => 'Điện thoại',
+            'MA_CSHT' => 'Mã cơ sở hạ tầng',
+            'MA_DIENLUC' => 'Mã điện lực',
+            'MA_HD_CSHT' => 'Mã hợp đồng điện lực',
         ];
     }
 

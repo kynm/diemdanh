@@ -34,23 +34,32 @@ switch (Yii::$app->user->identity->nhanvien->chucvu->cap) {
 
     <div class="box box-primary">
         <div class="box-body">
-            <div class="col-sm-6">
+            <div class="col-sm-2">
                 <?= $form->field($model, 'MA_TRAM')->textInput(['maxlength' => true]) ?>
             </div>
 
-            <div class="col-sm-6">
+            <div class="col-sm-4">
                 <?= $form->field($model, 'TEN_TRAM')->textInput(['maxlength' => true]) ?>
             </div>
 
             <div class="col-sm-6">
                 <?= $form->field($model, 'DIADIEM')->textInput(['maxlength' => true]) ?>
             </div>
+            <div class="col-sm-2">
+                <?= $form->field($model, 'MA_CSHT')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-sm-2">
+                <?= $form->field($model, 'MA_DIENLUC')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-sm-2">
+                <?= $form->field($model, 'MA_HD_CSHT')->textInput(['maxlength' => true]) ?>
+            </div>
 
-            <div class="col-sm-6">
-                <?= $form->field($model, 'LOAITRAM')->dropDownList([1 => 'Indoor', 2 => 'Outdoor',]) ?>
+            <div class="col-sm-2">
+                <?= $form->field($model, 'LOAITRAM')->dropDownList([1 => 'Indoor', 2 => 'Outdoor', 3=> 'VNPT', 4 => 'Xã hội hóa',]) ?>
             </div>
                 
-            <div class="col-sm-6">
+            <div class="col-sm-2">
             	<?= $form->field($model, 'ID_DAI')->widget(Select2::classname(), [
                     'data' => $listDaivt,
                     'options' => ['placeholder' => 'Chọn đài quản lý'],
@@ -60,7 +69,7 @@ switch (Yii::$app->user->identity->nhanvien->chucvu->cap) {
                 ]); ?>
             </div>
                 
-            <div class="col-sm-6">
+            <div class="col-sm-2">
                 <?= $form->field($model, 'ID_NHANVIEN')->widget(Select2::classname(), [
                     'data' => ArrayHelper::map(Nhanvien::find()->where(['>', 'ID_NHANVIEN', 0])->all(), 'ID_NHANVIEN', 'TEN_NHANVIEN'),
                     'options' => ['placeholder' => 'Chọn nhân viên quản lý'],
