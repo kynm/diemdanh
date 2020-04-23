@@ -14,8 +14,8 @@ use kartik\select2\Select2;
 /* @var $searchModel app\models\TramvtSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Quản lý thiết bị theo trạm';
-$this->params['breadcrumbs'][] = ['label' => 'Quản lý thiết bị', 'url' => ['nhomtbi/index']];
+$this->title = 'Điều hành điện/nhiên liệu theo trạm';
+$this->params['breadcrumbs'][] = ['label' => 'Điều hành điện/nhiên liệu', 'url' => ['nhomtbi/index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>

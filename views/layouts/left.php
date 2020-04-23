@@ -101,12 +101,17 @@ use yii\helpers\Url;
                         'url' => '#',
                         'items' => [
                             [
-                                'label' => 'Điều hành máy nổ', 'icon' => 'caret-right', 'url' => Url::to(['quanlymayno/'])
+                                'label' => 'Điều hành máy nổ', 'icon' => 'caret-right',
+                                'url' => Url::to(['quanlymayno/']),
+                                'visible' => Yii::$app->user->can('edit-nkmayno'),
                             ],
                             [
-                                'label' => 'Thống kê kế toán', 'icon' => 'caret-right', 'url' => Url::to(['quanlymayno/thongkeketoan'])
+                                'label' => 'Thống kê kế toán', 'icon' => 'caret-right',
+                                'url' => Url::to(['quanlymayno/thongkeketoan']),
+                                'visible' => Yii::$app->user->can('tkkt-mayno'),
                             ],
-                        ]
+                        ],
+                        'visible' => Yii::$app->user->can('view-nkmayno'),
                     ],
                     [
                         'label' => 'Thông tin cá nhân', 'icon' => 'user', 'url' => Url::to(['user/edit-profile'])

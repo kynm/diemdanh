@@ -55,20 +55,24 @@ class QuanlymaynoController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new TramvtSearch();
-        $params = Yii::$app->request->queryParams;
-        $dataProvider = $searchModel->searchMayno($params);
-        if (isset($params['TramvtSearch']) && $params['TramvtSearch']['ID_DAI']) {
-            $listTram = ArrayHelper::map(Tramvt::find()->where(['ID_DAI' => $params['TramvtSearch']['ID_DAI']])->asArray()->all(), 'TEN_TRAM', 'TEN_TRAM');
-        } else {
-            $listTram = ArrayHelper::map(Tramvt::find()->asArray()->all(), 'TEN_TRAM', 'TEN_TRAM');
-        }
+        if (Yii::$app->user->can('view-nkmayno')) {
+            $searchModel = new TramvtSearch();
+            $params = Yii::$app->request->queryParams;
+            $dataProvider = $searchModel->searchMayno($params);
+            if (isset($params['TramvtSearch']) && $params['TramvtSearch']['ID_DAI']) {
+                $listTram = ArrayHelper::map(Tramvt::find()->where(['ID_DAI' => $params['TramvtSearch']['ID_DAI']])->asArray()->all(), 'TEN_TRAM', 'TEN_TRAM');
+            } else {
+                $listTram = ArrayHelper::map(Tramvt::find()->asArray()->all(), 'TEN_TRAM', 'TEN_TRAM');
+            }
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'listTram' => $listTram,
-        ]);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'listTram' => $listTram,
+            ]);
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
+        }
     }
 
     /**
@@ -168,7 +172,7 @@ class QuanlymaynoController extends Controller
 
     public function actionThongkeketoan()
     {
-        if (Yii::$app->user->can('add-tkmn')) {
+        if (Yii::$app->user->can('tkkt-mayno')) {
             $months = [];
             $data = [];
             $inputs = [
@@ -218,7 +222,7 @@ class QuanlymaynoController extends Controller
 
     public function actionInbaoduongthang()
     {
-        if (Yii::$app->user->can('add-tkmn')) {
+        if (Yii::$app->user->can('tkkt-mayno')) {
             $this->layout = 'printLayout';
             $months = [];
             $data = [];

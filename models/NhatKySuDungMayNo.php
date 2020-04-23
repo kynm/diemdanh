@@ -99,13 +99,6 @@ class NhatKySuDungMayNo extends \yii\db\ActiveRecord
         return $this->hous * json_decode($this->tHIETBITRAM->THAMSOTHIETBI)->DINH_MUC / 60;
     }
 
-    public function getThanhtien()
-    {
-        $LOAINHIENLIEU = json_decode($value->tHIETBITRAM->THAMSOTHIETBI)->LOAINHIENLIEU;
-
-        return $dongiamayno[$LOAINHIENLIEU] * $this->soluong;
-    }
-
     public function getNGUOITAO()
     {
         return $this->hasOne(Nhanvien::className(), ['ID_NHANVIEN' => 'USER_ID']);

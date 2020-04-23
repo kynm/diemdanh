@@ -32,7 +32,10 @@ $tongtien = 0;
                     <td><?php echo $value->tHIETBITRAM->iDLOAITB->TEN_THIETBI;?></td>
                     <td>Cell</td>
                     <?php
-                        $tongtien +=$value->thanhtien;
+                        $LOAINHIENLIEU = json_decode($value->tHIETBITRAM->THAMSOTHIETBI)->LOAINHIENLIEU;
+
+                        $thanhtien= $dongiamayno[$LOAINHIENLIEU] * $value->soluong;
+                        $tongtien +=$thanhtien;
                     ?>
                     <td><?php echo json_decode($value->tHIETBITRAM->THAMSOTHIETBI)->DINH_MUC;?></td>
                     <td><?php echo $value->hous;?></td>
