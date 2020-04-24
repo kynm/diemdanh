@@ -141,7 +141,7 @@ class QuanlymaynoController extends Controller
             $model = new NhatKySuDungMayNo();
             $thietbitram = Thietbitram::findOne($id);
             $model->ID_TRAM = $thietbitram->ID_TRAM;
-            $model->IS_CHECKED = true;
+            $model->IS_CHECKED = false;
             $model->LOAI_SU_CO = 1;
             $model->ID_NV_DIEUHANH = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
             $model->ID_NV_VANHANH = $thietbitram->iDTRAM->ID_NHANVIEN;
