@@ -72,6 +72,9 @@ class Tramvt extends \yii\db\ActiveRecord
             'MA_CSHT' => 'Mã cơ sở hạ tầng',
             'MA_DIENLUC' => 'Mã điện lực',
             'MA_HD_CSHT' => 'Mã hợp đồng điện lực',
+            'TEN_DIENLUC' => 'Tên đơn vị điện lực',
+            'NH_DIENLUC' => 'Ngân hàng điện lực',
+            'TK_DIENLUC' => 'Tài khoản điện lực',
         ];
     }
 

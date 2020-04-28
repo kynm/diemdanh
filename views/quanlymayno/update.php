@@ -50,8 +50,10 @@ $this->params['breadcrumbs'][] = 'Cập nhật';
                         ],
                         'DINHMUC',
                         [
+                            'attribute' => 'hous',
+                        ],
+                        [
                             'attribute' => 'soluong',
-                            // 'format' => ['date', 'php:d/m/Y H:i'],
                         ],
                         [
                             'class' => 'yii\grid\ActionColumn',

@@ -73,6 +73,7 @@ class NhatKySuDungMayNo extends \yii\db\ActiveRecord
             'GHICHU' => 'Nội dung sự cố',
             'LOAI_SU_CO' => 'Loại sự cố',
             'soluong' => 'Số lượng (L)',
+            'hous' => 'Thời gian (Phút)',
         ];
     }
 

@@ -1,5 +1,4 @@
 <?php
-
 namespace app\controllers;
 
 use Yii;
@@ -8,7 +7,6 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\web\ForbiddenHttpException;
-
 use app\models\Tramvt;
 use app\models\Dotbaoduong;
 use app\models\Images;

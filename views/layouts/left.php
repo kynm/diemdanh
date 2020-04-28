@@ -114,6 +114,24 @@ use yii\helpers\Url;
                         'visible' => Yii::$app->user->can('view-nkmayno'),
                     ],
                     [
+                        'label' => 'Quản lý điện',
+                        'icon' => 'tablet',
+                        'url' => '#',
+                        'items' => [
+                            [
+                                'label' => 'Điều hành điện', 'icon' => 'caret-right',
+                                'url' => Url::to(['quanlydien/']),
+                                'visible' => Yii::$app->user->can('list-qldien'),
+                            ],
+                            [
+                                'label' => 'Thống kê kế toán', 'icon' => 'caret-right',
+                                'url' => Url::to(['quanlydien/thongkeketoan']),
+                                'visible' => Yii::$app->user->can('list-qldien'),
+                            ],
+                        ],
+                        'visible' => Yii::$app->user->can('list-qldien'),
+                    ],
+                    [
                         'label' => 'Thông tin cá nhân', 'icon' => 'user', 'url' => Url::to(['user/edit-profile'])
                     ],
                 ],

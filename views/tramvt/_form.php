@@ -49,9 +49,6 @@ switch (Yii::$app->user->identity->nhanvien->chucvu->cap) {
                 <?= $form->field($model, 'MA_CSHT')->textInput(['maxlength' => true]) ?>
             </div>
             <div class="col-sm-2">
-                <?= $form->field($model, 'MA_DIENLUC')->textInput(['maxlength' => true]) ?>
-            </div>
-            <div class="col-sm-2">
                 <?= $form->field($model, 'MA_HD_CSHT')->textInput(['maxlength' => true]) ?>
             </div>
 
@@ -87,7 +84,20 @@ switch (Yii::$app->user->identity->nhanvien->chucvu->cap) {
                 <?= $form->field($model, 'VI_DO')->textInput(['maxlength' => true, 'type' => 'number', 'step' => 'any', 'disabled' => ! Yii::$app->user->can('Administrator')]) ?>
             </div>
         </div>
-        <div class="box-footer">
+        <h4>Thông tin điện lực</h4>
+        <div class="col-sm-2">
+            <?= $form->field($model, 'MA_DIENLUC')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-sm-4">
+            <?= $form->field($model, 'TEN_DIENLUC')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-sm-4">
+            <?= $form->field($model, 'NH_DIENLUC')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-sm-2">
+            <?= $form->field($model, 'TK_DIENLUC')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="box-footer col-sm-12">
             <div class="text-center">
                 <?= Html::submitButton($model->isNewRecord ? '<i class="fa fa-plus"></i> Thêm' : '<i class="fa fa-pencil-square-o"></i> Cập nhật', ['class' => 'btn btn-primary btn-flat']) ?>
             </div>
