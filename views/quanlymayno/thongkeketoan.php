@@ -71,8 +71,11 @@ use yii\grid\GridView;
         </div>
         <?php ActiveForm::end(); ?>
         <?php if($isprint) { ?>
-            <div class="col-md-2 col-xs-2">
+            <div class="col-md-1 col-xs-1">
                 <a class="btn btn-primary btn-flat" href="<?= Url::to(['quanlymayno/inbaoduongthang?ID_DONVI=' . $inputs['ID_DONVI'] . '&NAM=' . $inputs['NAM'] . '&THANG=' . $inputs['THANG']])?>" target="_blank">In kết quả</a>
+            </div>
+            <div class="col-md-1 col-xs-1">
+                <a class="btn btn-primary btn-flat" href="<?= Url::to(['quanlymayno/exportbaoduongthang?ID_DONVI=' . $inputs['ID_DONVI'] . '&NAM=' . $inputs['NAM'] . '&THANG=' . $inputs['THANG']])?>">Excel</a>
             </div>
         <?php }?>
     </div>
