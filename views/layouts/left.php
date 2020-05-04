@@ -124,8 +124,8 @@ use yii\helpers\Url;
                                 'visible' => Yii::$app->user->can('list-qldien'),
                             ],
                             [
-                                'label' => 'Thống kê kế toán', 'icon' => 'caret-right',
-                                'url' => Url::to(['quanlydien/thongkeketoan']),
+                                'label' => 'Thống kê sử dụng điện', 'icon' => 'caret-right',
+                                'url' => Url::to(['quanlydien/thongkesudungdien']),
                                 'visible' => Yii::$app->user->can('list-qldien'),
                             ],
                         ],

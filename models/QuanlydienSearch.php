@@ -6,6 +6,9 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Quanlydien;
+use app\models\Tramvt;
+use app\models\Daivt;
+use yii\helpers\ArrayHelper;
 
 /**
  * NhanvienSearch represents the model behind the search form about `app\models\Nhanvien`.
@@ -40,9 +43,9 @@ class QuanlydienSearch extends Quanlydien
      * @return ActiveDataProvider
      */
 
-    public function searchKetoan($params)
+    public function searchThongkedien($params)
     {
-        $query = NhatKySuDungMayNo::find();
+        $query = Quanlydien::find();
 
         // add conditions that should always apply here
 
@@ -58,20 +61,20 @@ class QuanlydienSearch extends Quanlydien
             return $dataProvider;
         }
 
-        // $query->joinWith('nHANVIENDIEUHANH');
-        $query->joinWith('tHIETBITRAM');
+        $query->andFilterWhere([
+            'NAM' => $params['NAM'],
+            'THANG' => $params['THANG'],
+        ]);
 
-        $query->andFilterWhere(['in', 'tHIETBITRAM.ID_TRAM', [141,20,205]])
-            // ->andFilterWhere(['like', 'TEN_NHANVIEN', $this->TEN_NHANVIEN])
-            // ->andFilterWhere(['like', 'donvi.TEN_DONVI', $this->ID_DONVI])
-            // ->andFilterWhere(['like', 'daivt.TEN_DAIVT', $this->ID_DAI])
-            // ->andFilterWhere(['like', 'CHUC_VU', $this->CHUC_VU])
-            // ->andFilterWhere(['like', 'DIEN_THOAI', $this->DIEN_THOAI])
-            // ->andFilterWhere(['like', 'GHI_CHU', $this->GHI_CHU])
-            ->andFilterWhere(['>=' , 'THOIGIANBATDAU', $params['THANG']]);
+        if ($params['ID_DONVI']) {
+            $dsdai = ArrayHelper::map(Daivt::find()->where(['ID_DONVI' => $params['ID_DONVI']])->all(), 'ID_DAI', 'ID_DAI');
+            $danhsachtram = ArrayHelper::map(Tramvt::find()->where(['in', 'ID_DAI', $dsdai])->all(), 'MA_DIENLUC', 'MA_DIENLUC');
+            $query->andFilterWhere(['in', 'MA_DIENLUC', $danhsachtram]);
+        }
 
-        return $dataProvider;    
+        return $dataProvider;
     }
+
     public function search($params)
     {
         $query = Quanlydien::find();
@@ -93,10 +96,9 @@ class QuanlydienSearch extends Quanlydien
         // $query->joinWith('nHANVIENDIEUHANH');
 
         // grid filtering conditions
-        // $query->andFilterWhere([
-        //     // 'USER_ID' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN,
-        //     'ID_THIETBITRAM' => $params['ID_THIETBITRAM'],
-        // ]);
+        $query->andFilterWhere([
+            'MA_DIENLUC' => $params['MA_DIENLUC'],
+        ]);
 
         // $query->andFilterWhere(['like', 'MA_NHANVIEN', $this->MA_NHANVIEN])
         //     ->andFilterWhere(['like', 'TEN_NHANVIEN', $this->TEN_NHANVIEN])

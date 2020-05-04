@@ -151,7 +151,7 @@ class QuanlydienController extends Controller
             
             return $this->redirect(['index']);
         } else {
-            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');            
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
         }
     }
 
@@ -200,6 +200,38 @@ class QuanlydienController extends Controller
             'months' => $months,
             'years' => $years,
             'model' => $model,
+        ]);
+    }
+
+    public function actionThongkesudungdien()
+    {
+        $months = [];
+        for ($i = 0; $i < 12; $i++) {
+            $months[date('m', strtotime("+$i month"))] = date('m', strtotime("+$i month"));
+        }
+        $nowY = date("Y");
+        $years = [
+            $nowY => $nowY,
+            $nowY - 1 => $nowY - 1,
+        ];
+        $params = Yii::$app->request->queryParams;
+        if (!$params) {
+            $params = [
+                'NAM' => $nowY,
+                'THANG' => date("m"),
+                'ID_DONVI' => ''
+            ];
+        }
+        $searchModel = new QuanlydienSearch();
+        $dataProvider = $searchModel->searchThongkedien($params);
+        $dsdonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', [2,3,4,5,6,7]])->all(), 'ID_DONVI', 'TEN_DONVI');
+        return $this->render('thongkesudungdien', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'dsdonvi' => $dsdonvi,
+            'years' => $years,
+            'months' => $months,
+            'params' => $params,
         ]);
     }
 }
