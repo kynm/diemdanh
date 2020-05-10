@@ -17,11 +17,12 @@ $tongtien = 0;
                     <thead>
                       <tr>
                         <th scope="col">STT</th>
-                        <th scope="col">Mã khách hàng trên hóa đơn điện</th>
+                        <th scope="col">Mã khách hàng <br/>trên hóa đơn điện</th>
                         <th scope="col">Mã CSHT</th>
                         <th scope="col">Số tiền chưa thuế</th>
                         <th scope="col">Thuế VAT</th>
                         <th scope="col">Tổng tiền</th>
+                        <th scope="col">Tổng tiền đề xuất</th>
                         <th scope="col">Tên đơn vị hưởng</th>
                         <th scope="col">Số tài khoản</th>
                         <th scope="col">Tại ngân hàng</th>
