@@ -266,15 +266,51 @@ class QuanlydienController extends Controller
 
     public function actionInbaocaototrinhthang()
     {
-        $this->layout = 'printLayout';
         $params = Yii::$app->request->queryParams;
-
         $searchModel = new QuanlydienSearch();
         $dssddien = $searchModel->baocaodsdientheodonvi($params);
         $tongdien = $searchModel->baocaothdientheodonvi($params);
+        $donvi = Donvi::findOne($params['ID_DONVI']);
+        if (isset($params['is_excel']) && $params['is_excel']) {
+            $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+            $sheet = $spreadsheet->getActiveSheet();
+            $sheet->setCellValue('A1', 'I - Chi tiết tiền điện theo từng trạm');
+            $sheet->setCellValue('B1', $donvi->TEN_DONVI);
+            $sheet->fromArray(
+                ['Mã khách hàng trên hóa đơn điện','Mã CSHT','Số tiền chưa thuế','Thuế VAT','Tổng tiền','Tên đơn vị hưởng','Số tài khoản','Tại ngân hàng'],
+                '',
+                'A2'
+            );
+            $sheet->fromArray(
+                $dssddien,
+                '',
+                'A3'
+            );
+            $sheet->setCellValue('A' . (count($dssddien) + 3), 'Số liệu tổng hợp ');
+            $sheet->fromArray(
+                ['Tên đơn vị hưởng','Số tài khoản','Số tiền chưa thuế','Thuế VAT','Tổng tiền','Tên đơn vị hưởng','Số tài khoản','Tại ngân hàng'],
+                '',
+                'A' . (count($dssddien) + 4)
+            );
+            $sheet->fromArray(
+                $tongdien,
+                '',
+                'A' . (count($dssddien) + 5)
+            );
+            $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+            $file_name = 'Số liệu điện '  . $donvi->TEN_DONVI . $params['THANG'] . '/' . $params['NAM'];
+
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment;filename="'.$file_name.'.xlsx"');
+            header('Cache-Control: max-age=0');
+
+            $writer->save("php://output");
+            exit;
+        }
+        $this->layout = 'printLayout';
         return $this->render('inbaocaototrinhthang', [
-            'dssddien' => $searchModel->baocaodsdientheodonvi($params),
-            'tongdien' => $searchModel->baocaothdientheodonvi($params),
+            'dssddien' => $dssddien,
+            'tongdien' => $tongdien,
             // 'dsdonvi' => $dsdonvi,
             // 'params' => $params,
         ]);

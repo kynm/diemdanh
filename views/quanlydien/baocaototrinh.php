@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'get',
                 'action' => ['inbaocaototrinhthang'],
             ]); ?>
-            <div class="col-md-3 col-xs-3">
+            <div class="col-md-2 col-xs-2">
                 <?= Select2::widget([
                     'name' => 'ID_DONVI',
                     'id' => 'ID_DONVI',
@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ]
                 ]); ?>
             </div>
-            <div class="col-md-3 col-xs-3">
+            <div class="col-md-2 col-xs-2">
                 <?= Select2::widget([
                     'name' => 'NAM',
                     'id' => 'NAM',
@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ]
                 ]); ?>
             </div>
-            <div class="col-md-3 col-xs-3">
+            <div class="col-md-2 col-xs-2">
                 <?= Select2::widget([
                     'name' => 'THANG',
                     'id' => 'THANG',
@@ -65,7 +65,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     ]
                 ]); ?>
             </div>
-            <div class="col-md-3 col-xs-3">
+            <div class="col-md-2 col-xs-2">
+                <label>Xuất excel</label>
+                <input type="checkbox" name="is_excel" value="1">
+            </div>
+            <div class="col-md-2 col-xs-2">
                 <?= Html::submitButton(
                     '<i class="fa fa-search"></i> Xem báo cáo', 
                     [
