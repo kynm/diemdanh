@@ -111,4 +111,22 @@ class QuanlydienSearch extends Quanlydien
 
         return $dataProvider;
     }
+
+    public function baocaodsdientheodonvi($params)
+    {
+             $sql = "
+                SELECT a.MA_DIENLUC, b.MA_CSHT, a.TIENDIEN,a.TIENTHUE, a.TONGTIEN,b.TEN_DIENLUC,b.TK_DIENLUC,b.NH_DIENLUC from quanlydien a, tramvt b, daivt c where a.MA_DIENLUC = b.MA_DIENLUC and b.ID_DAI = c.ID_DAI and a.THANG = " . $params['THANG'] . " and a.NAM = " . $params['NAM'] . " and c.ID_DONVI =
+            " . $params['ID_DONVI'];
+
+        return Yii::$app->db->createCommand($sql)->queryAll();
+    }
+
+    public function baocaothdientheodonvi($params)
+    {
+        $sqltonghop = "
+            SELECT b.TK_DIENLUC,b.NH_DIENLUC,b.TEN_DIENLUC, sum(a.TIENDIEN) T_TIENDIEN,sum(a.TIENTHUE) T_TIENTHUE, sum(a.TONGTIEN) T_TONGTIEN from quanlydien a, tramvt b, daivt c where a.MA_DIENLUC = b.MA_DIENLUC and b.ID_DAI = c.ID_DAI and a.THANG = " . $params['THANG'] . " and a.NAM = " . $params['NAM'] . " and c.ID_DONVI =
+        " . $params['ID_DONVI'] . " GROUP BY b.TK_DIENLUC,b.NH_DIENLUC,b.TEN_DIENLUC";
+
+        return Yii::$app->db->createCommand($sqltonghop)->queryAll();
+    }
 }

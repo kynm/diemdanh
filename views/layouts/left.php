@@ -128,6 +128,11 @@ use yii\helpers\Url;
                                 'url' => Url::to(['quanlydien/thongkesudungdien']),
                                 'visible' => Yii::$app->user->can('list-qldien'),
                             ],
+                            [
+                                'label' => 'Tờ trình viễn thông', 'icon' => 'caret-right',
+                                'url' => Url::to(['quanlydien/baocaototrinh']),
+                                'visible' => Yii::$app->user->can('list-qldien'),
+                            ],
                         ],
                         'visible' => Yii::$app->user->can('list-qldien'),
                     ],

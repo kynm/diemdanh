@@ -217,9 +217,9 @@ class QuanlydienController extends Controller
         $params = Yii::$app->request->queryParams;
         if (!$params) {
             $params = [
-                'NAM' => $nowY,
-                'THANG' => date("m"),
-                'ID_DONVI' => ''
+                'NAM' => date('Y', strtotime("-1 month")),
+                'THANG' => date('m', strtotime("-1 month")),
+                'ID_DONVI' => 2
             ];
         }
         $searchModel = new QuanlydienSearch();
@@ -232,6 +232,51 @@ class QuanlydienController extends Controller
             'years' => $years,
             'months' => $months,
             'params' => $params,
+        ]);
+    }
+
+    public function actionBaocaototrinh()
+    {
+        $months = [];
+        for ($i = 0; $i < 12; $i++) {
+            $months[date('m', strtotime("+$i month"))] = date('m', strtotime("+$i month"));
+        }
+        $nowY = date("Y");
+        $years = [
+            $nowY => $nowY,
+            $nowY - 1 => $nowY - 1,
+        ];
+        $params = Yii::$app->request->queryParams;
+        if (!$params) {
+            $params = [
+                'NAM' => date('Y', strtotime("-1 month")),
+                'THANG' => date('m', strtotime("-1 month")),
+                'ID_DONVI' => 2
+            ];
+        }
+
+        $dsdonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', [2,3,4,5,6,7]])->all(), 'ID_DONVI', 'TEN_DONVI');
+        return $this->render('baocaototrinh', [
+            'dsdonvi' => $dsdonvi,
+            'years' => $years,
+            'months' => $months,
+            'params' => $params,
+        ]);
+    }
+
+    public function actionInbaocaototrinhthang()
+    {
+        $this->layout = 'printLayout';
+        $params = Yii::$app->request->queryParams;
+
+        $searchModel = new QuanlydienSearch();
+        $dssddien = $searchModel->baocaodsdientheodonvi($params);
+        $tongdien = $searchModel->baocaothdientheodonvi($params);
+        return $this->render('inbaocaototrinhthang', [
+            'dssddien' => $searchModel->baocaodsdientheodonvi($params),
+            'tongdien' => $searchModel->baocaothdientheodonvi($params),
+            // 'dsdonvi' => $dsdonvi,
+            // 'params' => $params,
         ]);
     }
 }

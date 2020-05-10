@@ -177,8 +177,8 @@ class QuanlymaynoController extends Controller
             $data = [];
             $inputs = [
                 'ID_DONVI' => 2,
-                'THANG' => date('m'),
-                'NAM' => date('Y'),
+                'NAM' => date('Y', strtotime("-1 month")),
+                'THANG' => date('m', strtotime("-1 month")),
             ];
             $dongiamayno = [
                 1 => 0,
@@ -228,8 +228,8 @@ class QuanlymaynoController extends Controller
             $data = [];
             $inputs = [
                 'ID_DONVI' => 2,
-                'THANG' => date('m'),
-                'NAM' => date('Y'),
+                'NAM' => date('Y', strtotime("-1 month")),
+                'THANG' => date('m', strtotime("-1 month")),
             ];
             $dongiamayno = [
                 1 => 0,
@@ -272,8 +272,8 @@ class QuanlymaynoController extends Controller
             $data = [];
             $inputs = [
                 'ID_DONVI' => 2,
-                'THANG' => date('m'),
-                'NAM' => date('Y'),
+                'NAM' => date('Y', strtotime("-1 month")),
+                'THANG' => date('m', strtotime("-1 month")),
             ];
             $dongiamayno = [
                 1 => 0,

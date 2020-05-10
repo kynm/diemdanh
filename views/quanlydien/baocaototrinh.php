@@ -22,15 +22,18 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="tramvt-index">
     <div class="box box-primary">
         <div class="row">
-            <?php $form = ActiveForm::begin(['method' => 'get',]); ?>
+            <?php $form = ActiveForm::begin([
+                'method' => 'get',
+                'action' => ['inbaocaototrinhthang'],
+            ]); ?>
             <div class="col-md-3 col-xs-3">
                 <?= Select2::widget([
                     'name' => 'ID_DONVI',
                     'id' => 'ID_DONVI',
-                    'value' => $params['ID_DONVI'],
+                    'value' => $params['ID_DONVI'] ?? 2,
                     'data' => $dsdonvi,
                     'theme' => Select2::THEME_BOOTSTRAP,
-                    'options' => ['placeholder' => 'Chọn đơn vị', 'required' => 'required'],
+                    'options' => ['placeholder' => 'Chọn đơn vị'],
                     'pluginOptions' => [
                         'allowClear' => true
                     ]
@@ -73,26 +76,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 ?>
             </div>
             <?php ActiveForm::end(); ?>
-        </div>
-        <br/>
-        <div class="row">
-            <div class="table-responsive">
-                <?php Pjax::begin(); ?>
-                    <?= GridView::widget([
-                        'dataProvider' => $dataProvider,
-                        'filterModel' => $searchModel,
-                        'columns' => [
-                            ['class' => 'yii\grid\SerialColumn'],
-                            'MA_DIENLUC',
-                            'NAM',
-                            'THANG',
-                            'TIENDIEN',
-                            'TIENTHUE',
-                            'TONGTIEN',
-                        ],
-                    ]); ?>
-                <?php Pjax::end(); ?>
-            </div>
         </div>
     </div>
 </div>
