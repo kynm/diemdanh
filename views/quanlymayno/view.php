@@ -58,6 +58,7 @@ if (Yii::$app->user->can('edit-tramvt')) {
 <div class="tramvt-view">
     <div class="box box-primary">
         <div class="box-body">
+    <a class="btn btn-success btn-flat" style="float: left;" href="<?= Url::to(['quanlymayno/'])?>">Về trang quản máy nổ</a>
             <br>
             <?php Pjax::begin(); ?>    <?= GridView::widget([
                     'dataProvider' => $dataProvider,

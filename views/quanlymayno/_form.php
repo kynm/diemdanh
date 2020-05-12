@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\Tramvt;
@@ -93,6 +94,7 @@ $listloaisuco = [
             <div class="text-center">
                 <?= Html::submitButton($model->isNewRecord ? '<i class="fa fa-plus"></i> Thêm' : '<i class="fa fa-pencil-square-o"></i> Cập nhật', ['class' => 'btn btn-primary btn-flat']) ?>
             </div>
+                <a class="btn btn-success btn-flat" style="float: right;" href="<?= Url::to(['quanlymayno/'])?>">Về trang quản máy nổ</a>
         </div>
     </div>
     <?php ActiveForm::end(); ?>
