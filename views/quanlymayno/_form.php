@@ -30,7 +30,7 @@ $listloaisuco = [
         <div class="box-body">
             <div class="col-sm-3">
                 <?= $form->field($model, 'ID_NV_DIEUHANH')->widget(Select2::classname(), [
-                    'data' => ArrayHelper::map(Nhanvien::find()->where(['>', 'ID_NHANVIEN', 0])->all(), 'ID_NHANVIEN', 'TEN_NHANVIEN'),
+                    'data' => ArrayHelper::map(Nhanvien::find()->where(['ID_DONVI' => 666])->all(), 'ID_NHANVIEN', 'TEN_NHANVIEN'),
                     'options' => ['placeholder' => 'Nhân viên điều hành'],
                     'pluginOptions' => [
                         'allowClear' => true
@@ -39,7 +39,7 @@ $listloaisuco = [
             </div>
             <div class="col-sm-3">
                 <?= $form->field($model, 'ID_NV_VANHANH')->widget(Select2::classname(), [
-                    'data' => ArrayHelper::map(Nhanvien::find()->where(['>', 'ID_NHANVIEN', 0])->all(), 'ID_NHANVIEN', 'TEN_NHANVIEN'),
+                    'data' => ArrayHelper::map(Nhanvien::find()->where(['ID_DAI' => $thietbitram->iDTRAM->ID_DAI])->all(), 'ID_NHANVIEN', 'TEN_NHANVIEN'),
                     'options' => ['placeholder' => 'Nhân viên vận hành'],
                     'pluginOptions' => [
                         'allowClear' => true

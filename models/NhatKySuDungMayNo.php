@@ -97,7 +97,7 @@ class NhatKySuDungMayNo extends \yii\db\ActiveRecord
 
     public function getSoluong()
     {
-        return $this->hous * json_decode($this->tHIETBITRAM->THAMSOTHIETBI)->DINH_MUC / 60;
+        return round($this->hous * json_decode($this->tHIETBITRAM->THAMSOTHIETBI)->DINH_MUC / 60, 2);
     }
 
     public function getNGUOITAO()

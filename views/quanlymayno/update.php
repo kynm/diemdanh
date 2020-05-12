@@ -12,7 +12,7 @@ use yii\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Tramvt */
-$this->title = 'Nhật ký sử dụng máy nổ ' . $thietbitram->iDLOAITB->TEN_THIETBI . ' Tại trạm ' . $thietbitram->iDTRAM->TEN_TRAM . $thietbitram->ID_TRAM;
+$this->title = 'Nhật ký sử dụng máy nổ ' . $thietbitram->iDLOAITB->TEN_THIETBI . ' Tại trạm ' . $thietbitram->iDTRAM->TEN_TRAM;
 $this->params['breadcrumbs'][] = 'Cập nhật';
 ?>
 <div class="tramvt-update">

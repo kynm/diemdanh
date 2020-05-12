@@ -286,6 +286,7 @@ class QuanlydienController extends Controller
                 '',
                 'A3'
             );
+
             $sheet->setCellValue('A' . (count($dssddien) + 3), 'Số liệu tổng hợp ');
             $sheet->fromArray(
                 ['Tên đơn vị hưởng','Số tài khoản','Số tiền chưa thuế','Thuế VAT','Tổng tiền','Tên đơn vị hưởng','Số tài khoản','Tại ngân hàng'],

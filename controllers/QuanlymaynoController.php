@@ -145,6 +145,7 @@ class QuanlymaynoController extends Controller
             $model->LOAI_SU_CO = 1;
             $model->ID_NV_DIEUHANH = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
             $model->ID_NV_VANHANH = $thietbitram->iDTRAM->ID_NHANVIEN;
+
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 $log = new ActivitiesLog;
                 $log->activity_type = 'add-nkmayno';
@@ -198,14 +199,17 @@ class QuanlymaynoController extends Controller
                 $inputs = Yii::$app->request->bodyParams;
                 $dongiamayno = ArrayHelper::map(Dongiamayno::find()
                     ->where(['THANG' => $inputs['THANG'], 'NAM' => $inputs['NAM']])->all(), 'LOAI_NHIENLIEU', 'DONGIA');
-                $dsdai = ArrayHelper::map(Daivt::find()->where(['ID_DONVI' => $inputs['ID_DONVI']])->all(), 'ID_DAI', 'ID_DAI');
-                $danhsachtram = ArrayHelper::map(Tramvt::find()->where(['in', 'ID_DAI', $dsdai])->all(), 'ID_TRAM', 'ID_TRAM');
-                $query = NhatKySuDungMayNo::find();
-                $query->joinWith('tHIETBITRAM')->where(['in','tHIETBITRAM.ID_TRAM', $danhsachtram]);
-                $query->andWhere('year(THOIGIANBATDAU) = ' . $inputs['NAM']);
-                $query->andWhere('MONTH(THOIGIANBATDAU) = ' . $inputs['THANG']);
-                
-                $data = $query->all();
+                $dsdai = ArrayHelper::map(Daivt::find()->where(['ID_DONVI' => $inputs['ID_DONVI']])->all(), 'ID_DAI', 'TEN_DAIVT');
+                $data = [];
+                foreach ($dsdai as $key => $value) {
+                    $data[$key]['TEN_DAIVT'] = $value;
+                    $danhsachtram = ArrayHelper::map(Tramvt::find()->where(['ID_DAI' => $key])->all(), 'ID_TRAM', 'ID_TRAM');
+                    $query = NhatKySuDungMayNo::find();
+                    $query->joinWith('tHIETBITRAM')->where(['in','tHIETBITRAM.ID_TRAM', $danhsachtram]);
+                    $query->andWhere('year(THOIGIANBATDAU) = ' . $inputs['NAM']);
+                    $query->andWhere('MONTH(THOIGIANBATDAU) = ' . $inputs['THANG']);
+                    $data[$key]['DU_LIEU'] = $query->all();
+                }
             }
             return $this->render('thongkeketoan', [
                 'isprint' => $isprint,
@@ -246,18 +250,23 @@ class QuanlymaynoController extends Controller
             $inputs = Yii::$app->request->get();
             $dongiamayno = ArrayHelper::map(Dongiamayno::find()
                 ->where(['THANG' => $inputs['THANG'], 'NAM' => $inputs['NAM']])->all(), 'LOAI_NHIENLIEU', 'DONGIA');
-            $dsdai = ArrayHelper::map(Daivt::find()->where(['ID_DONVI' => $inputs['ID_DONVI']])->all(), 'ID_DAI', 'ID_DAI');
-            $danhsachtram = ArrayHelper::map(Tramvt::find()->where(['in', 'ID_DAI', $dsdai])->all(), 'ID_TRAM', 'ID_TRAM');
-            $query = NhatKySuDungMayNo::find();
-            $query->joinWith('tHIETBITRAM')->where(['in','tHIETBITRAM.ID_TRAM', $danhsachtram]);
-            $query->andWhere('year(THOIGIANBATDAU) = ' . $inputs['NAM']);
-            $query->andWhere('MONTH(THOIGIANBATDAU) = ' . $inputs['THANG']);
+            $dsdai = ArrayHelper::map(Daivt::find()->where(['ID_DONVI' => $inputs['ID_DONVI']])->all(), 'ID_DAI', 'TEN_DAIVT');
+            $data = [];
+            foreach ($dsdai as $key => $value) {
+                $data[$key]['TEN_DAIVT'] = $value;
+                $danhsachtram = ArrayHelper::map(Tramvt::find()->where(['ID_DAI' => $key])->all(), 'ID_TRAM', 'ID_TRAM');
+                $query = NhatKySuDungMayNo::find();
+                $query->joinWith('tHIETBITRAM')->where(['in','tHIETBITRAM.ID_TRAM', $danhsachtram]);
+                $query->andWhere('year(THOIGIANBATDAU) = ' . $inputs['NAM']);
+                $query->andWhere('MONTH(THOIGIANBATDAU) = ' . $inputs['THANG']);
+                $data[$key]['DU_LIEU'] = $query->all();
+            }
             $donvi = Donvi::findOne($inputs['ID_DONVI']);
-            $data = $query->all();
             return $this->render('inbaoduongthang', [
                 'data' => $data,
                 'dongiamayno' => $dongiamayno,
                 'donvi' => $donvi,
+                'inputs' => $inputs,
                 ]);
         } else {
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');            

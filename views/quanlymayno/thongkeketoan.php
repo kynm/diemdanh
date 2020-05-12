@@ -81,7 +81,15 @@ use yii\grid\GridView;
     </div>
 </div>
 
-<?= $this->render('_table_data', [
-        'data' => $data,
-        'dongiamayno' => $dongiamayno,
-    ]) ?>
+<div class="tramvt-index">
+    <div class="box box-primary">
+        <div class="box-body">
+            <div class="table-responsive">
+                <?= $this->render('_table_data', [
+                    'data' => $data,
+                    'dongiamayno' => $dongiamayno,
+                ]) ?>
+            </div>
+        </div>
+    </div>
+</div>
