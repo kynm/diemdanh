@@ -27,6 +27,7 @@ $listloaisuco = [
     <?= $form->field($model, 'ID_THIETBITRAM')->hiddenInput(['value'=> $thietbitram->ID_THIETBI])->label(false);?>
     <?= $form->field($model, 'USER_ID')->hiddenInput(['value'=> Yii::$app->user->identity->nhanvien->ID_NHANVIEN])->label(false);?>
     <?= $form->field($model, 'DINHMUC')->hiddenInput(['value'=> json_decode($thietbitram->THAMSOTHIETBI)->DINH_MUC])->label(false);?>
+    <?= $form->field($model, 'LOAINHIENLIEU')->hiddenInput(['value'=> json_decode($thietbitram->THAMSOTHIETBI)->LOAINHIENLIEU])->label(false);?>
     <div class="box box-primary">
         <div class="box-body">
             <div class="col-sm-3">

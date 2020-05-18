@@ -18,12 +18,13 @@
         <td colspan="8" style="text-align: center;border: none;font-weight: bold;"><h3>BÁO CÁO TỔNG HỢP NHIÊN LIỆU CÁC ĐÀI TRẠM</h3></td>
     </tr>
         <tr style="border: none;">
-        <td colspan="8" style="text-align: center;border: none;"><span style="margin-right: 100px"> Tháng:  <?php echo $inputs['THANG'] . '/' . $inputs['NAM']?> </span>    Đơn vị:<?php echo $donvi->TEN_DONVI;?>  </td>
+        <td colspan="8" style="text-align: center;border: none;"><span style="margin-right: 100px"> Tháng:  <?php echo $inputs['THANG'] . '/' . $inputs['NAM']?> </span>    Đơn vị:<?php echo $donvi->TEN_DONVI ?? 'Toàn tỉnh';?>  </td>
     </tr>
 </table>
 <?= $this->render('_table_data', [
     'data' => $data,
     'dongiamayno' => $dongiamayno,
+    'loainhienlieu' => $loainhienlieu,
 ]) ?>
 <table class="table">
     <tr style="border: none;height: 100px;">

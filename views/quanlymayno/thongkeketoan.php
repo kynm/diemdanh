@@ -25,7 +25,7 @@ use yii\grid\GridView;
                 'name' => 'ID_DONVI',
                 'id' => 'ID_DONVI',
                 'value' => $inputs['ID_DONVI'],
-                'data' => ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', [2,3,4,5,6,7]])->all(), 'ID_DONVI', 'TEN_DONVI'),
+                'data' => $dsDonvi,
                 'theme' => Select2::THEME_BOOTSTRAP,
                 'options' => ['placeholder' => 'Chọn đơn vị'],
                 'pluginOptions' => [
@@ -88,6 +88,7 @@ use yii\grid\GridView;
                 <?= $this->render('_table_data', [
                     'data' => $data,
                     'dongiamayno' => $dongiamayno,
+                    'loainhienlieu' => $loainhienlieu,
                 ]) ?>
             </div>
         </div>

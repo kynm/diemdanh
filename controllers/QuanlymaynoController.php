@@ -193,24 +193,29 @@ class QuanlymaynoController extends Controller
                 $nowY => $nowY,
                 $nowY - 1 => $nowY - 1,
             ];
+            $dsDonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', [2,3,4,5,6,7]])->all(), 'ID_DONVI', 'TEN_DONVI');
             $isprint = 0;
+            $loainhienlieu = [];
+            $searchModel = new NhatKySuDungMayNoSearch();
+            $loainhienlieu = $searchModel->getloainhienlieu();
             if (Yii::$app->request->post()) {
                 $isprint = 1;
                 $inputs = Yii::$app->request->bodyParams;
-                $dongiamayno = ArrayHelper::map(Dongiamayno::find()
-                    ->where(['THANG' => $inputs['THANG'], 'NAM' => $inputs['NAM']])->all(), 'LOAI_NHIENLIEU', 'DONGIA');
-                $dsdai = ArrayHelper::map(Daivt::find()->where(['ID_DONVI' => $inputs['ID_DONVI']])->all(), 'ID_DAI', 'TEN_DAIVT');
-                $data = [];
-                foreach ($dsdai as $key => $value) {
-                    $data[$key]['TEN_DAIVT'] = $value;
-                    $danhsachtram = ArrayHelper::map(Tramvt::find()->where(['ID_DAI' => $key])->all(), 'ID_TRAM', 'ID_TRAM');
-                    $query = NhatKySuDungMayNo::find();
-                    $query->joinWith('tHIETBITRAM')->where(['in','tHIETBITRAM.ID_TRAM', $danhsachtram]);
-                    $query->andWhere('year(THOIGIANBATDAU) = ' . $inputs['NAM']);
-                    $query->andWhere('MONTH(THOIGIANBATDAU) = ' . $inputs['THANG']);
-                    $data[$key]['DU_LIEU'] = $query->all();
+                $dongiamayno = $searchModel->getDongiatheothang($inputs);
+                if ($inputs['ID_DONVI']) {
+                    $dldonvi = [$inputs['ID_DONVI'] => $inputs['ID_DONVI']];
+                } else {
+                    $dldonvi = $dsDonvi;
                 }
+
+                foreach ($dldonvi as $idDonvi => $dv) {
+                    $data[$idDonvi] = [];
+                    $data[$idDonvi]['TEN_DONVI'] = Donvi::findOne($idDonvi)->TEN_DONVI;
+                    $data[$idDonvi]['DU_LIEU'] = $searchModel->baocaomaynotheothang(['ID_DONVI' => $idDonvi, 'THANG' => $inputs['THANG'], 'NAM' => $inputs['NAM']]);
+                }
+
             }
+
             return $this->render('thongkeketoan', [
                 'isprint' => $isprint,
                 'data' => $data,
@@ -218,6 +223,8 @@ class QuanlymaynoController extends Controller
                 'years' => $years,
                 'inputs' => $inputs,
                 'dongiamayno' => $dongiamayno,
+                'loainhienlieu' => $loainhienlieu,
+                'dsDonvi' => $dsDonvi,
                 ]);
         } else {
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');            
@@ -248,18 +255,20 @@ class QuanlymaynoController extends Controller
                 $nowY - 1 => $nowY - 1,
             ];
             $inputs = Yii::$app->request->get();
-            $dongiamayno = ArrayHelper::map(Dongiamayno::find()
-                ->where(['THANG' => $inputs['THANG'], 'NAM' => $inputs['NAM']])->all(), 'LOAI_NHIENLIEU', 'DONGIA');
-            $dsdai = ArrayHelper::map(Daivt::find()->where(['ID_DONVI' => $inputs['ID_DONVI']])->all(), 'ID_DAI', 'TEN_DAIVT');
-            $data = [];
-            foreach ($dsdai as $key => $value) {
-                $data[$key]['TEN_DAIVT'] = $value;
-                $danhsachtram = ArrayHelper::map(Tramvt::find()->where(['ID_DAI' => $key])->all(), 'ID_TRAM', 'ID_TRAM');
-                $query = NhatKySuDungMayNo::find();
-                $query->joinWith('tHIETBITRAM')->where(['in','tHIETBITRAM.ID_TRAM', $danhsachtram]);
-                $query->andWhere('year(THOIGIANBATDAU) = ' . $inputs['NAM']);
-                $query->andWhere('MONTH(THOIGIANBATDAU) = ' . $inputs['THANG']);
-                $data[$key]['DU_LIEU'] = $query->all();
+            $dsDonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', [2,3,4,5,6,7]])->all(), 'ID_DONVI', 'TEN_DONVI');
+            $searchModel = new NhatKySuDungMayNoSearch();
+            $dongiamayno = $searchModel->getDongiatheothang($inputs);
+            $loainhienlieu = $searchModel->getloainhienlieu();
+            if ($inputs['ID_DONVI']) {
+                $dldonvi = [$inputs['ID_DONVI'] => $inputs['ID_DONVI']];
+            } else {
+                $dldonvi = $dsDonvi;
+            }
+
+            foreach ($dldonvi as $idDonvi => $dv) {
+                $data[$idDonvi] = [];
+                $data[$idDonvi]['TEN_DONVI'] = Donvi::findOne($idDonvi)->TEN_DONVI;
+                $data[$idDonvi]['DU_LIEU'] = $searchModel->baocaomaynotheothang(['ID_DONVI' => $idDonvi, 'THANG' => $inputs['THANG'], 'NAM' => $inputs['NAM']]);
             }
             $donvi = Donvi::findOne($inputs['ID_DONVI']);
             return $this->render('inbaoduongthang', [
@@ -267,6 +276,7 @@ class QuanlymaynoController extends Controller
                 'dongiamayno' => $dongiamayno,
                 'donvi' => $donvi,
                 'inputs' => $inputs,
+                'loainhienlieu' => $loainhienlieu,
                 ]);
         } else {
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');            

@@ -26,26 +26,24 @@ $tongtien = 0;
                     <?php foreach ($data as $dai): ?>
                         <?php if($dai['DU_LIEU']) :?>
                             <tr>
-                                <td colspan="8" style="font-weight: bold;"><?php echo $dai['TEN_DAIVT']?></td>
+                                <td colspan="8" style="font-weight: bold;"><?php echo $dai['TEN_DONVI']?></td>
                             </tr>
                             <?php $tong_theodai = 0;
                                 foreach ($dai['DU_LIEU'] as $value): ?>
                                 <tr>
-                                    <td><?php echo $value->tRAMVANHANH->TEN_TRAM;?></td>
-                                    <td><?php echo $value->tHIETBITRAM->iDLOAITB->TEN_THIETBI;?></td>
-                                    <td>Cell</td>
+                                    <td><?php echo $value['TEN_TRAM'];?></td>
+                                    <td><?php echo $value['TEN_THIETBI'];?></td>
+                                    <td><?php echo $loainhienlieu[$value['LOAINHIENLIEU']]?></td>
                                     <?php
-                                        $LOAINHIENLIEU = json_decode($value->tHIETBITRAM->THAMSOTHIETBI)->LOAINHIENLIEU;
-
-                                        $thanhtien = $dongiamayno[$LOAINHIENLIEU] * $value->soluong;
+                                        $thanhtien = $dongiamayno[$value['LOAINHIENLIEU']] * (round($value['DINHMUC'] * ($value['THOI_GIAN']/60), 2));
                                         $thanhtien = round($thanhtien);
                                         $tongtien += $thanhtien;
                                         $tong_theodai += $thanhtien;
                                     ?>
-                                    <td><?php echo json_decode($value->tHIETBITRAM->THAMSOTHIETBI)->DINH_MUC;?></td>
-                                    <td><?php echo $value->hous;?></td>
-                                    <td><?php echo $value->soluong;?></td>
-                                    <td><?php echo $dongiamayno[$LOAINHIENLIEU];?></td>
+                                    <td><?php echo $value['DINHMUC'];?></td>
+                                    <td><?php echo $value['THOI_GIAN'];?></td>
+                                    <td><?php echo round($value['DINHMUC'] * ($value['THOI_GIAN']/60), 2);?></td>
+                                    <td><?php echo $dongiamayno[$value['LOAINHIENLIEU']];?></td>
                                     <td><?php echo $thanhtien?></td>
                                 <tr>
                             <?php endforeach; ?>
