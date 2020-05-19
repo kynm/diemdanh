@@ -173,6 +173,11 @@ class QuanlymaynoController extends Controller
 
     public function actionThongkeketoan()
     {
+        // $data = NhatKySuDungMayNo::find()->all();
+        // foreach ($data as $key => $value) {
+        //     $value->LOAINHIENLIEU = json_decode(Thietbitram::findOne($value->ID_THIETBITRAM)->THAMSOTHIETBI)->LOAINHIENLIEU;
+        //     $value->save(false);
+        // }
         if (Yii::$app->user->can('tkkt-mayno')) {
             $months = [];
             $data = [];
