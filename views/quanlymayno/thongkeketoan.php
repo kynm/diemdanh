@@ -18,7 +18,7 @@ use yii\grid\GridView;
     <div class="row">
         <?php $form = ActiveForm::begin([
             'method' => 'post',
-            'action' => '/quanlymayno/thongkeketoan'
+            // 'action' => 'vnpt_mds/quanlymayno/thongkeketoan'
         ]); ?>
         <div class="col-md-3 col-xs-3">
             <?= Select2::widget([

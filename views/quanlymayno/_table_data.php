@@ -7,6 +7,8 @@ use yii\widgets\ActiveForm;
 /* @var $model app\models\TramvtSearch */
 /* @var $form yii\widgets\ActiveForm */
 $tongtien = 0;
+$tongphut = 0;
+$tongnhienlieu = 0;
 ?>
 
               <table class="table">
@@ -28,7 +30,10 @@ $tongtien = 0;
                             <tr>
                                 <td colspan="8" style="font-weight: bold;"><?php echo $dai['TEN_DONVI']?></td>
                             </tr>
-                            <?php $tong_theodai = 0;
+                            <?php 
+                                $tong_theodai = 0;
+                                $tong_phuttheodai = 0;
+                                $tong_nhienlieutheodai = 0;
                                 foreach ($dai['DU_LIEU'] as $value): ?>
                                 <tr>
                                     <td><?php echo $value['TEN_TRAM'];?></td>
@@ -39,6 +44,10 @@ $tongtien = 0;
                                         $thanhtien = round($thanhtien);
                                         $tongtien += $thanhtien;
                                         $tong_theodai += $thanhtien;
+                                        $tong_phuttheodai += $value['THOI_GIAN'];
+                                        $tong_nhienlieutheodai += round($value['DINHMUC'] * ($value['THOI_GIAN']/60), 2);
+                                        $tongphut += $tong_phuttheodai;
+                                        $tongnhienlieu += $tong_nhienlieutheodai;
                                     ?>
                                     <td><?php echo $value['DINHMUC'];?></td>
                                     <td><?php echo $value['THOI_GIAN'];?></td>
@@ -51,10 +60,10 @@ $tongtien = 0;
                                 <th scope="col"></th>
                                 <th scope="col"></th>
                                 <th scope="col"></th>
+                                <th scope="col"><?php echo number_format($tong_phuttheodai)?></th>
+                                <th scope="col"><?php echo number_format($tong_nhienlieutheodai)?></th>
                                 <th scope="col"></th>
-                                <th scope="col"></th>
-                                <th scope="col"></th>
-                                <th scope="col"><?php echo $tong_theodai?></th>
+                                <th scope="col"><?php echo number_format($tong_theodai)?></th>
                             </tr>
                         <?php endif; ?>
                     <?php endforeach; ?>
@@ -63,10 +72,10 @@ $tongtien = 0;
                         <th scope="col"></th>
                         <th scope="col"></th>
                         <th scope="col"></th>
+                        <th scope="col"><?php echo number_format($tongphut)?></th>
+                        <th scope="col"><?php echo number_format($tongnhienlieu)?></th>
                         <th scope="col"></th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
-                        <th scope="col"><?php echo $tongtien?></th>
+                        <th scope="col"><?php echo number_format($tongtien)?></th>
                     </tr>
                 </tbody>
               </table>
