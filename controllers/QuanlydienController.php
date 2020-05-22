@@ -312,8 +312,8 @@ class QuanlydienController extends Controller
         return $this->render('inbaocaototrinhthang', [
             'dssddien' => $dssddien,
             'tongdien' => $tongdien,
-            // 'dsdonvi' => $dsdonvi,
-            // 'params' => $params,
+            'donvi' => $donvi,
+            'inputs' => $params,
         ]);
     }
 }
