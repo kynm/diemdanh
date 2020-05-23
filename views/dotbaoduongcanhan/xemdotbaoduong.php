@@ -18,6 +18,7 @@ use app\models\Images;
 <div class="box box-primary">
 <div class="box-header">
   <h3 class="box-title"><?= Html::encode("{$loaitb}") ?></h3>
+  <div id="toado"></div>
 </div>
 <div class="box-body">
   <ul class="todo-list">
@@ -51,9 +52,8 @@ use app\models\Images;
         <?php foreach ($dotbd->images as $image): ?>
             <img height="150" src="<?php echo $image->ANH;?>">
         <?php endforeach; ?>
-        <input id="inp" type='file'>
+        <input id="inp" type='file' accept="image/*" capture="camera">
             <p id="b64"></p>
-
             <img id="img" height="150">
         </ul>
     </div>
