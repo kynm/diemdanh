@@ -265,28 +265,33 @@ class CongvieccanhanController extends Controller
         }
     }
 
-    public function actionUploadBase64v2()
+    public function actionUploadbase64v2()
     {
-        $inputs = Yii::$app->request->post()->get();
-        // $file = UploadedFile::getInstanceByName('file');
-
+        $inputs = Yii::$app->request->bodyParams;
+// var_dump($inputs);
+// die();
         $id = Yii::$app->request->post('ID_DOTBD');
         $dotbd = Dotbaoduong::findOne($id);
         $MA_DOTBD = $dotbd->MA_DOTBD;
-        $ID_THIETBI = Yii::$app->request->post('ID_THIETBI');
-        $MA_NOIDUNG = Yii::$app->request->post('MA_NOIDUNG');
-        $username = Yii::$app->user->identity->username;
-        $filename = "$MA_DOTBD-$username-$ID_THIETBI-$MA_NOIDUNG";
-        // $path = '/volume1/web/vnpt_mds/uploads/'.$filename;
-        $path = 'C:\xampp\htdocs\vnpt_mds\uploads\\';
-        $file = Yii::$app->convert->base64_to_image(Yii::$app->request->post('file'), $path, $filename);
-        if ($file) {
-            unset($key['file']);
-            $model = Noidungcongviec::find()->where($key)->one();
-            $model->ANH = $file;
-            $model->save(false);
-        
-            Yii::$app->api->sendSuccessResponse(['filename' => $file]);
+        // $ID_THIETBI = Yii::$app->request->post('ID_THIETBI');
+        // $MA_NOIDUNG = Yii::$app->request->post('MA_NOIDUNG');
+        // $username = Yii::$app->user->identity->username;
+        // $filename = "$MA_DOTBD-$username-" . strtotime("now");
+        // // $path = '/volume1/web/vnpt_mds/uploads/'.$filename;
+        // $path = 'C:\xampp\htdocs\vnpt_mds\uploads\\';
+        // $file = Yii::$app->convert->base64_to_image($inputs['IMAGEBASE64'], $path, $filename);
+        if ($inputs['IMAGEBASE64']) {
+            $model = new Images();
+            $model->ID_DOTBD = $id;
+            $model->ANH = $inputs['IMAGEBASE64'];
+            $model->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
+            $model->STT = 1;
+            $model->type = 1;
+            if ($model->save(false)) {
+                return json_encode(["message" => "True","error" => "0"], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            } else {
+                return json_encode(["message" => "False!","error" => "1"], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            }
         } else {
             Yii::$app->api->sendFailedResponse('Failed!');
         }

@@ -119,9 +119,9 @@ class Dotbaoduong extends \yii\db\ActiveRecord
         return $this->hasOne(Baoduongtong::className(), ['ID_BDT' => 'ID_BDT']);
     }
 
-    public function getFiles()
+    public function getImages()
     {
-        return [];
+        return $this->hasMany(Images::className(), ['ID_DOTBD' => 'ID_DOTBD']);
     }
 
         /**

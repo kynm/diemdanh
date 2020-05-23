@@ -5,6 +5,7 @@ use yii\widgets\LinkPager;
 use yii\widgets\ActiveForm;
 use app\models\Images;
 ?>
+<input type="hidden" name="urluploadimage" id="urluploadimage" value="<?= Url::to(['congvieccanhan/uploadbase64v2']) ?>">
 <input type="hidden" name="urlgetmodal" id="urlgetmodal" value="<?= Url::to(['congvieccanhan/urlgetmodal']) ?>">
 <input type="hidden" name="url" id="url" value="<?= Url::to(['congvieccanhan/hoanthanh']) ?>">
 <input type="hidden" name="urlxacnhan" id="urlxacnhan" value="<?= Url::to(['congvieccanhan/xacnhantatca']) ?>">
@@ -47,16 +48,13 @@ use app\models\Images;
     </div>
     <div class="box-body">
         <ul class="todo-list">
-        <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
-            <div class="col-md-6 col-sm-6">
-                <?= $form->field($dotbd, 'files[]')->fileInput(['multiple' => true, 'accept' => 'image/*']) ?>
-            </div>
-            <div class="box-footer">
-                <div class="text-center">
-                    <?= Html::submitButton('<i class="fa fa-check"></i> Hoàn thành', ['class' => 'btn btn-primary btn-flat']) ?>
-                </div>
-            </div>          
-            <?php ActiveForm::end(); ?>
+        <?php foreach ($dotbd->images as $image): ?>
+            <img height="150" src="<?php echo $image->ANH;?>">
+        <?php endforeach; ?>
+        <input id="inp" type='file'>
+            <p id="b64"></p>
+
+            <img id="img" height="150">
         </ul>
     </div>
 </div>
@@ -87,6 +85,51 @@ use app\models\Images;
 </div>
 <?php
 $script = <<< JS
+
+    function readFile() {
+      
+      if (this.files && this.files[0]) {
+        var FR= new FileReader();
+        FR.addEventListener("load", function(e) {
+            document.getElementById("img").src       = e.target.result;
+            var ID_DOTBD = $("#ID_DOTBD").val();
+            var urluploadimage = $("#urluploadimage").val();
+            $.ajax({
+                url: urluploadimage,
+                method: 'post',
+                data: {
+                    IMAGEBASE64: e.target.result,
+                    ID_DOTBD: ID_DOTBD,
+                },
+                success:function(data) {
+                    data = jQuery.parseJSON(data);
+                    if (data.error == 0) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Upload ảnh thành công',
+                            showConfirmButton: false,
+                            timer: 1000
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Lỗi upload ảnh',
+                            showConfirmButton: false,
+                            timer: 1000
+                        });
+                    }
+                }
+            });
+          console.log(e.target.result);
+        });
+
+        FR.readAsDataURL( this.files[0] );
+      }
+      
+    }
+
+    document.getElementById("inp").addEventListener("change", readFile);
+
     $(".xulycongviec").on( "click", function() {
         var ID_DOTBD = this.dataset.id_dotbd;
         var ID_THIETBI = this.dataset.id_thietbi;
