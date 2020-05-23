@@ -1,0 +1,9 @@
+	CREATE TABLE `images` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `ID_DOTBD` int(32) NOT NULL,
+ `ID_NHANVIEN` int(11) NOT NULL,
+ `ANH` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+ `STT` int(11) NOT NULL,
+ `type` tinyint(1) NOT NULL DEFAULT '0',
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8
