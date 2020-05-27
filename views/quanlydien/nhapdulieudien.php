@@ -12,11 +12,6 @@ use yii\grid\GridView;
 $this->title = 'NHập dữ liệu điện tại trạm ' . $tramvt->TEN_TRAM . $tramvt->MA_TRAM;
 ?>
 <div class="tramvt-update">
-<!--     <?= $this->render('_form', [
-        'model' => $model,
-        'months' => $months,
-        'years' => $years,
-    ]) ?> -->
     <div class="box box-primary">
         <div class="box-body">
             <?php Pjax::begin(); ?>

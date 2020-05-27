@@ -157,163 +157,192 @@ class QuanlydienController extends Controller
 
     public function actionImport()
     {
-        $months = [];
-        for ($i = 0; $i < 12; $i++) {
-            $months[date('m', strtotime("+$i month"))] = date('m', strtotime("+$i month"));
-        }
-        $nowY = date("Y");
-        $years = [
-            $nowY => $nowY,
-            $nowY - 1 => $nowY - 1,
-        ];
-        $model = new UploadForm();
-        if (Yii::$app->request->post())
-        {
-            $params = Yii::$app->request->bodyParams;
-            $model->fileupload = UploadedFile::getInstance($model, 'fileupload');
-            $data = \moonland\phpexcel\Excel::import($model->fileupload->tempName);
-            foreach ($data as $key => $value) {
-                if ($value['MA_DIENLUC']) {
-                    $model1 = Quanlydien::find()
-                        ->where([
-                            'MA_DIENLUC' => $value['MA_DIENLUC'],
-                            'NAM' => $params['UploadForm']['NAM'],
-                            'THANG' => $params['UploadForm']['THANG'],
-                        ])
-                        ->one();
-                    if (!$model1) {
-                        $model1 = new Quanlydien();
+        if (Yii::$app->user->can('import-qldien')) {
+            $months = [];
+            for ($i = 0; $i < 12; $i++) {
+                $months[date('m', strtotime("+$i month"))] = date('m', strtotime("+$i month"));
+            }
+            $nowY = date("Y");
+            $years = [
+                $nowY => $nowY,
+                $nowY - 1 => $nowY - 1,
+            ];
+            $model = new UploadForm();
+            if (Yii::$app->request->post())
+            {
+                $params = Yii::$app->request->bodyParams;
+                $model->fileupload = UploadedFile::getInstance($model, 'fileupload');
+                $data = \moonland\phpexcel\Excel::import($model->fileupload->tempName);
+                foreach ($data as $key => $value) {
+                    if ($value['MA_DIENLUC']) {
+                        $model1 = Quanlydien::find()
+                            ->where([
+                                'MA_DIENLUC' => $value['MA_DIENLUC'],
+                                'NAM' => $params['UploadForm']['NAM'],
+                                'THANG' => $params['UploadForm']['THANG'],
+                            ])
+                            ->one();
+                        if (!$model1) {
+                            $model1 = new Quanlydien();
+                        }
+                        $model1->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
+                        $model1->IS_CHECKED = 1;
+                        $model1->MA_DIENLUC = $value['MA_DIENLUC'];
+                        $model1->TIENDIEN = (int)$value['TIENDIEN'];
+                        $model1->TIENTHUE = (int)$value['TIENTHUE'];
+                        $model1->TONGTIEN = (int)$value['TONGTIEN'];
+                        $model1->NAM = $params['UploadForm']['NAM'];
+                        $model1->THANG = $params['UploadForm']['THANG'];
+                        $model1->save(false);
                     }
-                    $model1->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
-                    $model1->IS_CHECKED = 1;
-                    $model1->MA_DIENLUC = $value['MA_DIENLUC'];
-                    $model1->TIENDIEN = (int)$value['TIENDIEN'];
-                    $model1->TIENTHUE = (int)$value['TIENTHUE'];
-                    $model1->TONGTIEN = (int)$value['TONGTIEN'];
-                    $model1->NAM = $params['UploadForm']['NAM'];
-                    $model1->THANG = $params['UploadForm']['THANG'];
-                    $model1->save(false);
                 }
             }
+            return $this->render('import', [
+                'months' => $months,
+                'years' => $years,
+                'model' => $model,
+            ]);
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
         }
-        return $this->render('import', [
-            'months' => $months,
-            'years' => $years,
-            'model' => $model,
-        ]);
+    }
+
+    public function actionFilemauimportdien()
+    {
+        if (Yii::$app->user->can('import-qldien')) {
+            ini_set('max_execution_time', 5*60); // 5 minutes
+            $path = Yii::getAlias('@webroot') . '/samplefile';
+            $file = $path . '/dulieudien.xlsx';
+            Yii::$app->response->xSendFile($file);  
+
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
+        }
     }
 
     public function actionThongkesudungdien()
     {
-        $months = [];
-        for ($i = 0; $i < 12; $i++) {
-            $months[date('m', strtotime("+$i month"))] = date('m', strtotime("+$i month"));
-        }
-        $nowY = date("Y");
-        $years = [
-            $nowY => $nowY,
-            $nowY - 1 => $nowY - 1,
-        ];
-        $params = Yii::$app->request->queryParams;
-        if (!$params) {
-            $params = [
-                'NAM' => date('Y', strtotime("-1 month")),
-                'THANG' => date('m', strtotime("-1 month")),
-                'ID_DONVI' => 2
+        if (Yii::$app->user->can('ketoan-qldien')) {
+            $months = [];
+            for ($i = 0; $i < 12; $i++) {
+                $months[date('m', strtotime("+$i month"))] = date('m', strtotime("+$i month"));
+            }
+            $nowY = date("Y");
+            $years = [
+                $nowY => $nowY,
+                $nowY - 1 => $nowY - 1,
             ];
+            $params = Yii::$app->request->queryParams;
+            if (!$params) {
+                $params = [
+                    'NAM' => date('Y', strtotime("-1 month")),
+                    'THANG' => date('m', strtotime("-1 month")),
+                    'ID_DONVI' => 2
+                ];
+            }
+            $searchModel = new QuanlydienSearch();
+            $dataProvider = $searchModel->searchThongkedien($params);
+            $dsdonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', [2,3,4,5,6,7]])->all(), 'ID_DONVI', 'TEN_DONVI');
+            return $this->render('thongkesudungdien', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'dsdonvi' => $dsdonvi,
+                'years' => $years,
+                'months' => $months,
+                'params' => $params,
+            ]);
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
         }
-        $searchModel = new QuanlydienSearch();
-        $dataProvider = $searchModel->searchThongkedien($params);
-        $dsdonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', [2,3,4,5,6,7]])->all(), 'ID_DONVI', 'TEN_DONVI');
-        return $this->render('thongkesudungdien', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'dsdonvi' => $dsdonvi,
-            'years' => $years,
-            'months' => $months,
-            'params' => $params,
-        ]);
     }
 
     public function actionBaocaototrinh()
     {
-        $months = [];
-        for ($i = 0; $i < 12; $i++) {
-            $months[date('m', strtotime("+$i month"))] = date('m', strtotime("+$i month"));
-        }
-        $nowY = date("Y");
-        $years = [
-            $nowY => $nowY,
-            $nowY - 1 => $nowY - 1,
-        ];
-        $params = Yii::$app->request->queryParams;
-        if (!$params) {
-            $params = [
-                'NAM' => date('Y', strtotime("-1 month")),
-                'THANG' => date('m', strtotime("-1 month")),
-                'ID_DONVI' => 2
+        if (Yii::$app->user->can('ketoan-qldien')) {
+            $months = [];
+            for ($i = 0; $i < 12; $i++) {
+                $months[date('m', strtotime("+$i month"))] = date('m', strtotime("+$i month"));
+            }
+            $nowY = date("Y");
+            $years = [
+                $nowY => $nowY,
+                $nowY - 1 => $nowY - 1,
             ];
-        }
+            $params = Yii::$app->request->queryParams;
+            if (!$params) {
+                $params = [
+                    'NAM' => date('Y', strtotime("-1 month")),
+                    'THANG' => date('m', strtotime("-1 month")),
+                    'ID_DONVI' => 2
+                ];
+            }
 
-        $dsdonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', [2,3,4,5,6,7]])->all(), 'ID_DONVI', 'TEN_DONVI');
-        return $this->render('baocaototrinh', [
-            'dsdonvi' => $dsdonvi,
-            'years' => $years,
-            'months' => $months,
-            'params' => $params,
-        ]);
+            $dsdonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', [2,3,4,5,6,7]])->all(), 'ID_DONVI', 'TEN_DONVI');
+            return $this->render('baocaototrinh', [
+                'dsdonvi' => $dsdonvi,
+                'years' => $years,
+                'months' => $months,
+                'params' => $params,
+            ]);
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
+        }
     }
 
     public function actionInbaocaototrinhthang()
     {
-        $params = Yii::$app->request->queryParams;
-        $searchModel = new QuanlydienSearch();
-        $dssddien = $searchModel->baocaodsdientheodonvi($params);
-        $tongdien = $searchModel->baocaothdientheodonvi($params);
-        $donvi = Donvi::findOne($params['ID_DONVI']);
-        if (isset($params['is_excel']) && $params['is_excel']) {
-            $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
-            $sheet = $spreadsheet->getActiveSheet();
-            $sheet->setCellValue('A1', 'I - Chi tiết tiền điện theo từng trạm');
-            $sheet->setCellValue('B1', $donvi->TEN_DONVI);
-            $sheet->fromArray(
-                ['Mã khách hàng trên hóa đơn điện','Mã CSHT','Số tiền chưa thuế','Thuế VAT','Tổng tiền','Tên đơn vị hưởng','Số tài khoản','Tại ngân hàng'],
-                '',
-                'A2'
-            );
-            $sheet->fromArray(
-                $dssddien,
-                '',
-                'A3'
-            );
+        if (Yii::$app->user->can('ketoan-qldien')) {
+            $params = Yii::$app->request->queryParams;
+            $searchModel = new QuanlydienSearch();
+            $dssddien = $searchModel->baocaodsdientheodonvi($params);
+            $tongdien = $searchModel->baocaothdientheodonvi($params);
+            $donvi = Donvi::findOne($params['ID_DONVI']);
+            if (isset($params['is_excel']) && $params['is_excel']) {
+                $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+                $sheet = $spreadsheet->getActiveSheet();
+                $sheet->setCellValue('A1', 'I - Chi tiết tiền điện theo từng trạm');
+                $sheet->setCellValue('B1', $donvi->TEN_DONVI);
+                $sheet->fromArray(
+                    ['Mã khách hàng trên hóa đơn điện','Mã CSHT','Số tiền chưa thuế','Thuế VAT','Tổng tiền','Tên đơn vị hưởng','Số tài khoản','Tại ngân hàng'],
+                    '',
+                    'A2'
+                );
+                $sheet->fromArray(
+                    $dssddien,
+                    '',
+                    'A3'
+                );
 
-            $sheet->setCellValue('A' . (count($dssddien) + 3), 'Số liệu tổng hợp ');
-            $sheet->fromArray(
-                ['Tên đơn vị hưởng','Số tài khoản','Số tiền chưa thuế','Thuế VAT','Tổng tiền','Tên đơn vị hưởng','Số tài khoản','Tại ngân hàng'],
-                '',
-                'A' . (count($dssddien) + 4)
-            );
-            $sheet->fromArray(
-                $tongdien,
-                '',
-                'A' . (count($dssddien) + 5)
-            );
-            $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
-            $file_name = 'Số liệu điện '  . $donvi->TEN_DONVI . $params['THANG'] . '/' . $params['NAM'];
+                $sheet->setCellValue('A' . (count($dssddien) + 3), 'Số liệu tổng hợp ');
+                $sheet->fromArray(
+                    ['Tên đơn vị hưởng','Số tài khoản','Số tiền chưa thuế','Thuế VAT','Tổng tiền','Tên đơn vị hưởng','Số tài khoản','Tại ngân hàng'],
+                    '',
+                    'A' . (count($dssddien) + 4)
+                );
+                $sheet->fromArray(
+                    $tongdien,
+                    '',
+                    'A' . (count($dssddien) + 5)
+                );
+                $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+                $file_name = 'Số liệu điện '  . $donvi->TEN_DONVI . $params['THANG'] . '/' . $params['NAM'];
 
-            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-            header('Content-Disposition: attachment;filename="'.$file_name.'.xlsx"');
-            header('Cache-Control: max-age=0');
+                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                header('Content-Disposition: attachment;filename="'.$file_name.'.xlsx"');
+                header('Cache-Control: max-age=0');
 
-            $writer->save("php://output");
-            exit;
+                $writer->save("php://output");
+                exit;
+            }
+            $this->layout = 'printLayout';
+            return $this->render('inbaocaototrinhthang', [
+                'dssddien' => $dssddien,
+                'tongdien' => $tongdien,
+                'donvi' => $donvi,
+                'inputs' => $params,
+            ]);
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
         }
-        $this->layout = 'printLayout';
-        return $this->render('inbaocaototrinhthang', [
-            'dssddien' => $dssddien,
-            'tongdien' => $tongdien,
-            'donvi' => $donvi,
-            'inputs' => $params,
-        ]);
     }
 }

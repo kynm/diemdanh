@@ -126,12 +126,12 @@ use yii\helpers\Url;
                             [
                                 'label' => 'Thống kê sử dụng điện', 'icon' => 'caret-right',
                                 'url' => Url::to(['quanlydien/thongkesudungdien']),
-                                'visible' => Yii::$app->user->can('list-qldien'),
+                                'visible' => Yii::$app->user->can('ketoan-qldien'),
                             ],
                             [
                                 'label' => 'Tờ trình viễn thông', 'icon' => 'caret-right',
                                 'url' => Url::to(['quanlydien/baocaototrinh']),
-                                'visible' => Yii::$app->user->can('list-qldien'),
+                                'visible' => Yii::$app->user->can('ketoan-qldien'),
                             ],
                         ],
                         'visible' => Yii::$app->user->can('list-qldien'),
