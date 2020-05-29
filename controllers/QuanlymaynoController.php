@@ -182,7 +182,7 @@ class QuanlymaynoController extends Controller
             $months = [];
             $data = [];
             $inputs = [
-                'ID_DONVI' => 2,
+                'ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI,
                 'NAM' => date('Y', strtotime("-1 month")),
                 'THANG' => date('m', strtotime("-1 month")),
             ];
@@ -198,7 +198,12 @@ class QuanlymaynoController extends Controller
                 $nowY => $nowY,
                 $nowY - 1 => $nowY - 1,
             ];
-            $dsDonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', [2,3,4,5,6,7]])->all(), 'ID_DONVI', 'TEN_DONVI');
+            $iddv = [2,3,4,5,6,7];
+            if (Yii::$app->user->can('dmdv-diennhienlieu')) {
+            $iddv = [Yii::$app->user->identity->nhanvien->ID_DONVI];
+
+            }
+            $dsDonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'ID_DONVI', 'TEN_DONVI');
             $isprint = 0;
             $loainhienlieu = [];
             $searchModel = new NhatKySuDungMayNoSearch();
@@ -243,7 +248,7 @@ class QuanlymaynoController extends Controller
             $months = [];
             $data = [];
             $inputs = [
-                'ID_DONVI' => 2,
+                'ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI,
                 'NAM' => date('Y', strtotime("-1 month")),
                 'THANG' => date('m', strtotime("-1 month")),
             ];
@@ -260,7 +265,12 @@ class QuanlymaynoController extends Controller
                 $nowY - 1 => $nowY - 1,
             ];
             $inputs = Yii::$app->request->get();
-            $dsDonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', [2,3,4,5,6,7]])->all(), 'ID_DONVI', 'TEN_DONVI');
+            $iddv = [2,3,4,5,6,7];
+            if (Yii::$app->user->can('dmdv-diennhienlieu')) {
+                $inputs['ID_DONVI'] = Yii::$app->user->identity->nhanvien->ID_DONVI;
+                $iddv = [$inputs['ID_DONVI']];
+            }
+            $dsDonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'ID_DONVI', 'TEN_DONVI');
             $searchModel = new NhatKySuDungMayNoSearch();
             $dongiamayno = $searchModel->getDongiatheothang($inputs);
             $loainhienlieu = $searchModel->getloainhienlieu();
@@ -295,7 +305,7 @@ class QuanlymaynoController extends Controller
             $months = [];
             $data = [];
             $inputs = [
-                'ID_DONVI' => 2,
+                'ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI,
                 'NAM' => date('Y', strtotime("-1 month")),
                 'THANG' => date('m', strtotime("-1 month")),
             ];

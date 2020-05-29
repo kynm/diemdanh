@@ -233,16 +233,21 @@ class QuanlydienController extends Controller
                 $nowY - 1 => $nowY - 1,
             ];
             $params = Yii::$app->request->queryParams;
-            if (!$params) {
-                $params = [
+            if (!$params || !isset($params['NAM'])) {
+                $params = array_merge(Yii::$app->request->queryParams, [
                     'NAM' => date('Y', strtotime("-1 month")),
                     'THANG' => date('m', strtotime("-1 month")),
-                    'ID_DONVI' => 2
-                ];
+                    'ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI
+                ]);
             }
             $searchModel = new QuanlydienSearch();
             $dataProvider = $searchModel->searchThongkedien($params);
-            $dsdonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', [2,3,4,5,6,7]])->all(), 'ID_DONVI', 'TEN_DONVI');
+            $iddv = [2,3,4,5,6,7];
+            if (Yii::$app->user->can('dmdv-diennhienlieu')) {
+                $inputs['ID_DONVI'] = Yii::$app->user->identity->nhanvien->ID_DONVI;
+                $iddv = [$inputs['ID_DONVI']];
+            }
+            $dsdonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'ID_DONVI', 'TEN_DONVI');
             return $this->render('thongkesudungdien', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
@@ -269,15 +274,20 @@ class QuanlydienController extends Controller
                 $nowY - 1 => $nowY - 1,
             ];
             $params = Yii::$app->request->queryParams;
-            if (!$params) {
-                $params = [
+            if (!$params || !isset($params['NAM'])) {
+                $params = array_merge(Yii::$app->request->queryParams, [
                     'NAM' => date('Y', strtotime("-1 month")),
                     'THANG' => date('m', strtotime("-1 month")),
-                    'ID_DONVI' => 2
-                ];
+                    'ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI
+                ]);
             }
 
-            $dsdonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', [2,3,4,5,6,7]])->all(), 'ID_DONVI', 'TEN_DONVI');
+            $iddv = [2,3,4,5,6,7];
+            if (Yii::$app->user->can('dmdv-diennhienlieu')) {
+                $inputs['ID_DONVI'] = Yii::$app->user->identity->nhanvien->ID_DONVI;
+                $iddv = [$inputs['ID_DONVI']];
+            }
+            $dsdonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'ID_DONVI', 'TEN_DONVI');
             return $this->render('baocaototrinh', [
                 'dsdonvi' => $dsdonvi,
                 'years' => $years,

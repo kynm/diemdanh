@@ -134,7 +134,7 @@ use yii\helpers\Url;
                                 'visible' => Yii::$app->user->can('ketoan-qldien'),
                             ],
                         ],
-                        'visible' => Yii::$app->user->can('list-qldien'),
+                        'visible' => Yii::$app->user->can('view-qldien'),
                     ],
                     [
                         'label' => 'Thông tin cá nhân', 'icon' => 'user', 'url' => Url::to(['user/edit-profile'])
