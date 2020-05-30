@@ -106,12 +106,12 @@ use yii\helpers\Url;
                                 'visible' => Yii::$app->user->can('edit-nkmayno'),
                             ],
                             [
-                                'label' => 'Thống kê kế toán', 'icon' => 'caret-right',
+                                'label' => 'Tổng hợp nhiên liệu theo tháng', 'icon' => 'caret-right',
                                 'url' => Url::to(['quanlymayno/thongkeketoan']),
                                 'visible' => Yii::$app->user->can('tkkt-mayno'),
                             ],
                             [
-                                'label' => 'Báo cáo chi tiết', 'icon' => 'caret-right',
+                                'label' => 'Chi tiết nhiên liệu theo tháng', 'icon' => 'caret-right',
                                 'url' => Url::to(['quanlymayno/thongkechitiet']),
                                 'visible' => Yii::$app->user->can('tkct-mayno'),
                             ],
@@ -129,12 +129,12 @@ use yii\helpers\Url;
                                 'visible' => Yii::$app->user->can('list-qldien'),
                             ],
                             [
-                                'label' => 'Thống kê sử dụng điện', 'icon' => 'caret-right',
+                                'label' => 'Tổng hợp điện theo tháng', 'icon' => 'caret-right',
                                 'url' => Url::to(['quanlydien/thongkesudungdien']),
                                 'visible' => Yii::$app->user->can('ketoan-qldien'),
                             ],
                             [
-                                'label' => 'Tờ trình viễn thông', 'icon' => 'caret-right',
+                                'label' => 'Báo cáo điện theo tháng', 'icon' => 'caret-right',
                                 'url' => Url::to(['quanlydien/baocaototrinh']),
                                 'visible' => Yii::$app->user->can('ketoan-qldien'),
                             ],
