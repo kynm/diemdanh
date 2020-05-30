@@ -6,6 +6,8 @@ use Yii;
 use app\models\Nhanvien;
 use app\models\Thietbitram;
 use app\models\TramVT;
+use app\models\Donvi;
+
 
 /**
  * This is the model class for table "baoduongtong".
@@ -36,7 +38,7 @@ class Quanlydien extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['MA_DIENLUC'], 'required'],
+            [['MA_DIENLUC', 'MA_DONVIKT'], 'required'],
             [['NAM'], 'required'],
             [['TIENDIEN'], 'required'],
             [['TIENTHUE'], 'required'],
@@ -59,6 +61,7 @@ class Quanlydien extends \yii\db\ActiveRecord
             'TIENTHUE' => 'Thuế VAT',
             'TONGTIEN' => 'Tiền đề nghị thanh toán',
             'THANG' => 'Tháng',
+            'MA_DONVIKT' => 'MA_DONVIKT',
             'THOIGIANCAPNHAT' => 'Thời gian cập nhật',
             'IS_CHECKED' => 'Xác nhận',
         ];
@@ -67,5 +70,10 @@ class Quanlydien extends \yii\db\ActiveRecord
     public function getTRAMVT()
     {
         return $this->hasOne(TramVT::className(), ['MA_DIENLUC' => 'MA_DIENLUC']);
+    }
+
+    public function getDonvitheomaketoan()
+    {
+        return $this->hasOne(Donvi::className(), ['MA_DONVIKT' => 'MA_DONVIKT']);
     }
 }

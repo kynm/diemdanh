@@ -225,38 +225,36 @@ class QuanlydienController extends Controller
     {
         if (Yii::$app->user->can('ketoan-qldien')) {
             $months = [];
-            for ($i = 0; $i < 12; $i++) {
-                $months[date('m', strtotime("+$i month"))] = date('m', strtotime("+$i month"));
+            for ($i = 1; $i <= 12; $i++) {
+                $months[$i] = $i;
             }
             $nowY = date("Y");
             $years = [
                 $nowY => $nowY,
                 $nowY - 1 => $nowY - 1,
             ];
-            $params = Yii::$app->request->queryParams;
-            if (!$params || !isset($params['NAM'])) {
-                $params = array_merge(Yii::$app->request->queryParams, [
-                    'NAM' => date('Y', strtotime("-1 month")),
-                    'THANG' => date('m', strtotime("-1 month")),
-                    'ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI
-                ]);
-            }
+            // if (!$params || !isset($params['NAM'])) {
+            //     $params = array_merge(Yii::$app->request->queryParams, [
+            //         'NAM' => date('Y', strtotime("-1 month")),
+            //         'THANG' => date('m', strtotime("-1 month")),
+            //         'ID_DONVI' => Donvi::findone(Yii::$app->user->identity->nhanvien->ID_DONVI)->MA_DONVIKT
+            //     ]);
+            // }
 
             $iddv = [2,3,4,5,6,7];
             if (Yii::$app->user->can('dmdv-diennhienlieu')) {
-                $iddv = [$params['ID_DONVI']];
+                $iddv = [Yii::$app->user->identity->nhanvien->ID_DONVI];
             }
 
-            $dsdonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'ID_DONVI', 'TEN_DONVI');
+            $dsdonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'MA_DONVIKT', 'TEN_DONVI');
             $searchModel = new QuanlydienSearch();
-            $dataProvider = $searchModel->searchThongkedien($params);
+            $dataProvider = $searchModel->searchThongkedien(Yii::$app->request->queryParams);
             return $this->render('thongkesudungdien', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
                 'dsdonvi' => $dsdonvi,
-                'years' => $years,
                 'months' => $months,
-                'params' => $params,
+                'years' => $years,
             ]);
         } else {
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
@@ -278,8 +276,8 @@ class QuanlydienController extends Controller
             $params = Yii::$app->request->queryParams;
             if (!$params || !isset($params['NAM'])) {
                 $params = array_merge(Yii::$app->request->queryParams, [
-                    'NAM' => date('Y', strtotime("-1 month")),
-                    'THANG' => date('m', strtotime("-1 month")),
+                    'NAM' => date('Y', strtotime("-0 month")),
+                    'THANG' => date('m', strtotime("-0 month")),
                     'ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI
                 ]);
             }

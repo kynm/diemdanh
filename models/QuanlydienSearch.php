@@ -21,8 +21,8 @@ class QuanlydienSearch extends Quanlydien
     public function rules()
     {
         return [
-            // [['ID_NHANVIEN'], 'integer'],
-            // [['MA_NHANVIEN', 'TEN_NHANVIEN', 'CHUC_VU', 'DIEN_THOAI', 'GHI_CHU', 'USER_NAME', 'ID_DONVI', 'ID_DAI'], 'safe'],
+            [['NAM', 'THANG'], 'integer'],
+            [['MA_DONVIKT', 'MA_DIENLUC'], 'safe'],
         ];
     }
 
@@ -61,16 +61,24 @@ class QuanlydienSearch extends Quanlydien
             return $dataProvider;
         }
 
-        $query->andFilterWhere([
-            'NAM' => $params['NAM'],
-            'THANG' => $params['THANG'],
-        ]);
+        // if ($params['ID_DONVI']) {
+        //     $query->andFilterWhere(['in', 'MA_DONVIKT', $params['ID_DONVI']]);
+        // }
 
-        if ($params['ID_DONVI']) {
-            $dsdai = ArrayHelper::map(Daivt::find()->where(['ID_DONVI' => $params['ID_DONVI']])->all(), 'ID_DAI', 'ID_DAI');
-            $danhsachtram = ArrayHelper::map(Tramvt::find()->where(['in', 'ID_DAI', $dsdai])->all(), 'MA_DIENLUC', 'MA_DIENLUC');
-            $query->andFilterWhere(['in', 'MA_DIENLUC', $danhsachtram]);
+        // if ($params['NAM']) {
+        //     $query->andFilterWhere(['NAM' => $params['NAM']]);
+        // }
+
+        // if ($params['THANG']) {
+        //     $query->andFilterWhere(['THANG' => $params['THANG']]);
+        // }
+        $query->joinWith('donvitheomaketoan');
+        if (Yii::$app->user->can('dmdv-diennhienlieu')) {
+            $query->andFilterWhere(['quanlydien.MA_DONVIKT' => Donvi::findone(Yii::$app->user->identity->nhanvien->ID_DONVI)->MA_DONVIKT]);
         }
+        $query->andFilterWhere(['quanlydien.MA_DONVIKT' => $this->MA_DONVIKT]);
+        $query->andFilterWhere(['like', 'NAM', $this->NAM])
+            ->andFilterWhere(['like', 'THANG', $this->THANG]);
 
         return $dataProvider;
     }
