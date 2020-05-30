@@ -364,7 +364,7 @@ class QuanlymaynoController extends Controller
 
     public function actionInchitietbaoduongthang()
     {
-        if (Yii::$app->user->can('tkkt-mayno')) {
+        if (Yii::$app->user->can('tkct-mayno')) {
             $this->layout = 'printLayout';
             $months = [];
             $data = [];
@@ -407,7 +407,7 @@ class QuanlymaynoController extends Controller
                 $data[$idDonvi]['DU_LIEU'] = $searchModel->baocaomaynotheothangchitiet(['ID_DONVI' => $idDonvi, 'THANG' => $inputs['THANG'], 'NAM' => $inputs['NAM']]);
             }
             $donvi = Donvi::findOne($inputs['ID_DONVI']);
-            return $this->render('inbaoduongthang', [
+            return $this->render('inchitietbaoduongthang', [
                 'data' => $data,
                 'dongiamayno' => $dongiamayno,
                 'donvi' => $donvi,

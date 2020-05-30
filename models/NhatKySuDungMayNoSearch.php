@@ -85,7 +85,7 @@ class NhatKySuDungMayNoSearch extends NhatKySuDungMayNo
     public function baocaomaynotheothangchitiet($params)
     {
         $sql = "
-            SELECT b.TEN_TRAM,e.TEN_THIETBI, a.DINHMUC,a.LOAINHIENLIEU, TIMESTAMPDIFF(MINUTE, a.THOIGIANBATDAU, a.THOIGIANKETTHUC) THOI_GIAN FROM nhatkysudungmayno a, tramvt b, thietbitram c, daivt d,thietbi e WHERE a.ID_TRAM = b.ID_TRAM and b.ID_DAI = d.ID_DAI and c.ID_LOAITB = e.id_thietbi and a.ID_THIETBITRAM = c.ID_THIETBI and d.ID_DONVI = " . $params['ID_DONVI'] . " AND MONTH(a.THOIGIANBATDAU) = '" . $params['THANG'] . "' AND year(a.THOIGIANBATDAU) = '" . $params['NAM'] . "'";
+            SELECT b.TEN_TRAM,e.TEN_THIETBI, a.DINHMUC,a.LOAINHIENLIEU, a.THOIGIANBATDAU, a.THOIGIANKETTHUC, TIMESTAMPDIFF(MINUTE, a.THOIGIANBATDAU, a.THOIGIANKETTHUC) THOI_GIAN FROM nhatkysudungmayno a, tramvt b, thietbitram c, daivt d,thietbi e WHERE a.ID_TRAM = b.ID_TRAM and b.ID_DAI = d.ID_DAI and c.ID_LOAITB = e.id_thietbi and a.ID_THIETBITRAM = c.ID_THIETBI and d.ID_DONVI = " . $params['ID_DONVI'] . " AND MONTH(a.THOIGIANBATDAU) = '" . $params['THANG'] . "' AND year(a.THOIGIANBATDAU) = '" . $params['NAM'] . "' ORDER BY a.THOIGIANBATDAU, a.THOIGIANKETTHUC";
 
         return Yii::$app->db->createCommand($sql)->queryAll();
     }
