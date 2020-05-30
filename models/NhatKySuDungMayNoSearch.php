@@ -1,5 +1,4 @@
 <?php
-
 namespace app\models;
 
 use Yii;
@@ -7,9 +6,7 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\NhatKySuDungMayNo;
 use yii\helpers\ArrayHelper;
-/**
- * NhanvienSearch represents the model behind the search form about `app\models\Nhanvien`.
- */
+
 class NhatKySuDungMayNoSearch extends NhatKySuDungMayNo
 {
     /**
@@ -28,7 +25,6 @@ class NhatKySuDungMayNoSearch extends NhatKySuDungMayNo
      */
     public function scenarios()
     {
-        // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
 
@@ -43,70 +39,36 @@ class NhatKySuDungMayNoSearch extends NhatKySuDungMayNo
     public function searchKetoan($params)
     {
         $query = NhatKySuDungMayNo::find();
-
-        // add conditions that should always apply here
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-
         $this->load($params);
-
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
             return $dataProvider;
         }
 
-        // $query->joinWith('nHANVIENDIEUHANH');
         $query->joinWith('tHIETBITRAM');
-
         $query->andFilterWhere(['in', 'tHIETBITRAM.ID_TRAM', [141,20,205]])
-            // ->andFilterWhere(['like', 'TEN_NHANVIEN', $this->TEN_NHANVIEN])
-            // ->andFilterWhere(['like', 'donvi.TEN_DONVI', $this->ID_DONVI])
-            // ->andFilterWhere(['like', 'daivt.TEN_DAIVT', $this->ID_DAI])
-            // ->andFilterWhere(['like', 'CHUC_VU', $this->CHUC_VU])
-            // ->andFilterWhere(['like', 'DIEN_THOAI', $this->DIEN_THOAI])
             // ->andFilterWhere(['like', 'GHI_CHU', $this->GHI_CHU])
             ->andFilterWhere(['>=' , 'THOIGIANBATDAU', $params['THANG']]);
 
-        return $dataProvider;    
+        return $dataProvider;
     }
     public function search($params)
     {
         $query = NhatKySuDungMayNo::find();
-
-        // add conditions that should always apply here
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-
         $this->load($params);
-
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
             return $dataProvider;
         }
 
-        // $query->joinWith('nHANVIENDIEUHANH');
         $query->joinWith('nHANVIENVANHANH');
-
-        // grid filtering conditions
         $query->andFilterWhere([
-            // 'USER_ID' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN,
             'ID_THIETBITRAM' => $params['ID_THIETBITRAM'],
         ]);
-
-        // $query->andFilterWhere(['like', 'MA_NHANVIEN', $this->MA_NHANVIEN])
-        //     ->andFilterWhere(['like', 'TEN_NHANVIEN', $this->TEN_NHANVIEN])
-        //     ->andFilterWhere(['like', 'donvi.TEN_DONVI', $this->ID_DONVI])
-        //     ->andFilterWhere(['like', 'daivt.TEN_DAIVT', $this->ID_DAI])
-        //     ->andFilterWhere(['like', 'CHUC_VU', $this->CHUC_VU])
-        //     ->andFilterWhere(['like', 'DIEN_THOAI', $this->DIEN_THOAI])
-        //     ->andFilterWhere(['like', 'GHI_CHU', $this->GHI_CHU])
-        //     ->andFilterWhere(['like', 'USER_NAME', $this->USER_NAME]);
 
         return $dataProvider;
     }
@@ -116,6 +78,14 @@ class NhatKySuDungMayNoSearch extends NhatKySuDungMayNo
         $sql = "
             SELECT b.TEN_TRAM,e.TEN_THIETBI, a.DINHMUC,a.LOAINHIENLIEU, sum(TIMESTAMPDIFF(MINUTE, a.THOIGIANBATDAU, a.THOIGIANKETTHUC)) THOI_GIAN FROM nhatkysudungmayno a, tramvt b, thietbitram c, daivt d,thietbi e WHERE a.ID_TRAM = b.ID_TRAM and b.ID_DAI = d.ID_DAI and c.ID_LOAITB = e.id_thietbi and a.ID_THIETBITRAM = c.ID_THIETBI and d.ID_DONVI = " . $params['ID_DONVI'] . " AND MONTH(a.THOIGIANBATDAU) = '" . $params['THANG'] . "' AND year(a.THOIGIANBATDAU) = '" . $params['NAM'] . "' GROUP by b.TEN_TRAM,a.ID_THIETBITRAM,a.LOAINHIENLIEU, a.DINHMUC, e.TEN_THIETBI
         ";
+
+        return Yii::$app->db->createCommand($sql)->queryAll();
+    }
+
+    public function baocaomaynotheothangchitiet($params)
+    {
+        $sql = "
+            SELECT b.TEN_TRAM,e.TEN_THIETBI, a.DINHMUC,a.LOAINHIENLIEU, TIMESTAMPDIFF(MINUTE, a.THOIGIANBATDAU, a.THOIGIANKETTHUC) THOI_GIAN FROM nhatkysudungmayno a, tramvt b, thietbitram c, daivt d,thietbi e WHERE a.ID_TRAM = b.ID_TRAM and b.ID_DAI = d.ID_DAI and c.ID_LOAITB = e.id_thietbi and a.ID_THIETBITRAM = c.ID_THIETBI and d.ID_DONVI = " . $params['ID_DONVI'] . " AND MONTH(a.THOIGIANBATDAU) = '" . $params['THANG'] . "' AND year(a.THOIGIANBATDAU) = '" . $params['NAM'] . "'";
 
         return Yii::$app->db->createCommand($sql)->queryAll();
     }

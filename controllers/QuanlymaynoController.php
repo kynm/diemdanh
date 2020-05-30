@@ -223,10 +223,74 @@ class QuanlymaynoController extends Controller
                     $data[$idDonvi]['TEN_DONVI'] = Donvi::findOne($idDonvi)->TEN_DONVI;
                     $data[$idDonvi]['DU_LIEU'] = $searchModel->baocaomaynotheothang(['ID_DONVI' => $idDonvi, 'THANG' => $inputs['THANG'], 'NAM' => $inputs['NAM']]);
                 }
-
             }
 
             return $this->render('thongkeketoan', [
+                'isprint' => $isprint,
+                'data' => $data,
+                'months' => $months,
+                'years' => $years,
+                'inputs' => $inputs,
+                'dongiamayno' => $dongiamayno,
+                'loainhienlieu' => $loainhienlieu,
+                'dsDonvi' => $dsDonvi,
+                ]);
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');            
+        }
+    }
+
+    public function actionThongkechitiet()
+    {
+        if (Yii::$app->user->can('tkct-mayno')) {
+            $months = [];
+            $data = [];
+            $inputs = [
+                'ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI,
+                'NAM' => date('Y', strtotime("-1 month")),
+                'THANG' => date('m', strtotime("-1 month")),
+            ];
+            $dongiamayno = [
+                1 => 0,
+                2 => 0,
+            ];
+            for ($i = 0; $i < 12; $i++) {
+                $months[date('m', strtotime("+$i month"))] = date('m', strtotime("+$i month"));
+            }
+            $nowY = date("Y");
+            $years = [
+                $nowY => $nowY,
+                $nowY - 1 => $nowY - 1,
+            ];
+            $iddv = [2,3,4,5,6,7];
+            if (Yii::$app->user->can('dmdv-diennhienlieu')) {
+            $iddv = [Yii::$app->user->identity->nhanvien->ID_DONVI];
+
+            }
+            $dsDonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'ID_DONVI', 'TEN_DONVI');
+            $isprint = 0;
+            $loainhienlieu = [];
+            $searchModel = new NhatKySuDungMayNoSearch();
+            $loainhienlieu = $searchModel->getloainhienlieu();
+            if (Yii::$app->request->post()) {
+                $isprint = 1;
+                $inputs = Yii::$app->request->bodyParams;
+                $dongiamayno = $searchModel->getDongiatheothang($inputs);
+                if ($inputs['ID_DONVI']) {
+                    $dldonvi = [$inputs['ID_DONVI'] => $inputs['ID_DONVI']];
+                } else {
+                    $dldonvi = $dsDonvi;
+                }
+
+                foreach ($dldonvi as $idDonvi => $dv) {
+                    $data[$idDonvi] = [];
+                    $data[$idDonvi]['TEN_DONVI'] = Donvi::findOne($idDonvi)->TEN_DONVI;
+                    $data[$idDonvi]['DU_LIEU'] = $searchModel->baocaomaynotheothangchitiet(['ID_DONVI' => $idDonvi, 'THANG' => $inputs['THANG'], 'NAM' => $inputs['NAM']]);
+                }
+
+            }
+
+            return $this->render('thongkechitiet', [
                 'isprint' => $isprint,
                 'data' => $data,
                 'months' => $months,
@@ -284,6 +348,63 @@ class QuanlymaynoController extends Controller
                 $data[$idDonvi] = [];
                 $data[$idDonvi]['TEN_DONVI'] = Donvi::findOne($idDonvi)->TEN_DONVI;
                 $data[$idDonvi]['DU_LIEU'] = $searchModel->baocaomaynotheothang(['ID_DONVI' => $idDonvi, 'THANG' => $inputs['THANG'], 'NAM' => $inputs['NAM']]);
+            }
+            $donvi = Donvi::findOne($inputs['ID_DONVI']);
+            return $this->render('inbaoduongthang', [
+                'data' => $data,
+                'dongiamayno' => $dongiamayno,
+                'donvi' => $donvi,
+                'inputs' => $inputs,
+                'loainhienlieu' => $loainhienlieu,
+                ]);
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');            
+        }
+    }
+
+    public function actionInchitietbaoduongthang()
+    {
+        if (Yii::$app->user->can('tkkt-mayno')) {
+            $this->layout = 'printLayout';
+            $months = [];
+            $data = [];
+            $inputs = [
+                'ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI,
+                'NAM' => date('Y', strtotime("-1 month")),
+                'THANG' => date('m', strtotime("-1 month")),
+            ];
+            $dongiamayno = [
+                1 => 0,
+                2 => 0,
+            ];
+            for ($i = 0; $i < 12; $i++) {
+                $months[date('m', strtotime("+$i month"))] = date('m', strtotime("+$i month"));
+            }
+            $nowY = date("Y");
+            $years = [
+                $nowY => $nowY,
+                $nowY - 1 => $nowY - 1,
+            ];
+            $inputs = Yii::$app->request->get();
+            $iddv = [2,3,4,5,6,7];
+            if (Yii::$app->user->can('dmdv-diennhienlieu')) {
+                $inputs['ID_DONVI'] = Yii::$app->user->identity->nhanvien->ID_DONVI;
+                $iddv = [$inputs['ID_DONVI']];
+            }
+            $dsDonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'ID_DONVI', 'TEN_DONVI');
+            $searchModel = new NhatKySuDungMayNoSearch();
+            $dongiamayno = $searchModel->getDongiatheothang($inputs);
+            $loainhienlieu = $searchModel->getloainhienlieu();
+            if ($inputs['ID_DONVI']) {
+                $dldonvi = [$inputs['ID_DONVI'] => $inputs['ID_DONVI']];
+            } else {
+                $dldonvi = $dsDonvi;
+            }
+
+            foreach ($dldonvi as $idDonvi => $dv) {
+                $data[$idDonvi] = [];
+                $data[$idDonvi]['TEN_DONVI'] = Donvi::findOne($idDonvi)->TEN_DONVI;
+                $data[$idDonvi]['DU_LIEU'] = $searchModel->baocaomaynotheothangchitiet(['ID_DONVI' => $idDonvi, 'THANG' => $inputs['THANG'], 'NAM' => $inputs['NAM']]);
             }
             $donvi = Donvi::findOne($inputs['ID_DONVI']);
             return $this->render('inbaoduongthang', [

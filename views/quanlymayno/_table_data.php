@@ -46,14 +46,14 @@ $tongnhienlieu = 0;
                                         $tong_theodai += $thanhtien;
                                         $tong_phuttheodai += $value['THOI_GIAN'];
                                         $tong_nhienlieutheodai += round($value['DINHMUC'] * ($value['THOI_GIAN']/60), 2);
-                                        $tongphut += $tong_phuttheodai;
-                                        $tongnhienlieu += $tong_nhienlieutheodai;
+                                        $tongphut += $value['THOI_GIAN'];
+                                        $tongnhienlieu += round($value['DINHMUC'] * ($value['THOI_GIAN']/60), 2);
                                     ?>
                                     <td><?php echo $value['DINHMUC'];?></td>
                                     <td><?php echo $value['THOI_GIAN'];?></td>
                                     <td><?php echo round($value['DINHMUC'] * ($value['THOI_GIAN']/60), 2);?></td>
-                                    <td><?php echo $dongiamayno[$value['LOAINHIENLIEU']];?></td>
-                                    <td><?php echo $thanhtien?></td>
+                                    <td><?php echo number_format($dongiamayno[$value['LOAINHIENLIEU']]);?></td>
+                                    <td><?php echo number_format($thanhtien)?></td>
                                 <tr>
                             <?php endforeach; ?>
                             <th scope="col">Cộng</th>
