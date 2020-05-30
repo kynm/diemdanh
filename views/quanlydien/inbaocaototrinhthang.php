@@ -47,7 +47,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="box-body">
             <?= $this->render('_table_data', [
                 'dssddien' => $dssddien,
-                'tongdien' => $tongdien,
+                'tongdiendv' => $tongdiendv,
+                'tongdiennh' => $tongdiennh,
             ]) ?>
         </div>
     </div>

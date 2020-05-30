@@ -35,7 +35,7 @@ class Donvi extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ID_DONVI', 'MA_DONVI', 'CAP_TREN'], 'required'],
+            [['ID_DONVI', 'MA_DONVI', 'CAP_TREN','MA_DONVIKT'], 'required'],
             [['ID_DONVI', 'CAP_TREN'], 'integer'],
             [['MA_DONVI'], 'string', 'max' => 30],
             [['TEN_DONVI', 'DIA_CHI'], 'string', 'max' => 100],
@@ -52,6 +52,7 @@ class Donvi extends \yii\db\ActiveRecord
     {
         return [
             'ID_DONVI' => 'ID Đơn vị',
+            'MA_DONVIKT' => 'Mã Phần mềm toán',
             'MA_DONVI' => 'Mã đơn vị',
             'TEN_DONVI' => 'Tên đơn vị',
             'DIA_CHI' => 'Địa chỉ',

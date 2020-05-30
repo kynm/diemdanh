@@ -173,24 +173,25 @@ class QuanlydienController extends Controller
                 $params = Yii::$app->request->bodyParams;
                 $model->fileupload = UploadedFile::getInstance($model, 'fileupload');
                 $data = \moonland\phpexcel\Excel::import($model->fileupload->tempName);
-                foreach ($data as $key => $value) {
-                    if ($value['MA_DIENLUC']) {
-                        $model1 = Quanlydien::find()
-                            ->where([
-                                'MA_DIENLUC' => $value['MA_DIENLUC'],
+                Quanlydien::deleteAll([
                                 'NAM' => $params['UploadForm']['NAM'],
                                 'THANG' => $params['UploadForm']['THANG'],
-                            ])
-                            ->one();
-                        if (!$model1) {
-                            $model1 = new Quanlydien();
-                        }
+                            ]);
+                foreach ($data as $key => $value) {
+                    if ($value['MA_DIENLUC']) {
+                        $model1 = new Quanlydien();
                         $model1->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
                         $model1->IS_CHECKED = 1;
                         $model1->MA_DIENLUC = $value['MA_DIENLUC'];
+                        $model1->TEN_DIENLUC = $value['TEN_DIENLUC'];
+                        $model1->TK_DIENLUC = $value['TK_DIENLUC'];
+                        $model1->NH_DIENLUC = $value['NH_DIENLUC'];
+                        $model1->MA_CSHT = $value['MA_CSHT'];
+                        $model1->MA_DONVIKT = $value['MA_DONVIKT'];
                         $model1->TIENDIEN = (int)$value['TIENDIEN'];
                         $model1->TIENTHUE = (int)$value['TIENTHUE'];
                         $model1->TONGTIEN = (int)$value['TONGTIEN'];
+                        $model1->THOIGIANCAPNHAT = date("Y-m-d H:i:s");
                         $model1->NAM = $params['UploadForm']['NAM'];
                         $model1->THANG = $params['UploadForm']['THANG'];
                         $model1->save(false);
@@ -240,14 +241,15 @@ class QuanlydienController extends Controller
                     'ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI
                 ]);
             }
-            $searchModel = new QuanlydienSearch();
-            $dataProvider = $searchModel->searchThongkedien($params);
+
             $iddv = [2,3,4,5,6,7];
             if (Yii::$app->user->can('dmdv-diennhienlieu')) {
-                $inputs['ID_DONVI'] = Yii::$app->user->identity->nhanvien->ID_DONVI;
-                $iddv = [$inputs['ID_DONVI']];
+                $iddv = [$params['ID_DONVI']];
             }
+
             $dsdonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'ID_DONVI', 'TEN_DONVI');
+            $searchModel = new QuanlydienSearch();
+            $dataProvider = $searchModel->searchThongkedien($params);
             return $this->render('thongkesudungdien', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
@@ -303,9 +305,16 @@ class QuanlydienController extends Controller
     {
         if (Yii::$app->user->can('ketoan-qldien')) {
             $params = Yii::$app->request->queryParams;
+            $iddv = $params['ID_DONVI'] ? $params['ID_DONVI'] : [2,3,4,5,6,7];
+            if (Yii::$app->user->can('dmdv-diennhienlieu')) {
+                $iddv = [$params['ID_DONVI']];
+            }
+            $dsdonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'MA_DONVIKT', 'MA_DONVIKT');
+            $params['dsdonvi'] = implode(',', $dsdonvi);
             $searchModel = new QuanlydienSearch();
             $dssddien = $searchModel->baocaodsdientheodonvi($params);
-            $tongdien = $searchModel->baocaothdientheodonvi($params);
+            $tongdiendv = $searchModel->baocaothdientheodonvi($params);
+            $tongdiennh = $searchModel->baocaothdientheonganhang($params);
             $donvi = Donvi::findOne($params['ID_DONVI']);
             if (isset($params['is_excel']) && $params['is_excel']) {
                 $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
@@ -330,7 +339,7 @@ class QuanlydienController extends Controller
                     'A' . (count($dssddien) + 4)
                 );
                 $sheet->fromArray(
-                    $tongdien,
+                    $tongdiennh,
                     '',
                     'A' . (count($dssddien) + 5)
                 );
@@ -347,7 +356,8 @@ class QuanlydienController extends Controller
             $this->layout = 'printLayout';
             return $this->render('inbaocaototrinhthang', [
                 'dssddien' => $dssddien,
-                'tongdien' => $tongdien,
+                'tongdiendv' => $tongdiendv,
+                'tongdiennh' => $tongdiennh,
                 'donvi' => $donvi,
                 'inputs' => $params,
             ]);

@@ -114,9 +114,10 @@ class QuanlydienSearch extends Quanlydien
 
     public function baocaodsdientheodonvi($params)
     {
-             $sql = "
-                SELECT a.MA_DIENLUC, b.MA_CSHT, a.TIENDIEN,a.TIENTHUE, a.TONGTIEN,b.TEN_DIENLUC,b.TK_DIENLUC,b.NH_DIENLUC from quanlydien a, tramvt b, daivt c where a.MA_DIENLUC = b.MA_DIENLUC and b.ID_DAI = c.ID_DAI and a.THANG = " . $params['THANG'] . " and a.NAM = " . $params['NAM'] . " and c.ID_DONVI =
-            " . $params['ID_DONVI'];
+        $sql = "
+            SELECT a.MA_DIENLUC, a.MA_CSHT, a.TIENDIEN,a.TIENTHUE, a.TONGTIEN,a.TEN_DIENLUC,a.TK_DIENLUC,a.NH_DIENLUC, a.MA_DONVIKT 
+            from quanlydien a where a.THANG = " . $params['THANG'] . " and a.NAM = " . $params['NAM'] . " and a.MA_DONVIKT 
+            in (" . $params['dsdonvi'] . ")";
 
         return Yii::$app->db->createCommand($sql)->queryAll();
     }
@@ -124,8 +125,20 @@ class QuanlydienSearch extends Quanlydien
     public function baocaothdientheodonvi($params)
     {
         $sqltonghop = "
-            SELECT b.TEN_DIENLUC,b.TK_DIENLUC, sum(a.TIENDIEN) T_TIENDIEN,sum(a.TIENTHUE) T_TIENTHUE, sum(a.TONGTIEN) T_TONGTIEN,b.TEN_DIENLUC TEN_DIENLUC1,b.TK_DIENLUC TK_DIENLUC1,b.NH_DIENLUC NH_DIENLUC from quanlydien a, tramvt b, daivt c where a.MA_DIENLUC = b.MA_DIENLUC and b.ID_DAI = c.ID_DAI and a.THANG = " . $params['THANG'] . " and a.NAM = " . $params['NAM'] . " and c.ID_DONVI =
-        " . $params['ID_DONVI'] . " GROUP BY b.TK_DIENLUC,b.NH_DIENLUC,b.TEN_DIENLUC";
+            SELECT b.TEN_DONVI, COUNT(a.MA_DIENLUC) SO_TRAM, SUM(a.TIENDIEN) TIENDIEN, SUM(a.TIENTHUE) TIENTHUE, SUM(a.TONGTIEN) TONGTIEN 
+            FROM quanlydien a, donvi b 
+            where a.MA_DONVIKT = b.MA_DONVIKT and a.THANG = " . $params['THANG'] . " and a.NAM = " . $params['NAM'] . " and a.MA_DONVIKT 
+            in (" . $params['dsdonvi'] . ") GROUP by b.TEN_DONVI";
+
+        return Yii::$app->db->createCommand($sqltonghop)->queryAll();
+    }
+
+    public function baocaothdientheonganhang($params)
+    {
+        $sqltonghop = "
+            SELECT a.TEN_DIENLUC,a.TK_DIENLUC, sum(a.TIENDIEN) T_TIENDIEN,sum(a.TIENTHUE) T_TIENTHUE, sum(a.TONGTIEN) T_TONGTIEN,a.TEN_DIENLUC TEN_DIENLUC1,a.TK_DIENLUC TK_DIENLUC1,a.NH_DIENLUC NH_DIENLUC 
+            from quanlydien a where a.THANG = " . $params['THANG'] . " and a.NAM = " . $params['NAM'] . " and a.MA_DONVIKT 
+            in (" . $params['dsdonvi'] . ") GROUP BY a.TK_DIENLUC,a.NH_DIENLUC,a.TEN_DIENLUC";
 
         return Yii::$app->db->createCommand($sqltonghop)->queryAll();
     }
