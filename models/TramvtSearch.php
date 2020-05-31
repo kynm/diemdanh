@@ -114,6 +114,7 @@ class TramvtSearch extends Tramvt
         $query->andFilterWhere(['=', 'daivt.ID_DAI', $this->ID_DAI])
             ->andFilterWhere(['in', 'ID_TRAM', $allIdsTramMayno])
             ->andFilterWhere(['like', 'TEN_TRAM', $this->TEN_TRAM]);
+        $query->orderBy(['TEN_TRAM' => SORT_ASC]);
 
         return $dataProvider;
     }

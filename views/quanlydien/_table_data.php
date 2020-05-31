@@ -11,7 +11,7 @@ $tongtien = 0;
 ?>
 
 <div class="table-responsive">
-        <h4>II. Tổng hợp tiền điện theo số tài khoản </h4>
+        <h4>I. Tổng hợp tiền điện theo số tài khoản </h4>
     <table class="table">
         <thead>
           <tr>
@@ -114,23 +114,21 @@ $tongtien = 0;
     <table class="table">
         <thead>
           <tr>
-            <th scope="col" width="2%">STT</th>
-            <th scope="col" width="10%">Mã khách hàng <br/>trên hóa đơn điện</th>
-            <th scope="col" width="10%">Mã CSHT</th>
-            <th scope="col" width="5%">Số tiền chưa thuế</th>
-            <th scope="col" width="5%">Thuế VAT</th>
+            <th scope="col" width="5%">Mã khách hàng <br/>trên hóa đơn <br/>điện</th>
+            <th scope="col" width="5%">Mã CSHT</th>
+            <th scope="col" width="5%">Số tiền <br/>chưa thuế</th>
+            <th scope="col" width="5%">Thuế <br/>VAT</th>
             <th scope="col" width="5%">Tổng tiền</th>
-            <th scope="col" width="5%">Tổng tiền đề xuất</th>
-            <th scope="col" width="10%">Tên đơn vị hưởng</th>
+            <th scope="col" width="5%">Tổng tiền<br/> đề xuất</th>
+            <th scope="col" width="30%">Tên đơn vị hưởng</th>
             <th scope="col" width="5%">Số tài khoản</th>
-            <th scope="col" width="10%">Tại ngân hàng</th>
+            <th scope="col" width="30%">Tại ngân hàng</th>
             <th scope="col" width="3%">Mã đơn vị</th>
           </tr>
         </thead>
         <tbody>
             <?php foreach ($dssddien as $key => $value): ?>
                 <tr>
-                    <th scope="col"><?php echo ($key + 1);?></th>
                     <th scope="col"><?php echo $value['MA_DIENLUC'];?></th>
                     <th scope="col"><?php echo $value['MA_CSHT'];?></th>
                     <th scope="col"><?php echo number_format($value['TIENDIEN']);?></th>

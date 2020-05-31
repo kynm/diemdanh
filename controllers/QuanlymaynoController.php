@@ -60,9 +60,10 @@ class QuanlymaynoController extends Controller
             $params = Yii::$app->request->queryParams;
             $dataProvider = $searchModel->searchMayno($params);
             if (isset($params['TramvtSearch']) && $params['TramvtSearch']['ID_DAI']) {
-                $listTram = ArrayHelper::map(Tramvt::find()->where(['ID_DAI' => $params['TramvtSearch']['ID_DAI']])->asArray()->all(), 'TEN_TRAM', 'TEN_TRAM');
+                $listTram = ArrayHelper::map(Tramvt::find()->where(['ID_DAI' => $params['TramvtSearch']['ID_DAI']])->orderBy(['TEN_TRAM' => SORT_ASC])->asArray()->all(), 'TEN_TRAM', 'TEN_TRAM');
             } else {
-                $listTram = ArrayHelper::map(Tramvt::find()->asArray()->all(), 'TEN_TRAM', 'TEN_TRAM');
+                $listTram = ArrayHelper::map(Tramvt::find()->orderBy(['TEN_TRAM' => SORT_ASC])
+                    ->asArray()->all(), 'TEN_TRAM', 'TEN_TRAM');
             }
 
             return $this->render('index', [
@@ -198,7 +199,7 @@ class QuanlymaynoController extends Controller
                 $nowY => $nowY,
                 $nowY - 1 => $nowY - 1,
             ];
-            $iddv = [2,3,4,5,6,7];
+            $iddv = [2,3,4,5,6,7,666];
             if (Yii::$app->user->can('dmdv-diennhienlieu')) {
             $iddv = [Yii::$app->user->identity->nhanvien->ID_DONVI];
 
@@ -262,7 +263,7 @@ class QuanlymaynoController extends Controller
                 $nowY => $nowY,
                 $nowY - 1 => $nowY - 1,
             ];
-            $iddv = [2,3,4,5,6,7];
+            $iddv = [2,3,4,5,6,7,666];
             if (Yii::$app->user->can('dmdv-diennhienlieu')) {
             $iddv = [Yii::$app->user->identity->nhanvien->ID_DONVI];
 
@@ -329,7 +330,7 @@ class QuanlymaynoController extends Controller
                 $nowY - 1 => $nowY - 1,
             ];
             $inputs = Yii::$app->request->get();
-            $iddv = [2,3,4,5,6,7];
+            $iddv = [2,3,4,5,6,7,666];
             if (Yii::$app->user->can('dmdv-diennhienlieu')) {
                 $inputs['ID_DONVI'] = Yii::$app->user->identity->nhanvien->ID_DONVI;
                 $iddv = [$inputs['ID_DONVI']];
@@ -386,7 +387,7 @@ class QuanlymaynoController extends Controller
                 $nowY - 1 => $nowY - 1,
             ];
             $inputs = Yii::$app->request->get();
-            $iddv = [2,3,4,5,6,7];
+            $iddv = [2,3,4,5,6,7,666];
             if (Yii::$app->user->can('dmdv-diennhienlieu')) {
                 $inputs['ID_DONVI'] = Yii::$app->user->identity->nhanvien->ID_DONVI;
                 $iddv = [$inputs['ID_DONVI']];

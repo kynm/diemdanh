@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             [
                                 'attribute' => 'ID_DAI',
                                 'value' => 'iDDAI.TEN_DAIVT',
-                                'filter'=>ArrayHelper::map(Daivt::find()->asArray()->all(), 'ID_DAI', 'TEN_DAIVT'),
+                                'filter'=>ArrayHelper::map(Daivt::find()->orderBy(['TEN_DAIVT' => SORT_ASC])->asArray()->all(), 'ID_DAI', 'TEN_DAIVT'),
                                 'filterType' => GridView::FILTER_SELECT2,
                                 'filterWidgetOptions' => [
                                     'options' => ['prompt' => ''],

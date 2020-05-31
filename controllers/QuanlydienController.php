@@ -241,7 +241,7 @@ class QuanlydienController extends Controller
             //     ]);
             // }
 
-            $iddv = [2,3,4,5,6,7];
+            $iddv = [2,3,4,5,6,7,666];
             if (Yii::$app->user->can('dmdv-diennhienlieu')) {
                 $iddv = [Yii::$app->user->identity->nhanvien->ID_DONVI];
             }
@@ -282,7 +282,7 @@ class QuanlydienController extends Controller
                 ]);
             }
 
-            $iddv = [2,3,4,5,6,7];
+            $iddv = [2,3,4,5,6,7,666];
             if (Yii::$app->user->can('dmdv-diennhienlieu')) {
                 $inputs['ID_DONVI'] = Yii::$app->user->identity->nhanvien->ID_DONVI;
                 $iddv = [$inputs['ID_DONVI']];
@@ -303,7 +303,7 @@ class QuanlydienController extends Controller
     {
         if (Yii::$app->user->can('ketoan-qldien')) {
             $params = Yii::$app->request->queryParams;
-            $iddv = $params['ID_DONVI'] ? $params['ID_DONVI'] : [2,3,4,5,6,7];
+            $iddv = $params['ID_DONVI'] ? $params['ID_DONVI'] : [2,3,4,5,6,7,666];
             if (Yii::$app->user->can('dmdv-diennhienlieu')) {
                 $iddv = [$params['ID_DONVI']];
             }

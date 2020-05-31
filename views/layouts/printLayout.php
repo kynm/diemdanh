@@ -40,7 +40,44 @@ if (Yii::$app->controller->action->id === 'login') {
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
         <base href="/"> 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+        <style type="text/css">
+            .fixed {
+                  table-layout: fixed;
+                }
+        </style>
+        <script type="text/javascript">
+                function printDiv() 
+                {
+                    $("#button-print").hide();
+                    $("#backlink").hide();
+                  window.print();
+                }
+    var beforePrint = function() {
+        // $("#button-print").hide();
+    };
+
+    var afterPrint = function() {
+        $("#button-print").show();
+        $("#backlink").show();
+    };
+
+    if (window.matchMedia) {
+        var mediaQueryList = window.matchMedia('print');
+        mediaQueryList.addListener(function(mql) {
+            if (mql.matches) {
+                beforePrint();
+            } else {
+                afterPrint();
+            }
+        });
+    }
+
+    window.onbeforeprint = beforePrint;
+    window.onafterprint = afterPrint;
+
+        </script>
     </head>
     <body>
     <?php $this->beginBody() ?>
