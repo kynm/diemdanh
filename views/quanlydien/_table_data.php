@@ -11,8 +11,8 @@ $tongtien = 0;
 ?>
 
 <div class="table-responsive">
-        <h4>I. Tổng hợp tiền điện theo số tài khoản </h4>
-    <table class="table">
+        <h4>I. Tổng hợp tiền điện theo trung tâm viễn thông </h4>
+    <table>
         <thead>
           <tr>
             <th scope="col" width="2%">STT</th>
@@ -32,13 +32,13 @@ $tongtien = 0;
             $tongdv = 0;
             foreach ($tongdiendv as $key => $value): ?>
                 <tr>
-                    <th scope="col"><?php echo ($key + 1);?></th>
-                    <th scope="col"><?php echo $value['TEN_DONVI'];?></th>
-                    <th scope="col"><?php echo $value['SO_TRAM'];?></th>
-                    <th scope="col"><?php echo number_format($value['TIENDIEN']);?></th>
-                    <th scope="col"><?php echo number_format($value['TIENTHUE']);?></th>
-                    <th scope="col"><?php echo number_format($value['TONGTIEN']);?></th>
-                    <th scope="col"><?php echo number_format($value['TONGTIEN']);?></th>
+                    <td><?php echo ($key + 1);?></td>
+                    <td><?php echo $value['TEN_DONVI'];?></td>
+                    <td><?php echo $value['SO_TRAM'];?></td>
+                    <td><?php echo number_format($value['TIENDIEN']);?></td>
+                    <td><?php echo number_format($value['TIENTHUE']);?></td>
+                    <td><?php echo number_format($value['TONGTIEN']);?></td>
+                    <td><?php echo number_format($value['TONGTIEN']);?></td>
                     <?php
                         $tongchuathue += $value['TIENDIEN'];
                         $tongthue += $value['TIENTHUE'];
@@ -48,19 +48,19 @@ $tongtien = 0;
                 </tr>
             <?php endforeach; ?>
           <tr>
-            <th scope="col">Tổng</th>
-            <th scope="col"></th>
-            <th scope="col"><?php echo number_format($tongdv);?></th>
-            <th scope="col"><?php echo number_format($tongchuathue);?></th>
-            <th scope="col"><?php echo number_format($tongthue);?></th>
-            <th scope="col"><?php echo number_format($tongtien);?></th>
-            <th scope="col"><?php echo number_format($tongtien);?></th>
-            <th scope="col"></th>
+            <td>Tổng</td>
+            <td></td>
+            <td><?php echo number_format($tongdv);?></td>
+            <td><?php echo number_format($tongchuathue);?></td>
+            <td><?php echo number_format($tongthue);?></td>
+            <td><?php echo number_format($tongtien);?></td>
+            <td><?php echo number_format($tongtien);?></td>
+            <td></td>
           </tr>
         </tbody>
     </table>
     <h4>II. Tổng hợp tiền điện theo số tài khoản </h4>
-    <table class="table">
+    <table>
         <thead>
           <tr>
             <th scope="col" width="2%">STT</th>
@@ -69,8 +69,6 @@ $tongtien = 0;
             <th scope="col" width="7%">Số tiền chưa thuế</th>
             <th scope="col" width="5%">Thuế VAT</th>
             <th scope="col" width="7%">Tổng tiền</th>
-            <th scope="col" width="20%">Tên đơn vị hưởng</th>
-            <th scope="col" width="7%">Số tài khoản</th>
             <th scope="col" width="20%">Tại ngân hàng</th>
           </tr>
         </thead>
@@ -81,15 +79,13 @@ $tongtien = 0;
             $tongtien = 0;
             foreach ($tongdiennh as $key => $value): ?>
                 <tr>
-                    <th scope="col"><?php echo ($key + 1);?></th>
-                    <th scope="col"><?php echo $value['TEN_DIENLUC'];?></th>
-                    <th scope="col"><?php echo $value['TK_DIENLUC'];?></th>
-                    <th scope="col"><?php echo number_format($value['T_TIENDIEN']);?></th>
-                    <th scope="col"><?php echo number_format($value['T_TIENTHUE']);?></th>
-                    <th scope="col"><?php echo number_format($value['T_TONGTIEN']);?></th>
-                    <th scope="col"><?php echo $value['TEN_DIENLUC'];?></th>
-                    <th scope="col"><?php echo $value['TK_DIENLUC'];?></th>
-                    <th scope="col"><?php echo $value['NH_DIENLUC'];?></th>
+                    <td><?php echo ($key + 1);?></td>
+                    <td><?php echo $value['TEN_DIENLUC'];?></td>
+                    <td><?php echo $value['TK_DIENLUC'];?></td>
+                    <td><?php echo number_format($value['T_TIENDIEN']);?></td>
+                    <td><?php echo number_format($value['T_TIENTHUE']);?></td>
+                    <td><?php echo number_format($value['T_TONGTIEN']);?></td>
+                    <td><?php echo $value['NH_DIENLUC'];?></td>
                     <?php
                         $tongchuathue += $value['T_TIENDIEN'];
                         $tongthue += $value['T_TIENTHUE'];
@@ -98,47 +94,45 @@ $tongtien = 0;
                 </tr>
             <?php endforeach; ?>
           <tr>
-            <th scope="col">Tổng</th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-            <th scope="col"><?php echo number_format($tongchuathue);?></th>
-            <th scope="col"><?php echo number_format($tongthue);?></th>
-            <th scope="col"><?php echo number_format($tongtien);?></th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-            <th scope="col"></th>
+            <td>Tổng</td>
+            <td></td>
+            <td></td>
+            <td><?php echo number_format($tongchuathue);?></td>
+            <td><?php echo number_format($tongthue);?></td>
+            <td><?php echo number_format($tongtien);?></td>
+            <td></td>
           </tr>
         </tbody>
     </table>
     <h4>III. Chi tiết tiền điện theo từng trạm</h4>
-    <table class="table">
+    <table>
         <thead>
           <tr>
-            <th scope="col" width="5%">Mã khách hàng <br/>trên hóa đơn <br/>điện</th>
-            <th scope="col" width="5%">Mã CSHT</th>
-            <th scope="col" width="5%">Số tiền <br/>chưa thuế</th>
-            <th scope="col" width="5%">Thuế <br/>VAT</th>
-            <th scope="col" width="5%">Tổng tiền</th>
-            <th scope="col" width="5%">Tổng tiền<br/> đề xuất</th>
-            <th scope="col" width="30%">Tên đơn vị hưởng</th>
-            <th scope="col" width="5%">Số tài khoản</th>
-            <th scope="col" width="30%">Tại ngân hàng</th>
-            <th scope="col" width="3%">Mã đơn vị</th>
+            <th>Mã khách hàng <br/>trên hóa đơn <br/>điện</th>
+            <th>Mã CSHT</th>
+            <th>Số tiền <br/>chưa thuế</th>
+            <th>Thuế <br/>VAT</th>
+            <th>Tổng tiền</th>
+            <th>Tổng tiền<br/> đề xuất</th>
+            <th>Tên đơn vị hưởng</th>
+            <th>Số tài khoản</th>
+            <th>Tại ngân hàng</th>
+            <th>Mã đơn vị</th>
           </tr>
         </thead>
         <tbody>
             <?php foreach ($dssddien as $key => $value): ?>
                 <tr>
-                    <th scope="col"><?php echo $value['MA_DIENLUC'];?></th>
-                    <th scope="col"><?php echo $value['MA_CSHT'];?></th>
-                    <th scope="col"><?php echo number_format($value['TIENDIEN']);?></th>
-                    <th scope="col"><?php echo number_format($value['TIENTHUE']);?></th>
-                    <th scope="col"><?php echo number_format($value['TONGTIEN']);?></th>
-                    <th scope="col"><?php echo number_format($value['TONGTIEN']);?></th>
-                    <th scope="col"><?php echo $value['TEN_DIENLUC'];?></th>
-                    <th scope="col"><?php echo $value['TK_DIENLUC'];?></th>
-                    <th scope="col"><?php echo $value['NH_DIENLUC'];?></th>
-                    <th scope="col"><?php echo $value['MA_DONVIKT'];?></th>
+                    <td style="max-width: 110px;word-wrap: all;"><?php echo $value['MA_DIENLUC'];?></td>
+                    <td><?php echo $value['MA_CSHT'];?></td>
+                    <td><?php echo number_format($value['TIENDIEN']);?></td>
+                    <td><?php echo number_format($value['TIENTHUE']);?></td>
+                    <td><?php echo number_format($value['TONGTIEN']);?></td>
+                    <td><?php echo number_format($value['TONGTIEN']);?></td>
+                    <td style="max-width: 150px;word-wrap: break-word;"><?php echo $value['TEN_DIENLUC'];?></td>
+                    <td><?php echo $value['TK_DIENLUC'];?></td>
+                    <td style=""><?php echo $value['NH_DIENLUC'];?></td>
+                    <td><?php echo $value['MA_DONVIKT'];?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

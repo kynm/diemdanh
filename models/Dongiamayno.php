@@ -34,6 +34,8 @@ class Dongiamayno extends \yii\db\ActiveRecord
             [['THANG'], 'required'],
             [['NAM'], 'required'],
             [['DONGIA'], 'required'],
+            [['DONGIA'], 'number'],
+            [['ID_DONVI'], 'required'],
         ];
     }
 
@@ -48,6 +50,7 @@ class Dongiamayno extends \yii\db\ActiveRecord
             'THANG' => 'Tháng',
             'NAM' => 'Năm',
             'DONGIA' => 'Đơn giá',
+            'ID_DONVI' => 'Đơn vị',
         ];
     }
 }

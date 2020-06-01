@@ -34,6 +34,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'value' => 'THANG'
                             ],
                             [
+                                'attribute' => 'ID_DONVI',
+                                'value' => 'ID_DONVI'
+                            ],
+                            [
                                 'attribute' => 'NAM',
                                 'value' => 'NAM'
                             ],
@@ -43,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                             [
                                 'class' => 'yii\grid\ActionColumn',
-                                'template'=>'{view}',
+                                'template'=>'',
                                 'buttons'=>[
                                 ]  
                             ],

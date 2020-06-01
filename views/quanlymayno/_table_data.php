@@ -40,7 +40,7 @@ $tongnhienlieu = 0;
                                     <td><?php echo $value['TEN_THIETBI'];?></td>
                                     <td><?php echo $loainhienlieu[$value['LOAINHIENLIEU']]?></td>
                                     <?php
-                                        $thanhtien = $dongiamayno[$value['LOAINHIENLIEU']] * (round($value['DINHMUC'] * ($value['THOI_GIAN']/60), 2));
+                                        $thanhtien = $value['GIATIEN'] * (round($value['DINHMUC'] * ($value['THOI_GIAN']/60), 2));
                                         $thanhtien = round($thanhtien);
                                         $tongtien += $thanhtien;
                                         $tong_theodai += $thanhtien;
@@ -52,7 +52,7 @@ $tongnhienlieu = 0;
                                     <td><?php echo $value['DINHMUC'];?></td>
                                     <td><?php echo $value['THOI_GIAN'];?></td>
                                     <td><?php echo round($value['DINHMUC'] * ($value['THOI_GIAN']/60), 2);?></td>
-                                    <td><?php echo number_format($dongiamayno[$value['LOAINHIENLIEU']]);?></td>
+                                    <td><?php echo number_format($value['GIATIEN']);?></td>
                                     <td><?php echo number_format($thanhtien)?></td>
                                 <tr>
                             <?php endforeach; ?>

@@ -58,14 +58,16 @@ class DongiamaynoSearch extends Dieuchuyenthietbi
             // $query->where('0=1');
             return $dataProvider;
         }
-
+        if (Yii::$app->user->can('dmdv-diennhienlieu')) {
+            $query->andFilterWhere([
+                'ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI,
+                // 'LOAI_NHIENLIEU' => $this->LOAI_NHIENLIEU,
+                // 'THANG' => $this->THANG,
+                // 'NAM' => $this->NAM,
+            ]);
+        }
         // grid filtering conditions
-        $query->andFilterWhere([
-            // 'ID_NHANVIEN' => $this->ID_NHANVIEN,
-            // 'LOAI_NHIENLIEU' => $this->LOAI_NHIENLIEU,
-            // 'THANG' => $this->THANG,
-            // 'NAM' => $this->NAM,
-        ]);
+
 
         return $dataProvider;
     }

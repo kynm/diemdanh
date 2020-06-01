@@ -17,5 +17,6 @@ $this->params['breadcrumbs'][] = 'Cập nhật';
 <div class="tramvt-update">
     <?= $this->render('_form_gia', [
         'model' => $model,
+        'dsDonvi' => $dsDonvi,
     ]) ?>
 </div>

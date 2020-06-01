@@ -309,6 +309,7 @@ class QuanlydienController extends Controller
             }
             $dsdonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'MA_DONVIKT', 'MA_DONVIKT');
             $params['dsdonvi'] = implode(',', $dsdonvi);
+            // die(var_dump($params));
             $searchModel = new QuanlydienSearch();
             $dssddien = $searchModel->baocaodsdientheodonvi($params);
             $tongdiendv = $searchModel->baocaothdientheodonvi($params);

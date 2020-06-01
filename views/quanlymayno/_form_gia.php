@@ -12,13 +12,14 @@ use kartik\datetime\DateTimePicker;
 /* @var $model app\models\Tramvt */
 /* @var $form yii\widgets\ActiveForm */
             $months = [];
-            for ($i = 0; $i < 12; $i++) {
-                $months[date('m', strtotime("+$i month"))] = date('m', strtotime("+$i month"));
-            }
-            $nowY = date("Y");
+            // for ($i = 0; $i < 2; $i++) {
+            //     $months[date('m', strtotime("-$i month"))] = date('m', strtotime("-$i month"));
+            // }
+            $months[date('m', strtotime("-1 month"))] = date('m', strtotime("-1 month"));
+            // $nowY = date("Y");
             $years = [
-                $nowY => $nowY,
-                $nowY - 1 => $nowY - 1,
+                date('Y', strtotime("-1 month")) => date('Y', strtotime("-1 month")),
+                // $nowY - 1 => $nowY - 1,
             ];
             $loainhienlieu = [
                 1 => 'Diesel',
@@ -31,7 +32,16 @@ use kartik\datetime\DateTimePicker;
     <?php $form = ActiveForm::begin(); ?>
     <div class="box box-primary">
         <div class="box-body">
-            <div class="col-sm-3">
+            <div class="col-sm-2">
+                <?= $form->field($model, 'ID_DONVI')->widget(Select2::classname(), [
+                    'data' => $dsDonvi,
+                    'options' => ['placeholder' => 'Đơn vị'],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]); ?>
+            </div>
+            <div class="col-sm-2">
                 <?= $form->field($model, 'LOAI_NHIENLIEU')->widget(Select2::classname(), [
                     'data' => $loainhienlieu,
                     'options' => ['placeholder' => 'Loại nhiên liệu'],
@@ -40,7 +50,7 @@ use kartik\datetime\DateTimePicker;
                     ],
                 ]); ?>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-2">
                 <?= $form->field($model, 'THANG')->widget(Select2::classname(), [
                     'data' => $months,
                     'options' => ['placeholder' => 'Tháng'],
@@ -49,7 +59,7 @@ use kartik\datetime\DateTimePicker;
                     ],
                 ]); ?>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-2">
                 <?= $form->field($model, 'NAM')->widget(Select2::classname(), [
                     'data' => $years,
                     'options' => ['placeholder' => 'Năm'],

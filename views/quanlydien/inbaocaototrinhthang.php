@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <button type='button' id='button-print' class='btn btn-primary' value='Print' onclick='printDiv();'>In bảng kê</button>
 <?= Html::a('<i class="fa fa-plus"></i> Quay Lại', ['baocaototrinh'], ['class' => 'btn btn-primary btn-flat', 'id' => 'backlink']) ?>
-<div id="print">
+<div id="print" style="font-size: 12px;">
     <table class="table">
         <tr style="border: none;">
             <td colspan="2" style="text-align: center;border: none;">VNPT HÀ NAM</td>
