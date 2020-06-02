@@ -16,6 +16,9 @@ use kartik\file\FileInput;
         <div class="box box-primary">
             <div class="box-body">
                 <div class="col-md-2 col-xs-2">
+                    <?= $form->field($model, 'MA_DONVIKT')->dropDownList($dsdonvi, ['prompt' => 'Chọn đơn vị' ]); ?>
+                </div>
+                <div class="col-md-2 col-xs-2">
                     <?= $form->field($model, 'THANG')->dropDownList($months, ['prompt' => 'Chọn tháng' ]); ?>
                 </div>
                 <div class="col-md-2 col-xs-2">

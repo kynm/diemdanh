@@ -159,23 +159,37 @@ class QuanlydienController extends Controller
     {
         if (Yii::$app->user->can('import-qldien')) {
             $months = [];
-            for ($i = 0; $i < 12; $i++) {
-                $months[date('m', strtotime("+$i month"))] = date('m', strtotime("+$i month"));
-            }
-            $nowY = date("Y");
+            // for ($i = 0; $i < 2; $i++) {
+            //     $months[date('m', strtotime("-$i month"))] = date('m', strtotime("-$i month"));
+            // }
+            $months[date('m', strtotime("-2 month"))] = date('m', strtotime("-2 month"));
+            // $nowY = date("Y");
             $years = [
-                $nowY => $nowY,
-                $nowY - 1 => $nowY - 1,
+                date('Y', strtotime("-2 month")) => date('Y', strtotime("-2 month")),
+                // $nowY - 1 => $nowY - 1,
             ];
+            $iddv = [2,3,4,5,6,7,666];
+            if (Yii::$app->user->can('dmdv-diennhienlieu')) {
+                $iddv = [Yii::$app->user->identity->nhanvien->ID_DONVI];
+            }
+
+            $dsdonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'MA_DONVIKT', 'TEN_DONVI');
             $model = new UploadForm();
             if (Yii::$app->request->post())
             {
                 $params = Yii::$app->request->bodyParams;
                 $model->fileupload = UploadedFile::getInstance($model, 'fileupload');
                 $data = \moonland\phpexcel\Excel::import($model->fileupload->tempName);
+                $keys = array_keys($data[0]);
+                $arrkeyCheck = ['MA_DIENLUC', 'TEN_DIENLUC', 'TK_DIENLUC', 'NH_DIENLUC', 'MA_CSHT', 'TIENDIEN', 'TIENTHUE', 'TONGTIEN'];
+                if (array_diff($arrkeyCheck, $keys)) {
+                    Yii::$app->session->setFlash('error', "Cập nhật không thành công. Thiếu trường: " . implode(',', array_diff($arrkeyCheck, $keys)));
+                    return $this->redirect(['import']);
+                }
                 Quanlydien::deleteAll([
                                 'NAM' => $params['UploadForm']['NAM'],
                                 'THANG' => $params['UploadForm']['THANG'],
+                                'MA_DONVIKT' => $params['UploadForm']['MA_DONVIKT'],
                             ]);
                 foreach ($data as $key => $value) {
                     if ($value['MA_DIENLUC']) {
@@ -187,7 +201,7 @@ class QuanlydienController extends Controller
                         $model1->TK_DIENLUC = $value['TK_DIENLUC'];
                         $model1->NH_DIENLUC = $value['NH_DIENLUC'];
                         $model1->MA_CSHT = $value['MA_CSHT'];
-                        $model1->MA_DONVIKT = $value['MA_DONVIKT'];
+                        $model1->MA_DONVIKT = $params['UploadForm']['MA_DONVIKT'];
                         $model1->TIENDIEN = (int)$value['TIENDIEN'];
                         $model1->TIENTHUE = (int)$value['TIENTHUE'];
                         $model1->TONGTIEN = (int)$value['TONGTIEN'];
@@ -197,11 +211,14 @@ class QuanlydienController extends Controller
                         $model1->save(false);
                     }
                 }
+                Yii::$app->session->setFlash('success', "Cập nhật thành công!");
             }
+
             return $this->render('import', [
                 'months' => $months,
                 'years' => $years,
                 'model' => $model,
+                'dsdonvi' => $dsdonvi,
             ]);
         } else {
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
@@ -214,7 +231,7 @@ class QuanlydienController extends Controller
             ini_set('max_execution_time', 5*60); // 5 minutes
             $path = Yii::getAlias('@webroot') . '/samplefile';
             $file = $path . '/dulieudien.xlsx';
-            Yii::$app->response->xSendFile($file);  
+            return Yii::$app->response->xSendFile($file);
 
         } else {
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');

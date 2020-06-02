@@ -16,12 +16,13 @@ $this->title = 'Đẩy dữ liệu điện';
 $this->params['breadcrumbs'][] = 'Cập nhật';
 ?>
     <p>
-        <?= (Yii::$app->user->can('import-qldien')) ? Html::a('<i class="fa fa-plus"></i> Tải file mẫu', ['filemauimportdien'], ['class' => 'btn btn-primary btn-flat']) : '' ?>
+        <?= (Yii::$app->user->can('import-qldien')) ? Html::a('<i class="fa fa-plus"></i> Tải file mẫu', 'https://drive.google.com/file/d/1aimVmS5dZAtJMU_dX5snZB59oDsUqNWM/view?usp=sharing', ['class' => 'btn btn-primary btn-flat', 'target' => '_blank']) : '' ?>
     </p>
 <div class="tramvt-update">
     <?= $this->render('_form_import', [
         'months' => $months,
         'years' => $years,
         'model' => $model,
+        'dsdonvi' => $dsdonvi,
     ]) ?>
 </div>

@@ -55,7 +55,9 @@ DashboardAsset::register($this);
                     foreach (Yii::$app->session->getAllFlashes() as $key => $message) {
                         echo '<div class="alert ' . $key . '"> <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>' . $message . '</div>';
                     }
+
                 ?>
+
             </div>
                 
             <?= $content ?>

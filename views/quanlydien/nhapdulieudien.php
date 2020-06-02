@@ -10,6 +10,7 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Tramvt */
 $this->title = 'NHập dữ liệu điện tại trạm ' . $tramvt->TEN_TRAM . $tramvt->MA_TRAM;
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="tramvt-update">
     <div class="box box-primary">

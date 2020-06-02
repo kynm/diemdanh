@@ -12,14 +12,14 @@ class UploadForm extends Model
     public $fileupload;
     public $THANG;
     public $NAM;
+    public $MA_DONVIKT;
 
     public function rules()
     {
         return [
             [['fileupload'], 'file', 'skipOnEmpty' => false, 'extensions' => 'xlsx, xls'],
-            [['THANG', 'NAM'], 'required'],
-            [['THANG', 'NAM'], 'integer'],
-
+            [['THANG', 'NAM', 'MA_DONVIKT'], 'required'],
+            [['THANG', 'NAM', 'MA_DONVIKT'], 'integer'],
         ];
     }
     
@@ -31,6 +31,15 @@ class UploadForm extends Model
         } else {
             return false;
         }
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'THANG' => 'Tháng',
+            'NAM' => 'Năm',
+            'MA_DONVIKT' => 'Đơn vị',
+        ];
     }
 }
  ?>
