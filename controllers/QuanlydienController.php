@@ -63,10 +63,15 @@ class QuanlydienController extends Controller
                 $listTram = ArrayHelper::map(Tramvt::find()->asArray()->all(), 'TEN_TRAM', 'TEN_TRAM');
             }
 
+            $iddv = [2,3,4,5,6,7,666];
+            if (Yii::$app->user->can('dmdv-diennhienlieu')) {
+                $iddv = [Yii::$app->user->identity->nhanvien->ID_DONVI];
+            }
             return $this->render('index', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
                 'listTram' => $listTram,
+                'iddv' => $iddv,
             ]);
         } else {
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');

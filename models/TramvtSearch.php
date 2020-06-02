@@ -130,12 +130,17 @@ class TramvtSearch extends Tramvt
             return $dataProvider;
         }
 
+        $iddv = [2,3,4,5,6,7,666];
+        if (Yii::$app->user->can('dmdv-diennhienlieu')) {
+            $iddv = [Yii::$app->user->identity->nhanvien->ID_DONVI];
+        }
         $query->joinWith('iDDAI');
         $query->joinWith('iDNHANVIEN');
         $query->andFilterWhere([
             'ID_TRAM' => $this->ID_TRAM,
         ]);
         $query->andFilterWhere(['=', 'daivt.ID_DAI', $this->ID_DAI])
+            ->andFilterWhere(['in', 'daivt.ID_DONVI', $iddv])
             ->andFilterWhere(['like', 'TEN_TRAM', $this->TEN_TRAM]);
 
         return $dataProvider;
