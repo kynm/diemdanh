@@ -47,9 +47,13 @@ class TramvtSearch extends Tramvt
         $query = Tramvt::find();
 
         // add conditions that should always apply here
-        if (Yii::$app->user->identity->nhanvien->chucvu->cap == 2) {
+        // if (Yii::$app->user->identity->nhanvien->chucvu->cap == 2) {
+            
+        // }
+        if (Yii::$app->user->can('dmdv-diennhienlieu')) {
             $query->andWhere(['daivt.ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI]);
         }
+
         if (Yii::$app->user->identity->nhanvien->chucvu->cap == 3) {
             $query->andWhere(['tramvt.ID_DAI' => Yii::$app->user->identity->nhanvien->ID_DAI]);
         }
