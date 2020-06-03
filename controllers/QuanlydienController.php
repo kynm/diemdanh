@@ -331,7 +331,6 @@ class QuanlydienController extends Controller
             }
             $dsdonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'MA_DONVIKT', 'MA_DONVIKT');
             $params['dsdonvi'] = implode(',', $dsdonvi);
-            // die(var_dump($params));
             $searchModel = new QuanlydienSearch();
             $dssddien = $searchModel->baocaodsdientheodonvi($params);
             $tongdiendv = $searchModel->baocaothdientheodonvi($params);
@@ -339,40 +338,162 @@ class QuanlydienController extends Controller
             $donvi = Donvi::findOne($params['ID_DONVI']);
             if (isset($params['is_excel']) && $params['is_excel']) {
                 $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
-                $sheet = $spreadsheet->getActiveSheet();
-                $sheet->setCellValue('A1', 'I - Chi tiết tiền điện theo từng trạm');
-                $sheet->setCellValue('B1', $donvi->TEN_DONVI);
-                $sheet->fromArray(
-                    ['Mã khách hàng trên hóa đơn điện','Mã CSHT','Số tiền chưa thuế','Thuế VAT','Tổng tiền','Tên đơn vị hưởng','Số tài khoản','Tại ngân hàng'],
-                    '',
-                    'A2'
-                );
-                $sheet->fromArray(
-                    $dssddien,
-                    '',
-                    'A3'
-                );
+                $spreadsheet->getDefaultStyle()->getFont()->setName('Arial');
+                $spreadsheet->getDefaultStyle()->getFont()->setSize(10);
+                $spreadsheet->getActiveSheet()->mergeCells("A1:B1")->mergeCells("C1:F1")->mergeCells("G1:K1")
+                    ->setCellValue("A1", "VNPT HÀ NAM")
+                    ->setCellValue("G1", "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM");
+                $spreadsheet->getActiveSheet()->mergeCells("A2:B2")->mergeCells("C2:F2")->mergeCells("G2:K2")
+                    ->setCellValue("A2", "Phòng Kế toán Kế hoạch")
+                    ->setCellValue("G2", "Độc lập - Tự do - Hạnh phúc");
+                $spreadsheet->getActiveSheet()->mergeCells("A4:K4")->setCellValue("A4", "TỜ TRÌNH");
+                $spreadsheet->getActiveSheet()->mergeCells("A5:K5")
+                    ->setCellValue("A5", "V/v: Thanh toán tiền điện cho  các Trung tâm Viễn thông huyện, thành phố tháng: " .  $params["THANG"] . "/" . $params["NAM"]);
+                $spreadsheet->getActiveSheet()->mergeCells("A7:K7")->setCellValue("A7", "Kính gửi: Giám đốc Viễn thông Hà Nam");
+                $spreadsheet->getActiveSheet()->mergeCells("A8:K8")->setCellValue("A8", "Ý KIẾN CỦA LÃNH ĐẠO");
 
-                $sheet->setCellValue('A' . (count($dssddien) + 3), 'Số liệu tổng hợp ');
-                $sheet->fromArray(
-                    ['Tên đơn vị hưởng','Số tài khoản','Số tiền chưa thuế','Thuế VAT','Tổng tiền','Tên đơn vị hưởng','Số tài khoản','Tại ngân hàng'],
-                    '',
-                    'A' . (count($dssddien) + 4)
-                );
-                $sheet->fromArray(
-                    $tongdiennh,
-                    '',
-                    'A' . (count($dssddien) + 5)
-                );
-                $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
-                $file_name = 'Số liệu điện '  . $donvi->TEN_DONVI . $params['THANG'] . '/' . $params['NAM'];
+                $spreadsheet->getActiveSheet()->getStyle('A1:K8')->getAlignment()->setHorizontal('center');
+                $spreadsheet->getActiveSheet()->mergeCells("A10:K10")->setCellValue("A10", "Căn cứ các hợp đồng giữa Trung tâm viễn thông huyện thành phố và điện lực địa phương");
+                $spreadsheet->getActiveSheet()->mergeCells("A11:K11")->setCellValue("A11", "Căn cứ hóa đơn tiền điện phát sinh tháng 5/2020 tại đơn vị ");
+                $spreadsheet->getActiveSheet()->mergeCells("A12:K12")->setCellValue("A12", "Căn cứ tờ trình về việc thanh toán tiền điện tháng 5/2020 của đơn vị. ");
+                $spreadsheet->getActiveSheet()->mergeCells("A13:K13")->setCellValue("A13", "Để kịp thời thanh toán tiền điện cho điện lực địa phương; kính trình Giám đốc Viễn thông Hà Nam thanh toán tập trung tại Viễn thông Hà Nam các hóa đơn tiền điện chi  tiết như sau:");
+                $spreadsheet->getActiveSheet()->mergeCells("A15:K15")->setCellValue("A15", "I. Tổng hợp tiền điện theo trung tâm viễn thông");
+                if (count($tongdiendv)) {
+                    $tongchuathue = 0;
+                    $tongthue = 0;
+                    $tongtien = 0;
+                    $tongdv = 0;
+                    $spreadsheet->setActiveSheetIndex(0)
+                        ->setCellValue("A16", 'STT')
+                        ->setCellValue("B16", 'Tên TTVT')
+                        ->setCellValue("C16", 'Số trạm thanh toán')
+                        ->setCellValue("D16", 'Số tiền chưa thuế')
+                        ->setCellValue("E16", 'Thuế VAT')
+                        ->setCellValue("F16", 'Tổng tiền')
+                        ->setCellValue("G16", 'Tiền đề nghị thanh toán');
+                    foreach($tongdiendv as $key => $value) {
+                        $tongchuathue += $value['TIENDIEN'];
+                        $tongthue += $value['TIENTHUE'];
+                        $tongtien += $value['TONGTIEN'];
+                        $tongdv += $value['SO_TRAM'];
+                        $x = $key + 17;
+                        $spreadsheet->setActiveSheetIndex(0)
+                            ->setCellValue("A$x", ($key + 1))
+                            ->setCellValue("B$x", $value['TEN_DONVI'])
+                            ->setCellValue("C$x", $value['SO_TRAM'])
+                            ->setCellValue("D$x", $value['TIENDIEN'])
+                            ->setCellValue("E$x", $value['TIENTHUE'])
+                            ->setCellValue("F$x", $value['TONGTIEN'])
+                            ->setCellValue("G$x", $value['TONGTIEN']);
+                    }
 
+                    $x++;
+                    $spreadsheet->setActiveSheetIndex(0)
+                        ->setCellValue("A$x", 'Tổng')
+                        ->setCellValue("B$x", '')
+                        ->setCellValue("C$x", $tongdv)
+                        ->setCellValue("D$x", $tongchuathue)
+                        ->setCellValue("E$x", $tongthue)
+                        ->setCellValue("F$x", $tongtien)
+                        ->setCellValue("G$x", '');
+                    $x++;
+                    $x++;
+                    $spreadsheet->getActiveSheet()->mergeCells("A$x:K$x")->setCellValue("A$x", 'II. Tổng hợp tiền điện theo số tài khoản');
+                    $x++;
+                    $spreadsheet->setActiveSheetIndex(0)
+                        ->setCellValue("A$x", 'STT')
+                        ->setCellValue("B$x", 'Tên đơn vị hưởng')
+                        ->setCellValue("C$x", 'Số tài khoản')
+                        ->setCellValue("D$x", 'Số tiền chưa thuế')
+                        ->setCellValue("E$x", 'Thuế VAT')
+                        ->setCellValue("F$x", 'Tổng tiền')
+                        ->setCellValue("G$x", 'Tại ngân hàng');
+                    //list danh sách
+                    $tongchuathue = 0;
+                    $tongthue = 0;
+                    $tongtien = 0;
+                    foreach($tongdiennh as $key => $value) {
+                        $tongchuathue += $value['T_TIENDIEN'];
+                        $tongthue += $value['T_TIENTHUE'];
+                        $tongtien += $value['T_TONGTIEN'];
+                        $x = count($tongdiendv) + $key + 21;
+                        $spreadsheet->setActiveSheetIndex(0)
+                            ->setCellValue("A$x", ($key + 1))
+                            ->setCellValue("B$x", $value['TEN_DIENLUC'])
+                            ->setCellValue("C$x", $value['TK_DIENLUC'])
+                            ->setCellValue("D$x", $value['T_TIENDIEN'])
+                            ->setCellValue("E$x", $value['T_TIENTHUE'])
+                            ->setCellValue("F$x", $value['T_TONGTIEN'])
+                            ->setCellValue("G$x", $value['NH_DIENLUC']);
+                        $spreadsheet->getActiveSheet()->getStyle("C$x")->getNumberFormat()->setFormatCode('0');
+                    }
+
+                    $x++;
+                    $spreadsheet->setActiveSheetIndex(0)
+                        ->setCellValue("A$x", 'Tổng')
+                        ->setCellValue("B$x", '')
+                        ->setCellValue("C$x", '')
+                        ->setCellValue("D$x", $tongchuathue)
+                        ->setCellValue("E$x", $tongthue)
+                        ->setCellValue("F$x", $tongtien)
+                        ->setCellValue("G$x", '');
+
+                    $x++;
+                    $x++;
+                    $spreadsheet->getActiveSheet()->mergeCells("A$x:K$x")->setCellValue("A$x", 'III. Chi tiết tiền điện theo từng trạm');
+                    $x++;
+                    $spreadsheet->setActiveSheetIndex(0)
+                            ->setCellValue("A$x", 'STT')
+                            ->setCellValue("B$x", 'Mã khách hàng trên hóa đơn điện')
+                            ->setCellValue("C$x", 'Mã CSHT')
+                            ->setCellValue("D$x", 'Số tiền chưa thuế')
+                            ->setCellValue("E$x", 'Thuế VAT')
+                            ->setCellValue("F$x", 'Tổng tiền')
+                            ->setCellValue("G$x", 'Tổng tiền đề xuất')
+                            ->setCellValue("H$x", 'Tên đơn vị hưởng')
+                            ->setCellValue("I$x", 'Số tài khoản')
+                            ->setCellValue("J$x", 'Tại ngân hàng')
+                            ->setCellValue("K$x", 'Mã đơn vị');
+                    foreach($dssddien as $key => $value) {
+                        $x = count($tongdiennh) + count($tongdiendv) + $key + 24;
+                        $spreadsheet->setActiveSheetIndex(0)
+                            ->setCellValue("A$x", ($key + 1))
+                            ->setCellValue("B$x", $value['MA_DIENLUC'])
+                            ->setCellValue("C$x", $value['MA_CSHT'])
+                            ->setCellValue("D$x", $value['TIENDIEN'])
+                            ->setCellValue("E$x", $value['TIENTHUE'])
+                            ->setCellValue("F$x", $value['TONGTIEN'])
+                            ->setCellValue("G$x", $value['TONGTIEN'])
+                            ->setCellValue("H$x", $value['TEN_DIENLUC'])
+                            ->setCellValue("I$x", $value['TK_DIENLUC'])
+                            ->setCellValue("J$x", $value['NH_DIENLUC'])
+                            ->setCellValue("K$x", $value['MA_DONVIKT']);
+                        $spreadsheet->getActiveSheet()->getStyle("I$x")->getNumberFormat()->setFormatCode('0');
+                    }
+                    $x++;
+                    $x++;
+                    $x++;
+                    $x++;
+                    $x++;
+                    $spreadsheet->getActiveSheet()->mergeCells("A$x:D$x")->setCellValue("A$x", 'Người lập biểu');
+                    $spreadsheet->getActiveSheet()->setCellValue("H$x", 'Phủ Lý, ngày ' . date('d') . ', ' . date('m') . ', '. date('Y'));
+                    $spreadsheet->getActiveSheet()->getStyle("A$x:K$x")->getAlignment()->setHorizontal('center');
+                    $x++;
+                    $spreadsheet->getActiveSheet()->mergeCells("A$x:D$x")->setCellValue("A$x", '');
+                    $spreadsheet->getActiveSheet()->setCellValue("H$x", 'Kế toán trưởng');
+                    $spreadsheet->getActiveSheet()->getStyle("A$x:K$x")->getAlignment()->setHorizontal('center');
+                }
+                $filename = 'Output.xlsx'; //save our workbook as this file name
+                // Redirect output to a client’s web browser (Xlsx)
                 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-                header('Content-Disposition: attachment;filename="'.$file_name.'.xlsx"');
+                header('Content-Disposition: attachment;filename="'.$filename.'"');
                 header('Cache-Control: max-age=0');
+                // If you're serving to IE 9, then the following may be needed
+                header('Cache-Control: max-age=1');
 
-                $writer->save("php://output");
-                exit;
+                $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+                $writer->save('php://output');
+                die();
             }
             $this->layout = 'printLayout';
             return $this->render('inbaocaototrinhthang', [
