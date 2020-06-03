@@ -483,7 +483,7 @@ class QuanlydienController extends Controller
                     $spreadsheet->getActiveSheet()->setCellValue("H$x", 'Kế toán trưởng');
                     $spreadsheet->getActiveSheet()->getStyle("A$x:K$x")->getAlignment()->setHorizontal('center');
                 }
-                $filename = 'Dữ liệu điện ' . $params["THANG"] . "_" . $params["NAM"]); //save our workbook as this file name
+                $filename = 'Dữ liệu điện ' . $params["THANG"] . "_" . $params["NAM"]; //save our workbook as this file name
                 // Redirect output to a client’s web browser (Xlsx)
                 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
                 header('Content-Disposition: attachment;filename="'.$filename.'"');
