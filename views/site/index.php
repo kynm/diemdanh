@@ -71,31 +71,18 @@ $this->title = 'Dashboard';
             <div class="box box-primary collapsed-box">
                 <div class="box-header with-border">
                     <h3 class="box-title">Tài liệu hướng dẫn và phần mềm</h3>
-
                     <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
-                        </button>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                     </div>
+
                 </div>
                 <!-- /.box-header -->
-                <div class="box-body">
+                <div class="box-body" style="display: block;">
                     <ul>
-                        <li>Phiên bản website
-                            <ul>
-                                <iframe src="https://www.youtube.com/embed/bUiQB9LHBC4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                            
-                            </ul>
+                        <li>
+                            <a href="https://drive.google.com/file/d/1akPjH6DncfJe2odo7LUeWOEmHQOGQpgO/view?usp=sharing" target="_blank">Hướng dẫn sử dụng phần mềm</a>
                         </li>
-                        <li>Phiên bản mobile
-                            <ul>
-                                <li>
-                                    <a href="https://tinyurl.com/mdsmobile-huongdan" class="uppercase">Hướng dẫn cài đặt và sử dụng</a>
-                                </li>
-                                <li>
-                                    <a href="https://tinyurl.com/mdsmobile-caidat" class="uppercase">File cài đặt</a>
-                                </li>
-                            </ul>
+                        <li>
+                            <a href="https://docs.google.com/spreadsheets/d/1N1R92fV6yufSyAaJzPiUN2qFQfyOv0W5QeFUfnv4dr4/edit?usp=sharing" target="_blank">Góp ý và báo lỗi</a>
                         </li>
                     </ul>
                 </div>
