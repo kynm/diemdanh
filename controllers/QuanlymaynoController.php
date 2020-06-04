@@ -423,7 +423,7 @@ class QuanlymaynoController extends Controller
         }
         $searchModel = new NhatKySuDungMayNoSearch();
         foreach ($dldonvi as $idDonvi => $dv) {
-            $data = array_merge($data,$searchModel->baocaomaynotheothangchitiet(['ID_DONVI' => $idDonvi, 'THANG' => $inputs['THANG'], 'NAM' => $inputs['NAM']]));
+            $data = array_merge($data,$searchModel->baocaomaynotheothang(['ID_DONVI' => $idDonvi, 'THANG' => $inputs['THANG'], 'NAM' => $inputs['NAM']]));
         }
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();

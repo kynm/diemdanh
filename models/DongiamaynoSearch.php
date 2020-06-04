@@ -66,6 +66,11 @@ class DongiamaynoSearch extends Dieuchuyenthietbi
                 // 'NAM' => $this->NAM,
             ]);
         }
+        $query->orderBy([
+          'ID_DONVI' => SORT_DESC,
+          'THANG'=>SORT_DESC,
+          'NAM'=>SORT_DESC,
+        ]);
         // grid filtering conditions
 
 
