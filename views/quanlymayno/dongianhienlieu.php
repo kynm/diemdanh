@@ -26,20 +26,27 @@ $this->params['breadcrumbs'][] = $this->title;
                         'columns' => [
                             ['class' => 'yii\grid\SerialColumn'],
                             [
-                                'attribute' => 'LOAI_NHIENLIEU',
-                                'value' => 'LOAI_NHIENLIEU'
+                                'attribute' => 'ID_DONVI',
+                                'value' => 'iDDONVI.TEN_DONVI'
                             ],
                             [
                                 'attribute' => 'THANG',
                                 'value' => 'THANG'
                             ],
                             [
-                                'attribute' => 'ID_DONVI',
-                                'value' => 'iDDONVI.TEN_DONVI'
-                            ],
-                            [
                                 'attribute' => 'NAM',
                                 'value' => 'NAM'
+                            ],
+                            [
+                                'attribute' => 'LOAI_NHIENLIEU',
+                                'value' => function($model) {
+                                    switch ($model->LOAI_NHIENLIEU) {
+                                        case 1:
+                                            return 'Diesel';
+                                        case 2:
+                                            return 'Xăng';
+                                    }
+                                }
                             ],
                             [
                                 'attribute' => 'DONGIA',

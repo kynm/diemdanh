@@ -509,7 +509,7 @@ class QuanlymaynoController extends Controller
     {
         $searchModel = new DongiamaynoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        $loainhienlieu = [];
         return $this->render('dongianhienlieu', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
