@@ -50,7 +50,9 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                             [
                                 'attribute' => 'DONGIA',
-                                'value' => 'DONGIA'
+                                'value' => function($model) {
+                                    return number_format($model->DONGIA);
+                                }
                             ],
                             [
                                 'class' => 'yii\grid\ActionColumn',
