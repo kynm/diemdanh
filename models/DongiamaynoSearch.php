@@ -58,6 +58,7 @@ class DongiamaynoSearch extends Dieuchuyenthietbi
             // $query->where('0=1');
             return $dataProvider;
         }
+        $query->joinWith('iDDONVI');
         if (Yii::$app->user->can('dmdv-diennhienlieu')) {
             $query->andFilterWhere([
                 'ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI,

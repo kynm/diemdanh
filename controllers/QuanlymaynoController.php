@@ -24,6 +24,9 @@ use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
 use moonland\phpexcel\Excel;
 
+use app\models\Thietbi;
+use app\models\UploadForm;
+use yii\web\UploadedFile;
 /**
  * TramvtController implements the CRUD actions for Tramvt model.
  */
@@ -174,11 +177,6 @@ class QuanlymaynoController extends Controller
 
     public function actionThongkeketoan()
     {
-        // $data = NhatKySuDungMayNo::find()->all();
-        // foreach ($data as $key => $value) {
-        //     $value->LOAINHIENLIEU = json_decode(Thietbitram::findOne($value->ID_THIETBITRAM)->THAMSOTHIETBI)->LOAINHIENLIEU;
-        //     $value->save(false);
-        // }
         if (Yii::$app->user->can('tkkt-mayno')) {
             $months = [];
             $data = [];
@@ -560,5 +558,57 @@ class QuanlymaynoController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+    }
+
+    public function actionImport()
+    {
+        if (Yii::$app->user->can('import-qldien')) {
+            $months = [];
+            // for ($i = 0; $i < 2; $i++) {
+            //     $months[date('m', strtotime("-$i month"))] = date('m', strtotime("-$i month"));
+            // }
+            $months[date('m', strtotime("-2 month"))] = date('m', strtotime("-2 month"));
+            // $nowY = date("Y");
+            $years = [
+                date('Y', strtotime("-2 month")) => date('Y', strtotime("-2 month")),
+                // $nowY - 1 => $nowY - 1,
+            ];
+            $iddv = [2,3,4,5,6,7,666];
+            if (Yii::$app->user->can('dmdv-diennhienlieu')) {
+                $iddv = [Yii::$app->user->identity->nhanvien->ID_DONVI];
+            }
+
+            $dsdonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'MA_DONVIKT', 'TEN_DONVI');
+            $model = new UploadForm();
+            if (Yii::$app->request->post())
+            {
+                $params = Yii::$app->request->bodyParams;
+                $model->fileupload = UploadedFile::getInstance($model, 'fileupload');
+                $data = \moonland\phpexcel\Excel::import($model->fileupload->tempName);
+                $thietbichuanhap = [];
+                foreach ($data as $key => $value) {
+                $thietbi = Thietbi::find()->where(['TEN_THIETBI' => $value['ID_THIETBITRAM']])->one();
+                $tramvt = Tramvt::find()->where(['TEN_TRAM' => $value['ID_TRAM']])->one();
+                $thietbitram = Thietbitram::find()->where(['ID_TRAM' => $tramvt->ID_TRAM, 'ID_LOAITB' => $thietbi->ID_THIETBI])->one();
+                if (!$thietbitram) {
+                        $thietbichuanhap[]= $value;
+                    # code...
+                }
+                    // $thietbitram = Thietbitram::find()->where('')
+                }
+                die(var_dump($thietbichuanhap));
+                $keys = array_keys($data[0]);
+                Yii::$app->session->setFlash('success', "Cập nhật thành công!");
+            }
+
+            return $this->render('import', [
+                'months' => $months,
+                'years' => $years,
+                'model' => $model,
+                'dsdonvi' => $dsdonvi,
+            ]);
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
+        }
     }
 }

@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                             [
                                 'attribute' => 'ID_DONVI',
-                                'value' => 'ID_DONVI'
+                                'value' => 'iDDONVI.TEN_DONVI'
                             ],
                             [
                                 'attribute' => 'NAM',

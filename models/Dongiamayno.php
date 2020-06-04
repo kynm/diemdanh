@@ -53,4 +53,12 @@ class Dongiamayno extends \yii\db\ActiveRecord
             'ID_DONVI' => 'Đơn vị',
         ];
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIDDONVI()
+    {
+        return $this->hasOne(Donvi::className(), ['ID_DONVI' => 'ID_DONVI']);
+    }
 }
