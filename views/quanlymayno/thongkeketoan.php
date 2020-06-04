@@ -75,7 +75,7 @@ use yii\grid\GridView;
                 <a class="btn btn-primary btn-flat" href="<?= Url::to(['quanlymayno/inbaoduongthang?ID_DONVI=' . $inputs['ID_DONVI'] . '&NAM=' . $inputs['NAM'] . '&THANG=' . $inputs['THANG']])?>" target="_blank">In kết quả</a>
             </div>
             <div class="col-md-1 col-xs-1">
-                <a class="btn btn-primary btn-flat" href="<?= Url::to(['quanlymayno/exportbaoduongthang?ID_DONVI=' . $inputs['ID_DONVI'] . '&NAM=' . $inputs['NAM'] . '&THANG=' . $inputs['THANG']])?>"></a>
+                <a class="btn btn-primary btn-flat" href="<?= Url::to(['quanlymayno/exportbaoduongthang?ID_DONVI=' . $inputs['ID_DONVI'] . '&NAM=' . $inputs['NAM'] . '&THANG=' . $inputs['THANG']])?>">Danh sách Excel</a>
             </div>
         <?php }?>
     </div>
@@ -87,7 +87,6 @@ use yii\grid\GridView;
             <div class="table-responsive">
                 <?= $this->render('_table_data', [
                     'data' => $data,
-                    'dongiamayno' => $dongiamayno,
                     'loainhienlieu' => $loainhienlieu,
                 ]) ?>
             </div>

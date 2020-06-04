@@ -185,10 +185,6 @@ class QuanlymaynoController extends Controller
                 'NAM' => date('Y', strtotime("-1 month")),
                 'THANG' => date('m', strtotime("-1 month")),
             ];
-            $dongiamayno = [
-                1 => 0,
-                2 => 0,
-            ];
             for ($i = 0; $i < 12; $i++) {
                 $months[date('m', strtotime("+$i month"))] = date('m', strtotime("+$i month"));
             }
@@ -210,7 +206,6 @@ class QuanlymaynoController extends Controller
             if (Yii::$app->request->post()) {
                 $isprint = 1;
                 $inputs = Yii::$app->request->bodyParams;
-                $dongiamayno = $searchModel->getDongiatheothang($inputs);
                 if ($inputs['ID_DONVI']) {
                     $dldonvi = [$inputs['ID_DONVI'] => $inputs['ID_DONVI']];
                 } else {
@@ -230,7 +225,6 @@ class QuanlymaynoController extends Controller
                 'months' => $months,
                 'years' => $years,
                 'inputs' => $inputs,
-                'dongiamayno' => $dongiamayno,
                 'loainhienlieu' => $loainhienlieu,
                 'dsDonvi' => $dsDonvi,
                 ]);
@@ -248,10 +242,6 @@ class QuanlymaynoController extends Controller
                 'ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI,
                 'NAM' => date('Y', strtotime("-1 month")),
                 'THANG' => date('m', strtotime("-1 month")),
-            ];
-            $dongiamayno = [
-                1 => 0,
-                2 => 0,
             ];
             for ($i = 0; $i < 12; $i++) {
                 $months[date('m', strtotime("+$i month"))] = date('m', strtotime("+$i month"));
@@ -274,7 +264,6 @@ class QuanlymaynoController extends Controller
             if (Yii::$app->request->post()) {
                 $isprint = 1;
                 $inputs = Yii::$app->request->bodyParams;
-                $dongiamayno = $searchModel->getDongiatheothang($inputs);
                 if ($inputs['ID_DONVI']) {
                     $dldonvi = [$inputs['ID_DONVI'] => $inputs['ID_DONVI']];
                 } else {
@@ -295,7 +284,6 @@ class QuanlymaynoController extends Controller
                 'months' => $months,
                 'years' => $years,
                 'inputs' => $inputs,
-                'dongiamayno' => $dongiamayno,
                 'loainhienlieu' => $loainhienlieu,
                 'dsDonvi' => $dsDonvi,
                 ]);
@@ -420,73 +408,41 @@ class QuanlymaynoController extends Controller
 
     public function actionExportbaoduongthang()
     {
-        // if (Yii::$app->user->can('tkkt-mayno')) {
-        //     $this->layout = 'printLayout';
-        //     $months = [];
-        //     $data = [];
-        //     $inputs = [
-        //         'ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI,
-        //         'NAM' => date('Y', strtotime("-1 month")),
-        //         'THANG' => date('m', strtotime("-1 month")),
-        //     ];
-        //     $dongiamayno = [
-        //         1 => 0,
-        //         2 => 0,
-        //     ];
-        //     for ($i = 0; $i < 12; $i++) {
-        //         $months[date('m', strtotime("+$i month"))] = date('m', strtotime("+$i month"));
-        //     }
-        //     $nowY = date("Y");
-        //     $years = [
-        //         $nowY => $nowY,
-        //         $nowY - 1 => $nowY - 1,
-        //     ];
-        //     $inputs = Yii::$app->request->get();
-        //     $dongiamayno = ArrayHelper::map(Dongiamayno::find()
-        //         ->where(['THANG' => $inputs['THANG'], 'NAM' => $inputs['NAM']])->all(), 'LOAI_NHIENLIEU', 'DONGIA');
-        //     $dsdai = ArrayHelper::map(Daivt::find()->where(['ID_DONVI' => $inputs['ID_DONVI']])->all(), 'ID_DAI', 'ID_DAI');
-        //     $danhsachtram = ArrayHelper::map(Tramvt::find()->where(['in', 'ID_DAI', $dsdai])->all(), 'ID_TRAM', 'ID_TRAM');
-        //     $query = NhatKySuDungMayNo::find();
-        //     $query->where(['in','ID_TRAM', $danhsachtram]);
-        //     $query->andWhere('year(THOIGIANBATDAU) = ' . $inputs['NAM']);
-        //     $query->andWhere('MONTH(THOIGIANBATDAU) = ' . $inputs['THANG']);
-        //     $donvi = Donvi::findOne($inputs['ID_DONVI']);
-        //     $data = $query->all();
-        //     $dataExport = [];
-        //     $tongtien = 0;
-        //     foreach ($data as $key => $value) {
-        //         $dataExport[$key]['TEN_TRAM'] =  $value->tRAMVANHANH->TEN_TRAM;
-        //         $dataExport[$key]['TEN_THIETBI'] =  $value->tHIETBITRAM->iDLOAITB->TEN_THIETBI;
-        //         $LOAINHIENLIEU = json_decode($value->tHIETBITRAM->THAMSOTHIETBI)->LOAINHIENLIEU;
+        $data = [];
+        $inputs = Yii::$app->request->get();
+        $iddv = [2,3,4,5,6,7,666];
+        if (Yii::$app->user->can('dmdv-diennhienlieu')) {
+            $inputs['ID_DONVI'] = Yii::$app->user->identity->nhanvien->ID_DONVI;
+            $iddv = [$inputs['ID_DONVI']];
+        }
+        $dsDonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'ID_DONVI', 'TEN_DONVI');
+        if ($inputs['ID_DONVI']) {
+            $dldonvi = [$inputs['ID_DONVI'] => $inputs['ID_DONVI']];
+        } else {
+            $dldonvi = $dsDonvi;
+        }
+        $searchModel = new NhatKySuDungMayNoSearch();
+        foreach ($dldonvi as $idDonvi => $dv) {
+            $data = array_merge($data,$searchModel->baocaomaynotheothangchitiet(['ID_DONVI' => $idDonvi, 'THANG' => $inputs['THANG'], 'NAM' => $inputs['NAM']]));
+        }
 
-        //         $thanhtien= $dongiamayno[$LOAINHIENLIEU] * $value->soluong;
-        //         $tongtien +=$thanhtien;
-        //         $dataExport[$key]['DINH_MUC'] =  json_decode($value->tHIETBITRAM->THAMSOTHIETBI)->DINH_MUC;;
-        //         $dataExport[$key]['hous'] =  $value->hous;;
-        //         $dataExport[$key]['LOAINHIENLIEU'] =  $dongiamayno[$LOAINHIENLIEU];
-        //         $dataExport[$key]['thanhtien'] =  $thanhtien;
-        //     }
-        //     $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
-        //     $sheet = $spreadsheet->getActiveSheet();
-        //     $sheet->setCellValue('A1', 'Số liệu tháng ' . $inputs['THANG'] . '/' . $inputs['NAM']);
-        //     $sheet->setCellValue('B1', $donvi->TEN_DONVI);
-        //     $sheet->fromArray(
-        //         $dataExport,
-        //         '',
-        //         'A2'
-        //     );
-        //     $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
-        //     $file_name = $donvi->TEN_DONVI . $inputs['THANG'] . '/' . $inputs['NAM'];
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $spreadsheet->getDefaultStyle()->getFont()->setName('Arial');
+        $spreadsheet->getDefaultStyle()->getFont()->setSize(10);
+        $spreadsheet->getActiveSheet()->fromArray(array_keys($data[0]), '', 'A1');
+        $spreadsheet->getActiveSheet()->fromArray($data, '', 'A2');
 
-        //     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        //     header('Content-Disposition: attachment;filename="'.$file_name.'.xlsx"');
-        //     header('Cache-Control: max-age=0');
+        $filename = 'Dữ liệu máy nổ ' . $inputs["THANG"] . "_" . $inputs["NAM"] . '.xlsx'; //save our workbook as this file name
+        // Redirect output to a client’s web browser (Xlsx)
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="'.$filename.'"');
+        header('Cache-Control: max-age=0');
+        // If you're serving to IE 9, then the following may be needed
+        header('Cache-Control: max-age=1');
 
-        //     $writer->save("php://output");
-        //     exit;
-        // } else {
-        //     throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');            
-        // }
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $writer->save('php://output');
+        die();
     }
 
     protected function findModel($id)
