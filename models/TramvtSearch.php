@@ -134,7 +134,7 @@ class TramvtSearch extends Tramvt
             return $dataProvider;
         }
 
-        $iddv = [2,3,4,5,6,7,666];
+        $iddv = ArrayHelper::map(Donvi::find()->where(['<>', 'MA_DONVIKT', 0])->all(), 'ID_DONVI', 'ID_DONVI');
         if (Yii::$app->user->can('dmdv-diennhienlieu')) {
             $iddv = [Yii::$app->user->identity->nhanvien->ID_DONVI];
         }
