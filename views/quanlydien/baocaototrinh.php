@@ -41,12 +41,12 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="col-md-2 col-xs-2">
                 <?= Select2::widget([
-                    'name' => 'NAM',
-                    'id' => 'NAM',
-                    'value' => $params['NAM'],
-                    'data' => $years,
+                    'name' => 'THANG',
+                    'id' => 'THANG',
+                    'value' => $params['THANG'],
+                    'data' => $months,
                     'theme' => Select2::THEME_BOOTSTRAP,
-                    'options' => ['placeholder' => 'Chọn năm'],
+                    'options' => ['placeholder' => 'Chọn tháng'],
                     'pluginOptions' => [
                         'allowClear' => true
                     ]
@@ -54,12 +54,12 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="col-md-2 col-xs-2">
                 <?= Select2::widget([
-                    'name' => 'THANG',
-                    'id' => 'THANG',
-                    'value' => $params['THANG'],
-                    'data' => $months,
+                    'name' => 'NAM',
+                    'id' => 'NAM',
+                    'value' => $params['NAM'],
+                    'data' => $years,
                     'theme' => Select2::THEME_BOOTSTRAP,
-                    'options' => ['placeholder' => 'Chọn tháng'],
+                    'options' => ['placeholder' => 'Chọn năm'],
                     'pluginOptions' => [
                         'allowClear' => true
                     ]
