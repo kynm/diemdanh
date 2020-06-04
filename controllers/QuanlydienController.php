@@ -164,15 +164,10 @@ class QuanlydienController extends Controller
     {
         if (Yii::$app->user->can('import-qldien')) {
             $months = [];
-            // for ($i = 0; $i < 2; $i++) {
-            //     $months[date('m', strtotime("-$i month"))] = date('m', strtotime("-$i month"));
-            // }
-            $months[date('m', strtotime("-2 month"))] = date('m', strtotime("-2 month"));
-            // $nowY = date("Y");
-            $years = [
-                date('Y', strtotime("-2 month")) => date('Y', strtotime("-2 month")),
-                // $nowY - 1 => $nowY - 1,
-            ];
+            for ($i = 1; $i <= 12; $i++) {
+                $months[date('m', strtotime("-$i month"))] = date('m', strtotime("-$i month"));
+                $years[date('Y', strtotime("-$i month"))] = date('Y', strtotime("-$i month"));
+            }
             $iddv = ArrayHelper::map(Donvi::find()->where(['<>', 'MA_DONVIKT', 0])->all(), 'ID_DONVI', 'ID_DONVI');
             if (Yii::$app->user->can('dmdv-diennhienlieu')) {
                 $iddv = [Yii::$app->user->identity->nhanvien->ID_DONVI];
