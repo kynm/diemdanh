@@ -164,7 +164,11 @@ class QuanlydienController extends Controller
     {
         if (Yii::$app->user->can('import-qldien')) {
             $months = [];
-            for ($i = 1; $i <= 12; $i++) {
+            $years = [];
+            if (date('d') > 8) {
+                throw new ForbiddenHttpException('Số liệu điện phải được nhập trước ngày 8 hàng tháng');
+            }
+            for ($i = 1; $i <= 1; $i++) {
                 $months[date('m', strtotime("-$i month"))] = date('m', strtotime("-$i month"));
                 $years[date('Y', strtotime("-$i month"))] = date('Y', strtotime("-$i month"));
             }
