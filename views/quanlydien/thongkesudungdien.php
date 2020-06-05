@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                         [ 'attribute' =>'TONGTIEN',
                           'value' => function($model) {
-                            return number_format($model->TIENTHUE, 0, ',', '.');
+                            return number_format($model->TONGTIEN, 0, ',', '.');
                           }
                         ],
                     ]
