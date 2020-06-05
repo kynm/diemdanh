@@ -78,6 +78,7 @@ class QuanlydienSearch extends Quanlydien
         }
         $query->andFilterWhere(['quanlydien.MA_DONVIKT' => $this->MA_DONVIKT]);
         $query->andFilterWhere(['like', 'NAM', $this->NAM])
+            ->andFilterWhere(['like', 'MA_DIENLUC', $this->MA_DIENLUC])
             ->andFilterWhere(['like', 'THANG', $this->THANG]);
 
         return $dataProvider;
