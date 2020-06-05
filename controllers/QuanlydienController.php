@@ -202,8 +202,8 @@ class QuanlydienController extends Controller
                         $model1->NH_DIENLUC = $value['NH_DIENLUC'];
                         $model1->MA_CSHT = $value['MA_CSHT'];
                         $model1->MA_DONVIKT = $params['UploadForm']['MA_DONVIKT'];
-                        $model1->TIENDIEN = (int)$value['TIENDIEN'];
-                        $model1->TIENTHUE = (int)$value['TIENTHUE'];
+                        $model1->TIENDIEN = (int)formatnumber($value['TIENDIEN']);
+                        $model1->TIENTHUE = (int)formatnumber($value['TIENTHUE']);
                         $model1->TONGTIEN = (int)$value['TONGTIEN'];
                         $model1->THOIGIANCAPNHAT = date("Y-m-d H:i:s");
                         $model1->NAM = $params['UploadForm']['NAM'];
@@ -376,20 +376,20 @@ class QuanlydienController extends Controller
                             ->setCellValue("A$x", ($key + 1))
                             ->setCellValue("B$x", $value['TEN_DONVI'])
                             ->setCellValue("C$x", $value['SO_TRAM'])
-                            ->setCellValue("D$x", $value['TIENDIEN'])
-                            ->setCellValue("E$x", $value['TIENTHUE'])
-                            ->setCellValue("F$x", $value['TONGTIEN'])
-                            ->setCellValue("G$x", $value['TONGTIEN']);
+                            ->setCellValue("D$x", formatnumber($value['TIENDIEN']))
+                            ->setCellValue("E$x", formatnumber($value['TIENTHUE']))
+                            ->setCellValue("F$x", formatnumber($value['TONGTIEN']))
+                            ->setCellValue("G$x", formatnumber($value['TONGTIEN']));
                     }
 
                     $x++;
                     $spreadsheet->setActiveSheetIndex(0)
                         ->setCellValue("A$x", 'Tổng')
                         ->setCellValue("B$x", '')
-                        ->setCellValue("C$x", $tongdv)
-                        ->setCellValue("D$x", $tongchuathue)
-                        ->setCellValue("E$x", $tongthue)
-                        ->setCellValue("F$x", $tongtien)
+                        ->setCellValue("C$x", formatnumber($tongdv))
+                        ->setCellValue("D$x", formatnumber($tongchuathue))
+                        ->setCellValue("E$x", formatnumber($tongthue))
+                        ->setCellValue("F$x", formatnumber($tongtien))
                         ->setCellValue("G$x", '');
                     $x++;
                     $x++;
@@ -428,9 +428,9 @@ class QuanlydienController extends Controller
                         ->setCellValue("A$x", 'Tổng')
                         ->setCellValue("B$x", '')
                         ->setCellValue("C$x", '')
-                        ->setCellValue("D$x", $tongchuathue)
-                        ->setCellValue("E$x", $tongthue)
-                        ->setCellValue("F$x", $tongtien)
+                        ->setCellValue("D$x", formatnumber($tongchuathue))
+                        ->setCellValue("E$x", formatnumber($tongthue))
+                        ->setCellValue("F$x", formatnumber($tongtien))
                         ->setCellValue("G$x", '');
 
                     $x++;
@@ -455,10 +455,10 @@ class QuanlydienController extends Controller
                             ->setCellValue("A$x", ($key + 1))
                             ->setCellValue("B$x", $value['MA_DIENLUC'])
                             ->setCellValue("C$x", $value['MA_CSHT'])
-                            ->setCellValue("D$x", $value['TIENDIEN'])
-                            ->setCellValue("E$x", $value['TIENTHUE'])
-                            ->setCellValue("F$x", $value['TONGTIEN'])
-                            ->setCellValue("G$x", $value['TONGTIEN'])
+                            ->setCellValue("D$x", formatnumber($value['TIENDIEN']))
+                            ->setCellValue("E$x", formatnumber($value['TIENTHUE']))
+                            ->setCellValue("F$x", formatnumber($value['TONGTIEN']))
+                            ->setCellValue("G$x", formatnumber($value['TONGTIEN']))
                             ->setCellValue("H$x", $value['TEN_DIENLUC'])
                             ->setCellValue("I$x", $value['TK_DIENLUC'])
                             ->setCellValue("J$x", $value['NH_DIENLUC'])

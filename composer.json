@@ -60,6 +60,11 @@
             }
         }
     },
+    "autoload": {
+        "files": [
+            "functions.php"
+        ]
+    },
     "scripts": {
         "post-create-project-cmd": [
             "yii\\composer\\Installer::postCreateProject"

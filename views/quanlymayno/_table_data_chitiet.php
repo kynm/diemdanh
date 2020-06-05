@@ -51,13 +51,13 @@ $tongnhienlieu = 0;
                                         $tongphut += $value['THOI_GIAN'];
                                         $tongnhienlieu += round($value['DINHMUC'] * ($value['THOI_GIAN']/60), 2);
                                     ?>
-                                    <td><?php echo $value['DINHMUC'];?></td>
+                                    <td><?php echo formatnumber($value['DINHMUC'], 2);?></td>
                                     <td><?php echo $value['THOIGIANBATDAU'];?></td>
                                     <td><?php echo $value['THOIGIANKETTHUC'];?></td>
                                     <td><?php echo $value['THOI_GIAN'];?></td>
-                                    <td><?php echo round($value['DINHMUC'] * ($value['THOI_GIAN']/60), 2);?></td>
-                                    <td><?php echo number_format($value['GIATIEN']);?></td>
-                                    <td><?php echo number_format($thanhtien)?></td>
+                                    <td><?php echo formatnumber($value['DINHMUC'] * ($value['THOI_GIAN']/60), 2);?></td>
+                                    <td><?php echo formatnumber($value['GIATIEN']);?></td>
+                                    <td><?php echo formatnumber($thanhtien)?></td>
                                 <tr>
                             <?php endforeach; ?>
                             <th scope="col">Cộng</th>
@@ -66,10 +66,10 @@ $tongnhienlieu = 0;
                                 <th scope="col"></th>
                                 <th scope="col"></th>
                                 <th scope="col"></th>
-                                <th scope="col"><?php echo number_format($tong_phuttheodai)?></th>
-                                <th scope="col"><?php echo number_format($tong_nhienlieutheodai)?></th>
+                                <th scope="col"><?php echo formatnumber($tong_phuttheodai)?></th>
+                                <th scope="col"><?php echo formatnumber($tong_nhienlieutheodai)?></th>
                                 <th scope="col"></th>
-                                <th scope="col"><?php echo number_format($tong_theodai)?></th>
+                                <th scope="col"><?php echo formatnumber($tong_theodai)?></th>
                             </tr>
                         <?php endif; ?>
                     <?php endforeach; ?>
@@ -80,10 +80,10 @@ $tongnhienlieu = 0;
                         <th scope="col"></th>
                         <th scope="col"></th>
                         <th scope="col"></th>
-                        <th scope="col"><?php echo number_format($tongphut)?></th>
-                        <th scope="col"><?php echo number_format($tongnhienlieu)?></th>
+                        <th scope="col"><?php echo formatnumber($tongphut)?></th>
+                        <th scope="col"><?php echo formatnumber($tongnhienlieu)?></th>
                         <th scope="col"></th>
-                        <th scope="col"><?php echo number_format($tongtien)?></th>
+                        <th scope="col"><?php echo formatnumber($tongtien)?></th>
                     </tr>
                 </tbody>
               </table>

@@ -23,9 +23,21 @@ $this->params['breadcrumbs'][] = $this->title;
                         ['class' => 'yii\grid\SerialColumn'],
                         'NAM',
                         'THANG',
-                        'TIENDIEN',
-                        'TIENTHUE',
-                        'TONGTIEN',
+                        [ 'attribute' =>'TIENDIEN',
+                          'value' => function($model) {
+                            return number_format($model->TIENDIEN, 0, ',', '.');
+                          }
+                        ],
+                        [ 'attribute' =>'TIENTHUE',
+                          'value' => function($model) {
+                            return number_format($model->TIENTHUE, 0, ',', '.');
+                          }
+                        ],
+                        [ 'attribute' =>'TONGTIEN',
+                          'value' => function($model) {
+                            return number_format($model->TIENTHUE, 0, ',', '.');
+                          }
+                        ],
                         [
                             'class' => 'yii\grid\ActionColumn',
                             'template' => '',

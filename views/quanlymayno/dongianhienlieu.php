@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             [
                                 'attribute' => 'DONGIA',
                                 'value' => function($model) {
-                                    return number_format($model->DONGIA);
+                                    return formatnumber($model->DONGIA);
                                 }
                             ],
                             [
