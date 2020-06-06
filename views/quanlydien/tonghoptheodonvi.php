@@ -122,8 +122,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <?= ChartJs::widget([
                                         'type' => 'line',
                                         'options' => [
-                                            'height' => 200,
-                                            'width' => 900
+                                            'height' => 100,
+                                            'width' => 700
                                         ],
                                         'data' => [
                                             'labels' => ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"],
@@ -164,6 +164,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         $tongthang10 = 0;
                         $tongthang11 = 0;
                         $tongthang12 = 0;
+                        $datasets1 = [];
                         foreach ($tongtram as $key => $value): ?>
                             <?php
                             $tongthang1 += isset($value[1]) ? $value[1] : 0;
@@ -178,6 +179,20 @@ $this->params['breadcrumbs'][] = $this->title;
                             $tongthang10 += isset($value[10]) ? $value[10] : 0;
                             $tongthang11 += isset($value[11]) ? $value[11] : 0;
                             $tongthang12 += isset($value[12]) ? $value[12] : 0;
+                            $datasets1[] = [
+                                'fillColor' => "red",
+                                'strokeColor' => "red",
+                                'pointColor' => "red",
+                                'pointStrokeColor' => "red",
+                                'borderColor' => $value['COLOR'],
+                                "fill" => false,
+                                "label" => $value['TEN_DONVI'],
+                                'data' => [
+                                    $value[1],$value[2],$value[3],$value[4],
+                                    $value[5],$value[6],$value[7],$value[8],
+                                    $value[9],$value[10],$value[11],$value[12],
+                                ]
+                            ];
                             ?>
                             <tr>
                                 <td scope="col"><?php echo $value['TEN_DONVI']?></td>
@@ -209,6 +224,22 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <th scope="col"><?php echo number_format($tongthang10);?></th>
                                 <th scope="col"><?php echo number_format($tongthang11);?></th>
                                 <th scope="col"><?php echo number_format($tongthang12);?></th>
+                            </tr>
+                            <tr>
+                                <th colspan="12">
+                                    <?= ChartJs::widget([
+                                        'type' => 'line',
+                                        'options' => [
+                                            'height' => 100,
+                                            'width' => 700
+                                        ],
+                                        'data' => [
+                                            'labels' => ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"],
+                                            'datasets' => $datasets1
+                                        ]
+                                    ]);
+                                    ?>
+                                </th>
                             </tr>
                     </tbody>
                 </table>

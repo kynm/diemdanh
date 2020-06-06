@@ -542,9 +542,25 @@ class QuanlydienController extends Controller
                 }
             }
             $tongtram = [];
+            $i = 0;
             foreach ($dsdonvi as $key => $value) {
-                $tongtram[$key] = [];
+                $tongtram[$key] = [
+                    1 => 0,
+                    2 => 0,
+                    3 => 0,
+                    4 => 0,
+                    5 => 0,
+                    6 => 0,
+                    7 => 0,
+                    8 => 0,
+                    9 => 0,
+                    10 => 0,
+                    11 => 0,
+                    12 => 0,
+                ];
                 $tongtram[$key]['TEN_DONVI'] = $value;
+                $tongtram[$key]['COLOR'] = $color[$i];
+                $i++;
                 foreach ($searchModel->tonghoptramphatsinhtheodonvi($key, date('Y')) as $v) {
                     $tongtram[$key][$v['THANG']] = $v['TONGTRAM'];
                 }
