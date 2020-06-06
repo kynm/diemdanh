@@ -517,14 +517,30 @@ class QuanlydienController extends Controller
             $dsdonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'MA_DONVIKT', 'TEN_DONVI');
             $tongdien = [];
             $searchModel = new QuanlydienSearch();
+            $color = ["red","green","blue","yellow","brown","#00FFFF","#8B008B","#2F4F4F","#696969"];
+            $i = 0;
             foreach ($dsdonvi as $key => $value) {
-                $tongdien[$key] = [];
+                $tongdien[$key] = [
+                    1 => 0,
+                    2 => 0,
+                    3 => 0,
+                    4 => 0,
+                    5 => 0,
+                    6 => 0,
+                    7 => 0,
+                    8 => 0,
+                    9 => 0,
+                    10 => 0,
+                    11 => 0,
+                    12 => 0,
+                ];
                 $tongdien[$key]['TEN_DONVI'] = $value;
+                $tongdien[$key]['COLOR'] = $color[$i];
+                $i++;
                 foreach ($searchModel->tonghoptheodonvi($key, date('Y')) as $v) {
                     $tongdien[$key][$v['THANG']] = $v['TONGTIEN'];
                 }
             }
-
             $tongtram = [];
             foreach ($dsdonvi as $key => $value) {
                 $tongtram[$key] = [];
