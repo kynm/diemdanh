@@ -519,25 +519,11 @@ class QuanlymaynoController extends Controller
     public function actionImport()
     {
         if (Yii::$app->user->can('import-qldien')) {
-            $months = [];
-            // for ($i = 0; $i < 2; $i++) {
-            //     $months[date('m', strtotime("-$i month"))] = date('m', strtotime("-$i month"));
-            // }
-            $months[date('m', strtotime("-2 month"))] = date('m', strtotime("-2 month"));
-            // $nowY = date("Y");
-            $years = [
-                date('Y', strtotime("-2 month")) => date('Y', strtotime("-2 month")),
-                // $nowY - 1 => $nowY - 1,
-            ];
-            $iddv = [2,3,4,5,6,7,666];
-            if (Yii::$app->user->can('dmdv-diennhienlieu')) {
-                $iddv = [Yii::$app->user->identity->nhanvien->ID_DONVI];
-            }
 
-            $dsdonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'MA_DONVIKT', 'TEN_DONVI');
             $model = new UploadForm();
             if (Yii::$app->request->post())
             {
+                ini_set('max_execution_time', 0);                
                 $params = Yii::$app->request->bodyParams;
                 $model->fileupload = UploadedFile::getInstance($model, 'fileupload');
                 $data = \moonland\phpexcel\Excel::import($model->fileupload->tempName);
@@ -574,10 +560,7 @@ class QuanlymaynoController extends Controller
             }
 
             return $this->render('import', [
-                'months' => $months,
-                'years' => $years,
                 'model' => $model,
-                'dsdonvi' => $dsdonvi,
             ]);
         } else {
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
