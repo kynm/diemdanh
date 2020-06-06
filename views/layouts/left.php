@@ -138,6 +138,11 @@ use yii\helpers\Url;
                                 'url' => Url::to(['quanlydien/baocaototrinh']),
                                 'visible' => Yii::$app->user->can('ketoan-qldien'),
                             ],
+                            [
+                                'label' => 'Báo cáo tổng hợp theo đơn vị', 'icon' => 'caret-right',
+                                'url' => Url::to(['quanlydien/baocaotonghoptheodv']),
+                                'visible' => Yii::$app->user->can('ketoan-qldien'),
+                            ],
                         ],
                         'visible' => Yii::$app->user->can('view-qldien'),
                     ],

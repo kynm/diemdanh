@@ -506,4 +506,126 @@ class QuanlydienController extends Controller
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
         }
     }
+
+    public function actionBaocaotonghoptheodv()
+    {
+        if (Yii::$app->user->can('bctonghop-qldien')) {
+            $iddv = ArrayHelper::map(Donvi::find()->where(['<>', 'MA_DONVIKT', 0])->all(), 'ID_DONVI', 'ID_DONVI');
+            if (Yii::$app->user->can('dmdv-diennhienlieu')) {
+                $iddv = [Yii::$app->user->identity->nhanvien->ID_DONVI];
+            }
+            $dsdonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'MA_DONVIKT', 'TEN_DONVI');
+            $tongdien = [];
+            $searchModel = new QuanlydienSearch();
+            foreach ($dsdonvi as $key => $value) {
+                $tongdien[$key] = [];
+                $tongdien[$key]['TEN_DONVI'] = $value;
+                foreach ($searchModel->tonghoptheodonvi($key, date('Y')) as $v) {
+                    $tongdien[$key][$v['THANG']] = $v['TONGTIEN'];
+                }
+            }
+
+            $tongtram = [];
+            foreach ($dsdonvi as $key => $value) {
+                $tongtram[$key] = [];
+                $tongtram[$key]['TEN_DONVI'] = $value;
+                foreach ($searchModel->tonghoptramphatsinhtheodonvi($key, date('Y')) as $v) {
+                    $tongtram[$key][$v['THANG']] = $v['TONGTRAM'];
+                }
+            }
+            return $this->render('tonghoptheodonvi', [
+                    'tongdien' => $tongdien,
+                    'tongtram' => $tongtram,
+                ]);
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
+        }
+        //export excel
+        // $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        // $spreadsheet->getDefaultStyle()->getFont()->setName('Arial');
+        // $spreadsheet->getDefaultStyle()->getFont()->setSize(10);
+        // $spreadsheet->getActiveSheet()->mergeCells("A1:B1")->mergeCells("C1:F1")->mergeCells("G1:K1")
+        //     ->setCellValue("A1", "VNPT HÀ NAM")
+        //     ->setCellValue("G1", "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM");
+        // $spreadsheet->getActiveSheet()->mergeCells("A2:B2")->mergeCells("C2:F2")->mergeCells("G2:K2")
+        //     ->setCellValue("A2", "Phòng Kế toán Kế hoạch")
+        //     ->setCellValue("G2", "Độc lập - Tự do - Hạnh phúc");
+        // $spreadsheet->getActiveSheet()->mergeCells("A4:K4")->setCellValue("A4", "TỜ TRÌNH");
+        // $spreadsheet->getActiveSheet()->mergeCells("A5:K5")
+        //     ->setCellValue("A5", "V/v: Thanh toán tiền điện cho  các Trung tâm Viễn thông huyện, thành phố");
+        // $spreadsheet->getActiveSheet()->mergeCells("A7:K7")->setCellValue("A7", "Kính gửi: Giám đốc Viễn thông Hà Nam");
+        // $spreadsheet->getActiveSheet()->mergeCells("A8:K8")->setCellValue("A8", "Ý KIẾN CỦA LÃNH ĐẠO");
+
+        // $spreadsheet->getActiveSheet()->getStyle('A1:K8')->getAlignment()->setHorizontal('center');
+        // $spreadsheet->getActiveSheet()->mergeCells("A10:K10")->setCellValue("A10", "Căn cứ các hợp đồng giữa Trung tâm viễn thông huyện thành phố và điện lực địa phương");
+        // $spreadsheet->getActiveSheet()->mergeCells("A11:K11")->setCellValue("A11", "Căn cứ hóa đơn tiền điện phát sinh tháng 5/2020 tại đơn vị ");
+        // $spreadsheet->getActiveSheet()->mergeCells("A12:K12")->setCellValue("A12", "Căn cứ tờ trình về việc thanh toán tiền điện tháng 5/2020 của đơn vị. ");
+        // $spreadsheet->getActiveSheet()->mergeCells("A13:K13")->setCellValue("A13", "Để kịp thời thanh toán tiền điện cho điện lực địa phương; kính trình Giám đốc Viễn thông Hà Nam thanh toán tập trung tại Viễn thông Hà Nam các hóa đơn tiền điện chi  tiết như sau:");
+        // $spreadsheet->getActiveSheet()->mergeCells("A15:K15")->setCellValue("A15", "I. Tổng hợp tiền điện theo trung tâm viễn thông");
+        // if (count($data)) {
+        //     $tongchuathue = 0;
+        //     $tongthue = 0;
+        //     $tongtien = 0;
+        //     $tongdv = 0;
+        //     for ($i=1; $i <= 12 ; $i++) { 
+        //     $spreadsheet->setActiveSheetIndex(0)
+        //         ->setCellValue("A16", 'STT')
+        //         ->setCellValue("B16", 'Tên TTVT')
+        //         ->setCellValue("C16", 'Số trạm thanh toán')
+        //         ->setCellValue("D16", 'Số tiền chưa thuế')
+        //         ->setCellValue("E16", 'Thuế VAT')
+        //         ->setCellValue("F16", 'Tổng tiền')
+        //         ->setCellValue("G16", 'Tiền đề nghị thanh toán');
+        //     }
+
+        //     foreach($tongdiendv as $key => $value) {
+        //         $tongchuathue += $value['TIENDIEN'];
+        //         $tongthue += $value['TIENTHUE'];
+        //         $tongtien += $value['TONGTIEN'];
+        //         $tongdv += $value['SO_TRAM'];
+        //         $x = $key + 17;
+        //         $spreadsheet->setActiveSheetIndex(0)
+        //             ->setCellValue("A$x", ($key + 1))
+        //             ->setCellValue("B$x", $value['TEN_DONVI'])
+        //             ->setCellValue("C$x", $value['SO_TRAM'])
+        //             ->setCellValue("D$x", formatnumber($value['TIENDIEN']))
+        //             ->setCellValue("E$x", formatnumber($value['TIENTHUE']))
+        //             ->setCellValue("F$x", formatnumber($value['TONGTIEN']))
+        //             ->setCellValue("G$x", formatnumber($value['TONGTIEN']));
+        //     }
+
+        //     $x++;
+        //     $spreadsheet->setActiveSheetIndex(0)
+        //         ->setCellValue("A$x", 'Tổng')
+        //         ->setCellValue("B$x", '')
+        //         ->setCellValue("C$x", formatnumber($tongdv))
+        //         ->setCellValue("D$x", formatnumber($tongchuathue))
+        //         ->setCellValue("E$x", formatnumber($tongthue))
+        //         ->setCellValue("F$x", formatnumber($tongtien))
+        //         ->setCellValue("G$x", '');
+        //     $x++;
+        //     $x++;
+        //     $x++;
+        //     $x++;
+        //     $x++;
+        //     $spreadsheet->getActiveSheet()->mergeCells("A$x:D$x")->setCellValue("A$x", 'Người lập biểu');
+        //     $spreadsheet->getActiveSheet()->setCellValue("H$x", 'Phủ Lý, ngày ' . date('d') . ', ' . date('m') . ', '. date('Y'));
+        //     $spreadsheet->getActiveSheet()->getStyle("A$x:K$x")->getAlignment()->setHorizontal('center');
+        //     $x++;
+        //     $spreadsheet->getActiveSheet()->mergeCells("A$x:D$x")->setCellValue("A$x", '');
+        //     $spreadsheet->getActiveSheet()->setCellValue("H$x", 'Kế toán trưởng');
+        //     $spreadsheet->getActiveSheet()->getStyle("A$x:K$x")->getAlignment()->setHorizontal('center');
+        // }
+        // $filename = 'Dữ liệu điện ' . $params["THANG"] . "_" . $params["NAM"] . '.xlsx'; //save our workbook as this file name
+        // // Redirect output to a client’s web browser (Xlsx)
+        // header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        // header('Content-Disposition: attachment;filename="'.$filename.'"');
+        // header('Cache-Control: max-age=0');
+        // // If you're serving to IE 9, then the following may be needed
+        // header('Cache-Control: max-age=1');
+
+        // $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+        // $writer->save('php://output');
+        // die();
+    }
 }
