@@ -69,6 +69,9 @@ class NhatKySuDungMayNoSearch extends NhatKySuDungMayNo
         $query->andFilterWhere([
             'ID_THIETBITRAM' => $params['ID_THIETBITRAM'],
         ]);
+        $query->orderBy([
+            'THOIGIANBATDAU' => SORT_DESC,
+        ]);
 
         return $dataProvider;
     }

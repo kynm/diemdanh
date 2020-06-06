@@ -543,17 +543,33 @@ class QuanlymaynoController extends Controller
                 $data = \moonland\phpexcel\Excel::import($model->fileupload->tempName);
                 $thietbichuanhap = [];
                 foreach ($data as $key => $value) {
-                $thietbi = Thietbi::find()->where(['TEN_THIETBI' => $value['ID_THIETBITRAM']])->one();
-                $tramvt = Tramvt::find()->where(['TEN_TRAM' => $value['ID_TRAM']])->one();
-                $thietbitram = Thietbitram::find()->where(['ID_TRAM' => $tramvt->ID_TRAM, 'ID_LOAITB' => $thietbi->ID_THIETBI])->one();
-                if (!$thietbitram) {
-                        $thietbichuanhap[]= $value;
+                    $tramvt = Tramvt::find()->where(['TEN_TRAM' => $value['ID_TRAM']])->one();
                     # code...
-                }
-                    // $thietbitram = Thietbitram::find()->where('')
+                    $model = new NhatKySuDungMayNo();
+                    $model->IS_CHECKED = false;
+                    $model->LOAI_SU_CO = 1;
+                    $model->ID_NV_DIEUHANH = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
+                    $model->ID_NV_VANHANH = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
+                    $model->USER_ID = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
+                    $model->ID_TRAM = $tramvt ? $tramvt->ID_TRAM : 134;
+                    $model->DINHMUC = $value['DINHMUC'];
+                    $model->LOAINHIENLIEU = $value['LOAINHIENLIEU'];
+                    $model->GIATIEN = 0;
+                    $model->THOIGIANBATDAU = date('Y-m-d H:i:s', strtotime($value['THOIGIANBATDAU']));
+                    $model->THOIGIANKETTHUC = date('Y-m-d H:i:s', strtotime($value['THOIGIANKETTHUC']));
+                    $thietbi = Thietbi::find()->where(['TEN_THIETBI' => $value['ID_THIETBITRAM']])->one();
+                    $model->ID_THIETBITRAM = 1611;
+                    if ($thietbi && $tramvt) {
+                        $thietbitram = Thietbitram::find()->where(['ID_TRAM' => $tramvt->ID_TRAM, 'ID_LOAITB' => $thietbi->ID_THIETBI])->one();
+                        if ($thietbitram) {
+                            $model->ID_THIETBITRAM = $thietbitram->ID_THIETBI;
+                        } else {
+
+                        }
+                    }
+                    $model->save(false);
                 }
                 die(var_dump($thietbichuanhap));
-                $keys = array_keys($data[0]);
                 Yii::$app->session->setFlash('success', "Cập nhật thành công!");
             }
 

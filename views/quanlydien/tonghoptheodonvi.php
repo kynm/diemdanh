@@ -167,18 +167,18 @@ $this->params['breadcrumbs'][] = $this->title;
                         $datasets1 = [];
                         foreach ($tongtram as $key => $value): ?>
                             <?php
-                            $tongthang1 += isset($value[1]) ? $value[1] : 0;
-                            $tongthang2 += isset($value[2]) ? $value[2] : 0;
-                            $tongthang3 += isset($value[3]) ? $value[3] : 0;
-                            $tongthang4 += isset($value[4]) ? $value[4] : 0;
-                            $tongthang5 += isset($value[5]) ? $value[5] : 0;
-                            $tongthang6 += isset($value[6]) ? $value[6] : 0;
-                            $tongthang7 += isset($value[7]) ? $value[7] : 0;
-                            $tongthang8 += isset($value[8]) ? $value[8] : 0;
-                            $tongthang9 += isset($value[9]) ? $value[9] : 0;
-                            $tongthang10 += isset($value[10]) ? $value[10] : 0;
-                            $tongthang11 += isset($value[11]) ? $value[11] : 0;
-                            $tongthang12 += isset($value[12]) ? $value[12] : 0;
+                            $tongthang1 += $value[1];
+                            $tongthang2 += $value[2];
+                            $tongthang3 += $value[3];
+                            $tongthang4 += $value[4];
+                            $tongthang5 += $value[5];
+                            $tongthang6 += $value[6];
+                            $tongthang7 += $value[7];
+                            $tongthang8 += $value[8];
+                            $tongthang9 += $value[9];
+                            $tongthang10 +=  $value[10];
+                            $tongthang11 +=  $value[11];
+                            $tongthang12 +=  $value[12];
                             $datasets1[] = [
                                 'fillColor' => "red",
                                 'strokeColor' => "red",
@@ -196,18 +196,18 @@ $this->params['breadcrumbs'][] = $this->title;
                             ?>
                             <tr>
                                 <td scope="col"><?php echo $value['TEN_DONVI']?></td>
-                                <td scope="col"><?php echo isset($value[1]) ? number_format($value[1]) : 0;?></td>
-                                <td scope="col"><?php echo isset($value[2]) ? number_format($value[2]) : 0?></td>
-                                <td scope="col"><?php echo isset($value[3]) ? number_format($value[3]) : 0?></td>
-                                <td scope="col"><?php echo isset($value[4]) ? number_format($value[4]) : 0?></td>
-                                <td scope="col"><?php echo isset($value[5]) ? number_format($value[5]) : 0?></td>
-                                <td scope="col"><?php echo isset($value[6]) ? number_format($value[6]) : 0?></td>
-                                <td scope="col"><?php echo isset($value[7]) ? number_format($value[7]) : 0?></td>
-                                <td scope="col"><?php echo isset($value[8]) ? number_format($value[8]) : 0?></td>
-                                <td scope="col"><?php echo isset($value[9]) ? number_format($value[9]) : 0?></td>
-                                <td scope="col"><?php echo isset($value[10]) ? number_format($value[10]) : 0?></td>
-                                <td scope="col"><?php echo isset($value[11]) ? number_format($value[11]) : 0?></td>
-                                <td scope="col"><?php echo isset($value[12]) ? number_format($value[12]) : 0?></td>
+                                <td scope="col"><?php echo number_format($value[1]);?></td>
+                                <td scope="col"><?php echo number_format($value[2])?></td>
+                                <td scope="col"><?php echo number_format($value[3])?></td>
+                                <td scope="col"><?php echo number_format($value[4])?></td>
+                                <td scope="col"><?php echo number_format($value[5])?></td>
+                                <td scope="col"><?php echo number_format($value[6])?></td>
+                                <td scope="col"><?php echo number_format($value[7])?></td>
+                                <td scope="col"><?php echo number_format($value[8])?></td>
+                                <td scope="col"><?php echo number_format($value[9])?></td>
+                                <td scope="col"><?php echo  number_format($value[10])?></td>
+                                <td scope="col"><?php echo  number_format($value[11])?></td>
+                                <td scope="col"><?php echo  number_format($value[12])?></td>
                             </tr>
                         <?php endforeach; ?>
                             <tr>

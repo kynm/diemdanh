@@ -15,9 +15,6 @@ use yii\grid\GridView;
 $this->title = 'Đẩy dữ liệu điện';
 $this->params['breadcrumbs'][] = 'Cập nhật';
 ?>
-    <p>
-        <?= (Yii::$app->user->can('import-qldien')) ? Html::a('<i class="fa fa-plus"></i> Tải file mẫu', 'https://drive.google.com/file/d/1aimVmS5dZAtJMU_dX5snZB59oDsUqNWM/view?usp=sharing', ['class' => 'btn btn-primary btn-flat', 'target' => '_blank']) : '' ?>
-    </p>
 <div class="tramvt-update">
 <div class="import-dien-form">
     <?php $form = ActiveForm::begin([
@@ -27,15 +24,6 @@ $this->params['breadcrumbs'][] = 'Cập nhật';
     ]); ?>
         <div class="box box-primary">
             <div class="box-body">
-                <div class="col-md-2 col-xs-2">
-                    <?= $form->field($model, 'MA_DONVIKT')->dropDownList($dsdonvi, ['prompt' => 'Chọn đơn vị' ]); ?>
-                </div>
-                <div class="col-md-2 col-xs-2">
-                    <?= $form->field($model, 'THANG')->dropDownList($months, ['prompt' => 'Chọn tháng' ]); ?>
-                </div>
-                <div class="col-md-2 col-xs-2">
-                    <?= $form->field($model, 'NAM')->dropDownList($years, ['prompt' => 'Chọn năm' ]); ?>
-                </div>
                 <div class="col-md-2 col-xs-2">
                     <?= $form->field($model, 'fileupload')->fileInput();?>
                 </div>
@@ -51,7 +39,6 @@ $this->params['breadcrumbs'][] = 'Cập nhật';
                 ?>
             </div>
         </div>     
-        
         <?php ActiveForm::end(); ?>
 </div>
 
