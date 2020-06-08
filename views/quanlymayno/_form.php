@@ -68,8 +68,13 @@ $listloaisuco = [
             </div>
             <div class="col-sm-3">
                 <?= $form->field($model, 'THOIGIANBATDAU')->widget(DateTimePicker::classname(), [
-                    'options' => ['placeholder' => 'Dự kiến bắt đầu'],
+                    'options' => [
+                        'readonly' => true,
+                        'placeholder' => 'Dự kiến bắt đầu'
+                    ],
                     'pluginOptions' => [
+                        'todayHighlight' => true,
+                        'todayBtn' => true,
                         'autoclose' => true
                         ]
                     ]);
@@ -77,9 +82,14 @@ $listloaisuco = [
             </div>
             <div class="col-sm-3">
                 <?= $form->field($model, 'THOIGIANKETTHUC')->widget(DateTimePicker::classname(), [
-                    'options' => ['placeholder' => 'Dự kiến bắt đầu'],
+                    'options' => [
+                        'readonly' => true,
+                        'placeholder' => 'Dự kiến bắt đầu'
+                    ],
                     'pluginOptions' => [
-                        'autoclose' => true
+                        'todayHighlight' => true,
+                        'todayBtn' => true,
+                        'autoclose' => true,
                         ]
                     ]);
                 ?>

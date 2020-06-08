@@ -147,16 +147,24 @@ class QuanlymaynoController extends Controller
             $model->ID_TRAM = $thietbitram->ID_TRAM;
             $model->IS_CHECKED = false;
             $model->LOAI_SU_CO = 1;
+            $model->THOIGIANBATDAU = date('Y-m-d H:i');
+            $model->THOIGIANKETTHUC = date('Y-m-d H:i');
             $model->ID_NV_DIEUHANH = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
             $model->ID_NV_VANHANH = $thietbitram->iDTRAM->ID_NHANVIEN;
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                if ($model->THOIGIANBATDAU < date('Y-m-d H:i',strtotime("-9 days"))) {
+                    Yii::$app->session->setFlash('error', "Thời gian cập nhật quá 9 ngày. Hãy liên hệ với admin để được xử lý");
+                    return $this->redirect(['update', 'id' => $id]);
+                }
+
                 $log = new ActivitiesLog;
                 $log->activity_type = 'add-nkmayno';
                 $log->description = Yii::$app->user->identity->nhanvien->TEN_NHANVIEN." đã yêu cầu sử dụng máy nổ";
                 $log->user_id = Yii::$app->user->identity->id;
                 $log->create_at = time();
                 $log->save();
+                Yii::$app->session->setFlash('success', "Nhập dữ liệu thành công");
                 return $this->redirect(['update', 'id' => $id]);
             } else {
                 $searchModel = new NhatKySuDungMayNoSearch();
