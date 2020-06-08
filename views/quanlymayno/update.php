@@ -70,7 +70,13 @@ $this->params['breadcrumbs'][] = 'Cập nhật';
                                 'delete' => function ($url,$model,$key) {
                                     if (!$model->IS_CHECKED) {
                                         $url = Url::to(['quanlymayno/deletenhatky', 'id' => $model->ID]);
-                                        return Html::a('<span class="glyphicon glyphicon-trash"> </span>', $url, ['title' => 'Điều chỉnh nội dung' ]);
+                                        return Html::a('<span class="glyphicon glyphicon-trash"></span>', ['quanlymayno/deletenhatky', 'id' => $model->ID], [
+                                            'class' => '',
+                                            'data' => [
+                                                'confirm' => 'Bạn có chắc chắn muốn xóa dữ liệu không?',
+                                                'method' => 'post',
+                                            ],
+                                        ]);
                                     }
                                         return '';
                                 },

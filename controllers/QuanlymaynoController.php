@@ -101,7 +101,7 @@ class QuanlymaynoController extends Controller
     {
         if (Yii::$app->user->can('delete-nkmayno')) {
             NhatKySuDungMayNo::findOne($id)->delete();
-
+            Yii::$app->session->setFlash('success', "Xóa dữ liệu thành công");
             return $this->redirect(Yii::$app->request->referrer);
         } else {
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
@@ -121,6 +121,7 @@ class QuanlymaynoController extends Controller
                 $log->user_id = Yii::$app->user->identity->id;
                 $log->create_at = time();
                 $log->save();
+                Yii::$app->session->setFlash('success', "Sửa dữ liệu thành công");
                 return $this->redirect(['update', 'id' => $model->ID_THIETBITRAM]);
             } else {
                 return $this->render('updatenhatky', [
