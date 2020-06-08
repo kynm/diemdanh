@@ -86,7 +86,7 @@ class QuanlydienController extends Controller
             $model->MA_DIENLUC = $MA_DIENLUC;
             $months = [];
             for ($i = 0; $i < 12; $i++) {
-                $months[date('m', strtotime("+$i month"))] = date('m', strtotime("+$i month"));
+                $months[date('m', strtotime( date( 'Y-01-01' )." +$i months"))] = date('m', strtotime( date( 'Y-01-01' )." +$i months"));
             }
             $nowY = date("Y");
             $years = [
@@ -123,7 +123,7 @@ class QuanlydienController extends Controller
         if ($tramvt) {
             $months = [];
             for ($i = 0; $i < 12; $i++) {
-                $months[date('m', strtotime("+$i month"))] = date('m', strtotime("+$i month"));
+                $months[date('m', strtotime( date( 'Y-01-01' )." +$i months"))] = date('m', strtotime( date( 'Y-01-01' )." +$i months"));
             }
             $nowY = date("Y");
             $years = [
@@ -287,7 +287,7 @@ class QuanlydienController extends Controller
         if (Yii::$app->user->can('ketoan-qldien')) {
             $months = [];
             for ($i = 0; $i < 12; $i++) {
-                $months[date('m', strtotime("+$i month"))] = date('m', strtotime("+$i month"));
+                $months[date('m', strtotime( date( 'Y-01-01' )." +$i months"))] = date('m', strtotime( date( 'Y-01-01' )." +$i months"));
             }
             $nowY = date("Y");
             $years = [

@@ -186,7 +186,7 @@ class QuanlymaynoController extends Controller
                 'THANG' => date('m', strtotime("-1 month")),
             ];
             for ($i = 0; $i < 12; $i++) {
-                $months[date('m', strtotime("+$i month"))] = date('m', strtotime("+$i month"));
+                $months[date('m', strtotime( date( 'Y-01-01' )." +$i months"))] = date('m', strtotime( date( 'Y-01-01' )." +$i months"));
             }
             $nowY = date("Y");
             $years = [
@@ -244,7 +244,7 @@ class QuanlymaynoController extends Controller
                 'THANG' => date('m', strtotime("-1 month")),
             ];
             for ($i = 0; $i < 12; $i++) {
-                $months[date('m', strtotime("+$i month"))] = date('m', strtotime("+$i month"));
+                $months[date('m', strtotime( date( 'Y-01-01' )." +$i months"))] = date('m', strtotime( date( 'Y-01-01' )." +$i months"));
             }
             $nowY = date("Y");
             $years = [
@@ -365,7 +365,7 @@ class QuanlymaynoController extends Controller
                 2 => 0,
             ];
             for ($i = 0; $i < 12; $i++) {
-                $months[date('m', strtotime("+$i month"))] = date('m', strtotime("+$i month"));
+                $months[date('m', strtotime( date( 'Y-01-01' )." +$i months"))] = date('m', strtotime( date( 'Y-01-01' )." +$i months"));
             }
             $nowY = date("Y");
             $years = [
