@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <table class="table">
                     <thead>
                       <tr>
-                        <th scope="col" colspan="13">Số liệu sử dụng nhiên liệu trong tháng (Giờ chạy máy nổ)</th>
+                        <th scope="col" colspan="13">Số liệu sử dụng nhiên liệu trong tháng <?php echo date('m') . '/' . date('Y')?> (Giờ chạy máy nổ)</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -79,7 +79,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <table class="table">
                     <thead>
                     <tr>
-                        <th colspan="13">Tổng hợp tình hình sử dụng nhiên liệu trong năm của đơn vị năm 2020 (Giờ chạy máy nổ)</th>
+                        <th colspan="13">Tổng hợp tình hình sử dụng nhiên liệu trong năm của đơn vị năm <?php echo date('Y')?> (Giờ chạy máy nổ)</th>
                     </tr>
                       <tr>
                         <th scope="col">Tên đơn vị</th>
