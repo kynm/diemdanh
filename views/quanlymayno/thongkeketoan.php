@@ -87,7 +87,6 @@ use yii\grid\GridView;
             <div class="table-responsive">
                 <?= $this->render('_table_data', [
                     'data' => $data,
-                    'loainhienlieu' => $loainhienlieu,
                 ]) ?>
             </div>
         </div>

@@ -38,7 +38,7 @@ $tongnhienlieu = 0;
                                 <tr>
                                     <td><?php echo $value['TEN_TRAM'];?></td>
                                     <td><?php echo $value['TEN_THIETBI'];?></td>
-                                    <td><?php echo $loainhienlieu[$value['LOAINHIENLIEU']]?></td>
+                                    <td><?php echo $value['LOAINHIENLIEU']?></td>
                                     <?php
                                         $thanhtien = $value['GIATIEN'] * ($value['DINHMUC'] * ($value['THOI_GIAN']/60));
                                         $tongtien += $thanhtien;

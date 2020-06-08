@@ -24,7 +24,6 @@
 <?= $this->render('_table_data_chitiet', [
     'data' => $data,
     'dongiamayno' => $dongiamayno,
-    'loainhienlieu' => $loainhienlieu,
 ]) ?>
 <table class="table">
     <tr style="border: none;height: 100px;">

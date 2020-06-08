@@ -209,9 +209,7 @@ class QuanlymaynoController extends Controller
             }
             $dsDonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'ID_DONVI', 'TEN_DONVI');
             $isprint = 0;
-            $loainhienlieu = [];
             $searchModel = new NhatKySuDungMayNoSearch();
-            $loainhienlieu = $searchModel->getloainhienlieu();
             if (Yii::$app->request->post()) {
                 $isprint = 1;
                 $inputs = Yii::$app->request->bodyParams;
@@ -234,7 +232,6 @@ class QuanlymaynoController extends Controller
                 'months' => $months,
                 'years' => $years,
                 'inputs' => $inputs,
-                'loainhienlieu' => $loainhienlieu,
                 'dsDonvi' => $dsDonvi,
                 ]);
         } else {
@@ -267,9 +264,7 @@ class QuanlymaynoController extends Controller
             }
             $dsDonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'ID_DONVI', 'TEN_DONVI');
             $isprint = 0;
-            $loainhienlieu = [];
             $searchModel = new NhatKySuDungMayNoSearch();
-            $loainhienlieu = $searchModel->getloainhienlieu();
             if (Yii::$app->request->post()) {
                 $isprint = 1;
                 $inputs = Yii::$app->request->bodyParams;
@@ -293,7 +288,6 @@ class QuanlymaynoController extends Controller
                 'months' => $months,
                 'years' => $years,
                 'inputs' => $inputs,
-                'loainhienlieu' => $loainhienlieu,
                 'dsDonvi' => $dsDonvi,
                 ]);
         } else {
@@ -333,7 +327,6 @@ class QuanlymaynoController extends Controller
             $dsDonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'ID_DONVI', 'TEN_DONVI');
             $searchModel = new NhatKySuDungMayNoSearch();
             $dongiamayno = $searchModel->getDongiatheothang($inputs);
-            $loainhienlieu = $searchModel->getloainhienlieu();
             if ($inputs['ID_DONVI']) {
                 $dldonvi = [$inputs['ID_DONVI'] => $inputs['ID_DONVI']];
             } else {
@@ -351,7 +344,6 @@ class QuanlymaynoController extends Controller
                 'dongiamayno' => $dongiamayno,
                 'donvi' => $donvi,
                 'inputs' => $inputs,
-                'loainhienlieu' => $loainhienlieu,
                 ]);
         } else {
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');            
@@ -432,7 +424,7 @@ class QuanlymaynoController extends Controller
         }
         $searchModel = new NhatKySuDungMayNoSearch();
         foreach ($dldonvi as $idDonvi => $dv) {
-            $data = array_merge($data,$searchModel->baocaomaynotheothang(['ID_DONVI' => $idDonvi, 'THANG' => $inputs['THANG'], 'NAM' => $inputs['NAM']]));
+            $data = array_merge($data,$searchModel->baocaomaynotheothangchitiet(['ID_DONVI' => $idDonvi, 'THANG' => $inputs['THANG'], 'NAM' => $inputs['NAM']]));
         }
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
