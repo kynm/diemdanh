@@ -101,6 +101,11 @@ use yii\helpers\Url;
                         'url' => '#',
                         'items' => [
                             [
+                                'label' => 'Dashboard', 'icon' => 'caret-right',
+                                'url' => Url::to(['quanlymayno/baocaotonghoptheodv']),
+                                'visible' => Yii::$app->user->can('bctonghop-qldien'),
+                            ],
+                            [
                                 'label' => 'Điều hành máy nổ', 'icon' => 'caret-right',
                                 'url' => Url::to(['quanlymayno/']),
                                 'visible' => Yii::$app->user->can('edit-nkmayno'),
@@ -124,6 +129,11 @@ use yii\helpers\Url;
                         'url' => '#',
                         'items' => [
                             [
+                                'label' => 'Dashboard', 'icon' => 'caret-right',
+                                'url' => Url::to(['quanlydien/baocaotonghoptheodv']),
+                                'visible' => Yii::$app->user->can('bctonghop-mayno'),
+                            ],
+                            [
                                 'label' => 'Điều hành điện', 'icon' => 'caret-right',
                                 'url' => Url::to(['quanlydien/']),
                                 'visible' => Yii::$app->user->can('list-qldien'),
@@ -136,11 +146,6 @@ use yii\helpers\Url;
                             [
                                 'label' => 'Báo cáo điện theo tháng', 'icon' => 'caret-right',
                                 'url' => Url::to(['quanlydien/baocaototrinh']),
-                                'visible' => Yii::$app->user->can('ketoan-qldien'),
-                            ],
-                            [
-                                'label' => 'Báo cáo tổng hợp theo đơn vị', 'icon' => 'caret-right',
-                                'url' => Url::to(['quanlydien/baocaotonghoptheodv']),
                                 'visible' => Yii::$app->user->can('ketoan-qldien'),
                             ],
                         ],

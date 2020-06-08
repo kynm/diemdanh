@@ -566,4 +566,73 @@ class QuanlymaynoController extends Controller
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
         }
     }
+
+    public function actionBaocaotonghoptheodv()
+    {
+        if (Yii::$app->user->can('bctonghop-mayno')) {
+            $iddv = [2,3,4,5,6,7,666];
+            if (Yii::$app->user->can('dmdv-diennhienlieu')) {
+                $iddv = [Yii::$app->user->identity->nhanvien->ID_DONVI];
+            }
+            $dsdonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'ID_DONVI', 'TEN_DONVI');
+            $tongnhienlieu = [];
+            $searchModel = new NhatKySuDungMayNoSearch();
+            $color = ["red","green","blue","yellow","brown","#00FFFF","#8B008B","#2F4F4F","#696969"];
+            $i = 0;
+            foreach ($dsdonvi as $key => $value) {
+                $tongnhienlieu[$key] = [
+                    1 => 0,
+                    2 => 0,
+                    3 => 0,
+                    4 => 0,
+                    5 => 0,
+                    6 => 0,
+                    7 => 0,
+                    8 => 0,
+                    9 => 0,
+                    10 => 0,
+                    11 => 0,
+                    12 => 0,
+                ];
+                $tongnhienlieu[$key]['TEN_DONVI'] = $value;
+                $tongnhienlieu[$key]['COLOR'] = $color[$i];
+                $i++;
+                $dulieutonghop = $searchModel->baocaotonghoptheothang(['NAM' => date('Y'), 'ID_DONVI' => $key]);
+                foreach ($dulieutonghop as $v) {
+                    $tongnhienlieu[$key][$v['THANG']] = $v['TONG_THOI_GIAN'];
+                }
+            }
+
+            $tonghoptrongthang = [];
+            $i = 0;
+            $labels = [];
+            for($j = 0; $j <  date('t'); $j++)
+            {
+               $labels[] =  'Ngày ' . ($j + 1);
+            }
+            foreach ($dsdonvi as $key => $value) {
+                $tonghoptrongthang[$key] = [];
+                for($j = 0; $j <  date('t'); $j++)
+                {
+                   $tonghoptrongthang[$key][$j] =  0;
+                }
+                $tonghoptrongthang[$key][30] =  0;
+                $tonghoptrongthang[$key]['TEN_DONVI'] = $value;
+                $tonghoptrongthang[$key]['COLOR'] = $color[$i];
+                $i++;
+                $dulieutonghop = $searchModel->baocaotonghoptrongthang(['NAM' => date('Y'), 'ID_DONVI' => $key ]);
+                foreach ($dulieutonghop as $v) {
+                    $tonghoptrongthang[$key][$v['NGAY'] - 1] = $v['TONG_THOI_GIAN'];
+                }
+            }
+
+            return $this->render('tonghoptheodonvi', [
+                    'tongnhienlieu' => $tongnhienlieu,
+                    'tonghoptrongthang' => $tonghoptrongthang,
+                    'labels' => $labels,
+                ]);
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
+        }
+    }
 }
