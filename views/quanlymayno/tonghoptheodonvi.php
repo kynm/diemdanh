@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         'type' => 'line',
                                         'options' => [
                                             'height' => 100,
-                                            'width' => 500
+                                            'width' => 700
                                         ],
                                         'data' => [
                                             'labels' => $labels,
@@ -174,7 +174,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <th scope="col"><?php echo formatnumber($tongtienthang12, 2);?></th>
                             </tr>
                             <tr>
-                                <th scope="col"></th>
                                 <th colspan="12">
                                     <?= ChartJs::widget([
                                         'type' => 'line',
