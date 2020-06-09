@@ -185,7 +185,7 @@ class QuanlydienController extends Controller
                 $model->fileupload = UploadedFile::getInstance($model, 'fileupload');
                 $data = \moonland\phpexcel\Excel::import($model->fileupload->tempName);
                 $keys = array_keys($data[0]);
-                $arrkeyCheck = ['MA_DIENLUC', 'TEN_DIENLUC', 'TK_DIENLUC', 'NH_DIENLUC', 'MA_CSHT', 'TIENDIEN', 'TIENTHUE', 'TONGTIEN'];
+                $arrkeyCheck = ['MA_DIENLUC', 'TEN_DIENLUC', 'TK_DIENLUC', 'NH_DIENLUC', 'MA_CSHT', 'TIENDIEN', 'TIENTHUE', 'TONGTIEN', 'KW_TIEUTHU'];
                 if (array_diff($arrkeyCheck, $keys)) {
                     Yii::$app->session->setFlash('error', "Cập nhật không thành công. Thiếu trường: " . implode(',', array_diff($arrkeyCheck, $keys)));
                     return $this->redirect(['import']);
@@ -206,9 +206,10 @@ class QuanlydienController extends Controller
                         $model1->NH_DIENLUC = $value['NH_DIENLUC'];
                         $model1->MA_CSHT = $value['MA_CSHT'];
                         $model1->MA_DONVIKT = $params['UploadForm']['MA_DONVIKT'];
-                        $model1->TIENDIEN = (int)formatnumber($value['TIENDIEN']);
-                        $model1->TIENTHUE = (int)formatnumber($value['TIENTHUE']);
+                        $model1->TIENDIEN = (int)$value['TIENDIEN'];
+                        $model1->TIENTHUE = (int)$value['TIENTHUE'];
                         $model1->TONGTIEN = (int)$value['TONGTIEN'];
+                        $model1->KW_TIEUTHU = (int)$value['KW_TIEUTHU'];
                         $model1->THOIGIANCAPNHAT = date("Y-m-d H:i:s");
                         $model1->NAM = $params['UploadForm']['NAM'];
                         $model1->THANG = $params['UploadForm']['THANG'];
