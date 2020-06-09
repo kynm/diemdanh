@@ -36,7 +36,7 @@ class Tramvt extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['MA_TRAM', 'TEN_TRAM', 'ID_NHANVIEN', 'ID_DAI'], 'required'],
+            [['MA_TRAM', 'TEN_TRAM', 'ID_NHANVIEN', 'ID_DAI', 'TRANGTHAI_CSHT_ID'], 'required'],
             [['DIADIEM'], 'string'],
             [['MA_CSHT'], 'string'],
             [['MA_DIENLUC'], 'string'],
@@ -58,8 +58,8 @@ class Tramvt extends \yii\db\ActiveRecord
     {
         return [
             'ID_TRAM' => 'ID',
-            'MA_TRAM' => 'Mã trạm',
-            'TEN_TRAM' => 'Tên trạm',
+            'MA_TRAM' => 'Mã CSHT HDSX',
+            'TEN_TRAM' => 'Tên CSHT',
             'TEN_TRAM2' => 'Tên quản lý BTS',
             'DIADIEM' => 'Địa điểm',
             'NGAY_KTNT' => 'Ngày kiểm tra',
@@ -67,7 +67,7 @@ class Tramvt extends \yii\db\ActiveRecord
             'VI_DO' => 'Vĩ độ',
             'ID_DAI' => 'Đài quản lý',
             'ID_NHANVIEN' => 'Nhân viên quản lý',
-            'LOAITRAM' => 'Loại trạm',
+            'LOAITRAM' => 'Loại CSHT',
             'DIEN_THOAI' => 'Điện thoại',
             'MA_CSHT' => 'Mã cơ sở hạ tầng',
             'MA_DIENLUC' => 'Mã điện lực',
@@ -75,6 +75,8 @@ class Tramvt extends \yii\db\ActiveRecord
             'TEN_DIENLUC' => 'Tên đơn vị điện lực',
             'NH_DIENLUC' => 'Ngân hàng điện lực',
             'TK_DIENLUC' => 'Tài khoản điện lực',
+            'TRANGTHAI_CSHT_ID' => 'Trạng thái CSHT',
+            'KIEUTRAM' => 'Kiểu CSHT',
         ];
     }
 
