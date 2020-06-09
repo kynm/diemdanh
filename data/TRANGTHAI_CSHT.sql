@@ -1,3 +1,4 @@
+DROP TABLE TRANGTHAI_CSHT;
 CREATE TABLE `TRANGTHAI_CSHT` (
  `ID` int(11) NOT NULL AUTO_INCREMENT,
  `TEN_TRANGTHAI_CSHT` varchar(64) NOT NULL,
@@ -12,6 +13,7 @@ VALUES (1,'Đang hoạt động','Đang hoạt động'),
 (3,'Chấm dứt hoạt động','Thanh lý hủy bỏ CSHT');
 UNLOCK TABLES;
 
+DROP TABLE LOAIHINH_CSHT;
 CREATE TABLE `LOAIHINH_CSHT` (
  `ID` int(11) NOT NULL AUTO_INCREMENT,
  `TEN_LOAIHINH_CSHT` varchar(64) NOT NULL,
@@ -31,6 +33,7 @@ VALUES (1,'Đầu tư trên đất VNPT','Đầu tư trên đất VNPT'),
 (8,'Hình thức khác','Hình thức khác');
 UNLOCK TABLES;
 
+DROP TABLE KIEU_CSHT;
 CREATE TABLE `KIEU_CSHT` (
  `ID` int(11) NOT NULL AUTO_INCREMENT,
  `TEN_KIEU_CSHT` varchar(64) NOT NULL,
@@ -49,6 +52,7 @@ VALUES (1,'Macro truyền thống','Macro truyền thống'),
 (7,'MXU Outdoor','MXU Outdoor');
 UNLOCK TABLES;
 
+DROP TABLE TRANGTHAI_HDMD;
 CREATE TABLE `TRANGTHAI_HDMD` (
  `ID` int(11) NOT NULL AUTO_INCREMENT,
  `TEN_TRANGTHAI_HDMD` varchar(64) NOT NULL,
