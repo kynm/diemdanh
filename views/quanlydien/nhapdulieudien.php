@@ -41,17 +41,18 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'class' => 'yii\grid\ActionColumn',
                             'template' => '',
+                            'template' => '{update}',
                             // 'template' => '{update} {delete}',
-                            // 'buttons' => [
-                            //     'update' => function ($url,$model) {
-                            //         $url = Url::to(['quanlydien/update', 'id' => $model->ID]);
-                            //         return Html::a('<span class="glyphicon glyphicon-pencil"> </span>', $url, ['title' => 'Điều chỉnh nội dung' ]);
-                            //     },
-                            //     'delete' => function ($url,$model,$key) {
-                            //         $url = Url::to(['quanlydien/delete', 'id' => $model->ID]);
-                            //         return Html::a('<span class="glyphicon glyphicon-trash"> </span>', $url, ['title' => 'Xóa' ]);
-                            //     },
-                            // ],
+                            'buttons' => [
+                                'update' => function ($url,$model) {
+                                    $url = Url::to(['quanlydien/update', 'id' => $model->ID]);
+                                    return Html::a('<span class="glyphicon glyphicon-pencil"> </span>', $url, ['title' => 'Điều chỉnh nội dung' ]);
+                                },
+                                // 'delete' => function ($url,$model,$key) {
+                                //     $url = Url::to(['quanlydien/delete', 'id' => $model->ID]);
+                                //     return Html::a('<span class="glyphicon glyphicon-trash"> </span>', $url, ['title' => 'Xóa' ]);
+                                // },
+                            ],
                         ],
                     ],
                 ]); ?>

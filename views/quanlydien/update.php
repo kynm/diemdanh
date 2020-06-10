@@ -18,7 +18,5 @@ $this->params['breadcrumbs'][] = 'Cập nhật';
 <div class="tramvt-update">
     <?= $this->render('_form', [
         'model' => $model,
-        'months' => $months,
-        'years' => $years,
     ]) ?>
 </div>

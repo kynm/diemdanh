@@ -44,6 +44,7 @@ class Quanlydien extends \yii\db\ActiveRecord
             [['TIENTHUE'], 'required'],
             [['TONGTIEN'], 'required'],
             [['THANG'], 'required'],
+            [['DINHMUC'], 'required'],
             [['THOIGIANCAPNHAT'], 'required'],
         ];
     }
@@ -64,6 +65,9 @@ class Quanlydien extends \yii\db\ActiveRecord
             'MA_DONVIKT' => 'MA_DONVIKT',
             'THOIGIANCAPNHAT' => 'Thời gian cập nhật',
             'IS_CHECKED' => 'Xác nhận',
+            'DINHMUC' => 'Định mức (KW)',
+            'MA_CSHT' => 'Mã cơ sở hạ tầng',
+            'KW_TIEUTHU' => 'Lượng tiêu thụ (KW)',
         ];
     }
 

@@ -15,32 +15,8 @@ use kartik\select2\Select2;
     <?= $form->field($model, 'MA_DIENLUC')->hiddenInput()->label(false);?>
     <div class="box box-primary">
         <div class="box-body">
-            <div class="col-sm-3">
-                <?= $form->field($model, 'NAM')->widget(Select2::classname(), [
-                    'data' => $years,
-                    'options' => ['placeholder' => 'NAM'],
-                    'pluginOptions' => [
-                        'allowClear' => true
-                    ],
-                ]); ?>
-            </div>
-            <div class="col-sm-3">
-                <?= $form->field($model, 'THANG')->widget(Select2::classname(), [
-                    'data' => $months,
-                    'options' => ['placeholder' => 'THANG'],
-                    'pluginOptions' => [
-                        'allowClear' => true
-                    ],
-                ]); ?>
-            </div>
             <div class="col-sm-6">
-                <?= $form->field($model, 'TIENDIEN')->textInput(['maxlength' => true]) ?>
-            </div>
-            <div class="col-sm-6">
-                <?= $form->field($model, 'TIENTHUE')->textInput(['maxlength' => true]) ?>
-            </div>
-            <div class="col-sm-6">
-                <?= $form->field($model, 'TONGTIEN')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model, 'DINHMUC')->textInput(['maxlength' => true]) ?>
             </div>
         </div>
         <div class="box-footer">

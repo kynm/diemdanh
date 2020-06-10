@@ -121,31 +121,41 @@ class QuanlydienController extends Controller
         $model = Quanlydien::findOne($id);
         $tramvt = $model->tRAMVT;
         if ($tramvt) {
-            $months = [];
-            for ($i = 0; $i < 12; $i++) {
-                $months[date('m', strtotime( date( 'Y-01-01' )." +$i months"))] = date('m', strtotime( date( 'Y-01-01' )." +$i months"));
-            }
-            $nowY = date("Y");
-            $years = [
-                $nowY => $nowY,
-                $nowY - 1 => $nowY - 1,
-            ];
             if ($model->load(Yii::$app->request->post()))
             {
                 $model->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
-                // var_dump($model);
-                // die();
-                // $model->THOIGIANCAPNHAT = now('Y-m-d');
                 $model->save(false);
+                Yii::$app->session->setFlash('success', "Cập nhật thành công!");
             }
             return $this->render('update', [
                 'model' => $model,
                 'tramvt' => $tramvt,
-                'months' => $months,
-                'years' => $years,
             ]);
         } else {
             throw new ForbiddenHttpException('Trạm chưa liên kết đến điện lực');
+        }
+    }
+
+    public function actionUpdatedinhmucdien($id)
+    {
+        if (Yii::$app->user->can('capnhatdinhmuc-qldien')) {
+            $model = Quanlydien::findOne($id);
+            $inputs = Yii::$app->request->bodyParams;
+            $model->DINHMUC = $inputs['DINHMUC'];
+            if ($model->save(false))
+            {
+                return json_encode([
+                    "message" => "Thêm định mức thành công",
+                    "error" => false
+                ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            } else {
+                return json_encode([
+                        "message" => "Lỗi dữ liệu",
+                        "error" => true
+                    ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            }
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
         }
     }
 
@@ -255,14 +265,6 @@ class QuanlydienController extends Controller
                 $nowY => $nowY,
                 $nowY - 1 => $nowY - 1,
             ];
-            // if (!$params || !isset($params['NAM'])) {
-            //     $params = array_merge(Yii::$app->request->queryParams, [
-            //         'NAM' => date('Y', strtotime("-1 month")),
-            //         'THANG' => date('m', strtotime("-1 month")),
-            //         'ID_DONVI' => Donvi::findone(Yii::$app->user->identity->nhanvien->ID_DONVI)->MA_DONVIKT
-            //     ]);
-            // }
-
             $iddv = ArrayHelper::map(Donvi::find()->where(['<>', 'MA_DONVIKT', 0])->all(), 'ID_DONVI', 'ID_DONVI');
             if (Yii::$app->user->can('dmdv-diennhienlieu')) {
                 $iddv = [Yii::$app->user->identity->nhanvien->ID_DONVI];
