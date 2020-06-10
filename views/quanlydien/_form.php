@@ -16,7 +16,7 @@ use kartik\select2\Select2;
     <div class="box box-primary">
         <div class="box-body">
             <div class="col-sm-6">
-                <?= $form->field($model, 'DINHMUC')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model, 'KW_TIEUTHU')->textInput(['maxlength' => true]) ?>
             </div>
         </div>
         <div class="box-footer">
