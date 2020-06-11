@@ -9,33 +9,39 @@ use yii\widgets\ActiveForm;
 $tongtien = 0;
 $tongphut = 0;
 $tongnhienlieu = 0;
+$i = 0;
 ?>
 
-              <table class="table">
+              <table class="datatable">
                 <thead>
                   <tr>
-                    <th scope="col">Tên trạm</th>
-                    <th scope="col">Loại máy nổ</th>
-                    <th scope="col">Loại nhiên liệu</th>
-                    <th scope="col">Tiêu hao (l/h)</th>
-                    <th scope="col">Thời gian (phút)</th>
-                    <th scope="col">Số lượng (L)</th>
-                    <th scope="col">Đơn giá (VNĐ)</th>
-                    <th scope="col">Thành tiền</th>
+                    <th scope="col" width="5%">STT</th>
+                    <th scope="col" width="25%">Tên trạm</th>
+                    <th scope="col" width="15%">Loại máy nổ</th>
+                    <th scope="col" width="10%">Loại nhiên liệu</th>
+                    <th scope="col" width="10%">Tiêu hao (l/h)</th>
+                    <th scope="col" width="10%">Thời gian (phút)</th>
+                    <th scope="col" width="10%">Số lượng (L)</th>
+                    <th scope="col" width="10%">Đơn giá (VNĐ)</th>
+                    <th scope="col" width="10%">Thành tiền</th>
                   </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($data as $dai): ?>
                         <?php if($dai['DU_LIEU']) :?>
                             <tr>
-                                <td colspan="8" style="font-weight: bold;"><?php echo $dai['TEN_DONVI']?></td>
+                                <td colspan="9" style="font-weight: bold;"><?php echo $dai['TEN_DONVI']?></td>
                             </tr>
                             <?php 
                                 $tong_theodai = 0;
                                 $tong_phuttheodai = 0;
                                 $tong_nhienlieutheodai = 0;
-                                foreach ($dai['DU_LIEU'] as $value): ?>
+                                foreach ($dai['DU_LIEU'] as $value): 
+                                $i++;
+
+                                    ?>
                                 <tr>
+                                    <td><?php echo $i?></td>
                                     <td><?php echo $value['TEN_TRAM'];?></td>
                                     <td><?php echo $value['TEN_THIETBI'];?></td>
                                     <td><?php echo $value['LOAINHIENLIEU']?></td>
@@ -55,6 +61,7 @@ $tongnhienlieu = 0;
                                     <td><?php echo formatnumber($thanhtien);?></td>
                                 <tr>
                             <?php endforeach; ?>
+                                <th scope="col"></th>
                             <th scope="col">Cộng</th>
                                 <th scope="col"></th>
                                 <th scope="col"></th>
@@ -67,6 +74,7 @@ $tongnhienlieu = 0;
                         <?php endif; ?>
                     <?php endforeach; ?>
                     <tr>
+                        <th scope="col"></th>
                     <th scope="col">Tổng cộng</th>
                         <th scope="col"></th>
                         <th scope="col"></th>
