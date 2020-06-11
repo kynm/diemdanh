@@ -33,7 +33,7 @@
     </tr>
     <tr>
         <td colspan="2" style="border: none">
-            Nơi gửi
+            Giám đốc, Phó giám đốc (Thay báo cáo)
             <br/>KTTKTC (Thực hiện)
             <br/>Lưu: TTĐHTT
         </td>
