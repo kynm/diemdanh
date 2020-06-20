@@ -148,6 +148,11 @@ use yii\helpers\Url;
                                 'url' => Url::to(['quanlydien/baocaototrinh']),
                                 'visible' => Yii::$app->user->can('ketoan-qldien'),
                             ],
+                            [
+                                'label' => 'Cập nhật thanh toán điện', 'icon' => 'caret-right',
+                                'url' => Url::to(['quanlydien/capnhatthanhtoandien']),
+                                'visible' => Yii::$app->user->can('updatett-qldien'),
+                            ],
                         ],
                         'visible' => Yii::$app->user->can('view-qldien'),
                     ],

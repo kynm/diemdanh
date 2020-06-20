@@ -283,6 +283,46 @@ class QuanlydienController extends Controller
         }
     }
 
+    public function actionCapnhatthanhtoandien()
+    {
+        if (Yii::$app->user->can('updatett-qldien')) {
+            $months = [];
+            for ($i = 1; $i <= 12; $i++) {
+                $months[$i] = $i;
+            }
+            $nowY = date("Y");
+            $years = [
+                $nowY => $nowY,
+                $nowY - 1 => $nowY - 1,
+            ];
+            $iddv = ArrayHelper::map(Donvi::find()->where(['<>', 'MA_DONVIKT', 0])->all(), 'ID_DONVI', 'ID_DONVI');
+            if (Yii::$app->user->can('dmdv-diennhienlieu')) {
+                $iddv = [Yii::$app->user->identity->nhanvien->ID_DONVI];
+            }
+
+            $dsdonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'MA_DONVIKT', 'TEN_DONVI');
+            $searchModel = new QuanlydienSearch();
+            $dataProvider = $searchModel->searchThongkedienchuathanhtoan(Yii::$app->request->queryParams);
+            if (Yii::$app->request->post('AddSelection')) {
+                $selected_array = Yii::$app->request->post('AddSelection');
+                $sql  = 'UPDATE quanlydien SET IS_CHECKED = 1 WHERE ID IN ('  . implode(',', $selected_array) . ')';
+                Yii::$app->db->createCommand($sql)->execute();
+
+                Yii::$app->session->setFlash('success', "Cập nhật thanh toán thành công!");
+            }
+            return $this->render('thongkesudungdienchuathanhtoan', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'dsdonvi' => $dsdonvi,
+                'months' => $months,
+                'years' => $years,
+            ]);
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
+        }
+    }
+    
+
     public function actionBaocaototrinh()
     {
         if (Yii::$app->user->can('ketoan-qldien')) {

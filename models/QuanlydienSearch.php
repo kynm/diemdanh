@@ -88,6 +88,40 @@ class QuanlydienSearch extends Quanlydien
         return $dataProvider;
     }
 
+    public function searchThongkedienchuathanhtoan($params)
+    {
+        $query = Quanlydien::find();
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+        $query->andWhere(['is', 'IS_CHECKED', new \yii\db\Expression('null')]);
+        $query->joinWith('donvitheomaketoan');
+        if (Yii::$app->user->can('dmdv-diennhienlieu')) {
+            $query->andFilterWhere(['quanlydien.MA_DONVIKT' => Donvi::findone(Yii::$app->user->identity->nhanvien->ID_DONVI)->MA_DONVIKT]);
+        }
+        $query->andFilterWhere(['quanlydien.MA_DONVIKT' => $this->MA_DONVIKT]);
+        $query->andFilterWhere(['like', 'NAM', $this->NAM])
+            ->andFilterWhere(['like', 'MA_DIENLUC', $this->MA_DIENLUC])
+            ->andFilterWhere(['like', 'THANG', $this->THANG]);
+
+        $query->orderBy([
+            'NAM' => SORT_DESC,
+            'THANG' => SORT_DESC,
+        ]);
+        return $dataProvider;
+    }
+
     public function search($params)
     {
         $query = Quanlydien::find();
