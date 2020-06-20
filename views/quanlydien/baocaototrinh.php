@@ -70,6 +70,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 <input type="checkbox" name="is_excel" value="1">
             </div>
             <div class="col-md-2 col-xs-2">
+                <label>Toàn bộ tháng</label>
+                <input type="checkbox" name="IS_CHECKED" value="1">
+            </div>
+            <div class="col-md-2 col-xs-2">
                 <?= Html::submitButton(
                     '<i class="fa fa-search"></i> Xem báo cáo', 
                     [

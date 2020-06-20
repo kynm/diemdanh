@@ -55,7 +55,6 @@ $tongtien = 0;
             <td><?php echo number_format($tongthue, 0, ',', '.');?></td>
             <td><?php echo number_format($tongtien, 0, ',', '.');?></td>
             <td><?php echo number_format($tongtien, 0, ',', '.');?></td>
-            <td></td>
           </tr>
         </tbody>
     </table>

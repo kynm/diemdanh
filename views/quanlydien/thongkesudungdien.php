@@ -53,6 +53,11 @@ $this->params['breadcrumbs'][] = $this->title;
                             return number_format($model->TONGTIEN, 0, ',', '.');
                           }
                         ],
+                        [ 'attribute' =>'IS_CHECKED',
+                          'value' => function($model) {
+                            return $model->IS_CHECKED ? 'Đã thanh toán' : 'Chờ thanh toán';
+                          }
+                        ],
                         'KW_TIEUTHU',
                         [ 'attribute' =>'DINHMUC',
                           'value' => function($model) {

@@ -175,10 +175,7 @@ class QuanlydienController extends Controller
         if (Yii::$app->user->can('import-qldien')) {
             $months = [];
             $years = [];
-            if (date('d') > 8) {
-                throw new ForbiddenHttpException('Số liệu điện phải được nhập trước ngày 8 hàng tháng');
-            }
-            for ($i = 1; $i <= 1; $i++) {
+            for ($i = 0; $i <= 1; $i++) {
                 $months[date('m', strtotime("-$i month"))] = date('m', strtotime("-$i month"));
                 $years[date('Y', strtotime("-$i month"))] = date('Y', strtotime("-$i month"));
             }
@@ -204,12 +201,13 @@ class QuanlydienController extends Controller
                                 'NAM' => $params['UploadForm']['NAM'],
                                 'THANG' => $params['UploadForm']['THANG'],
                                 'MA_DONVIKT' => $params['UploadForm']['MA_DONVIKT'],
+                                'IS_CHECKED' => NULL,
                             ]);
                 foreach ($data as $key => $value) {
                     if ($value['MA_DIENLUC']) {
                         $model1 = new Quanlydien();
                         $model1->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
-                        $model1->IS_CHECKED = 1;
+                        $model1->IS_CHECKED = NULL;
                         $model1->MA_DIENLUC = $value['MA_DIENLUC'];
                         $model1->TEN_DIENLUC = $value['TEN_DIENLUC'];
                         $model1->TK_DIENLUC = $value['TK_DIENLUC'];
@@ -327,6 +325,8 @@ class QuanlydienController extends Controller
     {
         if (Yii::$app->user->can('ketoan-qldien')) {
             $params = Yii::$app->request->queryParams;
+            $params['is_excel'] = $params['is_excel'] ?? null;
+            $params['IS_CHECKED'] = $params['IS_CHECKED'] ?? null;
             $iddv = ArrayHelper::map(Donvi::find()->where(['<>', 'MA_DONVIKT', 0])->all(), 'ID_DONVI', 'ID_DONVI');
             if (Yii::$app->user->can('dmdv-diennhienlieu')) {
                 $iddv = [$params['ID_DONVI']];
@@ -338,7 +338,7 @@ class QuanlydienController extends Controller
             $tongdiendv = $searchModel->baocaothdientheodonvi($params);
             $tongdiennh = $searchModel->baocaothdientheonganhang($params);
             $donvi = Donvi::findOne($params['ID_DONVI']);
-            if (isset($params['is_excel']) && $params['is_excel']) {
+            if ($params['is_excel']) {
                 $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
                 $spreadsheet->getDefaultStyle()->getFont()->setName('Arial');
                 $spreadsheet->getDefaultStyle()->getFont()->setSize(10);
