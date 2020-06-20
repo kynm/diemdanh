@@ -457,7 +457,7 @@ class QuanlydienController extends Controller
                             ->setCellValue("J$x", 'Tại ngân hàng')
                             ->setCellValue("K$x", 'Mã đơn vị');
                     foreach($dssddien as $key => $value) {
-                        $x = count($tongdiennh) + count($tongdiendv) + $key + 24;
+                        $x = count($tongdiennh) + count($tongdiendv) + $key + 25;
                         $spreadsheet->setActiveSheetIndex(0)
                             ->setCellValue("A$x", ($key + 1))
                             ->setCellValue("B$x", $value['MA_DIENLUC'])

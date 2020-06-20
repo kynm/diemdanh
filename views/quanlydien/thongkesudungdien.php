@@ -40,17 +40,17 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                         [ 'attribute' =>'TIENDIEN',
                           'value' => function($model) {
-                            return number_format($model->TIENDIEN, 0, ',', '.');
+                            return formatnumber($model->TIENDIEN);
                           }
                         ],
                         [ 'attribute' =>'TIENTHUE',
                           'value' => function($model) {
-                            return number_format($model->TIENTHUE, 0, ',', '.');
+                            return formatnumber($model->TIENTHUE);
                           }
                         ],
                         [ 'attribute' =>'TONGTIEN',
                           'value' => function($model) {
-                            return number_format($model->TONGTIEN, 0, ',', '.');
+                            return formatnumber($model->TONGTIEN);
                           }
                         ],
                         [ 'attribute' =>'IS_CHECKED',
@@ -58,7 +58,11 @@ $this->params['breadcrumbs'][] = $this->title;
                             return $model->IS_CHECKED ? 'Đã thanh toán' : 'Chờ thanh toán';
                           }
                         ],
-                        'KW_TIEUTHU',
+                        [ 'attribute' =>'KW_TIEUTHU',
+                          'value' => function($model) {
+                            return formatnumber($model->KW_TIEUTHU);
+                          }
+                        ],
                         [ 'attribute' =>'DINHMUC',
                           'value' => function($model) {
                             if (Yii::$app->user->can('capnhatdinhmuc-qldien')) {

@@ -54,7 +54,7 @@ $i = 0;
                                         $tongphut += $value['THOI_GIAN'];
                                         $tongnhienlieu += round($value['DINHMUC'] * ($value['THOI_GIAN']/60), 2);
                                     ?>
-                                    <td><?php echo number_format($value['DINHMUC'], 2, ',', '.');?></td>
+                                    <td><?php echo formatnumber($value['DINHMUC'], 2);?></td>
                                     <td><?php echo $value['THOI_GIAN'];?></td>
                                     <td><?php echo round($value['DINHMUC'] * ($value['THOI_GIAN']/60), 2);?></td>
                                     <td><?php echo formatnumber($value['GIATIEN']);?></td>

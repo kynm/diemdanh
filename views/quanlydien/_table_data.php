@@ -35,10 +35,10 @@ $tongtien = 0;
                     <td><?php echo ($key + 1);?></td>
                     <td><?php echo $value['TEN_DONVI'];?></td>
                     <td><?php echo $value['SO_TRAM'];?></td>
-                    <td><?php echo number_format($value['TIENDIEN'], 0, ',', '.');?></td>
-                    <td><?php echo number_format($value['TIENTHUE'], 0, ',', '.');?></td>
-                    <td><?php echo number_format($value['TONGTIEN'], 0, ',', '.');?></td>
-                    <td><?php echo number_format($value['TONGTIEN'], 0, ',', '.');?></td>
+                    <td><?php echo formatnumber($value['TIENDIEN']);?></td>
+                    <td><?php echo formatnumber($value['TIENTHUE']);?></td>
+                    <td><?php echo formatnumber($value['TONGTIEN']);?></td>
+                    <td><?php echo formatnumber($value['TONGTIEN']);?></td>
                     <?php
                         $tongchuathue += $value['TIENDIEN'];
                         $tongthue += $value['TIENTHUE'];
@@ -50,11 +50,11 @@ $tongtien = 0;
           <tr>
             <td>Tổng</td>
             <td></td>
-            <td><?php echo number_format($tongdv, 0, ',', '.');?></td>
-            <td><?php echo number_format($tongchuathue, 0, ',', '.');?></td>
-            <td><?php echo number_format($tongthue, 0, ',', '.');?></td>
-            <td><?php echo number_format($tongtien, 0, ',', '.');?></td>
-            <td><?php echo number_format($tongtien, 0, ',', '.');?></td>
+            <td><?php echo formatnumber($tongdv);?></td>
+            <td><?php echo formatnumber($tongchuathue);?></td>
+            <td><?php echo formatnumber($tongthue);?></td>
+            <td><?php echo formatnumber($tongtien);?></td>
+            <td><?php echo formatnumber($tongtien);?></td>
           </tr>
         </tbody>
     </table>
@@ -81,9 +81,9 @@ $tongtien = 0;
                     <td><?php echo ($key + 1);?></td>
                     <td><?php echo $value['TEN_DIENLUC'];?></td>
                     <td><?php echo $value['TK_DIENLUC'];?></td>
-                    <td><?php echo number_format($value['T_TIENDIEN'], 0, ',', '.');?></td>
-                    <td><?php echo number_format($value['T_TIENTHUE'], 0, ',', '.');?></td>
-                    <td><?php echo number_format($value['T_TONGTIEN'], 0, ',', '.');?></td>
+                    <td><?php echo formatnumber($value['T_TIENDIEN']);?></td>
+                    <td><?php echo formatnumber($value['T_TIENTHUE']);?></td>
+                    <td><?php echo formatnumber($value['T_TONGTIEN']);?></td>
                     <td><?php echo $value['NH_DIENLUC'];?></td>
                     <?php
                         $tongchuathue += $value['T_TIENDIEN'];
@@ -96,9 +96,9 @@ $tongtien = 0;
             <td>Tổng</td>
             <td></td>
             <td></td>
-            <td><?php echo number_format($tongchuathue, 0, ',', '.');?></td>
-            <td><?php echo number_format($tongthue, 0, ',', '.');?></td>
-            <td><?php echo number_format($tongtien, 0, ',', '.');?></td>
+            <td><?php echo formatnumber($tongchuathue);?></td>
+            <td><?php echo formatnumber($tongthue);?></td>
+            <td><?php echo formatnumber($tongtien);?></td>
             <td></td>
           </tr>
         </tbody>
@@ -124,10 +124,10 @@ $tongtien = 0;
                 <tr>
                     <td style="max-width: 110px;word-wrap: all;"><?php echo $value['MA_DIENLUC'];?></td>
                     <td><?php echo $value['MA_CSHT'];?></td>
-                    <td><?php echo number_format($value['TIENDIEN'], 0, ',', '.');?></td>
-                    <td><?php echo number_format($value['TIENTHUE'], 0, ',', '.');?></td>
-                    <td><?php echo number_format($value['TONGTIEN'], 0, ',', '.');?></td>
-                    <td><?php echo number_format($value['TONGTIEN'], 0, ',', '.');?></td>
+                    <td><?php echo formatnumber($value['TIENDIEN']);?></td>
+                    <td><?php echo formatnumber($value['TIENTHUE']);?></td>
+                    <td><?php echo formatnumber($value['TONGTIEN']);?></td>
+                    <td><?php echo formatnumber($value['TONGTIEN']);?></td>
                     <td style="max-width: 150px;word-wrap: break-word;"><?php echo $value['TEN_DIENLUC'];?></td>
                     <td><?php echo $value['TK_DIENLUC'];?></td>
                     <td style=""><?php echo $value['NH_DIENLUC'];?></td>

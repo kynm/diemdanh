@@ -81,6 +81,10 @@ class QuanlydienSearch extends Quanlydien
             ->andFilterWhere(['like', 'MA_DIENLUC', $this->MA_DIENLUC])
             ->andFilterWhere(['like', 'THANG', $this->THANG]);
 
+        $query->orderBy([
+            'NAM' => SORT_DESC,
+            'THANG' => SORT_DESC,
+        ]);
         return $dataProvider;
     }
 

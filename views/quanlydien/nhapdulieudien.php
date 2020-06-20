@@ -25,17 +25,17 @@ $this->params['breadcrumbs'][] = $this->title;
                         'THANG',
                         [ 'attribute' =>'TIENDIEN',
                           'value' => function($model) {
-                            return number_format($model->TIENDIEN);
+                            return formatnumber($model->TIENDIEN);
                           }
                         ],
                         [ 'attribute' =>'TIENTHUE',
                           'value' => function($model) {
-                            return number_format($model->TIENTHUE);
+                            return formatnumber($model->TIENTHUE);
                           }
                         ],
                         [ 'attribute' =>'TONGTIEN',
                           'value' => function($model) {
-                            return number_format($model->TONGTIEN);
+                            return formatnumber($model->TONGTIEN);
                           }
                         ],
                         [

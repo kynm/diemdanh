@@ -88,34 +88,34 @@ $this->params['breadcrumbs'][] = $this->title;
                             ?>
                             <tr>
                                 <td scope="col"><?php echo $value['TEN_DONVI']?></td>
-                                <td scope="col"><?php echo number_format($value[1]);?></td>
-                                <td scope="col"><?php echo number_format($value[2]); ?></td>
-                                <td scope="col"><?php echo number_format($value[3]); ?></td>
-                                <td scope="col"><?php echo number_format($value[4]); ?></td>
-                                <td scope="col"><?php echo number_format($value[5]); ?></td>
-                                <td scope="col"><?php echo number_format($value[6]); ?></td>
-                                <td scope="col"><?php echo number_format($value[7]); ?></td>
-                                <td scope="col"><?php echo number_format($value[8]); ?></td>
-                                <td scope="col"><?php echo number_format($value[9]); ?></td>
-                                <td scope="col"><?php echo number_format($value[10]); ?></td>
-                                <td scope="col"><?php echo number_format($value[11]); ?></td>
-                                <td scope="col"><?php echo number_format($value[12]); ?></td>
+                                <td scope="col"><?php echo formatnumber($value[1]);?></td>
+                                <td scope="col"><?php echo formatnumber($value[2]); ?></td>
+                                <td scope="col"><?php echo formatnumber($value[3]); ?></td>
+                                <td scope="col"><?php echo formatnumber($value[4]); ?></td>
+                                <td scope="col"><?php echo formatnumber($value[5]); ?></td>
+                                <td scope="col"><?php echo formatnumber($value[6]); ?></td>
+                                <td scope="col"><?php echo formatnumber($value[7]); ?></td>
+                                <td scope="col"><?php echo formatnumber($value[8]); ?></td>
+                                <td scope="col"><?php echo formatnumber($value[9]); ?></td>
+                                <td scope="col"><?php echo formatnumber($value[10]); ?></td>
+                                <td scope="col"><?php echo formatnumber($value[11]); ?></td>
+                                <td scope="col"><?php echo formatnumber($value[12]); ?></td>
                             </tr>
                         <?php endforeach; ?>
                             <tr>
                                 <th scope="col"><?php echo 'Tổng tiền';?></th>
-                                <th scope="col"><?php echo number_format($tongtienthang1);?></th>
-                                <th scope="col"><?php echo number_format($tongtienthang2);?></th>
-                                <th scope="col"><?php echo number_format($tongtienthang3);?></th>
-                                <th scope="col"><?php echo number_format($tongtienthang4);?></th>
-                                <th scope="col"><?php echo number_format($tongtienthang5);?></th>
-                                <th scope="col"><?php echo number_format($tongtienthang6);?></th>
-                                <th scope="col"><?php echo number_format($tongtienthang7);?></th>
-                                <th scope="col"><?php echo number_format($tongtienthang8);?></th>
-                                <th scope="col"><?php echo number_format($tongtienthang9);?></th>
-                                <th scope="col"><?php echo number_format($tongtienthang10);?></th>
-                                <th scope="col"><?php echo number_format($tongtienthang11);?></th>
-                                <th scope="col"><?php echo number_format($tongtienthang12);?></th>
+                                <th scope="col"><?php echo formatnumber($tongtienthang1);?></th>
+                                <th scope="col"><?php echo formatnumber($tongtienthang2);?></th>
+                                <th scope="col"><?php echo formatnumber($tongtienthang3);?></th>
+                                <th scope="col"><?php echo formatnumber($tongtienthang4);?></th>
+                                <th scope="col"><?php echo formatnumber($tongtienthang5);?></th>
+                                <th scope="col"><?php echo formatnumber($tongtienthang6);?></th>
+                                <th scope="col"><?php echo formatnumber($tongtienthang7);?></th>
+                                <th scope="col"><?php echo formatnumber($tongtienthang8);?></th>
+                                <th scope="col"><?php echo formatnumber($tongtienthang9);?></th>
+                                <th scope="col"><?php echo formatnumber($tongtienthang10);?></th>
+                                <th scope="col"><?php echo formatnumber($tongtienthang11);?></th>
+                                <th scope="col"><?php echo formatnumber($tongtienthang12);?></th>
                             </tr>
                             <tr>
                                 <th colspan="12">
@@ -196,34 +196,34 @@ $this->params['breadcrumbs'][] = $this->title;
                             ?>
                             <tr>
                                 <td scope="col"><?php echo $value['TEN_DONVI']?></td>
-                                <td scope="col"><?php echo number_format($value[1]);?></td>
-                                <td scope="col"><?php echo number_format($value[2])?></td>
-                                <td scope="col"><?php echo number_format($value[3])?></td>
-                                <td scope="col"><?php echo number_format($value[4])?></td>
-                                <td scope="col"><?php echo number_format($value[5])?></td>
-                                <td scope="col"><?php echo number_format($value[6])?></td>
-                                <td scope="col"><?php echo number_format($value[7])?></td>
-                                <td scope="col"><?php echo number_format($value[8])?></td>
-                                <td scope="col"><?php echo number_format($value[9])?></td>
-                                <td scope="col"><?php echo  number_format($value[10])?></td>
-                                <td scope="col"><?php echo  number_format($value[11])?></td>
-                                <td scope="col"><?php echo  number_format($value[12])?></td>
+                                <td scope="col"><?php echo formatnumber($value[1]);?></td>
+                                <td scope="col"><?php echo formatnumber($value[2])?></td>
+                                <td scope="col"><?php echo formatnumber($value[3])?></td>
+                                <td scope="col"><?php echo formatnumber($value[4])?></td>
+                                <td scope="col"><?php echo formatnumber($value[5])?></td>
+                                <td scope="col"><?php echo formatnumber($value[6])?></td>
+                                <td scope="col"><?php echo formatnumber($value[7])?></td>
+                                <td scope="col"><?php echo formatnumber($value[8])?></td>
+                                <td scope="col"><?php echo formatnumber($value[9])?></td>
+                                <td scope="col"><?php echo  formatnumber($value[10])?></td>
+                                <td scope="col"><?php echo  formatnumber($value[11])?></td>
+                                <td scope="col"><?php echo  formatnumber($value[12])?></td>
                             </tr>
                         <?php endforeach; ?>
                             <tr>
                                 <th scope="col"><?php echo 'Tổng trạm';?></th>
-                                <th scope="col"><?php echo number_format($tongthang1);?></th>
-                                <th scope="col"><?php echo number_format($tongthang2);?></th>
-                                <th scope="col"><?php echo number_format($tongthang3);?></th>
-                                <th scope="col"><?php echo number_format($tongthang4);?></th>
-                                <th scope="col"><?php echo number_format($tongthang5);?></th>
-                                <th scope="col"><?php echo number_format($tongthang6);?></th>
-                                <th scope="col"><?php echo number_format($tongthang7);?></th>
-                                <th scope="col"><?php echo number_format($tongthang8);?></th>
-                                <th scope="col"><?php echo number_format($tongthang9);?></th>
-                                <th scope="col"><?php echo number_format($tongthang10);?></th>
-                                <th scope="col"><?php echo number_format($tongthang11);?></th>
-                                <th scope="col"><?php echo number_format($tongthang12);?></th>
+                                <th scope="col"><?php echo formatnumber($tongthang1);?></th>
+                                <th scope="col"><?php echo formatnumber($tongthang2);?></th>
+                                <th scope="col"><?php echo formatnumber($tongthang3);?></th>
+                                <th scope="col"><?php echo formatnumber($tongthang4);?></th>
+                                <th scope="col"><?php echo formatnumber($tongthang5);?></th>
+                                <th scope="col"><?php echo formatnumber($tongthang6);?></th>
+                                <th scope="col"><?php echo formatnumber($tongthang7);?></th>
+                                <th scope="col"><?php echo formatnumber($tongthang8);?></th>
+                                <th scope="col"><?php echo formatnumber($tongthang9);?></th>
+                                <th scope="col"><?php echo formatnumber($tongthang10);?></th>
+                                <th scope="col"><?php echo formatnumber($tongthang11);?></th>
+                                <th scope="col"><?php echo formatnumber($tongthang12);?></th>
                             </tr>
                             <tr>
                                 <th colspan="12">
