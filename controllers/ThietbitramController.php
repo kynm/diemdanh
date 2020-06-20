@@ -98,6 +98,16 @@ class ThietbitramController extends Controller
             $model = new Thietbitram();
 
             if ($model->load(Yii::$app->request->post())) {
+                $loaitbi = Thietbi::findone($model->ID_LOAITB);
+                if ($loaitbi->ID_NHOM == 1) {
+                    $json = json_encode(
+                        [
+                            'DINH_MUC' => 0,
+                            'LOAINHIENLIEU' => 1,
+                        ]);
+                    $model->THAMSOTHIETBI = $json;
+                }
+
                 $model->TEN_MA = '';
                 if ($model->save()) {
                     $thietbi = new Dieuchuyenthietbi;

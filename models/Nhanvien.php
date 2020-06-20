@@ -42,7 +42,7 @@ class Nhanvien extends \yii\db\ActiveRecord
         return [
             [['TEN_NHANVIEN', 'ID_DONVI'], 'required'],
             [['CHUC_VU', 'ID_DONVI'], 'integer'],
-            [['MA_NHANVIEN'], 'string', 'max' => 10],
+            [['MA_NHANVIEN'], 'string', 'max' => 20],
             [['TEN_NHANVIEN'], 'string', 'max' => 100],
             [['USER_NAME'], 'string', 'max' => 50],
             [['DIEN_THOAI'], 'string', 'max' => 15],

@@ -60,7 +60,6 @@ if (Yii::$app->user->can('edit-tramvt')) {
     <div class="box box-primary">
         <div class="box-body">
             <div class="row">
-            
                 <?php
                 $form = ActiveForm::begin(['method' => 'get']);
                 if ($visible) {
