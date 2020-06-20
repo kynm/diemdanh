@@ -298,8 +298,8 @@ class QuanlydienController extends Controller
             $params = Yii::$app->request->queryParams;
             if (!$params || !isset($params['NAM'])) {
                 $params = array_merge(Yii::$app->request->queryParams, [
-                    'NAM' => date('Y', strtotime("-1 month")),
-                    'THANG' => date('m', strtotime("-1 month")),
+                    'NAM' => date('Y', strtotime("-0 month")),
+                    'THANG' => date('m', strtotime("-0 month")),
                     'ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI
                 ]);
             }
