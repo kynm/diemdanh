@@ -371,6 +371,9 @@ class QuanlydienController extends Controller
             if (Yii::$app->user->can('dmdv-diennhienlieu')) {
                 $iddv = [$params['ID_DONVI']];
             }
+            if ($params['ID_DONVI']) {
+                $iddv = [$params['ID_DONVI']];
+            }
             $dsdonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'MA_DONVIKT', 'MA_DONVIKT');
             $params['dsdonvi'] = implode(',', $dsdonvi);
             $searchModel = new QuanlydienSearch();
