@@ -14,7 +14,8 @@ $this->title = 'Thống kê sử dụng điện theo trung tâm viễn thông';
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
-<input type="hidden" name="urluploadimage" id="updatedinhmucdien" value="<?= Url::to(['quanlydien/updatedinhmucdien']) ?>">
+<input type="hidden" name="updatedinhmucdien" id="updatedinhmucdien" value="<?= Url::to(['quanlydien/updatedinhmucdien']) ?>">
+<input type="hidden" name="updatetieuthudien" id="updatetieuthudien" value="<?= Url::to(['quanlydien/updatetieuthudien']) ?>">
 <div class="donvi-index">
     <div class="box box-primary">
         <div class="box-body">
@@ -60,8 +61,14 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                         [ 'attribute' =>'KW_TIEUTHU',
                           'value' => function($model) {
-                            return formatnumber($model->KW_TIEUTHU);
-                          }
+                            if (Yii::$app->user->can('capnhattt-qldien')) {
+                                return Html::input('text', 'KW_TIEUTHU-' . $model->ID, $model->KW_TIEUTHU, ['id' => 'KW_TIEUTHU-' . $model->ID]) . Html::button('Cập nhật', ['class' => 'updatetieuthu','data-id' => $model->ID]);
+                            } else {
+                                return '';
+                            }
+                            
+                          },
+                          'format' => 'raw'
                         ],
                         [ 'attribute' =>'DINHMUC',
                           'value' => function($model) {
@@ -120,6 +127,47 @@ $script = <<< JS
             Swal.fire({
                 icon: 'error',
                 title: 'Định mức phải là số!',
+                showConfirmButton: true
+            });
+        }
+    });
+    $(".updatetieuthu").on( "click", function() {
+        var intRegex = /^\d+$/;
+        var floatRegex = /^((\d+(\.\d *)?)|((\d*\.)?\d+))$/;
+        var id = $(this).data('id');
+        var element_tieuthu = '#KW_TIEUTHU-' + id;
+        var tieuthu = $(element_tieuthu).val();
+        if(intRegex.test(tieuthu) || floatRegex.test(tieuthu)) {
+            var updatetieuthudien = $("#updatetieuthudien").val();
+            $.ajax({
+                url: updatetieuthudien + '?id=' + id,
+                method: 'post',
+                data: {
+                    KW_TIEUTHU: tieuthu
+                },
+                success:function(data) {
+                    data = jQuery.parseJSON(data);
+                    if(data.error) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: data.message,
+                            showConfirmButton: false,
+                            timer: 1000
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'success',
+                            title: data.message,
+                            showConfirmButton: false,
+                            timer: 1000
+                        });
+                    }
+                }
+            });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Điện tiêu thụ phải là số!',
                 showConfirmButton: true
             });
         }

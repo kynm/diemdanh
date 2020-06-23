@@ -159,6 +159,29 @@ class QuanlydienController extends Controller
         }
     }
 
+    public function actionUpdatetieuthudien($id)
+    {
+        if (Yii::$app->user->can('capnhattt-qldien')) {
+            $model = Quanlydien::findOne($id);
+            $inputs = Yii::$app->request->bodyParams;
+            $model->KW_TIEUTHU = $inputs['KW_TIEUTHU'];
+            if ($model->save(false))
+            {
+                return json_encode([
+                    "message" => "Thêm điện tiêu thụ thành công",
+                    "error" => false
+                ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            } else {
+                return json_encode([
+                        "message" => "Lỗi dữ liệu",
+                        "error" => true
+                    ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            }
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
+        }
+    }
+
     public function actionDelete($id)
     {
         if (1) {
