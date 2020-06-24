@@ -11,11 +11,10 @@ use yii\widgets\ActiveForm;
 /* @var $searchModel app\models\TramvtSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Thống kê sử dụng điện theo trung tâm viễn thông';
+$this->title = 'Cập nhật thanh toán điện';
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
-<input type="hidden" name="urluploadimage" id="updatedinhmucdien" value="<?= Url::to(['quanlydien/updatedinhmucdien']) ?>">
 <?php 
 $form = ActiveForm::begin(['method' => 'post']); ?>
 <div class="donvi-index">

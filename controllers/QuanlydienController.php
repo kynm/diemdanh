@@ -198,7 +198,7 @@ class QuanlydienController extends Controller
         if (Yii::$app->user->can('import-qldien')) {
             $months = [];
             $years = [];
-            for ($i = 0; $i <= 1; $i++) {
+            for ($i = 0; $i <= 5; $i++) {
                 $months[date('m', strtotime("-$i month"))] = date('m', strtotime("-$i month"));
                 $years[date('Y', strtotime("-$i month"))] = date('Y', strtotime("-$i month"));
             }
