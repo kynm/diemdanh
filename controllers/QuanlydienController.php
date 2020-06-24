@@ -607,7 +607,7 @@ class QuanlydienController extends Controller
                 $tongdien[$key]['COLOR'] = $color[$i];
                 $i++;
                 foreach ($searchModel->tonghoptheodonvi($key, date('Y')) as $v) {
-                    $tongdien[$key][$v['THANG']] = $v['TONGTIEN'];
+                    $tongdien[$key][$v['THANG']] = $v['KW_TIEUTHU'];
                 }
             }
             $tongtram = [];

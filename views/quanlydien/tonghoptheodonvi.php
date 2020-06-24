@@ -44,18 +44,18 @@ $this->params['breadcrumbs'][] = $this->title;
                     <tbody>
 
                         <?php 
-                        $tongtienthang1 = 0;
-                        $tongtienthang2 = 0;
-                        $tongtienthang3 = 0;
-                        $tongtienthang4 = 0;
-                        $tongtienthang5 = 0;
-                        $tongtienthang6 = 0;
-                        $tongtienthang7 = 0;
-                        $tongtienthang8 = 0;
-                        $tongtienthang9 = 0;
-                        $tongtienthang10 = 0;
-                        $tongtienthang11 = 0;
-                        $tongtienthang12 = 0;
+                        $tongdienthang1 = 0;
+                        $tongdienthang2 = 0;
+                        $tongdienthang3 = 0;
+                        $tongdienthang4 = 0;
+                        $tongdienthang5 = 0;
+                        $tongdienthang6 = 0;
+                        $tongdienthang7 = 0;
+                        $tongdienthang8 = 0;
+                        $tongdienthang9 = 0;
+                        $tongdienthang10 = 0;
+                        $tongdienthang11 = 0;
+                        $tongdienthang12 = 0;
                         $datasets = [];
                         foreach ($tongdien as $key => $value): ?>
                             <?php
@@ -73,18 +73,18 @@ $this->params['breadcrumbs'][] = $this->title;
                                     $value[9],$value[10],$value[11],$value[12],
                                 ]
                             ];
-                            $tongtienthang1 += $value[1];
-                            $tongtienthang2 += $value[2];
-                            $tongtienthang3 += $value[3];
-                            $tongtienthang4 += $value[4];
-                            $tongtienthang5 += $value[5];
-                            $tongtienthang6 += $value[6];
-                            $tongtienthang7 += $value[7];
-                            $tongtienthang8 += $value[8];
-                            $tongtienthang9 += $value[9];
-                            $tongtienthang10 += $value[10];
-                            $tongtienthang11 += $value[11];
-                            $tongtienthang12 += $value[12];
+                            $tongdienthang1 += $value[1];
+                            $tongdienthang2 += $value[2];
+                            $tongdienthang3 += $value[3];
+                            $tongdienthang4 += $value[4];
+                            $tongdienthang5 += $value[5];
+                            $tongdienthang6 += $value[6];
+                            $tongdienthang7 += $value[7];
+                            $tongdienthang8 += $value[8];
+                            $tongdienthang9 += $value[9];
+                            $tongdienthang10 += $value[10];
+                            $tongdienthang11 += $value[11];
+                            $tongdienthang12 += $value[12];
                             ?>
                             <tr>
                                 <td scope="col"><?php echo $value['TEN_DONVI']?></td>
@@ -103,19 +103,19 @@ $this->params['breadcrumbs'][] = $this->title;
                             </tr>
                         <?php endforeach; ?>
                             <tr>
-                                <th scope="col"><?php echo 'Tổng tiền';?></th>
-                                <th scope="col"><?php echo formatnumber($tongtienthang1);?></th>
-                                <th scope="col"><?php echo formatnumber($tongtienthang2);?></th>
-                                <th scope="col"><?php echo formatnumber($tongtienthang3);?></th>
-                                <th scope="col"><?php echo formatnumber($tongtienthang4);?></th>
-                                <th scope="col"><?php echo formatnumber($tongtienthang5);?></th>
-                                <th scope="col"><?php echo formatnumber($tongtienthang6);?></th>
-                                <th scope="col"><?php echo formatnumber($tongtienthang7);?></th>
-                                <th scope="col"><?php echo formatnumber($tongtienthang8);?></th>
-                                <th scope="col"><?php echo formatnumber($tongtienthang9);?></th>
-                                <th scope="col"><?php echo formatnumber($tongtienthang10);?></th>
-                                <th scope="col"><?php echo formatnumber($tongtienthang11);?></th>
-                                <th scope="col"><?php echo formatnumber($tongtienthang12);?></th>
+                                <th scope="col"><?php echo 'Tổng điện tiêu thụ';?></th>
+                                <th scope="col"><?php echo formatnumber($tongdienthang1);?></th>
+                                <th scope="col"><?php echo formatnumber($tongdienthang2);?></th>
+                                <th scope="col"><?php echo formatnumber($tongdienthang3);?></th>
+                                <th scope="col"><?php echo formatnumber($tongdienthang4);?></th>
+                                <th scope="col"><?php echo formatnumber($tongdienthang5);?></th>
+                                <th scope="col"><?php echo formatnumber($tongdienthang6);?></th>
+                                <th scope="col"><?php echo formatnumber($tongdienthang7);?></th>
+                                <th scope="col"><?php echo formatnumber($tongdienthang8);?></th>
+                                <th scope="col"><?php echo formatnumber($tongdienthang9);?></th>
+                                <th scope="col"><?php echo formatnumber($tongdienthang10);?></th>
+                                <th scope="col"><?php echo formatnumber($tongdienthang11);?></th>
+                                <th scope="col"><?php echo formatnumber($tongdienthang12);?></th>
                             </tr>
                             <tr>
                                 <th colspan="12">
