@@ -120,6 +120,11 @@ use yii\helpers\Url;
                                 'url' => Url::to(['quanlymayno/thongkechitiet']),
                                 'visible' => Yii::$app->user->can('tkct-mayno'),
                             ],
+                            [
+                                'label' => 'Báo cáo theo đài trạm', 'icon' => 'caret-right',
+                                'url' => Url::to(['quanlymayno/baocaodaitram']),
+                                'visible' => Yii::$app->user->can('view-nkmayno'),
+                            ],
                         ],
                         'visible' => Yii::$app->user->can('view-nkmayno'),
                     ],

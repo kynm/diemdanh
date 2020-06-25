@@ -6,6 +6,8 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\NhatKySuDungMayNo;
 use yii\helpers\ArrayHelper;
+use app\models\Tramvt;
+use app\models\Daivt;
 
 class NhatKySuDungMayNoSearch extends NhatKySuDungMayNo
 {
@@ -15,7 +17,10 @@ class NhatKySuDungMayNoSearch extends NhatKySuDungMayNo
     public function rules()
     {
         return [
-            // [['ID_NHANVIEN'], 'integer'],
+            // ['THOIGIANBATDAU', 'date', 'timestampAttribute' => 'THOIGIANBATDAU', 'format' => 'php:d-m-y'],
+            // ['THOIGIANKETTHUC', 'date', 'timestampAttribute' => 'THOIGIANKETTHUC', 'format' => 'php:d-m-y'],
+            [['ID_TRAM'], 'safe'],
+            [['ID_DAI'], 'safe'],
             // [['MA_NHANVIEN', 'TEN_NHANVIEN', 'CHUC_VU', 'DIEN_THOAI', 'GHI_CHU', 'USER_NAME', 'ID_DONVI', 'ID_DAI'], 'safe'],
         ];
     }
@@ -129,5 +134,32 @@ class NhatKySuDungMayNoSearch extends NhatKySuDungMayNo
         ";
 
         return Yii::$app->db->createCommand($sql)->queryAll();
+    }
+
+    public function searchbaocaodaitram($params)
+    {
+        $query = NhatKySuDungMayNo::find();
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+        $this->load($params);
+        if (!$this->validate()) {
+            return $dataProvider;
+        }
+        $query->joinWith('tRAMVANHANH');
+        if (Yii::$app->user->can('truongdai-mayno')) {
+            $iddais = ArrayHelper::map(Daivt::find()->where(['=', 'ID_DONVI', Yii::$app->user->identity->nhanvien->ID_DONVI])->all(), 'ID_DAI', 'ID_DAI');
+            $idTram = ArrayHelper::map(Tramvt::find()->where(['in', 'ID_DAI', $iddais])->all(), 'ID_TRAM', 'ID_TRAM');
+            $query->andFilterWhere(['in', 'ID_TRAM', $idTram]);
+        }
+        $query->andFilterWhere(['like', 'tramvt.TEN_TRAM', $this->ID_TRAM]);
+        // ->andFilterWhere(['like', 'tramvt.TEN_TRAM', $this->ID_DAI])
+        // ->andFilterWhere(['between', 'THOIGIANBATDAU', $this->THOIGIANBATDAU, $this->THOIGIANKETTHUC]);
+
+        $query->orderBy([
+            'THOIGIANBATDAU' => SORT_DESC,
+        ]);
+
+        return $dataProvider;
     }
 }

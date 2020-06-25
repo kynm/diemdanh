@@ -259,8 +259,7 @@ class QuanlymaynoController extends Controller
             ];
             $iddv = [2,3,4,5,6,7,666];
             if (Yii::$app->user->can('dmdv-diennhienlieu')) {
-            $iddv = [Yii::$app->user->identity->nhanvien->ID_DONVI];
-
+                $iddv = [Yii::$app->user->identity->nhanvien->ID_DONVI];
             }
             $dsDonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'ID_DONVI', 'TEN_DONVI');
             $isprint = 0;
@@ -635,5 +634,15 @@ class QuanlymaynoController extends Controller
         } else {
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
         }
+    }
+
+    public function actionBaocaodaitram()
+    {
+        $searchModel = new NhatKySuDungMayNoSearch();
+        $dataProvider = $searchModel->searchbaocaodaitram(Yii::$app->request->queryParams);
+        return $this->render('baocaodaitram', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 }
