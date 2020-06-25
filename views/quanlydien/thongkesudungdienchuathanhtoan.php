@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 <?php 
-$form = ActiveForm::begin(['method' => 'post']); ?>
+$form = ActiveForm::begin(['method' => 'get']); ?>
 <div class="donvi-index">
     <div class="box box-primary">
         <div class="col-sm-12" style="margin-top: 15px">

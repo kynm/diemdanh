@@ -322,7 +322,13 @@ class QuanlydienController extends Controller
             if (Yii::$app->user->can('dmdv-diennhienlieu')) {
                 $iddv = [Yii::$app->user->identity->nhanvien->ID_DONVI];
             }
+            if (Yii::$app->request->get('AddSelection')) {
+                $selected_array = Yii::$app->request->get('AddSelection');
+                $sql  = 'UPDATE quanlydien SET IS_CHECKED = 1 WHERE ID IN ('  . implode(',', $selected_array) . ')';
+                Yii::$app->db->createCommand($sql)->execute();
 
+                Yii::$app->session->setFlash('success', "Cập nhật thanh toán thành công!");
+            }
             $dsdonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'MA_DONVIKT', 'TEN_DONVI');
             $searchModel = new QuanlydienSearch();
             $dataProvider = $searchModel->searchThongkedienchuathanhtoan(Yii::$app->request->queryParams);
