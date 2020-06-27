@@ -28,6 +28,14 @@ switch (Yii::$app->user->identity->nhanvien->chucvu->cap) {
         $listDaivt = [];
         break;
 }
+
+        if (Yii::$app->user->can('dmdv-diennhienlieu')) {
+            $listDaivt = ArrayHelper::map(Daivt::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->all(), 'ID_DAI', 'TEN_DAIVT');
+            $dsnhanvien = ArrayHelper::map(Nhanvien::find()->where(['in', 'ID_DONVI', Yii::$app->user->identity->nhanvien->ID_DONVI])->all(), 'ID_NHANVIEN', 'TEN_NHANVIEN');
+        } else {
+            $dsnhanvien = ArrayHelper::map(Nhanvien::find()->where(['>', 'ID_NHANVIEN', 0])->all(), 'ID_NHANVIEN', 'TEN_NHANVIEN');
+        }
+
 $listtrangthai = ArrayHelper::map(TrangthaiCSHT::find()->all(), 'ID', 'TEN_TRANGTHAI_CSHT');
 $listloaihinh = ArrayHelper::map(LoaihinhCSHT::find()->all(), 'ID', 'TEN_LOAIHINH_CSHT');
 $listkieu = ArrayHelper::map(KieuCSHT::find()->all(), 'ID', 'TEN_KIEU_CSHT');
@@ -83,7 +91,7 @@ $listkieu = ArrayHelper::map(KieuCSHT::find()->all(), 'ID', 'TEN_KIEU_CSHT');
                 
             <div class="col-sm-2">
                 <?= $form->field($model, 'ID_NHANVIEN')->widget(Select2::classname(), [
-                    'data' => ArrayHelper::map(Nhanvien::find()->where(['>', 'ID_NHANVIEN', 0])->all(), 'ID_NHANVIEN', 'TEN_NHANVIEN'),
+                    'data' => $dsnhanvien,
                     'options' => ['placeholder' => 'Chọn nhân viên quản lý'],
                     'pluginOptions' => [
                         'allowClear' => true
