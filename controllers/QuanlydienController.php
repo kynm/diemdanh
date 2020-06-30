@@ -202,6 +202,9 @@ class QuanlydienController extends Controller
                 $months[date('m', strtotime("-$i month"))] = date('m', strtotime("-$i month"));
                 $years[date('Y', strtotime("-$i month"))] = date('Y', strtotime("-$i month"));
             }
+            if (!isset($months['02'])) {
+                $months['02'] = '02';
+            }
             $iddv = ArrayHelper::map(Donvi::find()->where(['<>', 'MA_DONVIKT', 0])->all(), 'ID_DONVI', 'ID_DONVI');
             if (Yii::$app->user->can('dmdv-diennhienlieu')) {
                 $iddv = [Yii::$app->user->identity->nhanvien->ID_DONVI];
