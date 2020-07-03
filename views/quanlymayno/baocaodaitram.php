@@ -37,6 +37,10 @@ $this->params['breadcrumbs'][] = 'Cập nhật';
                             'value' => 'tRAMVANHANH.TEN_TRAM'
                         ],
                         [
+                            'attribute' => 'ID_THIETBITRAM',
+                            'value' => 'tHIETBITRAM.iDLOAITB.TEN_THIETBI'
+                        ],
+                        [
                             'attribute' => 'THOIGIANBATDAU',
                             // 'format' => ['date', 'php:d/m/Y H:i'],
                         ],

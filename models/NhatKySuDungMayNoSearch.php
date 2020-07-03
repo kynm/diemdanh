@@ -147,10 +147,11 @@ class NhatKySuDungMayNoSearch extends NhatKySuDungMayNo
             return $dataProvider;
         }
         $query->joinWith('tRAMVANHANH');
+        $query->joinWith('tHIETBITRAM');
         if (Yii::$app->user->can('truongdai-mayno')) {
-            $iddais = ArrayHelper::map(Daivt::find()->where(['=', 'ID_DONVI', Yii::$app->user->identity->nhanvien->ID_DONVI])->all(), 'ID_DAI', 'ID_DAI');
-            $idTram = ArrayHelper::map(Tramvt::find()->where(['in', 'ID_DAI', $iddais])->all(), 'ID_TRAM', 'ID_TRAM');
-            $query->andFilterWhere(['in', 'ID_TRAM', $idTram]);
+            // $iddais = ArrayHelper::map(Daivt::find()->where(['=', 'ID_DONVI', Yii::$app->user->identity->nhanvien->ID_DONVI])->all(), 'ID_DAI', 'ID_DAI');
+            $idTram = ArrayHelper::map(Tramvt::find()->where(['=', 'ID_DAI', Yii::$app->user->identity->nhanvien->ID_DAI])->all(), 'ID_TRAM', 'ID_TRAM');
+            $query->andFilterWhere(['in', 'nhatkysudungmayno.ID_TRAM', $idTram]);
         }
         $query->andFilterWhere(['like', 'tramvt.TEN_TRAM', $this->ID_TRAM]);
         // ->andFilterWhere(['like', 'tramvt.TEN_TRAM', $this->ID_DAI])
