@@ -221,4 +221,11 @@ class QuanlydienSearch extends Quanlydien
 
         return Yii::$app->db->createCommand($sqltonghop)->queryAll();
     }
+
+    public function tonghoptramphatsinhtheotram()
+    {
+        $sqltonghop = "SELECT a.MA_CSHT, (SELECT ten_tram from tramvt where MA_CSHT = a.MA_CSHT LIMIT 1) TEN_TRAM, A.THANG, A.KW_TIEUTHU from quanlydien a";
+
+        return Yii::$app->db->createCommand($sqltonghop)->queryAll();
+    }
 }

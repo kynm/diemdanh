@@ -748,4 +748,34 @@ class QuanlydienController extends Controller
         // $writer->save('php://output');
         // die();
     }
+
+    public function actionExporttonghoptheotram()
+    {
+        $data = [];
+        $searchModel = new QuanlydienSearch();
+        $data1 = $searchModel->tonghoptramphatsinhtheotram();
+        // foreach ($data1 as $value) {
+        //     $da
+        // }
+        // var_dump($data1);
+        // die();
+
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $spreadsheet->getDefaultStyle()->getFont()->setName('Arial');
+        $spreadsheet->getDefaultStyle()->getFont()->setSize(10);
+        $spreadsheet->getActiveSheet()->fromArray(array_keys($data1[0]), '', 'A1');
+        $spreadsheet->getActiveSheet()->fromArray($data1, '', 'A2');
+
+        $filename = 'Dữ liệ diện.xlsx'; //save our workbook as this file name
+        // Redirect output to a client’s web browser (Xlsx)
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="'.$filename.'"');
+        header('Cache-Control: max-age=0');
+        // If you're serving to IE 9, then the following may be needed
+        header('Cache-Control: max-age=1');
+
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $writer->save('php://output');
+        die();
+    }
 }
