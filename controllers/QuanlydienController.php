@@ -754,17 +754,26 @@ class QuanlydienController extends Controller
         $data = [];
         $searchModel = new QuanlydienSearch();
         $data1 = $searchModel->tonghoptramphatsinhtheotram();
-        // foreach ($data1 as $value) {
-        //     $da
-        // }
-        // var_dump($data1);
-        // die();
+        foreach ($data1 as $value) {
+            if (isset($data[$value['MA_CSHT']])) {
+                $data[$value['MA_CSHT']][$value['THANG']] = $value['KW_TIEUTHU'];
+            } else {
+                $data[$value['MA_CSHT']] = [];
+                $data[$value['MA_CSHT']] = $value;
+                $data[$value['MA_CSHT']][$value['THANG']] = $value['KW_TIEUTHU'];
+            }
+
+            unset($data[$value['MA_CSHT']]['THANG']);
+            unset($data[$value['MA_CSHT']]['KW_TIEUTHU']);
+
+        }
+
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $spreadsheet->getDefaultStyle()->getFont()->setName('Arial');
         $spreadsheet->getDefaultStyle()->getFont()->setSize(10);
-        $spreadsheet->getActiveSheet()->fromArray(array_keys($data1[0]), '', 'A1');
-        $spreadsheet->getActiveSheet()->fromArray($data1, '', 'A2');
+        $spreadsheet->getActiveSheet()->fromArray(array_keys($data[$value['MA_CSHT']]), '', 'A1');
+        $spreadsheet->getActiveSheet()->fromArray($data, '', 'A2');
 
         $filename = 'Dữ liệ diện.xlsx'; //save our workbook as this file name
         // Redirect output to a client’s web browser (Xlsx)
