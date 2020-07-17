@@ -8,8 +8,8 @@ use app\models\Nhanvien;
 use app\models\Daivt;
 use app\models\Donvi;
 use app\models\Tramvt;
-use app\models\Quanlydien;
-use app\models\QuanlydienSearch;
+use app\models\Quanlyhopdong;
+use app\models\QuanlyhopdongSearch;
 use app\models\TramvtSearch;
 use app\models\UploadForm;
 use yii\web\Controller;
@@ -25,7 +25,7 @@ use yii\web\UploadedFile;
 /**
  * TramvtController implements the CRUD actions for Tramvt model.
  */
-class QuanlydienController extends Controller
+class QuanlyhopdongController extends Controller
 {
     /**
      * @inheritdoc
@@ -53,10 +53,10 @@ class QuanlydienController extends Controller
      */
     public function actionIndex()
     {
-        if (Yii::$app->user->can('list-qldien')) {
+        if (Yii::$app->user->can('list-qlhopdong')) {
             $searchModel = new TramvtSearch();
             $params = Yii::$app->request->queryParams;
-            $dataProvider = $searchModel->searchQldien($params);
+            $dataProvider = $searchModel->searchQlhopdong($params);
             if (isset($params['TramvtSearch']) && $params['TramvtSearch']['ID_DAI']) {
                 $listTram = ArrayHelper::map(Tramvt::find()->where(['ID_DAI' => $params['TramvtSearch']['ID_DAI']])->asArray()->all(), 'TEN_TRAM', 'TEN_TRAM');
             } else {
@@ -64,7 +64,7 @@ class QuanlydienController extends Controller
             }
 
             $iddv = [2,3,4,5,6,7,666];
-            if (Yii::$app->user->can('dmdv-diennhienlieu')) {
+            if (Yii::$app->user->can('dmdv-qlhopdong')) {
                 $iddv = [Yii::$app->user->identity->nhanvien->ID_DONVI];
             }
             return $this->render('index', [
@@ -78,38 +78,62 @@ class QuanlydienController extends Controller
         }
     }
 
-    public function actionNhapdulieudien($MA_DIENLUC)
+    public function actionNhaphopdong($MA_CSHT)
     {
-        $tramvt = Tramvt::find()->where(['MA_DIENLUC' => $MA_DIENLUC])->one();
+        $tramvt = Tramvt::find()->where(['MA_CSHT' => $MA_CSHT])->one();
         if ($tramvt) {
-            $model = new Quanlydien();
-            $model->MA_DIENLUC = $MA_DIENLUC;
-            $months = [];
-            for ($i = 0; $i < 12; $i++) {
-                $months[date('m', strtotime( date( 'Y-01-01' )." +$i months"))] = date('m', strtotime( date( 'Y-01-01' )." +$i months"));
-            }
-            $nowY = date("Y");
-            $years = [
-                $nowY => $nowY,
-                $nowY - 1 => $nowY - 1,
-            ];
+            $model = new Quanlyhopdong();
+            $model->MA_CSHT = $MA_CSHT;
             if ($model->load(Yii::$app->request->post()))
             {
-                // if (Quanlydien::find()->where(['NAM'])) {
-                //     # code...
-                // }
                 $model->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
                 $model->save(false);
+                Yii::$app->session->setFlash('success', "Tạo hợp đồng thành công!");
+
+                return $this->redirect(['view', 'MA_CSHT' => $MA_CSHT]);
             }
-            $searchModel = new QuanlydienSearch();
-            $dataProvider = $searchModel->search(['MA_DIENLUC' => $MA_DIENLUC]);
-            return $this->render('nhapdulieudien', [
+
+            $searchModel = new QuanlyhopdongSearch();
+            $dataProvider = $searchModel->search(['MA_CSHT' => $MA_CSHT]);
+            return $this->render('nhaphopdong', [
                 'model' => $model,
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
                 'tramvt' => $tramvt,
-                'months' => $months,
-                'years' => $years,
+            ]);
+        } else {
+            throw new ForbiddenHttpException('Trạm chưa liên kết đến điện lực');
+        }
+    }
+
+
+
+    public function actionView($MA_CSHT)
+    {
+        $tramvt = Tramvt::find()->where(['MA_CSHT' => $MA_CSHT])->one();
+        if ($tramvt) {
+            $searchModel = new QuanlyhopdongSearch();
+            $dataProvider = $searchModel->search(['MA_CSHT' => $MA_CSHT]);
+            return $this->render('view', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'tramvt' => $tramvt,
+            ]);
+        } else {
+            throw new ForbiddenHttpException('Trạm chưa liên kết đến điện lực');
+        }
+    }
+
+    public function actionXemphieuthu($id)
+    {
+        $hopdong = Quanlyhopdong::find()->findOne($id);
+        if ($tramvt) {
+            $searchModel = new PhieuthuSearch();
+            $dataProvider = $searchModel->search(['HOPDONG_ID' => $hopdong->ID]);
+            return $this->render('xemphieuthu', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'tramvt' => $tramvt,
             ]);
         } else {
             throw new ForbiddenHttpException('Trạm chưa liên kết đến điện lực');
@@ -138,7 +162,7 @@ class QuanlydienController extends Controller
 
     public function actionUpdatedinhmucdien($id)
     {
-        if (Yii::$app->user->can('capnhatdinhmuc-qldien')) {
+        if (Yii::$app->user->can('capnhatdinhmuc-qlhopdong')) {
             $model = Quanlydien::findOne($id);
             $inputs = Yii::$app->request->bodyParams;
             $model->DINHMUC = $inputs['DINHMUC'];
@@ -161,7 +185,7 @@ class QuanlydienController extends Controller
 
     public function actionUpdatetieuthudien($id)
     {
-        if (Yii::$app->user->can('capnhattt-qldien')) {
+        if (Yii::$app->user->can('capnhattt-qlhopdong')) {
             $model = Quanlydien::findOne($id);
             $inputs = Yii::$app->request->bodyParams;
             $model->KW_TIEUTHU = $inputs['KW_TIEUTHU'];
@@ -195,7 +219,7 @@ class QuanlydienController extends Controller
 
     public function actionImport()
     {
-        if (Yii::$app->user->can('import-qldien')) {
+        if (Yii::$app->user->can('import-qlhopdong')) {
             $months = [];
             $years = [];
             for ($i = 0; $i <= 5; $i++) {
@@ -266,7 +290,7 @@ class QuanlydienController extends Controller
 
     public function actionFilemauimportdien()
     {
-        if (Yii::$app->user->can('import-qldien')) {
+        if (Yii::$app->user->can('import-qlhopdong')) {
             ini_set('max_execution_time', 5*60); // 5 minutes
             $path = Yii::getAlias('@webroot') . '/samplefile';
             $file = $path . '/dulieudien.xlsx';
@@ -279,7 +303,7 @@ class QuanlydienController extends Controller
 
     public function actionThongkesudungdien()
     {
-        if (Yii::$app->user->can('ketoan-qldien')) {
+        if (Yii::$app->user->can('ketoan-qlhopdong')) {
             $months = [];
             for ($i = 1; $i <= 12; $i++) {
                 $months[$i] = $i;
@@ -295,7 +319,7 @@ class QuanlydienController extends Controller
             }
 
             $dsdonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'MA_DONVIKT', 'TEN_DONVI');
-            $searchModel = new QuanlydienSearch();
+            $searchModel = new QuanlyhopdongSearch();
             $dataProvider = $searchModel->searchThongkedien(Yii::$app->request->queryParams);
             return $this->render('thongkesudungdien', [
                 'searchModel' => $searchModel,
@@ -311,7 +335,7 @@ class QuanlydienController extends Controller
 
     public function actionCapnhatthanhtoandien()
     {
-        if (Yii::$app->user->can('updatett-qldien')) {
+        if (Yii::$app->user->can('updatett-qlhopdong')) {
             $months = [];
             for ($i = 1; $i <= 12; $i++) {
                 $months[$i] = $i;
@@ -349,7 +373,7 @@ class QuanlydienController extends Controller
 
     public function actionUpdatethanhtoan()
     {
-        if (Yii::$app->user->can('updatett-qldien')) {
+        if (Yii::$app->user->can('updatett-qlhopdong')) {
             if (Yii::$app->request->post('AddSelection')) {
                 $selected_array = Yii::$app->request->post('AddSelection');
                 $sql  = 'UPDATE quanlydien SET IS_CHECKED = 1 WHERE ID IN ('  . implode(',', $selected_array) . ')';
@@ -367,7 +391,7 @@ class QuanlydienController extends Controller
 
     public function actionBaocaototrinh()
     {
-        if (Yii::$app->user->can('ketoan-qldien')) {
+        if (Yii::$app->user->can('ketoan-qlhopdong')) {
             $months = [];
             for ($i = 0; $i < 12; $i++) {
                 $months[date('m', strtotime( date( 'Y-01-01' )." +$i months"))] = date('m', strtotime( date( 'Y-01-01' )." +$i months"));
@@ -405,7 +429,7 @@ class QuanlydienController extends Controller
 
     public function actionInbaocaototrinhthang()
     {
-        if (Yii::$app->user->can('ketoan-qldien')) {
+        if (Yii::$app->user->can('ketoan-qlhopdong')) {
             $params = Yii::$app->request->queryParams;
             $params['is_excel'] = $params['is_excel'] ?? null;
             $params['IS_CHECKED'] = $params['IS_CHECKED'] ?? null;
@@ -597,7 +621,7 @@ class QuanlydienController extends Controller
 
     public function actionBaocaotonghoptheodv()
     {
-        if (Yii::$app->user->can('bctonghop-qldien')) {
+        if (Yii::$app->user->can('bctonghop-qlhopdong')) {
             $iddv = ArrayHelper::map(Donvi::find()->where(['<>', 'MA_DONVIKT', 0])->all(), 'ID_DONVI', 'ID_DONVI');
             if (Yii::$app->user->can('dmdv-diennhienlieu')) {
                 $iddv = [Yii::$app->user->identity->nhanvien->ID_DONVI];
@@ -747,100 +771,5 @@ class QuanlydienController extends Controller
         // $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
         // $writer->save('php://output');
         // die();
-    }
-
-    public function actionExporttonghoptheotram()
-    {
-        $data = [];
-        $searchModel = new QuanlydienSearch();
-        $data1 = $searchModel->tonghoptramphatsinhtheotram();
-        foreach ($data1 as $value) {
-            if (isset($data[$value['MA_CSHT']])) {
-                $data[$value['MA_CSHT']][$value['THANG']] = $value['KW_TIEUTHU'];
-            } else {
-                $data[$value['MA_CSHT']] = [];
-                $data[$value['MA_CSHT']] = $value;
-                $data[$value['MA_CSHT']][$value['THANG']] = $value['KW_TIEUTHU'];
-            }
-
-            unset($data[$value['MA_CSHT']]['THANG']);
-            unset($data[$value['MA_CSHT']]['KW_TIEUTHU']);
-
-        }
-
-
-        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
-        $spreadsheet->getDefaultStyle()->getFont()->setName('Arial');
-        $spreadsheet->getDefaultStyle()->getFont()->setSize(10);
-        $spreadsheet->getActiveSheet()->fromArray(array_keys($data[$value['MA_CSHT']]), '', 'A1');
-        $spreadsheet->getActiveSheet()->fromArray($data, '', 'A2');
-
-        $filename = 'Dữ liệ diện.xlsx'; //save our workbook as this file name
-        // Redirect output to a client’s web browser (Xlsx)
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="'.$filename.'"');
-        header('Cache-Control: max-age=0');
-        // If you're serving to IE 9, then the following may be needed
-        header('Cache-Control: max-age=1');
-
-        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
-        $writer->save('php://output');
-        die();
-    }
-    public function actionBaocaotonghoptheotram()
-    {
-        if (Yii::$app->user->can('bctonghop-qldien')) {
-            $params = Yii::$app->request->queryParams;
-            $iddv = ArrayHelper::map(Donvi::find()->where(['<>', 'MA_DONVIKT', 0])->all(), 'ID_DONVI', 'ID_DONVI');
-            if (Yii::$app->user->can('dmdv-diennhienlieu')) {
-                $iddv = [Yii::$app->user->identity->nhanvien->ID_DONVI];
-            }
-            $dsdonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'ID_DONVI', 'TEN_DONVI');
-            if (!$params) {
-                $params = array_merge(Yii::$app->request->queryParams, [
-                    'LOAIBC' => 'KW_TIEUTHU',
-                    'ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI
-                ]);
-            } else {
-                $iddv = $params['ID_DONVI'] ? $params['ID_DONVI'] : $iddv;
-            }
-
-            $loaibc = $params['LOAIBC'];
-            $dsdai = ArrayHelper::map(Daivt::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'ID_DAI', 'ID_DAI');
-            // $dstram = ArrayHelper::map(Tramvt::find()->where(['in', 'ID_TRAM', $iddv])->all(), 'ID_TRAM', 'TEN_TRAM');
-            $dstram = ArrayHelper::map(Tramvt::find()->where(['in', 'ID_DAI', $dsdai])->all(), 'MA_DIENLUC', 'TEN_TRAM');
-            $tongdien = [];
-            $searchModel = new QuanlydienSearch();
-            foreach ($dstram as $key => $value) {
-                $tongdien[$key] = [
-                    1 => 0,
-                    2 => 0,
-                    3 => 0,
-                    4 => 0,
-                    5 => 0,
-                    6 => 0,
-                    7 => 0,
-                    8 => 0,
-                    9 => 0,
-                    10 => 0,
-                    11 => 0,
-                    12 => 0,
-                ];
-                $tongdien[$key]['TEN_TRAM'] = $value;
-                foreach ($searchModel->tonghoptheotram($key, date('Y'), $loaibc) as $v) {
-                    $tongdien[$key][$v['THANG']] = $v['TONG_TT'];
-                }
-            }
-
-
-            return $this->render('tonghoptheotram', [
-                    'tongdien' => $tongdien,
-                    'dmloaibc' => ['TONGTIEN' => 'Báo cáo theo tổng tiền', 'KW_TIEUTHU' => 'Báo cáo theo điện tiêu thụ'],
-                    'dsdonvi' => $dsdonvi,
-                    'params' => $params,
-                ]);
-        } else {
-            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
-        }
     }
 }

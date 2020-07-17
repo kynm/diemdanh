@@ -136,7 +136,12 @@ use yii\helpers\Url;
                             [
                                 'label' => 'Dashboard', 'icon' => 'caret-right',
                                 'url' => Url::to(['quanlydien/baocaotonghoptheodv']),
-                                'visible' => Yii::$app->user->can('bctonghop-mayno'),
+                                'visible' => Yii::$app->user->can('bctonghop-qldien'),
+                            ],
+                            [
+                                'label' => 'Tổng hợp điện trong năm', 'icon' => 'caret-right',
+                                'url' => Url::to(['quanlydien/baocaotonghoptheotram']),
+                                'visible' => Yii::$app->user->can('bctonghop-qldien'),
                             ],
                             [
                                 'label' => 'Điều hành điện', 'icon' => 'caret-right',
@@ -160,6 +165,34 @@ use yii\helpers\Url;
                             ],
                         ],
                         'visible' => Yii::$app->user->can('view-qldien'),
+                    ],
+                    [
+                        'label' => 'Quản lý hợp đồng',
+                        'icon' => 'tablet',
+                        'url' => '#',
+                        'items' => [
+                            [
+                                'label' => 'Nhập hợp đồng', 'icon' => 'caret-right',
+                                'url' => Url::to(['quanlyhopdong/']),
+                                'visible' => Yii::$app->user->can('list-qlhopdong'),
+                            ],
+                            [
+                                'label' => 'Tổng hợp điện theo tháng', 'icon' => 'caret-right',
+                                'url' => Url::to(['quanlyhopdong/thongkesudungdien']),
+                                'visible' => Yii::$app->user->can('ketoan-qlhopdong'),
+                            ],
+                            [
+                                'label' => 'Báo cáo điện theo tháng', 'icon' => 'caret-right',
+                                'url' => Url::to(['quanlyhopdong/baocaototrinh']),
+                                'visible' => Yii::$app->user->can('ketoan-qlhopdong'),
+                            ],
+                            [
+                                'label' => 'Cập nhật thanh toán điện', 'icon' => 'caret-right',
+                                'url' => Url::to(['quanlyhopdong/capnhatthanhtoandien']),
+                                'visible' => Yii::$app->user->can('updatett-qlhopdong'),
+                            ],
+                        ],
+                        'visible' => Yii::$app->user->can('view-qlhopdong'),
                     ],
                     [
                         'label' => 'Thông tin cá nhân', 'icon' => 'user', 'url' => Url::to(['user/edit-profile'])

@@ -53,7 +53,6 @@ class TramvtSearch extends Tramvt
         if (Yii::$app->user->can('dmdv-diennhienlieu')) {
             $query->andWhere(['daivt.ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI]);
         }
-
         if (Yii::$app->user->identity->nhanvien->chucvu->cap == 3) {
             $query->andWhere(['tramvt.ID_DAI' => Yii::$app->user->identity->nhanvien->ID_DAI]);
         }
@@ -136,6 +135,33 @@ class TramvtSearch extends Tramvt
 
         $iddv = ArrayHelper::map(Donvi::find()->where(['<>', 'MA_DONVIKT', 0])->all(), 'ID_DONVI', 'ID_DONVI');
         if (Yii::$app->user->can('dmdv-diennhienlieu')) {
+            $iddv = [Yii::$app->user->identity->nhanvien->ID_DONVI];
+        }
+        $query->joinWith('iDDAI');
+        $query->joinWith('iDNHANVIEN');
+        $query->andFilterWhere([
+            'ID_TRAM' => $this->ID_TRAM,
+        ]);
+        $query->andFilterWhere(['=', 'daivt.ID_DAI', $this->ID_DAI])
+            ->andFilterWhere(['in', 'daivt.ID_DONVI', $iddv])
+            ->andFilterWhere(['like', 'TEN_TRAM', $this->TEN_TRAM]);
+
+        return $dataProvider;
+    }
+
+    public function searchQlhopdong($params)
+    {
+        $query = Tramvt::find();
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+        $this->load($params);
+        if (!$this->validate()) {
+            return $dataProvider;
+        }
+
+        $iddv = ArrayHelper::map(Donvi::find()->where(['<>', 'MA_DONVIKT', 0])->all(), 'ID_DONVI', 'ID_DONVI');
+        if (Yii::$app->user->can('dmdv-qlhopdong')) {
             $iddv = [Yii::$app->user->identity->nhanvien->ID_DONVI];
         }
         $query->joinWith('iDDAI');

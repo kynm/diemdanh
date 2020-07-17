@@ -61,6 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                         [ 'attribute' =>'KW_TIEUTHU',
                           'value' => function($model) {
+                            return $model->KW_TIEUTHU;
                             if (Yii::$app->user->can('capnhattt-qldien')) {
                                 return Html::input('text', 'KW_TIEUTHU-' . $model->ID, $model->KW_TIEUTHU, ['id' => 'KW_TIEUTHU-' . $model->ID]) . Html::button('Cập nhật', ['class' => 'updatetieuthu','data-id' => $model->ID]);
                             } else {
