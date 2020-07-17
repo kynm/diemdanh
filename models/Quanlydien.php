@@ -80,4 +80,15 @@ class Quanlydien extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Donvi::className(), ['MA_DONVIKT' => 'MA_DONVIKT']);
     }
+
+    public static function getTotal($provider, $fieldName)
+    {
+        $total = 0;
+
+        foreach ($provider as $item) {
+            $total += $item[$fieldName];
+        }
+
+        return $total;
+    }
 }

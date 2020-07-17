@@ -5,6 +5,7 @@ use yii\helpers\Url;
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
 use yii\widgets\ActiveForm;
+use app\models\Quanlydien;
 
 
 /* @var $this yii\web\View */
@@ -31,6 +32,7 @@ $form = ActiveForm::begin(['method' => 'get']); ?>
             <?php Pjax::begin(); ?>    <?= GridView::widget([
                     'dataProvider' => $dataProvider,
                     'filterModel' => $searchModel,
+                    'showFooter' => true,
                     'columns' => [
                         [
                             'class' => 'yii\grid\CheckboxColumn',
@@ -64,7 +66,8 @@ $form = ActiveForm::begin(['method' => 'get']); ?>
                         [ 'attribute' =>'TONGTIEN',
                           'value' => function($model) {
                             return formatnumber($model->TONGTIEN);
-                          }
+                          },
+                          'footer' => formatnumber(Quanlydien::getTotal($dataProvider->models, 'TONGTIEN')),
                         ],
                         [ 'attribute' =>'IS_CHECKED',
                           'value' => function($model) {
