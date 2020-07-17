@@ -808,11 +808,11 @@ class QuanlydienController extends Controller
             $loaibc = $params['LOAIBC'];
             $dsdai = ArrayHelper::map(Daivt::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'ID_DAI', 'ID_DAI');
             // $dstram = ArrayHelper::map(Tramvt::find()->where(['in', 'ID_TRAM', $iddv])->all(), 'ID_TRAM', 'TEN_TRAM');
-            $dstram = ArrayHelper::map(Tramvt::find()->where(['in', 'ID_DAI', $dsdai])->all(), 'MA_DIENLUC', 'TEN_TRAM');
+            $dstram = Tramvt::find()->where(['in', 'ID_DAI', $dsdai])->all();
             $tongdien = [];
             $searchModel = new QuanlydienSearch();
             foreach ($dstram as $key => $value) {
-                $tongdien[$key] = [
+                $tongdien[$value->MA_DIENLUC] = [
                     1 => 0,
                     2 => 0,
                     3 => 0,
@@ -826,12 +826,12 @@ class QuanlydienController extends Controller
                     11 => 0,
                     12 => 0,
                 ];
-                $tongdien[$key]['TEN_TRAM'] = $value;
-                foreach ($searchModel->tonghoptheotram($key, date('Y'), $loaibc) as $v) {
-                    $tongdien[$key][$v['THANG']] = $v['TONG_TT'];
+                $tongdien[$value->MA_DIENLUC]['TEN_TRAM'] = $value->TEN_TRAM;
+                $tongdien[$value->MA_DIENLUC]['DIADIEM'] = $value->DIADIEM;
+                foreach ($searchModel->tonghoptheotram($value->MA_DIENLUC, date('Y'), $loaibc) as $v) {
+                    $tongdien[$value->MA_DIENLUC][$v['THANG']] = $v['TONG_TT'];
                 }
             }
-
 
             return $this->render('tonghoptheotram', [
                     'tongdien' => $tongdien,

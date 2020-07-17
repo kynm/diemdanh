@@ -117,7 +117,10 @@ $this->params['breadcrumbs'][] = $this->title;
                             ?>
                             <tr>
                                 <td scope="col"><?php echo $i?></td>
-                                <td scope="col"><?php echo $value['TEN_TRAM']?></td>
+                                <td scope="col"><?php echo $value['TEN_TRAM']?>
+                                <br><span style="font-size: 10px;"><?php echo $value['DIADIEM']?></span>
+                                    
+                                </td>
                                 <td scope="col"><?php echo formatnumber($value[1]);?></td>
                                 <td scope="col"><?php echo formatnumber($value[2]); ?>
                                     <?php echo $value[2] - $value[1] > 0 ? 
