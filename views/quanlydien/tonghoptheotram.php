@@ -180,7 +180,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             </tr>
                         <?php endforeach; ?>
                         <tr>
-                            <th scope="col"><?php echo 'Tổng';?></th>
+                            <th scope="col" colspan="2"><?php echo 'Tổng';?></th>
                             <th scope="col"><?php echo formatnumber($tongdienthang1);?></th>
                             <th scope="col"><?php echo formatnumber($tongdienthang2);?>
                             <?php echo $tongdienthang2 - $tongdienthang1 > 0 ? 
