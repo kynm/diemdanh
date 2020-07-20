@@ -660,93 +660,6 @@ class QuanlydienController extends Controller
         } else {
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
         }
-        //export excel
-        // $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
-        // $spreadsheet->getDefaultStyle()->getFont()->setName('Arial');
-        // $spreadsheet->getDefaultStyle()->getFont()->setSize(10);
-        // $spreadsheet->getActiveSheet()->mergeCells("A1:B1")->mergeCells("C1:F1")->mergeCells("G1:K1")
-        //     ->setCellValue("A1", "VNPT HÀ NAM")
-        //     ->setCellValue("G1", "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM");
-        // $spreadsheet->getActiveSheet()->mergeCells("A2:B2")->mergeCells("C2:F2")->mergeCells("G2:K2")
-        //     ->setCellValue("A2", "Phòng Kế toán Kế hoạch")
-        //     ->setCellValue("G2", "Độc lập - Tự do - Hạnh phúc");
-        // $spreadsheet->getActiveSheet()->mergeCells("A4:K4")->setCellValue("A4", "TỜ TRÌNH");
-        // $spreadsheet->getActiveSheet()->mergeCells("A5:K5")
-        //     ->setCellValue("A5", "V/v: Thanh toán tiền điện cho  các Trung tâm Viễn thông huyện, thành phố");
-        // $spreadsheet->getActiveSheet()->mergeCells("A7:K7")->setCellValue("A7", "Kính gửi: Giám đốc Viễn thông Hà Nam");
-        // $spreadsheet->getActiveSheet()->mergeCells("A8:K8")->setCellValue("A8", "Ý KIẾN CỦA LÃNH ĐẠO");
-
-        // $spreadsheet->getActiveSheet()->getStyle('A1:K8')->getAlignment()->setHorizontal('center');
-        // $spreadsheet->getActiveSheet()->mergeCells("A10:K10")->setCellValue("A10", "Căn cứ các hợp đồng giữa Trung tâm viễn thông huyện thành phố và điện lực địa phương");
-        // $spreadsheet->getActiveSheet()->mergeCells("A11:K11")->setCellValue("A11", "Căn cứ hóa đơn tiền điện phát sinh tháng 5/2020 tại đơn vị ");
-        // $spreadsheet->getActiveSheet()->mergeCells("A12:K12")->setCellValue("A12", "Căn cứ tờ trình về việc thanh toán tiền điện tháng 5/2020 của đơn vị. ");
-        // $spreadsheet->getActiveSheet()->mergeCells("A13:K13")->setCellValue("A13", "Để kịp thời thanh toán tiền điện cho điện lực địa phương; kính trình Giám đốc Viễn thông Hà Nam thanh toán tập trung tại Viễn thông Hà Nam các hóa đơn tiền điện chi  tiết như sau:");
-        // $spreadsheet->getActiveSheet()->mergeCells("A15:K15")->setCellValue("A15", "I. Tổng hợp tiền điện theo trung tâm viễn thông");
-        // if (count($data)) {
-        //     $tongchuathue = 0;
-        //     $tongthue = 0;
-        //     $tongtien = 0;
-        //     $tongdv = 0;
-        //     for ($i=1; $i <= 12 ; $i++) { 
-        //     $spreadsheet->setActiveSheetIndex(0)
-        //         ->setCellValue("A16", 'STT')
-        //         ->setCellValue("B16", 'Tên TTVT')
-        //         ->setCellValue("C16", 'Số trạm thanh toán')
-        //         ->setCellValue("D16", 'Số tiền chưa thuế')
-        //         ->setCellValue("E16", 'Thuế VAT')
-        //         ->setCellValue("F16", 'Tổng tiền')
-        //         ->setCellValue("G16", 'Tiền đề nghị thanh toán');
-        //     }
-
-        //     foreach($tongdiendv as $key => $value) {
-        //         $tongchuathue += $value['TIENDIEN'];
-        //         $tongthue += $value['TIENTHUE'];
-        //         $tongtien += $value['TONGTIEN'];
-        //         $tongdv += $value['SO_TRAM'];
-        //         $x = $key + 17;
-        //         $spreadsheet->setActiveSheetIndex(0)
-        //             ->setCellValue("A$x", ($key + 1))
-        //             ->setCellValue("B$x", $value['TEN_DONVI'])
-        //             ->setCellValue("C$x", $value['SO_TRAM'])
-        //             ->setCellValue("D$x", formatnumber($value['TIENDIEN']))
-        //             ->setCellValue("E$x", formatnumber($value['TIENTHUE']))
-        //             ->setCellValue("F$x", formatnumber($value['TONGTIEN']))
-        //             ->setCellValue("G$x", formatnumber($value['TONGTIEN']));
-        //     }
-
-        //     $x++;
-        //     $spreadsheet->setActiveSheetIndex(0)
-        //         ->setCellValue("A$x", 'Tổng')
-        //         ->setCellValue("B$x", '')
-        //         ->setCellValue("C$x", formatnumber($tongdv))
-        //         ->setCellValue("D$x", formatnumber($tongchuathue))
-        //         ->setCellValue("E$x", formatnumber($tongthue))
-        //         ->setCellValue("F$x", formatnumber($tongtien))
-        //         ->setCellValue("G$x", '');
-        //     $x++;
-        //     $x++;
-        //     $x++;
-        //     $x++;
-        //     $x++;
-        //     $spreadsheet->getActiveSheet()->mergeCells("A$x:D$x")->setCellValue("A$x", 'Người lập biểu');
-        //     $spreadsheet->getActiveSheet()->setCellValue("H$x", 'Phủ Lý, ngày ' . date('d') . ', ' . date('m') . ', '. date('Y'));
-        //     $spreadsheet->getActiveSheet()->getStyle("A$x:K$x")->getAlignment()->setHorizontal('center');
-        //     $x++;
-        //     $spreadsheet->getActiveSheet()->mergeCells("A$x:D$x")->setCellValue("A$x", '');
-        //     $spreadsheet->getActiveSheet()->setCellValue("H$x", 'Kế toán trưởng');
-        //     $spreadsheet->getActiveSheet()->getStyle("A$x:K$x")->getAlignment()->setHorizontal('center');
-        // }
-        // $filename = 'Dữ liệu điện ' . $params["THANG"] . "_" . $params["NAM"] . '.xlsx'; //save our workbook as this file name
-        // // Redirect output to a client’s web browser (Xlsx)
-        // header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        // header('Content-Disposition: attachment;filename="'.$filename.'"');
-        // header('Cache-Control: max-age=0');
-        // // If you're serving to IE 9, then the following may be needed
-        // header('Cache-Control: max-age=1');
-
-        // $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
-        // $writer->save('php://output');
-        // die();
     }
 
     public function actionExporttonghoptheotram()
@@ -836,25 +749,134 @@ class QuanlydienController extends Controller
                 $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
                 $spreadsheet->getDefaultStyle()->getFont()->setName('Arial');
                 $spreadsheet->getDefaultStyle()->getFont()->setSize(10);
-                $spreadsheet->setActiveSheetIndex(0)
-                    ->setCellValue("A1", 'STT')
-                    ->setCellValue("B1", 'Tên trạm')
-                    ->setCellValue("C1", 'Địa chỉ')
-                    ->setCellValue("D1", 'Tháng 1')
-                    ->setCellValue("E1", 'Tháng 2')->setCellValue("F1", 'Tăng/giảm')->setCellValue("G1", 'Lượng tăng/ Giảm')->setCellValue("H", 'Tỉ lệ')
-                    ->setCellValue("E1", 'Tháng 3')->setCellValue("F1", 'Tăng/giảm')->setCellValue("G1", 'Lượng tăng/ Giảm')->setCellValue("H", 'Tỉ lệ')
-                    ->setCellValue("E1", 'Tháng 4')->setCellValue("F1", 'Tăng/giảm')->setCellValue("G1", 'Lượng tăng/ Giảm')->setCellValue("H", 'Tỉ lệ')
-                    ->setCellValue("E1", 'Tháng 5')->setCellValue("F1", 'Tăng/giảm')->setCellValue("G1", 'Lượng tăng/ Giảm')->setCellValue("H", 'Tỉ lệ')
-                    ->setCellValue("E1", 'Tháng 6')->setCellValue("F1", 'Tăng/giảm')->setCellValue("G1", 'Lượng tăng/ Giảm')->setCellValue("H", 'Tỉ lệ')
-                    ->setCellValue("E1", 'Tháng 7')->setCellValue("F1", 'Tăng/giảm')->setCellValue("G1", 'Lượng tăng/ Giảm')->setCellValue("H", 'Tỉ lệ')
-                    ->setCellValue("E1", 'Tháng 8')->setCellValue("F1", 'Tăng/giảm')->setCellValue("G1", 'Lượng tăng/ Giảm')->setCellValue("H", 'Tỉ lệ')
-                    ->setCellValue("E1", 'Tháng 9')->setCellValue("F1", 'Tăng/giảm')->setCellValue("G1", 'Lượng tăng/ Giảm')->setCellValue("H", 'Tỉ lệ')
-                    ->setCellValue("E1", 'Tháng 10')->setCellValue("F1", 'Tăng/giảm')->setCellValue("G1", 'Lượng tăng/ Giảm')->setCellValue("H", 'Tỉ lệ')
-                    ->setCellValue("E1", 'Tháng 11')->setCellValue("F1", 'Tăng/giảm')->setCellValue("G1", 'Lượng tăng/ Giảm')->setCellValue("H", 'Tỉ lệ')
-                    ->setCellValue("E1", 'Tháng 12')->setCellValue("F1", 'Tăng/giảm')->setCellValue("G1", 'Lượng tăng/ Giảm')->setCellValue("H", 'Tỉ lệ')
-                    ->setCellValue("G1", 'Tại ngân hàng');
-                var_dump($tongdien);
-                die();
+                $spreadsheet->getActiveSheet()->fromArray(
+                    [
+                        'STT',
+                        'Tên đơn vị',
+                        'Địa chỉ',
+                        'Tháng 1',
+                        'Tháng 2',
+                        'Tăng/Giảm',
+                        'Lượng tăng/giảm',
+                        'Tỉ lệ tăng/giảm %',
+                        'Tháng 3',
+                        'Tăng/Giảm',
+                        'Lượng tăng/giảm',
+                        'Tỉ lệ tăng/giảm %',
+                        'Tháng 4',
+                        'Tăng/Giảm',
+                        'Lượng tăng/giảm',
+                        'Tỉ lệ tăng/giảm %',
+                        'Tháng 5',
+                        'Tăng/Giảm',
+                        'Lượng tăng/giảm',
+                        'Tỉ lệ tăng/giảm %',
+                        'Tháng 6',
+                        'Tăng/Giảm',
+                        'Lượng tăng/giảm',
+                        'Tỉ lệ tăng/giảm %',
+                        'Tháng 7',
+                        'Tăng/Giảm',
+                        'Lượng tăng/giảm',
+                        'Tỉ lệ tăng/giảm %',
+                        'Tháng 8',
+                        'Tăng/Giảm',
+                        'Lượng tăng/giảm',
+                        'Tỉ lệ tăng/giảm %',
+                        'Tháng 9',
+                        'Tăng/Giảm',
+                        'Lượng tăng/giảm',
+                        'Tỉ lệ tăng/giảm %',
+                        'Tháng 10',
+                        'Tăng/Giảm',
+                        'Lượng tăng/giảm',
+                        'Tỉ lệ tăng/giảm %',
+                        'Tháng 11',
+                        'Tăng/Giảm',
+                        'Lượng tăng/giảm',
+                        'Tỉ lệ tăng/giảm %',
+                        'Tháng 12',
+                        'Tăng/Giảm',
+                        'Lượng tăng/giảm',
+                        'Tỉ lệ tăng/giảm %',
+                    ],
+                    '',
+                    'A1'         
+                );
+                $key = 0;
+                $x = 2;
+                foreach ($tongdien as $value) {
+                    $chenh21 = $value[2] - $value[1];
+                    $chenh32 = $value[3] - $value[2];
+                    $chenh43 = $value[4] - $value[3];
+                    $chenh54 = $value[5] - $value[4];
+                    $chenh65 = $value[6] - $value[5];
+                    $chenh76 = $value[7] - $value[6];
+                    $chenh87 = $value[8] - $value[7];
+                    $chenh98 = $value[9] - $value[8];
+                    $chenh109 = $value[10] - $value[9];
+                    $chenh1110 = $value[11] - $value[10];
+                    $chenh1211 = $value[12] - $value[11];
+                    $spreadsheet->setActiveSheetIndex(0)
+                        ->setCellValue("A$x", ($key + 1))
+                        ->setCellValue("B$x", $value['TEN_TRAM'])
+                        ->setCellValue("C$x", $value['DIADIEM'])
+                        ->setCellValue("D$x", formatnumber($value[1]))
+                        ->setCellValue("E$x", formatnumber($value[2]))
+                        ->setCellValue("F$x", $chenh21 > 0 ? 'Tăng' : 'Giảm')
+                        ->setCellValue("G$x", $chenh21)
+                        ->setCellValue("H$x", $value[1] != 0 ? formatnumber($chenh21/$value[1] * 100, 2): 0)
+                        ->setCellValue("I$x", formatnumber($value[3]))
+                        ->setCellValue("J$x", $chenh32 > 0 ? 'Tăng' : 'Giảm')
+                        ->setCellValue("K$x", $chenh32)
+                        ->setCellValue("L$x", $value[2] != 0 ? formatnumber($chenh32/$value[2] * 100, 2): 0)
+                        ->setCellValue("M$x", formatnumber($value[4]))
+                        ->setCellValue("N$x", $chenh43 > 0 ? 'Tăng' : 'Giảm')
+                        ->setCellValue("O$x", $chenh43)
+                        ->setCellValue("P$x", $value[3] != 0 ? formatnumber($chenh43/$value[3] * 100, 2): 0)
+                        ->setCellValue("Q$x", formatnumber($value[5]))
+                        ->setCellValue("R$x", $chenh54 > 0 ? 'Tăng' : 'Giảm')
+                        ->setCellValue("S$x", $chenh54)
+                        ->setCellValue("T$x", $value[4] != 0 ? formatnumber($chenh54/$value[4] * 100, 2): 0)
+                        ->setCellValue("U$x", formatnumber($value[6]))
+                        ->setCellValue("V$x", $chenh65 > 0 ? 'Tăng' : 'Giảm')
+                        ->setCellValue("W$x", $chenh65)
+                        ->setCellValue("X$x", $value[5] != 0 ? formatnumber($chenh65/$value[5] * 100, 2): 0)
+                        ->setCellValue("Y$x", formatnumber($value[7]))
+                        ->setCellValue("Z$x", $chenh76 > 0 ? 'Tăng' : 'Giảm')
+                        ->setCellValue("AA$x", $chenh76)
+                        ->setCellValue("AB$x", $value[6] != 0 ? formatnumber($chenh76/$value[6] * 100, 2): 0)
+                        ->setCellValue("AC$x", formatnumber($value[8]))
+                        ->setCellValue("AD$x", $chenh87 > 0 ? 'Tăng' : 'Giảm')
+                        ->setCellValue("AE$x", $chenh87)
+                        ->setCellValue("AF$x", $value[7] != 0 ? formatnumber($chenh87/$value[7] * 100, 2): 0)
+                        ->setCellValue("AG$x", formatnumber($value[9]))
+                        ->setCellValue("AH$x", $chenh98 > 0 ? 'Tăng' : 'Giảm')
+                        ->setCellValue("AI$x", $chenh98)
+                        ->setCellValue("AJ$x", $value[8] != 0 ? formatnumber($chenh98/$value[8] * 100, 2): 0)
+                        ->setCellValue("AK$x", formatnumber($value[10]))
+                        ->setCellValue("AL$x", $chenh109 > 0 ? 'Tăng' : 'Giảm')
+                        ->setCellValue("AM$x", $chenh109)
+                        ->setCellValue("AN$x", $value[9] != 0 ? formatnumber($chenh109/$value[9] * 100, 2): 0)
+                        ->setCellValue("AO$x", formatnumber($value[11]))
+                        ->setCellValue("AP$x", $chenh1110 > 0 ? 'Tăng' : 'Giảm')
+                        ->setCellValue("AQ$x", $chenh1110)
+                        ->setCellValue("AR$x", $value[10] != 0 ? formatnumber($chenh1110/$value[10] * 100, 2): 0)
+                        ->setCellValue("AS$x", formatnumber($value[12]))
+                        ->setCellValue("AT$x", $chenh1211 > 0 ? 'Tăng' : 'Giảm')
+                        ->setCellValue("AU$x", $chenh1211)
+                        ->setCellValue("AV$x", $value[11] != 0 ? formatnumber($chenh1211/$value[11] * 100, 2): 0);
+                    $key ++;
+                    $x ++;
+                }
+            $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+            $file_name = "Export_".date('Ymd_His');
+
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment;filename="'.$file_name.'.xlsx"');
+            header('Cache-Control: max-age=0');
+            $writer->save("php://output");
+        exit;
             }
 
             return $this->render('tonghoptheotram', [
