@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         // ],
                         'columns' => [
                             ['class' => 'yii\grid\SerialColumn'],
-                            'MA_TRAM',
+                            'MA_CSHT',
                             [
                                 'attribute' => 'TEN_TRAM',
                                 'format' => 'raw',
@@ -48,10 +48,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'value' => function ($model) {
                                     return $model->iDNHANVIEN ? Html::a($model->iDNHANVIEN->TEN_NHANVIEN, Url::to(['nhanvien/view', 'id' => $model->ID_NHANVIEN])) : '#';
                                 }
-                            ],
-                            [
-                                'attribute' => 'DIEN_THOAI',
-                                'value' => 'iDNHANVIEN.DIEN_THOAI'
                             ],
                             [
                                 'attribute' => 'LOAITRAM',

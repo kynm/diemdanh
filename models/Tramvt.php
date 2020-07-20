@@ -65,7 +65,7 @@ class Tramvt extends \yii\db\ActiveRecord
             'NGAY_KTNT' => 'Ngày kiểm tra',
             'KINH_DO' => 'Kinh độ',
             'VI_DO' => 'Vĩ độ',
-            'ID_DAI' => 'Đài quản lý',
+            'ID_DAI' => 'Tổ quản lý',
             'ID_NHANVIEN' => 'Nhân viên quản lý',
             'LOAITRAM' => 'Loại CSHT',
             'DIEN_THOAI' => 'Điện thoại',

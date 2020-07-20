@@ -756,23 +756,21 @@ class QuanlydienController extends Controller
         $data1 = $searchModel->tonghoptramphatsinhtheotram();
         foreach ($data1 as $value) {
             if (isset($data[$value['MA_CSHT']])) {
-                $data[$value['MA_CSHT']][$value['THANG']] = $value['KW_TIEUTHU'];
+                $data[$value['MA_CSHT']][$value['THANG']] = $value['KW_TIEUTHU'] . ' - ' . $value['TONGTIEN'];
             } else {
                 $data[$value['MA_CSHT']] = [];
                 $data[$value['MA_CSHT']] = $value;
-                $data[$value['MA_CSHT']][$value['THANG']] = $value['KW_TIEUTHU'];
+                $data[$value['MA_CSHT']][$value['THANG']] = $value['KW_TIEUTHU'] . ' - ' . $value['TONGTIEN'];
             }
 
             unset($data[$value['MA_CSHT']]['THANG']);
             unset($data[$value['MA_CSHT']]['KW_TIEUTHU']);
-
+            unset($data[$value['MA_CSHT']]['TONGTIEN']);
         }
-
-
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $spreadsheet->getDefaultStyle()->getFont()->setName('Arial');
         $spreadsheet->getDefaultStyle()->getFont()->setSize(10);
-        $spreadsheet->getActiveSheet()->fromArray(array_keys($data[$value['MA_CSHT']]), '', 'A1');
+        $spreadsheet->getActiveSheet()->fromArray(['MA_CSHT', 'TEN_TRAM', 1,2,3,4,5,6,7,8,9,10,11,12], '', 'A1');
         $spreadsheet->getActiveSheet()->fromArray($data, '', 'A2');
 
         $filename = 'Dữ liệ diện.xlsx'; //save our workbook as this file name
@@ -804,7 +802,7 @@ class QuanlydienController extends Controller
             } else {
                 $iddv = $params['ID_DONVI'] ? $params['ID_DONVI'] : $iddv;
             }
-
+            $params['is_excel'] = $params['is_excel'] ?? null;
             $loaibc = $params['LOAIBC'];
             $dsdai = ArrayHelper::map(Daivt::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'ID_DAI', 'ID_DAI');
             // $dstram = ArrayHelper::map(Tramvt::find()->where(['in', 'ID_TRAM', $iddv])->all(), 'ID_TRAM', 'TEN_TRAM');
@@ -831,6 +829,30 @@ class QuanlydienController extends Controller
                 foreach ($searchModel->tonghoptheotram($value->MA_DIENLUC, date('Y'), $loaibc) as $v) {
                     $tongdien[$value->MA_DIENLUC][$v['THANG']] = $v['TONG_TT'];
                 }
+            }
+            if ($params['is_excel']) {
+                $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+                $spreadsheet->getDefaultStyle()->getFont()->setName('Arial');
+                $spreadsheet->getDefaultStyle()->getFont()->setSize(10);
+                $spreadsheet->setActiveSheetIndex(0)
+                    ->setCellValue("A1", 'STT')
+                    ->setCellValue("B1", 'Tên trạm')
+                    ->setCellValue("C1", 'Địa chỉ')
+                    ->setCellValue("D1", 'Tháng 1')
+                    ->setCellValue("E1", 'Tháng 2')->setCellValue("F1", 'Tăng/giảm')->setCellValue("G1", 'Lượng tăng/ Giảm')->setCellValue("H", 'Tỉ lệ')
+                    ->setCellValue("E1", 'Tháng 3')->setCellValue("F1", 'Tăng/giảm')->setCellValue("G1", 'Lượng tăng/ Giảm')->setCellValue("H", 'Tỉ lệ')
+                    ->setCellValue("E1", 'Tháng 4')->setCellValue("F1", 'Tăng/giảm')->setCellValue("G1", 'Lượng tăng/ Giảm')->setCellValue("H", 'Tỉ lệ')
+                    ->setCellValue("E1", 'Tháng 5')->setCellValue("F1", 'Tăng/giảm')->setCellValue("G1", 'Lượng tăng/ Giảm')->setCellValue("H", 'Tỉ lệ')
+                    ->setCellValue("E1", 'Tháng 6')->setCellValue("F1", 'Tăng/giảm')->setCellValue("G1", 'Lượng tăng/ Giảm')->setCellValue("H", 'Tỉ lệ')
+                    ->setCellValue("E1", 'Tháng 7')->setCellValue("F1", 'Tăng/giảm')->setCellValue("G1", 'Lượng tăng/ Giảm')->setCellValue("H", 'Tỉ lệ')
+                    ->setCellValue("E1", 'Tháng 8')->setCellValue("F1", 'Tăng/giảm')->setCellValue("G1", 'Lượng tăng/ Giảm')->setCellValue("H", 'Tỉ lệ')
+                    ->setCellValue("E1", 'Tháng 9')->setCellValue("F1", 'Tăng/giảm')->setCellValue("G1", 'Lượng tăng/ Giảm')->setCellValue("H", 'Tỉ lệ')
+                    ->setCellValue("E1", 'Tháng 10')->setCellValue("F1", 'Tăng/giảm')->setCellValue("G1", 'Lượng tăng/ Giảm')->setCellValue("H", 'Tỉ lệ')
+                    ->setCellValue("E1", 'Tháng 11')->setCellValue("F1", 'Tăng/giảm')->setCellValue("G1", 'Lượng tăng/ Giảm')->setCellValue("H", 'Tỉ lệ')
+                    ->setCellValue("E1", 'Tháng 12')->setCellValue("F1", 'Tăng/giảm')->setCellValue("G1", 'Lượng tăng/ Giảm')->setCellValue("H", 'Tỉ lệ')
+                    ->setCellValue("G1", 'Tại ngân hàng');
+                var_dump($tongdien);
+                die();
             }
 
             return $this->render('tonghoptheotram', [

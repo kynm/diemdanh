@@ -49,6 +49,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]); ?>
             </div>
             <div class="col-md-2 col-xs-2">
+                <label>Xuất excel</label>
+                <input type="checkbox" name="is_excel" value="1">
+            </div>
+            <div class="col-md-2 col-xs-2">
                 <?= Html::submitButton(
                     '<i class="fa fa-search"></i> Xem báo cáo', 
                     [
