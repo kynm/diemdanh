@@ -756,11 +756,13 @@ class QuanlydienController extends Controller
         $data1 = $searchModel->tonghoptramphatsinhtheotram();
         foreach ($data1 as $value) {
             if (isset($data[$value['MA_CSHT']])) {
-                $data[$value['MA_CSHT']][$value['THANG']] = $value['KW_TIEUTHU'] . ' - ' . $value['TONGTIEN'];
+                $data[$value['MA_CSHT']][ 'KW sử dụng tháng '. $value['THANG']] = $value['KW_TIEUTHU'];
+                $data[$value['MA_CSHT']][ 'Tổng tiền tháng '. $value['THANG']] = $value['TONGTIEN'];
             } else {
                 $data[$value['MA_CSHT']] = [];
                 $data[$value['MA_CSHT']] = $value;
-                $data[$value['MA_CSHT']][$value['THANG']] = $value['KW_TIEUTHU'] . ' - ' . $value['TONGTIEN'];
+                $data[$value['MA_CSHT']][ 'KW sử dụng tháng '. $value['THANG']] = $value['KW_TIEUTHU'];
+                $data[$value['MA_CSHT']][ 'Tổng tiền tháng '. $value['THANG']] = $value['TONGTIEN'];
             }
 
             unset($data[$value['MA_CSHT']]['THANG']);
@@ -770,7 +772,7 @@ class QuanlydienController extends Controller
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $spreadsheet->getDefaultStyle()->getFont()->setName('Arial');
         $spreadsheet->getDefaultStyle()->getFont()->setSize(10);
-        $spreadsheet->getActiveSheet()->fromArray(['MA_CSHT', 'TEN_TRAM', 'KW tháng 1 - Tổng tiền tháng 1', 'KW tháng 2 - Tổng tiền tháng 2', 'KW tháng 3 - Tổng tiền tháng 3', 'KW tháng 4 - Tổng tiền tháng 4', 'KW tháng 5 - Tổng tiền tháng 5', 'KW tháng 6 - Tổng tiền tháng 6', 'KW tháng 7 - Tổng tiền tháng 7', 'KW tháng 8 - Tổng tiền tháng 8', 'KW tháng 9 - Tổng tiền tháng 9', 'KW tháng 10 - Tổng tiền tháng 10', 'KW tháng 11 - Tổng tiền tháng 11', 'KW tháng 12 - Tổng tiền tháng 12'], '', 'A1');
+        $spreadsheet->getActiveSheet()->fromArray(array_keys($data['CSHT_HNM_00226']), '', 'A1');
         $spreadsheet->getActiveSheet()->fromArray($data, '', 'A2');
 
         $filename = 'Dữ liệ diện.xlsx'; //save our workbook as this file name
