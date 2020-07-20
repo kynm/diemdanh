@@ -770,7 +770,7 @@ class QuanlydienController extends Controller
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $spreadsheet->getDefaultStyle()->getFont()->setName('Arial');
         $spreadsheet->getDefaultStyle()->getFont()->setSize(10);
-        $spreadsheet->getActiveSheet()->fromArray(['MA_CSHT', 'TEN_TRAM', 1,2,3,4,5,6,7,8,9,10,11,12], '', 'A1');
+        $spreadsheet->getActiveSheet()->fromArray(['MA_CSHT', 'TEN_TRAM', 'KW thangs 1 - Tổng tiền tháng 1', 'KW thangs 2 - Tổng tiền tháng 2', 'KW thangs 3 - Tổng tiền tháng 3', 'KW thangs 4 - Tổng tiền tháng 4', 'KW thangs 5 - Tổng tiền tháng 5', 'KW thangs 6 - Tổng tiền tháng 6', 'KW thangs 7 - Tổng tiền tháng 7', 'KW thangs 8 - Tổng tiền tháng 8', 'KW thangs 9 - Tổng tiền tháng 9', 'KW thangs 10 - Tổng tiền tháng 10', 'KW thangs 11 - Tổng tiền tháng 11', 'KW thangs 12 - Tổng tiền tháng 12'], '', 'A1');
         $spreadsheet->getActiveSheet()->fromArray($data, '', 'A2');
 
         $filename = 'Dữ liệ diện.xlsx'; //save our workbook as this file name
