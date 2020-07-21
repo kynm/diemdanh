@@ -128,57 +128,57 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <td scope="col"><?php echo formatnumber($value[1]);?></td>
                                 <td scope="col"><?php echo formatnumber($value[2]); ?>
                                     <?php echo $value[2] - $value[1] > 0 ? 
-                                    '<span class="glyphicon glyphicon-arrow-up btn-danger"></span>' . formatnumber($value[2] - $value[1]) : '<span class="glyphicon glyphicon glyphicon-arrow-down btn-success"></span>' . formatnumber($value[1] - $value[2]);
+                                    '<span class="fa fa-angle-up btn-danger"></span>' . formatnumber($value[2] - $value[1]) : '<span class="glyphicon fa  fa-angle-down btn-success"></span>' . formatnumber($value[1] - $value[2]);
                                     ?>
                                 </td>
                                 <td scope="col"><?php echo formatnumber($value[3]); ?>
                                     <?php echo $value[3] - $value[2] > 0 ? 
-                                    '<span class="glyphicon glyphicon-arrow-up btn-danger"></span>' . formatnumber($value[3] - $value[2]) : '<span class="glyphicon glyphicon-arrow-down btn-success"></span>' . formatnumber($value[2] - $value[3]);
+                                    '<span class="fa fa-angle-up btn-danger"></span>' . formatnumber($value[3] - $value[2]) : '<span class="fa  fa-angle-down btn-success"></span>' . formatnumber($value[2] - $value[3]);
                                     ?>
                                 </td>
                                 <td scope="col"><?php echo formatnumber($value[4]); ?>
                                     <?php echo $value[4] - $value[3] > 0 ? 
-                                    '<span class="glyphicon glyphicon-arrow-up btn-danger"></span>' . formatnumber($value[4] - $value[3]) : '<span class="glyphicon glyphicon glyphicon-arrow-down btn-success"></span>' . formatnumber($value[3] - $value[4]);
+                                    '<span class="fa fa-angle-up btn-danger"></span>' . formatnumber($value[4] - $value[3]) : '<span class="glyphicon fa  fa-angle-down btn-success"></span>' . formatnumber($value[3] - $value[4]);
                                     ?>
                                 </td>
                                 <td scope="col"><?php echo formatnumber($value[5]); ?>
                                     <?php echo $value[5] - $value[4] > 0 ? 
-                                    '<span class="glyphicon glyphicon-arrow-up btn-danger"></span>' . formatnumber($value[5] - $value[4]) : '<span class="glyphicon glyphicon glyphicon-arrow-down btn-success"></span>' . formatnumber($value[4] - $value[5]);
+                                    '<span class="fa fa-angle-up btn-danger"></span>' . formatnumber($value[5] - $value[4]) : '<span class="glyphicon fa  fa-angle-down btn-success"></span>' . formatnumber($value[4] - $value[5]);
                                     ?>
                                 </td>
                                 <td scope="col"><?php echo formatnumber($value[6]); ?>
                                     <?php echo $value[6] - $value[5] > 0 ? 
-                                    '<span class="glyphicon glyphicon-arrow-up btn-danger"></span>' . formatnumber($value[6] - $value[5]) : '<span class="glyphicon glyphicon glyphicon-arrow-down btn-success"></span>' . formatnumber($value[5] - $value[6]);
+                                    '<span class="fa fa-angle-up btn-danger"></span>' . formatnumber($value[6] - $value[5]) : '<span class="glyphicon fa  fa-angle-down btn-success"></span>' . formatnumber($value[5] - $value[6]);
                                     ?>
                                 </td>
                                 <td scope="col"><?php echo formatnumber($value[7]); ?>
                                     <?php echo $value[7] - $value[6] > 0 ? 
-                                    '<span class="glyphicon glyphicon-arrow-up btn-danger"></span>' . formatnumber($value[7] - $value[6]) : '<span class="glyphicon glyphicon glyphicon-arrow-down btn-success"></span>' . formatnumber($value[6] - $value[7]);
+                                    '<span class="fa fa-angle-up btn-danger"></span>' . formatnumber($value[7] - $value[6]) : '<span class="glyphicon fa  fa-angle-down btn-success"></span>' . formatnumber($value[6] - $value[7]);
                                     ?>
                                 </td>
                                 <td scope="col"><?php echo formatnumber($value[8]); ?>
                                     <?php echo $value[8] - $value[7] > 0 ? 
-                                    '<span class="glyphicon glyphicon-arrow-up btn-danger"></span>' . formatnumber($value[8] - $value[7]) : '<span class="glyphicon glyphicon glyphicon-arrow-down btn-success"></span>' . formatnumber($value[7] - $value[8]);
+                                    '<span class="fa fa-angle-up btn-danger"></span>' . formatnumber($value[8] - $value[7]) : '<span class="glyphicon fa  fa-angle-down btn-success"></span>' . formatnumber($value[7] - $value[8]);
                                     ?>
                                 </td>
                                 <td scope="col"><?php echo formatnumber($value[9]); ?>
                                     <?php echo $value[9] - $value[8] > 0 ? 
-                                    '<span class="glyphicon glyphicon-arrow-up btn-danger"></span>' . formatnumber($value[9] - $value[8]) : '<span class="glyphicon glyphicon glyphicon-arrow-down btn-success"></span>' . formatnumber($value[8] - $value[9]);
+                                    '<span class="fa fa-angle-up btn-danger"></span>' . formatnumber($value[9] - $value[8]) : '<span class="glyphicon fa  fa-angle-down btn-success"></span>' . formatnumber($value[8] - $value[9]);
                                     ?>
                                 </td>
                                 <td scope="col"><?php echo formatnumber($value[10]); ?>
                                     <?php echo $value[10] - $value[9] > 0 ? 
-                                    '<span class="glyphicon glyphicon-arrow-up btn-danger"></span>' . formatnumber($value[10] - $value[9]) : '<span class="glyphicon glyphicon glyphicon-arrow-down btn-success"></span>' . formatnumber($value[9] - $value[10]);
+                                    '<span class="fa fa-angle-up btn-danger"></span>' . formatnumber($value[10] - $value[9]) : '<span class="glyphicon fa  fa-angle-down btn-success"></span>' . formatnumber($value[9] - $value[10]);
                                     ?>
                                 </td>
                                 <td scope="col"><?php echo formatnumber($value[11]); ?>
                                     <?php echo $value[11] - $value[10] > 0 ? 
-                                    '<span class="glyphicon glyphicon-arrow-up btn-danger"></span>' . formatnumber($value[11] - $value[10]) : '<span class="glyphicon glyphicon glyphicon-arrow-down btn-success"></span>' . formatnumber($value[10] - $value[11]);
+                                    '<span class="fa fa-angle-up btn-danger"></span>' . formatnumber($value[11] - $value[10]) : '<span class="glyphicon fa  fa-angle-down btn-success"></span>' . formatnumber($value[10] - $value[11]);
                                     ?>
                                 </td>
                                 <td scope="col"><?php echo formatnumber($value[12]); ?>
                                     <?php echo $value[12] - $value[11] > 0 ? 
-                                    '<span class="glyphicon glyphicon-arrow-up btn-danger"></span>' . formatnumber($value[12] - $value[11]) : '<span class="glyphicon glyphicon glyphicon-arrow-down btn-success"></span>' . formatnumber($value[11] - $value[12]);
+                                    '<span class="fa fa-angle-up btn-danger"></span>' . formatnumber($value[12] - $value[11]) : '<span class="glyphicon fa  fa-angle-down btn-success"></span>' . formatnumber($value[11] - $value[12]);
                                     ?>
                                 </td>
                             </tr>
@@ -188,59 +188,59 @@ $this->params['breadcrumbs'][] = $this->title;
                             <th scope="col"><?php echo formatnumber($tongdienthang1);?></th>
                             <th scope="col"><?php echo formatnumber($tongdienthang2);?>
                             <?php echo $tongdienthang2 - $tongdienthang1 > 0 ? 
-                                '<span class="glyphicon glyphicon-arrow-up btn-danger"></span>' . formatnumber($tongdienthang2 - $tongdienthang1) : '<span class="glyphicon glyphicon-arrow-down btn-success"></span>' . formatnumber($tongdienthang1 - $tongdienthang2) ;
+                                '<span class="fa fa-angle-up btn-danger"></span>' . formatnumber($tongdienthang2 - $tongdienthang1) : '<span class="fa  fa-angle-down btn-success"></span>' . formatnumber($tongdienthang1 - $tongdienthang2) ;
                                 ?>
                                     
                                 </td>
                             <th scope="col"><?php echo formatnumber($tongdienthang3);?>
                                 <?php echo $tongdienthang3 - $tongdienthang2 > 0 ? 
-                                '<span class="glyphicon glyphicon-arrow-up btn-danger"></span>' . formatnumber($tongdienthang3 - $tongdienthang2) : '<span class="glyphicon glyphicon-arrow-down btn-success"></span>' . formatnumber($tongdienthang2 - $tongdienthang3) ;
+                                '<span class="fa fa-angle-up btn-danger"></span>' . formatnumber($tongdienthang3 - $tongdienthang2) : '<span class="fa  fa-angle-down btn-success"></span>' . formatnumber($tongdienthang2 - $tongdienthang3) ;
                                 ?>
 
                             </th>
                             <th scope="col"><?php echo formatnumber($tongdienthang4);?>
                                 <?php echo $tongdienthang4 - $tongdienthang3 > 0 ? 
-                                '<span class="glyphicon glyphicon-arrow-up btn-danger"></span>' . formatnumber($tongdienthang4 - $tongdienthang3) : '<span class="glyphicon glyphicon-arrow-down btn-success"></span>' . formatnumber($tongdienthang3 - $tongdienthang4) ;
+                                '<span class="fa fa-angle-up btn-danger"></span>' . formatnumber($tongdienthang4 - $tongdienthang3) : '<span class="fa  fa-angle-down btn-success"></span>' . formatnumber($tongdienthang3 - $tongdienthang4) ;
                                 ?>
                             </th>
                             <th scope="col"><?php echo formatnumber($tongdienthang5);?>
                                 <?php echo $tongdienthang5 - $tongdienthang4 > 0 ? 
-                                '<span class="glyphicon glyphicon-arrow-up btn-danger"></span>' . formatnumber($tongdienthang5 - $tongdienthang4) : '<span class="glyphicon glyphicon-arrow-down btn-success"></span>' . formatnumber($tongdienthang4 - $tongdienthang5) ;
+                                '<span class="fa fa-angle-up btn-danger"></span>' . formatnumber($tongdienthang5 - $tongdienthang4) : '<span class="fa  fa-angle-down btn-success"></span>' . formatnumber($tongdienthang4 - $tongdienthang5) ;
                                 ?>
                             </th>
                             <th scope="col"><?php echo formatnumber($tongdienthang6);?>
                                 <?php echo $tongdienthang6 - $tongdienthang5 > 0 ? 
-                                '<span class="glyphicon glyphicon-arrow-up btn-danger"></span>' . formatnumber($tongdienthang6 - $tongdienthang5) : '<span class="glyphicon glyphicon-arrow-down btn-success"></span>' . formatnumber($tongdienthang5 - $tongdienthang6) ;
+                                '<span class="fa fa-angle-up btn-danger"></span>' . formatnumber($tongdienthang6 - $tongdienthang5) : '<span class="fa  fa-angle-down btn-success"></span>' . formatnumber($tongdienthang5 - $tongdienthang6) ;
                                 ?>
                             </th>
                             <th scope="col"><?php echo formatnumber($tongdienthang7);?>
                                 <?php echo $tongdienthang7 - $tongdienthang6 > 0 ? 
-                                '<span class="glyphicon glyphicon-arrow-up btn-danger"></span>' . formatnumber($tongdienthang7 - $tongdienthang6) : '<span class="glyphicon glyphicon-arrow-down btn-success"></span>' . formatnumber($tongdienthang6 - $tongdienthang7) ;
+                                '<span class="fa fa-angle-up btn-danger"></span>' . formatnumber($tongdienthang7 - $tongdienthang6) : '<span class="fa  fa-angle-down btn-success"></span>' . formatnumber($tongdienthang6 - $tongdienthang7) ;
                                 ?>
                             </th>
                             <th scope="col"><?php echo formatnumber($tongdienthang8);?>
                                 <?php echo $tongdienthang8 - $tongdienthang7 > 0 ? 
-                                '<span class="glyphicon glyphicon-arrow-up btn-danger"></span>' . formatnumber($tongdienthang8 - $tongdienthang7) : '<span class="glyphicon glyphicon-arrow-down btn-success"></span>' . formatnumber($tongdienthang7 - $tongdienthang8) ;
+                                '<span class="fa fa-angle-up btn-danger"></span>' . formatnumber($tongdienthang8 - $tongdienthang7) : '<span class="fa  fa-angle-down btn-success"></span>' . formatnumber($tongdienthang7 - $tongdienthang8) ;
                                 ?>
                             </th>
                             <th scope="col"><?php echo formatnumber($tongdienthang9);?>
                                 <?php echo $tongdienthang9 - $tongdienthang8 > 0 ? 
-                                '<span class="glyphicon glyphicon-arrow-up btn-danger"></span>' . formatnumber($tongdienthang9 - $tongdienthang8) : '<span class="glyphicon glyphicon-arrow-down btn-success"></span>' . formatnumber($tongdienthang8 - $tongdienthang9) ;
+                                '<span class="fa fa-angle-up btn-danger"></span>' . formatnumber($tongdienthang9 - $tongdienthang8) : '<span class="fa  fa-angle-down btn-success"></span>' . formatnumber($tongdienthang8 - $tongdienthang9) ;
                                 ?>
                             </th>
                             <th scope="col"><?php echo formatnumber($tongdienthang10);?>
                                 <?php echo $tongdienthang10 - $tongdienthang9 > 0 ? 
-                                '<span class="glyphicon glyphicon-arrow-up btn-danger"></span>' . formatnumber($tongdienthang10 - $tongdienthang9) : '<span class="glyphicon glyphicon-arrow-down btn-success"></span>' . formatnumber($tongdienthang9 - $tongdienthang10) ;
+                                '<span class="fa fa-angle-up btn-danger"></span>' . formatnumber($tongdienthang10 - $tongdienthang9) : '<span class="fa  fa-angle-down btn-success"></span>' . formatnumber($tongdienthang9 - $tongdienthang10) ;
                                 ?>
                             </th>
                             <th scope="col"><?php echo formatnumber($tongdienthang11);?>
                                 <?php echo $tongdienthang11 - $tongdienthang10 > 0 ? 
-                                '<span class="glyphicon glyphicon-arrow-up btn-danger"></span>' . formatnumber($tongdienthang11 - $tongdienthang10) : '<span class="glyphicon glyphicon-arrow-down btn-success"></span>' . formatnumber($tongdienthang10 - $tongdienthang11) ;
+                                '<span class="fa fa-angle-up btn-danger"></span>' . formatnumber($tongdienthang11 - $tongdienthang10) : '<span class="fa  fa-angle-down btn-success"></span>' . formatnumber($tongdienthang10 - $tongdienthang11) ;
                                 ?>
                             </th>
                             <th scope="col"><?php echo formatnumber($tongdienthang12);?>
                                 <?php echo $tongdienthang12 - $tongdienthang11 > 0 ? 
-                                '<span class="glyphicon glyphicon-arrow-up btn-danger"></span>' . formatnumber($tongdienthang12 - $tongdienthang11) : '<span class="glyphicon glyphicon-arrow-down btn-success"></span>' . formatnumber($tongdienthang11 - $tongdienthang12) ;
+                                '<span class="fa fa-angle-up btn-danger"></span>' . formatnumber($tongdienthang12 - $tongdienthang11) : '<span class="fa  fa-angle-down btn-success"></span>' . formatnumber($tongdienthang11 - $tongdienthang12) ;
                                 ?>
                             </th>
                         </tr>
