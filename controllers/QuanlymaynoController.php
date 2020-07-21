@@ -666,6 +666,7 @@ class QuanlymaynoController extends Controller
             }
 
             $params['is_excel'] = $params['is_excel'] ?? null;
+            $dmloaibc = ['THOIGIAN' => 'Báo cáo theo thời gian', 'SOLUONG' => 'Báo cáo theo số lượng (lít)', 'TONGTIEN' => 'Báo cáo theo tổng tiền'];
             $loaibc = $params['LOAIBC'];
             $dsdai = ArrayHelper::map(Daivt::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'ID_DAI', 'ID_DAI');
             // $dstram = ArrayHelper::map(Tramvt::find()->where(['in', 'ID_TRAM', $iddv])->all(), 'ID_TRAM', 'TEN_TRAM');
@@ -818,7 +819,7 @@ class QuanlymaynoController extends Controller
                     $x ++;
                 }
             $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
-            $file_name = "Export_".date('Ymd_His');
+            $file_name = "Export_" . $dmloaibc[$loaibc].date('Ymd_His');
 
             header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
             header('Content-Disposition: attachment;filename="'.$file_name.'.xlsx"');
@@ -829,7 +830,7 @@ class QuanlymaynoController extends Controller
 
             return $this->render('tonghoptheotram', [
                     'data' => $data,
-                    'dmloaibc' => ['THOIGIAN' => 'Báo cáo theo thời gian', 'SOLUONG' => 'Báo cáo theo số lượng (lít)', 'TONGTIEN' => 'Báo cáo theo tổng tiền'],
+                    'dmloaibc' => $dmloaibc,
                     'dsdonvi' => $dsdonvi,
                     'params' => $params,
                 ]);
