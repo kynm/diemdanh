@@ -172,6 +172,19 @@ use yii\helpers\Url;
                         'visible' => Yii::$app->user->can('view-qldien'),
                     ],
                     [
+                        'label' => 'BC tổng hợp điện nhiên liệu',
+                        'icon' => 'tablet',
+                        'url' => '#',
+                        'items' => [
+                            [
+                                'label' => 'TH điện nhiên liệu trong năm', 'icon' => 'caret-right',
+                                'url' => Url::to(['baocaotonghop/baocaotonghoptheotram']),
+                                'visible' => Yii::$app->user->can('bctonghop-qldien'),
+                            ],
+                        ],
+                        'visible' => Yii::$app->user->can('view-qldien'),
+                    ],
+                    [
                         'label' => 'Quản lý hợp đồng',
                         'icon' => 'tablet',
                         'url' => '#',

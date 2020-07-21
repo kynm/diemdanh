@@ -10,7 +10,7 @@ use kartik\select2\Select2;
 /* @var $searchModel app\models\TramvtSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Tổng hợp tình hình sử dụng điện trong năm của các trạm năm ' . date('Y');
+$this->title = 'Tổng hợp tình hình sử dụng điện nhiên liệu trong năm của các trạm năm ' . date('Y');
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
@@ -30,19 +30,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'data' => $dsdonvi,
                     'theme' => Select2::THEME_BOOTSTRAP,
                     'options' => ['placeholder' => 'Chọn đơn vị'],
-                    'pluginOptions' => [
-                        'allowClear' => true
-                    ]
-                ]); ?>
-            </div>
-            <div class="col-md-2 col-xs-2">
-                <?= Select2::widget([
-                    'name' => 'LOAIBC',
-                    'id' => 'LOAIBC',
-                    'value' => $params['LOAIBC'],
-                    'data' => $dmloaibc,
-                    'theme' => Select2::THEME_BOOTSTRAP,
-                    'options' => ['placeholder' => 'Chọn loại báo cáo'],
                     'pluginOptions' => [
                         'allowClear' => true
                     ]
