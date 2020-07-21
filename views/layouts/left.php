@@ -106,6 +106,11 @@ use yii\helpers\Url;
                                 'visible' => Yii::$app->user->can('bctonghop-qldien'),
                             ],
                             [
+                                'label' => 'Tổng hợp nhiên liệu trong năm', 'icon' => 'caret-right',
+                                'url' => Url::to(['quanlymayno/baocaotonghoptheotram']),
+                                'visible' => Yii::$app->user->can('bctonghop-qldien'),
+                            ],
+                            [
                                 'label' => 'Điều hành máy nổ', 'icon' => 'caret-right',
                                 'url' => Url::to(['quanlymayno/']),
                                 'visible' => Yii::$app->user->can('edit-nkmayno'),
