@@ -309,6 +309,38 @@ class QuanlydienController extends Controller
         }
     }
 
+    public function actionThongketramvuotdinhmuc()
+    {
+        if (Yii::$app->user->can('bctonghop-qldien')) {
+            $months = [];
+            for ($i = 1; $i <= 12; $i++) {
+                $months[$i] = $i;
+            }
+            $nowY = date("Y");
+            $years = [
+                $nowY => $nowY,
+                $nowY - 1 => $nowY - 1,
+            ];
+            $iddv = ArrayHelper::map(Donvi::find()->where(['<>', 'MA_DONVIKT', 0])->all(), 'ID_DONVI', 'ID_DONVI');
+            if (Yii::$app->user->can('dmdv-diennhienlieu')) {
+                $iddv = [Yii::$app->user->identity->nhanvien->ID_DONVI];
+            }
+
+            $dsdonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'MA_DONVIKT', 'TEN_DONVI');
+            $searchModel = new QuanlydienSearch();
+            $dataProvider = $searchModel->searchThongkedienvuotdinhmuc(Yii::$app->request->queryParams);
+            return $this->render('thongketramvuotdinhmuc', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'dsdonvi' => $dsdonvi,
+                'months' => $months,
+                'years' => $years,
+            ]);
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
+        }
+    }
+
     public function actionCapnhatthanhtoandien()
     {
         if (Yii::$app->user->can('updatett-qldien')) {

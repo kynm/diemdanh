@@ -149,6 +149,11 @@ use yii\helpers\Url;
                                 'visible' => Yii::$app->user->can('bctonghop-qldien'),
                             ],
                             [
+                                'label' => 'Các trạm vượt định mức', 'icon' => 'caret-right',
+                                'url' => Url::to(['quanlydien/thongketramvuotdinhmuc']),
+                                'visible' => Yii::$app->user->can('bctonghop-qldien'),
+                            ],
+                            [
                                 'label' => 'Điều hành điện', 'icon' => 'caret-right',
                                 'url' => Url::to(['quanlydien/']),
                                 'visible' => Yii::$app->user->can('list-qldien'),
