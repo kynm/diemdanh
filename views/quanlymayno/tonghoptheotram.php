@@ -85,6 +85,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <th scope="col">Tháng 10</th>
                         <th scope="col">Tháng 11</th>
                         <th scope="col">Tháng 12</th>
+                        <th scope="col">Tổng</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -181,6 +182,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     '<span class="glyphicon glyphicon-arrow-up btn-danger"></span>' . formatnumber($value[12] - $value[11]) : '<span class="glyphicon glyphicon glyphicon-arrow-down btn-success"></span>' . formatnumber($value[11] - $value[12]);
                                     ?>
                                 </td>
+                                <td scope="col">
+                                    <?php echo $value[1] + $value[2] + $value[3] + $value[4] + $value[5] + $value[6] + $value[7] + $value[8] + $value[9] + $value[10] + $value[11] + $value[12];
+                                    ?>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                         <tr>
@@ -242,6 +247,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <?php echo $tongthang12 - $tongthang11 > 0 ? 
                                 '<span class="glyphicon glyphicon-arrow-up btn-danger"></span>' . formatnumber($tongthang12 - $tongthang11) : '<span class="glyphicon glyphicon-arrow-down btn-success"></span>' . formatnumber($tongthang11 - $tongthang12) ;
                                 ?>
+                            </th>
+                            <th>
+                                <?php echo $tongthang1 + $tongthang2 + $tongthang3 + $tongthang4 + $tongthang5 + $tongthang6 + $tongthang7 + $tongthang8 + $tongthang9 + $tongthang10 + $tongthang11 + $tongthang12
+                                    ?>
+
                             </th>
                         </tr>
                     </tbody>
