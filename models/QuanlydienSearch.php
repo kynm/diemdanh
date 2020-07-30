@@ -271,9 +271,8 @@ class QuanlydienSearch extends Quanlydien
 
     public function tramchuamap($params)
     {
-        $sqltonghop = "select a.id, (select ten_donvi from donvi where MA_DONVIKT = a.MA_DONVIKT) tendv,a.THANG, a.ma_dienluc, a.ma_csht from quanlydien a where a.THANG = " . $params['THANG'] . " and a.ma_csht not in (SELECT ma_csht from tramvt)";
+        $sqltonghop = "select a.id, (select ten_donvi from donvi where MA_DONVIKT = a.MA_DONVIKT) tendv,a.THANG, a.ma_dienluc, a.ma_csht from quanlydien a where a.THANG = " . $params['THANG'] . " and a.ma_csht not in (SELECT ma_csht from tramvt)  OR a.MA_CSHT is null ORDER BY a.MA_DONVIKT";
 
         return Yii::$app->db->createCommand($sqltonghop)->queryAll();
     }
-
 }
