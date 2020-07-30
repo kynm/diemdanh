@@ -732,6 +732,31 @@ class QuanlydienController extends Controller
         $writer->save('php://output');
         die();
     }
+    public function actionExporttramchuamap()
+    {
+        $data = [];
+        $searchModel = new QuanlydienSearch();
+        $params = Yii::$app->request->queryParams;
+        $params['THANG'] = $params['THANG'] ?? date('m');
+        $data1 = $searchModel->tramchuamap($params);
+
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $spreadsheet->getDefaultStyle()->getFont()->setName('Arial');
+        $spreadsheet->getDefaultStyle()->getFont()->setSize(10);
+        $spreadsheet->getActiveSheet()->fromArray($data1, '', 'A1');
+
+        $filename = 'Dữ liệ diện lỗi.xlsx'; //save our workbook as this file name
+        // Redirect output to a client’s web browser (Xlsx)
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="'.$filename.'"');
+        header('Cache-Control: max-age=0');
+        // If you're serving to IE 9, then the following may be needed
+        header('Cache-Control: max-age=1');
+
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $writer->save('php://output');
+        die();
+    }
     public function actionBaocaotonghoptheotram()
     {
         if (Yii::$app->user->can('bctonghop-qldien')) {

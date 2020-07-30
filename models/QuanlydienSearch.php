@@ -104,7 +104,7 @@ class QuanlydienSearch extends Quanlydien
         if (Yii::$app->user->can('dmdv-diennhienlieu')) {
             $query->andFilterWhere(['quanlydien.MA_DONVIKT' => Donvi::findone(Yii::$app->user->identity->nhanvien->ID_DONVI)->MA_DONVIKT]);
         }
-        $query->andWhere('KW_TIEUTHU > DINHMUC');
+        $query->andWhere('KW_TIEUTHU >= DINHMUC');
         $query->andFilterWhere(['quanlydien.MA_DONVIKT' => $this->MA_DONVIKT]);
         $query->andFilterWhere(['like', 'NAM', $this->NAM])
             ->andFilterWhere(['like', 'MA_DIENLUC', $this->MA_DIENLUC])
@@ -250,7 +250,7 @@ class QuanlydienSearch extends Quanlydien
 
     public function tonghoptheotram($madv, $nam, $loai ='KW_TIEUTHU')
     {
-        $sqltonghop = "SELECT THANG, sum(" . $loai . ") TONG_TT FROM `quanlydien` where MA_DIENLUC = '" . $madv . "' AND NAM = " . $nam . " GROUP by THANG";
+        $sqltonghop = "SELECT THANG, sum(" . $loai . ")" . ($loai == 'TONGTIEN' ? '/1000 ' : ' ') ." TONG_TT FROM `quanlydien` where MA_DIENLUC = '" . $madv . "' AND NAM = " . $nam . " GROUP by THANG";
 
         return Yii::$app->db->createCommand($sqltonghop)->queryAll();
     }
@@ -268,4 +268,12 @@ class QuanlydienSearch extends Quanlydien
 
         return Yii::$app->db->createCommand($sqltonghop)->queryAll();
     }
+
+    public function tramchuamap($params)
+    {
+        $sqltonghop = "select a.id, (select ten_donvi from donvi where MA_DONVIKT = a.MA_DONVIKT) tendv,a.THANG, a.ma_dienluc, a.ma_csht from quanlydien a where a.THANG = " . $params['THANG'] . " and a.ma_csht not in (SELECT ma_csht from tramvt)";
+
+        return Yii::$app->db->createCommand($sqltonghop)->queryAll();
+    }
+
 }

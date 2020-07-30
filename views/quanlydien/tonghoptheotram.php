@@ -10,7 +10,7 @@ use kartik\select2\Select2;
 /* @var $searchModel app\models\TramvtSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Tổng hợp tình hình sử dụng điện trong năm của các trạm năm ' . date('Y');
+$this->title = 'Tổng hợp tình hình sử dụng điện trong năm của các trạm năm ' . date('Y') . ' ĐƠN VỊ TÍNH: '   .  ($params['LOAIBC'] == 'TONGTIEN' ? '(nghìn đồng)' : 'KW');
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
