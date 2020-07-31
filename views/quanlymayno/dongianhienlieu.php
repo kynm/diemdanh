@@ -56,9 +56,17 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                             [
                                 'class' => 'yii\grid\ActionColumn',
-                                'template'=>'',
-                                'buttons'=>[
-                                ]  
+                                'template' => '{update}',
+                                'buttons' => [
+                                    'update' => function ($url,$model) {
+                                        if ($model->ID && $model->THANG == date('m', strtotime("-1 month"))) {
+                                            $url = Url::to(['updategianhienlieu', 'ID' => $model->ID]);
+                                            return Html::a('<span class="glyphicon glyphicon-pencil"> </span>', $url, ['title' => 'Điều chỉnh giá' ]);
+                                        }
+
+                                        return '';
+                                    },
+                                ],
                             ],
                         ],
                     ]); ?>

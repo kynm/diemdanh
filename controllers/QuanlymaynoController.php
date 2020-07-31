@@ -505,6 +505,56 @@ class QuanlymaynoController extends Controller
         }
     }
 
+    public function actionUpdategianhienlieu($ID)
+    {
+        if (Yii::$app->user->can('create-gianhienlieu') || 1) {
+            $model = Dongiamayno::findOne($ID);
+            $log = new ActivitiesLog;
+            $iddv = [2,3,4,5,6,7,666];
+            if (Yii::$app->user->can('dmdv-diennhienlieu')) {
+                $inputs['ID_DONVI'] = Yii::$app->user->identity->nhanvien->ID_DONVI;
+                $iddv = [$inputs['ID_DONVI']];
+            }
+            $dsDonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'ID_DONVI', 'TEN_DONVI');
+            if ($model->load(Yii::$app->request->post()))
+            {
+                $model->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->TEN_NHANVIEN;
+                $oldGia = Dongiamayno::find()->where(['ID_DONVI' => $model->ID_DONVI,'THANG' => $model->THANG, 'NAM' => $model->NAM, 'LOAI_NHIENLIEU' => $model->LOAI_NHIENLIEU])->one();
+                $dsdai = ArrayHelper::map(Daivt::find()->where(['ID_DONVI' => $model->ID_DONVI])->all(), 'ID_DAI', 'ID_DAI');
+                $danhsachtram = ArrayHelper::map(Tramvt::find()->where(['in', 'ID_DAI', $dsdai])->all(), 'ID_TRAM', 'ID_TRAM');
+                $query = NhatKySuDungMayNo::find();
+                $query->where(['in','ID_TRAM', $danhsachtram]);
+                $query->andWhere(['LOAINHIENLIEU' => $model->LOAI_NHIENLIEU]);
+                $query->andWhere('year(THOIGIANBATDAU) = ' . $model->NAM);
+                $query = $query->andWhere('MONTH(THOIGIANBATDAU) = ' . $model->THANG);
+                foreach ($query->all() as $key => $value) {
+                    $value->GIATIEN = $model->DONGIA;
+                    $value->save(false);
+                }
+                if ($oldGia) {
+                    $oldGia->DONGIA = $model->DONGIA;
+                    $oldGia->save();
+                    $log->activity_type = 'update_dongia';
+                } else {
+                    $model->save();
+                    $log->activity_type = 'add_dongia';
+                }
+                $log->description = Yii::$app->user->identity->nhanvien->TEN_NHANVIEN." thêm đơn giá cho ". $model->ID;
+                $log->user_id = Yii::$app->user->identity->id;
+                $log->create_at = time();
+                $log->save();
+                Yii::$app->session->setFlash('success', "Cập nhật đơn giá thành công");
+                return $this->redirect(['gianhienlieu']);
+            } else {
+                return $this->render('giamayno', [
+                    'model' => $model,
+                    'dsDonvi' => $dsDonvi,
+                ]);
+            }
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');            
+        }
+    }
     public function actionGianhienlieu()
     {
         $searchModel = new DongiamaynoSearch();

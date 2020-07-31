@@ -105,17 +105,17 @@ $this->params['breadcrumbs'][] = $this->title;
                             <tr>
                                 <th scope="col"><?php echo 'Tổng điện tiêu thụ';?></th>
                                 <th scope="col"><?php echo formatnumber($tongdienthang1);?></th>
-                                <th scope="col"><?php echo formatnumber($tongdienthang2);?></th>
-                                <th scope="col"><?php echo formatnumber($tongdienthang3);?></th>
-                                <th scope="col"><?php echo formatnumber($tongdienthang4);?></th>
-                                <th scope="col"><?php echo formatnumber($tongdienthang5);?></th>
-                                <th scope="col"><?php echo formatnumber($tongdienthang6);?></th>
-                                <th scope="col"><?php echo formatnumber($tongdienthang7);?></th>
-                                <th scope="col"><?php echo formatnumber($tongdienthang8);?></th>
-                                <th scope="col"><?php echo formatnumber($tongdienthang9);?></th>
-                                <th scope="col"><?php echo formatnumber($tongdienthang10);?></th>
-                                <th scope="col"><?php echo formatnumber($tongdienthang11);?></th>
-                                <th scope="col"><?php echo formatnumber($tongdienthang12);?></th>
+                                <th scope="col"><?php echo formatnumber($tongdienthang2) . ($tongdienthang2 > $tongdienthang1? '<span class="fa fa-angle-up btn-danger"></span>' : '<span class="fa   fa-angle-down btn-success"></span>') . formatnumber($tongdienthang2 - $tongdienthang1);?></th>
+                                <th scope="col"><?php echo formatnumber($tongdienthang3) . ($tongdienthang3 > $tongdienthang2? '<span class="fa fa-angle-up btn-danger"></span>' : '<span class="fa   fa-angle-down btn-success"></span>') . formatnumber($tongdienthang3 - $tongdienthang2);?></th>
+                                <th scope="col"><?php echo formatnumber($tongdienthang4) . ($tongdienthang4 > $tongdienthang3? '<span class="fa fa-angle-up btn-danger"></span>' : '<span class="fa   fa-angle-down btn-success"></span>') . formatnumber($tongdienthang4 - $tongdienthang3);?></th>
+                                <th scope="col"><?php echo formatnumber($tongdienthang5) . ($tongdienthang5 > $tongdienthang4? '<span class="fa fa-angle-up btn-danger"></span>' : '<span class="fa   fa-angle-down btn-success"></span>') . formatnumber($tongdienthang5 - $tongdienthang4);?></th>
+                                <th scope="col"><?php echo formatnumber($tongdienthang6) . ($tongdienthang6 > $tongdienthang5? '<span class="fa fa-angle-up btn-danger"></span>' : '<span class="fa   fa-angle-down btn-success"></span>') . formatnumber($tongdienthang6 - $tongdienthang5);?></th>
+                                <th scope="col"><?php echo formatnumber($tongdienthang7) . ($tongdienthang7 > $tongdienthang6? '<span class="fa fa-angle-up btn-danger"></span>' : '<span class="fa   fa-angle-down btn-success"></span>') . formatnumber($tongdienthang7 - $tongdienthang6);?></th>
+                                <th scope="col"><?php echo formatnumber($tongdienthang8) . ($tongdienthang8 > $tongdienthang7? '<span class="fa fa-angle-up btn-danger"></span>' : '<span class="fa   fa-angle-down btn-success"></span>') . formatnumber($tongdienthang8 - $tongdienthang7);?></th>
+                                <th scope="col"><?php echo formatnumber($tongdienthang9) . ($tongdienthang9 > $tongdienthang8? '<span class="fa fa-angle-up btn-danger"></span>' : '<span class="fa   fa-angle-down btn-success"></span>') . formatnumber($tongdienthang9 - $tongdienthang8);?></th>
+                                <th scope="col"><?php echo formatnumber($tongdienthang10) . ($tongdienthang10 > $tongdienthang9? '<span class="fa fa-angle-up btn-danger"></span>' : '<span class="fa   fa-angle-down btn-success"></span>') . formatnumber($tongdienthang10 - $tongdienthang9);?></th>
+                                <th scope="col"><?php echo formatnumber($tongdienthang11) . ($tongdienthang11 > $tongdienthang10? '<span class="fa fa-angle-up btn-danger"></span>' : '<span class="fa   fa-angle-down btn-success"></span>') . formatnumber($tongdienthang11 - $tongdienthang10);?></th>
+                                <th scope="col"><?php echo formatnumber($tongdienthang12) . ($tongdienthang12 > $tongdienthang11? '<span class="fa fa-angle-up btn-danger"></span>' : '<span class="fa   fa-angle-down btn-success"></span>') . formatnumber($tongdienthang12 - $tongdienthang11);?></th>
                             </tr>
                             <tr>
                                 <th colspan="12">
