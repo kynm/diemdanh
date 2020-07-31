@@ -89,17 +89,17 @@ $this->params['breadcrumbs'][] = $this->title;
                             <tr>
                                 <td scope="col"><?php echo $value['TEN_DONVI']?></td>
                                 <td scope="col"><?php echo formatnumber($value[1]);?></td>
-                                <td scope="col"><?php echo formatnumber($value[2]); ?></td>
-                                <td scope="col"><?php echo formatnumber($value[3]); ?></td>
-                                <td scope="col"><?php echo formatnumber($value[4]); ?></td>
-                                <td scope="col"><?php echo formatnumber($value[5]); ?></td>
-                                <td scope="col"><?php echo formatnumber($value[6]); ?></td>
-                                <td scope="col"><?php echo formatnumber($value[7]); ?></td>
-                                <td scope="col"><?php echo formatnumber($value[8]); ?></td>
-                                <td scope="col"><?php echo formatnumber($value[9]); ?></td>
-                                <td scope="col"><?php echo formatnumber($value[10]); ?></td>
-                                <td scope="col"><?php echo formatnumber($value[11]); ?></td>
-                                <td scope="col"><?php echo formatnumber($value[12]); ?></td>
+                                <td scope="col"><?php echo formatnumber($value[2]) . ($value[2] > $value[1]? '<span class="fa fa-angle-up btn-danger"></span>' : '<span class="fa   fa-angle-down btn-success"></span>') . formatnumber($value[2] - $value[1]); ?></td>
+                                <td scope="col"><?php echo formatnumber($value[3]) . ($value[3] > $value[2]? '<span class="fa fa-angle-up btn-danger"></span>' : '<span class="fa   fa-angle-down btn-success"></span>') . formatnumber($value[3] - $value[2]); ?></td>
+                                <td scope="col"><?php echo formatnumber($value[4]) . ($value[4] > $value[3]? '<span class="fa fa-angle-up btn-danger"></span>' : '<span class="fa   fa-angle-down btn-success"></span>') . formatnumber($value[4] - $value[3]); ?></td>
+                                <td scope="col"><?php echo formatnumber($value[5]) . ($value[5] > $value[4]? '<span class="fa fa-angle-up btn-danger"></span>' : '<span class="fa   fa-angle-down btn-success"></span>') . formatnumber($value[5] - $value[4]); ?></td>
+                                <td scope="col"><?php echo formatnumber($value[6]) . ($value[6] > $value[5]? '<span class="fa fa-angle-up btn-danger"></span>' : '<span class="fa   fa-angle-down btn-success"></span>') . formatnumber($value[6] - $value[5]); ?></td>
+                                <td scope="col"><?php echo formatnumber($value[7]) . ($value[7] > $value[6]? '<span class="fa fa-angle-up btn-danger"></span>' : '<span class="fa   fa-angle-down btn-success"></span>') . formatnumber($value[7] - $value[6]); ?></td>
+                                <td scope="col"><?php echo formatnumber($value[8]) . ($value[8] > $value[7]? '<span class="fa fa-angle-up btn-danger"></span>' : '<span class="fa   fa-angle-down btn-success"></span>') . formatnumber($value[8] - $value[7]); ?></td>
+                                <td scope="col"><?php echo formatnumber($value[9]) . ($value[9] > $value[8]? '<span class="fa fa-angle-up btn-danger"></span>' : '<span class="fa   fa-angle-down btn-success"></span>') . formatnumber($value[9] - $value[8]); ?></td>
+                                <td scope="col"><?php echo formatnumber($value[10]) . ($value[10] > $value[9]? '<span class="fa fa-angle-up btn-danger"></span>' : '<span class="fa   fa-angle-down btn-success"></span>') . formatnumber($value[10] - $value[9]); ?></td>
+                                <td scope="col"><?php echo formatnumber($value[11]) . ($value[11] > $value[10]? '<span class="fa fa-angle-up btn-danger"></span>' : '<span class="fa   fa-angle-down btn-success"></span>') . formatnumber($value[11] - $value[10]); ?></td>
+                                <td scope="col"><?php echo formatnumber($value[12]) . ($value[12] > $value[11]? '<span class="fa fa-angle-up btn-danger"></span>' : '<span class="fa   fa-angle-down btn-success"></span>') . formatnumber($value[12] - $value[11]); ?></td>
                             </tr>
                         <?php endforeach; ?>
                             <tr>
