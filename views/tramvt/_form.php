@@ -49,7 +49,7 @@ $listkieu = ArrayHelper::map(KieuCSHT::find()->all(), 'ID', 'TEN_KIEU_CSHT');
     <div class="box box-primary">
         <div class="box-body">
             <div class="col-sm-2">
-                <?= $form->field($model, 'MA_TRAM')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model, 'MA_TRAM')->textInput(['maxlength' => true, 'readonly' => !$model->isNewRecord]) ?>
             </div>
 
             <div class="col-sm-2">
@@ -60,7 +60,7 @@ $listkieu = ArrayHelper::map(KieuCSHT::find()->all(), 'ID', 'TEN_KIEU_CSHT');
                 <?= $form->field($model, 'DIADIEM')->textInput(['maxlength' => true]) ?>
             </div>
             <div class="col-sm-2">
-                <?= $form->field($model, 'MA_CSHT')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model, 'MA_CSHT')->textInput(['maxlength' => true, 'readonly' => !$model->isNewRecord]) ?>
             </div>
             <div class="col-sm-2">
                 <?= $form->field($model, 'MA_HD_CSHT')->textInput(['maxlength' => true]) ?>
