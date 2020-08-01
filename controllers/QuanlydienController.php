@@ -739,7 +739,9 @@ class QuanlydienController extends Controller
         $params = Yii::$app->request->queryParams;
         $params['THANG'] = $params['THANG'] ?? date('m');
         $data1 = $searchModel->tramchuamap($params);
-
+            return $this->render('tramchuamap', [
+                    'data1' => $data1,
+                ]);
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $spreadsheet->getDefaultStyle()->getFont()->setName('Arial');
         $spreadsheet->getDefaultStyle()->getFont()->setSize(10);
