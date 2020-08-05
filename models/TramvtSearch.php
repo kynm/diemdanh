@@ -44,7 +44,7 @@ class TramvtSearch extends Tramvt
      */
     public function search($params)
     {
-        $query = Tramvt::find();
+        $query = Tramvt::find()->andWhere(['is', 'IS_DELETE', new \yii\db\Expression('null')]);
 
         // add conditions that should always apply here
         // if (Yii::$app->user->identity->nhanvien->chucvu->cap == 2) {
@@ -94,7 +94,7 @@ class TramvtSearch extends Tramvt
         $allIdsTramMayno = ArrayHelper::map(Thietbitram::find()
             ->where(['in', 'ID_LOAITB', ArrayHelper::map(Thietbi::find()->where(['in', 'ID_NHOM', 1])->all(), 'ID_THIETBI', 'ID_THIETBI')])
             ->all(), 'ID_TRAM', 'ID_TRAM');
-        $query = Tramvt::find();
+        $query = Tramvt::find()->andWhere(['is', 'IS_DELETE', new \yii\db\Expression('null')]);
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -124,7 +124,7 @@ class TramvtSearch extends Tramvt
 
     public function searchQldien($params)
     {
-        $query = Tramvt::find();
+        $query = Tramvt::find()->andWhere(['is', 'IS_DELETE', new \yii\db\Expression('null')]);
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -151,7 +151,7 @@ class TramvtSearch extends Tramvt
 
     public function searchQlhopdong($params)
     {
-        $query = Tramvt::find();
+        $query = Tramvt::find()->andWhere(['is', 'IS_DELETE', new \yii\db\Expression('null')]);
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);

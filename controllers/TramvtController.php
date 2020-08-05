@@ -303,7 +303,10 @@ class TramvtController extends Controller
     public function actionDelete($id)
     {
         if (Yii::$app->user->can('delete-tramvt')) {
-            $this->findModel($id)->delete();
+            $tramvt = $this->findModel($id);
+            $tramvt->IS_DELETE = 1;
+            $tramvt->save(false);
+            //$this->findModel($id)->delete();
             
             return $this->redirect(['index']);
         } else {
