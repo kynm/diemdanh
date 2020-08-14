@@ -200,8 +200,8 @@ use yii\helpers\Url;
                                 'visible' => Yii::$app->user->can('list-qlhopdong'),
                             ],
                             [
-                                'label' => 'Tổng hợp điện theo tháng', 'icon' => 'caret-right',
-                                'url' => Url::to(['quanlyhopdong/thongkesudungdien']),
+                                'label' => 'Tổng hợp phiếu thu', 'icon' => 'caret-right',
+                                'url' => Url::to(['quanlyhopdong/thongkephieuthu']),
                                 'visible' => Yii::$app->user->can('ketoan-qlhopdong'),
                             ],
                             [

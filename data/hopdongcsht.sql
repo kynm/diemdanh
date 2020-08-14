@@ -9,7 +9,7 @@ CREATE TABLE `hopdong_csht` (
  `CHUNGMINHTU` varchar(20) NULL,
  `DIACHI` varchar(100) NOT NULL,
  `ĐAIDENVIENTHONG` varchar(50) NULL,
- `TENKHACHHANG` varchar(50) NOT NULL,
+ `TENKHACHHANG` varchar(100) NOT NULL,
  `MA_HOPDONG` varchar(20) NOT NULL,
  `TEN_HOPDONG` varchar(50) NOT NULL,
  PRIMARY KEY (`ID`)

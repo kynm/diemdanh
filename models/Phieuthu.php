@@ -36,6 +36,7 @@ class Phieuthu extends \yii\db\ActiveRecord
             [['ID_NHANVIEN'], 'required'],
             [['NGAYCAPNHAT'], 'required'],
             [['TRANGTHAI'], 'required'],
+            [['MA_DONVIKT'], 'required'],
         ];
     }
     /**
@@ -44,7 +45,7 @@ class Phieuthu extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'ID_HOPDONG' => 'ID hợp đồng',
+            'ID_HOPDONG' => 'Hợp đồng',
             'TUNGAY' => 'Ngày bắt đầu',
             'DENNGAY' => 'Ngày kết thúc',
             'SOTHANG' => 'Số tháng',
@@ -56,11 +57,17 @@ class Phieuthu extends \yii\db\ActiveRecord
             'SOTAIKHOAN' => 'Số tài khoản',
             'TEN_NGANHANG' => 'Tên ngân hàng',
             'TRANGTHAI' => 'Trạng thái',
+            'MA_DONVIKT' => 'Đơn vị',
         ];
     }
 
     public function getHopdong()
     {
         return $this->hasOne(Quanlyhopdong::className(), ['ID' => 'ID_HOPDONG']);
+    }
+
+    public function getDonvitheomaketoan()
+    {
+        return $this->hasOne(Donvi::className(), ['MA_DONVIKT' => 'MA_DONVIKT']);
     }
 }

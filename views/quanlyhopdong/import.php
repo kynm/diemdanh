@@ -21,6 +21,6 @@ $this->params['breadcrumbs'][] = 'Cập nhật';
 <div class="tramvt-update">
     <?= $this->render('_form_import', [
         'model' => $model,
-        'dsdonvi' => $dsdonvi,
+        // 'dsdonvi' => $dsdonvi,
     ]) ?>
 </div>

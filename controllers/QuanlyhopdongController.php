@@ -196,7 +196,7 @@ class QuanlyhopdongController extends Controller
             $model = new UploadForm();
             if (Yii::$app->request->post())
             {
-                echo "<pre>";
+                // echo "<pre>";
                 $params = Yii::$app->request->bodyParams;
                 $model->fileupload = UploadedFile::getInstance($model, 'fileupload');
                 $data = \moonland\phpexcel\Excel::import($model->fileupload->tempName);
@@ -206,6 +206,9 @@ class QuanlyhopdongController extends Controller
                     Yii::$app->session->setFlash('error', "Cập nhật không thành công. Thiếu trường: " . implode(',', array_diff($arrkeyCheck, $keys)));
                     return $this->redirect(['import']);
                 }
+                Phieuthu::deleteAll([
+                    'TRANGTHAI' => NULL,
+                ]);
                 foreach ($data as $key => $value) {
                     if ($value['MA_CSHT']) {
                         $hopdong = Quanlyhopdong::find()->where(['MA_CSHT' => $value['MA_CSHT']])->one();
@@ -222,10 +225,6 @@ class QuanlyhopdongController extends Controller
                             $hopdong->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_DONVI;
                             $hopdong->save(false);
                         }
-                        Phieuthu::deleteAll([
-                            'MA_DONVIKT' => $value['MA_DONVIKT'],
-                            'TRANGTHAI' => NULL,
-                        ]);
                         $pheuthu = new Phieuthu();
                         $pheuthu->ID_HOPDONG = $hopdong->ID;
                         $pheuthu->TUNGAY = date_format(date_create($value['TUNGAY']),"Y-m-d");
@@ -234,7 +233,7 @@ class QuanlyhopdongController extends Controller
                         $pheuthu->GIATIEN = $value['GIATIEN'];
                         $pheuthu->VAT = $value['VAT'];
                         $pheuthu->TONGTIEN = $value['TONGTIEN'];
-                        $pheuthu->LOAI_CHUNGTU = 'LOAI_CHUNGTU';
+                        $pheuthu->LOAI_CHUNGTU = $value['LOAI_CHUNGTU'];
                         $pheuthu->TEN_NGUOINHAN = $value['TEN_NGUOINHAN'];
                         $pheuthu->SOTAIKHOAN = $value['MA_CSHT'];
                         $pheuthu->TEN_NGANHANG = $value['TEN_NGANHANG'];
@@ -250,52 +249,28 @@ class QuanlyhopdongController extends Controller
 
             return $this->render('import', [
                 'model' => $model,
-                'dsdonvi' => $dsdonvi,
+                // 'dsdonvi' => $dsdonvi,
             ]);
         } else {
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
         }
     }
 
-    public function actionFilemauimportdien()
-    {
-        if (Yii::$app->user->can('import-qlhopdong')) {
-            ini_set('max_execution_time', 5*60); // 5 minutes
-            $path = Yii::getAlias('@webroot') . '/samplefile';
-            $file = $path . '/dulieudien.xlsx';
-            return Yii::$app->response->xSendFile($file);
-
-        } else {
-            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
-        }
-    }
-
-    public function actionThongkesudungdien()
+    public function actionThongkephieuthu()
     {
         if (Yii::$app->user->can('ketoan-qlhopdong')) {
-            $months = [];
-            for ($i = 1; $i <= 12; $i++) {
-                $months[$i] = $i;
-            }
-            $nowY = date("Y");
-            $years = [
-                $nowY => $nowY,
-                $nowY - 1 => $nowY - 1,
-            ];
             $iddv = ArrayHelper::map(Donvi::find()->where(['<>', 'MA_DONVIKT', 0])->all(), 'ID_DONVI', 'ID_DONVI');
             if (Yii::$app->user->can('dmdv-diennhienlieu')) {
                 $iddv = [Yii::$app->user->identity->nhanvien->ID_DONVI];
             }
 
             $dsdonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'MA_DONVIKT', 'TEN_DONVI');
-            $searchModel = new QuanlyhopdongSearch();
-            $dataProvider = $searchModel->searchThongkedien(Yii::$app->request->queryParams);
-            return $this->render('thongkesudungdien', [
+            $searchModel = new PhieuthuSearch();
+            $dataProvider = $searchModel->searchThongkephieuthu(Yii::$app->request->queryParams);
+            return $this->render('thongkephieuthu', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
                 'dsdonvi' => $dsdonvi,
-                'months' => $months,
-                'years' => $years,
             ]);
         } else {
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');

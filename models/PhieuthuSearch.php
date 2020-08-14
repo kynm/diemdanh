@@ -9,7 +9,7 @@ use app\models\Phieuthu;
 /**
  * ActivitiesLogSearch represents the model behind the search form of `app\models\ActivitiesLog`.
  */
-class PhieuthuSearch extends ActivitiesLog
+class PhieuthuSearch extends Phieuthu
 {
     /**
      * @inheritdoc
@@ -17,8 +17,7 @@ class PhieuthuSearch extends ActivitiesLog
     public function rules()
     {
         return [
-            [['activity_log_id', 'user_id', 'create_at'], 'integer'],
-            [['activity_type', 'description'], 'safe'],
+            [['MA_DONVIKT'], 'safe'],
         ];
     }
 
@@ -61,9 +60,28 @@ class PhieuthuSearch extends ActivitiesLog
             'ID_HOPDONG' => $params['ID_HOPDONG'],
         ]);
 
-        // $query->andFilterWhere(['like', 'activity_type', $this->activity_type])
-        //     ->andFilterWhere(['like', 'description', $this->description]);
-
         return $dataProvider;
+    }
+
+    public function searchThongkephieuthu($params)
+    {
+        $query = Phieuthu::find();
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+        if (!$this->validate()) {
+            return $dataProvider;
+        }
+
+        $query->joinWith('donvitheomaketoan');
+        // grid filtering conditions
+        if (Yii::$app->user->can('dmdv-diennhienlieu')) {
+            $query->andFilterWhere(['phieuthu_csht.MA_DONVIKT' => Donvi::findone(Yii::$app->user->identity->nhanvien->ID_DONVI)->MA_DONVIKT]);
+        }
+        $query->andFilterWhere(['phieuthu_csht.MA_DONVIKT' => $this->MA_DONVIKT]);
+
+        return $dataProvider;  
     }
 }
