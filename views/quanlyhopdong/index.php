@@ -15,9 +15,11 @@ use kartik\select2\Select2;
 
 $this->title = 'Quản lý hợp đồng';
 $this->params['breadcrumbs'][] = $this->title;
-
 ?>
 <div class="tramvt-index">
+        <p>
+        <?= (Yii::$app->user->can('import-qlhopdong')) ? Html::a('<i class="fa fa-plus"></i> Import dữ liệu', ['import'], ['class' => 'btn btn-primary btn-flat']) : '' ?>
+    </p>
     <div class="box box-primary">
         <div class="box-body">
             <div class="table-responsive">
@@ -41,6 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'pluginOptions' => ['allowClear' => true],
                                 ],
                             ],
+                            'MA_CSHT',
                             [
                                 'attribute' => 'TEN_TRAM',
                                 'format' => 'raw',
@@ -56,14 +59,20 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                             [
                                 'class' => 'yii\grid\ActionColumn',
-                                'template' => '{update}',
+                                'template' => '{update}{view}',
                                 'buttons' => [
                                     'update' => function ($url,$model) {
                                         if ($model->MA_CSHT) {
                                             $url = Url::to(['quanlyhopdong/nhaphopdong', 'MA_CSHT' => $model->MA_CSHT]);
                                             return Html::a('<span class="glyphicon glyphicon-pencil"> </span>', $url, ['title' => 'Quản lý hợp đồng' ]);
                                         }
-
+                                        return '';
+                                    },
+                                    'view' => function ($url,$model) {
+                                        if ($model->MA_CSHT) {
+                                            $url = Url::to(['quanlyhopdong/view', 'MA_CSHT' => $model->MA_CSHT]);
+                                            return Html::a('<span class="glyphicon glyphicon-eye-open"> </span>', $url, ['title' => 'Quản lý hợp đồng' ]);
+                                        }
                                         return '';
                                     },
                                 ],

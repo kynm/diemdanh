@@ -7,15 +7,15 @@ use yii\widgets\Pjax;
 use yii\helpers\Url;
 use yii\grid\GridView;
 
-/* @var $this yii\web\View */
-/* @var $model app\models\Tramvt */
-// $this->title = 'NHập hợp dồng ' . $tramvt->TEN_TRAM . $tramvt->MA_TRAM;
-// $this->params['breadcrumbs'][] = $this->title;
+$this->title = 'NHập hợp dồng ' . $tramvt->TEN_TRAM . $tramvt->MA_TRAM;
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="hopdong-update">
+    <p>
+        <?= Html::a('<i class="fa fa-plus"></i> Back', ['index'], ['class' => 'btn btn-primary btn-flat'])?>
+    </p>
     <div class="box box-primary">
         <div class="box-body">
-            fsdfsfsf
             <?php Pjax::begin(); ?>
                 <?= GridView::widget([
                     'dataProvider' => $dataProvider,
@@ -27,7 +27,6 @@ use yii\grid\GridView;
                         'NGAYKY',
                         'NGAY_BD',
                         'NGAYKT',
-                        'TEN_VT',
                         'DIACHI',
                         [
                             'class' => 'yii\grid\ActionColumn',
@@ -36,7 +35,7 @@ use yii\grid\GridView;
                             // 'template' => '{update} {delete}',
                             'buttons' => [
                                 'update' => function ($url,$model) {
-                                    $url = Url::to(['quanlyhopdong/xemphieuthu', 'id' => $model->ID]);
+                                    $url = Url::to(['quanlyhopdong/listphieuthu', 'idHopdong' => $model->ID]);
                                     return Html::a('<span class="btn btn-default btn-success">Xem phiếu thu </span>', $url, ['title' => 'Tạo phiếu thu' ]);
                                 },
                                 // 'delete' => function ($url,$model,$key) {

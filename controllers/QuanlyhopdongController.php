@@ -10,6 +10,8 @@ use app\models\Donvi;
 use app\models\Tramvt;
 use app\models\Quanlyhopdong;
 use app\models\QuanlyhopdongSearch;
+use app\models\Phieuthu;
+use app\models\PhieuthuSearch;
 use app\models\TramvtSearch;
 use app\models\UploadForm;
 use yii\web\Controller;
@@ -106,8 +108,6 @@ class QuanlyhopdongController extends Controller
         }
     }
 
-
-
     public function actionView($MA_CSHT)
     {
         $tramvt = Tramvt::find()->where(['MA_CSHT' => $MA_CSHT])->one();
@@ -124,16 +124,40 @@ class QuanlyhopdongController extends Controller
         }
     }
 
-    public function actionXemphieuthu($id)
+    public function actionListphieuthu($idHopdong)
     {
-        $hopdong = Quanlyhopdong::find()->findOne($id);
-        if ($tramvt) {
+        $hopdong = Quanlyhopdong::findOne($idHopdong);
+        if ($hopdong) {
             $searchModel = new PhieuthuSearch();
-            $dataProvider = $searchModel->search(['HOPDONG_ID' => $hopdong->ID]);
-            return $this->render('xemphieuthu', [
+            $dataProvider = $searchModel->search(['ID_HOPDONG' => $hopdong->ID]);
+            return $this->render('listphieuthu', [
                 'searchModel' => $searchModel,
+                'hopdong' => $hopdong,
                 'dataProvider' => $dataProvider,
-                'tramvt' => $tramvt,
+            ]);
+        } else {
+            throw new ForbiddenHttpException('Trạm chưa liên kết đến điện lực');
+        }
+    }
+
+    public function actionCreatePhieuthu($idHopdong)
+    {
+        $hopdong = Quanlyhopdong::findOne($idHopdong);
+        if ($hopdong) {
+            $model = new Phieuthu();
+            $model->ID_HOPDONG = $hopdong->ID;
+            $model->TRANGTHAI = 0;
+            $model->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
+            $model->NGAYCAPNHAT = date('Y-m-d');
+            if ($model->load(Yii::$app->request->post()))
+            {
+                $model->save(false);
+                Yii::$app->session->setFlash('success', "Tạo phiếu thu thành công!");
+                return $this->redirect(['listphieuthu', 'idHopdong' => $idHopdong]);
+            }
+            return $this->render('create-phieuthu', [
+                'model' => $model,
+                'hopdong' => $hopdong,
             ]);
         } else {
             throw new ForbiddenHttpException('Trạm chưa liên kết đến điện lực');
@@ -160,75 +184,9 @@ class QuanlyhopdongController extends Controller
         }
     }
 
-    public function actionUpdatedinhmucdien($id)
-    {
-        if (Yii::$app->user->can('capnhatdinhmuc-qlhopdong')) {
-            $model = Quanlydien::findOne($id);
-            $inputs = Yii::$app->request->bodyParams;
-            $model->DINHMUC = $inputs['DINHMUC'];
-            if ($model->save(false))
-            {
-                return json_encode([
-                    "message" => "Thêm định mức thành công",
-                    "error" => false
-                ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-            } else {
-                return json_encode([
-                        "message" => "Lỗi dữ liệu",
-                        "error" => true
-                    ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-            }
-        } else {
-            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
-        }
-    }
-
-    public function actionUpdatetieuthudien($id)
-    {
-        if (Yii::$app->user->can('capnhattt-qlhopdong')) {
-            $model = Quanlydien::findOne($id);
-            $inputs = Yii::$app->request->bodyParams;
-            $model->KW_TIEUTHU = $inputs['KW_TIEUTHU'];
-            if ($model->save(false))
-            {
-                return json_encode([
-                    "message" => "Thêm điện tiêu thụ thành công",
-                    "error" => false
-                ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-            } else {
-                return json_encode([
-                        "message" => "Lỗi dữ liệu",
-                        "error" => true
-                    ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-            }
-        } else {
-            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
-        }
-    }
-
-    public function actionDelete($id)
-    {
-        if (1) {
-            Quanlydien::findOne($id)->delete();
-            
-            return $this->redirect(['index']);
-        } else {
-            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
-        }
-    }
-
     public function actionImport()
     {
         if (Yii::$app->user->can('import-qlhopdong')) {
-            $months = [];
-            $years = [];
-            for ($i = 0; $i <= 5; $i++) {
-                $months[date('m', strtotime("-$i month"))] = date('m', strtotime("-$i month"));
-                $years[date('Y', strtotime("-$i month"))] = date('Y', strtotime("-$i month"));
-            }
-            if (!isset($months['02'])) {
-                $months['02'] = '02';
-            }
             $iddv = ArrayHelper::map(Donvi::find()->where(['<>', 'MA_DONVIKT', 0])->all(), 'ID_DONVI', 'ID_DONVI');
             if (Yii::$app->user->can('dmdv-diennhienlieu')) {
                 $iddv = [Yii::$app->user->identity->nhanvien->ID_DONVI];
@@ -238,48 +196,59 @@ class QuanlyhopdongController extends Controller
             $model = new UploadForm();
             if (Yii::$app->request->post())
             {
+                echo "<pre>";
                 $params = Yii::$app->request->bodyParams;
                 $model->fileupload = UploadedFile::getInstance($model, 'fileupload');
                 $data = \moonland\phpexcel\Excel::import($model->fileupload->tempName);
                 $keys = array_keys($data[0]);
-                $arrkeyCheck = ['MA_DIENLUC', 'TEN_DIENLUC', 'TK_DIENLUC', 'NH_DIENLUC', 'MA_CSHT', 'TIENDIEN', 'TIENTHUE', 'TONGTIEN', 'KW_TIEUTHU'];
+                $arrkeyCheck = ['MA_CSHT','MA_HOPDONG','NGAYKY','TENKHACHHANG','DIACHI','CHUNGMINHTU','TUNGAY','DENNGAY','SOTHANG','GIATIEN','VAT','DONGIA','TONGTIEN','TEN_NGUOINHAN','SOTAIKHOAN','TEN_NGANHANG','MA_DONVIKT'];
                 if (array_diff($arrkeyCheck, $keys)) {
                     Yii::$app->session->setFlash('error', "Cập nhật không thành công. Thiếu trường: " . implode(',', array_diff($arrkeyCheck, $keys)));
                     return $this->redirect(['import']);
                 }
-                Quanlydien::deleteAll([
-                                'NAM' => $params['UploadForm']['NAM'],
-                                'THANG' => $params['UploadForm']['THANG'],
-                                'MA_DONVIKT' => $params['UploadForm']['MA_DONVIKT'],
-                                'IS_CHECKED' => NULL,
-                            ]);
                 foreach ($data as $key => $value) {
-                    if ($value['MA_DIENLUC']) {
-                        $model1 = new Quanlydien();
-                        $model1->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
-                        $model1->IS_CHECKED = NULL;
-                        $model1->MA_DIENLUC = $value['MA_DIENLUC'];
-                        $model1->TEN_DIENLUC = $value['TEN_DIENLUC'];
-                        $model1->TK_DIENLUC = $value['TK_DIENLUC'];
-                        $model1->NH_DIENLUC = $value['NH_DIENLUC'];
-                        $model1->MA_CSHT = $value['MA_CSHT'];
-                        $model1->MA_DONVIKT = $params['UploadForm']['MA_DONVIKT'];
-                        $model1->TIENDIEN = (int)$value['TIENDIEN'];
-                        $model1->TIENTHUE = (int)$value['TIENTHUE'];
-                        $model1->TONGTIEN = (int)$value['TONGTIEN'];
-                        $model1->KW_TIEUTHU = (int)$value['KW_TIEUTHU'];
-                        $model1->THOIGIANCAPNHAT = date("Y-m-d H:i:s");
-                        $model1->NAM = $params['UploadForm']['NAM'];
-                        $model1->THANG = $params['UploadForm']['THANG'];
-                        $model1->save(false);
+                    if ($value['MA_CSHT']) {
+                        $hopdong = Quanlyhopdong::find()->where(['MA_CSHT' => $value['MA_CSHT']])->one();
+                        if (!$hopdong) {
+                            $hopdong = new Quanlyhopdong();
+                            $hopdong->MA_CSHT = $value['MA_CSHT'];
+                            $hopdong->MA_HOPDONG = $value['MA_HOPDONG'];
+                            $hopdong->NGAYKY = date_format(date_create($value['NGAYKY']),"Y-m-d");
+                            $hopdong->TENKHACHHANG = $value['TENKHACHHANG'];
+                            $hopdong->DIACHI = $value['DIACHI'];
+                            $hopdong->CHUNGMINHTU = $value['CHUNGMINHTU'];
+                            $hopdong->ĐAIDENVIENTHONG = $value['MA_CSHT'];
+                            $hopdong->TEN_HOPDONG = $value['MA_HOPDONG'];
+                            $hopdong->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_DONVI;
+                            $hopdong->save(false);
+                        }
+                        Phieuthu::deleteAll([
+                            'MA_DONVIKT' => $value['MA_DONVIKT'],
+                            'TRANGTHAI' => NULL,
+                        ]);
+                        $pheuthu = new Phieuthu();
+                        $pheuthu->ID_HOPDONG = $hopdong->ID;
+                        $pheuthu->TUNGAY = date_format(date_create($value['TUNGAY']),"Y-m-d");
+                        $pheuthu->DENNGAY = date_format(date_create($value['DENNGAY']),"Y-m-d");
+                        $pheuthu->SOTHANG = $value['SOTHANG'];
+                        $pheuthu->GIATIEN = $value['GIATIEN'];
+                        $pheuthu->VAT = $value['VAT'];
+                        $pheuthu->TONGTIEN = $value['TONGTIEN'];
+                        $pheuthu->LOAI_CHUNGTU = 'LOAI_CHUNGTU';
+                        $pheuthu->TEN_NGUOINHAN = $value['TEN_NGUOINHAN'];
+                        $pheuthu->SOTAIKHOAN = $value['MA_CSHT'];
+                        $pheuthu->TEN_NGANHANG = $value['TEN_NGANHANG'];
+                        $pheuthu->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_DONVI;
+                        $pheuthu->MA_DONVIKT = $value['MA_DONVIKT'];
+                        $pheuthu->TRANGTHAI = NULL;
+                        $pheuthu->NGAYCAPNHAT = date("Y-m-d H:i:s");
+                        $pheuthu->save(false);
                     }
                 }
                 Yii::$app->session->setFlash('success', "Cập nhật thành công!");
             }
 
             return $this->render('import', [
-                'months' => $months,
-                'years' => $years,
                 'model' => $model,
                 'dsdonvi' => $dsdonvi,
             ]);
@@ -351,7 +320,7 @@ class QuanlyhopdongController extends Controller
             }
             if (Yii::$app->request->get('AddSelection')) {
                 $selected_array = Yii::$app->request->get('AddSelection');
-                $sql  = 'UPDATE quanlydien SET IS_CHECKED = 1 WHERE ID IN ('  . implode(',', $selected_array) . ')';
+                $sql  = 'UPDATE quanlydien SET TRANGTHAI = 1 WHERE ID IN ('  . implode(',', $selected_array) . ')';
                 Yii::$app->db->createCommand($sql)->execute();
 
                 Yii::$app->session->setFlash('success', "Cập nhật thanh toán thành công!");
@@ -376,7 +345,7 @@ class QuanlyhopdongController extends Controller
         if (Yii::$app->user->can('updatett-qlhopdong')) {
             if (Yii::$app->request->post('AddSelection')) {
                 $selected_array = Yii::$app->request->post('AddSelection');
-                $sql  = 'UPDATE quanlydien SET IS_CHECKED = 1 WHERE ID IN ('  . implode(',', $selected_array) . ')';
+                $sql  = 'UPDATE quanlydien SET TRANGTHAI = 1 WHERE ID IN ('  . implode(',', $selected_array) . ')';
                 Yii::$app->db->createCommand($sql)->execute();
 
                 Yii::$app->session->setFlash('success', "Cập nhật thanh toán thành công!");
@@ -432,7 +401,7 @@ class QuanlyhopdongController extends Controller
         if (Yii::$app->user->can('ketoan-qlhopdong')) {
             $params = Yii::$app->request->queryParams;
             $params['is_excel'] = $params['is_excel'] ?? null;
-            $params['IS_CHECKED'] = $params['IS_CHECKED'] ?? null;
+            $params['TRANGTHAI'] = $params['TRANGTHAI'] ?? null;
             $iddv = ArrayHelper::map(Donvi::find()->where(['<>', 'MA_DONVIKT', 0])->all(), 'ID_DONVI', 'ID_DONVI');
             if (Yii::$app->user->can('dmdv-diennhienlieu')) {
                 $iddv = [$params['ID_DONVI']];

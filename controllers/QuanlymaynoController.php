@@ -63,9 +63,9 @@ class QuanlymaynoController extends Controller
             $params = Yii::$app->request->queryParams;
             $dataProvider = $searchModel->searchMayno($params);
             if (isset($params['TramvtSearch']) && $params['TramvtSearch']['ID_DAI']) {
-                $listTram = ArrayHelper::map(Tramvt::find()->where(['ID_DAI' => $params['TramvtSearch']['ID_DAI']])->orderBy(['TEN_TRAM' => SORT_ASC])->asArray()->all(), 'TEN_TRAM', 'TEN_TRAM');
+                $listTram = ArrayHelper::map(Tramvt::find()->andWhere(['is', 'IS_DELETE', new \yii\db\Expression('null')])->where(['ID_DAI' => $params['TramvtSearch']['ID_DAI']])->orderBy(['TEN_TRAM' => SORT_ASC])->asArray()->all(), 'TEN_TRAM', 'TEN_TRAM');
             } else {
-                $listTram = ArrayHelper::map(Tramvt::find()->orderBy(['TEN_TRAM' => SORT_ASC])
+                $listTram = ArrayHelper::map(Tramvt::find()->andWhere(['is', 'IS_DELETE', new \yii\db\Expression('null')])->orderBy(['TEN_TRAM' => SORT_ASC])
                     ->asArray()->all(), 'TEN_TRAM', 'TEN_TRAM');
             }
 
@@ -470,7 +470,7 @@ class QuanlymaynoController extends Controller
                 $model->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->TEN_NHANVIEN;
                 $oldGia = Dongiamayno::find()->where(['ID_DONVI' => $model->ID_DONVI,'THANG' => $model->THANG, 'NAM' => $model->NAM, 'LOAI_NHIENLIEU' => $model->LOAI_NHIENLIEU])->one();
                 $dsdai = ArrayHelper::map(Daivt::find()->where(['ID_DONVI' => $model->ID_DONVI])->all(), 'ID_DAI', 'ID_DAI');
-                $danhsachtram = ArrayHelper::map(Tramvt::find()->where(['in', 'ID_DAI', $dsdai])->all(), 'ID_TRAM', 'ID_TRAM');
+                $danhsachtram = ArrayHelper::map(Tramvt::find()->andWhere(['is', 'IS_DELETE', new \yii\db\Expression('null')])->where(['in', 'ID_DAI', $dsdai])->all(), 'ID_TRAM', 'ID_TRAM');
                 $query = NhatKySuDungMayNo::find();
                 $query->where(['in','ID_TRAM', $danhsachtram]);
                 $query->andWhere(['LOAINHIENLIEU' => $model->LOAI_NHIENLIEU]);
@@ -521,7 +521,7 @@ class QuanlymaynoController extends Controller
                 $model->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->TEN_NHANVIEN;
                 $oldGia = Dongiamayno::find()->where(['ID_DONVI' => $model->ID_DONVI,'THANG' => $model->THANG, 'NAM' => $model->NAM, 'LOAI_NHIENLIEU' => $model->LOAI_NHIENLIEU])->one();
                 $dsdai = ArrayHelper::map(Daivt::find()->where(['ID_DONVI' => $model->ID_DONVI])->all(), 'ID_DAI', 'ID_DAI');
-                $danhsachtram = ArrayHelper::map(Tramvt::find()->where(['in', 'ID_DAI', $dsdai])->all(), 'ID_TRAM', 'ID_TRAM');
+                $danhsachtram = ArrayHelper::map(Tramvt::find()->andWhere(['is', 'IS_DELETE', new \yii\db\Expression('null')])->where(['in', 'ID_DAI', $dsdai])->all(), 'ID_TRAM', 'ID_TRAM');
                 $query = NhatKySuDungMayNo::find();
                 $query->where(['in','ID_TRAM', $danhsachtram]);
                 $query->andWhere(['LOAINHIENLIEU' => $model->LOAI_NHIENLIEU]);
@@ -579,7 +579,7 @@ class QuanlymaynoController extends Controller
                 $data = \moonland\phpexcel\Excel::import($model->fileupload->tempName);
                 $thietbichuanhap = [];
                 foreach ($data as $key => $value) {
-                    $tramvt = Tramvt::find()->where(['TEN_TRAM' => $value['ID_TRAM']])->one();
+                    $tramvt = Tramvt::find()->andWhere(['is', 'IS_DELETE', new \yii\db\Expression('null')])->where(['TEN_TRAM' => $value['ID_TRAM']])->one();
                     # code...
                     $model = new NhatKySuDungMayNo();
                     $model->IS_CHECKED = false;
@@ -719,8 +719,8 @@ class QuanlymaynoController extends Controller
             $dmloaibc = ['THOIGIAN' => 'Báo cáo theo thời gian', 'SOLUONG' => 'Báo cáo theo số lượng (lít)', 'TONGTIEN' => 'Báo cáo theo tổng tiền'];
             $loaibc = $params['LOAIBC'];
             $dsdai = ArrayHelper::map(Daivt::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'ID_DAI', 'ID_DAI');
-            // $dstram = ArrayHelper::map(Tramvt::find()->where(['in', 'ID_TRAM', $iddv])->all(), 'ID_TRAM', 'TEN_TRAM');
-            $dstram = Tramvt::find()->where(['in', 'ID_DAI', $dsdai])->all();
+            // $dstram = ArrayHelper::map(Tramvt::find()->andWhere(['is', 'IS_DELETE', new \yii\db\Expression('null')])->where(['in', 'ID_TRAM', $iddv])->all(), 'ID_TRAM', 'TEN_TRAM');
+            $dstram = Tramvt::find()->andWhere(['is', 'IS_DELETE', new \yii\db\Expression('null')])->where(['in', 'ID_DAI', $dsdai])->all();
             $data = [];
             $searchModel = new NhatKySuDungMayNoSearch();
             foreach ($dstram as $key => $value) {

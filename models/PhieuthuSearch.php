@@ -1,19 +1,15 @@
 <?php
-
 namespace app\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Quanlyhopdong;
-use app\models\Tramvt;
-use app\models\Daivt;
-use yii\helpers\ArrayHelper;
+use app\models\Phieuthu;
 
 /**
- * NhanvienSearch represents the model behind the search form about `app\models\Nhanvien`.
+ * ActivitiesLogSearch represents the model behind the search form of `app\models\ActivitiesLog`.
  */
-class QuanlyhopdongSearch extends Quanlyhopdong
+class PhieuthuSearch extends ActivitiesLog
 {
     /**
      * @inheritdoc
@@ -21,8 +17,8 @@ class QuanlyhopdongSearch extends Quanlyhopdong
     public function rules()
     {
         return [
-            // [['NAM', 'THANG'], 'integer'],
-            // [['MA_DONVIKT', 'MA_DIENLUC'], 'safe'],
+            [['activity_log_id', 'user_id', 'create_at'], 'integer'],
+            [['activity_type', 'description'], 'safe'],
         ];
     }
 
@@ -42,10 +38,9 @@ class QuanlyhopdongSearch extends Quanlyhopdong
      *
      * @return ActiveDataProvider
      */
-
     public function search($params)
     {
-        $query = Quanlyhopdong::find();
+        $query = Phieuthu::find();
 
         // add conditions that should always apply here
 
@@ -61,19 +56,14 @@ class QuanlyhopdongSearch extends Quanlyhopdong
             return $dataProvider;
         }
 
-        // $query->joinWith('nHANVIENDIEUHANH');
-
         // grid filtering conditions
         $query->andFilterWhere([
-            'MA_CSHT' => $params['MA_CSHT'],
+            'ID_HOPDONG' => $params['ID_HOPDONG'],
         ]);
 
-        // $query->orderBy([
-        //     'NAM' => SORT_DESC,
-        //     'THANG' => SORT_DESC,
-        // ]);
+        // $query->andFilterWhere(['like', 'activity_type', $this->activity_type])
+        //     ->andFilterWhere(['like', 'description', $this->description]);
 
         return $dataProvider;
     }
-
 }

@@ -22,7 +22,7 @@ class TramvtSearch extends Tramvt
     {
         return [
             [['ID_TRAM'], 'integer'],
-            [['MA_TRAM', 'TEN_TRAM', 'DIADIEM', 'ID_DAI', 'ID_NHANVIEN'], 'safe'],
+            [['MA_TRAM','MA_CSHT', 'TEN_TRAM', 'DIADIEM', 'ID_DAI', 'ID_NHANVIEN'], 'safe'],
         ];
     }
 
@@ -170,6 +170,7 @@ class TramvtSearch extends Tramvt
             'ID_TRAM' => $this->ID_TRAM,
         ]);
         $query->andFilterWhere(['=', 'daivt.ID_DAI', $this->ID_DAI])
+            ->andFilterWhere(['like', 'MA_CSHT', $this->MA_CSHT])
             ->andFilterWhere(['in', 'daivt.ID_DONVI', $iddv])
             ->andFilterWhere(['like', 'TEN_TRAM', $this->TEN_TRAM]);
 
