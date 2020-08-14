@@ -17,7 +17,8 @@ class PhieuthuSearch extends Phieuthu
     public function rules()
     {
         return [
-            [['MA_DONVIKT'], 'safe'],
+            [['MA_DONVIKT', ], 'safe'],
+            // [['MA_CSHT'], 'string'],
         ];
     }
 
@@ -66,6 +67,8 @@ class PhieuthuSearch extends Phieuthu
     public function searchThongkephieuthu($params)
     {
         $query = Phieuthu::find();
+        $query->joinWith('hopdong');
+        $query->joinWith('donvitheomaketoan');
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -75,12 +78,13 @@ class PhieuthuSearch extends Phieuthu
             return $dataProvider;
         }
 
-        $query->joinWith('donvitheomaketoan');
         // grid filtering conditions
         if (Yii::$app->user->can('dmdv-diennhienlieu')) {
             $query->andFilterWhere(['phieuthu_csht.MA_DONVIKT' => Donvi::findone(Yii::$app->user->identity->nhanvien->ID_DONVI)->MA_DONVIKT]);
         }
         $query->andFilterWhere(['phieuthu_csht.MA_DONVIKT' => $this->MA_DONVIKT]);
+        // $query->andFilterWhere(['hopdong.MA_CSHT' => $this->MA_CSHT]);
+        // $query->andFilterWhere(['like', 'hopdong.MA_CSHT', $this->MA_CSHT]);
 
         return $dataProvider;  
     }

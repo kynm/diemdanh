@@ -204,16 +204,16 @@ use yii\helpers\Url;
                                 'url' => Url::to(['quanlyhopdong/thongkephieuthu']),
                                 'visible' => Yii::$app->user->can('ketoan-qlhopdong'),
                             ],
-                            [
-                                'label' => 'Báo cáo điện theo tháng', 'icon' => 'caret-right',
-                                'url' => Url::to(['quanlyhopdong/baocaototrinh']),
-                                'visible' => Yii::$app->user->can('ketoan-qlhopdong'),
-                            ],
-                            [
-                                'label' => 'Cập nhật thanh toán điện', 'icon' => 'caret-right',
-                                'url' => Url::to(['quanlyhopdong/capnhatthanhtoandien']),
-                                'visible' => Yii::$app->user->can('updatett-qlhopdong'),
-                            ],
+                            // [
+                            //     'label' => 'Báo cáo điện theo tháng', 'icon' => 'caret-right',
+                            //     'url' => Url::to(['quanlyhopdong/baocaototrinh']),
+                            //     'visible' => Yii::$app->user->can('ketoan-qlhopdong'),
+                            // ],
+                            // [
+                            //     'label' => 'Cập nhật thanh toán điện', 'icon' => 'caret-right',
+                            //     'url' => Url::to(['quanlyhopdong/capnhatthanhtoandien']),
+                            //     'visible' => Yii::$app->user->can('updatett-qlhopdong'),
+                            // ],
                         ],
                         'visible' => Yii::$app->user->can('view-qlhopdong'),
                     ],

@@ -72,8 +72,6 @@ class QuanlydienSearch extends Quanlydien
         // if ($params['THANG']) {
         //     $query->andFilterWhere(['THANG' => $params['THANG']]);
         // }
-        echo "<pre>";
-            die(var_dump($this));
         $query->joinWith('donvitheomaketoan');
         if (Yii::$app->user->can('dmdv-diennhienlieu')) {
             $query->andFilterWhere(['quanlydien.MA_DONVIKT' => Donvi::findone(Yii::$app->user->identity->nhanvien->ID_DONVI)->MA_DONVIKT]);

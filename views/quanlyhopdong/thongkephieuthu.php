@@ -30,9 +30,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             'filter'=> $dsdonvi,
                         ],
                         [
-                            'attribute' => 'Mã cơ sở hạ tầng',
+                            'attribute' => 'hopdong.MA_CSHT',
                             'value' => 'hopdong.MA_CSHT',
-                            'filter'=> $dsdonvi,
                         ],
                         [
                             'attribute' => 'ID_HOPDONG',
