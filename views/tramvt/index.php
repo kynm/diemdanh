@@ -51,9 +51,11 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                             [
                                 'attribute' => 'LOAITRAM',
-                                'value' => function ($model) {
-                                    return ($model->LOAITRAM == 0) ? 'Tập trung' : $model->LOAITRAM;
-                                }
+                                'value' => 'loaihinhcsht.TEN_LOAIHINH_CSHT'
+                            ],
+                            [
+                                'attribute' => 'TRANGTHAI_CSHT_ID',
+                                'value' => 'trangthaicsht.TEN_TRANGTHAI_CSHT'
                             ],
                             [
                                 'class' => 'yii\grid\ActionColumn',

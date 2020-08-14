@@ -112,6 +112,15 @@ class Tramvt extends \yii\db\ActiveRecord
         return $this->hasOne(Nhanvien::className(), ['ID_NHANVIEN' => 'ID_NHANVIEN']);
     }
 
+    public function getTrangthaicsht()
+    {
+        return $this->hasOne(TrangthaiCSHT::className(), ['ID' => 'TRANGTHAI_CSHT_ID']);
+    }
+
+    public function getloaihinhcsht()
+    {
+        return $this->hasOne(LoaihinhCSHT::className(), ['ID' => 'LOAITRAM']);
+    }
     /**
      * action tao dot ktvsnt
      */
