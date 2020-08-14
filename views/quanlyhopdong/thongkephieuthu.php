@@ -36,7 +36,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'attribute' => 'ID_HOPDONG',
                             'value' => 'hopdong.MA_HOPDONG',
-                            'filter'=> $dsdonvi,
                         ],
                         'TUNGAY',
                         'DENNGAY',

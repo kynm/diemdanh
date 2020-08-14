@@ -216,11 +216,12 @@ class QuanlyhopdongController extends Controller
                             $hopdong = new Quanlyhopdong();
                             $hopdong->MA_CSHT = $value['MA_CSHT'];
                             $hopdong->MA_HOPDONG = $value['MA_HOPDONG'];
+                            $value['MA_HOPDONG'] = str_replace(' ', '', $value['MA_HOPDONG']);
                             $hopdong->NGAYKY = date_format(date_create($value['NGAYKY']),"Y-m-d");
                             $hopdong->TENKHACHHANG = $value['TENKHACHHANG'];
                             $hopdong->DIACHI = $value['DIACHI'];
                             $hopdong->CHUNGMINHTU = $value['CHUNGMINHTU'];
-                            $hopdong->ĐAIDENVIENTHONG = $value['MA_CSHT'];
+                            $hopdong->TRAMVIENTHONG = $value['MA_CSHT'];
                             $hopdong->TEN_HOPDONG = $value['MA_HOPDONG'];
                             $hopdong->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_DONVI;
                             $hopdong->save(false);

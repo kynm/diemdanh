@@ -17,7 +17,7 @@ class PhieuthuSearch extends Phieuthu
     public function rules()
     {
         return [
-            [['MA_DONVIKT', ], 'safe'],
+            [['MA_DONVIKT', 'ID_HOPDONG'], 'safe'],
             // [['MA_CSHT'], 'string'],
         ];
     }
@@ -83,8 +83,8 @@ class PhieuthuSearch extends Phieuthu
             $query->andFilterWhere(['phieuthu_csht.MA_DONVIKT' => Donvi::findone(Yii::$app->user->identity->nhanvien->ID_DONVI)->MA_DONVIKT]);
         }
         $query->andFilterWhere(['phieuthu_csht.MA_DONVIKT' => $this->MA_DONVIKT]);
-        // $query->andFilterWhere(['hopdong.MA_CSHT' => $this->MA_CSHT]);
-        // $query->andFilterWhere(['like', 'hopdong.MA_CSHT', $this->MA_CSHT]);
+        $query->andFilterWhere(['hopdong_csht.MA_HOPDONG' => $this->ID_HOPDONG]);
+        // $query->andFilterWhere(['like', 'hopdong_csht.MA_HOPDONG', $this->ID_HOPDONG]);
 
         return $dataProvider;  
     }
