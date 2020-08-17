@@ -275,4 +275,23 @@ class QuanlydienSearch extends Quanlydien
 
         return Yii::$app->db->createCommand($sqltonghop)->queryAll();
     }
+
+    public function baocaodientheomuc()
+    {
+        $sqltonghop = "SELECT b.TEN_DONVI,a.thang,
+            SUM(CASE WHEN a.kw_tieuthu <= 500 THEN 1 ELSE 0 END) muc1,
+            SUM(CASE WHEN   a.kw_tieuthu > 500 AND  a.kw_tieuthu <= 1000 THEN 1 ELSE 0 END) muc2,
+            SUM(CASE WHEN  a.kw_tieuthu > 1000 AND  a.kw_tieuthu <= 1500 THEN 1 ELSE 0 END) muc3,
+            SUM(CASE WHEN  a.kw_tieuthu > 1500 AND a.kw_tieuthu <= 2000 THEN 1 ELSE 0 END) muc4,
+            SUM(CASE WHEN  a.kw_tieuthu > 2000 AND a.kw_tieuthu <= 2500 THEN 1 ELSE 0 END) muc5,
+            SUM(CASE WHEN  a.kw_tieuthu > 2500 AND a.kw_tieuthu <= 3000 THEN 1 ELSE 0 END) muc6,
+            SUM(CASE WHEN  a.kw_tieuthu > 3000 AND a.kw_tieuthu <= 3500 THEN 1 ELSE 0 END) muc7,
+            SUM(CASE WHEN  a.kw_tieuthu > 3500 AND a.kw_tieuthu <= 4000 THEN 1 ELSE 0 END) muc8,
+            SUM(CASE WHEN  a.kw_tieuthu > 4000 AND a.kw_tieuthu <= 4500 THEN 1 ELSE 0 END) muc9,
+            SUM(CASE WHEN  a.kw_tieuthu > 4500 AND a.kw_tieuthu <= 5000 THEN 1 ELSE 0 END) muc10,
+            SUM(CASE WHEN  a.kw_tieuthu > 5000 THEN 1 ELSE 0 END) muc11
+             FROM quanlydien a, donvi b WHERE a.MA_DONVIKT = b.MA_DONVIKT GROUP BY b.TEN_DONVI,a.thang";
+
+        return Yii::$app->db->createCommand($sqltonghop)->queryAll();
+    }
 }

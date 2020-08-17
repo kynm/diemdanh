@@ -173,6 +173,11 @@ use yii\helpers\Url;
                                 'url' => Url::to(['quanlydien/capnhatthanhtoandien']),
                                 'visible' => Yii::$app->user->can('updatett-qldien'),
                             ],
+                            [
+                                'label' => 'Báo cáo theo định mức', 'icon' => 'caret-right',
+                                'url' => Url::to(['quanlydien/baocaodientheomuc']),
+                                'visible' => Yii::$app->user->can('updatett-qldien'),
+                            ],
                         ],
                         'visible' => Yii::$app->user->can('view-qldien'),
                     ],

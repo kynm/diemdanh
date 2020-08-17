@@ -759,6 +759,29 @@ class QuanlydienController extends Controller
         $writer->save('php://output');
         die();
     }
+
+    public function actionBaocaodientheomuc()
+    {
+        $data = [];
+        $searchModel = new QuanlydienSearch();
+        $data1 = $searchModel->baocaodientheomuc();
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $spreadsheet->getDefaultStyle()->getFont()->setName('Arial');
+        $spreadsheet->getDefaultStyle()->getFont()->setSize(10);
+        $spreadsheet->getActiveSheet()->fromArray([['Tên trung tâm', 'THÁNG','DƯỚI 500 KW', 'TỪ 500 ĐẾN 1000', 'TỪ 1000 - 1500', 'TỪ 1500 - 2000', 'TỪ 2000 - 2500', 'TỪ 2500 - 3000', 'TỪ 3000 - 3500', 'TỪ 3500 - 4000', 'TỪ 4000 - 4500', 'TỪ 4500 - 5000', 'LỚN HƠN 5000']], '', 'A1');
+        $spreadsheet->getActiveSheet()->fromArray($data1, '', 'A2');
+        $filename = 'Dữ liệu theo mức.xlsx'; //save our workbook as this file name
+        // Redirect output to a client’s web browser (Xlsx)
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="'.$filename.'"');
+        header('Cache-Control: max-age=0');
+        // If you're serving to IE 9, then the following may be needed
+        header('Cache-Control: max-age=1');
+
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $writer->save('php://output');
+        die();
+    }
     public function actionBaocaotonghoptheotram()
     {
         if (Yii::$app->user->can('bctonghop-qldien')) {
@@ -780,8 +803,7 @@ class QuanlydienController extends Controller
             $loaibc = $params['LOAIBC'];
             $dsdai = ArrayHelper::map(Daivt::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'ID_DAI', 'ID_DAI');
             // $dstram = ArrayHelper::map(Tramvt::find()->where(['in', 'ID_TRAM', $iddv])->all(), 'ID_TRAM', 'TEN_TRAM');
-            // $dstram = Tramvt::find()->where(['in', 'ID_DAI', $dsdai])->all();
-            $dstram = Tramvt::find()->andWhere(['in', 'ID_DAI', $dsdai])->andWhere(['is', 'IS_DELETE', new \yii\db\Expression('null')])->andWhere(['is', 'IS_DELETE', new \yii\db\Expression('null')])->all();
+            $dstram = Tramvt::find()->where(['in', 'ID_DAI', $dsdai])->all();
             $tongdien = [];
             $searchModel = new QuanlydienSearch();
             foreach ($dstram as $key => $value) {
