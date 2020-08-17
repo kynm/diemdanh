@@ -86,7 +86,7 @@ class BaocaotonghopController extends Controller
                     12 => 0,
                 ];
                 $data[$value->ID_TRAM]['TEN_TRAM'] = $value->TEN_TRAM;
-                $data[$value->ID_TRAM]['DIADIEM'] = $value->DIADIEM;
+                $data[$value->ID_TRAM]['DIADIEM'] = $value->iDDAI->TEN_DAIVT;
                 $searchModel = new NhatKySuDungMayNoSearch();
                 foreach ($searchModel->tonghoptheotram($value->ID_TRAM, date('Y'), 'TONGTIEN') as $v) {
                     $data[$value->ID_TRAM][$v['THANG']] = $v['TONG'];
