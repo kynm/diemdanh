@@ -720,7 +720,8 @@ class QuanlymaynoController extends Controller
             $loaibc = $params['LOAIBC'];
             $dsdai = ArrayHelper::map(Daivt::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'ID_DAI', 'ID_DAI');
             // $dstram = ArrayHelper::map(Tramvt::find()->andWhere(['is', 'IS_DELETE', new \yii\db\Expression('null')])->where(['in', 'ID_TRAM', $iddv])->all(), 'ID_TRAM', 'TEN_TRAM');
-            $dstram = Tramvt::find()->andWhere(['is', 'IS_DELETE', new \yii\db\Expression('null')])->where(['in', 'ID_DAI', $dsdai])->all();
+            $dstram = Tramvt::find()->andWhere(['in', 'ID_DAI', $dsdai])->andWhere(['is', 'IS_DELETE', new \yii\db\Expression('null')])->andWhere(['is', 'IS_DELETE', new \yii\db\Expression('null')])->all();
+            
             $data = [];
             $searchModel = new NhatKySuDungMayNoSearch();
             foreach ($dstram as $key => $value) {
