@@ -30,6 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'TEN_DONVI',
                         'DIA_CHI',
                         'SO_DT',
+                        'MA_DONVIKT',
                         [
                             'attribute' => 'CAP_TREN',
                             'value' => 'cAPTREN.TEN_DONVI'

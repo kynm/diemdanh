@@ -248,6 +248,13 @@ class QuanlydienSearch extends Quanlydien
         return Yii::$app->db->createCommand($sqltonghop)->queryAll();
     }
 
+    public function tonghoptientheodonvi($madv, $nam)
+    {
+        $sqltonghop = "SELECT THANG, sum(TONGTIEN) TONGTIEN FROM `quanlydien` where MA_DONVIKT = " . $madv . " AND NAM = " . $nam . " GROUP by THANG";
+
+        return Yii::$app->db->createCommand($sqltonghop)->queryAll();
+    }
+
     public function tonghoptheotram($madv, $nam, $loai ='KW_TIEUTHU')
     {
         $sqltonghop = "SELECT THANG, sum(" . $loai . ") TONG_TT FROM `quanlydien` where MA_DIENLUC = '" . $madv . "' AND NAM = " . $nam . " GROUP by THANG";

@@ -134,7 +134,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 </th>
                             </tr>
                             <tr>
-                                <th colspan="13">Danh sách trạm phát sinh</th>
+                                <th colspan="13">TỔNG TIỀN</th>
                           </tr>
                           <tr>
                             <th >Tên đơn vị</th>

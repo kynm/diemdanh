@@ -681,8 +681,8 @@ class QuanlydienController extends Controller
                 $tongtram[$key]['TEN_DONVI'] = $value;
                 $tongtram[$key]['COLOR'] = $color[$i];
                 $i++;
-                foreach ($searchModel->tonghoptramphatsinhtheodonvi($key, date('Y')) as $v) {
-                    $tongtram[$key][$v['THANG']] = $v['TONGTRAM'];
+                foreach ($searchModel->tonghoptientheodonvi($key, date('Y')) as $v) {
+                    $tongtram[$key][$v['THANG']] = $v['TONGTIEN'];
                 }
             }
             return $this->render('tonghoptheodonvi', [
