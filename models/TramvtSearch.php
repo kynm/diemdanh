@@ -83,6 +83,7 @@ class TramvtSearch extends Tramvt
         $query->andFilterWhere(['like', 'MA_TRAM', $this->MA_TRAM])
             ->andFilterWhere(['like', 'daivt.TEN_DAIVT', $this->ID_DAI])
             ->andFilterWhere(['like', 'TEN_TRAM', $this->TEN_TRAM])
+            ->andFilterWhere(['like', 'MA_CSHT', $this->MA_CSHT])
             ->andFilterWhere(['like', 'nhanvien.TEN_NHANVIEN', $this->ID_NHANVIEN])
             ->andFilterWhere(['like', 'DIADIEM', $this->DIADIEM]);
 
