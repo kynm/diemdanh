@@ -92,7 +92,7 @@ class BaocaotonghopController extends Controller
                     $data[$value->ID_TRAM][$v['THANG']] = $v['TONG'];
                 }
                 $searchModel1 = new QuanlydienSearch();
-                foreach ($searchModel1->tonghoptheotram($value->MA_DIENLUC, date('Y'), 'TONGTIEN') as $v) {
+                foreach ($searchModel1->tonghoptheotram($value->MA_CSHT, date('Y'), 'TONGTIEN') as $v) {
                     $data[$value->ID_TRAM][$v['THANG']] += $v['TONG_TT'];
                 }
             }

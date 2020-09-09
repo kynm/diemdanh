@@ -807,7 +807,7 @@ class QuanlydienController extends Controller
             $tongdien = [];
             $searchModel = new QuanlydienSearch();
             foreach ($dstram as $key => $value) {
-                $tongdien[$value->MA_DIENLUC] = [
+                $tongdien[$value->MA_CSHT] = [
                     1 => 0,
                     2 => 0,
                     3 => 0,
@@ -821,10 +821,10 @@ class QuanlydienController extends Controller
                     11 => 0,
                     12 => 0,
                 ];
-                $tongdien[$value->MA_DIENLUC]['TEN_TRAM'] = $value->TEN_TRAM;
-                $tongdien[$value->MA_DIENLUC]['DIADIEM'] = $value->DIADIEM;
-                foreach ($searchModel->tonghoptheotram($value->MA_DIENLUC, date('Y'), $loaibc) as $v) {
-                    $tongdien[$value->MA_DIENLUC][$v['THANG']] = $v['TONG_TT'];
+                $tongdien[$value->MA_CSHT]['TEN_TRAM'] = $value->TEN_TRAM;
+                $tongdien[$value->MA_CSHT]['DIADIEM'] = $value->MA_CSHT;
+                foreach ($searchModel->tonghoptheotram($value->MA_CSHT, date('Y'), $loaibc) as $v) {
+                    $tongdien[$value->MA_CSHT][$v['THANG']] = $v['TONG_TT'];
                 }
             }
             if ($params['is_excel']) {
