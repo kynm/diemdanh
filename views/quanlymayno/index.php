@@ -22,6 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="tramvt-index">
     <div class="box box-primary">
         <div class="box-body">
+            <a class="btn btn-success btn-flat" style="float: left;" href="<?= Url::to(['quanlymayno/baocaodinhmucmayno'])?>">Danh sách máy nổ</a><br>
             <div class="table-responsive">
                 <?php Pjax::begin(); ?>    
                     <?= GridView::widget([

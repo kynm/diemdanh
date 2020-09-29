@@ -889,4 +889,46 @@ class QuanlymaynoController extends Controller
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
         }
     }
+
+    public function actionBaocaodinhmucmayno()
+    {
+        $dsthietbi = ArrayHelper::map(Thietbi::find()->where(['ID_NHOM' => 1])->all(), 'ID_THIETBI', 'ID_THIETBI');
+        $dsmayno = Thietbitram::find()->where(['in', 'ID_LOAITB', $dsthietbi])->orderBy('ID_TRAM')->all();
+        $datamayno = [];
+        $searchModel = new NhatKySuDungMayNoSearch();
+        $loainhienlieu = $searchModel->getloainhienlieu();
+        foreach ($dsmayno as $key => $value) {
+            $thamso = json_decode($value->THAMSOTHIETBI);
+            if ($thamso) {
+                $datamayno[$value->ID_THIETBI]['dai'] = $value->iDTRAM->iDDAI->TEN_DAIVT;
+                $datamayno[$value->ID_THIETBI]['tram'] = $value->iDTRAM->TEN_TRAM;
+                $datamayno[$value->ID_THIETBI]['name'] = $value->iDLOAITB->TEN_THIETBI;
+                $datamayno[$value->ID_THIETBI]['dinhmuc'] = $thamso->DINH_MUC;
+                $datamayno[$value->ID_THIETBI]['loainhienlieu'] = $loainhienlieu[$thamso->LOAINHIENLIEU];
+            }
+        }
+
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        
+        $sheet->fromArray(
+            ['Đài viễn thông','Tên trạm','Tên máy nổ', 'Định mức', 'Loại nhiên liệu'],
+            '',
+            'A1'         
+        );
+        $sheet->fromArray(
+            $datamayno,
+            '',
+            'A2'
+        );
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $file_name = "Định mức máy nổ_".date('Ymd_His');
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="'.$file_name.'.xlsx"');
+        header('Cache-Control: max-age=0');
+
+        $writer->save("php://output");
+        exit;
+    }
 }
