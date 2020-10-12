@@ -106,8 +106,8 @@ use kartik\select2\Select2;
                         <div class="form-group field-DINH_MUC required has-success">
                         <label class="control-label" for="thietbitram-serial_mac">LOẠI NHIÊN LIỆU</label>
                     <select class="form-control" id="LOAINHIENLIEU" name="LOAINHIENLIEU">
-                      <option value="1" <?php if($model->THAMSOTHIETBI && json_decode($model->THAMSOTHIETBI)->LOAINHIENLIEU = 1){ print ' selected'; }?>>Diesel</option>
-                      <option value="2" <?php if($model->THAMSOTHIETBI && json_decode($model->THAMSOTHIETBI)->LOAINHIENLIEU = 2){ print ' selected'; }?>>Xăng</option>
+                      <option value="1" <?php if($model->THAMSOTHIETBI && json_decode($model->THAMSOTHIETBI)->LOAINHIENLIEU == 1){ echo ' selected'; }?>>Diesel</option>
+                      <option value="2" <?php if($model->THAMSOTHIETBI && json_decode($model->THAMSOTHIETBI)->LOAINHIENLIEU == 2){ echo ' selected'; }?>>Xăng</option>
                     </select>
                         </div>
                     </div>
