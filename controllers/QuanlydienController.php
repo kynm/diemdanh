@@ -264,6 +264,58 @@ class QuanlydienController extends Controller
         }
     }
 
+    public function actionCapnhatdinhmuc()
+    {
+        if (Yii::$app->user->can('dinhmuc-qldien')) {
+            $months = [];
+            $years = [];
+            for ($i = 0; $i <= 5; $i++) {
+                $months[date('m', strtotime("-$i month"))] = date('m', strtotime("-$i month"));
+                $years[date('Y', strtotime("-$i month"))] = date('Y', strtotime("-$i month"));
+            }
+            if (!isset($months['02'])) {
+                $months['02'] = '02';
+            }
+            $model = new UploadForm();
+            if (Yii::$app->request->post())
+            {
+                $params = Yii::$app->request->bodyParams;
+                $model->fileupload = UploadedFile::getInstance($model, 'fileupload');
+                $data = \moonland\phpexcel\Excel::import($model->fileupload->tempName);
+                $keys = array_keys($data[0]);
+                $arrkeyCheck = ['MA_CSHT', 'DINHMUC'];
+                if (array_diff($arrkeyCheck, $keys)) {
+                    Yii::$app->session->setFlash('error', "Cập nhật không thành công. Thiếu trường: " . implode(',', array_diff($arrkeyCheck, $keys)));
+                    return $this->redirect(['import']);
+                }
+
+                foreach ($data as $key => $value) {
+                    if ($value['MA_CSHT']) {
+                        $dulieudien = Quanlydien::find()
+                            ->andFilterWhere(['=','THANG', (int)$params['UploadForm']['THANG']])
+                            ->andFilterWhere(['=','NAM', $params['UploadForm']['NAM']])
+                            ->andFilterWhere(['=', 'MA_CSHT', $value['MA_CSHT']])
+                            ->one();
+                        if ($dulieudien) {
+                            $dulieudien->DINHMUC = $value['DINHMUC'];
+                            $dulieudien->save(false);
+
+                        }
+                    }
+                }
+                Yii::$app->session->setFlash('success', "Cập nhật thành công!");
+            }
+
+            return $this->render('capnhatdinhmuc', [
+                'months' => $months,
+                'years' => $years,
+                'model' => $model,
+            ]);
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
+        }
+    }
+
     public function actionFilemauimportdien()
     {
         if (Yii::$app->user->can('import-qldien')) {

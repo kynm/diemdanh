@@ -159,6 +159,11 @@ use yii\helpers\Url;
                                 'visible' => Yii::$app->user->can('list-qldien'),
                             ],
                             [
+                                'label' => 'Cập nhật định mức', 'icon' => 'caret-right',
+                                'url' => Url::to(['quanlydien/capnhatdinhmuc']),
+                                'visible' => Yii::$app->user->can('dinhmuc-qldien'),
+                            ],
+                            [
                                 'label' => 'Tổng hợp điện theo tháng', 'icon' => 'caret-right',
                                 'url' => Url::to(['quanlydien/thongkesudungdien']),
                                 'visible' => Yii::$app->user->can('ketoan-qldien'),

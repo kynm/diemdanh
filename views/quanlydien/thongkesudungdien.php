@@ -60,27 +60,20 @@ $this->params['breadcrumbs'][] = $this->title;
                           }
                         ],
                         [ 'attribute' =>'KW_TIEUTHU',
-                          'value' => function($model) {
+                            'value' => function($model) {
                             return $model->KW_TIEUTHU;
-                            if (Yii::$app->user->can('capnhattt-qldien')) {
-                                return Html::input('text', 'KW_TIEUTHU-' . $model->ID, $model->KW_TIEUTHU, ['id' => 'KW_TIEUTHU-' . $model->ID]) . Html::button('Cập nhật', ['class' => 'updatetieuthu','data-id' => $model->ID]);
-                            } else {
-                                return '';
-                            }
-                            
-                          },
+                                if (Yii::$app->user->can('capnhattt-qldien')) {
+                                    return Html::input('text', 'KW_TIEUTHU-' . $model->ID, $model->KW_TIEUTHU, ['id' => 'KW_TIEUTHU-' . $model->ID]) . Html::button('Cập nhật', ['class' => 'updatetieuthu','data-id' => $model->ID]);
+                                } else {
+                                    return '';
+                                }
+                            },
                           'format' => 'raw'
                         ],
                         [ 'attribute' =>'DINHMUC',
                           'value' => function($model) {
-                            if (Yii::$app->user->can('capnhatdinhmuc-qldien')) {
-                                return Html::input('text', 'DINHMUC-' . $model->ID, $model->DINHMUC, ['id' => 'DINHMUC-' . $model->ID]) . Html::button('Cập nhật', ['class' => 'updatedinhmuc','data-id' => $model->ID]);
-                            } else {
-                                return '';
-                            }
-                            
-                          },
-                          'format' => 'raw'
+                            return formatnumber($model->DINHMUC);
+                          }
                         ],
                     ]
                 ]); ?>
