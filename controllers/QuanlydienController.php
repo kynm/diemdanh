@@ -373,21 +373,96 @@ class QuanlydienController extends Controller
                 $nowY => $nowY,
                 $nowY - 1 => $nowY - 1,
             ];
+            $params = Yii::$app->request->queryParams;
             $iddv = ArrayHelper::map(Donvi::find()->where(['<>', 'MA_DONVIKT', 0])->all(), 'ID_DONVI', 'ID_DONVI');
             if (Yii::$app->user->can('dmdv-diennhienlieu')) {
                 $iddv = [Yii::$app->user->identity->nhanvien->ID_DONVI];
             }
-
-            $dsdonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'MA_DONVIKT', 'TEN_DONVI');
+            $dsdonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'ID_DONVI', 'TEN_DONVI');
+            if (!$params) {
+                $params = array_merge(Yii::$app->request->queryParams, [
+                    'THANG' => date('m'),
+                    'NAM' => date('Y'),
+                    'ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI
+                ]);
+            } else {
+                $iddv = $params['ID_DONVI'] ? $params['ID_DONVI'] : $iddv;
+            }
+            $params['is_excel'] = $params['is_excel'] ?? null;
+            $params['is_dinhmuc'] = $params['is_dinhmuc'] ?? null;
+            $thang = $params['THANG'];
+            $nam = $params['NAM'];
+            $dsdai = ArrayHelper::map(Daivt::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'ID_DAI', 'ID_DAI');
+            // $dstram = ArrayHelper::map(Tramvt::find()->where(['in', 'ID_TRAM', $iddv])->all(), 'ID_TRAM', 'TEN_TRAM');
+            $dstram = Tramvt::find()->where(['in', 'ID_DAI', $dsdai])->all();
+            $tongdien = [];
             $searchModel = new QuanlydienSearch();
-            $dataProvider = $searchModel->searchThongkedienvuotdinhmuc(Yii::$app->request->queryParams);
+            foreach ($dstram as $key => $value) {
+                $tongdien[$value->MA_CSHT]['TEN_TRAM'] = $value->TEN_TRAM;
+                $tongdien[$value->MA_CSHT]['DIADIEM'] = $value->MA_CSHT;
+                $tongdien[$value->MA_CSHT]['THANG'] = 0;
+                $tongdien[$value->MA_CSHT]['KW_TIEUTHU'] = 0;
+                $tongdien[$value->MA_CSHT]['DINHMUC'] = 0;
+                $tongdien[$value->MA_CSHT]['TONGTIEN'] = 0;
+                $tongdien[$value->MA_CSHT]['KW_TIEUTHU_THANGTRUOC'] = 0;
+                foreach ($searchModel->tonghopdinhmuctheotram($value->MA_CSHT, $nam, $thang, $params['is_dinhmuc']) as  $v) {
+                    $tongdien[$value->MA_CSHT]['KW_TIEUTHU'] = $v['KW_TIEUTHU'];
+                    $tongdien[$value->MA_CSHT]['DINHMUC'] = $v['DINHMUC'];
+                    $tongdien[$value->MA_CSHT]['TONGTIEN'] = $v['TONGTIEN'];
+                }
+
+                foreach ($searchModel->tonghopdinhmuctheotram($value->MA_CSHT, $nam, ($thang - 1), $params['is_dinhmuc']) as  $v) {
+                    $tongdien[$value->MA_CSHT]['KW_TIEUTHU_THANGTRUOC'] = $v['KW_TIEUTHU'];
+                }
+            }
+            if ($params['is_excel']) {
+                $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+                $spreadsheet->getDefaultStyle()->getFont()->setName('Arial');
+                $spreadsheet->getDefaultStyle()->getFont()->setSize(10);
+                $spreadsheet->getActiveSheet()->fromArray(
+                    [
+                        'STT',
+                        'Tên đơn vị',
+                        'Địa chỉ',
+                        'Điện tiêu thụ tháng ' . $params['THANG'] . '(TỔNG TIỀN)',
+                        'Định mức tháng' . $params['THANG'],
+                        'Điện tiêu thụ tháng ' . $params['THANG'] . '(KW)',
+                        'Điện tiêu thụ tháng ' . ($params['THANG'] - 1) . '(KW)',
+                    ],
+                    '',
+                    'A1'         
+                );
+                $key = 0;
+                $x = 2;
+                foreach ($tongdien as $value) {
+                    $spreadsheet->setActiveSheetIndex(0)
+                        ->setCellValue("A$x", ($key + 1))
+                        ->setCellValue("B$x", $value['TEN_TRAM'])
+                        ->setCellValue("C$x", $value['DIADIEM'])
+                        ->setCellValue("D$x", formatnumber($value['TONGTIEN']))
+                        ->setCellValue("E$x", formatnumber($value['DINHMUC']))
+                        ->setCellValue("F$x", formatnumber($value['KW_TIEUTHU']))
+                        ->setCellValue("G$x", formatnumber($value['KW_TIEUTHU_THANGTRUOC']));
+                    $key ++;
+                    $x ++;
+                }
+            $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+            $file_name = "Export_".date('Ymd_His');
+
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment;filename="'.$file_name.'.xlsx"');
+            header('Cache-Control: max-age=0');
+            $writer->save("php://output");
+        exit;
+            }
+
             return $this->render('thongketramvuotdinhmuc', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
-                'dsdonvi' => $dsdonvi,
-                'months' => $months,
-                'years' => $years,
-            ]);
+                    'tongdien' => $tongdien,
+                    'dsdonvi' => $dsdonvi,
+                    'params' => $params,
+                    'months' => $months,
+                    'years' => $years,
+                ]);
         } else {
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
         }
