@@ -405,14 +405,21 @@ class QuanlydienController extends Controller
                 $tongdien[$value->MA_CSHT]['DINHMUC'] = 0;
                 $tongdien[$value->MA_CSHT]['TONGTIEN'] = 0;
                 $tongdien[$value->MA_CSHT]['KW_TIEUTHU_THANGTRUOC'] = 0;
-                foreach ($searchModel->tonghopdinhmuctheotram($value->MA_CSHT, $nam, $thang, $params['is_dinhmuc']) as  $v) {
+                foreach ($searchModel->tonghopdinhmuctheotram($value->MA_CSHT, $nam, $thang) as  $v) {
                     $tongdien[$value->MA_CSHT]['KW_TIEUTHU'] = $v['KW_TIEUTHU'];
                     $tongdien[$value->MA_CSHT]['DINHMUC'] = $v['DINHMUC'];
                     $tongdien[$value->MA_CSHT]['TONGTIEN'] = $v['TONGTIEN'];
                 }
 
-                foreach ($searchModel->tonghopdinhmuctheotram($value->MA_CSHT, $nam, ($thang - 1), $params['is_dinhmuc']) as  $v) {
+                foreach ($searchModel->tonghopdinhmuctheotram($value->MA_CSHT, $nam, ($thang - 1)) as  $v) {
                     $tongdien[$value->MA_CSHT]['KW_TIEUTHU_THANGTRUOC'] = $v['KW_TIEUTHU'];
+                }
+                if (!$tongdien[$value->MA_CSHT]['KW_TIEUTHU'] && !$tongdien[$value->MA_CSHT]['KW_TIEUTHU_THANGTRUOC']) {
+                    unset($tongdien[$value->MA_CSHT]);
+                }
+
+                if (isset($tongdien[$value->MA_CSHT]) && $params['is_dinhmuc'] && ($tongdien[$value->MA_CSHT]['KW_TIEUTHU'] > $tongdien[$value->MA_CSHT]['DINHMUC'])) {
+                    unset($tongdien[$value->MA_CSHT]);
                 }
             }
             if ($params['is_excel']) {

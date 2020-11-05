@@ -67,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="col-md-2 col-xs-2">
                 <label>Chỉ lấy vượt định mức</label>
-                <input type="checkbox" name="is_dinhmuc" value="1">
+                <input type="checkbox" name="is_dinhmuc" value="1" <?php echo $params['is_dinhmuc'] ? 'checked' : ''; ?>>
             </div>
             <div class="col-md-2 col-xs-2">
                 <?= Html::submitButton(

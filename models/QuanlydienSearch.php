@@ -302,14 +302,9 @@ class QuanlydienSearch extends Quanlydien
         return Yii::$app->db->createCommand($sqltonghop)->queryAll();
     }
 
-    public function tonghopdinhmuctheotram($madv, $nam, $thang, $isDinhmuc = null)
+    public function tonghopdinhmuctheotram($madv, $nam, $thang)
     {
-        if ($isDinhmuc) {
-            $sqltonghop = "SELECT  a.KW_TIEUTHU,a.DINHMUC, a.TONGTIEN FROM `quanlydien` a where a.MA_CSHT = '" . $madv . "' AND a.NAM = " . $nam . " AND a.THANG = " . $thang . " and a.DINHMUC > a.KW_TIEUTHU limit 1";
-        } else {
-            $sqltonghop = "SELECT  a.KW_TIEUTHU,a.DINHMUC, a.TONGTIEN FROM `quanlydien` a where a.MA_CSHT = '" . $madv . "' AND a.NAM = " . $nam . " AND a.THANG = " . $thang . " limit 1";
-
-        }
+        $sqltonghop = "SELECT  a.KW_TIEUTHU,a.DINHMUC, a.TONGTIEN FROM `quanlydien` a where a.MA_CSHT = '" . $madv . "' AND a.NAM = " . $nam . " AND a.THANG = " . $thang . " limit 1";
 
         return Yii::$app->db->createCommand($sqltonghop)->queryAll();
     }
