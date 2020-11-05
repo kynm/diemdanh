@@ -418,7 +418,7 @@ class QuanlydienController extends Controller
                     unset($tongdien[$value->MA_CSHT]);
                 }
 
-                if (isset($tongdien[$value->MA_CSHT]) && $params['is_dinhmuc'] && ($tongdien[$value->MA_CSHT]['KW_TIEUTHU'] > $tongdien[$value->MA_CSHT]['DINHMUC'])) {
+                if (isset($tongdien[$value->MA_CSHT]) && $params['is_dinhmuc'] && ($tongdien[$value->MA_CSHT]['KW_TIEUTHU'] < $tongdien[$value->MA_CSHT]['DINHMUC'])) {
                     unset($tongdien[$value->MA_CSHT]);
                 }
             }
