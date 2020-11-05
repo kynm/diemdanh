@@ -306,7 +306,6 @@ class QuanlydienSearch extends Quanlydien
     {
         if ($isDinhmuc) {
             $sqltonghop = "SELECT  a.KW_TIEUTHU,a.DINHMUC, a.TONGTIEN FROM `quanlydien` a where a.MA_CSHT = '" . $madv . "' AND a.NAM = " . $nam . " AND a.THANG = " . $thang . " and a.DINHMUC > a.KW_TIEUTHU limit 1";
-        die(var_dump($sqltonghop));
         } else {
             $sqltonghop = "SELECT  a.KW_TIEUTHU,a.DINHMUC, a.TONGTIEN FROM `quanlydien` a where a.MA_CSHT = '" . $madv . "' AND a.NAM = " . $nam . " AND a.THANG = " . $thang . " limit 1";
 
