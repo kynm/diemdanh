@@ -304,6 +304,12 @@ class QuanlydienController extends Controller
                         }
                     }
                 }
+                $log = new ActivitiesLog;
+                $log->activity_type = 'dien-capnhatdinhmuc';
+                $log->description = Yii::$app->user->identity->nhanvien->TEN_NHANVIEN." cập nhật định mức tháng  ". $params['UploadForm']['THANG'] . '/' . $params['UploadForm']['NAM'];
+                $log->user_id = Yii::$app->user->identity->id;
+                $log->create_at = time();
+                $log->save(false);
                 $data = array_merge([$keys], $data);
                 $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
                 $sheet = $spreadsheet->getActiveSheet();
