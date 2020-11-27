@@ -16,7 +16,7 @@ $this->title = 'Đẩy dữ liệu điện';
 $this->params['breadcrumbs'][] = 'Cập nhật';
 ?>
     <p>
-        <?= (Yii::$app->user->can('dinhmuc-qldien')) ? Html::a('<i class="fa fa-plus"></i> Tải file mẫu', 'https://drive.google.com/file/d/1aimVmS5dZAtJMU_dX5snZB59oDsUqNWM/view?usp=sharing', ['class' => 'btn btn-primary btn-flat', 'target' => '_blank']) : '' ?>
+        <?= (Yii::$app->user->can('dinhmuc-qldien')) ? Html::a('<i class="fa fa-plus"></i> Tải file mẫu', 'https://drive.google.com/file/d/1MaC85jJHpO7CdnA1rrY7Q9uSIe4x6_UV/view?usp=sharing', ['class' => 'btn btn-primary btn-flat', 'target' => '_blank']) : '' ?>
     </p>
 <div class="tramvt-update">
     <?= $this->render('_form_import_dinhmuc', [
