@@ -283,10 +283,11 @@ class QuanlydienController extends Controller
                 $model->fileupload = UploadedFile::getInstance($model, 'fileupload');
                 $data = \moonland\phpexcel\Excel::import($model->fileupload->tempName);
                 $keys = array_keys($data[0]);
+                array_push($keys, 'TRANGTHAI');
                 $arrkeyCheck = ['MA_CSHT', 'DINHMUC'];
                 if (array_diff($arrkeyCheck, $keys)) {
                     Yii::$app->session->setFlash('error', "Cập nhật không thành công. Thiếu trường: " . implode(',', array_diff($arrkeyCheck, $keys)));
-                    return $this->redirect(['import']);
+                    return $this->redirect(['capnhatdinhmuc']);
                 }
 
                 foreach ($data as $key => $value) {
@@ -299,11 +300,26 @@ class QuanlydienController extends Controller
                         if ($dulieudien) {
                             $dulieudien->DINHMUC = $value['DINHMUC'];
                             $dulieudien->save(false);
-
+                            $data[$key]['success'] = 'Đã cập nhật';
                         }
                     }
                 }
-                Yii::$app->session->setFlash('success', "Cập nhật thành công!");
+                $data = array_merge([$keys], $data);
+                $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+                $sheet = $spreadsheet->getActiveSheet();
+                $sheet->fromArray(
+                    $data,
+                    '',
+                    'A1'
+                );
+
+                $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+                $file_name = "Export_dinhmuc_".date('Ymd_His');
+                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                header('Content-Disposition: attachment;filename="'.$file_name.'.xlsx"');
+                header('Cache-Control: max-age=0');
+                $writer->save("php://output");
+                exit;
             }
 
             return $this->render('capnhatdinhmuc', [
