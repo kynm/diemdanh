@@ -440,7 +440,7 @@ class QuanlydienController extends Controller
                     unset($tongdien[$value->MA_CSHT]);
                 }
 
-                if (isset($tongdien[$value->MA_CSHT]) && $params['is_dinhmuc'] && ($tongdien[$value->MA_CSHT]['KW_TIEUTHU'] < $tongdien[$value->MA_CSHT]['DINHMUC'])) {
+                if (isset($tongdien[$value->MA_CSHT]) && $params['is_dinhmuc'] && ($tongdien[$value->MA_CSHT]['KW_TIEUTHU'] <= $tongdien[$value->MA_CSHT]['DINHMUC'])) {
                     unset($tongdien[$value->MA_CSHT]);
                 }
             }
@@ -957,13 +957,12 @@ class QuanlydienController extends Controller
             }
             $params['is_excel'] = $params['is_excel'] ?? null;
             $loaibc = $params['LOAIBC'];
-            $dsdai = ArrayHelper::map(Daivt::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'ID_DAI', 'ID_DAI');
-            // $dstram = ArrayHelper::map(Tramvt::find()->where(['in', 'ID_TRAM', $iddv])->all(), 'ID_TRAM', 'TEN_TRAM');
-            $dstram = Tramvt::find()->where(['in', 'ID_DAI', $dsdai])->all();
+            $searchModelTramvt = new TramvtSearch();
+            $dstram = $searchModelTramvt->searchDSTramvt($iddv);
             $tongdien = [];
             $searchModel = new QuanlydienSearch();
             foreach ($dstram as $key => $value) {
-                $tongdien[$value->MA_CSHT] = [
+                $tongdien[$value['MA_CSHT']] = [
                     1 => 0,
                     2 => 0,
                     3 => 0,
@@ -977,12 +976,14 @@ class QuanlydienController extends Controller
                     11 => 0,
                     12 => 0,
                 ];
-                $tongdien[$value->MA_CSHT]['TEN_TRAM'] = $value->TEN_TRAM;
-                $tongdien[$value->MA_CSHT]['DIADIEM'] = $value->MA_CSHT;
-                foreach ($searchModel->tonghoptheotram($value->MA_CSHT, date('Y'), $loaibc) as $v) {
-                    $tongdien[$value->MA_CSHT][$v['THANG']] = $v['TONG_TT'];
+                $tongdien[$value['MA_CSHT']]['TEN_DONVI'] = $value['TEN_DONVI'];
+                $tongdien[$value['MA_CSHT']]['TEN_TRAM'] = $value['TEN_TRAM'];
+                $tongdien[$value['MA_CSHT']]['DIADIEM'] = $value['MA_CSHT'];
+                foreach ($searchModel->tonghoptheotram($value['MA_CSHT'], date('Y'), $loaibc) as $v) {
+                    $tongdien[$value['MA_CSHT']][$v['THANG']] = $v['TONG_TT'];
                 }
             }
+            
             if ($params['is_excel']) {
                 $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
                 $spreadsheet->getDefaultStyle()->getFont()->setName('Arial');

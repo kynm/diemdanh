@@ -73,6 +73,7 @@ $this->params['breadcrumbs'][] = $this->title;
                       <tr>
                         <th scope="col">STT</th>
                         <th scope="col">Tên đơn vị</th>
+                        <th scope="col">Tên đơn vị</th>
                         <th scope="col">Tháng 1</th>
                         <th scope="col">Tháng 2</th>
                         <th scope="col">Tháng 3</th>
@@ -121,6 +122,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ?>
                             <tr>
                                 <td scope="col"><?php echo $i?></td>
+                                <td scope="col"><?php echo $value['TEN_DONVI']?>
                                 <td scope="col"><?php echo $value['TEN_TRAM']?>
                                 <br><span style="font-size: 10px;"><?php echo $value['DIADIEM']?></span>
                                     
