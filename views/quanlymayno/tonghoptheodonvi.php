@@ -45,6 +45,19 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]); ?>
             </div>
             <div class="col-md-2 col-xs-2">
+                <?= Select2::widget([
+                    'name' => 'THANG',
+                    'id' => 'THANG',
+                    'value' => $params['THANG'],
+                    'data' => $months,
+                    'theme' => Select2::THEME_BOOTSTRAP,
+                    'options' => ['placeholder' => 'Chọn tháng'],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ]
+                ]); ?>
+            </div>
+            <div class="col-md-2 col-xs-2">
                 <?= Html::submitButton(
                     '<i class="fa fa-search"></i> Xem báo cáo', 
                     [
@@ -63,7 +76,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <table class="table">
                     <thead>
                       <tr>
-                        <th scope="col" colspan="13">Số liệu sử dụng nhiên liệu trong tháng <?php echo date('m') . '/' . date('Y')?> (Giờ chạy máy nổ)</th>
+                        <th scope="col" colspan="13">Số liệu sử dụng nhiên liệu trong tháng <?php echo $params['THANG'] . '/' . $params['NAM']?> (Giờ chạy máy nổ)</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -112,7 +125,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <table class="table">
                     <thead>
                     <tr>
-                        <th colspan="13">Tổng hợp tình hình sử dụng nhiên liệu trong năm của đơn vị năm <?php echo date('Y')?> (Giờ chạy máy nổ)</th>
+                        <th colspan="13">Tổng hợp tình hình sử dụng nhiên liệu trong năm của đơn vị năm <?php echo $params['NAM']?> (Giờ chạy máy nổ)</th>
                     </tr>
                       <tr>
                         <th scope="col">Tên đơn vị</th>

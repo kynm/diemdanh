@@ -628,7 +628,12 @@ class QuanlymaynoController extends Controller
             if (!$params || !isset($params['NAM'])) {
                 $params = array_merge(Yii::$app->request->queryParams, [
                     'NAM' => date('Y'),
+                    'THANG' => date('m'),
                 ]);
+            }
+            $months = [];
+            for ($i = 0; $i < 12; $i++) {
+                $months[date('m', strtotime( date( 'Y-01-01' )." +$i months"))] = date('m', strtotime( date( 'Y-01-01' )." +$i months"));
             }
             $iddv = [2,3,4,5,6,7,666];
             if (Yii::$app->user->can('dmdv-diennhienlieu')) {
@@ -680,7 +685,7 @@ class QuanlymaynoController extends Controller
                 $tonghoptrongthang[$key]['TEN_DONVI'] = $value;
                 $tonghoptrongthang[$key]['COLOR'] = $color[$i];
                 $i++;
-                $dulieutonghop = $searchModel->baocaotonghoptrongthang(['NAM' => $params['NAM'], 'ID_DONVI' => $key ]);
+                $dulieutonghop = $searchModel->baocaotonghoptrongthang(['NAM' => $params['NAM'], 'THANG' => $params['THANG'], 'ID_DONVI' => $key ]);
                 foreach ($dulieutonghop as $v) {
                     $tonghoptrongthang[$key][$v['NGAY'] - 1] = $v['TONG_THOI_GIAN'];
                 }
@@ -692,6 +697,7 @@ class QuanlymaynoController extends Controller
                     'labels' => $labels,
                     'params' => $params,
                     'years' => $years,
+                    'months' => $months,
                 ]);
         } else {
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');

@@ -130,7 +130,7 @@ class NhatKySuDungMayNoSearch extends NhatKySuDungMayNo
             SELECT DAYOFMONTH(a.THOIGIANBATDAU) NGAY,ROUND(sum(TIMESTAMPDIFF(MINUTE, a.THOIGIANBATDAU, a.THOIGIANKETTHUC))/60,2) TONG_THOI_GIAN FROM nhatkysudungmayno a, tramvt b, thietbitram c, daivt d,thietbi e 
              WHERE a.ID_TRAM = b.ID_TRAM and b.ID_DAI = d.ID_DAI and c.ID_LOAITB = e.id_thietbi and a.ID_THIETBITRAM = c.ID_THIETBI  
              AND year(a.THOIGIANBATDAU) = '" . $params['NAM'] . "' and d.ID_DONVI = " . $params['ID_DONVI'] .  
-            " and month(a.THOIGIANBATDAU) = " . date('m') . " GROUP BY DAYOFMONTH(a.THOIGIANBATDAU)
+            " and month(a.THOIGIANBATDAU) = " . $params['THANG'] . " GROUP BY DAYOFMONTH(a.THOIGIANBATDAU)
         ";
 
         return Yii::$app->db->createCommand($sql)->queryAll();
