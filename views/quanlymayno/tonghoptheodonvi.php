@@ -9,12 +9,13 @@ use app\models\Daivt;
 use app\models\Tramvt;
 use kartik\select2\Select2;
 use dosamigos\chartjs\ChartJs;
+use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\TramvtSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Tổng hợp tình hình sử dụng nhiên liệu trong năm của đơn vị năm ' . date('Y');
+$this->title = 'Tổng hợp tình hình sử dụng nhiên liệu trong năm của đơn vị năm ' . $params['NAM'];
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
@@ -24,6 +25,38 @@ $this->params['breadcrumbs'][] = $this->title;
 
 }</style>
 <div class="tramvt-index">
+    <div class="box box-primary">
+        <div class="row">
+            <?php $form = ActiveForm::begin([
+                'method' => 'get',
+                'action' => ['baocaotonghoptheodv'],
+            ]); ?>
+            <div class="col-md-2 col-xs-2">
+                <?= Select2::widget([
+                    'name' => 'NAM',
+                    'id' => 'NAM',
+                    'value' => $params['NAM'],
+                    'data' => $years,
+                    'theme' => Select2::THEME_BOOTSTRAP,
+                    'options' => ['placeholder' => 'Chọn năm'],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ]
+                ]); ?>
+            </div>
+            <div class="col-md-2 col-xs-2">
+                <?= Html::submitButton(
+                    '<i class="fa fa-search"></i> Xem báo cáo', 
+                    [
+                        'class'=>'btn btn-primary btn-flat',
+                        'id' => 'searchBtn',
+                        
+                    ])
+                ?>
+            </div>
+            <?php ActiveForm::end(); ?>
+        </div>
+    </div>
     <div class="box box-primary">
         <div class="box-body">
             <div class="table-responsive">

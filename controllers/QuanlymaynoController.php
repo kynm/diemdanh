@@ -620,6 +620,16 @@ class QuanlymaynoController extends Controller
     public function actionBaocaotonghoptheodv()
     {
         if (Yii::$app->user->can('bctonghop-mayno')) {
+            $years = [
+                date('Y') - 1 => date('Y') - 1,
+                date('Y') => date('Y'),
+            ];
+            $params = Yii::$app->request->queryParams;
+            if (!$params || !isset($params['NAM'])) {
+                $params = array_merge(Yii::$app->request->queryParams, [
+                    'NAM' => date('Y'),
+                ]);
+            }
             $iddv = [2,3,4,5,6,7,666];
             if (Yii::$app->user->can('dmdv-diennhienlieu')) {
                 $iddv = [Yii::$app->user->identity->nhanvien->ID_DONVI];
@@ -647,7 +657,7 @@ class QuanlymaynoController extends Controller
                 $tongnhienlieu[$key]['TEN_DONVI'] = $value;
                 $tongnhienlieu[$key]['COLOR'] = $color[$i];
                 $i++;
-                $dulieutonghop = $searchModel->baocaotonghoptheothang(['NAM' => date('Y'), 'ID_DONVI' => $key]);
+                $dulieutonghop = $searchModel->baocaotonghoptheothang(['NAM' => $params['NAM'], 'ID_DONVI' => $key]);
                 foreach ($dulieutonghop as $v) {
                     $tongnhienlieu[$key][$v['THANG']] = $v['TONG_THOI_GIAN'];
                 }
@@ -670,7 +680,7 @@ class QuanlymaynoController extends Controller
                 $tonghoptrongthang[$key]['TEN_DONVI'] = $value;
                 $tonghoptrongthang[$key]['COLOR'] = $color[$i];
                 $i++;
-                $dulieutonghop = $searchModel->baocaotonghoptrongthang(['NAM' => date('Y'), 'ID_DONVI' => $key ]);
+                $dulieutonghop = $searchModel->baocaotonghoptrongthang(['NAM' => $params['NAM'], 'ID_DONVI' => $key ]);
                 foreach ($dulieutonghop as $v) {
                     $tonghoptrongthang[$key][$v['NGAY'] - 1] = $v['TONG_THOI_GIAN'];
                 }
@@ -680,6 +690,8 @@ class QuanlymaynoController extends Controller
                     'tongnhienlieu' => $tongnhienlieu,
                     'tonghoptrongthang' => $tonghoptrongthang,
                     'labels' => $labels,
+                    'params' => $params,
+                    'years' => $years,
                 ]);
         } else {
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
