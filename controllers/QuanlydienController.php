@@ -906,6 +906,7 @@ class QuanlydienController extends Controller
         $searchModel = new QuanlydienSearch();
         $params = Yii::$app->request->queryParams;
         $params['THANG'] = $params['THANG'] ?? date('m');
+        $params['NAM'] = $params['NAM'] ?? date('y');
         $data1 = $searchModel->tramchuamap($params);
             return $this->render('tramchuamap', [
                     'data1' => $data1,

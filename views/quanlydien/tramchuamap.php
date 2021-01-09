@@ -23,6 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <thead>
                       <tr>
                         <th scope="col">Tên đơn vị</th>
+                        <th scope="col">Năm</th>
                         <th scope="col">Tháng</th>
                         <th scope="col">Mã điện lực</th>
                         <th scope="col">Mã CSHT</th>
@@ -34,6 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         foreach ($data1 as $key => $value): ?>
                       <tr>
                         <th scope="col"><?php echo $value['tendv'];?></th>
+                        <th scope="col"><?php echo $value['NAM'];?></th>
                         <th scope="col"><?php echo $value['THANG'];?></th>
                         <th scope="col"><?php echo $value['ma_dienluc'];?></th>
                         <th scope="col"><?php echo $value['ma_csht'];?></th>
