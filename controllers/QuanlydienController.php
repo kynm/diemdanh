@@ -786,6 +786,16 @@ class QuanlydienController extends Controller
     public function actionBaocaotonghoptheodv()
     {
         if (Yii::$app->user->can('bctonghop-qldien')) {
+            $years = [
+                date('Y') - 1 => date('Y') - 1,
+                date('Y') => date('Y'),
+            ];
+            $params = Yii::$app->request->queryParams;
+            if (!$params || !isset($params['NAM'])) {
+                $params = array_merge(Yii::$app->request->queryParams, [
+                    'NAM' => date('Y'),
+                ]);
+            }
             $iddv = ArrayHelper::map(Donvi::find()->where(['<>', 'MA_DONVIKT', 0])->all(), 'ID_DONVI', 'ID_DONVI');
             if (Yii::$app->user->can('dmdv-diennhienlieu')) {
                 $iddv = [Yii::$app->user->identity->nhanvien->ID_DONVI];
@@ -813,7 +823,7 @@ class QuanlydienController extends Controller
                 $tongdien[$key]['TEN_DONVI'] = $value;
                 $tongdien[$key]['COLOR'] = $color[$i];
                 $i++;
-                foreach ($searchModel->tonghoptheodonvi($key, date('Y')) as $v) {
+                foreach ($searchModel->tonghoptheodonvi($key, $params['NAM']) as $v) {
                     $tongdien[$key][$v['THANG']] = $v['KW_TIEUTHU'];
                 }
             }
@@ -837,13 +847,15 @@ class QuanlydienController extends Controller
                 $tongtram[$key]['TEN_DONVI'] = $value;
                 $tongtram[$key]['COLOR'] = $color[$i];
                 $i++;
-                foreach ($searchModel->tonghoptientheodonvi($key, date('Y')) as $v) {
+                foreach ($searchModel->tonghoptientheodonvi($key, $params['NAM']) as $v) {
                     $tongtram[$key][$v['THANG']] = $v['TONGTIEN'];
                 }
             }
             return $this->render('tonghoptheodonvi', [
                     'tongdien' => $tongdien,
                     'tongtram' => $tongtram,
+                    'params' => $params,
+                    'years' => $years,
                 ]);
         } else {
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
