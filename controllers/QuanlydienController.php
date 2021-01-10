@@ -1146,6 +1146,7 @@ class QuanlydienController extends Controller
     {
         if (Yii::$app->user->can('bctonghop-qldien')) {
             $years = [
+                date('Y') - 2 => date('Y') - 2,
                 date('Y') - 1 => date('Y') - 1,
                 date('Y') => date('Y'),
             ];
@@ -1192,6 +1193,20 @@ class QuanlydienController extends Controller
                     11 => 0,
                     12 => 0,
                 ];
+                $tongdien[$key]['DATAOLDOLD'] = [
+                    1 => 0,
+                    2 => 0,
+                    3 => 0,
+                    4 => 0,
+                    5 => 0,
+                    6 => 0,
+                    7 => 0,
+                    8 => 0,
+                    9 => 0,
+                    10 => 0,
+                    11 => 0,
+                    12 => 0,
+                ];
                 $tongdien[$key]['TEN_DONVI'] = $value;
                 $tongdien[$key]['borderWidth'] = 1;
                 foreach ($searchModel->tonghoptheodonvi($key, $params['NAM']) as $v) {
@@ -1199,6 +1214,9 @@ class QuanlydienController extends Controller
                 }
                 foreach ($searchModel->tonghoptheodonvi($key, $params['NAM'] - 1) as $v) {
                     $tongdien[$key]['DATAOLD'][$v['THANG']] = $v['KW_TIEUTHU'];
+                }
+                foreach ($searchModel->tonghoptheodonvi($key, $params['NAM'] - 2) as $v) {
+                    $tongdien[$key]['DATAOLDOLD'][$v['THANG']] = $v['KW_TIEUTHU'];
                 }
             }
             return $this->render('baocaocungky', [

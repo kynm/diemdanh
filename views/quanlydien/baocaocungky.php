@@ -59,16 +59,22 @@ $this->params['breadcrumbs'][] = $this->title;
                             // die(var_dump($value['DATANOW']));
                             $datasets= [];
                             $datasets[] = [
+                                'label' => ($params['NAM'] - 2),
+                                'data' => [$value['DATAOLDOLD'][1],$value['DATAOLDOLD'][1],$value['DATAOLDOLD'][2],$value['DATAOLDOLD'][4],$value['DATAOLDOLD'][5],$value['DATAOLDOLD'][6],$value['DATAOLDOLD'][9],$value['DATAOLDOLD'][8],$value['DATAOLDOLD'][9],$value['DATAOLDOLD'][10],$value['DATAOLDOLD'][11],$value['DATAOLDOLD'][12]],
+                                'backgroundColor' => 'gray',
+                                'borderColor' => 'gray',
+                            ];
+                            $datasets[] = [
                                 'label' => ($params['NAM'] - 1),
                                 'data' => [$value['DATAOLD'][1],$value['DATAOLD'][1],$value['DATAOLD'][2],$value['DATAOLD'][4],$value['DATAOLD'][5],$value['DATAOLD'][6],$value['DATAOLD'][9],$value['DATAOLD'][8],$value['DATAOLD'][9],$value['DATAOLD'][10],$value['DATAOLD'][11],$value['DATAOLD'][12]],
-                                'backgroundColor' => 'blue',
-                                'borderColor' => 'blue',
+                                'backgroundColor' => '#3c8dbc',
+                                'borderColor' => '#3c8dbc',
                             ];
                             $datasets[] = [
                                 'label' => $params['NAM'],
                                 'data' => [$value['DATANOW'][1],$value['DATANOW'][1],$value['DATANOW'][2],$value['DATANOW'][4],$value['DATANOW'][5],$value['DATANOW'][6],$value['DATANOW'][9],$value['DATANOW'][8],$value['DATANOW'][9],$value['DATANOW'][10],$value['DATANOW'][11],$value['DATANOW'][12]],
-                                'backgroundColor' => 'green',
-                                'borderColor' => 'green',
+                                'backgroundColor' => '#3cbc7e',
+                                'borderColor' => '#3cbc7e',
                             ];
                             ?>
                         <tr>
