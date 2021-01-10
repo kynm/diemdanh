@@ -154,6 +154,11 @@ use yii\helpers\Url;
                                 'visible' => Yii::$app->user->can('bctonghop-qldien'),
                             ],
                             [
+                                'label' => 'Báo cáo sử dụng điện cùng kỳ', 'icon' => 'caret-right',
+                                'url' => Url::to(['quanlydien/baocaocungky']),
+                                'visible' => Yii::$app->user->can('bctonghop-qldien'),
+                            ],
+                            [
                                 'label' => 'Điều hành điện', 'icon' => 'caret-right',
                                 'url' => Url::to(['quanlydien/']),
                                 'visible' => Yii::$app->user->can('list-qldien'),

@@ -1141,4 +1141,89 @@ class QuanlydienController extends Controller
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
         }
     }
+
+    public function actionBaocaocungky()
+    {
+        if (Yii::$app->user->can('bctonghop-qldien')) {
+            $years = [
+                date('Y') - 1 => date('Y') - 1,
+                date('Y') => date('Y'),
+            ];
+            $params = Yii::$app->request->queryParams;
+            if (!$params || !isset($params['NAM'])) {
+                $params = array_merge(Yii::$app->request->queryParams, [
+                    'NAM' => date('Y'),
+                ]);
+            }
+            $iddv = ArrayHelper::map(Donvi::find()->where(['<>', 'MA_DONVIKT', 0])->all(), 'ID_DONVI', 'ID_DONVI');
+            if (Yii::$app->user->can('dmdv-diennhienlieu')) {
+                $iddv = [Yii::$app->user->identity->nhanvien->ID_DONVI];
+            }
+            $dsdonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'MA_DONVIKT', 'TEN_DONVI');
+            $tongdien = [];
+            $tongdienold = [];
+            $searchModel = new QuanlydienSearch();
+            foreach ($dsdonvi as $key => $value) {
+                $tongdien[$key]['DATANOW'] = [
+                    1 => 0,
+                    2 => 0,
+                    3 => 0,
+                    4 => 0,
+                    5 => 0,
+                    6 => 0,
+                    7 => 0,
+                    8 => 0,
+                    9 => 0,
+                    10 => 0,
+                    11 => 0,
+                    12 => 0,
+                ];
+                $tongdien[$key]['DATAOLD'] = [
+                    1 => 0,
+                    2 => 0,
+                    3 => 0,
+                    4 => 0,
+                    5 => 0,
+                    6 => 0,
+                    7 => 0,
+                    8 => 0,
+                    9 => 0,
+                    10 => 0,
+                    11 => 0,
+                    12 => 0,
+                ];
+                $tongdien[$key]['TEN_DONVI'] = $value;
+                $tongdien[$key]['NOW_YEAR'] = $params['NAM'];
+                $tongdien[$key]['borderWidth'] = 1;
+                $tongdien[$key]['backgroundColor'] = [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                  ];
+                foreach ($searchModel->tonghoptheodonvi($key, $params['NAM']) as $v) {
+                    $tongdien[$key]['DATANOW'][$v['THANG']] = $v['KW_TIEUTHU'];
+                }
+                foreach ($searchModel->tonghoptheodonvi($key, $params['NAM'] - 1) as $v) {
+                    $tongdien[$key]['DATAOLD'][$v['THANG']] = $v['KW_TIEUTHU'];
+                }
+            }
+            return $this->render('baocaocungky', [
+                    'tongdien' => $tongdien,
+                    // 'tongdienold' => $tongdienold,
+                    'params' => $params,
+                    'years' => $years,
+                ]);
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
+        }
+    }
 }
