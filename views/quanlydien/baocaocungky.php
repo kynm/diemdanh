@@ -9,7 +9,7 @@ use yii\widgets\ActiveForm;
 /* @var $searchModel app\models\TramvtSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Tổng hợp tình hình sử dụng điện trong năm của đơn vị năm ' . $params['NAM'];
+$this->title = 'Tổng hợp tình hình sử dụng điện trong năm của đơn vị năm ' . $params['NAM'] . ' so với năm ' . ($params['NAM'] - 1) . ' theo KW sử dụng';
 
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -63,14 +63,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'data' => [$value['DATAOLD'][1],$value['DATAOLD'][1],$value['DATAOLD'][2],$value['DATAOLD'][4],$value['DATAOLD'][5],$value['DATAOLD'][6],$value['DATAOLD'][9],$value['DATAOLD'][8],$value['DATAOLD'][9],$value['DATAOLD'][10],$value['DATAOLD'][11],$value['DATAOLD'][12]],
                                 'backgroundColor' => $value['backgroundColor'],
                                 'borderColor' => $value['backgroundColor'],
-                                'fillColor' => 'red',
                             ];
                             $datasets[] = [
                                 'label' => $value['NOW_YEAR'],
                                 'data' => [$value['DATANOW'][1],$value['DATANOW'][1],$value['DATANOW'][2],$value['DATANOW'][4],$value['DATANOW'][5],$value['DATANOW'][6],$value['DATANOW'][9],$value['DATANOW'][8],$value['DATANOW'][9],$value['DATANOW'][10],$value['DATANOW'][11],$value['DATANOW'][12]],
                                 'backgroundColor' => $value['backgroundColor'],
                                 'borderColor' => $value['backgroundColor'],
-                                'fillColor' => 'rgba(220,220,220,0.5)',
                             ];
                             ?>
                         <tr>
