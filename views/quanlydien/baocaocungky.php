@@ -74,7 +74,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ];
                             ?>
                         <tr>
-                            <th colspan="12">
+                            <th colspan="12" style="text-align: center; font-size: 20px;font-weight: bold;">
                                 <?php echo $value["TEN_DONVI"]?>
                             </th>
                         </tr>
