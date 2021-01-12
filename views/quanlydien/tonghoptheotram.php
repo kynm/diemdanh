@@ -10,7 +10,7 @@ use kartik\select2\Select2;
 /* @var $searchModel app\models\TramvtSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Tổng hợp tình hình sử dụng điện trong năm của các trạm năm ' . date('Y') . ' ĐƠN VỊ TÍNH: '   .  ($params['LOAIBC'] == 'TONGTIEN' ? '(nghìn đồng)' : 'KW');
+$this->title = 'Tổng hợp tình hình sử dụng điện trong năm của các trạm năm ' . $params['NAM'] . ' ĐƠN VỊ TÍNH: '   .  ($params['LOAIBC'] == 'TONGTIEN' ? '(nghìn đồng)' : 'KW');
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
@@ -28,6 +28,19 @@ $this->params['breadcrumbs'][] = $this->title;
                     'id' => 'ID_DONVI',
                     'value' => $params['ID_DONVI'] ?? 2,
                     'data' => $dsdonvi,
+                    'theme' => Select2::THEME_BOOTSTRAP,
+                    'options' => ['placeholder' => 'Chọn đơn vị'],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ]
+                ]); ?>
+            </div>
+            <div class="col-md-2 col-xs-2">
+                <?= Select2::widget([
+                    'name' => 'NAM',
+                    'id' => 'NAM',
+                    'value' => $params['NAM'] ?? date('Y'),
+                    'data' => $years,
                     'theme' => Select2::THEME_BOOTSTRAP,
                     'options' => ['placeholder' => 'Chọn đơn vị'],
                     'pluginOptions' => [

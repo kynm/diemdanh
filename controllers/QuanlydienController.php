@@ -954,6 +954,10 @@ class QuanlydienController extends Controller
     public function actionBaocaotonghoptheotram()
     {
         if (Yii::$app->user->can('bctonghop-qldien')) {
+            $years = [
+                date('Y') - 1 => date('Y') - 1,
+                date('Y') => date('Y'),
+            ];
             $params = Yii::$app->request->queryParams;
             $iddv = ArrayHelper::map(Donvi::find()->where(['<>', 'MA_DONVIKT', 0])->all(), 'ID_DONVI', 'ID_DONVI');
             if (Yii::$app->user->can('dmdv-diennhienlieu')) {
@@ -963,6 +967,7 @@ class QuanlydienController extends Controller
             if (!$params) {
                 $params = array_merge(Yii::$app->request->queryParams, [
                     'LOAIBC' => 'KW_TIEUTHU',
+                    'NAM' => date('Y'),
                     'ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI
                 ]);
             } else {
@@ -992,7 +997,7 @@ class QuanlydienController extends Controller
                 $tongdien[$value['MA_CSHT']]['TEN_DONVI'] = $value['TEN_DONVI'];
                 $tongdien[$value['MA_CSHT']]['TEN_TRAM'] = $value['TEN_TRAM'];
                 $tongdien[$value['MA_CSHT']]['DIADIEM'] = $value['MA_CSHT'];
-                foreach ($searchModel->tonghoptheotram($value['MA_CSHT'], date('Y'), $loaibc) as $v) {
+                foreach ($searchModel->tonghoptheotram($value['MA_CSHT'], $params['NAM'], $loaibc) as $v) {
                     $tongdien[$value['MA_CSHT']][$v['THANG']] = $v['TONG_TT'];
                 }
             }
@@ -1136,6 +1141,7 @@ class QuanlydienController extends Controller
                     'dmloaibc' => ['TONGTIEN' => 'Báo cáo theo tổng tiền', 'KW_TIEUTHU' => 'Báo cáo theo điện tiêu thụ'],
                     'dsdonvi' => $dsdonvi,
                     'params' => $params,
+                    'years' => $years,
                 ]);
         } else {
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
@@ -1229,4 +1235,69 @@ class QuanlydienController extends Controller
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
         }
     }
+
+    public function actionGetdulieudien()
+    {
+        $datakw = '{"Nam":2019,"MaKhachHang":"PA24HN0008868","htmlTableDuLieuChiTietChiSo":null,"lstData":[[{"DienTieuThu":74040,"SoTien":0,"Thang":1,"Nam":0},{"DienTieuThu":77160,"SoTien":0,"Thang":2,"Nam":0},{"DienTieuThu":69480,"SoTien":0,"Thang":3,"Nam":0},{"DienTieuThu":80400,"SoTien":0,"Thang":4,"Nam":0},{"DienTieuThu":84960,"SoTien":0,"Thang":5,"Nam":0},{"DienTieuThu":93240,"SoTien":0,"Thang":6,"Nam":0},{"DienTieuThu":90360,"SoTien":0,"Thang":7,"Nam":0},{"DienTieuThu":89280,"SoTien":0,"Thang":8,"Nam":0},{"DienTieuThu":81000,"SoTien":0,"Thang":9,"Nam":0},{"DienTieuThu":81856,"SoTien":0,"Thang":10,"Nam":0},{"DienTieuThu":75944,"SoTien":0,"Thang":11,"Nam":0},{"DienTieuThu":72520,"SoTien":0,"Thang":12,"Nam":0}],[{"DienTieuThu":68341,"SoTien":0,"Thang":1,"Nam":0},{"DienTieuThu":67320,"SoTien":0,"Thang":2,"Nam":0},{"DienTieuThu":72720,"SoTien":0,"Thang":3,"Nam":0},{"DienTieuThu":74280,"SoTien":0,"Thang":4,"Nam":0},{"DienTieuThu":88680,"SoTien":0,"Thang":5,"Nam":0},{"DienTieuThu":93120,"SoTien":0,"Thang":6,"Nam":0},{"DienTieuThu":89040,"SoTien":0,"Thang":7,"Nam":0},{"DienTieuThu":83160,"SoTien":0,"Thang":8,"Nam":0},{"DienTieuThu":86400,"SoTien":0,"Thang":9,"Nam":0},{"DienTieuThu":78240,"SoTien":0,"Thang":10,"Nam":0},{"DienTieuThu":78720,"SoTien":0,"Thang":11,"Nam":0},{"DienTieuThu":70440,"SoTien":0,"Thang":12,"Nam":0}]]}';
+        $datatien = '{"Nam":2019,"MaKhachHang":"PA24HN0008868","htmlTableDuLieuChiTietChiSo":null,"lstData":[[{"DienTieuThu":0,"SoTien":136045536,"Thang":1,"Nam":0},{"DienTieuThu":0,"SoTien":140990784,"Thang":2,"Nam":0},{"DienTieuThu":0,"SoTien":129321328,"Thang":3,"Nam":0},{"DienTieuThu":0,"SoTien":159018816,"Thang":4,"Nam":0},{"DienTieuThu":0,"SoTien":168708016,"Thang":5,"Nam":0},{"DienTieuThu":0,"SoTien":186452240,"Thang":6,"Nam":0},{"DienTieuThu":0,"SoTien":180949424,"Thang":7,"Nam":0},{"DienTieuThu":0,"SoTien":178106816,"Thang":8,"Nam":0},{"DienTieuThu":0,"SoTien":1.614059E+08,"Thang":9,"Nam":0},{"DienTieuThu":0,"SoTien":1.628786E+08,"Thang":10,"Nam":0},{"DienTieuThu":0,"SoTien":149684352,"Thang":11,"Nam":0},{"DienTieuThu":0,"SoTien":1.438355E+08,"Thang":12,"Nam":0}],[{"DienTieuThu":0,"SoTien":125844192,"Thang":1,"Nam":0},{"DienTieuThu":0,"SoTien":123356640,"Thang":2,"Nam":0},{"DienTieuThu":0,"SoTien":133116192,"Thang":3,"Nam":0},{"DienTieuThu":0,"SoTien":136535520,"Thang":4,"Nam":0},{"DienTieuThu":0,"SoTien":164588688,"Thang":5,"Nam":0},{"DienTieuThu":0,"SoTien":171932112,"Thang":6,"Nam":0},{"DienTieuThu":0,"SoTien":164890976,"Thang":7,"Nam":0},{"DienTieuThu":0,"SoTien":154580976,"Thang":8,"Nam":0},{"DienTieuThu":0,"SoTien":158698048,"Thang":9,"Nam":0},{"DienTieuThu":0,"SoTien":144765728,"Thang":10,"Nam":0},{"DienTieuThu":0,"SoTien":144274144,"Thang":11,"Nam":0},{"DienTieuThu":0,"SoTien":1.296438E+08,"Thang":12,"Nam":0}]]}';
+        
+        $datakw = json_decode($datakw, true);
+        $datatien = json_decode($datatien, true);
+        $makh = $datakw['MaKhachHang'];
+        $lstDatakw = $datakw['lstData'];
+        $lstDatatien = $datatien['lstData'];
+        $nam = $datakw['Nam'];
+        $namtien = $datatien['Nam'];
+        echo '<pre>';
+        $data = [];
+        $i = 0;
+        foreach ($lstDatakw[0] as $key => $value) {
+            $data[$makh][$i][$value['Thang']]['MA_DIENLUC'] = $makh;
+            $data[$makh][$i][$value['Thang']]['NAM'] = $nam;
+            $data[$makh][$i][$value['Thang']]['THANG'] = $value['Thang'];
+            $data[$makh][$i][$value['Thang']]['KW_TIEUTHU'] = $value['DienTieuThu'];
+            $data[$makh][$i][$value['Thang']]['ID_NHANVIEN'] = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;;
+            $data[$makh][$i][$value['Thang']]['IS_CHECKED'] = NULL;
+            $data[$makh][$i][$value['Thang']]['THOIGIANCAPNHAT'] = date("Y-m-d H:i:s");
+            $data[$makh][$i][$value['Thang']]['NH_DIENLUC'] = 'VNPT HA NAM';
+            $data[$makh][$i][$value['Thang']]['TK_DIENLUC'] = '123456';
+        }
+        foreach ($lstDatatien[0] as $key => $value) {
+            $data[$makh][$i][$value['Thang']]['TIENDIEN'] = (int)$value['SoTien'];
+            $data[$makh][$i][$value['Thang']]['TONGTIEN'] = (int)$value['SoTien'];
+            $data[$makh][$i][$value['Thang']]['TIENTHUE'] = (int)$value['SoTien'] / 10;
+        }
+        foreach ($lstDatakw[1] as $key => $value) {
+            $data[$makh][$nam - 1][$value['Thang']]['MA_DIENLUC'] = $makh;
+            $data[$makh][$nam - 1][$value['Thang']]['NAM'] = $nam - 1;
+            $data[$makh][$nam - 1][$value['Thang']]['THANG'] = $value['Thang'];
+            $data[$makh][$nam - 1][$value['Thang']]['KW_TIEUTHU'] = $value['DienTieuThu'];
+            $data[$makh][$nam - 1][$value['Thang']]['ID_NHANVIEN'] = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;;
+            $data[$makh][$nam - 1][$value['Thang']]['IS_CHECKED'] = NULL;
+            $data[$makh][$nam - 1][$value['Thang']]['THOIGIANCAPNHAT'] = date("Y-m-d H:i:s");
+        }
+        foreach ($lstDatatien[1] as $key => $value) {
+            $data[$makh][$nam - 1][$value['Thang']]['TIENDIEN'] = (int)$value['SoTien'];
+            $data[$makh][$nam - 1][$value['Thang']]['TONGTIEN'] = (int)$value['SoTien'];
+            $data[$makh][$nam - 1][$value['Thang']]['TIENTHUE'] = (int)$value['SoTien'] / 10;
+        }
+        die(var_dump($data));
+    }
 }
+                        // $model1 = new Quanlydien();
+                        // $model1->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
+                        // $model1->IS_CHECKED = NULL;
+                        // $model1->MA_DIENLUC = $value['MA_DIENLUC'];
+                        // $model1->TEN_DIENLUC = $value['TEN_DIENLUC'];
+                        // $model1->TK_DIENLUC = $value['TK_DIENLUC'];
+                        // $model1->NH_DIENLUC = $value['NH_DIENLUC'];
+                        // $model1->MA_CSHT = $value['MA_CSHT'];
+                        // $model1->MA_DONVIKT = $params['UploadForm']['MA_DONVIKT'];
+                        // $model1->TIENDIEN = (int)$value['TIENDIEN'];
+                        // $model1->TIENTHUE = (int)$value['TIENTHUE'];
+                        // $model1->TONGTIEN = (int)$value['TONGTIEN'];
+                        // $model1->KW_TIEUTHU = (int)$value['KW_TIEUTHU'];
+                        // $model1->THOIGIANCAPNHAT = date("Y-m-d H:i:s");
+                        // $model1->NAM = $params['UploadForm']['NAM'];
+                        // $model1->THANG = $params['UploadForm']['THANG'];
+                        // $model1->save(false);
