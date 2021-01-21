@@ -1001,7 +1001,6 @@ class QuanlydienController extends Controller
                     $tongdien[$value['MA_CSHT']][$v['THANG']] = $v['TONG_TT'];
                 }
             }
-            
             if ($params['is_excel']) {
                 $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
                 $spreadsheet->getDefaultStyle()->getFont()->setName('Arial');
@@ -1126,14 +1125,14 @@ class QuanlydienController extends Controller
                     $key ++;
                     $x ++;
                 }
-            $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
-            $file_name = "Export_".date('Ymd_His');
+                $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+                $file_name = "Export_".date('Ymd_His');
 
-            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-            header('Content-Disposition: attachment;filename="'.$file_name.'.xlsx"');
-            header('Cache-Control: max-age=0');
-            $writer->save("php://output");
-        exit;
+                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                header('Content-Disposition: attachment;filename="'.$file_name.'.xlsx"');
+                header('Cache-Control: max-age=0');
+                $writer->save("php://output");
+                exit;
             }
 
             return $this->render('tonghoptheotram', [
@@ -1227,7 +1226,6 @@ class QuanlydienController extends Controller
             }
             return $this->render('baocaocungky', [
                     'tongdien' => $tongdien,
-                    // 'tongdienold' => $tongdienold,
                     'params' => $params,
                     'years' => $years,
                 ]);
