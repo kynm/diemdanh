@@ -77,9 +77,9 @@ class QuanlydienSearch extends Quanlydien
             $query->andFilterWhere(['quanlydien.MA_DONVIKT' => Donvi::findone(Yii::$app->user->identity->nhanvien->ID_DONVI)->MA_DONVIKT]);
         }
         $query->andFilterWhere(['quanlydien.MA_DONVIKT' => $this->MA_DONVIKT]);
-        $query->andFilterWhere(['like', 'NAM', $this->NAM])
+        $query->andFilterWhere(['NAM' => $this->NAM])
             ->andFilterWhere(['like', 'MA_DIENLUC', $this->MA_DIENLUC])
-            ->andFilterWhere(['like', 'THANG', $this->THANG]);
+            ->andFilterWhere(['THANG' => $this->THANG]);
 
         $query->orderBy([
             'NAM' => SORT_DESC,
