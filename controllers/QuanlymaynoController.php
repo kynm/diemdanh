@@ -530,6 +530,7 @@ class QuanlymaynoController extends Controller
                 $query = $query->andWhere('MONTH(THOIGIANBATDAU) = ' . $model->THANG);
                 foreach ($query->all() as $key => $value) {
                     $value->GIATIEN = $model->DONGIA;
+                    $value->IS_CHECKED = 1;
                     $value->save(false);
                 }
                 if ($oldGia) {
