@@ -414,34 +414,34 @@ class QuanlydienController extends Controller
             $params['is_dinhmuc'] = $params['is_dinhmuc'] ?? null;
             $thang = $params['THANG'];
             $nam = $params['NAM'];
-            $dsdai = ArrayHelper::map(Daivt::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'ID_DAI', 'ID_DAI');
-            // $dstram = ArrayHelper::map(Tramvt::find()->where(['in', 'ID_TRAM', $iddv])->all(), 'ID_TRAM', 'TEN_TRAM');
-            $dstram = Tramvt::find()->where(['in', 'ID_DAI', $dsdai])->all();
+            $searchModelTramvt = new TramvtSearch();
+            $dstram = $searchModelTramvt->searchDSTramvt($iddv);
             $tongdien = [];
             $searchModel = new QuanlydienSearch();
             foreach ($dstram as $key => $value) {
-                $tongdien[$value->MA_CSHT]['TEN_TRAM'] = $value->TEN_TRAM;
-                $tongdien[$value->MA_CSHT]['DIADIEM'] = $value->MA_CSHT;
-                $tongdien[$value->MA_CSHT]['THANG'] = 0;
-                $tongdien[$value->MA_CSHT]['KW_TIEUTHU'] = 0;
-                $tongdien[$value->MA_CSHT]['DINHMUC'] = 0;
-                $tongdien[$value->MA_CSHT]['TONGTIEN'] = 0;
-                $tongdien[$value->MA_CSHT]['KW_TIEUTHU_THANGTRUOC'] = 0;
-                foreach ($searchModel->tonghopdinhmuctheotram($value->MA_CSHT, $nam, $thang) as  $v) {
-                    $tongdien[$value->MA_CSHT]['KW_TIEUTHU'] = $v['KW_TIEUTHU'];
-                    $tongdien[$value->MA_CSHT]['DINHMUC'] = $v['DINHMUC'];
-                    $tongdien[$value->MA_CSHT]['TONGTIEN'] = $v['TONGTIEN'];
+                $tongdien[$value['MA_CSHT']]['TEN_TRAM'] = $value['TEN_TRAM'];
+                $tongdien[$value['MA_CSHT']]['TEN_DONVI'] = $value['TEN_DONVI'];
+                $tongdien[$value['MA_CSHT']]['DIADIEM'] = $value['MA_CSHT'];
+                $tongdien[$value['MA_CSHT']]['THANG'] = 0;
+                $tongdien[$value['MA_CSHT']]['KW_TIEUTHU'] = 0;
+                $tongdien[$value['MA_CSHT']]['DINHMUC'] = 0;
+                $tongdien[$value['MA_CSHT']]['TONGTIEN'] = 0;
+                $tongdien[$value['MA_CSHT']]['KW_TIEUTHU_THANGTRUOC'] = 0;
+                foreach ($searchModel->tonghopdinhmuctheotram($value['MA_CSHT'], $nam, $thang) as  $v) {
+                    $tongdien[$value['MA_CSHT']]['KW_TIEUTHU'] = $v['KW_TIEUTHU'];
+                    $tongdien[$value['MA_CSHT']]['DINHMUC'] = $v['DINHMUC'];
+                    $tongdien[$value['MA_CSHT']]['TONGTIEN'] = $v['TONGTIEN'];
                 }
 
-                foreach ($searchModel->tonghopdinhmuctheotram($value->MA_CSHT, $nam, ($thang - 1)) as  $v) {
-                    $tongdien[$value->MA_CSHT]['KW_TIEUTHU_THANGTRUOC'] = $v['KW_TIEUTHU'];
+                foreach ($searchModel->tonghopdinhmuctheotram($value['MA_CSHT'], $nam, ($thang - 1)) as  $v) {
+                    $tongdien[$value['MA_CSHT']]['KW_TIEUTHU_THANGTRUOC'] = $v['KW_TIEUTHU'];
                 }
-                if (!$tongdien[$value->MA_CSHT]['KW_TIEUTHU'] && !$tongdien[$value->MA_CSHT]['KW_TIEUTHU_THANGTRUOC']) {
-                    unset($tongdien[$value->MA_CSHT]);
+                if (!$tongdien[$value['MA_CSHT']]['KW_TIEUTHU'] && !$tongdien[$value['MA_CSHT']]['KW_TIEUTHU_THANGTRUOC']) {
+                    unset($tongdien[$value['MA_CSHT']]);
                 }
 
-                if (isset($tongdien[$value->MA_CSHT]) && $params['is_dinhmuc'] && ($tongdien[$value->MA_CSHT]['KW_TIEUTHU'] <= $tongdien[$value->MA_CSHT]['DINHMUC'])) {
-                    unset($tongdien[$value->MA_CSHT]);
+                if (isset($tongdien[$value['MA_CSHT']]) && $params['is_dinhmuc'] && ($tongdien[$value['MA_CSHT']]['KW_TIEUTHU'] <= $tongdien[$value['MA_CSHT']]['DINHMUC'])) {
+                    unset($tongdien[$value['MA_CSHT']]);
                 }
             }
             if ($params['is_excel']) {
@@ -452,6 +452,7 @@ class QuanlydienController extends Controller
                     [
                         'STT',
                         'Tên đơn vị',
+                        'Tên trạm',
                         'Địa chỉ',
                         'Điện tiêu thụ tháng ' . $params['THANG'] . '(TỔNG TIỀN)',
                         'Định mức tháng' . $params['THANG'],
@@ -466,12 +467,13 @@ class QuanlydienController extends Controller
                 foreach ($tongdien as $value) {
                     $spreadsheet->setActiveSheetIndex(0)
                         ->setCellValue("A$x", ($key + 1))
-                        ->setCellValue("B$x", $value['TEN_TRAM'])
-                        ->setCellValue("C$x", $value['DIADIEM'])
-                        ->setCellValue("D$x", formatnumber($value['TONGTIEN']))
-                        ->setCellValue("E$x", formatnumber($value['DINHMUC']))
-                        ->setCellValue("F$x", formatnumber($value['KW_TIEUTHU']))
-                        ->setCellValue("G$x", formatnumber($value['KW_TIEUTHU_THANGTRUOC']));
+                        ->setCellValue("B$x", $value['TEN_DONVI'])
+                        ->setCellValue("C$x", $value['TEN_TRAM'])
+                        ->setCellValue("D$x", $value['DIADIEM'])
+                        ->setCellValue("E$x", formatnumber($value['TONGTIEN']))
+                        ->setCellValue("F$x", formatnumber($value['DINHMUC']))
+                        ->setCellValue("G$x", formatnumber($value['KW_TIEUTHU']))
+                        ->setCellValue("H$x", formatnumber($value['KW_TIEUTHU_THANGTRUOC']));
                     $key ++;
                     $x ++;
                 }

@@ -89,7 +89,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     <thead>
                       <tr>
                         <th scope="col">STT</th>
-                        <th scope="col">Tên đơn vị</th>
+                        <th scope="col">Tên Đơn vị</th>
+                        <th scope="col">Tên trạm</th>
                         <th scope="col">Điện tiêu thụ tháng <?php echo $params['THANG'];?> (TỔNG TIỀN)</th>
                         <th scope="col">Định mức (KW)</th>
                         <th scope="col">Điện tiêu thụ tháng <?php echo $params['THANG'];?> (KW)</th>
@@ -103,6 +104,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         foreach ($tongdien as $key => $value): $i ++;?>
                             <tr>
                                 <td scope="col"><?php echo $i?></td>
+                                <td scope="col"><?php echo $value['TEN_DONVI']?>
                                 <td scope="col"><?php echo $value['TEN_TRAM']?>
                                 <br><span style="font-size: 10px;"><?php echo $value['DIADIEM']?></span>
                                 </td>
