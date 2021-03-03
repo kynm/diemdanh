@@ -184,11 +184,6 @@ use yii\helpers\Url;
                                 'visible' => Yii::$app->user->can('updatett-qldien'),
                             ],
                             [
-                                'label' => 'D/S trạm chưa map', 'icon' => 'caret-right',
-                                'url' => Url::to(['quanlydien/exporttramchuamap']),
-                                'visible' => Yii::$app->user->can('updatett-qldien'),
-                            ],
-                            [
                                 'label' => 'Báo cáo theo định mức', 'icon' => 'caret-right',
                                 'url' => Url::to(['quanlydien/baocaodientheomuc']),
                                 'visible' => Yii::$app->user->can('updatett-qldien'),

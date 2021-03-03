@@ -27,6 +27,7 @@ $form = ActiveForm::begin(['method' => 'get']); ?>
                     'class'=>'btn btn-primary btn-flat'
                 ]); 
             ?>
+            <?= Html::a('Kiểm tra dữ liệu lỗi', ['/quanlydien/exporttramchuamap'], ['class' => 'btn btn-success']) ?>
         </div>
         <div class="box-body">
             <?php Pjax::begin(); ?>    <?= GridView::widget([
