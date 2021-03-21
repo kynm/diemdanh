@@ -17,7 +17,6 @@ if (Yii::$app->controller->action->id === 'login') {
         ['content' => $content]
     );
 } else {
-
     if (class_exists('backend\assets\AppAsset')) {
         backend\assets\AppAsset::register($this);
     } else {
@@ -33,8 +32,6 @@ if (Yii::$app->controller->action->id === 'login') {
     <!DOCTYPE html>
     <html lang="<?= Yii::$app->language ?>">
     <head>
-        <meta name="google-site-verification" content="jyVCK93M5I1ZxnLA5jJXdtKBlPHkQAKqjCIuuT_cx50" />
-        
         <link rel="icon" href="<?= Url::to(Yii::$app->homeUrl) ?>/favicon.ico" type="image/x-icon" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic">
         <meta charset="<?= Yii::$app->charset ?>"/>
@@ -45,28 +42,18 @@ if (Yii::$app->controller->action->id === 'login') {
         <base href="/"> 
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     </head>
-    <body class="hold-transition skin-blue sidebar-mini fixed">
+    <body>
     <?php $this->beginBody() ?>
-    <div class="wrapper">
-
+    <div class="skin-blue layout-top-nav">
         <?= $this->render(
-            'header.php',
+            'header_ioc.php',
             ['directoryAsset' => $directoryAsset]
         ) ?>
-
-        <?= $this->render(
-            'left.php',
-            ['directoryAsset' => $directoryAsset]
-        )
-        ?>
-
         <?= $this->render(
             'content.php',
             ['content' => $content, 'directoryAsset' => $directoryAsset]
         ) ?>
-
     </div>
-
     <?php $this->endBody() ?>
     </body>
     </html>

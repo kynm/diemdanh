@@ -254,11 +254,22 @@ class SiteController extends Controller
             return $this->render('baoduongcanhan', [
             ]);
         }
-
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         }
+    }
 
+    public function actionIoc()
+    {
+        $this->layout = 'iocLayout';
+        if (!Yii::$app->user->isGuest) {
+            return $this->render('chucnangioc', [
+            ]);
+        }
+        $model = new LoginForm();
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            return $this->goBack();
+        }
     }
 }
