@@ -7,11 +7,9 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\web\ForbiddenHttpException;
-use app\models\Tramvt;
-use app\models\Dotbaoduong;
+use app\models\ThietbiIOC;
+use app\models\IOCSearch;
 use app\models\Images;
-use app\models\Noidungcongviec;
-use app\models\DotbaoduongCanhanSearch;
 use app\models\AuthorizationCodes;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
@@ -55,10 +53,45 @@ class IocController extends Controller
 
     public $imageFile;
 
-    public function actionPhanbothuebao($trangthai = '', $daivt='', $tramvt='')
+    public function actionPhanbothietbi()
     {
-        $this->layout = false;
-        return $this->render('phanbothuebao', [
+        return $this->render('dsthietbi', [
         ]);
+    }
+
+    public function actionLaydsthietbi()
+    {
+        $params = Yii::$app->request->queryParams;
+        $searchModel = new IOCSearch();
+        return json_encode($searchModel->danhsachthietbi(), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+
+    }
+
+    public function actionPhanbospliter()
+    {
+        return $this->render('dsspliter', [
+        ]);
+    }
+
+    public function actionLaydsspliter()
+    {
+        $params = Yii::$app->request->queryParams;
+        $searchModel = new IOCSearch();
+        return json_encode($searchModel->danhsachspliter(), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+
+    }
+
+    public function actionPhanbothuebao()
+    {
+        return $this->render('dsthuebao', [
+        ]);
+    }
+
+    public function actionLaydsthuebao()
+    {
+        $params = Yii::$app->request->queryParams;
+        $searchModel = new IOCSearch();
+        return json_encode($searchModel->danhsachthuebao(), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+
     }
 }
