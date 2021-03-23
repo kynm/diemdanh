@@ -49,15 +49,28 @@ class IOCSearch extends ThietbiIOC
 
     public function danhsachspliter()
     {
-        $sqltonghop = "SELECT spl.TEN_KC,spl.KINHDO,spl.VIDO FROM ioc_spliter spl";
+        $sqltonghop = "SELECT spl.TEN_KC,spl.KINHDO,spl.VIDO FROM ioc_spliter spl limit 100";
 
         return Yii::$app->db->createCommand($sqltonghop)->queryAll();
     }
 
     public function danhsachthuebao()
     {
-        $sqltonghop = "SELECT tb.ma_tb,tb.KINHDO,tb.VIDO,(CASE WHEN tb.NHAMANG = 1 THEN 'black' WHEN tb.NHAMANG = 2 THEN 'blue' WHEN tb.NHAMANG = 3 THEN 'red' WHEN tb.NHAMANG = 4 THEN 'yellow' END) color FROM ioc_thuebao tb WHERE tb.KINHDO is not null and tb.KINHDO <> 0 and tb.phuong_id = 6176
-";
+        $sqltonghop = "SELECT tb.ma_tb,tb.KINHDO,tb.VIDO,(CASE WHEN tb.NHAMANG = 1 THEN 'black' WHEN tb.NHAMANG = 2 THEN 'blue' WHEN tb.NHAMANG = 3 THEN 'red' WHEN tb.NHAMANG = 4 THEN 'yellow' END) color FROM ioc_thuebao tb WHERE tb.KINHDO is not null and tb.KINHDO <> 0 and tb.phuong_id = 6176";
+
+        return Yii::$app->db->createCommand($sqltonghop)->queryAll();
+    }
+
+    public function thiphanthuebao()
+    {
+        $sqltonghop = "SELECT (CASE WHEN tb.NHAMANG = 1 THEN 'Vietel' WHEN tb.NHAMANG = 2 THEN 'VNPT' WHEN tb.NHAMANG = 3 THEN 'FPT' WHEN tb.NHAMANG = 4 THEN 'Chưa sử dụng' END) NHAMANG, count(*) SO_LUONG FROM `ioc_thuebao` tb GROUP by NHAMANG";
+
+        return Yii::$app->db->createCommand($sqltonghop)->queryAll();
+    }
+
+    public function tongsothuebao()
+    {
+        $sqltonghop = "select count(*) SO_LUONG FROM `ioc_thuebao` tb";
 
         return Yii::$app->db->createCommand($sqltonghop)->queryAll();
     }

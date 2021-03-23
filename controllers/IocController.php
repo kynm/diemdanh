@@ -94,4 +94,15 @@ class IocController extends Controller
         return json_encode($searchModel->danhsachthuebao(), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 
     }
+
+    public function actionBaocaothiphanthuebao()
+    {
+        $searchModel = new IOCSearch();
+        $thiphan = $searchModel->thiphanthuebao();
+        // $tongthuebao = $searchModel->tongsothuebao();
+        return $this->render('thiphanthuebao', [
+            'thiphan' => $thiphan,
+            'tongthuebao' => 18618,
+        ]);
+    }
 }
