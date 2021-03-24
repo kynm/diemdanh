@@ -23,9 +23,7 @@ if (Yii::$app->controller->action->id === 'login') {
         // app\assets\AppAsset::register($this);
         app\assets\DashboardAsset::register($this);
     }
-
     dmstr\web\AdminLteAsset::register($this);
-
     $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed2010/adminlte/dist');
     ?>
     <?php $this->beginPage() ?>
@@ -50,7 +48,7 @@ if (Yii::$app->controller->action->id === 'login') {
             ['directoryAsset' => $directoryAsset]
         ) ?>
         <?= $this->render(
-            'content.php',
+            'ioccontent.php',
             ['content' => $content, 'directoryAsset' => $directoryAsset]
         ) ?>
     </div>

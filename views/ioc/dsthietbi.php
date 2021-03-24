@@ -1,3 +1,4 @@
+<h3>Tọa độ thiết bị trên địa bàn</h3>
 <div id="myMap" style="position:relative;width:100%px;height:1000px;"></div>
 <script type='text/javascript'>
     function GetMap() {
