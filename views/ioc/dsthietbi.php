@@ -17,7 +17,7 @@
                     for (var i = data.length - 1; i >= 0; i--) {
                         //Add the pushpin to the map
                         var pin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(data[i].VIDO, data[i].KINHDO),
-                         {title: data[i].system, color: 'red',});
+                         {title: data[i].system, color: 'blue',});
                         map.entities.push(pin);
                     }
                 }

@@ -30,7 +30,7 @@ if (Yii::$app->controller->action->id === 'login') {
     <!DOCTYPE html>
     <html lang="<?= Yii::$app->language ?>">
     <head>
-        <link rel="icon" href="<?= Url::to(Yii::$app->homeUrl) ?>/favicon.ico" type="image/x-icon" />
+        <link rel="icon" href="<?= Url::to(Yii::$app->homeUrl) ?>/dist/img/favicon.ico" type="image/x-icon" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic">
         <meta charset="<?= Yii::$app->charset ?>"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -39,6 +39,7 @@ if (Yii::$app->controller->action->id === 'login') {
         <?php $this->head() ?>
         <base href="/"> 
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+ <script type='text/javascript' src='http://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=AvfTOCp6deFCiiaKwzdfi_Z10QhqZgpDDbKDXEb6_Wengs8XpdH1FqwoDWWQa1So' async defer></script>
     </head>
     <body>
     <?php $this->beginBody() ?>

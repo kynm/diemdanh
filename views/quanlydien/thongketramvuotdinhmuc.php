@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="tramvt-index">
-<div class="box box-primary">
+    <div class="box box-primary">
         <div class="row">
             <?php $form = ActiveForm::begin([
                 'method' => 'get',

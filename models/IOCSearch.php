@@ -40,16 +40,24 @@ class IOCSearch extends ThietbiIOC
      * @return ActiveDataProvider
      */
 
-    public function danhsachthietbi()
+    public function danhsachthietbi($params)
     {
-        $sqltonghop = "SELECT dv.tram,tb.system, tb.KINHDO,tb.VIDO from ioc_donvitram dv, ioc_thietbi tb where dv.ID_TRAM = tb.ID_TRAM";
+        if (isset($params['ID_THIETBI']) && $params['ID_THIETBI']) {
+            $sqltonghop = "SELECT tb.system, tb.KINHDO,tb.VIDO from ioc_thietbi tb where  ID_THIETBI= " . $params['ID_THIETBI'];
+        } else {
+            $sqltonghop = "SELECT tb.system, tb.KINHDO,tb.VIDO from ioc_thietbi tb";
+        }
 
         return Yii::$app->db->createCommand($sqltonghop)->queryAll();
     }
 
-    public function danhsachspliter()
+    public function danhsachspliter($params)
     {
-        $sqltonghop = "SELECT spl.TEN_KC,spl.KINHDO,spl.VIDO FROM ioc_spliter spl limit 100";
+        if (isset($params['ID_THIETBI']) && $params['ID_THIETBI']) {
+            $sqltonghop = "SELECT spl.TEN_KC,spl.KINHDO,spl.VIDO FROM ioc_spliter spl where spl.ID_THIETBI = " . $params['ID_THIETBI'];
+        } else {
+            $sqltonghop = "SELECT spl.TEN_KC,spl.KINHDO,spl.VIDO FROM ioc_spliter spl LIMIT 500";
+        }
 
         return Yii::$app->db->createCommand($sqltonghop)->queryAll();
     }

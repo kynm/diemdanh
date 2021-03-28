@@ -14,6 +14,7 @@ use app\models\AuthorizationCodes;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 use app\models\MultipleUploadForm;
+use yii\helpers\ArrayHelper;
 
 class IocController extends Controller
 {
@@ -63,13 +64,17 @@ class IocController extends Controller
     {
         $params = Yii::$app->request->queryParams;
         $searchModel = new IOCSearch();
-        return json_encode($searchModel->danhsachthietbi(), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        return json_encode($searchModel->danhsachthietbi($params), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 
     }
 
     public function actionPhanbospliter()
     {
+        $dsthietbi =  ArrayHelper::map(ThietbiIOC::find()->asArray()->all(), 'ID_THIETBI', 'SYSTEM');
+        // echo "<pre>";
+        // die(var_dump($dsthietbi));
         return $this->render('dsspliter', [
+            'dsthietbi' => $dsthietbi,
         ]);
     }
 
@@ -77,7 +82,7 @@ class IocController extends Controller
     {
         $params = Yii::$app->request->queryParams;
         $searchModel = new IOCSearch();
-        return json_encode($searchModel->danhsachspliter(), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        return json_encode($searchModel->danhsachspliter($params), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 
     }
 
