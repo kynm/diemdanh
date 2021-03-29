@@ -11,8 +11,8 @@ use yii\helpers\Url;
                 <li><a href="<?= Url::to(['ioc/phanbothietbi'])?>">Bản đồ phân bố thiết bị</a></li>
                 <li><a href="<?= Url::to(['ioc/phanbospliter'])?>">Phân bố spliter</a></li>
                 <li><a href="<?= Url::to(['ioc/phanbothuebao'])?>">Phân bố thuê bao</a></li>
+                <li><a href="<?= Url::to(['ioc/baocaothuebao'])?>">BC thuê bao theo thiết bị</a></li>
                 <li><a href="<?= Url::to(['ioc/baocaothiphanthuebao'])?>">Thị phần thuê bao</a></li>
-                <li><a href="<?= Url::to(['ioc/baocaothiphanthuebao'])?>">Điều hành cập nhật tọa độ thuê bao</a></li>
               </ul>
           </div>
           <div class="navbar-custom-menu">

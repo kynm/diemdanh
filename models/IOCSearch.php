@@ -54,17 +54,31 @@ class IOCSearch extends ThietbiIOC
     public function danhsachspliter($params)
     {
         if (isset($params['ID_THIETBI']) && $params['ID_THIETBI']) {
-            $sqltonghop = "SELECT spl.TEN_KC,spl.KINHDO,spl.VIDO FROM ioc_spliter spl where spl.ID_THIETBI = " . $params['ID_THIETBI'];
+            $sqltonghop = "SELECT spl.KETCUOI_ID,spl.TEN_KC,spl.KINHDO,spl.VIDO FROM ioc_spliter spl where spl.ID_THIETBI = " . $params['ID_THIETBI'];
         } else {
-            $sqltonghop = "SELECT spl.TEN_KC,spl.KINHDO,spl.VIDO FROM ioc_spliter spl LIMIT 500";
+            $sqltonghop = "SELECT spl.KETCUOI_ID,spl.TEN_KC,spl.KINHDO,spl.VIDO FROM ioc_spliter spl LIMIT 500";
         }
 
         return Yii::$app->db->createCommand($sqltonghop)->queryAll();
     }
 
-    public function danhsachthuebao()
+    public function laythongtinspliter($params)
     {
-        $sqltonghop = "SELECT tb.ma_tb,tb.KINHDO,tb.VIDO,(CASE WHEN tb.NHAMANG = 1 THEN 'black' WHEN tb.NHAMANG = 2 THEN 'blue' WHEN tb.NHAMANG = 3 THEN 'red' WHEN tb.NHAMANG = 4 THEN 'yellow' END) color FROM ioc_thuebao tb WHERE tb.KINHDO is not null and tb.KINHDO <> 0 and tb.phuong_id = 6176";
+        $sqltonghop = "SELECT spl.KETCUOI_ID,spl.TEN_KC,spl.KINHDO,spl.VIDO FROM ioc_spliter spl WHERE KETCUOI_ID=" . $params['KETCUOI_ID'] . ' LIMIT 1';
+
+        return Yii::$app->db->createCommand($sqltonghop)->queryAll();
+    }
+
+    public function danhsachthuebao($params)
+    {
+        $sqltonghop = "SELECT tb.ma_tb,tb.KINHDO,tb.VIDO,(CASE WHEN tb.NHAMANG = 1 THEN 'black' WHEN tb.NHAMANG = 2 THEN 'blue' WHEN tb.NHAMANG = 3 THEN 'red' WHEN tb.NHAMANG = 4 THEN 'yellow' END) color FROM ioc_thuebao tb WHERE tb.KINHDO is not null and tb.KINHDO <> 0 AND tb.KETCUOI_ID = " . $params['KETCUOI_ID'];
+
+        return Yii::$app->db->createCommand($sqltonghop)->queryAll();
+    }
+
+    public function baocaodanhsachthuebao($params)
+    {
+        $sqltonghop = "SELECT a.KINHDO KINHDO_SPL,a.VIDO VIDO_SPL,tb.ma_tb,tb.KINHDO KINHDO_TB,tb.VIDO VIDO_TB FROM ioc_spliter a, ioc_thuebao tb where a.ketcuoi_id = tb.KETCUOI_ID and tb.KINHDO is not null and tb.KINHDO <> 0 AND tb.KETCUOI_ID = " . $params['KETCUOI_ID'];
 
         return Yii::$app->db->createCommand($sqltonghop)->queryAll();
     }

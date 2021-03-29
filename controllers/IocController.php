@@ -71,8 +71,6 @@ class IocController extends Controller
     public function actionPhanbospliter()
     {
         $dsthietbi =  ArrayHelper::map(ThietbiIOC::find()->asArray()->all(), 'ID_THIETBI', 'SYSTEM');
-        // echo "<pre>";
-        // die(var_dump($dsthietbi));
         return $this->render('dsspliter', [
             'dsthietbi' => $dsthietbi,
         ]);
@@ -86,9 +84,35 @@ class IocController extends Controller
 
     }
 
+    public function actionLaythongtinspliter()
+    {
+        $params = Yii::$app->request->queryParams;
+        $searchModel = new IOCSearch();
+        return json_encode($searchModel->laythongtinspliter($params), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+
+    }
+
     public function actionPhanbothuebao()
     {
+        $dsthietbi =  ArrayHelper::map(ThietbiIOC::find()->asArray()->all(), 'ID_THIETBI', 'SYSTEM');
         return $this->render('dsthuebao', [
+            'dsthietbi' => $dsthietbi,
+        ]);
+    }
+
+    public function actionBaocaothuebao()
+    {
+        $dsthietbi =  ArrayHelper::map(ThietbiIOC::find()->asArray()->all(), 'ID_THIETBI', 'SYSTEM');
+        $searchModel = new IOCSearch();
+        $params['KETCUOI_ID'] = 1587378;
+        $dsthuebao = $searchModel->baocaodanhsachthuebao($params);
+        echo "<pre>";
+        foreach ($dsthuebao as $key => $value) {
+            $dsthuebao[$key]['KHOANG_CACH'] = haversineGreatCircleDistance($value['VIDO_SPL'],$value['KINHDO_SPL'],$value['VIDO_TB'],$value['KINHDO_TB']);
+        }
+        die(var_dump($dsthuebao));
+        return $this->render('baocaothuebao', [
+            'dsthietbi' => $dsthietbi,
         ]);
     }
 
@@ -96,7 +120,13 @@ class IocController extends Controller
     {
         $params = Yii::$app->request->queryParams;
         $searchModel = new IOCSearch();
-        return json_encode($searchModel->danhsachthuebao(), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        $spt = $searchModel->laythongtinspliter($params);
+        $dsthuebao = $searchModel->danhsachthuebao($params);
+        foreach ($dsthuebao as $key => $value) {
+            $dsthuebao[$key]['KHOANG_CACH'] = haversineGreatCircleDistance($spt[0]['VIDO'],$spt[0]['KINHDO'],$value['VIDO'],$value['KINHDO']);
+        }
+
+        return json_encode($dsthuebao, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 
     }
 
