@@ -128,9 +128,8 @@ class IocController extends Controller
 
     public function actionUpdatequangduongthuebao()
     {
-        $dsthietbi =  ArrayHelper::map(ThietbiIOC::find()->asArray()->all(), 'ID_THIETBI', 'SYSTEM');
+        $params = Yii::$app->request->queryParams;
         $searchModel = new IOCSearch();
-        $params['KETCUOI_ID'] = null;
         $dsthuebao = $searchModel->baocaodanhsachthuebao($params);
         foreach ($dsthuebao as $key => $value) {
             $dsthuebao[$key]['KHOANG_CACH'] = haversineGreatCircleDistance($value['VIDO_SPL'],$value['KINHDO_SPL'],$value['VIDO_TB'],$value['KINHDO_TB']);
@@ -139,9 +138,7 @@ class IocController extends Controller
         }
         echo "<pre>";
         die(var_dump($dsthuebao));
-        return $this->render('baocaothuebao', [
-            'dsthietbi' => $dsthietbi,
-        ]);
+        return json_encode($dsthuebao, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
     }
 
     public function actionLaydsthuebao()

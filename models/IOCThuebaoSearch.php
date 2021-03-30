@@ -56,11 +56,17 @@ class IOCThuebaoSearch extends IOCThuebao
             // $query->where('0=1');
             return $dataProvider;
         }
-
+        $query->joinWith('spliter');
         // grid filtering conditions
         if (isset($params['KETCUOI_ID'])) {
             $query->andFilterWhere([
-                'KETCUOI_ID' => $params['KETCUOI_ID'],
+                'ioc_thuebao.KETCUOI_ID' => $params['KETCUOI_ID'],
+            ]);
+        }
+
+        if (isset($params['ID_THIETBI'])) {
+            $query->andFilterWhere([
+                'ioc_spliter.ID_THIETBI' => $params['ID_THIETBI'],
             ]);
         }
 

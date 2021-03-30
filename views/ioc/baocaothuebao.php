@@ -59,6 +59,16 @@ $this->params['breadcrumbs'][] = $this->title;
         ?>
     </div>
 <?php ActiveForm::end(); ?>
+<div class="col-md-2 col-xs-2">
+        <?= Html::Button(
+            '<i class="fa fa-search"></i> Cập nhật khoảng cách', 
+            [
+                'class'=>'btn btn-primary btn-flat',
+                'id' => 'capnhatkhoangcach',
+                
+            ])
+        ?>
+    </div>
 </div>
 <h3>Danh sách thê bao theo thiết bị <span id="thuebao"></span></h3>
  <div class="box box-primary">
@@ -100,6 +110,26 @@ $script = <<< JS
                     });
                 }
             });
+        });
+
+        $(document).on('click', '#capnhatkhoangcach', function() {
+            var KETCUOI_ID = $("#KETCUOI_ID").val();
+            if (KETCUOI_ID) {
+                var url = '/ioc/updatequangduongthuebao?KETCUOI_ID=' + KETCUOI_ID;
+                $.ajax({
+                    url: url,
+                    method: 'get',
+                    data: {
+                    },
+                    success:function(data) {
+                        alert('Hoàn thành cập nhật');
+                        location.reload();
+                    }
+                });
+                } else {
+                    alert('Cần chọn splter trước khi cập nhật!');
+                }
+            
         });
 JS;
 $this->registerJs($script);
