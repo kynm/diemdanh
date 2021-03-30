@@ -9,6 +9,7 @@ use yii\web\Response;
 use yii\web\ForbiddenHttpException;
 use app\models\ThietbiIOC;
 use app\models\IOCSearch;
+use app\models\IOCThuebaoSearch;
 use app\models\Images;
 use app\models\AuthorizationCodes;
 use yii\filters\VerbFilter;
@@ -102,14 +103,41 @@ class IocController extends Controller
 
     public function actionBaocaothuebao()
     {
+        $params = Yii::$app->request->queryParams;
+        $searchModel = new IOCSearch();
+        $dsspliter = [];
+        foreach ($searchModel->danhsachspliter($params) as $key => $value) {
+           $dsspliter[$value['KETCUOI_ID']] = $value['TEN_KC'];
+        }
+        // ;
+        // echo "<pre>";
+        // die(var_dump($dsspliter));
+        $dsthietbi =  ArrayHelper::map(ThietbiIOC::find()->asArray()->all(), 'ID_THIETBI', 'SYSTEM');
+        $searchModel = new IOCThuebaoSearch();
+        $dataProvider = $searchModel->search($params);
+        // echo "<pre>";
+        // die(var_dump($dsthuebao));
+        return $this->render('baocaothuebao', [
+            'dsthietbi' => $dsthietbi,
+            'dsspliter' => $dsspliter,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'params' => $params,
+        ]);
+    }
+
+    public function actionUpdatequangduongthuebao()
+    {
         $dsthietbi =  ArrayHelper::map(ThietbiIOC::find()->asArray()->all(), 'ID_THIETBI', 'SYSTEM');
         $searchModel = new IOCSearch();
-        $params['KETCUOI_ID'] = 1587378;
+        $params['KETCUOI_ID'] = null;
         $dsthuebao = $searchModel->baocaodanhsachthuebao($params);
-        echo "<pre>";
         foreach ($dsthuebao as $key => $value) {
             $dsthuebao[$key]['KHOANG_CACH'] = haversineGreatCircleDistance($value['VIDO_SPL'],$value['KINHDO_SPL'],$value['VIDO_TB'],$value['KINHDO_TB']);
+            $sqltonghop = "update ioc_thuebao set KHOANG_CACH = " . $dsthuebao[$key]['KHOANG_CACH'] . " WHERE ma_tb = '" . $dsthuebao[$key]['ma_tb'] . "'";
+            Yii::$app->db->createCommand($sqltonghop)->execute();
         }
+        echo "<pre>";
         die(var_dump($dsthuebao));
         return $this->render('baocaothuebao', [
             'dsthietbi' => $dsthietbi,

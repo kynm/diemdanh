@@ -17,6 +17,7 @@
 
         $angle = 2 * asin(sqrt(pow(sin($latDelta / 2), 2) +
         cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)));
-        return number_format($angle * $earthRadius);
+        return $angle * $earthRadius;
+        // return number_format($angle * $earthRadius);
     }
 ?>

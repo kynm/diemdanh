@@ -71,14 +71,20 @@ class IOCSearch extends ThietbiIOC
 
     public function danhsachthuebao($params)
     {
-        $sqltonghop = "SELECT tb.ma_tb,tb.KINHDO,tb.VIDO,(CASE WHEN tb.NHAMANG = 1 THEN 'black' WHEN tb.NHAMANG = 2 THEN 'blue' WHEN tb.NHAMANG = 3 THEN 'red' WHEN tb.NHAMANG = 4 THEN 'yellow' END) color FROM ioc_thuebao tb WHERE tb.KINHDO is not null and tb.KINHDO <> 0 AND tb.KETCUOI_ID = " . $params['KETCUOI_ID'];
+        $sqltonghop = "SELECT tb.ma_tb,tb.KINHDO,tb.VIDO,(CASE WHEN tb.NHAMANG = 1 THEN 'black' WHEN tb.NHAMANG = 2 THEN 'blue' WHEN tb.NHAMANG = 3 THEN 'red' WHEN tb.NHAMANG = 4 THEN 'yellow' END) color FROM ioc_thuebao tb WHERE tb.KINHDO is not null and tb.KINHDO <> 0 ";
+        if ($params['KETCUOI_ID']) {
+            $sqltonghop .= " AND tb.KETCUOI_ID = " . $params['KETCUOI_ID'];
+        }
 
         return Yii::$app->db->createCommand($sqltonghop)->queryAll();
     }
 
     public function baocaodanhsachthuebao($params)
     {
-        $sqltonghop = "SELECT a.KINHDO KINHDO_SPL,a.VIDO VIDO_SPL,tb.ma_tb,tb.KINHDO KINHDO_TB,tb.VIDO VIDO_TB FROM ioc_spliter a, ioc_thuebao tb where a.ketcuoi_id = tb.KETCUOI_ID and tb.KINHDO is not null and tb.KINHDO <> 0 AND tb.KETCUOI_ID = " . $params['KETCUOI_ID'];
+        $sqltonghop = "SELECT a.KINHDO KINHDO_SPL,a.VIDO VIDO_SPL,tb.ma_tb,tb.KINHDO KINHDO_TB,tb.VIDO VIDO_TB, ROUND(tb.KHOANG_CACH, 2) KHOANG_CACH FROM ioc_spliter a, ioc_thuebao tb where a.ketcuoi_id = tb.KETCUOI_ID and tb.KINHDO is not null and tb.KINHDO <> 0 ";
+        if ($params['KETCUOI_ID']) {
+            $sqltonghop .= "AND tb.KETCUOI_ID = " . $params['KETCUOI_ID'];
+        }
 
         return Yii::$app->db->createCommand($sqltonghop)->queryAll();
     }
