@@ -22,7 +22,9 @@ use app\models\Thietbitram;
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
               <li><a href="<?= Url::to(['site/baoduong'])?>">Bảo dưỡng</a></li>
+              <?php if (Yii::$app->user->can('dieuhanhioc')) {?>
               <li><a href="<?= Url::to(['ioc/phanbothietbi'])?>">Điều hành</a></li>
+              <?php }?>
               <li class="task-menu">
                 <a href="<?= Url::to(['site/logout'])?>" data-method="post">
                   <i class="fa fa-sign-out"></i> Đăng xuất
