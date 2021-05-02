@@ -84,7 +84,7 @@ class NhatKySuDungMayNoSearch extends NhatKySuDungMayNo
     public function baocaomaynotheothang($params)
     {
         $sql = "
-            SELECT b.TEN_TRAM,e.TEN_THIETBI, a.DINHMUC,CASE WHEN (a.LOAINHIENLIEU = 1) THEN 'Diesel' WHEN (a.LOAINHIENLIEU = 2) THEN 'Xăng' END AS LOAINHIENLIEU,a.GIATIEN, sum(TIMESTAMPDIFF(MINUTE, a.THOIGIANBATDAU, a.THOIGIANKETTHUC)) THOI_GIAN FROM nhatkysudungmayno a, tramvt b, thietbitram c, daivt d,thietbi e WHERE a.ID_TRAM = b.ID_TRAM and b.ID_DAI = d.ID_DAI and c.ID_LOAITB = e.id_thietbi and a.ID_THIETBITRAM = c.ID_THIETBI and d.ID_DONVI = " . $params['ID_DONVI'] . " AND MONTH(a.THOIGIANBATDAU) = '" . $params['THANG'] . "' AND year(a.THOIGIANBATDAU) = '" . $params['NAM'] . "' GROUP by b.TEN_TRAM,a.ID_THIETBITRAM,a.LOAINHIENLIEU, a.DINHMUC, e.TEN_THIETBI
+            SELECT b.TEN_TRAM,e.TEN_THIETBI, a.DINHMUC,CASE WHEN (a.LOAINHIENLIEU = 1) THEN 'Diesel' WHEN (a.LOAINHIENLIEU = 2) THEN 'Xăng' END AS LOAINHIENLIEU,a.GIATIEN, sum(TIMESTAMPDIFF(MINUTE, a.THOIGIANBATDAU, a.THOIGIANKETTHUC)) THOI_GIAN FROM nhatkysudungmayno a, tramvt b, thietbitram c, daivt d,thietbi e WHERE a.ID_TRAM = b.ID_TRAM and b.ID_DAI = d.ID_DAI and c.ID_LOAITB = e.id_thietbi and a.ID_THIETBITRAM = c.ID_THIETBI and d.ID_DONVI = " . $params['ID_DONVI'] . " AND MONTH(a.THOIGIANBATDAU) = '" . $params['THANG'] . "' AND year(a.THOIGIANBATDAU) = '" . $params['NAM'] . "' GROUP by b.TEN_TRAM,a.ID_THIETBITRAM,a.LOAINHIENLIEU, a.DINHMUC, e.TEN_THIETBI,a.GIATIEN
         ";
 
         return Yii::$app->db->createCommand($sql)->queryAll();
@@ -166,22 +166,19 @@ class NhatKySuDungMayNoSearch extends NhatKySuDungMayNo
 
     public function tonghoptheotram($idtram, $nam, $loai ='THOIGIAN')
     {
-        if ($loai == 'THOIGIAN') {
-            # code...
-        }
         switch ($loai) {
             case 'THOIGIAN':
-                $sqltonghop = "SELECT b.TEN_TRAM,MONTH(a.THOIGIANBATDAU) THANG, ROUND(sum(TIMESTAMPDIFF(MINUTE, a.THOIGIANBATDAU, a.THOIGIANKETTHUC))/60,2) TONG from nhatkysudungmayno a, tramvt b where a.ID_TRAM = b.ID_TRAM AND a.ID_TRAM = '" . $idtram . "' AND year(a.THOIGIANBATDAU) = '" . $nam . "'  GROUP by MONTH(a.THOIGIANBATDAU),b.TEN_TRAM";
+                $sqltonghop = "SELECT b.TEN_TRAM,MONTH(a.THOIGIANBATDAU) THANG, ROUND(sum(TIMESTAMPDIFF(MINUTE, a.THOIGIANBATDAU, a.THOIGIANKETTHUC)/60), 2) TONG from nhatkysudungmayno a, tramvt b where a.ID_TRAM = b.ID_TRAM AND a.ID_TRAM = '" . $idtram . "' AND year(a.THOIGIANBATDAU) = '" . $nam . "'  GROUP by MONTH(a.THOIGIANBATDAU),b.TEN_TRAM";
                 break;
             case 'SOLUONG':
-                $sqltonghop = "SELECT b.TEN_TRAM,MONTH(a.THOIGIANBATDAU) THANG, ROUND(sum(TIMESTAMPDIFF(MINUTE, a.THOIGIANBATDAU, a.THOIGIANKETTHUC))/60,2) * a.DINHMUC TONG from nhatkysudungmayno a, tramvt b where a.ID_TRAM = b.ID_TRAM AND a.ID_TRAM = '" . $idtram . "' AND year(a.THOIGIANBATDAU) = '" . $nam . "'  GROUP by MONTH(a.THOIGIANBATDAU),b.TEN_TRAM";
+                $sqltonghop = "SELECT b.TEN_TRAM,MONTH(a.THOIGIANBATDAU) THANG, ROUND(sum(TIMESTAMPDIFF(MINUTE, a.THOIGIANBATDAU, a.THOIGIANKETTHUC)/60 * a.DINHMUC), 2) TONG from nhatkysudungmayno a, tramvt b where a.ID_TRAM = b.ID_TRAM AND a.ID_TRAM = '" . $idtram . "' AND year(a.THOIGIANBATDAU) = '" . $nam . "'  GROUP by MONTH(a.THOIGIANBATDAU),b.TEN_TRAM";
                 break;
             case 'TONGTIEN':
-                $sqltonghop = "SELECT b.TEN_TRAM,MONTH(a.THOIGIANBATDAU) THANG, ROUND(sum(TIMESTAMPDIFF(MINUTE, a.THOIGIANBATDAU, a.THOIGIANKETTHUC))/60,2) * a.DINHMUC * a.GIATIEN TONG from nhatkysudungmayno a, tramvt b where a.ID_TRAM = b.ID_TRAM AND a.ID_TRAM = '" . $idtram . "' AND year(a.THOIGIANBATDAU) = '" . $nam . "'  GROUP by MONTH(a.THOIGIANBATDAU),b.TEN_TRAM";
+                $sqltonghop = "SELECT b.TEN_TRAM,MONTH(a.THOIGIANBATDAU) THANG, ROUND(sum(TIMESTAMPDIFF(MINUTE, a.THOIGIANBATDAU, a.THOIGIANKETTHUC)/60 * a.DINHMUC * a.GIATIEN), 2) TONG from nhatkysudungmayno a, tramvt b where a.ID_TRAM = b.ID_TRAM AND a.ID_TRAM = '" . $idtram . "' AND year(a.THOIGIANBATDAU) = '" . $nam . "'  GROUP by MONTH(a.THOIGIANBATDAU),b.TEN_TRAM";
                 break;
             
             default:
-                $sqltonghop = "SELECT b.TEN_TRAM,MONTH(a.THOIGIANBATDAU) THANG, ROUND(sum(TIMESTAMPDIFF(MINUTE, a.THOIGIANBATDAU, a.THOIGIANKETTHUC))/60,2) TONG from nhatkysudungmayno a, tramvt b where a.ID_TRAM = b.ID_TRAM AND a.ID_TRAM = '" . $idtram . "' AND year(a.THOIGIANBATDAU) = '" . $nam . "'  GROUP by MONTH(a.THOIGIANBATDAU),b.TEN_TRAM";
+                $sqltonghop = "SELECT b.TEN_TRAM,MONTH(a.THOIGIANBATDAU) THANG, ROUND(sum(TIMESTAMPDIFF(MINUTE, a.THOIGIANBATDAU, a.THOIGIANKETTHUC)/60), 2) TONG from nhatkysudungmayno a, tramvt b where a.ID_TRAM = b.ID_TRAM AND a.ID_TRAM = '" . $idtram . "' AND year(a.THOIGIANBATDAU) = '" . $nam . "'  GROUP by MONTH(a.THOIGIANBATDAU),b.TEN_TRAM";
                 break;
         }
 
