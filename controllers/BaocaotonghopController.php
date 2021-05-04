@@ -291,13 +291,12 @@ class BaocaotonghopController extends Controller
                     $tongdien[$value['MA_CSHT']]['KW_TIEUTHU'] = $v['KW_TIEUTHU'];
                 }
                 $tongdien[$value['MA_CSHT']]['DINHMUC_GIO'] = $tongdien[$value['MA_CSHT']]['DINHMUC'] / ($songay * 24);
-
-                $dulieumayno = $searchmaynoModel->tonghoptramtheothang($value['ID_TRAM'], $nam, $thang);
                 //lấy điện theo định mức máy nổ
+                $dulieumayno = $searchmaynoModel->tonghoptramtheothang($value['ID_TRAM'], $nam, $thang);
                 $giomayno = isset($dulieumayno[0]) ? $dulieumayno[0]['TONG'] : 0;
                 $tongdien[$value['MA_CSHT']]['GIO_MAY_NO'] = $giomayno;
                 $tongdien[$value['MA_CSHT']]['KW_MAY_NO'] = $tongdien[$value['MA_CSHT']]['DINHMUC_GIO'] * $giomayno;
-                $tongdien[$value['MA_CSHT']]['KW_THUCTE'] = $v['KW_TIEUTHU'] + $tongdien[$value['MA_CSHT']]['KW_MAY_NO'];
+                $tongdien[$value['MA_CSHT']]['KW_THUCTE'] = $tongdien[$value['MA_CSHT']]['KW_TIEUTHU'] + $tongdien[$value['MA_CSHT']]['KW_MAY_NO'];
                 // echo "<pre>";
                 // die(var_dump($v['DINHMUC']));
                 // die(var_dump($v['DINHMUC'] * $giomayno));
