@@ -20,6 +20,7 @@ use yii\data\ArrayDataProvider;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
 use moonland\phpexcel\Excel;
+use app\models\TramvtSearch;
 
 /**
  * TramvtController implements the CRUD actions for Tramvt model.
@@ -233,6 +234,135 @@ class BaocaotonghopController extends Controller
                     'data' => $data,
                     'dsdonvi' => $dsdonvi,
                     'params' => $params,
+                ]);
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
+        }
+    }
+
+    public function actionThongketramvuotdinhmuc()
+    {
+        if (Yii::$app->user->can('bctonghop-qldien')) {
+            $months = [];
+            for ($i = 0; $i < 12; $i++) {
+                $months[date('m', strtotime( date( 'Y-01-01' )." +$i months"))] = date('m', strtotime( date( 'Y-01-01' )." +$i months"));
+            }
+            $nowY = date("Y");
+            $years = [
+                $nowY => $nowY,
+                $nowY - 1 => $nowY - 1,
+            ];
+            $params = Yii::$app->request->queryParams;
+            $iddv = ArrayHelper::map(Donvi::find()->where(['<>', 'MA_DONVIKT', 0])->all(), 'ID_DONVI', 'ID_DONVI');
+            if (Yii::$app->user->can('dmdv-diennhienlieu')) {
+                $iddv = [Yii::$app->user->identity->nhanvien->ID_DONVI];
+            }
+            $dsdonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'ID_DONVI', 'TEN_DONVI');
+            if (!$params) {
+                $params = array_merge(Yii::$app->request->queryParams, [
+                    'THANG' => date('m'),
+                    'NAM' => date('Y'),
+                    'ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI
+                ]);
+            } else {
+                $iddv = $params['ID_DONVI'] ? $params['ID_DONVI'] : $iddv;
+            }
+
+            $params['is_excel'] = $params['is_excel'] ?? null;
+            $params['is_dinhmuc'] = $params['is_dinhmuc'] ?? null;
+            $thang = $params['THANG'];
+            $nam = $params['NAM'];
+            $searchModelTramvt = new TramvtSearch();
+            $dstram = $searchModelTramvt->searchDSTramvt($iddv);
+            $tongdien = [];
+            $searchModel = new QuanlydienSearch();
+            $searchmaynoModel = new NhatKySuDungMayNoSearch();
+            foreach ($dstram as $key => $value) {
+                $tongdien[$value['MA_CSHT']]['TEN_TRAM'] = $value['TEN_TRAM'];
+                $tongdien[$value['MA_CSHT']]['TEN_DONVI'] = $value['TEN_DONVI'];
+                $tongdien[$value['MA_CSHT']]['DIADIEM'] = $value['MA_CSHT'];
+                $tongdien[$value['MA_CSHT']]['THANG'] = 0;
+                $tongdien[$value['MA_CSHT']]['KW_TIEUTHU'] = 0;
+                $tongdien[$value['MA_CSHT']]['DINHMUC'] = 0;
+                $tongdien[$value['MA_CSHT']]['TONGTIEN'] = 0;
+                $songay = cal_days_in_month(CAL_GREGORIAN, $params['THANG'], $params['NAM']);
+                foreach ($searchModel->tonghopdinhmucdnltheotram($value['MA_CSHT'], $nam, $thang) as  $v) {
+                    $tongdien[$value['MA_CSHT']]['DINHMUC'] = $v['DINHMUC'];
+                    $tongdien[$value['MA_CSHT']]['KW_TIEUTHU'] = $v['KW_TIEUTHU'];
+                }
+                $tongdien[$value['MA_CSHT']]['DINHMUC_GIO'] = $tongdien[$value['MA_CSHT']]['DINHMUC'] / ($songay * 24);
+
+                $dulieumayno = $searchmaynoModel->tonghoptramtheothang($value['ID_TRAM'], $nam, $thang);
+                //lấy điện theo định mức máy nổ
+                $giomayno = isset($dulieumayno[0]) ? $dulieumayno[0]['TONG'] : 0;
+                $tongdien[$value['MA_CSHT']]['GIO_MAY_NO'] = $giomayno;
+                $tongdien[$value['MA_CSHT']]['KW_MAY_NO'] = $tongdien[$value['MA_CSHT']]['DINHMUC_GIO'] * $giomayno;
+                $tongdien[$value['MA_CSHT']]['KW_THUCTE'] = $v['KW_TIEUTHU'] + $tongdien[$value['MA_CSHT']]['KW_MAY_NO'];
+                // echo "<pre>";
+                // die(var_dump($v['DINHMUC']));
+                // die(var_dump($v['DINHMUC'] * $giomayno));
+                // die(var_dump($songay * 24));
+
+                if (!$tongdien[$value['MA_CSHT']]['KW_TIEUTHU']) {
+                    unset($tongdien[$value['MA_CSHT']]);
+                }
+
+                if (isset($tongdien[$value['MA_CSHT']]) && $params['is_dinhmuc'] && ($tongdien[$value['MA_CSHT']]['KW_THUCTE'] <= $tongdien[$value['MA_CSHT']]['DINHMUC'])) {
+                    unset($tongdien[$value['MA_CSHT']]);
+                }
+            }
+            if ($params['is_excel']) {
+                $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+                $spreadsheet->getDefaultStyle()->getFont()->setName('Arial');
+                $spreadsheet->getDefaultStyle()->getFont()->setSize(10);
+                $spreadsheet->getActiveSheet()->fromArray(
+                    [
+                        'STT',
+                        'Tên đơn vị',
+                        'Tên trạm',
+                        'Định mức (KW)',
+                        'Định mức (KW/h)',
+                        'Lượng tiêu thụ (KW)',
+                        'Giờ máy nổ',
+                        'Máy nổ theo định mức điện(KW)',
+                        'KW_THUCTE',
+                    ],
+                    '',
+                    'A1'         
+                );
+                $key = 0;
+                $x = 2;
+                foreach ($tongdien as $value) {
+                    $spreadsheet->setActiveSheetIndex(0)
+                        ->setCellValue("A$x", ($key + 1))
+                        ->setCellValue("B$x", $value['TEN_DONVI'])
+                        ->setCellValue("C$x", $value['TEN_TRAM'])
+                        ->setCellValue("D$x", $value['DIADIEM'])
+                        ->setCellValue("E$x", formatnumber($value['DINHMUC']))
+                        ->setCellValue("F$x", formatnumber($value['DINHMUC_GIO'], 2))
+                        ->setCellValue("G$x", formatnumber($value['KW_TIEUTHU']))
+                        ->setCellValue("H$x", formatnumber($value['GIO_MAY_NO'], 2))
+                        ->setCellValue("I$x", formatnumber($value['KW_MAY_NO']))
+                        ->setCellValue("J$x", formatnumber($value['KW_THUCTE']));
+                    $key ++;
+                    $x ++;
+                }
+            $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+            $file_name = "Export_".date('Ymd_His');
+
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment;filename="'.$file_name.'.xlsx"');
+            header('Cache-Control: max-age=0');
+            $writer->save("php://output");
+        exit;
+            }
+
+            return $this->render('thongketramvuotdinhmuc', [
+                    'tongdien' => $tongdien,
+                    'dsdonvi' => $dsdonvi,
+                    'params' => $params,
+                    'months' => $months,
+                    'years' => $years,
                 ]);
         } else {
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');

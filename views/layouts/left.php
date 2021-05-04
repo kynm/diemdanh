@@ -202,6 +202,11 @@ use yii\helpers\Url;
                                 'url' => Url::to(['baocaotonghop/baocaotonghoptheotram']),
                                 'visible' => Yii::$app->user->can('bctonghop-qldien'),
                             ],
+                            [
+                                'label' => 'BC điện nhiên liệu theo định mức', 'icon' => 'caret-right',
+                                'url' => Url::to(['baocaotonghop/thongketramvuotdinhmuc']),
+                                'visible' => Yii::$app->user->can('bctonghop-qldien'),
+                            ],
                         ],
                         'visible' => Yii::$app->user->can('view-qldien'),
                     ],

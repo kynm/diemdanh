@@ -181,7 +181,7 @@ class TramvtSearch extends Tramvt
     public function searchDSTramvt($idDonvi)
     {
         $dsDonvi = is_array($idDonvi) ? implode(',', $idDonvi) : $idDonvi;
-        $sql = "SELECT a.MA_CSHT,a.TEN_TRAM,a.DIADIEM,c.TEN_DONVI FROM tramvt a, daivt b, donvi c WHERE a.ID_DAI = b.ID_DAI AND b.ID_DONVI = c.ID_DONVI AND c.ID_DONVI IN (" . $dsDonvi . ") ORDER BY a.TEN_TRAM";
+        $sql = "SELECT a.ID_TRAM,a.MA_CSHT,a.TEN_TRAM,a.DIADIEM,c.TEN_DONVI FROM tramvt a, daivt b, donvi c WHERE a.ID_DAI = b.ID_DAI AND b.ID_DONVI = c.ID_DONVI AND c.ID_DONVI IN (" . $dsDonvi . ") ORDER BY a.TEN_TRAM";
 
         return Yii::$app->db->createCommand($sql)->queryAll();
     }

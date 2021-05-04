@@ -184,4 +184,25 @@ class NhatKySuDungMayNoSearch extends NhatKySuDungMayNo
 
         return Yii::$app->db->createCommand($sqltonghop)->queryAll();
     }
+
+    public function tonghoptramtheothang($idtram, $nam, $thang, $loai ='THOIGIAN')
+    {
+        switch ($loai) {
+            case 'THOIGIAN':
+                $sqltonghop = "SELECT b.TEN_TRAM, ROUND(sum(TIMESTAMPDIFF(MINUTE, a.THOIGIANBATDAU, a.THOIGIANKETTHUC)/60), 2) TONG from nhatkysudungmayno a, tramvt b where a.ID_TRAM = b.ID_TRAM AND a.ID_TRAM = '" . $idtram . "' AND year(a.THOIGIANBATDAU) = '" . $nam . "' AND month(a.THOIGIANBATDAU) = '" . $thang . "'  GROUP by MONTH(a.THOIGIANBATDAU),b.TEN_TRAM";
+                break;
+            case 'SOLUONG':
+             //   $sqltonghop = "SELECT b.TEN_TRAM,MONTH(a.THOIGIANBATDAU) THANG, ROUND(sum(TIMESTAMPDIFF(MINUTE, a.THOIGIANBATDAU, a.THOIGIANKETTHUC)/60 * a.DINHMUC), 2) TONG from nhatkysudungmayno a, tramvt b where a.ID_TRAM = b.ID_TRAM AND a.ID_TRAM = '" . $idtram . "' AND year(a.THOIGIANBATDAU) = '" . $nam . "'  GROUP by MONTH(a.THOIGIANBATDAU),b.TEN_TRAM";
+                break;
+            case 'TONGTIEN':
+               // $sqltonghop = "SELECT b.TEN_TRAM,MONTH(a.THOIGIANBATDAU) THANG, ROUND(sum(TIMESTAMPDIFF(MINUTE, a.THOIGIANBATDAU, a.THOIGIANKETTHUC)/60 * a.DINHMUC * a.GIATIEN), 2) TONG from nhatkysudungmayno a, tramvt b where a.ID_TRAM = b.ID_TRAM AND a.ID_TRAM = '" . $idtram . "' AND year(a.THOIGIANBATDAU) = '" . $nam . "'  GROUP by MONTH(a.THOIGIANBATDAU),b.TEN_TRAM";
+                break;
+            
+            default:
+                //$sqltonghop = "SELECT b.TEN_TRAM,MONTH(a.THOIGIANBATDAU) THANG, ROUND(sum(TIMESTAMPDIFF(MINUTE, a.THOIGIANBATDAU, a.THOIGIANKETTHUC)/60), 2) TONG from nhatkysudungmayno a, tramvt b where a.ID_TRAM = b.ID_TRAM AND a.ID_TRAM = '" . $idtram . "' AND year(a.THOIGIANBATDAU) = '" . $nam . "'  GROUP by MONTH(a.THOIGIANBATDAU),b.TEN_TRAM";
+                break;
+        }
+
+        return Yii::$app->db->createCommand($sqltonghop)->queryAll();
+    }
 }
