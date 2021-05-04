@@ -96,7 +96,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <th scope="col">Lượng tiêu thụ (KW)</th>
                         <th scope="col">Giờ máy nổ</th>
                         <th scope="col">Máy nổ theo định mức điện(KW)</th>
-                        <th scope="col">KW_THUCTE</th>
+                        <th scope="col">Tổng sử dụng</th>
                       </tr>
                     </thead>
                     <tbody>

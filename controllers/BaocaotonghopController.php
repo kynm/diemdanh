@@ -324,7 +324,7 @@ class BaocaotonghopController extends Controller
                         'Lượng tiêu thụ (KW)',
                         'Giờ máy nổ',
                         'Máy nổ theo định mức điện(KW)',
-                        'KW_THUCTE',
+                        'Tổng sử dụng',
                     ],
                     '',
                     'A1'         
