@@ -107,7 +107,6 @@ class ThietbitramController extends Controller
                         ]);
                     $model->THAMSOTHIETBI = $json;
                 }
-
                 $model->TEN_MA = '';
                 if ($model->save()) {
                     $thietbi = new Dieuchuyenthietbi;
@@ -128,7 +127,6 @@ class ThietbitramController extends Controller
                     var_dump($model->errors);
                     die;
                 }
-
 
                 return $this->redirect(['tramvt/view', 'id' => $model->ID_TRAM]);
             } else {

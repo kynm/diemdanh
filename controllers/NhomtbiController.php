@@ -67,36 +67,6 @@ class NhomtbiController extends Controller
     {
         $devicesSearchModel = new ThietbiSearch();
         $devicesProvider = $devicesSearchModel->searchNhom(Yii::$app->request->queryParams);
-        // $allDatas = Yii::$app->db->createCommand('SELECT * FROM `table 34`')->queryAll();
-        // foreach ($allDatas as $key => $data) {
-        //     $thietbi = Thietbi::findOne(['TEN_THIETBI' => $data['chungloai']]);
-        //     $tramvt = Tramvt::findOne(['TEN_TRAM' => $data['ten_tram']]);
-        //     // if (!$tramvt || !$thietbi) {
-        //     if (!$tramvt) {
-        //         // var_dump($data);
-        //     } else {
-        //         $thietbitram = new Thietbitram();
-        //         $thietbitram->ID_LOAITB = $thietbi->ID_THIETBI;
-        //         $thietbitram->ID_TRAM = $tramvt->ID_TRAM;
-        //         $thietbitram->TEN_MA = $thietbi->TEN_THIETBI ?? 'VNPT NO NAME';
-        //         $thietbitram->NGAYSX = date('Y-m-d');
-        //         $thietbitram->NGAYSD = date('Y-m-d');
-        //         $thietbitram->SERIAL_MAC = $thietbi->MA_THIETBI . '-' . $tramvt->MA_TRAM;
-        //         $thietbitram->THAMSOTHIETBI = json_encode(
-        //         [
-        //             'DINH_MUC' => $data['tieuhao'],
-        //             'LOAINHIENLIEU' => $data['nhienlieu'] == 'Diesel' ? 1 : 2,
-        //         ]);
-        //         // var_dump($thietbitram);
-        //     }
-
-        //     // $thietbi->MA_THIETBI = str_replace(' ', '', $data['chungloai']);
-        //     // $thietbi->TEN_THIETBI = $data['chungloai'];
-        //     // $thietbi->ID_NHOM = 1;
-        //     // $thietbi->HANGSX = 'VNPT';
-        //     // $thietbi->THONGSOKT = $data['nhienlieu'];
-        // }
-        // die('ok');
         $query = Noidungbaotrinhomtbi::find()->where(['ID_NHOM' => $id]);
         $contentsProvider = new ActiveDataProvider([
             'query' => $query,

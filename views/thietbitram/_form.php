@@ -48,7 +48,6 @@ use kartik\select2\Select2;
                         ],
                     ]); ?>
                 </div>
-            
                 <div class="col-sm-4 col-md-4">
                     <label>Ngày sản xuất</label>
                     <?= DatePicker::widget([

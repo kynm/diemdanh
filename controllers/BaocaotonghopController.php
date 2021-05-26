@@ -319,6 +319,7 @@ class BaocaotonghopController extends Controller
                         'STT',
                         'Tên đơn vị',
                         'Tên trạm',
+                        'Mã cơ sở hạ tầng',
                         'Định mức (KW)',
                         'Định mức (KW/h)',
                         'Lượng tiêu thụ (KW)',
