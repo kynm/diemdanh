@@ -28,41 +28,41 @@ use yii\helpers\Url;
                     [
                         'label' => 'MENU', 'options' => ['class' => 'header']
                     ],
-                    [
-                        'label' => 'Kiểm tra nhà trạm',
-                        'icon' => 'wrench',
-                        'url' => '#',
-                        'items' => [
-                            [
-                                'label' => 'Danh sách', 'icon' => 'caret-right', 'url' => Url::to(['dotbaoduong/kiemtranhatram'])
-                            ],
-                            [
-                                'label' => 'Báo cáo các đợt', 'icon' => 'caret-right', 'url' => Url::to(['dotbaoduong/baocaoktnt'])
-                            ],
-                        ],
-                    ],
-                    [
-                        'label' => 'Phân công tổ trưởng',
-                        'icon' => 'check-square-o',
-                        'url' => Url::to(['congviec/giaonhiemvu']),
-                        'visible' => Yii::$app->user->can('phancong-dbd')
-                    ],
-                    [
-                        'label' => 'Bảo dưỡng thiết bị',
-                        'icon' => 'table',
-                        'url' => '#',
-                        'items' => [
-                            [
-                                'label' => 'Thêm đợt bảo dưỡng', 'icon' => 'caret-right', 'url' => Url::to(['dotbaoduong/create'])
-                            ],
-                            [
-                                'label' => 'Tổ trưởng giao việc', 'icon' => 'caret-right', 'url' => Url::to(['dotbaoduong/phe-duyet'])
-                            ],
-                            [
-                                'label' => 'Danh sách', 'icon' => 'caret-right', 'url' => Url::to(['dotbaoduong/'])
-                            ],
-                        ],
-                    ],
+                    // [
+                    //     'label' => 'Kiểm tra nhà trạm',
+                    //     'icon' => 'wrench',
+                    //     'url' => '#',
+                    //     'items' => [
+                    //         [
+                    //             'label' => 'Danh sách', 'icon' => 'caret-right', 'url' => Url::to(['dotbaoduong/kiemtranhatram'])
+                    //         ],
+                    //         [
+                    //             'label' => 'Báo cáo các đợt', 'icon' => 'caret-right', 'url' => Url::to(['dotbaoduong/baocaoktnt'])
+                    //         ],
+                    //     ],
+                    // ],
+                    // [
+                    //     'label' => 'Phân công tổ trưởng',
+                    //     'icon' => 'check-square-o',
+                    //     'url' => Url::to(['congviec/giaonhiemvu']),
+                    //     'visible' => Yii::$app->user->can('phancong-dbd')
+                    // ],
+                    // [
+                    //     'label' => 'Bảo dưỡng thiết bị',
+                    //     'icon' => 'table',
+                    //     'url' => '#',
+                    //     'items' => [
+                    //         [
+                    //             'label' => 'Thêm đợt bảo dưỡng', 'icon' => 'caret-right', 'url' => Url::to(['dotbaoduong/create'])
+                    //         ],
+                    //         [
+                    //             'label' => 'Tổ trưởng giao việc', 'icon' => 'caret-right', 'url' => Url::to(['dotbaoduong/phe-duyet'])
+                    //         ],
+                    //         [
+                    //             'label' => 'Danh sách', 'icon' => 'caret-right', 'url' => Url::to(['dotbaoduong/'])
+                    //         ],
+                    //     ],
+                    // ],
                     [
                         'label' => 'Đơn vị',
                         'icon' => 'building-o',
@@ -73,6 +73,9 @@ use yii\helpers\Url;
                             ],
                             [
                                 'label' => 'Danh sách đài viễn thông', 'icon' => 'caret-right', 'url' => Url::to(['daivt/'])
+                            ],
+                            [
+                                'label' => 'Trạm viễn thông', 'icon' => 'caret-right', 'url' => Url::to(['tramvt/'])
                             ],
                             [
                                 'label' => 'Danh sách nhân viên', 'icon' => 'caret-right', 'url' => Url::to(['nhanvien/'])
@@ -90,9 +93,7 @@ use yii\helpers\Url;
                             // [
                             //     'label' => 'Loại thiết bị', 'icon' => 'caret-right', 'url' => Url::to(['thietbi/'])
                             // ],
-                            [
-                                'label' => 'Trạm viễn thông', 'icon' => 'caret-right', 'url' => Url::to(['tramvt/'])
-                            ],
+                            
                         ]
                     ],
                     [
