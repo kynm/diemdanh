@@ -60,7 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                             [
                                 'class' => 'yii\grid\ActionColumn',
-                                // 'template' => 
+                                // 'template' => '{update,delete}',
                                 'visibleButtons' => [
                                     'update' => function ($model) {
                                         if (Yii::$app->user->can('edit-tramvt')) {

@@ -90,6 +90,9 @@ use yii\helpers\Url;
                             [
                                 'label' => 'Nhóm thiết bị', 'icon' => 'caret-right', 'url' => Url::to(['nhomtbi/'])
                             ],
+                            [
+                                'label' => 'Quản lý thiết bị theo trạm', 'icon' => 'caret-right', 'url' => Url::to(['tramvt/hatangtram'])
+                            ],
                             // [
                             //     'label' => 'Loại thiết bị', 'icon' => 'caret-right', 'url' => Url::to(['thietbi/'])
                             // ],

@@ -60,6 +60,17 @@ class TramvtController extends Controller
         ]);
     }
 
+    public function actionHatangtram()
+    {
+        $searchModel = new TramvtSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('hatangtram', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
     public function actionShow()
     {
         $list_tram = Tramvt::find()->all();
