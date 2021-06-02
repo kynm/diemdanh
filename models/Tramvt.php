@@ -36,7 +36,7 @@ class Tramvt extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['MA_TRAM', 'TEN_TRAM', 'ID_NHANVIEN', 'ID_DAI', 'TRANGTHAI_CSHT_ID'], 'required'],
+            [['MA_TRAM', 'TEN_TRAM', 'ID_NHANVIEN', 'ID_DAI', 'TRANGTHAI_CSHT_ID', 'type_payment_id'], 'required'],
             [['DIADIEM'], 'string'],
             [['MA_CSHT'], 'string'],
             [['MA_DIENLUC'], 'string'],
@@ -77,6 +77,7 @@ class Tramvt extends \yii\db\ActiveRecord
             'TK_DIENLUC' => 'Tài khoản điện lực',
             'TRANGTHAI_CSHT_ID' => 'Trạng thái CSHT',
             'KIEUTRAM' => 'Kiểu CSHT',
+            'type_payment_id' => 'Kiểu thanh toán điện',
         ];
     }
 

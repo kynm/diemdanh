@@ -188,7 +188,7 @@ class TramvtSearch extends Tramvt
 
     public function searchExportdstram()
     {
-        $sql = "SELECT c.TEN_DONVI,b.TEN_DAIVT,a.MA_CSHT,a.TEN_TRAM,a.DIADIEM,d.TEN_KIEU_CSHT,e.TEN_LOAIHINH_CSHT,f.TEN_TRANGTHAI_CSHT FROM tramvt a, daivt b, donvi c,kieu_csht d,loaihinh_csht e,trangthai_csht f WHERE a.ID_DAI = b.ID_DAI AND b.ID_DONVI = c.ID_DONVI and a.KIEUTRAM = d.id and a.LOAITRAM = e.id and a.TRANGTHAI_CSHT_ID = f.id and a.IS_DELETE is null ORDER BY c.TEN_DONVI";
+        $sql = "SELECT c.TEN_DONVI,b.TEN_DAIVT,a.MA_CSHT,a.TEN_TRAM,a.DIADIEM,d.TEN_KIEU_CSHT,e.TEN_LOAIHINH_CSHT,f.TEN_TRANGTHAI_CSHT,g.type_payment kieu_thanh_toan FROM tramvt a, daivt b, donvi c,kieu_csht d,loaihinh_csht e,trangthai_csht f,type_payments g WHERE a.ID_DAI = b.ID_DAI AND b.ID_DONVI = c.ID_DONVI and a.KIEUTRAM = d.id and a.LOAITRAM = e.id and a.TRANGTHAI_CSHT_ID = f.id and a.type_payment_id = g.id and a.IS_DELETE is null ORDER BY c.TEN_DONVI";
 
         return Yii::$app->db->createCommand($sql)->queryAll();
     }

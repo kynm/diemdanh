@@ -8,6 +8,7 @@ use app\models\Nhanvien;
 use app\models\TrangthaiCSHT;
 use app\models\LoaihinhCSHT;
 use app\models\KieuCSHT;
+use app\models\TypePayment;
 use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
@@ -39,6 +40,7 @@ switch (Yii::$app->user->identity->nhanvien->chucvu->cap) {
 $listtrangthai = ArrayHelper::map(TrangthaiCSHT::find()->all(), 'ID', 'TEN_TRANGTHAI_CSHT');
 $listloaihinh = ArrayHelper::map(LoaihinhCSHT::find()->all(), 'ID', 'TEN_LOAIHINH_CSHT');
 $listkieu = ArrayHelper::map(KieuCSHT::find()->all(), 'ID', 'TEN_KIEU_CSHT');
+$listtypepayment = ArrayHelper::map(TypePayment::find()->all(), 'ID', 'type_payment');
 
 ?>
 
@@ -102,6 +104,15 @@ $listkieu = ArrayHelper::map(KieuCSHT::find()->all(), 'ID', 'TEN_KIEU_CSHT');
                 <?= $form->field($model, 'KIEUTRAM')->widget(Select2::classname(), [
                     'data' => $listkieu,
                     'options' => ['placeholder' => 'Kiểu trạm'],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]); ?>
+            </div>
+            <div class="col-sm-2">
+                <?= $form->field($model, 'type_payment_id')->widget(Select2::classname(), [
+                    'data' => $listtypepayment,
+                    'options' => ['placeholder' => 'Kiểu thanh toán'],
                     'pluginOptions' => [
                         'allowClear' => true
                     ],
