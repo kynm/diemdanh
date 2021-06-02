@@ -16,6 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="tramvt-index">   
     <p>
         <?= (Yii::$app->user->can('create-tramvt')) ? Html::a('<i class="fa fa-plus"></i> Thêm trạm viễn thông', ['create'], ['class' => 'btn btn-primary btn-flat']) : '' ?>
+        <?= (Yii::$app->user->can('export-tramvt')) ? Html::a('<i class="fa fa-plus"></i> Export ds trạm', ['exportdstram'], ['class' => 'btn btn-primary btn-flat']) : '' ?>
     </p>
     <div class="box box-primary">
         <div class="box-body">

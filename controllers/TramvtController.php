@@ -397,4 +397,28 @@ class TramvtController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    public function actionExportdstram()
+    {
+        $searchModel = new TramvtSearch();
+        $dstram = $searchModel->searchExportdstram();
+        $dstram = array_merge([isset($dstram[0]) ? array_keys($dstram[0]) : []], $dstram);
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $spreadsheet->createSheet();
+        $spreadsheet->setActiveSheetIndex(0);
+        $spreadsheet->getActiveSheet()->setTitle('Tổng hợp báo hỏng');
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->fromArray(
+            $dstram,
+            '',
+            'A1'
+        );
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $file_name = "Danh sách trạm_".date('Ymd_His');
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="'.$file_name.'.xlsx"');
+        header('Cache-Control: max-age=0');
+        $writer->save("php://output");
+        exit;
+    }
 }
