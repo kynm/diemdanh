@@ -59,7 +59,6 @@ class TramvtSearch extends Tramvt
         if (Yii::$app->user->identity->nhanvien->chucvu->cap >= 4) {
             $query->andWhere(['tramvt.ID_NHANVIEN' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN]);
         }
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
