@@ -417,7 +417,7 @@ class TramvtController extends Controller
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $spreadsheet->createSheet();
         $spreadsheet->setActiveSheetIndex(0);
-        $spreadsheet->getActiveSheet()->setTitle('Tổng hợp báo hỏng');
+        $spreadsheet->getActiveSheet()->setTitle('Danh sách trạm');
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray(
             $dstram,
