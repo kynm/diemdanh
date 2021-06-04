@@ -323,4 +323,11 @@ class QuanlydienSearch extends Quanlydien
 
         return Yii::$app->db->createCommand($sqltonghop)->queryAll();
     }
+
+    public function baocaotempleteg20opexmbb($params)
+    {
+        $sql = "SELECT a.MA_CSHT,null LOAI_HINH_TH,NULL LOAI_TRAM_PV,b.TEN_TRAM,b.TEN_TRAM ma_tram,'' cau_hinh, 'Hà Nam' TINH,a.MA_DONVIKT HUYEN,b.diadiem,b.KINH_DO,b.VI_DO, a.KW_TIEUTHU,a.TONGTIEN,null VANHANH_BAODUONG,null CP_THUE,null CP_LAODONG,null CP_SUACHUA,null CP_KHAC,null GHICHU,c.type_payment LOAI_THANHTOAN from quanlydien a,tramvt b,type_payments c where a.ma_csht = b.ma_csht and b.type_payment_id = c.id AND  a.THANG = " . $params['THANG'] . " and a.NAM = " . $params['NAM'] . " and a.MA_DONVIKT 
+            in (" . $params['dsdonvi'] . ")";
+        return Yii::$app->db->createCommand($sql)->queryAll();
+    }
 }

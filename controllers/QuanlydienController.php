@@ -593,6 +593,76 @@ class QuanlydienController extends Controller
         }
     }
 
+    public function actionTempleteg20opexmbb()
+    {
+        if (Yii::$app->user->can('ketoan-qldien')) {
+            $months = [];
+            for ($i = 0; $i < 12; $i++) {
+                $months[date('m', strtotime( date( 'Y-01-01' )." +$i months"))] = date('m', strtotime( date( 'Y-01-01' )." +$i months"));
+            }
+            $nowY = date("Y");
+            $years = [
+                $nowY => $nowY,
+                $nowY - 1 => $nowY - 1,
+            ];
+            $params = Yii::$app->request->queryParams;
+            if (!$params || !isset($params['NAM'])) {
+                $params = array_merge(Yii::$app->request->queryParams, [
+                    'NAM' => date('Y', strtotime("-0 month")),
+                    'THANG' => date('m', strtotime("-0 month")),
+                    'ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI
+                ]);
+            }
+
+            $iddv = ArrayHelper::map(Donvi::find()->where(['<>', 'MA_DONVIKT', 0])->all(), 'ID_DONVI', 'ID_DONVI');
+            if (Yii::$app->user->can('dmdv-diennhienlieu')) {
+                $inputs['ID_DONVI'] = Yii::$app->user->identity->nhanvien->ID_DONVI;
+                $iddv = [$inputs['ID_DONVI']];
+            }
+            $dsdonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'ID_DONVI', 'TEN_DONVI');
+            if (Yii::$app->request->post()) {
+                $paramsPosts = Yii::$app->request->post();
+                if (Yii::$app->user->can('dmdv-diennhienlieu')) {
+                $iddv = [$paramsPosts['ID_DONVI']];
+                }
+                if ($paramsPosts['ID_DONVI']) {
+                    $iddv = [$paramsPosts['ID_DONVI']];
+                }
+                $dsdonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', $iddv])->all(), 'MA_DONVIKT', 'MA_DONVIKT');
+                $paramsPosts['dsdonvi'] = implode(',', $dsdonvi);
+                $searchModel = new QuanlydienSearch();
+                $dssddien = $searchModel->baocaotempleteg20opexmbb($paramsPosts);
+                $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+                $spreadsheet->getDefaultStyle()->getFont()->setName('Arial');
+                $spreadsheet->getDefaultStyle()->getFont()->setSize(10);
+                $header = [['Mã CSHT','Loại hình thực hiện','Loại trạm phục vụ','Tên trạm','Mã trạm','Cấu hình','Tỉnh','Huyện','Địa chỉ','Kinh độ','Vĩ độ','Số điện tiêu thụ(KW)(opex)','Chi phí Tiền điện  (opex)','Chi phí vận hành bảo dưỡng (opex)','Chi phí thuê hạ tầng (opex)','Chi phí lao động tại trạm (opex)','Chi phí sửa chữa tài sản cố định (opex)','Các chi phí khác (opex)','Ghi chú'],
+['(1)','(2)','(3)','(4)','(5)','(6)','(7)','(8)','(9)','(10)','(11)','(12)','(13)','(14)','(15)','(16)','(17)','(18)','(19)']];
+                $spreadsheet->getActiveSheet()->fromArray($header, '', 'A1');
+                $spreadsheet->getActiveSheet()->fromArray($dssddien, '', 'A3');
+                $filename = 'TEMPLETE_G20_OPEX_MBB'. $paramsPosts['THANG'] . $paramsPosts['NAM'] . '.xlsx'; //save our workbook as this file name
+                // Redirect output to a client’s web browser (Xlsx)
+                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                header('Content-Disposition: attachment;filename="'.$filename.'"');
+                header('Cache-Control: max-age=0');
+                // If you're serving to IE 9, then the following may be needed
+                header('Cache-Control: max-age=1');
+
+                $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+                $writer->save('php://output');
+                die();
+
+            }
+            return $this->render('templeteg20opexmbb', [
+                'dsdonvi' => $dsdonvi,
+                'years' => $years,
+                'months' => $months,
+                'params' => $params,
+            ]);
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
+        }
+    }
+
     public function actionInbaocaototrinhthang()
     {
         if (Yii::$app->user->can('ketoan-qldien')) {

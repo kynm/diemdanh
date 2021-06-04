@@ -192,6 +192,11 @@ use yii\helpers\Url;
                                 'url' => Url::to(['quanlydien/baocaodientheomuc']),
                                 'visible' => Yii::$app->user->can('updatett-qldien'),
                             ],
+                            [
+                                'label' => 'Templete G20 OPEX MBB', 'icon' => 'caret-right',
+                                'url' => Url::to(['quanlydien/templeteg20opexmbb']),
+                                'visible' => Yii::$app->user->can('ketoan-qldien'),
+                            ],
 
                         ],
                         'visible' => Yii::$app->user->can('view-qldien'),
