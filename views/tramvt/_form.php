@@ -109,7 +109,7 @@ $listtypepayment = ArrayHelper::map(TypePayment::find()->all(), 'ID', 'type_paym
                     ],
                 ]); ?>
             </div>
-            <div class="col-sm-2">
+            <div class="col-sm-4">
                 <?= $form->field($model, 'type_payment_id')->widget(Select2::classname(), [
                     'data' => $listtypepayment,
                     'options' => ['placeholder' => 'Kiểu thanh toán'],
@@ -122,7 +122,7 @@ $listtypepayment = ArrayHelper::map(TypePayment::find()->all(), 'ID', 'type_paym
             <div class="col-sm-2">
                 <?= $form->field($model, 'KINH_DO')->textInput(['maxlength' => true, 'type' => 'number', 'step' => 'any', 'disabled' => ! Yii::$app->user->can('Administrator')]) ?>
             </div>
-                
+
             <div class="col-sm-2">
                 <?= $form->field($model, 'VI_DO')->textInput(['maxlength' => true, 'type' => 'number', 'step' => 'any', 'disabled' => ! Yii::$app->user->can('Administrator')]) ?>
             </div>
