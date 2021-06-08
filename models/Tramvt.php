@@ -77,7 +77,7 @@ class Tramvt extends \yii\db\ActiveRecord
             'TK_DIENLUC' => 'Tài khoản điện lực',
             'TRANGTHAI_CSHT_ID' => 'Trạng thái CSHT',
             'KIEUTRAM' => 'Kiểu CSHT',
-            'type_payment_id' => 'Kiểu thanh toán điện',
+            'type_payment_id' => 'Loại trạm',
         ];
     }
 

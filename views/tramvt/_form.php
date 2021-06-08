@@ -112,7 +112,7 @@ $listtypepayment = ArrayHelper::map(TypePayment::find()->all(), 'ID', 'type_paym
             <div class="col-sm-4">
                 <?= $form->field($model, 'type_payment_id')->widget(Select2::classname(), [
                     'data' => $listtypepayment,
-                    'options' => ['placeholder' => 'Kiểu thanh toán'],
+                    'options' => ['placeholder' => 'Loại trạm'],
                     'pluginOptions' => [
                         'allowClear' => true
                     ],
