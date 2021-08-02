@@ -12,11 +12,10 @@ use kartik\select2\Select2;
 
 <div class="qldien-form">
     <?php $form = ActiveForm::begin(); ?>
-    <?= $form->field($model, 'MA_DIENLUC')->hiddenInput()->label(false);?>
     <div class="box box-primary">
         <div class="box-body">
             <div class="col-sm-6">
-                <?= $form->field($model, 'KW_TIEUTHU')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model, 'DINHMUC')->textInput(['maxlength' => true]) ?>
             </div>
         </div>
         <div class="box-footer">

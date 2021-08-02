@@ -58,8 +58,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'template' => '{update}',
                                 'buttons' => [
                                     'update' => function ($url,$model) {
-                                        if ($model->MA_DIENLUC) {
-                                            $url = Url::to(['quanlydien/nhapdulieudien', 'MA_DIENLUC' => $model->MA_DIENLUC]);
+                                        if ($model->MA_CSHT) {
+                                            $url = Url::to(['quanlydien/nhapdulieudien', 'MA_CSHT' => $model->MA_CSHT]);
                                             return Html::a('<span class="glyphicon glyphicon-pencil"> </span>', $url, ['title' => 'Điều chỉnh nội dung' ]);
                                         }
 

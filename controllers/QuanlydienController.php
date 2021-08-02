@@ -78,12 +78,12 @@ class QuanlydienController extends Controller
         }
     }
 
-    public function actionNhapdulieudien($MA_DIENLUC)
+    public function actionNhapdulieudien($MA_CSHT)
     {
-        $tramvt = Tramvt::find()->where(['MA_DIENLUC' => $MA_DIENLUC])->one();
+        $tramvt = Tramvt::find()->where(['MA_CSHT' => $MA_CSHT])->one();
         if ($tramvt) {
             $model = new Quanlydien();
-            $model->MA_DIENLUC = $MA_DIENLUC;
+            $model->MA_CSHT = $MA_CSHT;
             $months = [];
             for ($i = 0; $i < 12; $i++) {
                 $months[date('m', strtotime( date( 'Y-01-01' )." +$i months"))] = date('m', strtotime( date( 'Y-01-01' )." +$i months"));
@@ -102,7 +102,7 @@ class QuanlydienController extends Controller
                 $model->save(false);
             }
             $searchModel = new QuanlydienSearch();
-            $dataProvider = $searchModel->search(['MA_DIENLUC' => $MA_DIENLUC]);
+            $dataProvider = $searchModel->search(['MA_CSHT' => $MA_CSHT]);
             return $this->render('nhapdulieudien', [
                 'model' => $model,
                 'searchModel' => $searchModel,

@@ -177,7 +177,7 @@ class QuanlydienSearch extends Quanlydien
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'MA_DIENLUC' => $params['MA_DIENLUC'],
+            'MA_CSHT' => $params['MA_CSHT'],
         ]);
 
         $query->orderBy([
