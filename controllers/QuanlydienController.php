@@ -119,7 +119,7 @@ class QuanlydienController extends Controller
     public function actionUpdate($id)
     {
         $model = Quanlydien::findOne($id);
-        $tramvt = $model->tRAMVT;
+        $tramvt = Tramvt::find()->where(['MA_CSHT' => $model->MA_CSHT])->one();
         if ($tramvt) {
             if ($model->load(Yii::$app->request->post()))
             {
