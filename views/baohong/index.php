@@ -1,0 +1,50 @@
+<?php
+
+use yii\helpers\Html;
+use yii\grid\GridView;
+use yii\widgets\Pjax;
+/* @var $this yii\web\View */
+/* @var $searchModel app\models\NhanvienSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
+
+$this->title = 'Báo hỏng';
+$this->params['breadcrumbs'][] = ['label' => 'Đơn vị', 'url' => ['donvi/index']];
+$this->params['breadcrumbs'][] = $this->title;
+?>
+<div class="nhanvien-index">
+    <p>
+        <?= (Yii::$app->user->can('Administrator')) ? Html::a('<i class="fa fa-plus"></i> Báo hỏng', ['create'], ['class' => 'btn btn-primary btn-flat']) : '' ?>
+    </p>
+    <div class="box box-primary">
+        <div class="box-body">
+            <div class="table-responsive">
+            <?php Pjax::begin(); ?>    <?= GridView::widget([
+                    'dataProvider' => $dataProvider,
+                    'filterModel' => $searchModel,
+                    // 'formatter' => [
+                    //     'class' => 'yii\i18n\Formatter',
+                    //     'nullDisplay' => '',
+                    // ],
+                    'columns' => [
+                        ['class' => 'yii\grid\SerialColumn'],
+                        [
+                            'attribute' => 'donvi_id',
+                            'value' => 'iDDONVI.TEN_DONVI'
+                        ],
+                        [
+                            'attribute' => 'dai_id',
+                            'value' => 'iDDAI.TEN_DAIVT'
+                        ],
+                        
+                        'ten_kh',
+                        'diachi',
+                        'so_dt',
+                        ['class' => 'yii\grid\ActionColumn',
+                        'template' => (Yii::$app->user->can('edit-baohong')) ? '{view} {update}' : '{view}'],
+                    ],
+                ]); ?>
+            <?php Pjax::end(); ?>
+            </div>
+        </div>
+    </div>
+</div>

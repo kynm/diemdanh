@@ -15,16 +15,15 @@ use app\models\Thietbitram;
         <!-- Header Navbar -->
         <nav class="navbar navbar-static-top" role="navigation">
           <!-- Sidebar toggle button-->
-          <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-            <span class="sr-only">Toggle navigation</span>
-          </a>
+          <ul class="nav navbar-nav">
+            <li><a href="<?= Url::to(['/'])?>">Dashboard</a></li>
+              <?php if (Yii::$app->user->can('baohong')) {?>
+              <li><a href="<?= Url::to(['baohong/index'])?>">Báo hỏng</a></li>
+              <?php }?>
+            </ul>
           <!-- Navbar Right Menu -->
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
-              <li><a href="<?= Url::to(['site/baoduong'])?>">Bảo dưỡng</a></li>
-              <?php if (Yii::$app->user->can('dieuhanhioc')) {?>
-              <li><a href="<?= Url::to(['ioc/phanbothietbi'])?>">Điều hành</a></li>
-              <?php }?>
               <li class="task-menu">
                 <a href="<?= Url::to(['site/logout'])?>" data-method="post">
                   <i class="fa fa-sign-out"></i> Đăng xuất

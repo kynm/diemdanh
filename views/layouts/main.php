@@ -45,7 +45,7 @@ if (Yii::$app->controller->action->id === 'login') {
         <base href="/"> 
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     </head>
-    <body class="hold-transition skin-blue sidebar-mini fixed">
+    <body class="skin-blue layout-top-nav">
     <?php $this->beginBody() ?>
     <div class="wrapper">
 
@@ -53,13 +53,6 @@ if (Yii::$app->controller->action->id === 'login') {
             'header.php',
             ['directoryAsset' => $directoryAsset]
         ) ?>
-
-        <?= $this->render(
-            'left.php',
-            ['directoryAsset' => $directoryAsset]
-        )
-        ?>
-
         <?= $this->render(
             'content.php',
             ['content' => $content, 'directoryAsset' => $directoryAsset]

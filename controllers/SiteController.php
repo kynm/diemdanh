@@ -78,26 +78,6 @@ class SiteController extends Controller
         if (Yii::$app->user->isGuest) {
             return $this->redirect(['login']);
         } else {
-            // $bdt = Baoduongtong::find()->where(['TYPE' => 2])->orderBy(['ID_BDT' => SORT_DESC])->one();
-            
-            // $searchModel = new DotbaoduongSearch();
-            // $dataProvider = $searchModel->searchBaocaoktnt($bdt->ID_BDT, Yii::$app->request->queryParams);
-            // for ($i=4; $i<=7 ; $i++) {
-            //     $each = [];
-            //     $ttvt = Donvi::findOne($i);
-            //     $each['name'] = $ttvt->TEN_DONVI;
-            //     $each['id'] = $i;
-            //     $each['labels'] = ['Kế hoạch', 'Đang thực hiện', 'Chưa thực hiện', 'Chưa hoàn thành', 'Kết thúc'];
-            //     $each['dataset'][] = round(100 * Dotbaoduong::find()->where(['ID_BDT' => $bdt->ID_BDT, 'TRANGTHAI' => 'kehoach'])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count() / Dotbaoduong::find()->where(['ID_BDT' => $bdt->ID_BDT])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count(), 2);
-            //     $each['dataset'][] = round(100 * Dotbaoduong::find()->where(['ID_BDT' => $bdt->ID_BDT, 'TRANGTHAI' => 'dangthuchien'])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count() / Dotbaoduong::find()->where(['ID_BDT' => $bdt->ID_BDT])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count(), 2);
-            //     $each['dataset'][] = round(100 * Dotbaoduong::find()->where(['ID_BDT' => $bdt->ID_BDT, 'TRANGTHAI' => 'chuathuchien'])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count() / Dotbaoduong::find()->where(['ID_BDT' => $bdt->ID_BDT])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count(), 2);
-            //     $each['dataset'][] = round(100 * Dotbaoduong::find()->where(['ID_BDT' => $bdt->ID_BDT, 'TRANGTHAI' => 'chuahoanthanh'])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count() / Dotbaoduong::find()->where(['ID_BDT' => $bdt->ID_BDT])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count(), 2);
-            //     $each['dataset'][] = round(100 * Dotbaoduong::find()->where(['ID_BDT' => $bdt->ID_BDT, 'TRANGTHAI' => 'ketthuc'])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count() / Dotbaoduong::find()->where(['ID_BDT' => $bdt->ID_BDT])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count(), 2);
-            //     $each['tyle'] = Dotbaoduong::find()->where(['ID_BDT' => $bdt->ID_BDT, 'TRANGTHAI' => 'ketthuc'])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count() ."/". Dotbaoduong::find()->where(['ID_BDT' => $bdt->ID_BDT])->joinWith('tRAMVT.iDDAI')->andWhere(['ID_DONVI' => $i])->count();
-            //     $data[] = $each;
-            //     // print_r($each); echo "<hr>";
-            // }
-            // exit;
             return $this->render('index'
                 // ,[
                 // 'searchModel' => $searchModel,
