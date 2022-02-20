@@ -14,9 +14,7 @@ $dsDichvu = [
     2 => 'MyTV',
 ];
 ?>
-
 <div class="donvi-form">
-
     <?php $form = ActiveForm::begin(); ?>
     <div class="box box-primary">
         <div class="box-body">

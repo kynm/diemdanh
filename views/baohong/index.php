@@ -39,8 +39,19 @@ $this->params['breadcrumbs'][] = $this->title;
                         'ten_kh',
                         'diachi',
                         'so_dt',
+                        'ngay_bh',
+                        'ngay_xl',
                         ['class' => 'yii\grid\ActionColumn',
-                        'template' => (Yii::$app->user->can('edit-baohong')) ? '{view} {update}' : '{view}'],
+                            'template' => '{view} {xulybaohong}',
+                            'buttons' => [
+                                'xulybaohong' => function ($url, $model) {
+                                    return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
+                                                'title' => Yii::t('app', 'lead-update'),
+                                    ]);
+                                },
+
+                            ],
+                        ],
                     ],
                 ]); ?>
             <?php Pjax::end(); ?>

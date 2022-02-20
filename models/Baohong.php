@@ -66,6 +66,8 @@ class Baohong extends \yii\db\ActiveRecord
             'dai_id' => 'Đài',
             'noidung' => 'Nội dung phản ánh',
             'diachi' => 'Địa chỉ',
+            'status' => 'Trạng thái',
+            'ghichu' => 'Ghi chú',
         ];
     }
 
@@ -114,27 +116,8 @@ class Baohong extends \yii\db\ActiveRecord
         return $this->hasOne(Donvi::className(), ['ID_DONVI' => 'donvi_id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getChucvu()
+    public function getDichvu()
     {
-        return $this->hasOne(Chucvu::className(), ['id' => 'CHUC_VU']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getThuchienbds()
-    {
-        return $this->hasMany(Thuchienbd::className(), ['ID_NHANVIEN' => 'ID_NHANVIEN']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getTramvts()
-    {
-        return $this->hasMany(Tramvt::className(), ['ID_NHANVIEN' => 'ID_NHANVIEN']);
+        return $this->hasOne(Dichvu::className(), ['id' => 'dichvu_id']);
     }
 }

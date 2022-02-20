@@ -68,6 +68,32 @@ class BaohongController extends Controller
         ]);
     }
 
+    public function actionXulybaohong($id)
+    {
+        $model = $this->findModel($id);
+        if ($model->load(Yii::$app->request->post())) {
+            $params = Yii::$app->request->post();
+            $model->status = $params['Baohong']['status'];
+            if (in_array($model->status, [1,3])) {
+                $model->ngay_xl = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d H:i:s');
+            }
+            $model->ghichu = $params['Baohong']['ghichu'];
+            $model->save(false);
+            $log = new ActivitiesLog;
+            $log->activity_type = 'capnhatxuly-baohong';
+            $log->description = Yii::$app->user->identity->nhanvien->TEN_NHANVIEN." đã cập nhật báo hỏng ". $model->ten_kh;
+            $log->user_id = Yii::$app->user->identity->id;
+            $log->create_at = time();
+            $log->save();
+            return $this->redirect(['index']);
+        } else {
+            return $this->render('xulybaohong', [
+                'model' => $model,
+            ]);
+        }
+        
+    }
+
     /**
      * Creates a new Baohong model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -82,7 +108,6 @@ class BaohongController extends Controller
 
             if ($model->load(Yii::$app->request->post())) {
                 $model->user_id = 1;
-                $model->nhanvien_xl_id = 1;
                 $model->nhanvien_xl_id = 1;
                 $model->save();
                 $log = new ActivitiesLog;
@@ -169,4 +194,5 @@ class BaohongController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
 }
