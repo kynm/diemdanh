@@ -39,7 +39,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     'ten_kh',
                     'diachi',
-                    'so_dt',
+                    [
+                        'attribute' => 'so_dt',
+                        'value' => Html::a($model->so_dt,"tel:".$model->so_dt),
+                        'format' => 'raw',
+                    ],
                     'noidung',
                 ],
             ]) ?>
