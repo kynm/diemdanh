@@ -73,14 +73,9 @@ class BaohongSearch extends Baohong
             $query->andFilterWhere(['nhanvien_id' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN]);
         }
 
-        // $query->andFilterWhere(['like', 'MA_NHANVIEN', $this->MA_NHANVIEN])
-        //     ->andFilterWhere(['like', 'TEN_NHANVIEN', $this->TEN_NHANVIEN])
-        //     ->andFilterWhere(['like', 'donvi.TEN_DONVI', $this->ID_DONVI])
-        //     ->andFilterWhere(['like', 'daivt.TEN_DAIVT', $this->ID_DAI])
-        //     ->andFilterWhere(['like', 'CHUC_VU', $this->ten_kh])
-        //     ->andFilterWhere(['like', 'DIEN_THOAI', $this->DIEN_THOAI])
-        //     ->andFilterWhere(['like', 'GHI_CHU', $this->GHI_CHU])
-        //     ->andFilterWhere(['like', 'USER_NAME', $this->USER_NAME]);
+        $query->andFilterWhere(['like', 'baohong.ten_kh', $this->ten_kh]);
+        $query->andFilterWhere(['like', 'baohong.so_dt', $this->so_dt]);
+        $query->andFilterWhere(['like', 'baohong.diachi', $this->diachi]);
 
         $query->orderBy([
             'ngay_xl' => SORT_ASC,
