@@ -30,7 +30,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     [
                         'attribute' => 'status',
-                        'value' => statusbaohong()[$model->status],
+                        'value' => Html::button(statusbaohong()[$model->status], ['class' => 'btn btn-primary']),
+                        'format' => 'raw',
                     ],
                     [
                         'attribute' => 'dichvu_id',

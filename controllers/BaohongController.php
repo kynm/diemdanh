@@ -122,7 +122,7 @@ class BaohongController extends Controller
             $model->donvi_id = Yii::$app->user->identity->nhanvien->ID_DONVI;
 
             if ($model->load(Yii::$app->request->post())) {
-                $message = '<pre><b>' . Yii::$app->user->identity->nhanvien->TEN_NHANVIEN. '</b></pre>' . ' đã yêu cầu xử lý' . PHP_EOL;
+                $message = '<pre><b>' . Yii::$app->user->identity->nhanvien->TEN_NHANVIEN. '</b></pre>' . ' đã tạo báo hỏng' . PHP_EOL;
                 $model->nhanvien_id = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
                 $model->nhanvien_xl_id = 1;
                 $model->save();

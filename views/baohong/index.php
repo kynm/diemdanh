@@ -27,31 +27,27 @@ $this->params['breadcrumbs'][] = $this->title;
                     // ],
                     'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
-                        [
-                            'attribute' => 'donvi_id',
-                            'value' => 'iDDONVI.TEN_DONVI'
-                        ],
-                        [
-                            'attribute' => 'dai_id',
-                            'value' => 'iDDAI.TEN_DAIVT'
-                        ],
-                        
-                        'ten_kh',
-                        'diachi',
-                        'so_dt',
-                        'ngay_bh',
-                        'ngay_xl',
                         ['class' => 'yii\grid\ActionColumn',
                             'template' => '{view} {xulybaohong}',
                             'buttons' => [
                                 'xulybaohong' => function ($url, $model) {
-                                    return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
-                                                'title' => Yii::t('app', 'lead-update'),
+                                    return Html::a('<span class="glyphicon glyphicon-pencil">Xử lý</span>', $url, [
+                                        'title' => Yii::t('app', 'lead-update'),
                                     ]);
                                 },
 
                             ],
                         ],
+                        [
+                            'attribute' => 'donvi_id',
+                            'value' => 'iDDONVI.TEN_DONVI'
+                        ],
+                        'ten_kh',
+                        'diachi',
+                        'so_dt',
+                        'ngay_bh',
+                        'ngay_xl',
+                        
                     ],
                 ]); ?>
             <?php Pjax::end(); ?>
