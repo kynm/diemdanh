@@ -4,15 +4,14 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\Donvi;
+use app\models\Dichvu;
+use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Donvi */
 /* @var $form yii\widgets\ActiveForm */
 $dsDonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', [2,3,4,5,6,7]])->all(), 'ID_DONVI', 'TEN_DONVI');
-$dsDichvu = [
-    1 => 'Fiber',
-    2 => 'MyTV',
-];
+$dsDichvu = ArrayHelper::map(Dichvu::find()->all(), 'id', 'ten_dv');
 ?>
 <div class="donvi-form">
     <?php $form = ActiveForm::begin(); ?>
@@ -20,12 +19,24 @@ $dsDichvu = [
         <div class="box-body">
             <div class="row">
                 <div class="col-md-4">
-                    <?= $form->field($model, 'donvi_id')->dropDownList($dsDonvi,['prompt' => 'Chọn đơn vị chủ quản']
-                    ) ?>
+                    <?= $form->field($model, 'donvi_id')->widget(Select2::classname(), [
+                        'data' => $dsDonvi,
+                        'pluginOptions' => [
+                            'placeholder' => 'Chọn đơn vị chủ quản',
+                            'allowClear' => true,
+                            // 'multiple' => true
+                        ],
+                    ]); ?>
                 </div>
                 <div class="col-md-4">
-                    <?= $form->field($model, 'dichvu_id')->dropDownList($dsDichvu,['prompt' => 'Chọn dịch vụ']
-                    ) ?>
+                    <?= $form->field($model, 'dichvu_id')->widget(Select2::classname(), [
+                        'data' => $dsDichvu,
+                        'pluginOptions' => [
+                            'placeholder' => 'Chọn dịch vụ',
+                            'allowClear' => true,
+                            // 'multiple' => true
+                        ],
+                    ]); ?>
                 </div>
                 <div class="col-md-12">
                     <?= $form->field($model, 'ten_kh')->textInput(['maxlength' => true]) ?>
