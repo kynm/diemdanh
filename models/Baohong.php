@@ -121,4 +121,9 @@ class Baohong extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Dichvu::className(), ['id' => 'dichvu_id']);
     }
+
+    public function getNguyennhan()
+    {
+        return $this->hasOne(Nguyennhan::className(), ['id' => 'nguyennhan_id']);
+    }
 }

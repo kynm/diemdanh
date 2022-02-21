@@ -91,6 +91,7 @@ class BaohongController extends Controller
             $message .= 'ĐC: <pre>' . $model->diachi . '</pre>' . PHP_EOL;
             $message .= 'Nội dung: <pre>' . $model->noidung . PHP_EOL;
             $message .= '</pre>Ghi chú: <pre>' . $model->ghichu . PHP_EOL;
+            $message .= '</pre>Nguyên nhân: <pre>' . ($model->nguyennhan ? $model->nguyennhan->nguyennhan : '') . PHP_EOL;
             $message .= '</pre> <a href="' . Url::to(['baohong/view', 'id' => $model->id], true) . '">Chi tiết</a>';
             $log = new ActivitiesLog;
             $log->activity_type = 'capnhatxuly-baohong';

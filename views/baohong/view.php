@@ -45,6 +45,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         'format' => 'raw',
                     ],
                     'noidung',
+                    [
+                        'attribute' => 'nguyennhan_id',
+                        'value' => $model->nguyennhan ? $model->nguyennhan->nguyennhan : '',
+                    ],
                 ],
             ]) ?>
             <?php if (Yii::$app->user->can('dmdv-xlbaohong')): ?>
