@@ -83,7 +83,8 @@ class BaohongSearch extends Baohong
         //     ->andFilterWhere(['like', 'USER_NAME', $this->USER_NAME]);
 
         $query->orderBy([
-          'id'=>SORT_DESC,
+            'ngay_xl' => SORT_ASC,
+            'id'=>SORT_DESC,
         ]);
         return $dataProvider;
     }
