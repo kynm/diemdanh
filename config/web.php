@@ -62,18 +62,10 @@ $config = [
                 ],
             ],
         ],
-        // 'i18n' => [
-        //     'translations' => [
-        //     'app*' => [
-        //         'class' => 'yii\i18n\PhpMessageSource',
-        //         'basePath' => '@app/messages',
-        //         // 'sourceLanguage' => 'en_US',
-        //         'fileMap' => [
-        //             'app' => 'app.php'
-        //             ],
-        //         ],
-        //     ],
-        // ],
+        'telegram' => [
+            'class' => 'aki\telegram\Telegram',
+            'botToken' => '1694558864:AAF3PSSRvWlI3iVsdu8_bZDuguCF2ziLnMs',
+        ],
         'db' => $db,
         'db_sms' => $db_sms,
 

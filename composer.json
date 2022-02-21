@@ -37,13 +37,13 @@
         "2amigos/yii2-chartjs-widget": "~2.0",
         "kartik-v/yii2-export": "dev-master",
         "moonlandsoft/yii2-phpexcel": "*",
-        "sfedosimov/yii2-oci8pdo": "*",
         "markbaker/matrix": "^1.2",
                 "yiisoft/yii2-debug": "~2.0.0",
         "yiisoft/yii2-gii": "~2.0.0",
         "phpoffice/phpspreadsheet": "^1.10",
         "kartik-v/yii2-widget-fileinput": "@dev",
-        "2amigos/yii2-google-maps-library": "*"
+        "2amigos/yii2-google-maps-library": "*",
+        "aki/yii2-bot-telegram": "^3.1"
     },
     "require-dev": {
         "yiisoft/yii2-faker": "~2.0.0",
@@ -82,9 +82,5 @@
                 "config/web.php"
             ]
         }
-    },
-    "repositories": [{
-        "type": "vcs",
-        "url": "https://github.com/sfedosimov/yii2-oci8pdo.git"
-    }]
+    }
 }

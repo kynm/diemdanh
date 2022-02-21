@@ -17,9 +17,7 @@ use app\models\Thietbitram;
           <!-- Sidebar toggle button-->
           <ul class="nav navbar-nav">
             <li><a href="<?= Url::to(['/'])?>">Dashboard</a></li>
-              <?php if (Yii::$app->user->can('baohong')) {?>
               <li><a href="<?= Url::to(['baohong/index'])?>">Báo hỏng</a></li>
-              <?php }?>
             </ul>
           <!-- Navbar Right Menu -->
           <div class="navbar-custom-menu">

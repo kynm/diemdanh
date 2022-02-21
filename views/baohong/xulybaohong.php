@@ -27,14 +27,17 @@ $this->params['breadcrumbs'][] = $this->title;
                         'value' => $model->iDDONVI->TEN_DONVI,
                     ],
                     [
-                        'attribute' => 'user_id',
+                        'attribute' => 'nhanvien_id',
                         'value' => $model->nHANVIEN->TEN_NHANVIEN,
                     ],
                     [
                         'attribute' => 'nhanvien_xl_id',
                         'value' => $model->nHANVIENXULY->TEN_NHANVIEN,
                     ],
-                    'status',
+                    [
+                        'attribute' => 'status',
+                        'value' => statusbaohong()[$model->status],
+                    ],
                     [
                         'attribute' => 'dichvu_id',
                         'value' => $model->dichvu->ten_dv,

@@ -20,4 +20,23 @@
         return $angle * $earthRadius;
         // return number_format($angle * $earthRadius);
     }
+
+    function sendtelegrammessage($chatId, $message = 'Test text')
+    {
+        \Yii::$app->telegram->sendMessage([
+        'chat_id' => $chatId,
+        'text' => $message,
+        'parse_mode' => 'HTML',
+    ]);
+    }
+
+    function statusbaohong()
+    {
+        return [
+            0 => 'Chờ tiếp nhận',
+            1 => 'Báo sai',
+            2 => 'Đang xử lý',
+            3 => 'Đã xử lý',
+        ];
+    }
 ?>

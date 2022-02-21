@@ -28,13 +28,23 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'nhanvien_xl_id',
                         'value' => $model->nHANVIENXULY->TEN_NHANVIEN,
                     ],
-                    'dichvu_id',
+                    [
+                        'attribute' => 'status',
+                        'value' => statusbaohong()[$model->status],
+                    ],
+                    [
+                        'attribute' => 'dichvu_id',
+                        'value' => $model->dichvu->ten_dv,
+                    ],
                     'ten_kh',
                     'diachi',
                     'so_dt',
                     'noidung',
                 ],
             ]) ?>
+            <?php if (Yii::$app->user->can('dmdv-xlbaohong')): ?>
+                <?=  Html::a('Xử lý báo hỏng', ['xulybaohong', 'id' => $model->id], ['class' => 'btn btn-primary btn-flat']) ?>
+            <?php endif; ?>
         </div>
     </div>
 </div>

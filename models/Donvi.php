@@ -92,4 +92,9 @@ class Donvi extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Nhanvien::className(), ['ID_DONVI' => 'ID_DONVI']);
     }
+
+    public function getChatid()
+    {
+        return $this->telegram_id ? $this->telegram_id : '-1001641206920';
+    }
 }

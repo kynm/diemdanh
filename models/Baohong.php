@@ -41,8 +41,8 @@ class Baohong extends \yii\db\ActiveRecord
     {
         return [
             [['donvi_id','dichvu_id','ten_kh', 'so_dt', 'diachi', 'noidung'], 'required'],
-            [['user_id', 'donvi_id', 'nhanvien_xl_id', 'dichvu_id'], 'integer'],
-            [['ten_kh'], 'string', 'max' => 20],
+            [['nhanvien_id', 'donvi_id', 'nhanvien_xl_id', 'dichvu_id'], 'integer'],
+            [['ten_kh'], 'string', 'max' => 50],
             [['diachi'], 'string', 'max' => 200],
             [['so_dt'], 'string', 'max' => 11],
             [['noidung'], 'string', 'max' => 500],
@@ -59,7 +59,7 @@ class Baohong extends \yii\db\ActiveRecord
         return [
             'donvi_id' => 'Trung tâm viễn thông',
             'nhanvien_xl_id' => 'Nhân viên xử lý',
-            'user_id' => 'Nhân viên phản ánh',
+            'nhanvien_id' => 'Nhân viên phản ánh',
             'dichvu_id' => 'Dịch vụ phản ánh',
             'ten_kh' => 'Tên khách hàng',
             'so_dt' => 'Số điện thoại',
@@ -92,7 +92,7 @@ class Baohong extends \yii\db\ActiveRecord
      */
     public function getNHANVIEN()
     {
-        return $this->hasOne(Nhanvien::className(), ['ID_NHANVIEN' => 'user_id']);
+        return $this->hasOne(Nhanvien::className(), ['ID_NHANVIEN' => 'nhanvien_id']);
     }
 
     public function getNHANVIENXULY()

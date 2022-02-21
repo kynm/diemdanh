@@ -18,7 +18,7 @@ class BaohongSearch extends Baohong
     public function rules()
     {
         return [
-            [['user_id', 'nhanvien_xl_id'], 'integer'],
+            [['nhanvien_id', 'nhanvien_xl_id'], 'integer'],
             [['ten_kh', 'diachi', 'so_dt'], 'safe'],
         ];
     }
@@ -48,7 +48,13 @@ class BaohongSearch extends Baohong
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-
+        $iddv = [];
+        if (Yii::$app->user->can('Administrator')) {
+            $iddv = [2,3,4,5,6,7];
+        }
+        if (Yii::$app->user->can('dmdv-xlbaohong')) {
+            $iddv = [Yii::$app->user->identity->nhanvien->ID_DONVI];
+        }
         $this->load($params);
 
         if (!$this->validate()) {
@@ -58,12 +64,14 @@ class BaohongSearch extends Baohong
         }
 
         $query->joinWith('iDDONVI');
-        $query->joinWith('iDDAI');
+        // $query->joinWith('iDDAI');
 
         // // grid filtering conditions
-        // $query->andFilterWhere([
-        //     'ID_NHANVIEN' => $this->ID_NHANVIEN,
-        // ]);
+        if (Yii::$app->user->can('Administrator') || Yii::$app->user->can('dmdv-xlbaohong')) {
+            $query->andFilterWhere(['in', 'donvi_id', $iddv]);
+        } else {
+            $query->andFilterWhere(['nhanvien_id' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN]);
+        }
 
         // $query->andFilterWhere(['like', 'MA_NHANVIEN', $this->MA_NHANVIEN])
         //     ->andFilterWhere(['like', 'TEN_NHANVIEN', $this->TEN_NHANVIEN])
@@ -74,6 +82,9 @@ class BaohongSearch extends Baohong
         //     ->andFilterWhere(['like', 'GHI_CHU', $this->GHI_CHU])
         //     ->andFilterWhere(['like', 'USER_NAME', $this->USER_NAME]);
 
+        $query->orderBy([
+          'id'=>SORT_DESC,
+        ]);
         return $dataProvider;
     }
 }

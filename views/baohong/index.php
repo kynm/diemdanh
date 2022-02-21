@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="nhanvien-index">
     <p>
-        <?= (Yii::$app->user->can('Administrator')) ? Html::a('<i class="fa fa-plus"></i> Báo hỏng', ['create'], ['class' => 'btn btn-primary btn-flat']) : '' ?>
+        <?= (Yii::$app->user->can('create-baohong')) ? Html::a('<i class="fa fa-plus"></i> Báo hỏng', ['create'], ['class' => 'btn btn-primary btn-flat']) : '' ?>
     </p>
     <div class="box box-primary">
         <div class="box-body">

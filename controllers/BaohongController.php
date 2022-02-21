@@ -18,6 +18,7 @@ use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
+use yii\helpers\Url;
 
 /**
  * BaohongController implements the CRUD actions for Baohong model.
@@ -74,17 +75,31 @@ class BaohongController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $params = Yii::$app->request->post();
             $model->status = $params['Baohong']['status'];
+            $message = '<pre><b>' . Yii::$app->user->identity->nhanvien->TEN_NHANVIEN . '</b></pre>';
             if (in_array($model->status, [1,3])) {
                 $model->ngay_xl = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d H:i:s');
+                $message .= ' ' . statusbaohong()[$model->status] . PHP_EOL;
+            } else {
+                $message .= ' Cập nhật xử lý' . PHP_EOL;
+
             }
             $model->ghichu = $params['Baohong']['ghichu'];
             $model->save(false);
+            $message .= 'DV: <pre>' . $model->dichvu->ten_dv . '</pre>' . PHP_EOL;
+            $message .= 'KH: <pre>' . $model->ten_kh . '</pre>' . PHP_EOL;
+            $message .= 'SĐT: <u>' . $model->so_dt . '</u>' . PHP_EOL;
+            $message .= 'ĐC: <pre>' . $model->diachi . '</pre>' . PHP_EOL;
+            $message .= 'Nội dung: <pre>' . $model->noidung . PHP_EOL;
+            $message .= '</pre>Ghi chú: <pre>' . $model->ghichu . PHP_EOL;
+            $message .= '</pre> <a href="' . Url::to(['baohong/view', 'id' => $model->id], true) . '">Chi tiết</a>';
             $log = new ActivitiesLog;
             $log->activity_type = 'capnhatxuly-baohong';
-            $log->description = Yii::$app->user->identity->nhanvien->TEN_NHANVIEN." đã cập nhật báo hỏng ". $model->ten_kh;
+            $log->description = $message;
             $log->user_id = Yii::$app->user->identity->id;
             $log->create_at = time();
             $log->save();
+            $donvi = Donvi::findOne($model->donvi_id);
+            sendtelegrammessage($donvi->chatid, $message);
             return $this->redirect(['index']);
         } else {
             return $this->render('xulybaohong', [
@@ -104,18 +119,27 @@ class BaohongController extends Controller
         if (Yii::$app->user->can('create-baohong')) {
             $model = new Baohong();
             $model->dichvu_id = 1;
-            $model->donvi_id = 2;
+            $model->donvi_id = Yii::$app->user->identity->nhanvien->ID_DONVI;
 
             if ($model->load(Yii::$app->request->post())) {
-                $model->user_id = 1;
+                $message = '<pre><b>' . Yii::$app->user->identity->nhanvien->TEN_NHANVIEN. '</b></pre>' . ' đã yêu cầu xử lý' . PHP_EOL;
+                $model->nhanvien_id = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
                 $model->nhanvien_xl_id = 1;
                 $model->save();
+                $message .= 'DV: <pre>' . $model->dichvu->ten_dv . '</pre>' . PHP_EOL;
+                $message .= 'KH: <pre>' . $model->ten_kh . '</pre>' . PHP_EOL;
+                $message .= 'SĐT: <u>' . $model->so_dt . '</u>' . PHP_EOL;
+                $message .= 'ĐC: <pre>' . $model->diachi . '</pre>' . PHP_EOL;
+                $message .= 'Nội dung: <pre>' . $model->noidung . '</pre>' . PHP_EOL;
+                $message .= '<a href="' . Url::to(['baohong/view', 'id' => $model->id], true) . '">Chi tiết</a>';
                 $log = new ActivitiesLog;
                 $log->activity_type = 'create-baohong';
-                $log->description = Yii::$app->user->identity->nhanvien->TEN_NHANVIEN." đã thêm báo hỏng ". $model->ten_kh;
+                $log->description = $message;
                 $log->user_id = Yii::$app->user->identity->id;
                 $log->create_at = time();
                 $log->save();
+                $donvi = Donvi::findOne($model->donvi_id);
+                sendtelegrammessage($donvi->chatid, $message);
                 return $this->redirect(['index']);
             } else {
                 return $this->render('create', [

@@ -8,12 +8,7 @@ use app\models\Donvi;
 /* @var $this yii\web\View */
 /* @var $model app\models\Donvi */
 /* @var $form yii\widgets\ActiveForm */
-$dsTrangthai = [
-    0 => 'Chờ tiếp nhận',
-    1 => 'Báo sai',
-    2 => 'Đang xử lý',
-    3 => 'Đã xử lý',
-];
+
 ?>
 <div class="donvi-form">
     <?php $form = ActiveForm::begin(); ?>
@@ -21,7 +16,7 @@ $dsTrangthai = [
         <div class="box-body">
             <div class="row">
                 <div class="col-md-4">
-                    <?= $form->field($model, 'status')->dropDownList($dsTrangthai,['prompt' => 'Chọn trạng thái xử lý']
+                    <?= $form->field($model, 'status')->dropDownList(statusbaohong(),['prompt' => 'Chọn trạng thái xử lý']
                     ) ?>
                 </div>
                 <div class="col-md-8">

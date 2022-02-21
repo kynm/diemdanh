@@ -529,7 +529,7 @@ class DotbaoduongController extends Controller
         }
         if (Yii::$app->user->can('Administrator')) {
             $dotbd->TRANGTHAI = 'dangthuchien';
-                $dotbd->save(false);
+            $dotbd->save(false);
         }
         return $this->redirect(Yii::$app->request->referrer);
     }

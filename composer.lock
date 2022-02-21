@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "69f7d48b70e6ceda5b6cd3584fd06811",
+    "content-hash": "d68969f300aa68fbf4bcf9b02ab39e82",
     "packages": [
         {
             "name": "2amigos/yii2-chartjs-widget",
@@ -180,6 +180,48 @@
                 "yii"
             ],
             "time": "2019-04-15T16:51:02+00:00"
+        },
+        {
+            "name": "aki/yii2-bot-telegram",
+            "version": "3.1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/akbarjoudi/yii2-bot-telegram.git",
+                "reference": "308c7386bac56db3fe29806398f6f9a6fd74524e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/akbarjoudi/yii2-bot-telegram/zipball/308c7386bac56db3fe29806398f6f9a6fd74524e",
+                "reference": "308c7386bac56db3fe29806398f6f9a6fd74524e",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "guzzlehttp/guzzle": "*",
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "aki\\telegram\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0+"
+            ],
+            "authors": [
+                {
+                    "name": "akbarjoudi",
+                    "email": "akbar.joody@gmail.ocm"
+                }
+            ],
+            "description": "bot telegram",
+            "keywords": [
+                "extension",
+                "yii2"
+            ],
+            "time": "2022-02-13T06:51:16+00:00"
         },
         {
             "name": "almasaeed2010/adminlte",
@@ -3392,50 +3434,6 @@
             "time": "2020-04-28T12:40:35+00:00"
         },
         {
-            "name": "sfedosimov/yii2-oci8pdo",
-            "version": "v1.0.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sfedosimov/yii2-oci8pdo.git",
-                "reference": "6add1d706ea70c96334b0b5892486ce685d4cd31"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sfedosimov/yii2-oci8pdo/zipball/6add1d706ea70c96334b0b5892486ce685d4cd31",
-                "reference": "6add1d706ea70c96334b0b5892486ce685d4cd31",
-                "shasum": ""
-            },
-            "require": {
-                "yiisoft/yii2": "*"
-            },
-            "type": "yii2-extension",
-            "autoload": {
-                "psr-4": {
-                    "sfedosimov\\oci8pdo\\": ""
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Sergey Fedosimov",
-                    "email": "sfedosimov@gmail.com"
-                }
-            ],
-            "description": "Emulation of the PDO driver by means of OCI8",
-            "keywords": [
-                "oci8",
-                "pdo",
-                "yii2"
-            ],
-            "support": {
-                "email": "sfedosimov@gmail.com",
-                "issues": "https://github.com/sfedosimov/yii2-oci8pdo/issues"
-            },
-            "time": "2015-10-16T08:19:27+00:00"
-        },
-        {
             "name": "swiftmailer/swiftmailer",
             "version": "v5.4.12",
             "source": {
@@ -3487,6 +3485,7 @@
                 "mail",
                 "mailer"
             ],
+            "abandoned": "symfony/mailer",
             "time": "2018-07-31T09:26:32+00:00"
         },
         {
@@ -4599,6 +4598,7 @@
                 "faker",
                 "fixtures"
             ],
+            "abandoned": true,
             "time": "2019-12-12T13:22:17+00:00"
         },
         {
@@ -5164,6 +5164,7 @@
             "keywords": [
                 "tokenizer"
             ],
+            "abandoned": true,
             "time": "2019-09-17T06:23:10+00:00"
         },
         {
@@ -5864,6 +5865,50 @@
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
             "homepage": "https://github.com/sebastianbergmann/version",
             "time": "2016-10-03T07:35:21+00:00"
+        },
+        {
+            "name": "sfedosimov/yii2-oci8pdo",
+            "version": "v1.0.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sfedosimov/yii2-oci8pdo.git",
+                "reference": "6add1d706ea70c96334b0b5892486ce685d4cd31"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sfedosimov/yii2-oci8pdo/zipball/6add1d706ea70c96334b0b5892486ce685d4cd31",
+                "reference": "6add1d706ea70c96334b0b5892486ce685d4cd31",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "sfedosimov\\oci8pdo\\": ""
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sergey Fedosimov",
+                    "email": "sfedosimov@gmail.com"
+                }
+            ],
+            "description": "Emulation of the PDO driver by means of OCI8",
+            "keywords": [
+                "oci8",
+                "pdo",
+                "yii2"
+            ],
+            "support": {
+                "email": "sfedosimov@gmail.com",
+                "issues": "https://github.com/sfedosimov/yii2-oci8pdo/issues"
+            },
+            "time": "2015-10-16T08:19:27+00:00"
         },
         {
             "name": "symfony/browser-kit",
@@ -6632,12 +6677,12 @@
             "version": "1.8.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/webmozart/assert.git",
+                "url": "https://github.com/webmozarts/assert.git",
                 "reference": "ab2cb0b3b559010b75981b1bdce728da3ee90ad6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmozart/assert/zipball/ab2cb0b3b559010b75981b1bdce728da3ee90ad6",
+                "url": "https://api.github.com/repos/webmozarts/assert/zipball/ab2cb0b3b559010b75981b1bdce728da3ee90ad6",
                 "reference": "ab2cb0b3b559010b75981b1bdce728da3ee90ad6",
                 "shasum": ""
             },
