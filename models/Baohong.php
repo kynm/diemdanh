@@ -41,7 +41,7 @@ class Baohong extends \yii\db\ActiveRecord
     {
         return [
             [['donvi_id','dichvu_id','ten_kh', 'so_dt', 'diachi', 'noidung'], 'required'],
-            [['nhanvien_id', 'donvi_id', 'nhanvien_xl_id', 'dichvu_id'], 'integer'],
+            [['nhanvien_id', 'donvi_id', 'nhanvien_xl_id', 'dichvu_id', 'nguyennhan_id'], 'integer'],
             [['ten_kh'], 'string', 'max' => 50],
             [['diachi'], 'string', 'max' => 200],
             [['so_dt'], 'string', 'max' => 11],
@@ -68,6 +68,7 @@ class Baohong extends \yii\db\ActiveRecord
             'diachi' => 'Địa chỉ',
             'status' => 'Trạng thái',
             'ghichu' => 'Ghi chú',
+            'nguyennhan_id' => 'Nguyên nhân',
         ];
     }
 

@@ -78,13 +78,14 @@ class SiteController extends Controller
         if (Yii::$app->user->isGuest) {
             return $this->redirect(['login']);
         } else {
+            $dsbaohongdaxl = Yii::$app->db->createCommand('SELECT b.TEN_DONVI, COUNT(*) SO_LUONG FROM baohong a, donvi b where a.donvi_id = b.ID_DONVI and a.status in (1,3) GROUP BY b.TEN_DONVI')->queryAll();
+            $dsbaohongchuaxl = Yii::$app->db->createCommand('SELECT b.TEN_DONVI, COUNT(*) SO_LUONG FROM baohong a, donvi b where a.donvi_id = b.ID_DONVI and a.status in (0,2) GROUP BY b.TEN_DONVI')->queryAll();
+            // die(var_dump($dsbaohongdaxl));
             return $this->render('index'
-                // ,[
-                // 'searchModel' => $searchModel,
-                // 'dataProvider' => $dataProvider,
-                // 'data' => $data,
-                // 'bdt' => $bdt
-                // ]
+                ,[
+                'dsbaohongdaxl' => $dsbaohongdaxl,
+                'dsbaohongchuaxl' => $dsbaohongchuaxl,
+                ]
             ); 
         }
         // return $this->render('index');

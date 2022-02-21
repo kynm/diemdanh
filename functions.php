@@ -23,11 +23,12 @@
 
     function sendtelegrammessage($chatId, $message = 'Test text')
     {
+        return 1;
         \Yii::$app->telegram->sendMessage([
-        'chat_id' => $chatId,
-        'text' => $message,
-        'parse_mode' => 'HTML',
-    ]);
+            'chat_id' => $chatId,
+            'text' => $message,
+            'parse_mode' => 'HTML',
+        ]);
     }
 
     function statusbaohong()

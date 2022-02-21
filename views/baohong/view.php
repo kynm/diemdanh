@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'value' => $model->iDDONVI->TEN_DONVI,
                     ],
                     [
-                        'attribute' => 'user_id',
+                        'attribute' => 'nhanvien_id',
                         'value' => $model->nHANVIEN->TEN_NHANVIEN,
                     ],
                     [
