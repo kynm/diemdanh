@@ -29,7 +29,7 @@ use yii\helpers\Url;
                 <ul class="nav navbar-nav">
                     <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-                        <span class="hidden-xs"><?= Yii::$app->user->identity->nhanvien->TEN_NHANVIEN ?></span>
+                        <span><?= Yii::$app->user->identity->nhanvien->TEN_NHANVIEN ?></span>
                     </a>
                     <ul class="dropdown-menu">
                         <li class="user-footer">

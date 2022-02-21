@@ -22,7 +22,7 @@ use app\models\Tramvt;
 /* @var $searchModel app\models\DotbaoduongSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Dashboard';
+$this->title = '443 HNM';
 ?>
 <div class="index">
     <div class="row">
