@@ -93,7 +93,8 @@ class BaohongController extends Controller
             $model->ghichu = $params['Baohong']['ghichu'];
             $model->nv_thaotac_xl = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
             $model->save(false);
-            $message .= 'NVKT: <u>' . $model->nHANVIENXULY->TEN_NHANVIEN . '</u>. SĐT:<u> ' . $model->nHANVIENXULY->DIEN_THOAI . '</u>' . PHP_EOL;
+            $message .= 'NV Báo hỏng: <u>' . $model->nHANVIEN->TEN_NHANVIEN . '</u>. SĐT:<u> ' . $model->nHANVIEN->DIEN_THOAI . '</u>' . PHP_EOL;
+            $message .= 'NV Kỹ thuật: <u>' . $model->nHANVIENXULY->TEN_NHANVIEN . '</u>. SĐT:<u> ' . $model->nHANVIENXULY->DIEN_THOAI . '</u>' . PHP_EOL;
             $message .= 'DV: <u>' . $model->tendsdichvu . '</u>' . PHP_EOL;
             $message .= 'KH: <u>' . $model->ten_kh . '</u> (<u> ' . $model->ma_tb . ' </u>) SĐT: <u>' . $model->so_dt . '</u>' . PHP_EOL;
             $message .= 'ĐC: <u>' . $model->diachi . '</u>' . PHP_EOL;
@@ -134,6 +135,7 @@ class BaohongController extends Controller
             $model->ghichu = $params['Baohong']['ghichu'];
             $model->nv_thaotac_xl = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
             $model->save(false);
+            $message .= 'NV Báo hỏng: <u>' . $model->nHANVIEN->TEN_NHANVIEN . '</u>. SĐT:<u> ' . $model->nHANVIEN->DIEN_THOAI . '</u>' . PHP_EOL;
             $message .= 'NVKT: <u>' . $model->nHANVIENXULY->TEN_NHANVIEN . '</u>. SĐT:<u> ' . $model->nHANVIENXULY->DIEN_THOAI . '</u>' . PHP_EOL;
             $message .= 'DV: <u>' . $model->tendsdichvu . '</u>' . PHP_EOL;
             $message .= 'KH: <u>' . $model->ten_kh . '</u> (<u> ' . $model->ma_tb . ' </u>) SĐT: <u>' . $model->so_dt . '</u>' . PHP_EOL;
@@ -180,6 +182,7 @@ class BaohongController extends Controller
                     $dv->baohong_id = $model->id;
                     $dv->save(false);
                 }
+                $message .= 'NV Báo hỏng: <u>' . $model->nHANVIEN->TEN_NHANVIEN . '</u>. SĐT:<u> ' . $model->nHANVIEN->DIEN_THOAI . '</u>' . PHP_EOL;
                 $message = '<u><b>' . Yii::$app->user->identity->nhanvien->TEN_NHANVIEN. '</b></u>' . ' TẠO BÁO HỎNG' . PHP_EOL;
                 $message .= 'NVKT: <u>' . $model->nHANVIENXULY->TEN_NHANVIEN . '</u>. SĐT:<u> ' . $model->nHANVIENXULY->DIEN_THOAI . '</u>' . PHP_EOL;
                 $message .= 'DV: <u>' . $model->tendsdichvu . '</u>' . PHP_EOL;
