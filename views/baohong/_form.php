@@ -34,12 +34,25 @@ $dsDichvu = ArrayHelper::map(Dichvu::find()->all(), 'id', 'ten_dv');
                         'pluginOptions' => [
                             'placeholder' => 'Chọn dịch vụ',
                             'allowClear' => true,
+                            'multiple' => true
+                        ],
+                    ]); ?>
+                </div>
+                <div class="col-md-4">
+                    <?= $form->field($model, 'nhanvien_xl_id')->widget(Select2::classname(), [
+                        'data' => $dsNhanvien,
+                        'pluginOptions' => [
+                            'placeholder' => 'Chọn nhân viên',
+                            'allowClear' => true,
                             // 'multiple' => true
                         ],
                     ]); ?>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-6">
                     <?= $form->field($model, 'ten_kh')->textInput(['maxlength' => true]) ?>
+                </div>
+                <div class="col-md-6">
+                    <?= $form->field($model, 'ma_tb')->textInput(['maxlength' => true]) ?>
                 </div>
                     
                 <div class="col-md-12">

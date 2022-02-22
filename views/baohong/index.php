@@ -39,10 +39,15 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                         ],
                         'ten_kh',
+                        'ma_tb',
                         'diachi',
                         'so_dt',
                         'ngay_bh',
                         'ngay_xl',
+                        [
+                            'attribute' => 'nhanvien_xl_id',
+                            'value' => 'nHANVIENXULY.TEN_NHANVIEN'
+                        ],
                         [
                             'attribute' => 'donvi_id',
                             'value' => 'iDDONVI.TEN_DONVI'

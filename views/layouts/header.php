@@ -37,7 +37,7 @@ use yii\helpers\Url;
                                 <a href="<?= Url::to(['user/edit-profile'])?>" class="btn btn-default btn-flat">Profile</a>
                             </div>
                             <div class="pull-right">
-                                <a href="<?= Url::to(['site/logout'])?>" data-method="post">
+                                <a href="<?= Url::to(['site/logout'])?>" data-method="post" class="btn btn-default btn-flat">
                                     <i class="fa fa-sign-out"></i> Đăng xuất
                                 </a>
                             </div>

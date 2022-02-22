@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "nhanvien".
@@ -21,6 +22,7 @@ use Yii;
  * @property Kehoachbdtb[] $kehoachbdtbs
  * @property Daivt $iDDAI
  * @property Donvi $iDDONVI
+ * @property Donvi $nHANVIENXULY
  * @property Thuchienbd[] $thuchienbds
  * @property Tramvt[] $tramvts
  */
@@ -40,8 +42,8 @@ class Baohong extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['donvi_id','dichvu_id','ten_kh', 'so_dt', 'diachi', 'noidung'], 'required'],
-            [['nhanvien_id', 'donvi_id', 'nhanvien_xl_id', 'dichvu_id', 'nguyennhan_id'], 'integer'],
+            [['donvi_id','dichvu_id','ten_kh', 'so_dt', 'diachi', 'noidung', 'ma_tb', 'nhanvien_xl_id'], 'required'],
+            [['nhanvien_id', 'donvi_id', 'nhanvien_xl_id', 'nguyennhan_id', 'danhgia'], 'integer'],
             [['ten_kh'], 'string', 'max' => 50],
             [['diachi'], 'string', 'max' => 200],
             [['so_dt'], 'string', 'max' => 11],
@@ -58,7 +60,7 @@ class Baohong extends \yii\db\ActiveRecord
     {
         return [
             'donvi_id' => 'Trung tâm viễn thông',
-            'nhanvien_xl_id' => 'Nhân viên xử lý',
+            'nhanvien_xl_id' => 'Nhân viên kỹ thuật',
             'nhanvien_id' => 'Nhân viên phản ánh',
             'dichvu_id' => 'Dịch vụ phản ánh',
             'ten_kh' => 'Tên khách hàng',
@@ -69,6 +71,8 @@ class Baohong extends \yii\db\ActiveRecord
             'status' => 'Trạng thái',
             'ghichu' => 'Ghi chú',
             'nguyennhan_id' => 'Nguyên nhân',
+            'ma_tb' => 'Mã thuê bao',
+            'danhgia' => 'Đánh giá',
         ];
     }
 
@@ -117,13 +121,30 @@ class Baohong extends \yii\db\ActiveRecord
         return $this->hasOne(Donvi::className(), ['ID_DONVI' => 'donvi_id']);
     }
 
-    public function getDichvu()
-    {
-        return $this->hasOne(Dichvu::className(), ['id' => 'dichvu_id']);
-    }
+    // public function getDichvu()
+    // {
+    //     return $this->hasOne(Dichvu::className(), ['id' => 'dichvu_id']);
+    // }
 
     public function getNguyennhan()
     {
         return $this->hasOne(Nguyennhan::className(), ['id' => 'nguyennhan_id']);
+    }
+
+    public function getDichvubaohong()
+    {
+        return $this->hasMany(Dichvubaohong::class, ['baohong_id' => 'id']);
+    }
+
+    public function getDichvu()
+    {
+        return $this->hasMany(Dichvu::class, ['id' => 'dichvu_id'])
+            ->via('dichvubaohong');
+    }
+
+    public function getTendsdichvu()
+    {
+        $dsdv = ArrayHelper::map($this->dichvu, 'id', 'ten_dv');
+        return implode($dsdv, ', ');
     }
 }

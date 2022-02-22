@@ -3,15 +3,15 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Temp;
 use app\models\ActivitiesLog;
 use app\models\AuthAssignment;
 use app\models\User;
 use app\models\Daivt;
 use app\models\Donvi;
-use app\models\Tramvt;
+use app\models\Nhanvien;
 use app\models\Baohong;
 use app\models\BaohongSearch;
+use app\models\Dichvubaohong;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
@@ -76,23 +76,29 @@ class BaohongController extends Controller
             $params = Yii::$app->request->post();
             $model->status = $params['Baohong']['status'];
             $message = '<pre><b>' . Yii::$app->user->identity->nhanvien->TEN_NHANVIEN . '</b></pre>';
-            if (in_array($model->status, [1,3])) {
-                $model->ngay_xl = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d H:i:s');
-                $message .= ' ' . statusbaohong()[$model->status] . PHP_EOL;
-            } else {
-                $message .= ' Cập nhật xử lý' . PHP_EOL;
-
+            switch ($model->status) {
+                case 1:
+                    $message .= ' thông báo KHÁCH HÀNG BÁO SAI' . PHP_EOL;
+                    break;
+                case 3:
+                    $message .= ' đã cập nhật HOÀN THÀNH XỬ LÝ' . PHP_EOL;
+                    $model->ngay_xl = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d H:i:s');
+                    break;
+                
+                default:
+                    $message .= ' ' . statusbaohong()[$model->status] . PHP_EOL;
+                    break;
             }
+
             $model->ghichu = $params['Baohong']['ghichu'];
+            $model->nv_thaotac_xl = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
             $model->save(false);
-            $message .= 'DV: <pre>' . $model->dichvu->ten_dv . '</pre>' . PHP_EOL;
-            $message .= 'KH: <pre>' . $model->ten_kh . '</pre>' . PHP_EOL;
-            $message .= 'SĐT: <u>' . $model->so_dt . '</u>' . PHP_EOL;
-            $message .= 'ĐC: <pre>' . $model->diachi . '</pre>' . PHP_EOL;
-            $message .= 'Nội dung: <pre>' . $model->noidung . PHP_EOL;
-            $message .= '</pre>Ghi chú: <pre>' . $model->ghichu . PHP_EOL;
-            $message .= '</pre>Nguyên nhân: <pre>' . ($model->nguyennhan ? $model->nguyennhan->nguyennhan : '') . PHP_EOL;
-            $message .= '</pre> <a href="' . Url::to(['baohong/view', 'id' => $model->id], true) . '">Chi tiết</a>';
+            $message .= 'NVKT: <u>' . $model->nHANVIENXULY->TEN_NHANVIEN . '</u>. SĐT:<u> ' . $model->nHANVIENXULY->DIEN_THOAI . '</u>' . PHP_EOL;
+            $message .= 'DV: <u>' . $model->tendsdichvu . '</u>' . PHP_EOL;
+            $message .= 'KH: <u>' . $model->ten_kh . '</u> (<u> ' . $model->ma_tb . ' </u>) SĐT: <u>' . $model->so_dt . '</u>' . PHP_EOL;
+            $message .= 'ĐC: <u>' . $model->diachi . '</u>' . PHP_EOL;
+            $message .= 'Nội dung: <u>' . $model->noidung . '</u>' . PHP_EOL;
+            $message .= '<a href="' . Url::to(['baohong/view', 'id' => $model->id], true) . '">Chi tiết</a>';
             $log = new ActivitiesLog;
             $log->activity_type = 'capnhatxuly-baohong';
             $log->description = $message;
@@ -104,6 +110,47 @@ class BaohongController extends Controller
             return $this->redirect(['index']);
         } else {
             return $this->render('xulybaohong', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    public function actionPhanhoixuly($id)
+    {
+        $model = $this->findModel($id);
+        if ($model->load(Yii::$app->request->post())) {
+            $params = Yii::$app->request->post();
+            $model->status = $params['Baohong']['status'];
+            $model->danhgia = $params['Baohong']['danhgia'];
+            $message = '<pre><b>' . Yii::$app->user->identity->nhanvien->TEN_NHANVIEN . '</b></pre>';
+            if ($model->status == 0) {
+                $model->ngay_xl = null;
+                $message .= ' đã cập nhật YÊU CẦU XỬ LÝ LẠI ' . PHP_EOL;
+            } else {
+                $message .= ' đã cập nhật ĐÓNG YÊU CẦU' . PHP_EOL;
+                $message .= ' Độ hài lòng: ' . $model->danhgia . ' SAO' . PHP_EOL;
+
+            }
+            $model->ghichu = $params['Baohong']['ghichu'];
+            $model->nv_thaotac_xl = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
+            $model->save(false);
+            $message .= 'NVKT: <u>' . $model->nHANVIENXULY->TEN_NHANVIEN . '</u>. SĐT:<u> ' . $model->nHANVIENXULY->DIEN_THOAI . '</u>' . PHP_EOL;
+            $message .= 'DV: <u>' . $model->tendsdichvu . '</u>' . PHP_EOL;
+            $message .= 'KH: <u>' . $model->ten_kh . '</u> (<u> ' . $model->ma_tb . ' </u>) SĐT: <u>' . $model->so_dt . '</u>' . PHP_EOL;
+            $message .= 'ĐC: <u>' . $model->diachi . '</u>' . PHP_EOL;
+            $message .= 'Nội dung: <u>' . $model->noidung . '</u>' . PHP_EOL;
+            $message .= '<a href="' . Url::to(['baohong/view', 'id' => $model->id], true) . '">Chi tiết</a>';
+            $log = new ActivitiesLog;
+            $log->activity_type = 'capnhatxuly-baohong';
+            $log->description = $message;
+            $log->user_id = Yii::$app->user->identity->id;
+            $log->create_at = time();
+            $log->save();
+            $donvi = Donvi::findOne($model->donvi_id);
+            sendtelegrammessage($donvi->chatid, $message);
+            return $this->redirect(['index']);
+        } else {
+            return $this->render('phanhoixuly', [
                 'model' => $model,
             ]);
         }
@@ -121,17 +168,24 @@ class BaohongController extends Controller
             $model = new Baohong();
             $model->dichvu_id = 1;
             $model->donvi_id = Yii::$app->user->identity->nhanvien->ID_DONVI;
-
+            $dsNhanvien = ArrayHelper::map(Nhanvien::find()->where(['ID_DONVI' => $model->donvi_id])->all(), 'ID_NHANVIEN', 'TEN_NHANVIEN');
             if ($model->load(Yii::$app->request->post())) {
-                $message = '<pre><b>' . Yii::$app->user->identity->nhanvien->TEN_NHANVIEN. '</b></pre>' . ' đã tạo báo hỏng' . PHP_EOL;
+                $arrdichvu = $model->dichvu_id;
+                $model->dichvu_id = json_encode($arrdichvu);
                 $model->nhanvien_id = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
-                $model->nhanvien_xl_id = 1;
                 $model->save();
-                $message .= 'DV: <pre>' . $model->dichvu->ten_dv . '</pre>' . PHP_EOL;
-                $message .= 'KH: <pre>' . $model->ten_kh . '</pre>' . PHP_EOL;
-                $message .= 'SĐT: <u>' . $model->so_dt . '</u>' . PHP_EOL;
-                $message .= 'ĐC: <pre>' . $model->diachi . '</pre>' . PHP_EOL;
-                $message .= 'Nội dung: <pre>' . $model->noidung . '</pre>' . PHP_EOL;
+                foreach($arrdichvu as $dichvu) {
+                    $dv = new Dichvubaohong();
+                    $dv->dichvu_id = $dichvu;
+                    $dv->baohong_id = $model->id;
+                    $dv->save(false);
+                }
+                $message = '<u><b>' . Yii::$app->user->identity->nhanvien->TEN_NHANVIEN. '</b></u>' . ' TẠO BÁO HỎNG' . PHP_EOL;
+                $message .= 'NVKT: <u>' . $model->nHANVIENXULY->TEN_NHANVIEN . '</u>. SĐT:<u> ' . $model->nHANVIENXULY->DIEN_THOAI . '</u>' . PHP_EOL;
+                $message .= 'DV: <u>' . $model->tendsdichvu . '</u>' . PHP_EOL;
+                $message .= 'KH: <u>' . $model->ten_kh . '</u> (<u> ' . $model->ma_tb . ' </u>) SĐT: <u>' . $model->so_dt . '</u>' . PHP_EOL;
+                $message .= 'ĐC: <u>' . $model->diachi . '</u>' . PHP_EOL;
+                $message .= 'Nội dung: <u>' . $model->noidung . '</u>' . PHP_EOL;
                 $message .= '<a href="' . Url::to(['baohong/view', 'id' => $model->id], true) . '">Chi tiết</a>';
                 $log = new ActivitiesLog;
                 $log->activity_type = 'create-baohong';
@@ -140,24 +194,18 @@ class BaohongController extends Controller
                 $log->create_at = time();
                 $log->save();
                 $donvi = Donvi::findOne($model->donvi_id);
-                sendtelegrammessage($donvi->chatid, $message);
+               sendtelegrammessage($donvi->chatid, $message);
                 return $this->redirect(['index']);
             } else {
                 return $this->render('create', [
                     'model' => $model,
+                    'dsNhanvien' => $dsNhanvien,
                 ]);
             }
-            return $this->render('create', [
-                'model' => $model,
-                // 'authModel' => $authModel,
-                'user' => $user,
-            ]);
         } else {
             # code...
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
-            
         }
-        
     }
 
     /**

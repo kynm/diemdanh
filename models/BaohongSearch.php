@@ -65,12 +65,17 @@ class BaohongSearch extends Baohong
 
         $query->joinWith('iDDONVI');
         // $query->joinWith('iDDAI');
-
         // // grid filtering conditions
         if (Yii::$app->user->can('Administrator') || Yii::$app->user->can('dmdv-xlbaohong')) {
             $query->andFilterWhere(['in', 'donvi_id', $iddv]);
-        } else {
+        }
+
+        if (Yii::$app->user->can('nhanvien-kd-baohong')) {
             $query->andFilterWhere(['nhanvien_id' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN]);
+        }
+
+        if (Yii::$app->user->can('xuly-baohong')) {
+            $query->andFilterWhere(['nhanvien_xl_id' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN]);
         }
 
         $query->andFilterWhere(['like', 'baohong.ten_kh', $this->ten_kh]);

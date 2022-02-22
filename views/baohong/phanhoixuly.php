@@ -11,9 +11,9 @@ $this->params['breadcrumbs'][] = ['label' => 'Báo hỏng', 'url' => ['baohong/i
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="daivt-view">
-    <?php if (in_array($model->status, [0,2])): ?>
+    <?php if (in_array($model->status, [1,3])): ?>
         <div class="xuly-baohong">
-        <?= $this->render('_form_xl_baohong', [
+        <?= $this->render('_form_phanhoi_xl_baohong', [
             'model' => $model,
         ]) ?>
     <?php endif; ?>

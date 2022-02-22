@@ -13,6 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="baohong-create">
     <?= $this->render('_form', [
         'model' => $model,
+        'dsNhanvien' => $dsNhanvien,
     ]) ?>
 
 </div>

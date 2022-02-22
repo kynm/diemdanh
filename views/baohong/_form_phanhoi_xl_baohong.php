@@ -11,10 +11,21 @@ use kartik\select2\Select2;
 /* @var $model app\models\Donvi */
 /* @var $form yii\widgets\ActiveForm */
 $dsNguyennhan = ArrayHelper::map(Nguyennhan::find()->all(), 'id', 'nguyennhan');
+$dsdanhgia = [
+    1 => 'Rất không hài lòng',
+    2 => 'Không hài lòng',
+    3 => 'Bình thường',
+    4 => 'Hài lòng',
+    5 => 'Rất hài lòng',
+];
 $status = statusbaohong();
-unset($status[0]);
-unset($status[4]);
-unset($status[5]);
+$listStatus = [0 => 'Mở lại yêu cầu', 4 => $status[4]];
+if ($model->status == 1) {
+    $listStatus = [0 => 'Mở lại yêu cầu', 5 => $status[5]];
+    $model->status = 5;
+} else {
+    $model->status = 4;
+}
 ?>
 <div class="donvi-form">
     <?php $form = ActiveForm::begin(); ?>
@@ -22,26 +33,13 @@ unset($status[5]);
         <div class="box-body">
             <div class="row">
                 <div class="col-md-2">
-                    <?= $form->field($model, 'status')->widget(Select2::classname(), [
-                        'data' => $status,
-                        'pluginOptions' => [
-                            'placeholder' => 'Chọn trạng thái xử lý',
-                            'allowClear' => true,
-                            // 'multiple' => true
-                        ],
-                    ]); ?>
+                    <?= $form->field($model, 'status')->radioList($listStatus, ['separator'=>'<br/>'])->label('Xử lý yêu cầu'); ?> 
                 </div>
                 <div class="col-md-2">
-                    <?= $form->field($model, 'nguyennhan_id')->widget(Select2::classname(), [
-                        'data' => $dsNguyennhan,
-                        'pluginOptions' => [
-                            'placeholder' => 'Chọn nguyên nhân',
-                            'allowClear' => true,
-                            // 'multiple' => true
-                        ],
-                    ]); ?>
+                    <label class="text text-danger"></label>
+                    <?= $form->field($model, 'danhgia')->radioList($dsdanhgia, ['separator'=>'<br/>']);?> 
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-6">
                     <?= $form->field($model, 'ghichu')->textarea(['rows' => '6']) ?>
                 </div>
             </div>
