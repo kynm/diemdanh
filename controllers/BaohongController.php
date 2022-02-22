@@ -93,12 +93,7 @@ class BaohongController extends Controller
             $model->ghichu = $params['Baohong']['ghichu'];
             $model->nv_thaotac_xl = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
             $model->save(false);
-            $message .= 'NV Báo hỏng: <u>' . $model->nHANVIEN->TEN_NHANVIEN . '</u>. SĐT:<u>' . $model->nHANVIEN->DIEN_THOAI . '</u>' . PHP_EOL;
-            $message .= 'NV Kỹ thuật: <u>' . $model->nHANVIENXULY->TEN_NHANVIEN . '</u>. SĐT:<u>' . $model->nHANVIENXULY->DIEN_THOAI . '</u>' . PHP_EOL;
-            $message .= 'DV: <u>' . $model->tendsdichvu . '</u>' . PHP_EOL;
-            $message .= 'KH: <u>' . $model->ten_kh . '</u> (<u> ' . $model->ma_tb . ' </u>) SĐT: <u>' . $model->so_dt . '</u>' . PHP_EOL;
-            $message .= 'ĐC: <u>' . $model->diachi . '</u>' . PHP_EOL;
-            $message .= 'Nội dung: <u>' . $model->noidung . '</u>' . PHP_EOL;
+            self::tinnhanchung($model, $message);
             $message .= 'Ghi chú xử lý: <u>' . $model->ghichu . '</u>' . PHP_EOL;
             $message .= '<a href="' . Url::to(['baohong/view', 'id' => $model->id], true) . '">Chi tiết</a>';
             $log = new ActivitiesLog;
@@ -136,12 +131,7 @@ class BaohongController extends Controller
             $model->ghichu = $params['Baohong']['ghichu'];
             $model->nv_thaotac_xl = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
             $model->save(false);
-            $message .= 'NV Báo hỏng: <u>' . $model->nHANVIEN->TEN_NHANVIEN . '</u>. SĐT:<u>' . $model->nHANVIEN->DIEN_THOAI . '</u>' . PHP_EOL;
-            $message .= 'NVKT: <u>' . $model->nHANVIENXULY->TEN_NHANVIEN . '</u>. SĐT:<u>' . $model->nHANVIENXULY->DIEN_THOAI . '</u>' . PHP_EOL;
-            $message .= 'DV: <u>' . $model->tendsdichvu . '</u>' . PHP_EOL;
-            $message .= 'KH: <u>' . $model->ten_kh . '</u> (<u> ' . $model->ma_tb . ' </u>) SĐT: <u>' . $model->so_dt . '</u>' . PHP_EOL;
-            $message .= 'ĐC: <u>' . $model->diachi . '</u>' . PHP_EOL;
-            $message .= 'Nội dung: <u>' . $model->noidung . '</u>' . PHP_EOL;
+            self::tinnhanchung($model, $message);
             $message .= 'Ghi chú xử lý: <u>' . $model->ghichu . '</u>' . PHP_EOL;
             $message .= '<a href="' . Url::to(['baohong/view', 'id' => $model->id], true) . '">Chi tiết</a>';
             $log = new ActivitiesLog;
@@ -183,13 +173,8 @@ class BaohongController extends Controller
                     $dv->baohong_id = $model->id;
                     $dv->save(false);
                 }
-                $message = '<u><b>' . Yii::$app->user->identity->nhanvien->TEN_NHANVIEN. '</b></u>' . ' TẠO BÁO HỎNG' . PHP_EOL;
-                $message .= 'NV Báo hỏng: <u>' . $model->nHANVIEN->TEN_NHANVIEN . '</u>. SĐT:<u> ' . $model->nHANVIEN->DIEN_THOAI . '</u>' . PHP_EOL;
-                $message .= 'NVKT: <u>' . $model->nHANVIENXULY->TEN_NHANVIEN . '</u>. SĐT:<u> ' . $model->nHANVIENXULY->DIEN_THOAI . '</u>' . PHP_EOL;
-                $message .= 'DV: <u>' . $model->tendsdichvu . '</u>' . PHP_EOL;
-                $message .= 'KH: <u>' . $model->ten_kh . '</u> (<u> ' . $model->ma_tb . ' </u>) SĐT: <u>' . $model->so_dt . '</u>' . PHP_EOL;
-                $message .= 'ĐC: <u>' . $model->diachi . '</u>' . PHP_EOL;
-                $message .= 'Nội dung: <u>' . $model->noidung . '</u>' . PHP_EOL;
+                $message = '<code><b>' . Yii::$app->user->identity->nhanvien->TEN_NHANVIEN. '</b></code>' . ' TẠO BÁO HỎNG' . PHP_EOL;
+                self::tinnhanchung($model, $message);
                 $message .= '<a href="' . Url::to(['baohong/view', 'id' => $model->id], true) . '">Chi tiết</a>';
                 $log = new ActivitiesLog;
                 $log->activity_type = 'create-baohong';
@@ -270,6 +255,16 @@ class BaohongController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public static function tinnhanchung($model, &$message)
+    {
+        $message .= 'NV Báo hỏng: <strong>' . $model->nHANVIEN->TEN_NHANVIEN . '</strong>. SĐT:<u> ' . $model->nHANVIEN->DIEN_THOAI . '</u>' . PHP_EOL;
+        $message .= 'NVKT: <strong>' . $model->nHANVIENXULY->TEN_NHANVIEN . '</strong>. SĐT:<u>' . $model->nHANVIENXULY->DIEN_THOAI . '</u>' . PHP_EOL;
+        $message .= 'DV: <code>' . $model->tendsdichvu . '</code>' . PHP_EOL;
+        $message .= 'KH: <code>' . $model->ten_kh . '</code> (<code> ' . $model->ma_tb . ' </code>) SĐT: <u>' . $model->so_dt . '</u>' . PHP_EOL;
+        $message .= 'ĐC: <strong>' . $model->diachi . '</strong>' . PHP_EOL;
+        $message .= 'Nội dung: <strong>' . $model->noidung . '</strong>' . PHP_EOL;
     }
 
 }
