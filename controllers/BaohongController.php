@@ -158,7 +158,6 @@ class BaohongController extends Controller
                 'model' => $model,
             ]);
         }
-        
     }
 
     /**

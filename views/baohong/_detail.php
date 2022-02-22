@@ -11,12 +11,12 @@ use yii\helpers\Html;
         ],
         [
             'attribute' => 'nhanvien_id',
-            'value' => '<strong>' . $model->nHANVIEN->TEN_NHANVIEN . '</strong>',
+            'value' => '<strong>' . $model->nHANVIEN->TEN_NHANVIEN . '</strong><a href="tel:' . $model->nHANVIEN->DIEN_THOAI . '">( ' . $model->nHANVIEN->DIEN_THOAI . ' )</a>',
             'format' => 'raw',
         ],
         [
             'attribute' => 'nhanvien_xl_id',
-            'value' => '<strong>' . $model->nHANVIENXULY->TEN_NHANVIEN . '</strong>',
+            'value' => '<strong>' . $model->nHANVIENXULY->TEN_NHANVIEN . '</strong><a href="tel:' . $model->nHANVIENXULY->DIEN_THOAI . '">( ' . $model->nHANVIENXULY->DIEN_THOAI . ' )</a>',
             'format' => 'raw',
         ],
         [

@@ -44,6 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'so_dt',
                         'ngay_bh',
                         'ngay_xl',
+                        'tentrangthai',
                         [
                             'attribute' => 'nhanvien_xl_id',
                             'value' => 'nHANVIENXULY.TEN_NHANVIEN'

@@ -64,7 +64,7 @@ class Baohong extends \yii\db\ActiveRecord
             'nhanvien_id' => 'Nhân viên phản ánh',
             'dichvu_id' => 'Dịch vụ phản ánh',
             'ten_kh' => 'Tên khách hàng',
-            'so_dt' => 'Số điện thoại',
+            'so_dt' => 'SĐT khách hàng',
             'dai_id' => 'Đài',
             'noidung' => 'Nội dung phản ánh',
             'diachi' => 'Địa chỉ',
@@ -73,6 +73,7 @@ class Baohong extends \yii\db\ActiveRecord
             'nguyennhan_id' => 'Nguyên nhân',
             'ma_tb' => 'Mã thuê bao',
             'danhgia' => 'Đánh giá',
+            'tentrangthai' => 'Trạng thái',
         ];
     }
 
@@ -146,5 +147,10 @@ class Baohong extends \yii\db\ActiveRecord
     {
         $dsdv = ArrayHelper::map($this->dichvu, 'id', 'ten_dv');
         return implode($dsdv, ', ');
+    }
+
+    public function getTentrangthai()
+    {
+        return statusbaohong()[$this->status];
     }
 }
