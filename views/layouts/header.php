@@ -7,6 +7,7 @@ use yii\helpers\Url;
         <div class="container">
             <div class="navbar-header">
                 <a href="<?= Url::to(['/'])?>" class="navbar-brand">Dashboard</a>
+                <a href="<?= Url::to(['baohong/index'])?>" class="navbar-brand">Báo hỏng</a>
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
                 <i class="fa fa-bars"></i>
                 </button>
@@ -22,7 +23,6 @@ use yii\helpers\Url;
                             </ul>
                         </li>
                     <?php endif; ?>
-                    <li class="active"><a href="<?= Url::to(['baohong/index'])?>">Báo hỏng</a></li>
                 </ul>
             </div>
             <div class="navbar-custom-menu">

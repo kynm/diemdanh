@@ -27,6 +27,13 @@ $this->title = '443 HNM';
 <div class="index">
     <div class="row">
         <div class="row">
+            <div class="col-md-12">
+                <div class="box-footer">
+                    <div class="text-center">
+                        <?= (Yii::$app->user->can('nhanvien-kd-baohong')) ? Html::a('<i class="fa fa-plus-square"></i>Tạo báo hỏng', ['/baohong/create'], ['class' => 'btn btn-primary btn-flat']) : '' ?>
+                    </div>
+                </div>
+            </div>
             <div class="col-md-6">
                 <div class="box">
                     <div class="box-header with-border">
