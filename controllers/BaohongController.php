@@ -75,7 +75,7 @@ class BaohongController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $params = Yii::$app->request->post();
             $model->status = $params['Baohong']['status'];
-            $message = '<pre><b>' . Yii::$app->user->identity->nhanvien->TEN_NHANVIEN . '</b></pre>';
+            $message = '<code><b>' . Yii::$app->user->identity->nhanvien->TEN_NHANVIEN . '</b></code>';
             switch ($model->status) {
                 case 1:
                     $model->ngay_xl = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d H:i:s');
@@ -120,7 +120,7 @@ class BaohongController extends Controller
             $params = Yii::$app->request->post();
             $model->status = $params['Baohong']['status'];
             $model->danhgia = $params['Baohong']['danhgia'];
-            $message = '<pre><b>' . Yii::$app->user->identity->nhanvien->TEN_NHANVIEN . '</b></pre>';
+            $message = '<code><b>' . Yii::$app->user->identity->nhanvien->TEN_NHANVIEN . '</b></code>';
             if ($model->status == 0) {
                 $model->ngay_xl = null;
                 $message .= ' đã cập nhật YÊU CẦU XỬ LÝ LẠI ' . "\xF0\x9F\x92\xA3 \xF0\x9F\x92\xA3 \xF0\x9F\x92\xA3 \xF0\x9F\x92\xA3" . PHP_EOL;
