@@ -224,6 +224,22 @@ class NhanvienController extends Controller
         }
     }
 
+    public function actionListnvdonvi($id) {
+        $danhsachnhanvien = Nhanvien::find()
+        ->where(['ID_DONVI' => $id])
+        ->all();
+
+        if(isset($danhsachnhanvien) && count($danhsachnhanvien)>0) {
+            echo "<option value=''>Chọn đài viễn thông</option>";
+            foreach($danhsachnhanvien as $each) {
+                echo "<option value='".$each->ID_NHANVIEN."'>".$each->TEN_NHANVIEN."</option>";
+            }
+            return;
+        }else {
+            echo "<option value=''>Chọn đài viễn thông</option>";
+        }
+    }
+
     public function actionImport()
     {
         ini_set('max_execution_time', 0);

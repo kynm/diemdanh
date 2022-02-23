@@ -179,7 +179,7 @@ class BaohongController extends Controller
                     $dv->save(false);
                 }
                 $message = "\xF0\x9F\x94\x94 \xF0\x9F\x94\x94 \xF0\x9F\x94\x94 \xF0\x9F\x94\x94 \xF0\x9F\x94\x94" . PHP_EOL;
-                $message = '<code><b>' . Yii::$app->user->identity->nhanvien->TEN_NHANVIEN. '</b></code>' . ' TẠO BÁO HỎNG' . PHP_EOL;
+                $message .= '<code><b>' . Yii::$app->user->identity->nhanvien->TEN_NHANVIEN. '</b></code>' . ' TẠO BÁO HỎNG' . PHP_EOL;
                 self::tinnhanchung($model, $message);
                 $message .= " \xF0\x9F\x91\x89 \xF0\x9F\x91\x89 \xF0\x9F\x91\x89" . '<a href="' . Url::to(['baohong/view', 'id' => $model->id], true) . '">Chi tiết</a>';
                 $log = new ActivitiesLog;

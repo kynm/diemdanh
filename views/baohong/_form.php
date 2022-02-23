@@ -19,14 +19,14 @@ $dsDichvu = ArrayHelper::map(Dichvu::find()->all(), 'id', 'ten_dv');
         <div class="box-body">
             <div class="row">
                 <div class="col-md-4">
-                    <?= $form->field($model, 'donvi_id')->widget(Select2::classname(), [
-                        'data' => $dsDonvi,
-                        'pluginOptions' => [
-                            'placeholder' => 'Chọn đơn vị chủ quản',
-                            'allowClear' => true,
-                            // 'multiple' => true
-                        ],
-                    ]); ?>
+                    <?= $form->field($model, 'donvi_id')->dropDownList($dsDonvi, 
+                        [
+                            'prompt' => "Chọn đơn vị",
+                            'onchange' => '
+                                $.post("'.Yii::$app->homeUrl.'nhanvien/listnvdonvi?id="+$(this).val(), function( data ) {
+                                    $("#baohong-nhanvien_xl_id").html( data );
+                                });'
+                        ]); ?>
                 </div>
                 <div class="col-md-4">
                     <?= $form->field($model, 'dichvu_id')->widget(Select2::classname(), [
