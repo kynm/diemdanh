@@ -27,7 +27,7 @@ use kartik\rating\StarRating;
         ],
         [
             'attribute' => 'danhgia',
-            'value' => StarRating::widget([ 'name' => 'danhgia', 'value' => $model->danhgia, 'pluginOptions' => [ 'readonly' => true, 'showClear' => false, 'showCaption' => false, ], ]),
+            'value' => in_array($model->status, [4,5]) ? StarRating::widget([ 'name' => 'danhgia', 'value' => $model->danhgia, 'pluginOptions' => [ 'readonly' => true, 'showClear' => false, 'showCaption' => false, ], ]) : '',
             'format' => 'raw',
         ],
         [
