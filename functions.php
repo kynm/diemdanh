@@ -50,7 +50,7 @@
                 $color = 'red';
                 break;
             case 1:
-                $color = '#FFD700';
+                $color = '#008000';
                 break;
             case 2:
                 $color = '#FFD700';
