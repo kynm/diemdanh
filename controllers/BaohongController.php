@@ -78,10 +78,11 @@ class BaohongController extends Controller
             $message = '<pre><b>' . Yii::$app->user->identity->nhanvien->TEN_NHANVIEN . '</b></pre>';
             switch ($model->status) {
                 case 1:
-                    $message .= ' thông báo KHÁCH HÀNG BÁO SAI' . PHP_EOL;
+                    $model->ngay_xl = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d H:i:s');
+                    $message .= ' thông báo KHÁCH HÀNG BÁO SAI' . " \xF0\x9F\x91\xBD \xF0\x9F\x91\xBD \xF0\x9F\x91\xBD \xF0\x9F\x91\xBD " . PHP_EOL;
                     break;
                 case 3:
-                    $message .= ' đã cập nhật HOÀN THÀNH XỬ LÝ' . PHP_EOL;
+                    $message .= ' đã cập nhật HOÀN THÀNH XỬ LÝ' . " \xF0\x9F\x8C\x9E \xF0\x9F\x8C\x9E \xF0\x9F\x8C\x9E \xF0\x9F\x8C\x9E \xF0\x9F\x8C\x9E" . PHP_EOL;
                     $model->ngay_xl = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d H:i:s');
                     break;
                 
@@ -94,8 +95,8 @@ class BaohongController extends Controller
             $model->nv_thaotac_xl = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
             $model->save(false);
             self::tinnhanchung($model, $message);
-            $message .= 'Ghi chú xử lý: <u>' . $model->ghichu . '</u>' . PHP_EOL;
-            $message .= '<a href="' . Url::to(['baohong/view', 'id' => $model->id], true) . '">Chi tiết</a>';
+            $message .= " \xF0\x9F\x94\x93 \xF0\x9F\x94\x93 " . 'Ghi chú xử lý: <u>' . $model->ghichu . '</u>' . PHP_EOL;
+            $message .= " \xF0\x9F\x91\x88 \xF0\x9F\x91\x88 \xF0\x9F\x91\x88" . '<a href="' . Url::to(['baohong/view', 'id' => $model->id], true) . '">Chi tiết</a>';
             $log = new ActivitiesLog;
             $log->activity_type = 'capnhatxuly-baohong';
             $log->description = $message;
@@ -122,10 +123,14 @@ class BaohongController extends Controller
             $message = '<pre><b>' . Yii::$app->user->identity->nhanvien->TEN_NHANVIEN . '</b></pre>';
             if ($model->status == 0) {
                 $model->ngay_xl = null;
-                $message .= ' đã cập nhật YÊU CẦU XỬ LÝ LẠI ' . PHP_EOL;
+                $message .= ' đã cập nhật YÊU CẦU XỬ LÝ LẠI ' . "\xF0\x9F\x92\xA3 \xF0\x9F\x92\xA3 \xF0\x9F\x92\xA3 \xF0\x9F\x92\xA3" . PHP_EOL;
             } else {
-                $message .= ' đã cập nhật ĐÓNG YÊU CẦU' . PHP_EOL;
-                $message .= ' Độ hài lòng: ' . $model->danhgia . ' SAO' . PHP_EOL;
+                $message .= ' đã cập nhật ĐÓNG YÊU CẦU' . " \xF0\x9F\x8D\xBA \xF0\x9F\x8D\xBA \xF0\x9F\x8D\xBA \xF0\x9F\x8D\xBA \xF0\x9F\x8D\xBA " . PHP_EOL;
+                $stringstars = "";
+                for ($i=1; $i <= $model->danhgia ; $i++) { 
+                    $stringstars .=  " \xE2\xAD\x90 ";
+                }
+                $message .= ' Độ hài lòng: ' . $stringstars . PHP_EOL;
 
             }
             $model->ghichu = $params['Baohong']['ghichu'];
@@ -133,7 +138,7 @@ class BaohongController extends Controller
             $model->save(false);
             self::tinnhanchung($model, $message);
             $message .= 'Ghi chú xử lý: <u>' . $model->ghichu . '</u>' . PHP_EOL;
-            $message .= '<a href="' . Url::to(['baohong/view', 'id' => $model->id], true) . '">Chi tiết</a>';
+            $message .= " \xF0\x9F\x91\x88 \xF0\x9F\x91\x88 \xF0\x9F\x91\x88" . '<a href="' . Url::to(['baohong/view', 'id' => $model->id], true) . '">Chi tiết</a>';
             $log = new ActivitiesLog;
             $log->activity_type = 'capnhatxuly-baohong';
             $log->description = $message;
@@ -173,9 +178,10 @@ class BaohongController extends Controller
                     $dv->baohong_id = $model->id;
                     $dv->save(false);
                 }
+                $message = "\xF0\x9F\x94\x94 \xF0\x9F\x94\x94 \xF0\x9F\x94\x94 \xF0\x9F\x94\x94 \xF0\x9F\x94\x94" . PHP_EOL;
                 $message = '<code><b>' . Yii::$app->user->identity->nhanvien->TEN_NHANVIEN. '</b></code>' . ' TẠO BÁO HỎNG' . PHP_EOL;
                 self::tinnhanchung($model, $message);
-                $message .= '<a href="' . Url::to(['baohong/view', 'id' => $model->id], true) . '">Chi tiết</a>';
+                $message .= " \xF0\x9F\x91\x88 \xF0\x9F\x91\x88 \xF0\x9F\x91\x88" . '<a href="' . Url::to(['baohong/view', 'id' => $model->id], true) . '">Chi tiết</a>';
                 $log = new ActivitiesLog;
                 $log->activity_type = 'create-baohong';
                 $log->description = $message;
@@ -259,12 +265,13 @@ class BaohongController extends Controller
 
     public static function tinnhanchung($model, &$message)
     {
-        $message .= 'NV Báo hỏng: <strong>' . $model->nHANVIEN->TEN_NHANVIEN . '</strong>. SĐT:<u> ' . $model->nHANVIEN->DIEN_THOAI . '</u>' . PHP_EOL;
-        $message .= 'NVKT: <strong>' . $model->nHANVIENXULY->TEN_NHANVIEN . '</strong>. SĐT:<u>' . $model->nHANVIENXULY->DIEN_THOAI . '</u>' . PHP_EOL;
-        $message .= 'DV: <code>' . $model->tendsdichvu . '</code>' . PHP_EOL;
-        $message .= 'KH: <code>' . $model->ten_kh . '</code> (<code>' . $model->ma_tb . '</code>) SĐT: <u>' . $model->so_dt . '</u>' . PHP_EOL;
-        $message .= 'ĐC: <strong>' . $model->diachi . '</strong>' . PHP_EOL;
-        $message .= 'Nội dung: <strong>' . $model->noidung . '</strong>' . PHP_EOL;
+        $message .= " \xF0\x9F\x91\xA7 " . 'NV Báo hỏng: <strong>' . $model->nHANVIEN->TEN_NHANVIEN . '</strong>. SĐT:<u> ' . $model->nHANVIEN->DIEN_THOAI . '</u>' . PHP_EOL;
+        $message .= " \xF0\x9F\x91\xA8 " .'NVKT: <strong>' . $model->nHANVIENXULY->TEN_NHANVIEN . '</strong>. SĐT:<u>' . $model->nHANVIENXULY->DIEN_THOAI . '</u>' . PHP_EOL;
+        $message .= " \xF0\x9F\x92\xB0 " .'Dịch vụ: <code>' . $model->tendsdichvu . '</code>' . PHP_EOL;
+        $message .= " \xF0\x9F\x91\xAA " .'Khách hàng: <code>' . $model->ten_kh . '</code> (<code>' . $model->ma_tb . '</code>)' . PHP_EOL;
+        $message .= " \xF0\x9F\x93\xB2 " .'SĐT: <u>' . $model->so_dt . '</u>' . PHP_EOL;
+        $message .= " \xF0\x9F\x8F\xA0 " .'Địa chỉ: <strong>' . $model->diachi . '</strong>' . PHP_EOL;
+        $message .= " \xF0\x9F\x92\x94 " .'Nội dung: <strong>' . $model->noidung . '</strong>' . PHP_EOL;
     }
 
 }

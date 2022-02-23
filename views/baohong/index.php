@@ -12,12 +12,8 @@ $this->params['breadcrumbs'][] = ['label' => 'Đơn vị', 'url' => ['donvi/inde
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="nhanvien-index">
-    <div class="col-md-12">
-        <div class="box-footer">
-            <div class="text-center">
-                <?= (Yii::$app->user->can('create-baohong')) ? Html::a('<i class="fa fa-plus"></i> Báo hỏng', ['create'], ['class' => 'btn btn-primary btn-flat']) : '' ?>
-            </div>
-        </div>
+    <div class="text-center">
+        <?= (Yii::$app->user->can('create-baohong')) ? Html::a('<i class="fa fa-plus"></i> Báo hỏng', ['create'], ['class' => 'btn btn-primary btn-flat']) : '' ?>
     </div>
     <div class="box box-primary">
         <div class="box-body">
