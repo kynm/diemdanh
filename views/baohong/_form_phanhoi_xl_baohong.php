@@ -7,6 +7,7 @@ use app\models\Donvi;
 use app\models\Nguyennhan;
 use kartik\select2\Select2;
 use kartik\rating\StarRating;
+use yii\web\JsExpression;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Donvi */
@@ -41,8 +42,8 @@ if ($model->status == 1) {
                     <?= StarRating::widget([
     'name' => 'danhgia',
     'pluginOptions' => [
-        'min' => 1,
-        'max' => 5,
+        // 'min' => 1,
+        // 'max' => 5,
         'step' => 1,
         'size' => 'lg',
         'starCaptions' => [
