@@ -35,6 +35,11 @@ use yii\helpers\Html;
             'format' => 'raw',
         ],
         [
+            'attribute' => 'ma_tb',
+            'value' => '<code>' . $model->ma_tb . '</code>',
+            'format' => 'raw',
+        ],
+        [
             'attribute' => 'diachi',
             'value' => '<strong>' . $model->diachi . '</strong>',
             'format' => 'raw',

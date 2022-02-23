@@ -262,7 +262,7 @@ class BaohongController extends Controller
         $message .= 'NV Báo hỏng: <strong>' . $model->nHANVIEN->TEN_NHANVIEN . '</strong>. SĐT:<u> ' . $model->nHANVIEN->DIEN_THOAI . '</u>' . PHP_EOL;
         $message .= 'NVKT: <strong>' . $model->nHANVIENXULY->TEN_NHANVIEN . '</strong>. SĐT:<u>' . $model->nHANVIENXULY->DIEN_THOAI . '</u>' . PHP_EOL;
         $message .= 'DV: <code>' . $model->tendsdichvu . '</code>' . PHP_EOL;
-        $message .= 'KH: <code>' . $model->ten_kh . '</code> (<code> ' . $model->ma_tb . ' </code>) SĐT: <u>' . $model->so_dt . '</u>' . PHP_EOL;
+        $message .= 'KH: <code>' . $model->ten_kh . '</code> (<code>' . $model->ma_tb . '</code>) SĐT: <u>' . $model->so_dt . '</u>' . PHP_EOL;
         $message .= 'ĐC: <strong>' . $model->diachi . '</strong>' . PHP_EOL;
         $message .= 'Nội dung: <strong>' . $model->noidung . '</strong>' . PHP_EOL;
     }
