@@ -119,7 +119,7 @@ class BaohongController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $params = Yii::$app->request->post();
             $model->status = $params['Baohong']['status'];
-            $model->danhgia = $params['Baohong']['danhgia'];
+            $model->danhgia = $params['danhgia'];
             $message = '<code><b>' . Yii::$app->user->identity->nhanvien->TEN_NHANVIEN . '</b></code>';
             if ($model->status == 0) {
                 $model->ngay_xl = null;
@@ -136,7 +136,7 @@ class BaohongController extends Controller
             $model->ghichu = $params['Baohong']['ghichu'];
             $model->nv_thaotac_xl = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
             $model->save(false);
-            self::tinnhanchung($model, $message);
+            //self::tinnhanchung($model, $message);
             $message .= 'Ghi chú xử lý: <u>' . $model->ghichu . '</u>' . PHP_EOL;
             $message .= " \xF0\x9F\x91\x89 \xF0\x9F\x91\x89 \xF0\x9F\x91\x89" . '<a href="' . Url::to(['baohong/view', 'id' => $model->id], true) . '">Chi tiết</a>';
             $log = new ActivitiesLog;

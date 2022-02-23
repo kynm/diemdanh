@@ -6,6 +6,7 @@ use yii\helpers\ArrayHelper;
 use app\models\Donvi;
 use app\models\Nguyennhan;
 use kartik\select2\Select2;
+use kartik\rating\StarRating;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Donvi */
@@ -37,7 +38,29 @@ if ($model->status == 1) {
                 </div>
                 <div class="col-md-2">
                     <label class="text text-danger"></label>
-                    <?= $form->field($model, 'danhgia')->radioList($dsdanhgia, ['separator'=>'<br/>']);?> 
+                    <?= StarRating::widget([
+    'name' => 'danhgia',
+    'pluginOptions' => [
+        'min' => 1,
+        'max' => 5,
+        'step' => 1,
+        'size' => 'lg',
+        'starCaptions' => [
+            1 => 'Rất không hài lòng',
+            2 => 'Không hài lòng',
+            3 => 'Bình thường',
+            4 => 'Hài lòng',
+            5 => 'Rất hài lòng',
+        ],
+        'starCaptionClasses' => [
+            1 => 'text-danger',
+            2 => 'text-danger',
+            3 => 'text-warning',
+            4 => 'text-info',
+            5 => 'text-primary',
+        ],
+    ],
+]);?> 
                 </div>
                 <div class="col-md-6">
                     <?= $form->field($model, 'ghichu')->textarea(['rows' => '6']) ?>
