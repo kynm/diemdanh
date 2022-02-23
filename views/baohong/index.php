@@ -58,6 +58,10 @@ $this->params['breadcrumbs'][] = $this->title;
                             'value' => 'nHANVIENXULY.TEN_NHANVIEN'
                         ],
                         [
+                            'attribute' => 'nhanvien_id',
+                            'value' => 'nHANVIEN.TEN_NHANVIEN'
+                        ],
+                        [
                             'attribute' => 'donvi_id',
                             'value' => 'iDDONVI.TEN_DONVI'
                         ],
