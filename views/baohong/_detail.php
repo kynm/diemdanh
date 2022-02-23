@@ -26,11 +26,6 @@ use yii\helpers\Html;
             'format' => 'raw',
         ],
         [
-            'attribute' => 'danhgia',
-            'value' => $model->danhgia . '(SAO)'),
-            'format' => 'raw',
-        ],
-        [
             'attribute' => 'dichvu_id',
             'value' => Html::button($model->tendsdichvu, ['class' => 'btn btn-danger']),
             'format' => 'raw',
