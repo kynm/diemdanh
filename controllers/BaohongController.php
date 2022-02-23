@@ -96,7 +96,7 @@ class BaohongController extends Controller
             $model->save(false);
             self::tinnhanchung($model, $message);
             $message .= " \xF0\x9F\x94\x93 \xF0\x9F\x94\x93 " . 'Ghi chú xử lý: <u>' . $model->ghichu . '</u>' . PHP_EOL;
-            $message .= " \xF0\x9F\x91\x88 \xF0\x9F\x91\x88 \xF0\x9F\x91\x88" . '<a href="' . Url::to(['baohong/view', 'id' => $model->id], true) . '">Chi tiết</a>';
+            $message .= " \xF0\x9F\x91\x89 \xF0\x9F\x91\x89 \xF0\x9F\x91\x89" . '<a href="' . Url::to(['baohong/view', 'id' => $model->id], true) . '">Chi tiết</a>';
             $log = new ActivitiesLog;
             $log->activity_type = 'capnhatxuly-baohong';
             $log->description = $message;
@@ -138,7 +138,7 @@ class BaohongController extends Controller
             $model->save(false);
             self::tinnhanchung($model, $message);
             $message .= 'Ghi chú xử lý: <u>' . $model->ghichu . '</u>' . PHP_EOL;
-            $message .= " \xF0\x9F\x91\x88 \xF0\x9F\x91\x88 \xF0\x9F\x91\x88" . '<a href="' . Url::to(['baohong/view', 'id' => $model->id], true) . '">Chi tiết</a>';
+            $message .= " \xF0\x9F\x91\x89 \xF0\x9F\x91\x89 \xF0\x9F\x91\x89" . '<a href="' . Url::to(['baohong/view', 'id' => $model->id], true) . '">Chi tiết</a>';
             $log = new ActivitiesLog;
             $log->activity_type = 'capnhatxuly-baohong';
             $log->description = $message;
@@ -181,7 +181,7 @@ class BaohongController extends Controller
                 $message = "\xF0\x9F\x94\x94 \xF0\x9F\x94\x94 \xF0\x9F\x94\x94 \xF0\x9F\x94\x94 \xF0\x9F\x94\x94" . PHP_EOL;
                 $message = '<code><b>' . Yii::$app->user->identity->nhanvien->TEN_NHANVIEN. '</b></code>' . ' TẠO BÁO HỎNG' . PHP_EOL;
                 self::tinnhanchung($model, $message);
-                $message .= " \xF0\x9F\x91\x88 \xF0\x9F\x91\x88 \xF0\x9F\x91\x88" . '<a href="' . Url::to(['baohong/view', 'id' => $model->id], true) . '">Chi tiết</a>';
+                $message .= " \xF0\x9F\x91\x89 \xF0\x9F\x91\x89 \xF0\x9F\x91\x89" . '<a href="' . Url::to(['baohong/view', 'id' => $model->id], true) . '">Chi tiết</a>';
                 $log = new ActivitiesLog;
                 $log->activity_type = 'create-baohong';
                 $log->description = $message;
