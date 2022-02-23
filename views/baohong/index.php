@@ -38,6 +38,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                         'title' => Yii::t('app', 'lead-update'),
                                     ]);
                                 },
+                                'view' => function ($url, $model) {
+                                    return Html::a('<span class="glyphicon glyphicon-eye-open">Chi tiết</span>', $url, [
+                                        'title' => Yii::t('app', 'lead-update'),
+                                    ]);
+                                },
 
                             ],
                         ],
