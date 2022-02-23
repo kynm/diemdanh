@@ -1,7 +1,7 @@
 <?php
 use yii\widgets\DetailView;
 use yii\helpers\Html;
-use kartik\widgets\StarRating;
+// use kartik\widgets\StarRating;
 ?>
 <?= DetailView::widget([
     'model' => $model,
@@ -27,7 +27,7 @@ use kartik\widgets\StarRating;
         ],
         [
             'attribute' => 'danhgia',
-            'value' => StarRating::widget(['danhgia' => 'rating_33','language' => 'de']),
+            'value' => $model->danhgia . '(SAO)'),
             'format' => 'raw',
         ],
         [
