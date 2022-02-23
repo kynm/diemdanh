@@ -18,7 +18,7 @@ class BaohongSearch extends Baohong
     public function rules()
     {
         return [
-            [['nhanvien_id', 'nhanvien_xl_id', 'ma_tb'], 'integer'],
+            [['ma_tb', 'status'], 'integer'],
             [['ten_kh', 'diachi', 'so_dt'], 'safe'],
         ];
     }
@@ -82,10 +82,12 @@ class BaohongSearch extends Baohong
         $query->andFilterWhere(['like', 'baohong.so_dt', $this->so_dt]);
         $query->andFilterWhere(['like', 'baohong.diachi', $this->diachi]);
         $query->andFilterWhere(['like', 'baohong.ma_tb', $this->ma_tb]);
+        $query->andFilterWhere(['=', 'baohong.status', $this->status]);
 
         $query->orderBy([
             'ngay_xl' => SORT_ASC,
-            'id'=>SORT_ASC,
+            'ngay_bh'=>SORT_ASC,
+            'status'=>SORT_DESC,
         ]);
         return $dataProvider;
     }

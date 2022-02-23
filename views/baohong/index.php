@@ -46,13 +46,17 @@ $this->params['breadcrumbs'][] = $this->title;
 
                             ],
                         ],
+                        'ngay_bh',
                         'ten_kh',
                         'ma_tb',
                         'diachi',
                         'so_dt',
-                        'ngay_bh',
+                        [
+                            'attribute' => 'status',
+                            'filter'=> statusbaohong(),
+                            'value' => 'tentrangthai'
+                        ],
                         'ngay_xl',
-                        'tentrangthai',
                         [
                             'attribute' => 'nhanvien_xl_id',
                             'value' => 'nHANVIENXULY.TEN_NHANVIEN'
@@ -61,11 +65,6 @@ $this->params['breadcrumbs'][] = $this->title;
                             'attribute' => 'nhanvien_id',
                             'value' => 'nHANVIEN.TEN_NHANVIEN'
                         ],
-                        [
-                            'attribute' => 'donvi_id',
-                            'value' => 'iDDONVI.TEN_DONVI'
-                        ],
-                        
                     ],
                 ]); ?>
             <?php Pjax::end(); ?>
