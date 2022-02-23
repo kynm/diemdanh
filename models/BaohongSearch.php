@@ -84,7 +84,7 @@ class BaohongSearch extends Baohong
 
         $query->orderBy([
             'ngay_xl' => SORT_ASC,
-            'id'=>SORT_DESC,
+            'id'=>SORT_ASC,
         ]);
         return $dataProvider;
     }

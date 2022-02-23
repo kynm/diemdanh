@@ -1,6 +1,7 @@
 <?php
 use yii\widgets\DetailView;
 use yii\helpers\Html;
+use kartik\widgets\StarRating
 ?>
 <?= DetailView::widget([
     'model' => $model,
@@ -21,6 +22,11 @@ use yii\helpers\Html;
         ],
         [
             'attribute' => 'status',
+            'value' => Html::button(statusbaohong()[$model->status], ['class' => 'btn btn-primary']),
+            'format' => 'raw',
+        ],
+        [
+            'attribute' => 'danhgia',
             'value' => Html::button(statusbaohong()[$model->status], ['class' => 'btn btn-primary']),
             'format' => 'raw',
         ],

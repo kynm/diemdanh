@@ -41,4 +41,35 @@
             5 => 'Xác nhận báo sai',
         ];
     }
+
+    function colorstatus($status)
+    {
+        $color = '';
+        switch ($status) {
+            case 0:
+                $color = 'red';
+                break;
+            case 1:
+                $color = '#FFD700';
+                break;
+            case 2:
+                $color = '#FFD700';
+                break;
+            case 3:
+                $color = '#008000';
+                break;
+            case 4:
+                $color = '#1E90FF';
+                break;
+            case 5:
+                $color = '#1E90FF';
+                break;
+            
+            default:
+                $color = '#1E90FF';
+                break;
+        }
+
+        return $color;
+    }
 ?>

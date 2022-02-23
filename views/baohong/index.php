@@ -25,6 +25,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     //     'class' => 'yii\i18n\Formatter',
                     //     'nullDisplay' => '',
                     // ],
+                    'rowOptions' => function ($model, $index, $widget, $grid){
+                      return ['style'=>'color:'. colorstatus($model->status) .';'];
+                    },
                     'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
                         ['class' => 'yii\grid\ActionColumn',
