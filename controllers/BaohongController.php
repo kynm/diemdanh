@@ -64,9 +64,16 @@ class BaohongController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        $baohong = $this->findModel($id);
+        if ($baohong) {
+            return $this->render('view', [
+                'model' => $baohong,
+            ]);
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập hoặc báo hỏng không tồn tại');
+
+        }
+
     }
 
     public function actionXulybaohong($id)
