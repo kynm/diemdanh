@@ -64,7 +64,7 @@ $config = [
         ],
         'telegram' => [
             'class' => 'aki\telegram\Telegram',
-            'botToken' => '1694558864:AAF3PSSRvWlI3iVsdu8_bZDuguCF2ziLnMs',
+            'botToken' => '5263779956:AAH6cDcTCGXMvAh8gST7BS-BI7HkL65YlpQ',
         ],
         'db' => $db,
         'db_sms' => $db_sms,
