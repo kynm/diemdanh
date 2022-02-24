@@ -55,6 +55,8 @@ use kartik\rating\StarRating;
             'value' => Html::a($model->so_dt,"tel:".$model->so_dt),
             'format' => 'raw',
         ],
+        'ngay_bh',
+        'ngay_xl',
         'noidung',
         [
             'attribute' => 'nguyennhan_id',
