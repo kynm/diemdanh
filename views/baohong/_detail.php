@@ -58,6 +58,7 @@ use kartik\rating\StarRating;
         'ngay_bh',
         'ngay_xl',
         'noidung',
+        'ghichu',
         [
             'attribute' => 'nguyennhan_id',
             'value' => $model->nguyennhan ? $model->nguyennhan->nguyennhan : '',
