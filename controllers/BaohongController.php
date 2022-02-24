@@ -105,13 +105,8 @@ class BaohongController extends Controller
             self::tinnhanchung($model, $message);
             $message .= " \xF0\x9F\x94\x93 \xF0\x9F\x94\x93 " . 'Ghi chú xử lý: <u>' . $model->ghichu . '</u>' . PHP_EOL;
             $message .= " \xF0\x9F\x91\x89 \xF0\x9F\x91\x89 \xF0\x9F\x91\x89" . '<a href="' . Url::to(['baohong/view', 'id' => $model->id], true) . '">Chi tiết</a>';
-            $log = new ActivitiesLog;
-            $log->activity_type = 'capnhatxuly-baohong';
-            $log->description = $message;
-            $log->user_id = Yii::$app->user->identity->id;
-            $log->create_at = time();
-            $log->save();
             $donvi = Donvi::findOne($model->donvi_id);
+            self::savelog($model, $message, 'capnhatxuly-baohong', $donvi->chatid);
             sendtelegrammessage($donvi->chatid, $message);
             return $this->redirect(['view', 'id' => $id]);
         } else {
@@ -149,13 +144,8 @@ class BaohongController extends Controller
             self::tinnhanchung($model, $message);
             $message .= 'Ghi chú xử lý: <u>' . $model->ghichu . '</u>' . PHP_EOL;
             $message .= " \xF0\x9F\x91\x89 \xF0\x9F\x91\x89 \xF0\x9F\x91\x89" . '<a href="' . Url::to(['baohong/view', 'id' => $model->id], true) . '">Chi tiết</a>';
-            $log = new ActivitiesLog;
-            $log->activity_type = 'capnhatxuly-baohong';
-            $log->description = $message;
-            $log->user_id = Yii::$app->user->identity->id;
-            $log->create_at = time();
-            $log->save();
             $donvi = Donvi::findOne($model->donvi_id);
+            self::savelog($model, $message, 'phanhoixuly-baohong', $donvi->chatid);
             sendtelegrammessage($donvi->chatid, $message);
             return $this->redirect(['index']);
         } else {
@@ -192,13 +182,8 @@ class BaohongController extends Controller
                 $message .= '<code><b>' . Yii::$app->user->identity->nhanvien->TEN_NHANVIEN. '</b></code>' . ' TẠO BÁO HỎNG' . PHP_EOL;
                 self::tinnhanchung($model, $message);
                 $message .= " \xF0\x9F\x91\x89 \xF0\x9F\x91\x89 \xF0\x9F\x91\x89" . '<a href="' . Url::to(['baohong/view', 'id' => $model->id], true) . '">Chi tiết</a>';
-                $log = new ActivitiesLog;
-                $log->activity_type = 'create-baohong';
-                $log->description = $message;
-                $log->user_id = Yii::$app->user->identity->id;
-                $log->create_at = time();
-                $log->save();
                 $donvi = Donvi::findOne($model->donvi_id);
+                self::savelog($model, $message, 'create-baohong', $donvi->chatid);
                sendtelegrammessage($donvi->chatid, $message);
                 return $this->redirect(['index']);
             } else {
@@ -257,6 +242,18 @@ class BaohongController extends Controller
         
     }
 
+    public function actionGuilaitinnhan($id, $type)
+    {
+        $log = ActivitiesLog::find()->where(['baohong_id' => $id, 'activity_type' => $type])->orderBy(['activity_log_id' => SORT_DESC])->one();
+        if ($log) {
+            sendtelegrammessage($log->chatid, $log->description);
+            Yii::$app->session->setFlash('success', "Đã gửi lại tin nhắn telegram thành công!");
+        } else {
+            Yii::$app->session->setFlash('error', "Tin nhắn không tồn tại hoặc lỗi. Hãy liên hệ với quản trị để được hỗ trợ!");
+        }
+        return $this->redirect(['view', 'id' => $id]);
+    }
+
     /**
      * Finds the Nhanvien model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -282,6 +279,18 @@ class BaohongController extends Controller
         $message .= " \xF0\x9F\x93\x9E " .'SĐT: <u>' . $model->so_dt . '</u>' . PHP_EOL;
         $message .= " \xF0\x9F\x8F\xA0 " .'Địa chỉ: <strong>' . $model->diachi . '</strong>' . PHP_EOL;
         $message .= " \xF0\x9F\x92\x94 " .'Nội dung: <strong>' . $model->noidung . '</strong>' . PHP_EOL;
+    }
+
+    public static function savelog($model, $message, $type, $chatid)
+    {
+        $log = new ActivitiesLog;
+        $log->activity_type = $type;
+        $log->description = $message;
+        $log->baohong_id = $model->id;
+        $log->chatid = $chatid;
+        $log->user_id = Yii::$app->user->identity->id;
+        $log->create_at = time();
+        $log->save(false);
     }
 
 }

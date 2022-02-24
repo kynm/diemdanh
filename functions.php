@@ -23,7 +23,6 @@
 
     function sendtelegrammessage($chatId, $message = 'Test text')
     {
-        //$chatId = '-1001632381553';
         \Yii::$app->telegram->sendMessage([
             'chat_id' => $chatId,
             'text' => $message,
