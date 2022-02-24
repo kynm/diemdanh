@@ -22,6 +22,16 @@ unset($status[5]);
         <div class="box-body">
             <div class="row">
                 <div class="col-md-2">
+                    <?= $form->field($model, 'nhanvien_xl_id')->widget(Select2::classname(), [
+                        'data' => $dsNhanvien,
+                        'pluginOptions' => [
+                            'placeholder' => 'Chọn nhân viên',
+                            'allowClear' => true,
+                            // 'multiple' => true
+                        ],
+                    ]); ?>
+                </div>
+                <div class="col-md-2">
                     <?= $form->field($model, 'status')->widget(Select2::classname(), [
                         'data' => $status,
                         'pluginOptions' => [
@@ -41,7 +51,7 @@ unset($status[5]);
                         ],
                     ]); ?>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-6">
                     <?= $form->field($model, 'ghichu')->textarea(['rows' => '6']) ?>
                 </div>
             </div>

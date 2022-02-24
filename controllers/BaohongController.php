@@ -74,7 +74,8 @@ class BaohongController extends Controller
         $model = $this->findModel($id);
         if ($model->load(Yii::$app->request->post())) {
             $params = Yii::$app->request->post();
-            $model->status = $params['Baohong']['status'];
+            $model->status = $params['Baohong']['status'] ? $params['Baohong']['status'] : 0;
+            $model->nhanvien_xl_id = $params['Baohong']['nhanvien_xl_id'] ? $params['Baohong']['nhanvien_xl_id'] : $model->nhanvien_xl_id;
             $message = '<code><b>' . Yii::$app->user->identity->nhanvien->TEN_NHANVIEN . '</b></code>';
             switch ($model->status) {
                 case 1:
@@ -105,10 +106,12 @@ class BaohongController extends Controller
             $log->save();
             $donvi = Donvi::findOne($model->donvi_id);
             sendtelegrammessage($donvi->chatid, $message);
-            return $this->redirect(['index']);
+            return $this->redirect(['view', 'id' => $id]);
         } else {
+            $dsNhanvien = ArrayHelper::map(Nhanvien::find()->where(['ID_DONVI' => $model->donvi_id])->all(), 'ID_NHANVIEN', 'TEN_NHANVIEN');
             return $this->render('xulybaohong', [
                 'model' => $model,
+                'dsNhanvien' => $dsNhanvien,
             ]);
         }
     }

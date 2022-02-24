@@ -15,6 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="xuly-baohong">
         <?= $this->render('_form_xl_baohong', [
             'model' => $model,
+            'dsNhanvien' => $dsNhanvien,
         ]) ?>
     <?php endif; ?>
     <div class="box box-primary">
