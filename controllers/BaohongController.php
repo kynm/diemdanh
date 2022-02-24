@@ -269,7 +269,7 @@ class BaohongController extends Controller
         $message .= " \xF0\x9F\x91\xA8 " .'NVKT: <strong>' . $model->nHANVIENXULY->TEN_NHANVIEN . '</strong>. SĐT:<u>' . $model->nHANVIENXULY->DIEN_THOAI . '</u>' . PHP_EOL;
         $message .= " \xF0\x9F\x92\xB0 " .'Dịch vụ: <code>' . $model->tendsdichvu . '</code>' . PHP_EOL;
         $message .= " \xF0\x9F\x91\xAA " .'Khách hàng: <code>' . $model->ten_kh . '</code> (<code>' . $model->ma_tb . '</code>)' . PHP_EOL;
-        $message .= " \xF0\x9F\x93\xB2 " .'SĐT: <u>' . $model->so_dt . '</u>' . PHP_EOL;
+        $message .= " \xF0\x9F\x93\x9E " .'SĐT: <u>' . $model->so_dt . '</u>' . PHP_EOL;
         $message .= " \xF0\x9F\x8F\xA0 " .'Địa chỉ: <strong>' . $model->diachi . '</strong>' . PHP_EOL;
         $message .= " \xF0\x9F\x92\x94 " .'Nội dung: <strong>' . $model->noidung . '</strong>' . PHP_EOL;
     }
