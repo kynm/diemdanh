@@ -84,6 +84,37 @@ $this->title = '443 HNM';
                     </div>
                 </div>
             </div>
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3><b>Báo hỏng theo dịch vụ</b></h3>
+                    </div>
+                    <div class="box-body">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th style="width: 10px">#</th>
+                                    <th>Đơn vị</th>
+                                    <th>Fiber</th>
+                                    <th>MyTV</th>
+                                    <th>Điện thoại cố định</th>
+                                    <th>Di động</th>
+                                </tr>
+                                <?php foreach ($dsbaohongtheodichvu as $key => $value):?>
+                                    <tr>
+                                        <td scope="col"><?php echo ($key + 1)?></td>
+                                        <td scope="col"><?php echo $value['TEN_DONVI']?>
+                                        <td scope="col"><?php echo $value['FIBER']?>
+                                        <td scope="col"><?php echo $value['MYTV']?>
+                                        <td scope="col"><?php echo $value['DTCD']?>
+                                        <td scope="col"><?php echo $value['DIDONG']?>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -80,11 +80,13 @@ class SiteController extends Controller
         } else {
             $dsbaohongdaxl = Yii::$app->db->createCommand('SELECT b.TEN_DONVI, COUNT(*) SO_LUONG FROM baohong a, donvi b where a.donvi_id = b.ID_DONVI and a.status in (1,3,4,5) GROUP BY b.TEN_DONVI')->queryAll();
             $dsbaohongchuaxl = Yii::$app->db->createCommand('SELECT b.TEN_DONVI, COUNT(*) SO_LUONG FROM baohong a, donvi b where a.donvi_id = b.ID_DONVI and a.status in (0,2) GROUP BY b.TEN_DONVI')->queryAll();
+            $dsbaohongtheodichvu= Yii::$app->db->createCommand('SELECT b.TEN_DONVI , SUM(CASE WHEN c.dichvu_id = 1 THEN 1 ELSE 0 END) AS FIBER , SUM(CASE WHEN c.dichvu_id = 2 THEN 1 ELSE 0 END) AS MYTV , SUM(CASE WHEN c.dichvu_id = 2 THEN 1 ELSE 0 END) AS DTCD , SUM(CASE WHEN c.dichvu_id = 2 THEN 1 ELSE 0 END) AS DIDONG FROM baohong a, donvi b,dichvu_baohong c, dichvu d where a.donvi_id = b.ID_DONVI and a.id = c.baohong_id and c.dichvu_id = d.id GROUP BY b.TEN_DONVI')->queryAll();
             // die(var_dump($dsbaohongdaxl));
             return $this->render('index'
                 ,[
                 'dsbaohongdaxl' => $dsbaohongdaxl,
                 'dsbaohongchuaxl' => $dsbaohongchuaxl,
+                'dsbaohongtheodichvu' => $dsbaohongtheodichvu,
                 ]
             ); 
         }
