@@ -39,7 +39,7 @@ class BaohongSearch extends Baohong
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $type)
     {
         $query = Baohong::find();
 
@@ -75,7 +75,7 @@ class BaohongSearch extends Baohong
         }
 
         if (Yii::$app->user->can('xuly-baohong')) {
-            $query->andFilterWhere(['nhanvien_xl_id' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN]);
+           $query->andFilterWhere(['nhanvien_xl_id' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN]);
         }
 
         $query->andFilterWhere(['like', 'baohong.ten_kh', $this->ten_kh]);
@@ -83,7 +83,20 @@ class BaohongSearch extends Baohong
         $query->andFilterWhere(['like', 'baohong.diachi', $this->diachi]);
         $query->andFilterWhere(['like', 'baohong.ma_tb', $this->ma_tb]);
         $query->andFilterWhere(['=', 'baohong.status', $this->status]);
-       $query->where(['not in', 'baohong.status', [4,5]]);
+
+        //type = 0: tìm kiếm lịch sử, $type = 1: module điều hành
+        switch ($type) {
+            case 0:
+                $query->andFilterWhere(['in', 'baohong.status', [4,5]]);
+                break;
+            case 1:
+                $query->andFilterWhere(['not in', 'baohong.status', [4,5]]);
+                break;
+            default:
+                $query->andFilterWhere(['not in', 'baohong.status', [4,5]]);
+                // code...
+                break;
+        }
 
         $query->orderBy([
             'ngay_xl' => SORT_ASC,

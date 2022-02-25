@@ -49,9 +49,20 @@ class BaohongController extends Controller
     public function actionIndex()
     {
         $searchModel = new BaohongSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 1);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionLichsuxl()
+    {
+        $searchModel = new BaohongSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 0);
+
+        return $this->render('lichsuxl', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);

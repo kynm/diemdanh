@@ -14,6 +14,14 @@ use yii\helpers\Url;
             </div>
             <div class="navbar-collapse pull-left collapse" id="navbar-collapse">
                 <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Báo cáo <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="<?= Url::to(['baohong/lichsuxl'])?>">Lịch sử XL báo hỏng</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav">
                     <?php if (Yii::$app->user->can('Administrator')): ?>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Quản trị <span class="caret"></span></a>
