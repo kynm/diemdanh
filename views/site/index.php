@@ -37,7 +37,7 @@ $this->title = '443 HNM';
             <div class="col-md-6">
                 <div class="box">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Tổng hợp yêu cầu đã xử lý</h3>
+                        <h3><b>Tổng hợp yêu cầu đã xử lý</b></h3>
                     </div>
                     <div class="box-body">
                         <table class="table table-bordered">
@@ -62,7 +62,7 @@ $this->title = '443 HNM';
             <div class="col-md-6">
                 <div class="box">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Tổng hợp yêu cầu tồn đọng</h3>
+                        <h3><b>Tổng hợp yêu cầu tồn đọng</b></h3>
                     </div>
                     <div class="box-body">
                         <table class="table table-bordered">
