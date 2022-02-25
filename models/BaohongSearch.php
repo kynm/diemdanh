@@ -99,8 +99,8 @@ class BaohongSearch extends Baohong
 
         $query->orderBy([
             'ngay_xl' => SORT_ASC,
-            'ngay_bh'=>SORT_ASC,
             'status'=>SORT_DESC,
+            'ngay_bh'=>SORT_ASC,
         ]);
         return $dataProvider;
     }

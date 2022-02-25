@@ -89,80 +89,86 @@ class BaohongController extends Controller
 
     public function actionXulybaohong($id)
     {
-        $model = $this->findModel($id);
-        if ($model->load(Yii::$app->request->post())) {
-            $params = Yii::$app->request->post();
-            $model->status = $params['Baohong']['status'] ? $params['Baohong']['status'] : 0;
-            $model->nhanvien_xl_id = $params['Baohong']['nhanvien_xl_id'] ? $params['Baohong']['nhanvien_xl_id'] : $model->nhanvien_xl_id;
-            $message = '<code><b>' . Yii::$app->user->identity->nhanvien->TEN_NHANVIEN . '</b></code>';
-            switch ($model->status) {
-                case 1:
-                    $model->ngay_xl = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d H:i:s');
-                    $message .= ' thông báo KHÁCH HÀNG BÁO SAI' . " \xF0\x9F\x91\xBD \xF0\x9F\x91\xBD \xF0\x9F\x91\xBD \xF0\x9F\x91\xBD " . PHP_EOL;
-                    break;
-                case 3:
-                    $message .= ' đã cập nhật HOÀN THÀNH XỬ LÝ' . " \xF0\x9F\x8C\x9E \xF0\x9F\x8C\x9E \xF0\x9F\x8C\x9E \xF0\x9F\x8C\x9E \xF0\x9F\x8C\x9E" . PHP_EOL;
-                    $model->ngay_xl = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d H:i:s');
-                    break;
-                
-                default:
-                    $message .= ' ' . statusbaohong()[$model->status] . PHP_EOL;
-                    break;
+        if (Yii::$app->user->can('dmdv-xlbaohong') || (Yii::$app->user->can('xuly-baohong') && Yii::$app->user->identity->nhanvien->ID_NHANVIEN == $model->nhanvien_xl_id)) {
+            $model = $this->findModel($id);
+            if ($model->load(Yii::$app->request->post())) {
+                $params = Yii::$app->request->post();
+                $model->status = $params['Baohong']['status'] ? $params['Baohong']['status'] : 0;
+                $model->nhanvien_xl_id = $params['Baohong']['nhanvien_xl_id'] ? $params['Baohong']['nhanvien_xl_id'] : $model->nhanvien_xl_id;
+                $message = '<code><b>' . Yii::$app->user->identity->nhanvien->TEN_NHANVIEN . '</b></code>';
+                switch ($model->status) {
+                    case 1:
+                        $model->ngay_xl = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d H:i:s');
+                        $message .= ' thông báo KHÁCH HÀNG BÁO SAI' . " \xF0\x9F\x91\xBD \xF0\x9F\x91\xBD \xF0\x9F\x91\xBD \xF0\x9F\x91\xBD " . PHP_EOL;
+                        break;
+                    case 3:
+                        $message .= ' đã cập nhật HOÀN THÀNH XỬ LÝ' . " \xF0\x9F\x8C\x9E \xF0\x9F\x8C\x9E \xF0\x9F\x8C\x9E \xF0\x9F\x8C\x9E \xF0\x9F\x8C\x9E" . PHP_EOL;
+                        $model->ngay_xl = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d H:i:s');
+                        break;
+                    default:
+                        $message .= ' ' . statusbaohong()[$model->status] . PHP_EOL;
+                        break;
+                }
+                $model->ghichu = $params['Baohong']['ghichu'];
+                $model->nv_thaotac_xl = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
+                $model->save(false);
+                self::tinnhanchung($model, $message);
+                $message .= " \xF0\x9F\x94\x93 \xF0\x9F\x94\x93 " . 'Ghi chú xử lý: <u>' . $model->ghichu . '</u>' . PHP_EOL;
+                $message .= " \xF0\x9F\x91\x89 \xF0\x9F\x91\x89 \xF0\x9F\x91\x89" . '<a href="' . Url::to(['baohong/view', 'id' => $model->id], true) . '">Chi tiết</a>';
+                $donvi = Donvi::findOne($model->donvi_id);
+                self::savelog($model, $message, 'capnhatxuly-baohong', $donvi->chatid);
+                sendtelegrammessage($donvi->chatid, $message);
+                return $this->redirect(['view', 'id' => $id]);
+            } else {
+                $dsNhanvien = ArrayHelper::map(Nhanvien::find()->where(['ID_DONVI' => $model->donvi_id])->all(), 'ID_NHANVIEN', 'TEN_NHANVIEN');
+                return $this->render('xulybaohong', [
+                    'model' => $model,
+                    'dsNhanvien' => $dsNhanvien,
+                ]);
             }
-
-            $model->ghichu = $params['Baohong']['ghichu'];
-            $model->nv_thaotac_xl = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
-            $model->save(false);
-            self::tinnhanchung($model, $message);
-            $message .= " \xF0\x9F\x94\x93 \xF0\x9F\x94\x93 " . 'Ghi chú xử lý: <u>' . $model->ghichu . '</u>' . PHP_EOL;
-            $message .= " \xF0\x9F\x91\x89 \xF0\x9F\x91\x89 \xF0\x9F\x91\x89" . '<a href="' . Url::to(['baohong/view', 'id' => $model->id], true) . '">Chi tiết</a>';
-            $donvi = Donvi::findOne($model->donvi_id);
-            self::savelog($model, $message, 'capnhatxuly-baohong', $donvi->chatid);
-            sendtelegrammessage($donvi->chatid, $message);
-            return $this->redirect(['view', 'id' => $id]);
         } else {
-            $dsNhanvien = ArrayHelper::map(Nhanvien::find()->where(['ID_DONVI' => $model->donvi_id])->all(), 'ID_NHANVIEN', 'TEN_NHANVIEN');
-            return $this->render('xulybaohong', [
-                'model' => $model,
-                'dsNhanvien' => $dsNhanvien,
-            ]);
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập hoặc báo hỏng không tồn tại');
         }
     }
 
     public function actionPhanhoixuly($id)
     {
-        $model = $this->findModel($id);
-        if ($model->load(Yii::$app->request->post())) {
-            $params = Yii::$app->request->post();
-            $model->status = $params['Baohong']['status'];
-            $model->danhgia = $params['danhgia'];
-            $message = '<code><b>' . Yii::$app->user->identity->nhanvien->TEN_NHANVIEN . '</b></code>';
-            if ($model->status == 0) {
-                $model->ngay_xl = null;
-                $message .= ' đã cập nhật YÊU CẦU XỬ LÝ LẠI ' . "\xF0\x9F\x92\xA3 \xF0\x9F\x92\xA3 \xF0\x9F\x92\xA3 \xF0\x9F\x92\xA3" . PHP_EOL;
-            } else {
-                $message .= ' đã cập nhật ĐÓNG YÊU CẦU' . " \xF0\x9F\x8D\xBA \xF0\x9F\x8D\xBA \xF0\x9F\x8D\xBA \xF0\x9F\x8D\xBA \xF0\x9F\x8D\xBA " . PHP_EOL;
-                $stringstars = "";
-                for ($i=1; $i <= $model->danhgia ; $i++) { 
-                    $stringstars .=  " \xE2\xAD\x90 ";
-                }
-                $message .= ' Độ hài lòng: ' . $stringstars . PHP_EOL;
+        if (Yii::$app->user->can('nhanvien-kd-baohong') && in_array($model->status, [1,3]) && ($model->nhanvien_id == Yii::$app->user->identity->nhanvien->ID_NHANVIEN)){
+            $model = $this->findModel($id);
+            if ($model->load(Yii::$app->request->post())) {
+                $params = Yii::$app->request->post();
+                $model->status = $params['Baohong']['status'];
+                $model->danhgia = $params['danhgia'];
+                $message = '<code><b>' . Yii::$app->user->identity->nhanvien->TEN_NHANVIEN . '</b></code>';
+                if ($model->status == 0) {
+                    $model->ngay_xl = null;
+                    $message .= ' đã cập nhật YÊU CẦU XỬ LÝ LẠI ' . "\xF0\x9F\x92\xA3 \xF0\x9F\x92\xA3 \xF0\x9F\x92\xA3 \xF0\x9F\x92\xA3" . PHP_EOL;
+                } else {
+                    $message .= ' đã cập nhật ĐÓNG YÊU CẦU' . " \xF0\x9F\x8D\xBA \xF0\x9F\x8D\xBA \xF0\x9F\x8D\xBA \xF0\x9F\x8D\xBA \xF0\x9F\x8D\xBA " . PHP_EOL;
+                    $stringstars = "";
+                    for ($i=1; $i <= $model->danhgia ; $i++) { 
+                        $stringstars .=  " \xE2\xAD\x90 ";
+                    }
+                    $message .= ' Độ hài lòng: ' . $stringstars . PHP_EOL;
 
+                }
+                $model->ghichu = $params['Baohong']['ghichu'];
+                $model->nv_thaotac_xl = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
+                $model->save(false);
+                self::tinnhanchung($model, $message);
+                $message .= 'Ghi chú xử lý: <u>' . $model->ghichu . '</u>' . PHP_EOL;
+                $message .= " \xF0\x9F\x91\x89 \xF0\x9F\x91\x89 \xF0\x9F\x91\x89" . '<a href="' . Url::to(['baohong/view', 'id' => $model->id], true) . '">Chi tiết</a>';
+                $donvi = Donvi::findOne($model->donvi_id);
+                self::savelog($model, $message, 'phanhoixuly-baohong', $donvi->chatid);
+                sendtelegrammessage($donvi->chatid, $message);
+                return $this->redirect(['index']);
+            } else {
+                return $this->render('phanhoixuly', [
+                    'model' => $model,
+                ]);
             }
-            $model->ghichu = $params['Baohong']['ghichu'];
-            $model->nv_thaotac_xl = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
-            $model->save(false);
-            self::tinnhanchung($model, $message);
-            $message .= 'Ghi chú xử lý: <u>' . $model->ghichu . '</u>' . PHP_EOL;
-            $message .= " \xF0\x9F\x91\x89 \xF0\x9F\x91\x89 \xF0\x9F\x91\x89" . '<a href="' . Url::to(['baohong/view', 'id' => $model->id], true) . '">Chi tiết</a>';
-            $donvi = Donvi::findOne($model->donvi_id);
-            self::savelog($model, $message, 'phanhoixuly-baohong', $donvi->chatid);
-            sendtelegrammessage($donvi->chatid, $message);
-            return $this->redirect(['index']);
         } else {
-            return $this->render('phanhoixuly', [
-                'model' => $model,
-            ]);
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập hoặc báo hỏng không tồn tại');
         }
     }
 
@@ -204,7 +210,6 @@ class BaohongController extends Controller
                 ]);
             }
         } else {
-            # code...
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
         }
     }
