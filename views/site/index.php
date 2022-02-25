@@ -115,6 +115,41 @@ $this->title = '443 HNM';
                     </div>
                 </div>
             </div>
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3><b>Báo hỏng theo nguyên nhân</b></h3>
+                    </div>
+                    <div class="box-body">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th style="width: 10px">#</th>
+                                    <th>Nguyên nhân</th>
+                                    <th>Trung tâm VT Phủ Lý</th>
+                                    <th>Trung tâm VT Bình Lục</th>
+                                    <th>Trung tâm VT Duy Tiên</th>
+                                    <th>Trung tâm VT Lý Nhân</th>
+                                    <th>Trung tâm VT Kim Bảng</th>
+                                    <th>Trung tâm VT Thanh Liêm</th>
+                                </tr>
+                                <?php foreach ($dsbaohongtheonguyennhan as $key => $value):?>
+                                    <tr>
+                                        <td scope="col"><?php echo ($key + 1)?></td>
+                                        <td scope="col"><?php echo $value['nguyennhan']?>
+                                        <td scope="col"><?php echo $value['PLY']?>
+                                        <td scope="col"><?php echo $value['BLC']?>
+                                        <td scope="col"><?php echo $value['DTN']?>
+                                        <td scope="col"><?php echo $value['LNN']?>
+                                        <td scope="col"><?php echo $value['KBG']?>
+                                        <td scope="col"><?php echo $value['TLM']?>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
