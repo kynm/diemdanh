@@ -12,12 +12,12 @@ use kartik\rating\StarRating;
         ],
         [
             'attribute' => 'nhanvien_id',
-            'value' => '<strong>' . $model->nHANVIEN->TEN_NHANVIEN . '</strong><a href="tel:' . $model->nHANVIEN->DIEN_THOAI . '">( ' . $model->nHANVIEN->DIEN_THOAI . ' )</a>',
+            'value' => '<strong>' . $model->nHANVIEN->TEN_NHANVIEN . '</strong><a href="tel:' . $model->nHANVIEN->DIEN_THOAI . '">( ' . $model->nHANVIEN->DIEN_THOAI . ' )</a> ' . $model->nHANVIEN->iDDAI->TEN_DAIVT,
             'format' => 'raw',
         ],
         [
             'attribute' => 'nhanvien_xl_id',
-            'value' => '<strong>' . $model->nHANVIENXULY->TEN_NHANVIEN . '</strong><a href="tel:' . $model->nHANVIENXULY->DIEN_THOAI . '">( ' . $model->nHANVIENXULY->DIEN_THOAI . ' )</a>',
+            'value' => '<strong>' . $model->nHANVIENXULY->TEN_NHANVIEN . '</strong><a href="tel:' . $model->nHANVIENXULY->DIEN_THOAI . '">( ' . $model->nHANVIENXULY->DIEN_THOAI . ' )</a> ' . $model->nHANVIENXULY->iDDAI->TEN_DAIVT,
             'format' => 'raw',
         ],
         [

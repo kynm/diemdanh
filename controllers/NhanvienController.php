@@ -82,24 +82,17 @@ class NhanvienController extends Controller
             $user = new User;
 
             if ($model->load(Yii::$app->request->post())) {
-                // if (!Nhanvien::find()->where(['MA_NHANVIEN' =>$model->MA_NHANVIEN])->exists()) {
                     if (User::find()->where(['username' => $model->USER_NAME])->exists() == false) {
                         //Luu thong tin nhan vien
                         $model->save();
-                        
-                        //Luu tai khoan
-                        // print_r($model->ID_NHANVIEN);
-                        // die;
-
                         // $user = new User;
                         $user->username = $model->USER_NAME;
                         $user->email = $model->USER_NAME."@vnpt.vn";
-                        $user->setPassword('vnpt1234');
+                        $user->setPassword('Vnpt@12345');
                         $user->generateAuthKey();
                         $user->status = 10;
                         $user->created_at = time();
                         $user->save(false);
-                        
 
                         //Luu log them nhan vien
                         $log = new ActivitiesLog;
@@ -132,7 +125,7 @@ class NhanvienController extends Controller
             $user = new User;
             $user->username = $model->USER_NAME;
             $user->email = $model->USER_NAME."@vnpt.vn";
-            $user->setPassword('Vnpt@123');
+            $user->setPassword('Vnpt@12345');
             $user->generateAuthKey();
             $user->status = 10;
             $user->created_at = time();
