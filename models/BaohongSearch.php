@@ -83,6 +83,7 @@ class BaohongSearch extends Baohong
         $query->andFilterWhere(['like', 'baohong.diachi', $this->diachi]);
         $query->andFilterWhere(['like', 'baohong.ma_tb', $this->ma_tb]);
         $query->andFilterWhere(['=', 'baohong.status', $this->status]);
+       $query->where(['not in', 'baohong.status', [4,5]]);
 
         $query->orderBy([
             'ngay_xl' => SORT_ASC,
