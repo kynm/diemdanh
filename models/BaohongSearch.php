@@ -94,7 +94,6 @@ class BaohongSearch extends Baohong
                 break;
             default:
                 $query->andFilterWhere(['not in', 'baohong.status', [4,5]]);
-                // code...
                 break;
         }
 

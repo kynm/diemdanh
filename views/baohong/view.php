@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Daivt */
 
-$this->title = 'Báo hỏng';
+$this->title = $model->ma_tb;
 $this->params['breadcrumbs'][] = ['label' => 'Báo hỏng', 'url' => ['baohong/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

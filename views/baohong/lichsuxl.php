@@ -7,8 +7,8 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\models\NhanvienSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Báo hỏng';
-$this->params['breadcrumbs'][] = ['label' => 'Đơn vị', 'url' => ['donvi/index']];
+$this->title = 'Lịch sử xử lý báo hỏng';
+$this->params['breadcrumbs'][] = ['label' => 'Lịch sử xử lý báo hỏng', 'url' => ['baohong/lichsuxl']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="nhanvien-index">
