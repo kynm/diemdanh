@@ -34,7 +34,7 @@ $this->title = '443 HNM';
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="box">
                     <div class="box-header with-border">
                         <h3><b>Tổng hợp yêu cầu đã xử lý</b></h3>
@@ -59,7 +59,32 @@ $this->title = '443 HNM';
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3><b>Tổng hợp yêu cầu chưa Outbound</b></h3>
+                    </div>
+                    <div class="box-body">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th style="width: 10px">#</th>
+                                    <th>Đơn vị</th>
+                                    <th>Số lượng</th>
+                                </tr>
+                                <?php foreach ($dsbaohongchuaoutbound as $key => $value):?>
+                                    <tr>
+                                        <td scope="col"><?php echo ($key + 1)?></td>
+                                        <td scope="col"><?php echo $value['TEN_DONVI']?>
+                                        <td scope="col"><?php echo $value['SO_LUONG']?>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
                 <div class="box">
                     <div class="box-header with-border">
                         <h3><b>Tổng hợp yêu cầu tồn đọng</b></h3>

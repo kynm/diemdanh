@@ -32,7 +32,7 @@ if (Yii::$app->controller->action->id === 'login') {
     <head>
         <meta name="google-site-verification" content="jyVCK93M5I1ZxnLA5jJXdtKBlPHkQAKqjCIuuT_cx50" />
         
-        <link rel="icon" href="<?= Url::to(Yii::$app->homeUrl) ?>/favicon.ico" type="image/x-icon" />
+        <link rel="icon" href="<?= Url::to(Yii::$app->homeUrl) ?>favicon.ico" type="image/x-icon" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic">
         <meta charset="<?= Yii::$app->charset ?>"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
