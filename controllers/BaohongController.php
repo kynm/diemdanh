@@ -195,8 +195,7 @@ class BaohongController extends Controller
                     $dv->baohong_id = $model->id;
                     $dv->save(false);
                 }
-                $message = "\xF0\x9F\x94\x94 \xF0\x9F\x94\x94 \xF0\x9F\x94\x94 \xF0\x9F\x94\x94 \xF0\x9F\x94\x94" . PHP_EOL;
-                $message .= '</code>' . ' BÁO HỎNG MỚI' . PHP_EOL;
+                $message = "\xF0\x9F\x94\x94 \xF0\x9F\x94\x94 \xF0\x9F\x94\x94 \xF0\x9F\x94\x94 \xF0\x9F\x94\x94" . ' BÁO HỎNG MỚI' . PHP_EOL;
                 self::tinnhanchung($model, $message);
                 $message .= " \xF0\x9F\x91\x89 \xF0\x9F\x91\x89 \xF0\x9F\x91\x89" . '<a href="' . Url::to(['baohong/view', 'id' => $model->id], true) . '">Chi tiết</a>';
                 $donvi = Donvi::findOne($model->donvi_id);
