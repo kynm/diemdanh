@@ -89,8 +89,8 @@ class BaohongController extends Controller
 
     public function actionXulybaohong($id)
     {
+        $model = $this->findModel($id);
         if (Yii::$app->user->can('dmdv-xlbaohong') || (Yii::$app->user->can('xuly-baohong') && Yii::$app->user->identity->nhanvien->ID_NHANVIEN == $model->nhanvien_xl_id)) {
-            $model = $this->findModel($id);
             if ($model->load(Yii::$app->request->post())) {
                 $params = Yii::$app->request->post();
                 $model->status = $params['Baohong']['status'] ? $params['Baohong']['status'] : 0;
@@ -133,8 +133,8 @@ class BaohongController extends Controller
 
     public function actionPhanhoixuly($id)
     {
+        $model = $this->findModel($id);
         if (Yii::$app->user->can('nhanvien-kd-baohong') && in_array($model->status, [1,3]) && ($model->nhanvien_id == Yii::$app->user->identity->nhanvien->ID_NHANVIEN)){
-            $model = $this->findModel($id);
             if ($model->load(Yii::$app->request->post())) {
                 $params = Yii::$app->request->post();
                 $model->status = $params['Baohong']['status'];
@@ -196,7 +196,7 @@ class BaohongController extends Controller
                     $dv->save(false);
                 }
                 $message = "\xF0\x9F\x94\x94 \xF0\x9F\x94\x94 \xF0\x9F\x94\x94 \xF0\x9F\x94\x94 \xF0\x9F\x94\x94" . PHP_EOL;
-                $message .= '<code><b>' . Yii::$app->user->identity->nhanvien->TEN_NHANVIEN. '</b></code>' . ' TẠO BÁO HỎNG' . PHP_EOL;
+                $message .= '</code>' . ' BÁO HỎNG MỚI' . PHP_EOL;
                 self::tinnhanchung($model, $message);
                 $message .= " \xF0\x9F\x91\x89 \xF0\x9F\x91\x89 \xF0\x9F\x91\x89" . '<a href="' . Url::to(['baohong/view', 'id' => $model->id], true) . '">Chi tiết</a>';
                 $donvi = Donvi::findOne($model->donvi_id);

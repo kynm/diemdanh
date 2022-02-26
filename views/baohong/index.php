@@ -51,11 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'ma_tb',
                         'diachi',
                         'so_dt',
-                        [
-                            'attribute' => 'status',
-                            'filter'=> statusbaohong(),
-                            'value' => 'tentrangthai'
-                        ],
+                        'noidung',
                         'ngay_xl',
                         [
                             'attribute' => 'nhanvien_xl_id',
