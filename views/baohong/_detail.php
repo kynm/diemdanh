@@ -55,8 +55,18 @@ use kartik\rating\StarRating;
             'value' => Html::a($model->so_dt,"tel:".$model->so_dt),
             'format' => 'raw',
         ],
-        'ngay_bh',
-        'ngay_xl',
+        ['attribute'=>'ngay_bh',
+         'value' => function ($model) {
+              return Yii::$app->formatter->asDateTime($model->ngay_bh, 'HH:mm:ss d/m/Y');
+          },
+
+        ],
+        ['attribute'=>'ngay_xl',
+         'value' => function ($model) {
+              return Yii::$app->formatter->asDateTime($model->ngay_xl, 'HH:mm:ss d/m/Y');
+          },
+
+        ],
         'noidung',
         'ghichu',
         [
