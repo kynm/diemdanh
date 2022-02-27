@@ -87,7 +87,7 @@ $this->title = '443 HNM';
             <div class="col-md-4">
                 <div class="box">
                     <div class="box-header with-border">
-                        <h3><b>Tổng hợp báo hỏng tồn đọng</b></h3>
+                        <h3><b>Tổng hợp báo hỏng chưa xử lý</b></h3>
                     </div>
                     <div class="box-body">
                         <table class="table table-bordered">
