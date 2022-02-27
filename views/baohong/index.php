@@ -46,12 +46,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
                             ],
                         ],
-                        'ngay_bh',
                         'ten_kh',
                         'ma_tb',
-                        'diachi',
                         'so_dt',
+                        'diachi',
                         'noidung',
+                        'ngay_bh',
                         'ngay_xl',
                         [
                             'attribute' => 'nhanvien_xl_id',
