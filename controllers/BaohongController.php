@@ -185,6 +185,15 @@ class BaohongController extends Controller
             $model->donvi_id = Yii::$app->user->identity->nhanvien->ID_DONVI;
             $dsNhanvien = ArrayHelper::map(Nhanvien::find()->where(['ID_DONVI' => $model->donvi_id])->all(), 'ID_NHANVIEN', 'TEN_NHANVIEN');
             if ($model->load(Yii::$app->request->post())) {
+                if (!$model->validate()) {
+                    Yii::$app->session->setFlash('error', "Lỗi khởi tạo!");
+                    $errors = $model->errors;
+                    return $this->render('create', [
+                    'model' => $model,
+                    'errors' => $errors,
+                    'dsNhanvien' => $dsNhanvien,
+                ]);
+                }
                 $arrdichvu = $model->dichvu_id;
                 $model->dichvu_id = json_encode($arrdichvu);
                 $model->nhanvien_id = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
