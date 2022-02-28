@@ -10,6 +10,7 @@ use app\models\Chucvu;
 /* @var $this yii\web\View */
 /* @var $model app\models\Nhanvien */
 /* @var $form yii\widgets\ActiveForm */
+$model->CHUC_VU = 3;
 ?>
 
 <div class="nhanvien-form">
@@ -21,13 +22,8 @@ use app\models\Chucvu;
                 <div class="col-sm-4">
                     <?= $form->field($model, 'MA_NHANVIEN')->textInput(['maxlength' => true]) ?>
                 </div>
-                    
                 <div class="col-sm-4">
                     <?= $form->field($model, 'TEN_NHANVIEN')->textInput(['maxlength' => true]) ?>
-                </div>
-                    
-                <div class="col-sm-4">
-                    <?= $form->field($model, 'CHUC_VU')->dropDownList(ArrayHelper::map(Chucvu::find()->all(), 'id', 'ten_chucvu'), ['prompt' => 'Chọn chức vụ' ]); ?>
                 </div>
             </div>
                 
