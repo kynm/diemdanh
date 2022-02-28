@@ -23,6 +23,7 @@
 
     function sendtelegrammessage($chatId, $message = 'Test text')
     {
+        return 1;
         \Yii::$app->telegram->sendMessage([
             'chat_id' => $chatId,
             'text' => $message,

@@ -1,11 +1,9 @@
-$('fff').submit(function(e)
+$('form').submit(function(e)
 {  
-    //Stop submit
-    //e.preventDefault(); 
+    $(this).find("button[type='submit']").prop('disabled',true);
+});
 
-    //Do what you want
-    $('#submit-form').attr('disabled',true);
-
-    //Submit
-    //this.submit();
+$('form').change(function(e)
+{  
+    $(this).find("button[type='submit']").attr('disabled',false);
 });
