@@ -27,7 +27,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     },
                     'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
-                        'ngay_bh',
                         'ten_kh',
                         'ma_tb',
                         'diachi',
@@ -37,6 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'filter'=> statusbaohong(),
                             'value' => 'tentrangthai'
                         ],
+                        'ngay_bh',
                         'ngay_xl',
                         [
                             'attribute' => 'nhanvien_xl_id',
