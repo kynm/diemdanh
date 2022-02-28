@@ -270,7 +270,7 @@ class BaohongController extends Controller
     {
         $log = ActivitiesLog::find()->where(['baohong_id' => $id, 'activity_type' => $type])->orderBy(['activity_log_id' => SORT_DESC])->one();
         if ($log) {
-            sendtelegrammessage($log->chatid, $log->description);
+            sendtelegrammessage($log->chatid, 'TIN NHẮN GỬI LẠI' .  PHP_EOL .  $log->description);
             Yii::$app->session->setFlash('success', "Đã gửi lại tin nhắn telegram thành công!");
         } else {
             Yii::$app->session->setFlash('error', "Tin nhắn không tồn tại hoặc lỗi. Hãy liên hệ với quản trị để được hỗ trợ!");
@@ -317,4 +317,40 @@ class BaohongController extends Controller
         $log->save(false);
     }
 
+    public function actionTestbyaccount()
+    {
+        if (Yii::$app->request->post()) {
+            $params = Yii::$app->request->post();
+            $matb = $params['ma_tb'];
+            $result = testbyaccount($matb);
+            return $result;
+        }
+    }
+
+    public function actionKiemtrathongtinthuebao()
+    {
+        if (Yii::$app->request->post()) {
+            $params = Yii::$app->request->post();
+            $matb = $params['ma_tb'];
+            $result = getByAccount($matb);
+            die(var_dump((array)$result));
+            $error = true;
+            $data = [];
+            if (is_array($result)) {
+                $error = false;
+                $data = [
+                    'AccountName' => $result[0]->AccountName,
+                    'SubName' => $result[0]->SubName,
+                    'FrameNo' => $result[0]->FrameNo,
+                    'SlotNo' => $result[0]->SlotNo,
+                    'PortNo' => $result[0]->PortNo,
+                    'OnuIndex' => $result[0]->OnuIndex,
+                ];
+            }
+            return [
+                'error' => false,
+                'data' => $data,
+            ];
+        }
+    }
 }

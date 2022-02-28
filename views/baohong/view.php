@@ -22,6 +22,8 @@ $this->params['breadcrumbs'][] = $this->title;
             ]) ?>
             <div class="box-footer">
                 <?php if (in_array($model->status, [0,2])): ?>
+                    <span class="btn btn-primary" data-matb="<?php echo $model->ma_tb?>" id="kttrangthaithuebao">Kiểm tra trạng thái thuê bao</span>
+                    <span class="btn btn-primary" data-matb="<?php echo $model->ma_tb?>" id="ktttthuebao">KTTT thuê bao</span>
                     <?php if (Yii::$app->user->can('dmdv-xlbaohong') || (Yii::$app->user->can('xuly-baohong') && Yii::$app->user->identity->nhanvien->ID_NHANVIEN == $model->nhanvien_xl_id)): ?>
                         <?=  Html::a('Xử lý báo hỏng', ['xulybaohong', 'id' => $model->id], ['class' => 'btn btn-primary btn-flat']) ?>
                     <?php endif; ?>
@@ -33,3 +35,6 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+<?php
+// $this->registerJsFile('/js/xulybaohong.js'); 
+ ?>

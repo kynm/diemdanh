@@ -23,7 +23,6 @@
 
     function sendtelegrammessage($chatId, $message = 'Test text')
     {
-        return 1;
         \Yii::$app->telegram->sendMessage([
             'chat_id' => $chatId,
             'text' => $message,
@@ -72,5 +71,53 @@
         }
 
         return $color;
+    }
+
+    function testbyaccount($matb)
+    {
+        $matb = trim(strtolower($matb));
+        $request_url = 'https://cts.vnpt.vn:8085/LineTestAPI/TestbyAccount?accountName=' . $matb . '&serviceType=3';
+        $data = [
+          "accountName"        => $matb,
+              "serviceType"        => 3,
+        ];
+        $curl = curl_init($request_url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');
+        curl_setopt($curl, CURLOPT_POSTFIELDS,  json_encode($data));
+        curl_setopt($curl, CURLOPT_HTTPHEADER, [
+          'Authorization: Y3RzLmhubUAyOC8wMi8yMDIyIDE3OjA3',
+          'Content-Type: application/json'
+        ]);
+        $response = curl_exec($curl);
+        curl_close($curl);
+        return json_decode($response);
+        return $response;
+
+    }
+
+    function getByAccount($matb)
+    {
+        $matb = trim(strtolower($matb));
+        $request_url = 'https://cts.vnpt.vn:8085/LineTestAPI/GetByAccount?accountName=' . $matb . '&serviceType=3';
+        $data = [
+          "accountName"        => $matb,
+              "serviceType"        => 3,
+        ];
+        $curl = curl_init($request_url);
+        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');
+        curl_setopt($curl, CURLOPT_POSTFIELDS,  json_encode($data));
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, false);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, [
+          'Authorization: Y3RzLmhubUAyOC8wMi8yMDIyIDE3OjA3',
+        ]);
+        $response = curl_exec($curl);
+       $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        curl_close($curl);
+        if ($httpcode == '0') {
+            getByAccount($matb);
+        }
+
+        return $response;
     }
 ?>
