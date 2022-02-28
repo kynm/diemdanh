@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'USER_NAME',
 
                         ['class' => 'yii\grid\ActionColumn',
-                        'template' => (Yii::$app->user->can('edit-nhanvien')) ? '{view} {update} delete' : '{view}'],
+                        'template' => (Yii::$app->user->can('edit-nhanvien')) ? '{view} {update} {delete}' : '{view}'],
                     ],
                 ]); ?>
             <?php Pjax::end(); ?>
