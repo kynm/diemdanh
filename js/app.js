@@ -1,11 +1,11 @@
-$('form').submit(function(e)
+$('fff').submit(function(e)
 {  
     //Stop submit
-    e.preventDefault(); 
+    //e.preventDefault(); 
 
     //Do what you want
     $('#submit-form').attr('disabled',true);
 
     //Submit
-    this.submit();
+    //this.submit();
 });
