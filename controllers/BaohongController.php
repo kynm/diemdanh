@@ -172,6 +172,30 @@ class BaohongController extends Controller
         }
     }
 
+    // public function actionNhanxuly($id)
+    // {
+    //     $model = $this->findModel($id);
+    //     if (Yii::$app->user->can('dmdv-xlbaohong') || (Yii::$app->user->can('xuly-baohong'))) {
+    //         if (Yii::$app->request->post()) {
+    //             $model->nhanvien_xl_id = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
+    //             $model->nv_thaotac_xl = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
+    //             $model->save(false);
+    //             $message = '<code><b>' . Yii::$app->user->identity->nhanvien->TEN_NHANVIEN . '</b></code>';
+    //             $message .= ' NHẬN XỬ LÝ' . " \xF0\x9F\x91\xBD \xF0\x9F\x91\xBD \xF0\x9F\x91\xBD \xF0\x9F\x91\xBD " . PHP_EOL;
+    //             self::tinnhanchung($model, $message);
+    //             $message .= " \xF0\x9F\x94\x93 \xF0\x9F\x94\x93 " . 'Ghi chú xử lý: <u>' . $model->ghichu . '</u>' . PHP_EOL;
+    //             $message .= " \xF0\x9F\x91\x89 \xF0\x9F\x91\x89 \xF0\x9F\x91\x89" . '<a href="' . Url::to(['baohong/view', 'id' => $model->id], true) . '">Chi tiết</a>';
+    //             $donvi = Donvi::findOne($model->donvi_id);
+    //             self::savelog($model, $message, 'capnhatxuly-baohong', $donvi->chatid);
+    //             //sendtelegrammessage($donvi->chatid, $message);
+    //             die('ok');
+    //             return ['error' => false];
+    //         }
+    //     } else {
+    //         throw new ForbiddenHttpException('Bạn không có quyền truy cập hoặc báo hỏng không tồn tại');
+    //     }
+    // }
+
     /**
      * Creates a new Baohong model.
      * If creation is successful, the browser will be redirected to the 'view' page.

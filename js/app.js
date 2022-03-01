@@ -44,4 +44,26 @@ $(document).ready(function() {
             }
         });
     });
+
+    $("#nhanxuly").on( "click", function() {
+        if (confirm("Bạn có chắc chắn nhận yêu cầu xử lý?") == true) {
+        var id = $(this).data('id');
+            $.ajax({
+                url: '/baohong/nhanxuly?id=' + id ,
+                method: 'post',
+                data: {
+                    id: id,
+                },
+                success:function(data) {
+                    if (!data.error) {
+                        Swal.fire('Xác nhận thành công');
+                        location.reload();
+                    }
+                }
+            });
+        } else {
+          Swal.fire('Đã xác nhận hủy');
+        }
+
+    });
 });
