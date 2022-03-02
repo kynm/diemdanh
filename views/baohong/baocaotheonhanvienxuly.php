@@ -29,9 +29,6 @@ $this->title = 'BÁO CÁO THEO NHÂN VIÊN XỬ LÝ';
         <div class="row">
             <div class="col-md-6">
                 <div class="box">
-                    <div class="box-header with-border">
-                        <h3><b>Báo hỏng theo nguyên nhân</b></h3>
-                    </div>
                     <div class="box-body">
                         <table class="table table-bordered">
                             <tbody>
@@ -62,7 +59,7 @@ $this->title = 'BÁO CÁO THEO NHÂN VIÊN XỬ LÝ';
                                     </tr>
                                 <?php endforeach; ?>
                                     <tr>
-                                        <td scope="col"><?php echo ($key + 1)?></td>
+                                        <td scope="col"></td>
                                         <td scope="col">TỔNG</td>
                                         <td scope="col"><?php echo $CHUA_XL?></td>
                                         <td scope="col"><?php echo $CHUA_OUTBOUND?></td>
