@@ -78,12 +78,65 @@ class SiteController extends Controller
         if (Yii::$app->user->isGuest) {
             return $this->redirect(['login']);
         } else {
-            $dsbaohongdaxl = Yii::$app->db->createCommand('SELECT b.TEN_DONVI, COUNT(*) SO_LUONG FROM baohong a, donvi b where a.donvi_id = b.ID_DONVI and a.status in (1,3,4,5) GROUP BY b.TEN_DONVI')->queryAll();
+            $params = Yii::$app->request->queryParams;
+            $type = isset($params['type']) ? $params['type'] : 0;
+            switch ($type) {
+                case 1:
+                    $text = 'Hôm qua';
+                    $startDate = date('Y-m-01', strtotime('-1 days'));
+                    $endDate = date('Y-m-01', strtotime('-1 days'));
+                    break;
+                case 2:
+                    $text = 'Tuần trước';
+                    $startDate = date('Y-m-d', strtotime('-1 weeks'));
+                    die(var_dump($startDate));
+                    $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
+                    break;
+                case 3:
+                    $text = 'Tháng trước';
+                    $startDate = date('Y-m-01',strtotime('-1 months'));
+                    $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
+                    break;
+                case 4:
+                    $text = 'Quý trước';
+                    $text = 'Hôm nay';
+                    $startDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
+                    $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
+                    break;
+                case 5:
+                    $text = 'Tuần hiện tại';
+                    $startDate = date("Y-m-d", strtotime('monday this week'));
+                    $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
+                    break;
+                case 6:
+                    $text = 'Tháng hiện tại';
+                    $startDate = date('Y-m-01');
+                    $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
+                    break;
+                case 7:
+                    $text = 'Quý hiện tại';
+                    $text = 'Hôm nay';
+                    $startDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
+                    $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
+                    break;
+                case 8:
+                    $text = 'Năm hiện tại';
+                    $startDate = date( 'Y' ) . '-01-01';
+                    $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
+                    break;
+                    die(var_dump($startDate));
+
+                default:
+                    $text = 'Hôm nay';
+                    $startDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
+                    $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
+                    break;
+            }
+            $dsbaohongdaxl = Yii::$app->db->createCommand('SELECT b.TEN_DONVI, COUNT(*) SO_LUONG FROM baohong a, donvi b where a.donvi_id = b.ID_DONVI and a.status in (1,3,4,5) and date(a.ngay_bh) BETWEEN "' . $startDate . '" and "' . $endDate . '" GROUP BY b.TEN_DONVI')->queryAll();
             $dsbaohongchuaxl = Yii::$app->db->createCommand('SELECT b.TEN_DONVI, COUNT(*) SO_LUONG FROM baohong a, donvi b where a.donvi_id = b.ID_DONVI and a.status in (0,2) GROUP BY b.TEN_DONVI')->queryAll();
-            $dsbaohongtheodichvu= Yii::$app->db->createCommand('SELECT b.TEN_DONVI , SUM(CASE WHEN c.dichvu_id = 1 THEN 1 ELSE 0 END) AS FIBER , SUM(CASE WHEN c.dichvu_id = 2 THEN 1 ELSE 0 END) AS MYTV , SUM(CASE WHEN c.dichvu_id = 2 THEN 1 ELSE 0 END) AS DTCD , SUM(CASE WHEN c.dichvu_id = 2 THEN 1 ELSE 0 END) AS DIDONG FROM baohong a, donvi b,dichvu_baohong c, dichvu d where a.donvi_id = b.ID_DONVI and a.id = c.baohong_id and c.dichvu_id = d.id GROUP BY b.TEN_DONVI')->queryAll();
-            $dsbaohongtheonguyennhan= Yii::$app->db->createCommand('SELECT b.nguyennhan ,SUM(CASE WHEN a.donvi_id = 2 THEN 1 ELSE 0 END) AS PLY ,SUM(CASE WHEN a.donvi_id = 3 THEN 1 ELSE 0 END) AS BLC ,SUM(CASE WHEN a.donvi_id = 4 THEN 1 ELSE 0 END) AS DTN ,SUM(CASE WHEN a.donvi_id = 5 THEN 1 ELSE 0 END) AS LNN ,SUM(CASE WHEN a.donvi_id = 6 THEN 1 ELSE 0 END) AS KBG ,SUM(CASE WHEN a.donvi_id = 6 THEN 1 ELSE 0 END) AS TLM FROM baohong a,nguyennhan b where a.nguyennhan_id = b.id GROUP by b.nguyennhan')->queryAll();
+            $dsbaohongtheodichvu= Yii::$app->db->createCommand('SELECT b.TEN_DONVI , SUM(CASE WHEN c.dichvu_id = 1 THEN 1 ELSE 0 END) AS FIBER , SUM(CASE WHEN c.dichvu_id = 2 THEN 1 ELSE 0 END) AS MYTV , SUM(CASE WHEN c.dichvu_id = 2 THEN 1 ELSE 0 END) AS DTCD , SUM(CASE WHEN c.dichvu_id = 2 THEN 1 ELSE 0 END) AS DIDONG FROM baohong a, donvi b,dichvu_baohong c, dichvu d where a.donvi_id = b.ID_DONVI and a.id = c.baohong_id and c.dichvu_id = d.id and date(a.ngay_bh) BETWEEN "' . $startDate . '" and "' . $endDate . '" GROUP BY b.TEN_DONVI')->queryAll();
+            $dsbaohongtheonguyennhan= Yii::$app->db->createCommand('SELECT b.nguyennhan ,SUM(CASE WHEN a.donvi_id = 2 THEN 1 ELSE 0 END) AS PLY ,SUM(CASE WHEN a.donvi_id = 3 THEN 1 ELSE 0 END) AS BLC ,SUM(CASE WHEN a.donvi_id = 4 THEN 1 ELSE 0 END) AS DTN ,SUM(CASE WHEN a.donvi_id = 5 THEN 1 ELSE 0 END) AS LNN ,SUM(CASE WHEN a.donvi_id = 6 THEN 1 ELSE 0 END) AS KBG ,SUM(CASE WHEN a.donvi_id = 6 THEN 1 ELSE 0 END) AS TLM FROM baohong a,nguyennhan b where a.nguyennhan_id = b.id and date(a.ngay_bh) BETWEEN "' . $startDate . '" and "' . $endDate . '" GROUP by b.nguyennhan')->queryAll();
             $dsbaohongchuaoutbound = Yii::$app->db->createCommand('SELECT b.TEN_DONVI, COUNT(*) SO_LUONG FROM baohong a, donvi b where a.donvi_id = b.ID_DONVI and a.status in (1,3) GROUP BY b.TEN_DONVI')->queryAll();
-            // die(var_dump($dsbaohongdaxl));
             return $this->render('index'
                 ,[
                 'dsbaohongdaxl' => $dsbaohongdaxl,
@@ -91,6 +144,7 @@ class SiteController extends Controller
                 'dsbaohongtheodichvu' => $dsbaohongtheodichvu,
                 'dsbaohongtheonguyennhan' => $dsbaohongtheonguyennhan,
                 'dsbaohongchuaoutbound' => $dsbaohongchuaoutbound,
+                'text' => $text,
                 ]
             ); 
         }

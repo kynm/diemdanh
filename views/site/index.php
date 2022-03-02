@@ -22,7 +22,7 @@ use app\models\Tramvt;
 /* @var $searchModel app\models\DotbaoduongSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = '443 HNM';
+$this->title = '443 HNM - ' . $text;
 ?>
 <div class="index">
     <div class="row">
@@ -34,32 +34,7 @@ $this->title = '443 HNM';
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="box">
-                    <div class="box-header with-border">
-                        <h3><b>Tổng hợp báo hỏng đã xử lý</b></h3>
-                    </div>
-                    <div class="box-body">
-                        <table class="table table-bordered">
-                            <tbody>
-                                <tr>
-                                    <th style="width: 10px">#</th>
-                                    <th>Đơn vị</th>
-                                    <th>Số lượng</th>
-                                </tr>
-                                <?php foreach ($dsbaohongdaxl as $key => $value):?>
-                                    <tr>
-                                        <td scope="col"><?php echo ($key + 1)?></td>
-                                        <td scope="col"><?php echo $value['TEN_DONVI']?>
-                                        <td scope="col"><?php echo $value['SO_LUONG']?>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="box">
                     <div class="box-header with-border">
                         <h3><b>Tổng hợp báo hỏng chưa Outbound</b></h3>
@@ -84,7 +59,7 @@ $this->title = '443 HNM';
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="box">
                     <div class="box-header with-border">
                         <h3><b>Tổng hợp báo hỏng chưa xử lý</b></h3>
@@ -110,6 +85,42 @@ $this->title = '443 HNM';
                 </div>
             </div>
             <div class="col-md-12">
+                <div class="box-footer">
+                    <div class="text-center">
+                        <?= Html::a('Hôm qua', ['/?type=1'], ['class' => 'btn btn-danger btn-flat']) ?>
+                        <?= Html::a('Hôm nay', ['/?type=0'], ['class' => 'btn btn-danger btn-flat']) ?>
+                        <?= Html::a('Tuần hiện tại', ['/?type=5'], ['class' => 'btn btn-danger btn-flat']) ?>
+                        <?= Html::a('Tháng hiện tại', ['/?type=6'], ['class' => 'btn btn-danger btn-flat']) ?>
+                        <?= Html::a('Năm hiện tại', ['/?type=8'], ['class' => 'btn btn-danger btn-flat']) ?>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3><b>Tổng hợp báo hỏng đã xử lý</b></h3>
+                    </div>
+                    <div class="box-body">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th style="width: 10px">#</th>
+                                    <th>Đơn vị</th>
+                                    <th>Số lượng</th>
+                                </tr>
+                                <?php foreach ($dsbaohongdaxl as $key => $value):?>
+                                    <tr>
+                                        <td scope="col"><?php echo ($key + 1)?></td>
+                                        <td scope="col"><?php echo $value['TEN_DONVI']?>
+                                        <td scope="col"><?php echo $value['SO_LUONG']?>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
                 <div class="box">
                     <div class="box-header with-border">
                         <h3><b>Báo hỏng theo dịch vụ</b></h3>
