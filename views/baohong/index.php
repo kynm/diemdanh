@@ -61,6 +61,10 @@ $this->params['breadcrumbs'][] = $this->title;
                             'attribute' => 'nhanvien_id',
                             'value' => 'nHANVIEN.TEN_NHANVIEN'
                         ],
+                        [
+                            'attribute' => 'donvi_id',
+                            'value' => 'iDDONVI.TEN_DONVI'
+                        ],
                     ],
                 ]); ?>
             <?php Pjax::end(); ?>

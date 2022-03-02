@@ -52,7 +52,7 @@ class BaohongSearch extends Baohong
         if (Yii::$app->user->can('Administrator')) {
             $iddv = [2,3,4,5,6,7];
         }
-        if (Yii::$app->user->can('dmdv-xlbaohong')) {
+        if (Yii::$app->user->can('dmdv-xlbaohong') || Yii::$app->user->can('dmdv-kinhdoanh')) {
             $iddv = [Yii::$app->user->identity->nhanvien->ID_DONVI];
         }
         $this->load($params);
