@@ -70,7 +70,7 @@ class BaohongSearch extends Baohong
             $query->andFilterWhere(['in', 'donvi_id', $iddv]);
         }
 
-        if (Yii::$app->user->can('nhanvien-kd-baohong')) {
+        if (Yii::$app->user->can('nhanvien-kd-baohong') && !Yii::$app->user->can('dmdv-kinhdoanh')) {
             $query->andFilterWhere(['nhanvien_id' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN]);
         }
 
