@@ -1,7 +1,0 @@
-<footer class="main-footer">
-	<div class="pull-right hidden-xs">
-	    <span class="pull-right" ><b>Phiên bản</b> 10.0</span>
-	</div>
-    <strong><a>VNPT HÀ NAM, TRUNG TÂM CNTT</a> &copy; <?= date('Y', time()); ?></strong>
-   	Điện thoại hỗ trợ : <a href='tel:0911111111'  style='color:#444;'><i class='fa fa-phone-square'></i> 0911.111.111</a>  - <a href='tel:0912222222' style='color:#444;'><i class='fa fa-phone-square'></i> 0912.222.222</a>
-</footer>

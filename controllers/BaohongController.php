@@ -57,6 +57,28 @@ class BaohongController extends Controller
         ]);
     }
 
+    public function actionBaocaotheonhanvienxuly()
+    {
+        $searchModel = new BaohongSearch();
+        $baocaotheonhanvienxuly = $searchModel->baocaotheonhanvienxuly(Yii::$app->request->queryParams);
+
+        return $this->render('baocaotheonhanvienxuly', [
+            'searchModel' => $searchModel,
+            'baocaotheonhanvienxuly' => $baocaotheonhanvienxuly,
+        ]);
+    }
+
+    public function actionBaocaotheonhanvienbaohong()
+    {
+        $searchModel = new BaohongSearch();
+        $baocaotheonhanvienbaohong = $searchModel->baocaotheonhanvienbaohong(Yii::$app->request->queryParams);
+
+        return $this->render('baocaotheonhanvienbaohong', [
+            'searchModel' => $searchModel,
+            'baocaotheonhanvienbaohong' => $baocaotheonhanvienbaohong,
+        ]);
+    }
+
     public function actionLichsuxl()
     {
         $searchModel = new BaohongSearch();

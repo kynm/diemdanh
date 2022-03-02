@@ -104,4 +104,25 @@ class BaohongSearch extends Baohong
         ]);
         return $dataProvider;
     }
+
+    public function baocaotheonhanvienxuly($params)
+    {
+        $iddv = Yii::$app->user->identity->nhanvien->ID_DONVI;
+        if (Yii::$app->user->can('quanlybaocao')) {
+            $iddv = '2,3,4,5,6,7';
+        }
+        return Yii::$app->db->createCommand('SELECT b.ten_nhanvien TEN_NHANVIEN, SUM(CASE WHEN a.STATUS = 0 THEN 1 ELSE 0 END) AS CHUA_XL ,SUM(CASE WHEN a.STATUS = 3 OR a.status = 1 THEN 1 ELSE 0 END) AS CHUA_OUTBOUND ,SUM(CASE WHEN a.STATUS = 4 or a.status = 5 THEN 1 ELSE 0 END) AS HOANTHANH FROM baohong a,nhanvien b where a.nhanvien_xl_id = b.id_nhanvien AND a.donvi_id in(' . $iddv . ') GROUP by b.ten_nhanvien')->queryAll();
+    }
+
+    public function baocaotheonhanvienbaohong($params)
+    {
+        $iddv = Yii::$app->user->identity->nhanvien->ID_DONVI;
+        if (Yii::$app->user->can('quanlybaocao')) {
+            $iddv = '2,3,4,5,6,7';
+        }
+        return Yii::$app->db->createCommand('SELECT b.ten_nhanvien TEN_NHANVIEN, SUM(CASE WHEN a.STATUS = 0 THEN 1 ELSE 0 END) AS CHUA_XL ,SUM(CASE WHEN a.STATUS = 3 OR a.status = 1 THEN 1 ELSE 0 END) AS CHUA_OUTBOUND ,SUM(CASE WHEN a.STATUS = 4 or a.status = 5 THEN 1 ELSE 0 END) AS HOANTHANH FROM baohong a,nhanvien b where a.nhanvien_id = b.id_nhanvien  AND a.donvi_id in(' . $iddv . ') GROUP by b.ten_nhanvien')->queryAll();
+    }
+
+    // BÁO CÁO THEO NHÂN VIÊN BÁO HỎNG 
+    // báo cáo theo nhân viên xử lý: 
 }
