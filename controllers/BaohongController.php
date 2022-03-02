@@ -243,6 +243,7 @@ class BaohongController extends Controller
                 $arrdichvu = $model->dichvu_id;
                 $model->dichvu_id = json_encode($arrdichvu);
                 $model->nhanvien_id = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
+                $model->ma_tb = strtolower($model->ma_tb);
                 $model->save();
                 foreach($arrdichvu as $dichvu) {
                     $dv = new Dichvubaohong();
