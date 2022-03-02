@@ -66,7 +66,7 @@ class BaohongSearch extends Baohong
         $query->joinWith('iDDONVI');
         // $query->joinWith('iDDAI');
         // // grid filtering conditions
-        if (Yii::$app->user->can('Administrator') || Yii::$app->user->can('dmdv-xlbaohong')) {
+        if (Yii::$app->user->can('Administrator') || Yii::$app->user->can('dmdv-xlbaohong')  || Yii::$app->user->can('dmdv-kinhdoanh')) {
             $query->andFilterWhere(['in', 'donvi_id', $iddv]);
         }
 
