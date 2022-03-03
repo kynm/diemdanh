@@ -79,6 +79,17 @@ class BaohongController extends Controller
         ]);
     }
 
+    public function actionBaocaobaohongnhieulan()
+    {
+        $searchModel = new BaohongSearch();
+        $baocaobaohongnhieulan = $searchModel->baocaobaohongnhieulan(Yii::$app->request->queryParams);
+
+        return $this->render('baocaobaohongnhieulan', [
+            'searchModel' => $searchModel,
+            'baocaobaohongnhieulan' => $baocaobaohongnhieulan,
+        ]);
+    }
+
     public function actionLichsuxl()
     {
         $searchModel = new BaohongSearch();

@@ -20,6 +20,7 @@ use yii\helpers\Url;
                             <li><a href="<?= Url::to(['baohong/lichsuxl'])?>">Lịch sử XL báo hỏng</a></li>
                             <li><a href="<?= Url::to(['baohong/baocaotheonhanvienxuly'])?>">Báo cáo theo nhân viên xử lý</a></li>
                             <li><a href="<?= Url::to(['baohong/baocaotheonhanvienbaohong'])?>">Báo cáo theo nhân viên báo hỏng</a></li>
+                            <li><a href="<?= Url::to(['baohong/baocaobaohongnhieulan'])?>">Báo cáo thuê bao báo hỏng nhiều lần</a></li>
                         </ul>
                     </li>
                 </ul>

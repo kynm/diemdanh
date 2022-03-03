@@ -7,16 +7,6 @@ use yii\widgets\Pjax;
 use kartik\select2\Select2;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
-use dosamigos\chartjs\ChartJs;
-use app\models\ActivitiesLog;
-use app\models\Baoduongtong;
-use app\models\Daivt;
-use app\models\Donvi;
-use app\models\Dotbaoduong;
-use app\models\Images;
-use app\models\Nhomtbi;
-use app\models\Noidungcongviec;
-use app\models\Tramvt;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\DotbaoduongSearch */
