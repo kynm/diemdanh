@@ -29,8 +29,9 @@ $this->params['breadcrumbs'][] = $this->title;
                       return ['style'=>'color:'. colorstatus($model->status) .';'];
                     },
                     'columns' => [
-                        ['class' => 'yii\grid\SerialColumn'],
+                        ['class' => 'yii\grid\SerialColumn',],
                         ['class' => 'yii\grid\ActionColumn',
+                            'contentOptions' => ['style' => 'width:5%; white-space: normal;'],
                             'template' => '{view}',
                             'buttons' => [
                                 'xulybaohong' => function ($url, $model) {
@@ -46,24 +47,36 @@ $this->params['breadcrumbs'][] = $this->title;
 
                             ],
                         ],
-                        'ten_kh',
+                        [
+                            'attribute' => 'ten_kh',
+                            'contentOptions' => ['style' => 'width:10%; white-space: normal;'],
+                        ],
                         'ma_tb',
                         'so_dt',
-                        'diachi',
-                        'noidung',
+                        [
+                            'attribute' => 'diachi',
+                            'contentOptions' => ['style' => 'width:20%; white-space: normal;'],
+                        ],
+                        [
+                            'attribute' => 'noidung',
+                            'contentOptions' => ['style' => 'width:20%; white-space: normal;'],
+                        ],
                         'ngay_bh',
                         'ngay_xl',
                         [
                             'attribute' => 'nhanvien_xl_id',
-                            'value' => 'nHANVIENXULY.TEN_NHANVIEN'
+                            'value' => 'nHANVIENXULY.TEN_NHANVIEN',
+                            'contentOptions' => ['style' => 'width:10%; white-space: normal;'],
                         ],
                         [
                             'attribute' => 'nhanvien_id',
-                            'value' => 'nHANVIEN.TEN_NHANVIEN'
+                            'value' => 'nHANVIEN.TEN_NHANVIEN',
+                            'contentOptions' => ['style' => 'width:10%; white-space: normal;'],
                         ],
                         [
                             'attribute' => 'donvi_id',
-                            'value' => 'iDDONVI.TEN_DONVI'
+                            'value' => 'iDDONVI.TEN_DONVI',
+                            'contentOptions' => ['style' => 'width:10%; white-space: normal;'],
                         ],
                     ],
                 ]); ?>
