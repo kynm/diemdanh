@@ -18,8 +18,8 @@ class BaohongSearch extends Baohong
     public function rules()
     {
         return [
-            [['ma_tb', 'status'], 'integer'],
-            [['ten_kh', 'diachi', 'so_dt'], 'safe'],
+            [['status'], 'integer'],
+            [['ten_kh', 'diachi', 'so_dt', 'ma_tb', 'noidung'], 'safe'],
         ];
     }
 
@@ -82,6 +82,7 @@ class BaohongSearch extends Baohong
         $query->andFilterWhere(['like', 'baohong.so_dt', $this->so_dt]);
         $query->andFilterWhere(['like', 'baohong.diachi', $this->diachi]);
         $query->andFilterWhere(['like', 'baohong.ma_tb', $this->ma_tb]);
+        $query->andFilterWhere(['like', 'baohong.noidung', $this->noidung]);
         $query->andFilterWhere(['=', 'baohong.status', $this->status]);
 
         //type = 0: tìm kiếm lịch sử, $type = 1: module điều hành
