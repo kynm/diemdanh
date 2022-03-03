@@ -107,20 +107,124 @@ class BaohongSearch extends Baohong
 
     public function baocaotheonhanvienxuly($params)
     {
+        $type = isset($params['type']) ? $params['type'] : 0;
+        switch ($type) {
+            case 1:
+                $text = 'Hôm qua';
+                $startDate = date('Y-m-01', strtotime('-1 days'));
+                $endDate = date('Y-m-01', strtotime('-1 days'));
+                break;
+            case 2:
+                $text = 'Tuần trước';
+                $startDate = date('Y-m-d', strtotime('-1 weeks'));
+                die(var_dump($startDate));
+                $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
+                break;
+            case 3:
+                $text = 'Tháng trước';
+                $startDate = date('Y-m-01',strtotime('-1 months'));
+                $endDate = date('Y-m-t',strtotime('-1 months'));
+                break;
+            case 4:
+                $text = 'Quý trước';
+                $text = 'Hôm nay';
+                $startDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
+                $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
+                break;
+            case 5:
+                $text = 'Tuần hiện tại';
+                $startDate = date("Y-m-d", strtotime('monday this week'));
+                $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
+                break;
+            case 6:
+                $text = 'Tháng hiện tại';
+                $startDate = date('Y-m-01');
+                $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
+                break;
+            case 7:
+                $text = 'Quý hiện tại';
+                $text = 'Hôm nay';
+                $startDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
+                $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
+                break;
+            case 8:
+                $text = 'Năm hiện tại';
+                $startDate = date( 'Y' ) . '-01-01';
+                $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
+                break;
+
+            default:
+                $text = 'Hôm nay';
+                $startDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
+                $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
+                break;
+        }
         $iddv = Yii::$app->user->identity->nhanvien->ID_DONVI;
         if (Yii::$app->user->can('quanlybaocao')) {
             $iddv = '2,3,4,5,6,7';
         }
-        return Yii::$app->db->createCommand('SELECT b.ten_nhanvien TEN_NHANVIEN, SUM(CASE WHEN a.STATUS = 0 THEN 1 ELSE 0 END) AS CHUA_XL ,SUM(CASE WHEN a.STATUS = 3 OR a.status = 1 THEN 1 ELSE 0 END) AS CHUA_OUTBOUND ,SUM(CASE WHEN a.STATUS = 4 or a.status = 5 THEN 1 ELSE 0 END) AS HOANTHANH FROM baohong a,nhanvien b where a.nhanvien_xl_id = b.id_nhanvien AND a.donvi_id in(' . $iddv . ') GROUP by b.ten_nhanvien')->queryAll();
+        return Yii::$app->db->createCommand('SELECT b.ten_nhanvien TEN_NHANVIEN, SUM(CASE WHEN a.STATUS = 0 THEN 1 ELSE 0 END) AS CHUA_XL ,SUM(CASE WHEN a.STATUS = 3 OR a.status = 1 THEN 1 ELSE 0 END) AS CHUA_OUTBOUND ,SUM(CASE WHEN a.STATUS = 4 or a.status = 5 THEN 1 ELSE 0 END) AS HOANTHANH FROM baohong a,nhanvien b where a.nhanvien_xl_id = b.id_nhanvien AND a.donvi_id in(' . $iddv . ') and date(a.ngay_bh) BETWEEN "' . $startDate . '" and "' . $endDate . '" GROUP by b.ten_nhanvien')->queryAll();
     }
 
     public function baocaotheonhanvienbaohong($params)
     {
+        $type = isset($params['type']) ? $params['type'] : 0;
+        switch ($type) {
+            case 1:
+                $text = 'Hôm qua';
+                $startDate = date('Y-m-01', strtotime('-1 days'));
+                $endDate = date('Y-m-01', strtotime('-1 days'));
+                break;
+            case 2:
+                $text = 'Tuần trước';
+                $startDate = date('Y-m-d', strtotime('-1 weeks'));
+                die(var_dump($startDate));
+                $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
+                break;
+            case 3:
+                $text = 'Tháng trước';
+                $startDate = date('Y-m-01',strtotime('-1 months'));
+                $endDate = date('Y-m-t',strtotime('-1 months'));
+                break;
+            case 4:
+                $text = 'Quý trước';
+                $text = 'Hôm nay';
+                $startDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
+                $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
+                break;
+            case 5:
+                $text = 'Tuần hiện tại';
+                $startDate = date("Y-m-d", strtotime('monday this week'));
+                $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
+                break;
+            case 6:
+                $text = 'Tháng hiện tại';
+                $startDate = date('Y-m-01');
+                $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
+                break;
+            case 7:
+                $text = 'Quý hiện tại';
+                $text = 'Hôm nay';
+                $startDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
+                $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
+                break;
+            case 8:
+                $text = 'Năm hiện tại';
+                $startDate = date( 'Y' ) . '-01-01';
+                $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
+                break;
+
+            default:
+                $text = 'Hôm nay';
+                $startDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
+                $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
+                break;
+        }
         $iddv = Yii::$app->user->identity->nhanvien->ID_DONVI;
         if (Yii::$app->user->can('quanlybaocao')) {
             $iddv = '2,3,4,5,6,7';
         }
-        return Yii::$app->db->createCommand('SELECT b.ten_nhanvien TEN_NHANVIEN, SUM(CASE WHEN a.STATUS = 0 THEN 1 ELSE 0 END) AS CHUA_XL ,SUM(CASE WHEN a.STATUS = 3 OR a.status = 1 THEN 1 ELSE 0 END) AS CHUA_OUTBOUND ,SUM(CASE WHEN a.STATUS = 4 or a.status = 5 THEN 1 ELSE 0 END) AS HOANTHANH FROM baohong a,nhanvien b where a.nhanvien_id = b.id_nhanvien  AND a.donvi_id in(' . $iddv . ') GROUP by b.ten_nhanvien')->queryAll();
+        return Yii::$app->db->createCommand('SELECT b.ten_nhanvien TEN_NHANVIEN, SUM(CASE WHEN a.STATUS = 0 THEN 1 ELSE 0 END) AS CHUA_XL ,SUM(CASE WHEN a.STATUS = 3 OR a.status = 1 THEN 1 ELSE 0 END) AS CHUA_OUTBOUND ,SUM(CASE WHEN a.STATUS = 4 or a.status = 5 THEN 1 ELSE 0 END) AS HOANTHANH FROM baohong a,nhanvien b where a.nhanvien_id = b.id_nhanvien  AND a.donvi_id in(' . $iddv . ') and date(a.ngay_bh) BETWEEN "' . $startDate . '" and "' . $endDate . '" GROUP by b.ten_nhanvien')->queryAll();
     }
 
     // BÁO CÁO THEO NHÂN VIÊN BÁO HỎNG 
