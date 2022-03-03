@@ -42,7 +42,7 @@ $this->title = '443 HNM - ' . $text;
                     <div class="box-body">
                         <table class="table table-bordered">
                             <tbody>
-                                <tr>
+                                <tr class="bg-warning">
                                     <th style="width: 10px">#</th>
                                     <th>Đơn vị</th>
                                     <th>Số lượng</th>
@@ -67,7 +67,7 @@ $this->title = '443 HNM - ' . $text;
                     <div class="box-body">
                         <table class="table table-bordered">
                             <tbody>
-                                <tr>
+                                <tr class="bg-danger">
                                     <th style="width: 10px">#</th>
                                     <th>Đơn vị</th>
                                     <th>Số lượng</th>
@@ -96,7 +96,7 @@ $this->title = '443 HNM - ' . $text;
                     <div class="box-body">
                         <table class="table table-bordered">
                             <tbody>
-                                <tr>
+                                <tr class="bg-primary">
                                     <th style="width: 10px">#</th>
                                     <th>Đơn vị</th>
                                     <th>Số lượng</th>
@@ -121,7 +121,7 @@ $this->title = '443 HNM - ' . $text;
                     <div class="box-body">
                         <table class="table table-bordered">
                             <tbody>
-                                <tr>
+                                <tr class="bg-primary">
                                     <th style="width: 10px">#</th>
                                     <th>Đơn vị</th>
                                     <th>Fiber</th>
@@ -152,7 +152,7 @@ $this->title = '443 HNM - ' . $text;
                     <div class="box-body">
                         <table class="table table-bordered">
                             <tbody>
-                                <tr>
+                                <tr class="bg-primary">
                                     <th style="width: 10px">#</th>
                                     <th>Nguyên nhân</th>
                                     <th>Trung tâm VT Phủ Lý</th>
