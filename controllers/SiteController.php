@@ -18,10 +18,7 @@ use app\models\Donvi;
 use app\models\Nhanvien;
 use app\models\Dotbaoduong;
 use app\models\DotbaoduongSearch;
-use app\models\Nhomtbi;
-use app\models\Thietbi;
-use app\models\Thietbitram;
-use app\models\Tramvt;
+use app\models\BaohongSearch;
 use moonland\phpexcel\Excel;
 
 class SiteController extends Controller
@@ -79,58 +76,11 @@ class SiteController extends Controller
             return $this->redirect(['login']);
         } else {
             $params = Yii::$app->request->queryParams;
-            $type = isset($params['type']) ? $params['type'] : 0;
-            switch ($type) {
-                case 1:
-                    $text = 'Hôm qua';
-                    $startDate = date('Y-m-01', strtotime('-1 days'));
-                    $endDate = date('Y-m-01', strtotime('-1 days'));
-                    break;
-                case 2:
-                    $text = 'Tuần trước';
-                    $startDate = date('Y-m-d', strtotime('-1 weeks'));
-                    die(var_dump($startDate));
-                    $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
-                    break;
-                case 3:
-                    $text = 'Tháng trước';
-                    $startDate = date('Y-m-01',strtotime('-1 months'));
-                    $endDate = date('Y-m-t',strtotime('-1 months'));
-                    break;
-                case 4:
-                    $text = 'Quý trước';
-                    $text = 'Hôm nay';
-                    $startDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
-                    $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
-                    break;
-                case 5:
-                    $text = 'Tuần hiện tại';
-                    $startDate = date("Y-m-d", strtotime('monday this week'));
-                    $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
-                    break;
-                case 6:
-                    $text = 'Tháng hiện tại';
-                    $startDate = date('Y-m-01');
-                    $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
-                    break;
-                case 7:
-                    $text = 'Quý hiện tại';
-                    $text = 'Hôm nay';
-                    $startDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
-                    $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
-                    break;
-                case 8:
-                    $text = 'Năm hiện tại';
-                    $startDate = date( 'Y' ) . '-01-01';
-                    $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
-                    break;
-
-                default:
-                    $text = 'Hôm nay';
-                    $startDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
-                    $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
-                    break;
-            }
+            $searchModel = new BaohongSearch();
+            $result = $searchModel->getStartDateEndDate($params);
+            $startDate = $result['startDate'];
+            $endDate = $result['endDate'];
+            $text = $result['text'];
             $dsbaohongdaxl = Yii::$app->db->createCommand('SELECT b.TEN_DONVI, COUNT(*) SO_LUONG FROM baohong a, donvi b where a.donvi_id = b.ID_DONVI and a.status in (1,3,4,5) and date(a.ngay_xl) BETWEEN "' . $startDate . '" and "' . $endDate . '" GROUP BY b.TEN_DONVI')->queryAll();
 
             $dsbaohongchuaoutbound = Yii::$app->db->createCommand('SELECT b.TEN_DONVI, COUNT(*) SO_LUONG FROM baohong a, donvi b where a.donvi_id = b.ID_DONVI and a.status in (1,3) GROUP BY b.TEN_DONVI')->queryAll();

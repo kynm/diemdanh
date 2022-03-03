@@ -107,58 +107,9 @@ class BaohongSearch extends Baohong
 
     public function baocaotheonhanvienxuly($params)
     {
-        $type = isset($params['type']) ? $params['type'] : 0;
-        switch ($type) {
-            case 1:
-                $text = 'Hôm qua';
-                $startDate = date('Y-m-01', strtotime('-1 days'));
-                $endDate = date('Y-m-01', strtotime('-1 days'));
-                break;
-            case 2:
-                $text = 'Tuần trước';
-                $startDate = date('Y-m-d', strtotime('-1 weeks'));
-                die(var_dump($startDate));
-                $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
-                break;
-            case 3:
-                $text = 'Tháng trước';
-                $startDate = date('Y-m-01',strtotime('-1 months'));
-                $endDate = date('Y-m-t',strtotime('-1 months'));
-                break;
-            case 4:
-                $text = 'Quý trước';
-                $text = 'Hôm nay';
-                $startDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
-                $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
-                break;
-            case 5:
-                $text = 'Tuần hiện tại';
-                $startDate = date("Y-m-d", strtotime('monday this week'));
-                $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
-                break;
-            case 6:
-                $text = 'Tháng hiện tại';
-                $startDate = date('Y-m-01');
-                $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
-                break;
-            case 7:
-                $text = 'Quý hiện tại';
-                $text = 'Hôm nay';
-                $startDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
-                $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
-                break;
-            case 8:
-                $text = 'Năm hiện tại';
-                $startDate = date( 'Y' ) . '-01-01';
-                $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
-                break;
-
-            default:
-                $text = 'Hôm nay';
-                $startDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
-                $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
-                break;
-        }
+        $result = $this->getStartDateEndDate($params);
+        $startDate = $result['startDate'];
+        $endDate = $result['endDate'];
         $iddv = Yii::$app->user->identity->nhanvien->ID_DONVI;
         if (Yii::$app->user->can('quanlybaocao')) {
             $iddv = '2,3,4,5,6,7';
@@ -168,58 +119,9 @@ class BaohongSearch extends Baohong
 
     public function baocaotheonhanvienbaohong($params)
     {
-        $type = isset($params['type']) ? $params['type'] : 0;
-        switch ($type) {
-            case 1:
-                $text = 'Hôm qua';
-                $startDate = date('Y-m-01', strtotime('-1 days'));
-                $endDate = date('Y-m-01', strtotime('-1 days'));
-                break;
-            case 2:
-                $text = 'Tuần trước';
-                $startDate = date('Y-m-d', strtotime('-1 weeks'));
-                die(var_dump($startDate));
-                $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
-                break;
-            case 3:
-                $text = 'Tháng trước';
-                $startDate = date('Y-m-01',strtotime('-1 months'));
-                $endDate = date('Y-m-t',strtotime('-1 months'));
-                break;
-            case 4:
-                $text = 'Quý trước';
-                $text = 'Hôm nay';
-                $startDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
-                $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
-                break;
-            case 5:
-                $text = 'Tuần hiện tại';
-                $startDate = date("Y-m-d", strtotime('monday this week'));
-                $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
-                break;
-            case 6:
-                $text = 'Tháng hiện tại';
-                $startDate = date('Y-m-01');
-                $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
-                break;
-            case 7:
-                $text = 'Quý hiện tại';
-                $text = 'Hôm nay';
-                $startDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
-                $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
-                break;
-            case 8:
-                $text = 'Năm hiện tại';
-                $startDate = date( 'Y' ) . '-01-01';
-                $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
-                break;
-
-            default:
-                $text = 'Hôm nay';
-                $startDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
-                $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
-                break;
-        }
+        $result = $this->getStartDateEndDate($params);
+        $startDate = $result['startDate'];
+        $endDate = $result['endDate'];
         $iddv = Yii::$app->user->identity->nhanvien->ID_DONVI;
         if (Yii::$app->user->can('quanlybaocao')) {
             $iddv = '2,3,4,5,6,7';
@@ -229,10 +131,23 @@ class BaohongSearch extends Baohong
 
     public function baocaobaohongnhieulan($params)
     {
+        $result = $this->getStartDateEndDate($params);
+        $startDate = $result['startDate'];
+        $endDate = $result['endDate'];
+        $iddv = Yii::$app->user->identity->nhanvien->ID_DONVI;
+        if (Yii::$app->user->can('quanlybaocao')) {
+            $iddv = '2,3,4,5,6,7';
+        }
+        return Yii::$app->db->createCommand('SELECT b.TEN_DONVI,a.ma_tb MA_TB, COUNT(*) SO_LUONG FROM baohong a, donvi b where a.donvi_id = b.ID_DONVI AND a.donvi_id in(' . $iddv . ') and date(a.ngay_bh) BETWEEN "' . $startDate . '" and "' . $endDate . '"  GROUP BY b.TEN_DONVI,a.ma_tb  HAVING COUNT(*) > 1 ORDER BY b.TEN_DONVI')->queryAll();
+    }
+
+
+    public function getStartDateEndDate($params)
+    {
         $type = isset($params['type']) ? $params['type'] : 0;
         switch ($type) {
             case 1:
-                $text = 'Hôm qua';
+                $text = 'Hôm qua'; //ok
                 $startDate = date('Y-m-01', strtotime('-1 days'));
                 $endDate = date('Y-m-01', strtotime('-1 days'));
                 break;
@@ -243,7 +158,7 @@ class BaohongSearch extends Baohong
                 $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
                 break;
             case 3:
-                $text = 'Tháng trước';
+                $text = 'Tháng trước'; //ok
                 $startDate = date('Y-m-01',strtotime('-1 months'));
                 $endDate = date('Y-m-t',strtotime('-1 months'));
                 break;
@@ -254,12 +169,12 @@ class BaohongSearch extends Baohong
                 $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
                 break;
             case 5:
-                $text = 'Tuần hiện tại';
+                $text = 'Tuần hiện tại'; //ok
                 $startDate = date("Y-m-d", strtotime('monday this week'));
                 $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
                 break;
             case 6:
-                $text = 'Tháng hiện tại';
+                $text = 'Tháng hiện tại'; //ok
                 $startDate = date('Y-m-01');
                 $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
                 break;
@@ -270,24 +185,22 @@ class BaohongSearch extends Baohong
                 $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
                 break;
             case 8:
-                $text = 'Năm hiện tại';
+                $text = 'Năm hiện tại'; //ok
                 $startDate = date( 'Y' ) . '-01-01';
                 $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
                 break;
 
             default:
-                $text = 'Hôm nay';
+                $text = 'Hôm nay'; //ok
                 $startDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
                 $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
                 break;
         }
-        $iddv = Yii::$app->user->identity->nhanvien->ID_DONVI;
-        if (Yii::$app->user->can('quanlybaocao')) {
-            $iddv = '2,3,4,5,6,7';
-        }
-        return Yii::$app->db->createCommand('SELECT b.TEN_DONVI,a.ma_tb MA_TB, COUNT(*) SO_LUONG FROM baohong a, donvi b where a.donvi_id = b.ID_DONVI AND a.donvi_id in(' . $iddv . ') and date(a.ngay_bh) BETWEEN "' . $startDate . '" and "' . $endDate . '"  GROUP BY b.TEN_DONVI,a.ma_tb  HAVING COUNT(*) > 1 ORDER BY b.TEN_DONVI')->queryAll();
-    }
 
-    // BÁO CÁO THEO NHÂN VIÊN BÁO HỎNG 
-    // báo cáo theo nhân viên xử lý: 
+        return [
+            'startDate' => $startDate,
+            'endDate' => $endDate,
+            'text' => $text,
+        ];
+    }
 }
