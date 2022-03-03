@@ -22,7 +22,7 @@ use app\models\Tramvt;
 /* @var $searchModel app\models\DotbaoduongSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'BÁO CÁO THEO NHÂN VIÊN XỬ LÝ';
+$this->title = 'BÁO CÁO THEO NHÂN VIÊN BÁO HỎNG';
 ?>
 <div class="index">
     <div class="row">
