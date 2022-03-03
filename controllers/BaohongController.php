@@ -59,34 +59,43 @@ class BaohongController extends Controller
 
     public function actionBaocaotheonhanvienxuly()
     {
+        $params = Yii::$app->request->queryParams;
+        $type = isset($params['type']) ? $params['type'] : 6;
         $searchModel = new BaohongSearch();
-        $baocaotheonhanvienxuly = $searchModel->baocaotheonhanvienxuly(Yii::$app->request->queryParams);
+        $baocaotheonhanvienxuly = $searchModel->baocaotheonhanvienxuly($params);
 
         return $this->render('baocaotheonhanvienxuly', [
             'searchModel' => $searchModel,
             'baocaotheonhanvienxuly' => $baocaotheonhanvienxuly,
+            'type' => $type,
         ]);
     }
 
     public function actionBaocaotheonhanvienbaohong()
     {
+        $params = Yii::$app->request->queryParams;
+        $type = isset($params['type']) ? $params['type'] : 6;
         $searchModel = new BaohongSearch();
-        $baocaotheonhanvienbaohong = $searchModel->baocaotheonhanvienbaohong(Yii::$app->request->queryParams);
+        $baocaotheonhanvienbaohong = $searchModel->baocaotheonhanvienbaohong($params);
 
         return $this->render('baocaotheonhanvienbaohong', [
             'searchModel' => $searchModel,
             'baocaotheonhanvienbaohong' => $baocaotheonhanvienbaohong,
+            'type' => $type,
         ]);
     }
 
     public function actionBaocaobaohongnhieulan()
     {
+        $params = Yii::$app->request->queryParams;
+        $type = isset($params['type']) ? $params['type'] : 6;
         $searchModel = new BaohongSearch();
-        $baocaobaohongnhieulan = $searchModel->baocaobaohongnhieulan(Yii::$app->request->queryParams);
+        $baocaobaohongnhieulan = $searchModel->baocaobaohongnhieulan($params);
 
         return $this->render('baocaobaohongnhieulan', [
             'searchModel' => $searchModel,
             'baocaobaohongnhieulan' => $baocaobaohongnhieulan,
+            'type' => $type,
         ]);
     }
 

@@ -85,7 +85,7 @@ $this->title = '443 HNM - ' . $text;
                 </div>
             </div>
             <?= $this->render('/partial/_link_search_with_date_type', [
-                'url' => $url,
+                'url' => '/',
                 'type' => $type,
             ]) ?>
             <div class="col-md-6">

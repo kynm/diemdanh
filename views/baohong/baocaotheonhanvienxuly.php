@@ -16,18 +16,10 @@ $this->title = 'BÁO CÁO THEO NHÂN VIÊN BÁO HỎNG';
 ?>
 <div class="index">
     <div class="row">
-        <div class="col-md-12">
-            <div class="box-footer">
-                <div class="text-center">
-                    <?= Html::a('Tháng trước', ['/baohong/baocaotheonhanvienxuly/?type=3'], ['class' => 'btn btn-danger btn-flat']) ?>
-                    <?= Html::a('Hôm qua', ['/baohong/baocaotheonhanvienxuly?type=1'], ['class' => 'btn btn-danger btn-flat']) ?>
-                    <?= Html::a('Hôm nay', ['/baohong/baocaotheonhanvienxuly?type=0'], ['class' => 'btn btn-danger btn-flat']) ?>
-                    <?= Html::a('Tuần hiện tại', ['/baohong/baocaotheonhanvienxuly/?type=5'], ['class' => 'btn btn-danger btn-flat']) ?>
-                    <?= Html::a('Tháng hiện tại', ['/baohong/baocaotheonhanvienxuly/?type=6'], ['class' => 'btn btn-danger btn-flat']) ?>
-                    <?= Html::a('Năm hiện tại', ['/baohong/baocaotheonhanvienxuly/?type=8'], ['class' => 'btn btn-danger btn-flat']) ?>
-                </div>
-            </div>
-        </div>
+        <?= $this->render('/partial/_link_search_with_date_type', [
+            'url' => '/baohong/baocaotheonhanvienxuly',
+            'type' => $type,
+        ]) ?>
         <div class="col-md-12">
             <div class="box">
                 <div class="box-body">
