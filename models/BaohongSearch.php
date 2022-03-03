@@ -201,6 +201,7 @@ class BaohongSearch extends Baohong
             'startDate' => $startDate,
             'endDate' => $endDate,
             'text' => $text,
+            'type' => $type,
         ];
     }
 }

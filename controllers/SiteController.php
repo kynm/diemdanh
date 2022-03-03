@@ -81,6 +81,7 @@ class SiteController extends Controller
             $startDate = $result['startDate'];
             $endDate = $result['endDate'];
             $text = $result['text'];
+            $type = $result['type'];
             $dsbaohongdaxl = Yii::$app->db->createCommand('SELECT b.TEN_DONVI, COUNT(*) SO_LUONG FROM baohong a, donvi b where a.donvi_id = b.ID_DONVI and a.status in (1,3,4,5) and date(a.ngay_xl) BETWEEN "' . $startDate . '" and "' . $endDate . '" GROUP BY b.TEN_DONVI')->queryAll();
 
             $dsbaohongchuaoutbound = Yii::$app->db->createCommand('SELECT b.TEN_DONVI, COUNT(*) SO_LUONG FROM baohong a, donvi b where a.donvi_id = b.ID_DONVI and a.status in (1,3) GROUP BY b.TEN_DONVI')->queryAll();
@@ -99,6 +100,8 @@ class SiteController extends Controller
                 'dsbaohongtheonguyennhan' => $dsbaohongtheonguyennhan,
                 'dsbaohongchuaoutbound' => $dsbaohongchuaoutbound,
                 'text' => $text,
+                'url' => '/',
+                'type' => $type,
                 ]
             ); 
         }

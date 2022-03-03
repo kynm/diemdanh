@@ -84,18 +84,10 @@ $this->title = '443 HNM - ' . $text;
                     </div>
                 </div>
             </div>
-            <div class="col-md-12">
-                <div class="box-footer">
-                    <div class="text-center">
-                        <?= Html::a('Tháng trước', ['/?type=3'], ['class' => 'btn btn-danger btn-flat']) ?>
-                        <?= Html::a('Hôm qua', ['/?type=1'], ['class' => 'btn btn-danger btn-flat']) ?>
-                        <?= Html::a('Hôm nay', ['/?type=0'], ['class' => 'btn btn-danger btn-flat']) ?>
-                        <?= Html::a('Tuần hiện tại', ['/?type=5'], ['class' => 'btn btn-danger btn-flat']) ?>
-                        <?= Html::a('Tháng hiện tại', ['/?type=6'], ['class' => 'btn btn-danger btn-flat']) ?>
-                        <?= Html::a('Năm hiện tại', ['/?type=8'], ['class' => 'btn btn-danger btn-flat']) ?>
-                    </div>
-                </div>
-            </div>
+            <?= $this->render('/partial/_link_search_with_date_type', [
+                'url' => $url,
+                'type' => $type,
+            ]) ?>
             <div class="col-md-6">
                 <div class="box">
                     <div class="box-header with-border">
