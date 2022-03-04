@@ -337,7 +337,7 @@ class BaohongController extends Controller
     {
         $log = ActivitiesLog::find()->where(['baohong_id' => $id, 'activity_type' => $type])->orderBy(['activity_log_id' => SORT_DESC])->one();
         if ($log) {
-            sendtelegrammessage($log->chatid, 'TIN NHẮN GỬI LẠI' .  PHP_EOL .  $log->description);
+            sendtelegrammessage($log->chatid, Yii::$app->user->identity->nhanvien->TEN_NHANVIEN . ' GỬI LẠI TIN NHẮN' .  PHP_EOL .  $log->description);
             Yii::$app->session->setFlash('success', "Đã gửi lại tin nhắn telegram thành công!");
         } else {
             Yii::$app->session->setFlash('error', "Tin nhắn không tồn tại hoặc lỗi. Hãy liên hệ với quản trị để được hỗ trợ!");
