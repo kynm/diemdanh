@@ -31,6 +31,7 @@ $this->title = '443 HNM - ' . $text;
                 <div class="box-footer">
                     <div class="text-center">
                         <?= (Yii::$app->user->can('nhanvien-kd-baohong')) ? Html::a('<i class="fa fa-plus-square"></i>Tạo báo hỏng', ['/baohong/create'], ['class' => 'btn btn-primary btn-flat']) : '' ?>
+                        <?= (Yii::$app->user->can('create-tinnhandieuhanh')) ? Html::a('Tin nhắn điều hành', ['/site/tinnhandieuhanh'], ['class' => 'btn btn-primary']) : '' ?>
                     </div>
                 </div>
             </div>

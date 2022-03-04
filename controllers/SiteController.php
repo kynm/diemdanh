@@ -270,4 +270,35 @@ class SiteController extends Controller
             return $this->goBack();
         }
     }
+
+    public function actionTinnhandieuhanh()
+    {
+        if (Yii::$app->user->can('create-tinnhandieuhanh')) {
+            if (Yii::$app->request->post()) {
+                $params = Yii::$app->request->post();
+                $noidung = $params['noidung'];
+                $dsdonvi = $params['donvi_id'];
+                if ($noidung) {
+                    foreach($dsdonvi as $id)
+                    {
+                        if ($params['noidung']) {
+                            $donvi = Donvi::find()->where(['ID_DONVI' => $id])->one();
+                            $message = '<code>' . Yii::$app->user->identity->nhanvien->TEN_NHANVIEN . ' GỬI TIN NHẮN </code>'. PHP_EOL;
+                            $message .= $params['noidung'];
+                            if ($donvi && $donvi->telegram_id) {
+                                sendtelegrammessage($donvi->chatid, $message);
+                            }
+                        }
+                    }
+                }
+                Yii::$app->session->setFlash('success', "Đã gửi lại tin nhắn telegram thành công!");
+                return $this->redirect(['index']);
+            } else {
+                return $this->render('tinnhandieuhanh', [
+                ]);
+            }
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
+        }
+    }
 }
