@@ -37,17 +37,17 @@ $this->title = '443 HNM - ' . $text;
             <div class="col-md-6">
                 <div class="box">
                     <div class="box-header with-border">
-                        <h3><b>Tổng hợp báo hỏng chưa Outbound</b></h3>
+                        <h3><b>Tổng hợp báo hỏng chưa xử lý</b></h3>
                     </div>
                     <div class="box-body">
                         <table class="table table-bordered">
                             <tbody>
-                                <tr class="bg-warning">
+                                <tr class="bg-danger">
                                     <th style="width: 10px">#</th>
                                     <th>Đơn vị</th>
                                     <th>Số lượng</th>
                                 </tr>
-                                <?php foreach ($dsbaohongchuaoutbound as $key => $value):?>
+                                <?php foreach ($dsbaohongchuaxl as $key => $value):?>
                                     <tr>
                                         <td scope="col"><?php echo ($key + 1)?></td>
                                         <td scope="col"><?php echo $value['TEN_DONVI']?>
@@ -62,17 +62,17 @@ $this->title = '443 HNM - ' . $text;
             <div class="col-md-6">
                 <div class="box">
                     <div class="box-header with-border">
-                        <h3><b>Tổng hợp báo hỏng chưa xử lý</b></h3>
+                        <h3><b>Tổng hợp báo hỏng chưa Outbound</b></h3>
                     </div>
                     <div class="box-body">
                         <table class="table table-bordered">
                             <tbody>
-                                <tr class="bg-danger">
+                                <tr class="bg-warning">
                                     <th style="width: 10px">#</th>
                                     <th>Đơn vị</th>
                                     <th>Số lượng</th>
                                 </tr>
-                                <?php foreach ($dsbaohongchuaxl as $key => $value):?>
+                                <?php foreach ($dsbaohongchuaoutbound as $key => $value):?>
                                     <tr>
                                         <td scope="col"><?php echo ($key + 1)?></td>
                                         <td scope="col"><?php echo $value['TEN_DONVI']?>
