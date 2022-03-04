@@ -78,6 +78,16 @@ class BaohongSearch extends Baohong
            $query->andFilterWhere(['nhanvien_xl_id' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN]);
         }
 
+        if (Yii::$app->user->can('dieuhanh-chamsockhachhang')) {
+           $query = Baohong::find();
+            $dataProvider = new ActiveDataProvider([
+                'query' => $query,
+            ]);
+            $query->joinWith('iDDONVI');
+            $iddv = [2,3,4,5,6,7];
+            $query->andFilterWhere(['in', 'donvi_id', $iddv]);
+        }
+
         $query->andFilterWhere(['like', 'baohong.ten_kh', $this->ten_kh]);
         $query->andFilterWhere(['like', 'baohong.so_dt', $this->so_dt]);
         $query->andFilterWhere(['like', 'baohong.diachi', $this->diachi]);
