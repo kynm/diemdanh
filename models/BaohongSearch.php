@@ -159,8 +159,8 @@ class BaohongSearch extends Baohong
         switch ($type) {
             case 1:
                 $text = 'Hôm qua'; //ok
-                $startDate = date('Y-m-01', strtotime('-1 days'));
-                $endDate = date('Y-m-01', strtotime('-1 days'));
+                $startDate = date('Y-m-d', strtotime('-1 days'));
+                $endDate = date('Y-m-d', strtotime('-1 days'));
                 break;
             case 2:
                 $text = 'Tuần trước';
