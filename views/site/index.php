@@ -38,7 +38,7 @@ $this->title = '443 HNM - ' . $text;
             <div class="col-md-3">
                 <div class="box">
                     <div class="box-header with-border">
-                        <h3><b>Tổng hợp báo hỏng chưa xử lý</b></h3>
+                        <h3><b>BÁO HỎNG CHƯA XỬ LÝ</b></h3>
                     </div>
                     <div class="box-body">
                         <table class="table table-bordered">
@@ -63,7 +63,7 @@ $this->title = '443 HNM - ' . $text;
             <div class="col-md-3">
                 <div class="box">
                     <div class="box-header with-border">
-                        <h3><b>Tổng hợp báo hỏng chưa Outbound</b></h3>
+                        <h3><b>BÁO HỎNG CHƯA OUTBOUND</b></h3>
                     </div>
                     <div class="box-body">
                         <table class="table table-bordered">
@@ -136,7 +136,7 @@ $this->title = '443 HNM - ' . $text;
             <div class="col-md-6">
                 <div class="box">
                     <div class="box-header with-border">
-                        <h3><b>Tổng hợp báo hỏng đã xử lý</b></h3>
+                        <h3><b>BÁO HỎNG ĐÃ XỬ LÝ</b></h3>
                     </div>
                     <div class="box-body">
                         <table class="table table-bordered">
@@ -161,7 +161,7 @@ $this->title = '443 HNM - ' . $text;
             <div class="col-md-6">
                 <div class="box">
                     <div class="box-header with-border">
-                        <h3><b>Báo hỏng theo dịch vụ</b></h3>
+                        <h3><b>BÁO HỎNG THEO DỊCH VỤ</b></h3>
                     </div>
                     <div class="box-body">
                         <table class="table table-bordered">
@@ -192,7 +192,7 @@ $this->title = '443 HNM - ' . $text;
             <div class="col-md-12">
                 <div class="box">
                     <div class="box-header with-border">
-                        <h3><b>Báo hỏng theo nguyên nhân</b></h3>
+                        <h3><b>BÁO HỎNG THEO NGUYÊN NHÂN</b></h3>
                     </div>
                     <div class="box-body">
                         <table class="table table-bordered">
