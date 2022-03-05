@@ -17,6 +17,7 @@ use app\models\Images;
 use app\models\Nhomtbi;
 use app\models\Noidungcongviec;
 use app\models\Tramvt;
+$dsDonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', [2,3,4,5,6,7]])->all(), 'ID_DONVI', 'TEN_DONVI');
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\DotbaoduongSearch */
@@ -31,11 +32,10 @@ $this->title = '443 HNM - ' . $text;
                 <div class="box-footer">
                     <div class="text-center">
                         <?= (Yii::$app->user->can('nhanvien-kd-baohong')) ? Html::a('<i class="fa fa-plus-square"></i>Tạo báo hỏng', ['/baohong/create'], ['class' => 'btn btn-primary btn-flat']) : '' ?>
-                        <?= (Yii::$app->user->can('create-tinnhandieuhanh')) ? Html::a('Tin nhắn điều hành', ['/site/tinnhandieuhanh'], ['class' => 'btn btn-primary']) : '' ?>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <div class="box">
                     <div class="box-header with-border">
                         <h3><b>Tổng hợp báo hỏng chưa xử lý</b></h3>
@@ -60,7 +60,7 @@ $this->title = '443 HNM - ' . $text;
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <div class="box">
                     <div class="box-header with-border">
                         <h3><b>Tổng hợp báo hỏng chưa Outbound</b></h3>
@@ -85,6 +85,50 @@ $this->title = '443 HNM - ' . $text;
                     </div>
                 </div>
             </div>
+            <?php if(Yii::$app->user->can('create-tinnhandieuhanh')) { ?>
+            <div class="col-md-6">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3><b>TIN NHẮN ĐIỀU HÀNH</b></h3>
+                    </div>
+                    <div class="box-body">
+                        <?php $form = ActiveForm::begin([
+                            'method' => 'post',
+                            'action' => ['/site/tinnhandieuhanh'],
+                        ]); ?>
+                        <div class="box box-primary">
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-md-4 col-xs-4">
+                                        <div class="form-group">
+                                            <?php foreach ($dsDonvi as $key => $value) {?>
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox" value="<?php echo $key?>" name="donvi_id[]" checked="checked"><?php echo $value?></label>
+                                                </div>
+                                            <?php }?>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 col-xs-8">
+                                        <div class="form-group field-election-election_description">
+                                        <label class="control-label" for="election-election_description">Nội dung</label>
+                                        <textarea id="election-election_description" class="form-control" name="noidung" rows="6"></textarea>    
+                                        <div class="help-block"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                
+                            <div class="box-footer">
+                                <div class="text-center">
+                                    <?= Html::submitButton('<i class="fa fa-plus"></i> Gửi tin nhắn', ['class' => 'btn btn-primary btn-flat', 'id' => 'submit-form']) ?>
+                                </div>
+                            </div>
+                        </div>
+                        <?php ActiveForm::end(); ?>
+                    </div>
+                </div>
+            </div>
+            <?php } ?>
             <?= $this->render('/partial/_link_search_with_date_type', [
                 'url' => '/',
                 'type' => $type,

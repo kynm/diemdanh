@@ -286,7 +286,7 @@ class SiteController extends Controller
                             $message = '<code>' . Yii::$app->user->identity->nhanvien->TEN_NHANVIEN . ' GỬI TIN NHẮN </code>'. PHP_EOL;
                             $message .= $params['noidung'];
                             if ($donvi && $donvi->telegram_id) {
-                                sendtelegrammessage($donvi->chatid, $message);
+                                //sendtelegrammessage($donvi->chatid, $message);
                             }
                         }
                     }
