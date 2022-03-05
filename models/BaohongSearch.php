@@ -164,9 +164,8 @@ class BaohongSearch extends Baohong
                 break;
             case 2:
                 $text = 'Tuần trước';
-                $startDate = date('Y-m-d', strtotime('-1 weeks'));
-                die(var_dump($startDate));
-                $endDate = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
+                $startDate = date('Y-m-d',strtotime('monday this week', strtotime('-1 weeks')));
+                $endDate = date('Y-m-d',strtotime($startDate) + (24*3600*6));
                 break;
             case 3:
                 $text = 'Tháng trước'; //ok
