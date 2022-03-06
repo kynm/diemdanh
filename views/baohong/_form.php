@@ -62,7 +62,7 @@ $dsDichvu = ArrayHelper::map(Dichvu::find()->all(), 'id', 'ten_dv');
                     <?= $form->field($model, 'so_dt')->textInput(['maxlength' => true]) ?>
                 </div>
                 <div class="col-md-12">
-                    <?= $form->field($model, 'noidung')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'noidung')->textarea(['rows' => '6']) ?>
                 </div>
             </div>
         </div>

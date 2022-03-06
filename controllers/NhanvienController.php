@@ -155,17 +155,12 @@ class NhanvienController extends Controller
                     $user->setPassword($data['User']['password']);
                     $user->save(false);
                 }
-                if ($model->ID_DONVI == 6) {
-                    $assign = new AuthAssignment;
-                    $assign->user_id = $model->user->id;
-                    $assign->item_name = '-dotbaoduong';
-                    $assign->save();
-                }
+
                 return $this->redirect(['view', 'id' => $model->ID_NHANVIEN]);
             } else {
+                die(var_dump($model->user));
                 return $this->render('update', [
                     'model' => $model,
-                    // 'authModel' => $authModel,
                     'user' => $user,
                 ]);
             }

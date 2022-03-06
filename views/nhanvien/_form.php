@@ -26,12 +26,10 @@ $model->CHUC_VU = 3;
                     <?= $form->field($model, 'TEN_NHANVIEN')->textInput(['maxlength' => true]) ?>
                 </div>
             </div>
-                
             <div class="row">
                 <div class="col-sm-4">
                     <?= $form->field($model, 'DIEN_THOAI')->textInput(['maxlength' => true]) ?>
                 </div>
-                    
                 <div class="col-sm-4">
                     <?= $form->field($model, 'ID_DONVI')->dropDownList(ArrayHelper::map(Donvi::find()->all(), 'ID_DONVI', 'TEN_DONVI'), 
                         [
@@ -42,12 +40,10 @@ $model->CHUC_VU = 3;
                                 });'
                         ]); ?>
                 </div>
-                    
                 <div class="col-sm-4">
                     <?= $form->field($model, 'ID_DAI')->dropDownList(ArrayHelper::map(Daivt::find()->all(), 'ID_DAI', 'TEN_DAIVT'), ['prompt' => 'Chọn đài viễn thông' ]); ?> 
                 </div>
             </div>
-                
             <div class="row">
                 <div class="col-sm-4">
                     <?= $form->field($model, 'USER_NAME')->textInput(['maxlength' => true, 'disabled' => $model->isNewRecord ? false : true ]) ?>
@@ -58,7 +54,7 @@ $model->CHUC_VU = 3;
                         echo $form->field($model->user, 'password')->passwordInput(['maxlength' => true]);
                     }  ?>
                 </div>
-            </div>                
+            </div>
         </div>
         <div class="box-footer">
             <div class="text-center">
