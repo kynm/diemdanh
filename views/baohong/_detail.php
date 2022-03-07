@@ -56,15 +56,10 @@ use kartik\rating\StarRating;
             'format' => 'raw',
         ],
         ['attribute'=>'ngay_bh',
-         'value' => function ($model) {
-              return Yii::$app->formatter->asDateTime($model->ngay_bh, 'php:d/m/Y h:m:s');
-          },
-
+         'value' => $model->ngay_bh,
         ],
         ['attribute'=>'ngay_xl',
-         'value' => function ($model) {
-              return Yii::$app->formatter->asDateTime($model->ngay_xl, 'php:d/m/Y h:m:s ');
-          },
+         'value' => $model->ngay_xl,
 
         ],
         'noidung',
