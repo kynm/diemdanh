@@ -84,9 +84,9 @@ class SiteController extends Controller
             $type = $result['type'];
             $dsbaohongdaxl = Yii::$app->db->createCommand('SELECT b.TEN_DONVI, COUNT(*) SO_LUONG FROM baohong a, donvi b where a.donvi_id = b.ID_DONVI and a.status in (1,3,4,5) and date(a.ngay_xl) BETWEEN "' . $startDate . '" and "' . $endDate . '" GROUP BY b.TEN_DONVI')->queryAll();
 
-            $dsbaohongchuaoutbound = Yii::$app->db->createCommand('SELECT b.TEN_DONVI, COUNT(*) SO_LUONG FROM baohong a, donvi b where a.donvi_id = b.ID_DONVI and a.status in (1,3) GROUP BY b.TEN_DONVI')->queryAll();
+            $dsbaohongchuaoutbound = Yii::$app->db->createCommand('SELECT b.TEN_DONVI, COUNT(*) SO_LUONG, SUM(CASE WHEN date(a.ngay_bh) = CURDATE() THEN 1 ELSE 0 END) TRONG_NGAY, SUM(CASE WHEN date(a.ngay_bh) < CURDATE() THEN 1 ELSE 0 END) TON_NGAY_TRUOC FROM baohong a, donvi b where a.donvi_id = b.ID_DONVI and a.status in (1,3) GROUP BY b.TEN_DONVI')->queryAll();
 
-            $dsbaohongchuaxl = Yii::$app->db->createCommand('SELECT b.TEN_DONVI, COUNT(*) SO_LUONG FROM baohong a, donvi b where a.donvi_id = b.ID_DONVI and a.status in (0,2) GROUP BY b.TEN_DONVI')->queryAll();
+            $dsbaohongchuaxl = Yii::$app->db->createCommand('SELECT b.TEN_DONVI, COUNT(*) SO_LUONG, SUM(CASE WHEN date(a.ngay_bh) = CURDATE() THEN 1 ELSE 0 END) TRONG_NGAY, SUM(CASE WHEN date(a.ngay_bh) < CURDATE() THEN 1 ELSE 0 END) TON_NGAY_TRUOC FROM baohong a, donvi b where a.donvi_id = b.ID_DONVI and a.status in (0,2) GROUP BY b.TEN_DONVI')->queryAll();
 
             $dsbaohongtheodichvu= Yii::$app->db->createCommand('SELECT b.TEN_DONVI , SUM(CASE WHEN c.dichvu_id = 1 THEN 1 ELSE 0 END) AS FIBER , SUM(CASE WHEN c.dichvu_id = 2 THEN 1 ELSE 0 END) AS MYTV , SUM(CASE WHEN c.dichvu_id = 2 THEN 1 ELSE 0 END) AS DTCD , SUM(CASE WHEN c.dichvu_id = 2 THEN 1 ELSE 0 END) AS DIDONG FROM baohong a, donvi b,dichvu_baohong c, dichvu d where a.donvi_id = b.ID_DONVI and a.id = c.baohong_id and c.dichvu_id = d.id and date(a.ngay_xl) BETWEEN "' . $startDate . '" and "' . $endDate . '" GROUP BY b.TEN_DONVI')->queryAll();
 

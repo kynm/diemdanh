@@ -46,13 +46,15 @@ $this->title = '443 HNM - ' . $text;
                                 <tr class="bg-danger">
                                     <th style="width: 10px">#</th>
                                     <th>Đơn vị</th>
-                                    <th>Số lượng</th>
+                                    <th>Tồn trước</th>
+                                    <th>Hôm nay</th>
                                 </tr>
                                 <?php foreach ($dsbaohongchuaxl as $key => $value):?>
                                     <tr>
                                         <td scope="col"><?php echo ($key + 1)?></td>
                                         <td scope="col"><?php echo $value['TEN_DONVI']?>
-                                        <td scope="col"><?php echo $value['SO_LUONG']?>
+                                        <td scope="col"><?php echo $value['TON_NGAY_TRUOC']?>
+                                        <td scope="col"><?php echo $value['TRONG_NGAY']?>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
@@ -71,13 +73,15 @@ $this->title = '443 HNM - ' . $text;
                                 <tr class="bg-warning">
                                     <th style="width: 10px">#</th>
                                     <th>Đơn vị</th>
-                                    <th>Số lượng</th>
+                                    <th>Tồn trước</th>
+                                    <th>Hôm nay</th>
                                 </tr>
                                 <?php foreach ($dsbaohongchuaoutbound as $key => $value):?>
                                     <tr>
                                         <td scope="col"><?php echo ($key + 1)?></td>
                                         <td scope="col"><?php echo $value['TEN_DONVI']?>
-                                        <td scope="col"><?php echo $value['SO_LUONG']?>
+                                        <td scope="col"><?php echo $value['TON_NGAY_TRUOC']?>
+                                        <td scope="col"><?php echo $value['TRONG_NGAY']?>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>

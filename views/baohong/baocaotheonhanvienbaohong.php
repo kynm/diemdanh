@@ -27,6 +27,7 @@ $this->title = 'BÁO CÁO THEO NHÂN VIÊN XỬ LÝ';
                         <tbody>
                             <tr>
                                 <th style="width: 10px">#</th>
+                                <th>ĐƠN VỊ</th>
                                 <th>TÊN NHÂN VIÊN</th>
                                 <th>CHƯA XỬ LÝ</th>
                                 <th>CHƯA OUTBOUND</th>
@@ -44,6 +45,7 @@ $this->title = 'BÁO CÁO THEO NHÂN VIÊN XỬ LÝ';
                                 ?>
                                 <tr>
                                     <td scope="col"><?php echo ($key + 1)?></td>
+                                    <td scope="col"><?php echo $value['TEN_DAIVT']?></td>
                                     <td scope="col"><?php echo $value['TEN_NHANVIEN']?></td>
                                     <td scope="col"><?php echo $value['CHUA_XL']?></td>
                                     <td scope="col"><?php echo $value['CHUA_OUTBOUND']?></td>

@@ -125,7 +125,7 @@ class BaohongSearch extends Baohong
         if (Yii::$app->user->can('quanlybaocao')) {
             $iddv = '2,3,4,5,6,7';
         }
-        return Yii::$app->db->createCommand('SELECT b.ten_nhanvien TEN_NHANVIEN, SUM(CASE WHEN a.STATUS = 0 THEN 1 ELSE 0 END) AS CHUA_XL ,SUM(CASE WHEN a.STATUS = 3 OR a.status = 1 THEN 1 ELSE 0 END) AS CHUA_OUTBOUND ,SUM(CASE WHEN a.STATUS = 4 or a.status = 5 THEN 1 ELSE 0 END) AS HOANTHANH FROM baohong a,nhanvien b where a.nhanvien_xl_id = b.id_nhanvien AND a.donvi_id in(' . $iddv . ') and date(a.ngay_bh) BETWEEN "' . $startDate . '" and "' . $endDate . '" GROUP by b.ten_nhanvien')->queryAll();
+        return Yii::$app->db->createCommand('SELECT c.TEN_DAIVT,b.ten_nhanvien TEN_NHANVIEN, SUM(CASE WHEN a.STATUS = 0 THEN 1 ELSE 0 END) AS CHUA_XL ,SUM(CASE WHEN a.STATUS = 3 OR a.status = 1 THEN 1 ELSE 0 END) AS CHUA_OUTBOUND ,SUM(CASE WHEN a.STATUS = 4 or a.status = 5 THEN 1 ELSE 0 END) AS HOANTHANH FROM baohong a,nhanvien b, daivt c where a.nhanvien_xl_id = b.id_nhanvien and b.ID_DAI = c.ID_DAI AND a.donvi_id in(' . $iddv . ') and date(a.ngay_bh) BETWEEN "' . $startDate . '" and "' . $endDate . '" GROUP by b.ten_nhanvien,c.TEN_DAIVT order By c.TEN_DAIVT')->queryAll();
     }
 
     public function baocaotheonhanvienbaohong($params)
@@ -137,7 +137,7 @@ class BaohongSearch extends Baohong
         if (Yii::$app->user->can('quanlybaocao')) {
             $iddv = '2,3,4,5,6,7';
         }
-        return Yii::$app->db->createCommand('SELECT b.ten_nhanvien TEN_NHANVIEN, SUM(CASE WHEN a.STATUS = 0 THEN 1 ELSE 0 END) AS CHUA_XL ,SUM(CASE WHEN a.STATUS = 3 OR a.status = 1 THEN 1 ELSE 0 END) AS CHUA_OUTBOUND ,SUM(CASE WHEN a.STATUS = 4 or a.status = 5 THEN 1 ELSE 0 END) AS HOANTHANH FROM baohong a,nhanvien b where a.nhanvien_id = b.id_nhanvien  AND a.donvi_id in(' . $iddv . ') and date(a.ngay_bh) BETWEEN "' . $startDate . '" and "' . $endDate . '" GROUP by b.ten_nhanvien')->queryAll();
+        return Yii::$app->db->createCommand('SELECT c.TEN_DAIVT,b.ten_nhanvien TEN_NHANVIEN, SUM(CASE WHEN a.STATUS = 0 THEN 1 ELSE 0 END) AS CHUA_XL ,SUM(CASE WHEN a.STATUS = 3 OR a.status = 1 THEN 1 ELSE 0 END) AS CHUA_OUTBOUND ,SUM(CASE WHEN a.STATUS = 4 or a.status = 5 THEN 1 ELSE 0 END) AS HOANTHANH FROM baohong a,nhanvien b, daivt c where a.nhanvien_id = b.id_nhanvien and b.ID_DAI = c.ID_DAI  AND a.donvi_id in(' . $iddv . ') and date(a.ngay_bh) BETWEEN "' . $startDate . '" and "' . $endDate . '" GROUP by b.ten_nhanvien ,c.TEN_DAIVT order By c.TEN_DAIVT')->queryAll();
     }
 
     public function baocaobaohongnhieulan($params)
