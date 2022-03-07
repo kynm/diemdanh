@@ -158,7 +158,6 @@ class NhanvienController extends Controller
 
                 return $this->redirect(['view', 'id' => $model->ID_NHANVIEN]);
             } else {
-                die(var_dump($model->user));
                 return $this->render('update', [
                     'model' => $model,
                     'user' => $user,
