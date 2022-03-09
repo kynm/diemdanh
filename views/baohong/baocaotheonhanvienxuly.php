@@ -55,7 +55,7 @@ $this->title = 'BÁO CÁO THEO NHÂN VIÊN BÁO HỎNG';
                             <?php endforeach; ?>
                                 <tr>
                                     <td scope="col"></td>
-                                    <td scope="col">TỔNG</td>
+                                    <td scope="col" colspan="2">TỔNG</td>
                                     <td scope="col"><?php echo $CHUA_XL?></td>
                                     <td scope="col"><?php echo $CHUA_OUTBOUND?></td>
                                     <td scope="col"><?php echo $HOANTHANH?></td>
