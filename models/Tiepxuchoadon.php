@@ -26,14 +26,14 @@ use yii\helpers\ArrayHelper;
  * @property Thuchienbd[] $thuchienbds
  * @property Tramvt[] $tramvts
  */
-class Baohong extends \yii\db\ActiveRecord
+class Tiepxuchoadon extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'hotro';
+        return 'tiepxuchoadonmoi';
     }
 
     /**
@@ -42,14 +42,10 @@ class Baohong extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['donvi_id','dichvu_id','ten_kh', 'so_dt', 'diachi', 'noidung', 'ma_tb', 'nhanvien_xl_id'], 'required'],
-            [['nhanvien_id', 'donvi_id', 'nhanvien_xl_id', 'nguyennhan_id', 'danhgia'], 'integer'],
-            [['ten_kh'], 'string', 'max' => 50],
-            [['diachi'], 'string', 'max' => 200],
-            [['so_dt'], 'string', 'max' => 11],
-            [['noidung'], 'string', 'max' => 500],
-            [['dai_id', 'so_dt'], 'safe'],
-            [['donvi_id'], 'exist', 'skipOnError' => true, 'targetClass' => Donvi::className(), 'targetAttribute' => ['donvi_id' => 'ID_DONVI']],
+            [['nhanvien_id','hddtmoi_id', 'ketqua', 'ht_tc'], 'required'],
+            [['nhanvien_id', 'donvi_id', 'ketqua', 'ht_tc'], 'integer'],
+            [['nhanvien_id'], 'exist', 'skipOnError' => true, 'targetClass' => Nhanvien::className(), 'targetAttribute' => ['nhanvien_id' => 'ID_NHANVIEN']],
+            [['hddtmoi_id'], 'exist', 'skipOnError' => true, 'targetClass' => Hddtmoi::className(), 'targetAttribute' => ['hddtmoi_id' => 'id']],
         ];
     }
 
@@ -59,59 +55,32 @@ class Baohong extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'donvi_id' => 'Trung tâm viễn thông',
-            'nhanvien_xl_id' => 'Nhân viên kỹ thuật',
-            'nhanvien_id' => 'Nhân viên phản ánh',
-            'dichvu_id' => 'Dịch vụ phản ánh',
-            'ten_kh' => 'Tên khách hàng',
-            'so_dt' => 'SĐT khách hàng',
-            'dai_id' => 'Đài',
-            'noidung' => 'Nội dung phản ánh',
-            'diachi' => 'Địa chỉ',
-            'status' => 'Trạng thái',
+            'ketqua' => 'Kết quả',
+            'ht_tc' => 'Hình thức tiếp xúc',
             'ghichu' => 'Ghi chú',
-            'nguyennhan_id' => 'Nguyên nhân',
-            'ma_tb' => 'Mã thuê bao',
-            'danhgia' => 'Đánh giá',
+            'hddtmoi_id' => 'Khách hàng',
             'tentrangthai' => 'Trạng thái',
+            'ngay_tiepxuc' => 'Ngày tiếp xúc',
+            'nhanvien_id' => 'Nhân viên liên hệ',
+            'donvi_id' => 'Địa bàn',
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getDotbaoduongs()
-    {
-        return $this->hasMany(Dotbaoduong::className(), ['ID_NHANVIEN' => 'ID_NHANVIEN']);
-    }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getKehoachbdtbs()
-    {
-        return $this->hasMany(Kehoachbdtb::className(), ['ID_NHANVIEN' => 'ID_NHANVIEN']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getNHANVIEN()
+    public function getNhanvien()
     {
         return $this->hasOne(Nhanvien::className(), ['ID_NHANVIEN' => 'nhanvien_id']);
     }
 
-    public function getNHANVIENXULY()
-    {
-        return $this->hasOne(Nhanvien::className(), ['ID_NHANVIEN' => 'nhanvien_xl_id']);
-    }
-
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIDDAI()
+    public function getKhachhang()
     {
-        return $this->hasOne(Daivt::className(), ['ID_DAI' => 'dai_id']);
+        return $this->hasOne(Hddtmoi::className(), ['id' => 'hddtmoi_id']);
     }
 
     /**

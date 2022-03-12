@@ -23,6 +23,7 @@
 
     function sendtelegrammessage($chatId, $message = 'Test text')
     {
+        return 1;
         \Yii::$app->telegram->sendMessage([
             'chat_id' => $chatId,
             'text' => $message,
@@ -120,4 +121,28 @@
 
         return $response;
     }
+
+    function ketquatxhoadon()
+    {
+        return [
+            1 => 'Đồng ý sử dụng dịch vụ',
+            2 => 'Ký hợp đồng',
+            3 => 'Đã thu tiền',
+            4 => 'Đã hoàn thiện, bàn giao cho khách hàng',
+            5 => 'Đã dùng VNPT từ trước',
+            6 => 'Đã dùng dùng của doanh nghiệp khác',
+            7 => 'Giải thể',
+            8 => 'Sát nhập',
+            9 => 'Hẹn khi khác gọi lại',
+        ];
+    }
+    
+    function hinhthuctx()
+    {
+      return [
+            1 => 'Gọi điện',
+            2 => 'Gặp trực tiếp',
+        ];
+    }
+
 ?>

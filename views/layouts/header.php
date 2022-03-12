@@ -7,13 +7,13 @@ use yii\helpers\Url;
         <div class="container">
             <div class="navbar-header">
                 <a href="<?= Url::to(['/'])?>" class="navbar-brand">Dashboard</a>
-                <a href="<?= Url::to(['baohong/index'])?>" class="navbar-brand">Báo hỏng</a>
+                <a href="<?= Url::to(['hoadondientumoi/index'])?>" class="navbar-brand">Hóa đơn điện tử</a>
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
                 <i class="fa fa-bars"></i>
                 </button>
             </div>
             <div class="navbar-collapse pull-left collapse" id="navbar-collapse">
-                <ul class="nav navbar-nav">
+<!--                 <ul class="nav navbar-nav">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Báo cáo <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
@@ -23,7 +23,7 @@ use yii\helpers\Url;
                             <li><a href="<?= Url::to(['baohong/baocaobaohongnhieulan'])?>">Báo cáo thuê bao báo hỏng nhiều lần</a></li>
                         </ul>
                     </li>
-                </ul>
+                </ul> -->
                 <ul class="nav navbar-nav">
                     <?php if (Yii::$app->user->can('Administrator')): ?>
                         <li class="dropdown">

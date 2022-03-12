@@ -10,16 +10,14 @@ class UploadForm extends Model
      * @var UploadedFile
      */
     public $fileupload;
-    public $THANG;
-    public $NAM;
-    public $MA_DONVIKT;
+    public $nhanvien_id;
+    public $donvi_id;
 
     public function rules()
     {
         return [
             [['fileupload'], 'file', 'skipOnEmpty' => false, 'extensions' => 'xlsx, xls'],
-            [['THANG', 'NAM', 'MA_DONVIKT'], 'required'],
-            [['THANG', 'NAM', 'MA_DONVIKT'], 'integer'],
+            [['nhanvien_id', 'donvi_id'], 'required'],
         ];
     }
     
@@ -35,9 +33,8 @@ class UploadForm extends Model
     public function attributeLabels()
     {
         return [
-            'THANG' => 'Tháng',
-            'NAM' => 'Năm',
-            'MA_DONVIKT' => 'Đơn vị',
+            'nhanvien_id' => 'Nhân viên',
+            'donvi_id' => 'Đơn vị',
         ];
     }
 }
