@@ -10,7 +10,7 @@ use app\models\Hddtmoi;
 /**
  * DotbaoduongSearch represents the model behind the search form about `app\models\Dotbaoduong`.
  */
-class HddtmoiSearch extends Hddtmoi
+class Tt32to78Search extends Hddtmoi
 {
      // Virtual variable
     public $ID_DAI;
@@ -22,8 +22,6 @@ class HddtmoiSearch extends Hddtmoi
     public function rules()
     {
         return [
-            // [['ID_DOTBD', 'ID_DAI', 'ID_DONVI'], 'integer'],
-            // [['MA_DOTBD', 'TRANGTHAI'], 'string', 'max' => 32],
             [['MST', 'TEN_KH', 'DIACHI', 'LIENHE', 'EMAIL'], 'safe'],
         ];
     }

@@ -142,6 +142,20 @@
       return [
             1 => 'Gọi điện',
             2 => 'Gặp trực tiếp',
+            2 => 'Liên hệ qua Zalo,facebook,..',
+        ];
+    }
+
+    function ketqua32to78()
+    {
+        return [
+            1 => 'Đã liên hệ hẹn lúc khác',
+            2 => 'Đã thêm vào nhóm zalo',
+            3 => 'Đã tư vấn nghiệp vụ',
+            4 => 'Đã hướng dẫn sử dụng',
+            5 => 'Đã phát hành hóa đơn thành công',
+            6 => 'Hướng dẫn nghiệp vụ khác',
+            7 => 'Đã hủy dịch vụ',
         ];
     }
 

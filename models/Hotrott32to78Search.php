@@ -5,26 +5,20 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Hddtmoi;
+use app\models\Hotrott32to78;
 
 /**
- * DotbaoduongSearch represents the model behind the search form about `app\models\Dotbaoduong`.
+ * Hotrott32to78Search represents the model behind the search form of `app\models\Hotrott32to78`.
  */
-class HddtmoiSearch extends Hddtmoi
+class Hotrott32to78Search extends Hotrott32to78
 {
-     // Virtual variable
-    public $ID_DAI;
-    public $ID_DONVI;
-
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            // [['ID_DOTBD', 'ID_DAI', 'ID_DONVI'], 'integer'],
-            // [['MA_DOTBD', 'TRANGTHAI'], 'string', 'max' => 32],
-            [['MST', 'TEN_KH', 'DIACHI', 'LIENHE', 'EMAIL'], 'safe'],
+            // [['activity_type', 'activity_name', 'class'], 'safe'],
         ];
     }
 
@@ -46,7 +40,7 @@ class HddtmoiSearch extends Hddtmoi
      */
     public function search($params)
     {
-        $query = Hddtmoi::find();
+        $query = Hotrott32to78::find();
 
         // add conditions that should always apply here
 
@@ -62,15 +56,17 @@ class HddtmoiSearch extends Hddtmoi
             return $dataProvider;
         }
 
-        $query->andFilterWhere(['like', 'hddtmoi.MST', $this->MST]);
-        $query->andFilterWhere(['like', 'hddtmoi.TEN_KH', $this->TEN_KH]);
-        $query->andFilterWhere(['like', 'hddtmoi.DIACHI', $this->DIACHI]);
-        $query->andFilterWhere(['like', 'hddtmoi.LIENHE', $this->LIENHE]);
-        $query->andFilterWhere(['like', 'hddtmoi.EMAIL', $this->EMAIL]);
+        // grid filtering conditions
+        // $query->andFilterWhere(['like', 'activity_type', $this->activity_type])
+        //     ->andFilterWhere(['like', 'activity_name', $this->activity_name])
+        //     ->andFilterWhere(['like', 'class', $this->class]);
+
+        if (!Yii::$app->user->can('quanly-dulieu')) {
+           $query->andFilterWhere(['nhanvien_id' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN]);
+        }
         $query->orderBy([
-            'ngay_lh' => SORT_ASC,
+            'ngay_tiepxuc' => SORT_DESC,
         ]);
         return $dataProvider;
     }
-
 }

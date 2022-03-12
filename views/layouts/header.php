@@ -8,6 +8,7 @@ use yii\helpers\Url;
             <div class="navbar-header">
                 <a href="<?= Url::to(['/'])?>" class="navbar-brand">Dashboard</a>
                 <a href="<?= Url::to(['hoadondientumoi/index'])?>" class="navbar-brand">Hóa đơn điện tử</a>
+                <a href="<?= Url::to(['tt32to78/index'])?>" class="navbar-brand">Chuyển đổi HĐ TT78</a>
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
                 <i class="fa fa-bars"></i>
                 </button>
