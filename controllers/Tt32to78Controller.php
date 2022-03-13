@@ -39,8 +39,8 @@ class Tt32to78Controller extends Controller
 
         public function actionImport()
     {
-            $dsdonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', [2,3,4,5,6,7]])->all(), 'ID_DONVI', 'TEN_DONVI');
-            $dsNhanvien = ArrayHelper::map(Nhanvien::find()->where(['in', 'ID_DONVI', [668]])->all(), 'ID_NHANVIEN', 'TEN_NHANVIEN');
+            $dsdonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', [9,668]])->all(), 'ID_DONVI', 'TEN_DONVI');
+            $dsNhanvien = ArrayHelper::map(Nhanvien::find()->where(['in', 'ID_DONVI', [668,9]])->all(), 'ID_NHANVIEN', 'TEN_NHANVIEN');
             $model = new UploadForm();
             if (Yii::$app->request->post())
             {
@@ -56,13 +56,17 @@ class Tt32to78Controller extends Controller
                 foreach ($data as $key => $value) {
                     if ($value['MST']) {
                         $model1 = new tt32to78();
-                        $model1->nhanvien_id = $params['UploadForm']['nhanvien_id'];
-                        $model1->donvi_id = $params['UploadForm']['donvi_id'];
+                        $model1->nhanvien_id = 1;
+                        $model1->donvi_id = 1;
                         $model1->TEN_KH = $value['TEN_KH'];
                         $model1->MST = $value['MST'];
                         $model1->DIACHI = $value['DIACHI'];
                         $model1->LIENHE = $value['LIENHE'];
                         $model1->EMAIL = $value['EMAIL'];
+                        $model1->GUIDK01 = $value['GUIDK01'];
+                        $model1->TRANGTHAINANGCAP = $value['TRANGTHAINANGCAP'];
+                        $model1->TEN_NV_KD = $value['TEN_NV_KD'];
+                        $model1->NHANVIENHOTRO = $value['NHANVIENHOTRO'];
                         $model1->save(false);
                     }
                 }
@@ -126,6 +130,9 @@ class Tt32to78Controller extends Controller
             $model->ghichu = $params['Hotrott32to78']['ghichu'];
             $model->save(false);
             $khachhang->ngay_lh = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d H:i:s');
+            $khachhang->ht_lh = $model->ht_tc;
+            $khachhang->ketqua = $model->ketqua;
+            $khachhang->ghichu = $model->ghichu;
             $khachhang->save(false);
             Yii::$app->session->setFlash('success', "Đã thực thiện tiếp xúc khách hàng thành công!");
             return $this->redirect(['view', 'id' => $khachhang->id]);

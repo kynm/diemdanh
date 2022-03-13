@@ -155,7 +155,7 @@ class BaohongSearch extends Baohong
 
     public function getStartDateEndDate($params)
     {
-        $type = isset($params['type']) ? $params['type'] : 6;
+        $type = isset($params['type']) ? $params['type'] : 0;
         switch ($type) {
             case 1:
                 $text = 'Hôm qua'; //ok

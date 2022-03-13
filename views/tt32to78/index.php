@@ -40,13 +40,18 @@ $this->params['breadcrumbs'][] = $this->title;
                             'attribute' => 'DIACHI',
                             'contentOptions' => ['style' => 'width:10%; white-space: normal;'],
                         ],
+                        'LOAIHETHONG',
+                        'TEN_KETOAN',
                         'LIENHE',
                         'EMAIL',
-                        'ngay_lh',
+                        'ghichu',
+                        'TRANGTHAINANGCAP',
                         [
-                            'attribute' => 'donvi_id',
-                            'value' => 'donvi.TEN_DONVI'
+                            'attribute' => 'nhanvien_id',
+                            'value' => 'nhanvien.TEN_NHANVIEN',
+                            'contentOptions' => ['style' => 'width:5%; white-space: normal;'],
                         ],
+                        'ngay_lh',
                         
                     ],
                 ]); ?>

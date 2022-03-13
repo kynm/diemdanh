@@ -17,17 +17,20 @@ use app\models\Donvi;
         <div class="box-body">
             <div class="row">
                 <div class="col-md-4">
-                    <?= $form->field($model, 'donvi_id')->dropDownList($dsdonvi,['prompt' => 'Chọn dịa bàn']) ?>
-                </div>
-                <div class="col-md-4">
-                    <?= $form->field($model, 'donvi_id')->textInput(['maxlength' => true]) ?>
-                </div>
-                <div class="col-md-4">
                     <?= $form->field($model, 'TEN_KH')->textInput(['maxlength' => true]) ?>
                 </div>
                     
                 <div class="col-md-4">
                     <?= $form->field($model, 'MST')->textInput(['maxlength' => true]) ?>
+                </div>
+                <div class="col-md-4">
+                    <?= $form->field($model, 'EMAIL')->textInput(['maxlength' => true]) ?>
+                </div>
+                <div class="col-md-4">
+                    <?= $form->field($model, 'TRANGTHAINANGCAP')->textInput(['maxlength' => true]) ?>
+                </div>
+                <div class="col-md-4">
+                    <?= $form->field($model, 'TEN_KETOAN')->textInput(['maxlength' => true]) ?>
                 </div>
                 <div class="col-md-3">
                     <?= $form->field($model, 'LIENHE')->textInput(['maxlength' => true]) ?>

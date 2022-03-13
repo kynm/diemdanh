@@ -42,10 +42,10 @@ class Hotrott32to78 extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nhanvien_id','hddtmoi_id', 'ketqua', 'ht_tc'], 'required'],
+            [['nhanvien_id','tt32to78_id', 'ketqua', 'ht_tc'], 'required'],
             [['nhanvien_id', 'donvi_id', 'ketqua', 'ht_tc'], 'integer'],
             [['nhanvien_id'], 'exist', 'skipOnError' => true, 'targetClass' => Nhanvien::className(), 'targetAttribute' => ['nhanvien_id' => 'ID_NHANVIEN']],
-            [['hddtmoi_id'], 'exist', 'skipOnError' => true, 'targetClass' => Hddtmoi::className(), 'targetAttribute' => ['hddtmoi_id' => 'id']],
+            [['tt32to78_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tt32to78::className(), 'targetAttribute' => ['tt32to78_id' => 'id']],
         ];
     }
 
@@ -58,7 +58,7 @@ class Hotrott32to78 extends \yii\db\ActiveRecord
             'ketqua' => 'Kết quả',
             'ht_tc' => 'Hình thức tiếp xúc',
             'ghichu' => 'Ghi chú',
-            'hddtmoi_id' => 'Khách hàng',
+            'tt32to78_id' => 'Khách hàng',
             'tentrangthai' => 'Trạng thái',
             'ngay_tiepxuc' => 'Ngày tiếp xúc',
             'nhanvien_id' => 'Nhân viên liên hệ',
@@ -80,7 +80,7 @@ class Hotrott32to78 extends \yii\db\ActiveRecord
      */
     public function getKhachhang()
     {
-        return $this->hasOne(Hddtmoi::className(), ['id' => 'hddtmoi_id']);
+        return $this->hasOne(Tt32to78::className(), ['id' => 'tt32to78_id']);
     }
 
     /**

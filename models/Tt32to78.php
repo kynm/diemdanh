@@ -53,6 +53,10 @@ class Tt32to78 extends \yii\db\ActiveRecord
             'LIENHE' => 'Điện thoại',
             'EMAIL' => 'Email',
             'SDT' => 'Số điện thoại',
+            'TEN_KETOAN' => 'Tên kế toán',
+            'TRANGTHAINANGCAP' => 'Trạng thái nâng cấp',
+            'TEN_NV_KD' => 'Tên nhân viên kinh doanh',
+            'LOAIHETHONG' => 'Loại hệ thống'
         ];
     }
 
@@ -63,6 +67,11 @@ class Tt32to78 extends \yii\db\ActiveRecord
     public function getDonvi()
     {
         return $this->hasOne(Donvi::className(), ['ID_DONVI' => 'donvi_id']);
+    }
+
+    public function getNhanvien()
+    {
+        return $this->hasOne(Nhanvien::className(), ['ID_NHANVIEN' => 'nhanvien_id']);
     }
 
     /**

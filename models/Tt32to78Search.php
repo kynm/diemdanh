@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Hddtmoi;
+use app\models\Tt32to78;
 
 /**
  * DotbaoduongSearch represents the model behind the search form about `app\models\Dotbaoduong`.
  */
-class Tt32to78Search extends Hddtmoi
+class Tt32to78Search extends Tt32to78
 {
      // Virtual variable
     public $ID_DAI;
@@ -22,7 +22,7 @@ class Tt32to78Search extends Hddtmoi
     public function rules()
     {
         return [
-            [['MST', 'TEN_KH', 'DIACHI', 'LIENHE', 'EMAIL'], 'safe'],
+            [['MST', 'TEN_KH', 'DIACHI', 'LIENHE', 'EMAIL', 'TRANGTHAINANGCAP'], 'safe'],
         ];
     }
 
@@ -44,7 +44,7 @@ class Tt32to78Search extends Hddtmoi
      */
     public function search($params)
     {
-        $query = Hddtmoi::find();
+        $query = Tt32to78::find();
 
         // add conditions that should always apply here
 
@@ -59,12 +59,15 @@ class Tt32to78Search extends Hddtmoi
             // $query->where('0=1');
             return $dataProvider;
         }
-
-        $query->andFilterWhere(['like', 'hddtmoi.MST', $this->MST]);
-        $query->andFilterWhere(['like', 'hddtmoi.TEN_KH', $this->TEN_KH]);
-        $query->andFilterWhere(['like', 'hddtmoi.DIACHI', $this->DIACHI]);
-        $query->andFilterWhere(['like', 'hddtmoi.LIENHE', $this->LIENHE]);
-        $query->andFilterWhere(['like', 'hddtmoi.EMAIL', $this->EMAIL]);
+        if (Yii::$app->user->can('nhanvien-hotro-chuyendoi')) {
+            $query->andFilterWhere(['nhanvien_id' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN]);
+        }
+        $query->andFilterWhere(['like', 'MST', $this->MST]);
+        $query->andFilterWhere(['like', 'TEN_KH', $this->TEN_KH]);
+        $query->andFilterWhere(['like', 'DIACHI', $this->DIACHI]);
+        $query->andFilterWhere(['like', 'LIENHE', $this->LIENHE]);
+        $query->andFilterWhere(['like', 'EMAIL', $this->EMAIL]);
+        $query->andFilterWhere(['=', 'TRANGTHAINANGCAP', $this->TRANGTHAINANGCAP]);
         $query->orderBy([
             'ngay_lh' => SORT_ASC,
         ]);

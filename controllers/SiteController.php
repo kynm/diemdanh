@@ -85,19 +85,21 @@ class SiteController extends Controller
             $tongkhdatiepcan = Yii::$app->db->createCommand('SELECT c.TEN_DONVI, count(*) SO_LUONG FROM tiepxuchoadonmoi a, hddtmoi b, donvi c WHERE a.hddtmoi_id = b.id and b.donvi_id = c.ID_DONVI and date(a.ngay_tiepxuc) BETWEEN "' . $startDate . '" and "' . $endDate . '" group by c.TEN_DONVI')->queryAll();
             $dsketquatiepcan = Yii::$app->db->createCommand('SELECT c.TEN_DONVI, SUM(CASE WHEN a.ketqua = 1 THEN 1 ELSE 0 END) AS DONGY , SUM(CASE WHEN a.ketqua = 2 THEN 1 ELSE 0 END) AS KYHOPDONG , SUM(CASE WHEN a.ketqua = 3 THEN 1 ELSE 0 END) AS THUTIEN , SUM(CASE WHEN a.ketqua = 4 THEN 1 ELSE 0 END) AS HOANTHIEN , SUM(CASE WHEN a.ketqua = 5 THEN 1 ELSE 0 END) AS DADUNGTRUOC , SUM(CASE WHEN a.ketqua = 6 THEN 1 ELSE 0 END) AS DADUNGDNK , SUM(CASE WHEN a.ketqua = 7 THEN 1 ELSE 0 END) AS GIAITHE , SUM(CASE WHEN a.ketqua = 8 THEN 1 ELSE 0 END) AS SATNHAP , SUM(CASE WHEN a.ketqua = 9 THEN 1 ELSE 0 END) AS HENGOISAU FROM tiepxuchoadonmoi a, hddtmoi b, donvi c WHERE a.hddtmoi_id = b.id and b.donvi_id = c.ID_DONVI and date(a.ngay_tiepxuc) BETWEEN "' . $startDate . '" and "' . $endDate . '" group by c.TEN_DONVI')->queryAll();
             $cachtiepcan = Yii::$app->db->createCommand('SELECT c.TEN_DONVI , SUM(CASE WHEN a.ht_tc = 1 THEN 1 ELSE 0 END) AS GOIDIEN , SUM(CASE WHEN a.ht_tc = 2 THEN 1 ELSE 0 END) AS GAPTRUCTIEP FROM tiepxuchoadonmoi a, hddtmoi b, donvi c WHERE a.hddtmoi_id = b.id and b.donvi_id = c.ID_DONVI and date(a.ngay_tiepxuc) BETWEEN "' . $startDate . '" and "' . $endDate . '" group by c.TEN_DONVI')->queryAll();
-
-            // $dsbaohongchuaoutbound = Yii::$app->db->createCommand('SELECT b.TEN_DONVI, COUNT(*) SO_LUONG, SUM(CASE WHEN date(a.ngay_bh) = CURDATE() THEN 1 ELSE 0 END) TRONG_NGAY, SUM(CASE WHEN date(a.ngay_bh) < CURDATE() THEN 1 ELSE 0 END) TON_NGAY_TRUOC FROM baohong a, donvi b where a.donvi_id = b.ID_DONVI and a.status in (1,3) GROUP BY b.TEN_DONVI')->queryAll();
-
-            // $dsbaohongchuaxl = Yii::$app->db->createCommand('SELECT b.TEN_DONVI, COUNT(*) SO_LUONG, SUM(CASE WHEN date(a.ngay_bh) = CURDATE() THEN 1 ELSE 0 END) TRONG_NGAY, SUM(CASE WHEN date(a.ngay_bh) < CURDATE() THEN 1 ELSE 0 END) TON_NGAY_TRUOC FROM baohong a, donvi b where a.donvi_id = b.ID_DONVI and a.status in (0,2) GROUP BY b.TEN_DONVI')->queryAll();
-
-            // $dsbaohongtheodichvu= Yii::$app->db->createCommand('SELECT b.TEN_DONVI , SUM(CASE WHEN c.dichvu_id = 1 THEN 1 ELSE 0 END) AS FIBER , SUM(CASE WHEN c.dichvu_id = 2 THEN 1 ELSE 0 END) AS MYTV , SUM(CASE WHEN c.dichvu_id = 2 THEN 1 ELSE 0 END) AS DTCD , SUM(CASE WHEN c.dichvu_id = 2 THEN 1 ELSE 0 END) AS DIDONG FROM baohong a, donvi b,dichvu_baohong c, dichvu d where a.donvi_id = b.ID_DONVI and a.id = c.baohong_id and c.dichvu_id = d.id and date(a.ngay_xl) BETWEEN "' . $startDate . '" and "' . $endDate . '" GROUP BY b.TEN_DONVI')->queryAll();
-
+            // chuyển đổi 78
+            $dsketquachuyendoi = Yii::$app->db->createCommand('SELECT c.TEN_NHANVIEN, SUM(CASE WHEN a.ketqua = 1 THEN 1 ELSE 0 END) AS DALH , SUM(CASE WHEN a.ketqua = 2 THEN 1 ELSE 0 END) AS DATHEMZALO , SUM(CASE WHEN a.ketqua = 3 THEN 1 ELSE 0 END) AS GUIDK01 , SUM(CASE WHEN a.ketqua = 4 THEN 1 ELSE 0 END) AS DAPHHD , SUM(CASE WHEN a.ketqua = 5 THEN 1 ELSE 0 END) AS HDNVKHAC , SUM(CASE WHEN a.ketqua = 6 THEN 1 ELSE 0 END) AS DADUNGDNK , SUM(CASE WHEN a.ketqua = 7 THEN 1 ELSE 0 END) AS HUYDV FROM lichsuhotrott32to78 a, khchuyendoi32to78 b, nhanvien c WHERE a.tt32to78_id = b.id and b.nhanvien_id = c.ID_NHANVIEN and date(a.ngay_tiepxuc) BETWEEN "' . $startDate . '" and "' . $endDate . '" group by c.TEN_NHANVIEN')->queryAll();
+            $dsketquachuyendoitheocongty = Yii::$app->db->createCommand('SELECT c.TEN_NHANVIEN, SUM(CASE WHEN b.ketqua = 1 THEN 1 ELSE 0 END) AS DALH , SUM(CASE WHEN b.ketqua = 2 THEN 1 ELSE 0 END) AS DATHEMZALO , SUM(CASE WHEN b.ketqua = 3 THEN 1 ELSE 0 END) AS GUIDK01 , SUM(CASE WHEN b.ketqua = 4 THEN 1 ELSE 0 END) AS DAPHHD , SUM(CASE WHEN b.ketqua = 5 THEN 1 ELSE 0 END) AS HDNVKHAC , SUM(CASE WHEN b.ketqua = 6 THEN 1 ELSE 0 END) AS DADUNGDNK , SUM(CASE WHEN b.ketqua = 7 THEN 1 ELSE 0 END) AS HUYDV FROM khchuyendoi32to78 b, nhanvien c WHERE b.nhanvien_id = c.ID_NHANVIEN and date(b.ngay_lh) BETWEEN "' . $startDate . '" and "' . $endDate . '" group by c.TEN_NHANVIEN')->queryAll();
+            $dsnangcaphethong = Yii::$app->db->createCommand('SELECT c.TEN_NHANVIEN, SUM(CASE WHEN b.TRANGTHAINANGCAP = 1 THEN 1 ELSE 0 END) AS DANANGCAP , COUNT(*) TONGSO FROM khchuyendoi32to78 b, nhanvien c WHERE b.nhanvien_id = c.ID_NHANVIEN group by c.TEN_NHANVIEN')->queryAll();
+            $dahoanthanh = Yii::$app->db->createCommand('SELECT c.TEN_NHANVIEN, SUM(CASE WHEN b.ketqua = 5 || b.ketqua = 6 || b.ketqua = 7 THEN 1 ELSE 0 END) AS DAHOANTHANH , COUNT(*) TONGSO FROM khchuyendoi32to78 b, nhanvien c WHERE b.nhanvien_id = c.ID_NHANVIEN group by c.TEN_NHANVIEN')->queryAll();
 
             return $this->render('index'
                 ,[
-                'tongkhdatiepcan' => $tongkhdatiepcan,
-                'dsketquatiepcan' => $dsketquatiepcan,
-                'cachtiepcan' => $cachtiepcan,
+                'tongkhdatiepcan' => [],
+                'dsketquatiepcan' => [],
+                'cachtiepcan' => [],
+                'dsketquachuyendoi' => $dsketquachuyendoi,
+                'dsketquachuyendoitheocongty' => $dsketquachuyendoitheocongty,
+                'dsnangcaphethong' => $dsnangcaphethong,
+                'dahoanthanh' => $dahoanthanh,
                 'text' => $text,
                 'url' => '/',
                 'type' => $type,

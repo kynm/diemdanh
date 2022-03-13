@@ -32,6 +32,143 @@ $this->title = 'RA QUÂN - ' . $text;
                 'url' => '/',
                 'type' => $type,
             ]) ?>
+            <div class="col-md-4">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3><b>TỔNG HỢP NÂNG CẤP HỆ THỐNG</b></h3>
+                    </div>
+                    <div class="box-body">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr class="bg-primary">
+                                    <th style="width: 10px">#</th>
+                                    <th>TÊN NHÂN VIÊN</th>
+                                    <th>ĐÃ NÂNG CẤP</th>
+                                    <th>CÒN LẠI</th>
+                                    <th>TỔNG SỐ</th>
+                                    <th>TỶ LỆ</th>
+                                </tr>
+                                <?php foreach ($dsnangcaphethong as $key => $value):?>
+                                    <tr>
+                                        <td scope="col"><?php echo ($key + 1)?></td>
+                                        <td scope="col"><?php echo $value['TEN_NHANVIEN']?></td>
+                                        <td scope="col"><?php echo $value['DANANGCAP']?></td>
+                                        <td scope="col"><?php echo ($value['TONGSO']  - $value['DANANGCAP'])?></td>
+                                        <td scope="col"><?php echo $value['TONGSO']?></td>
+                                        <td scope="col"><?php echo round(($value['DANANGCAP'] * 100)/$value['TONGSO'], 2)?> %</td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3><b>TỔNG HỢP ĐÃ HOÀN THÀNH</b></h3>
+                    </div>
+                    <div class="box-body">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr class="bg-primary">
+                                    <th style="width: 10px">#</th>
+                                    <th>TÊN NHÂN VIÊN</th>
+                                    <th>ĐÃ HOÀN THÀNH</th>
+                                    <th>CÒN LẠI</th>
+                                    <th>TỔNG SỐ</th>
+                                    <th>TỶ LỆ</th>
+                                </tr>
+                                <?php foreach ($dahoanthanh as $key => $value):?>
+                                    <tr>
+                                        <td scope="col"><?php echo ($key + 1)?></td>
+                                        <td scope="col"><?php echo $value['TEN_NHANVIEN']?></td>
+                                        <td scope="col"><?php echo $value['DAHOANTHANH']?></td>
+                                        <td scope="col"><?php echo ($value['TONGSO']  - $value['DAHOANTHANH'])?></td>
+                                        <td scope="col"><?php echo $value['TONGSO']?></td>
+                                        <td scope="col"><?php echo round(($value['DAHOANTHANH'] * 100)/$value['TONGSO'], 2)?> %</td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3><b>KẾT QUẢ CHUYỂN ĐỔI HÓA ĐƠN SANG TT 78(THEO LƯỢT HỖ TRỢ)</b></h3>
+                    </div>
+                    <div class="box-body">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr class="bg-primary">
+                                    <th style="width: 10px">#</th>
+                                    <th>TÊN NHÂN VIÊN</th>
+                                    <th>ĐÃ LH, HẸN LÚC KHÁC</th>
+                                    <th>ĐÃ THÊM VÀO NHÓM ZALO</th>
+                                    <th>ĐÃ TƯ VẤN NGHIỆP VỤ</th>
+                                    <th>ĐÃ GỬI DK01</th>
+                                    <th>ĐÃ PHÁT HÀNH HĐ</th>
+                                    <th>ĐÃ HD NGHIỆP VỤ SAU PHÁT HÀNH</th>
+                                    <th>ĐÃ HỦY</th>
+                                </tr>
+                                <?php foreach ($dsketquachuyendoi as $key => $value):?>
+                                    <tr>
+                                        <td scope="col"><?php echo ($key + 1)?></td>
+                                        <td scope="col"><?php echo $value['TEN_NHANVIEN']?>
+                                        <td scope="col"><?php echo $value['DALH']?>
+                                        <td scope="col"><?php echo $value['DATHEMZALO']?>
+                                        <td scope="col"><?php echo $value['GUIDK01']?>
+                                        <td scope="col"><?php echo $value['DAPHHD']?>
+                                        <td scope="col"><?php echo $value['HDNVKHAC']?>
+                                        <td scope="col"><?php echo $value['DADUNGDNK']?>
+                                        <td scope="col"><?php echo $value['HUYDV']?>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3><b>KẾT QUẢ CHUYỂN ĐỔI HÓA ĐƠN SANG TT 78(THEO LƯỢT CÔNG TY)</b></h3>
+                    </div>
+                    <div class="box-body">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr class="bg-primary">
+                                    <th style="width: 10px">#</th>
+                                    <th>TÊN NHÂN VIÊN</th>
+                                    <th>ĐÃ LH, HẸN LÚC KHÁC</th>
+                                    <th>ĐÃ THÊM VÀO NHÓM ZALO</th>
+                                    <th>ĐÃ TƯ VẤN NGHIỆP VỤ</th>
+                                    <th>ĐÃ GỬI DK01</th>
+                                    <th>ĐÃ PHÁT HÀNH HĐ</th>
+                                    <th>ĐÃ HD NGHIỆP VỤ SAU PHÁT HÀNH</th>
+                                    <th>ĐÃ HỦY</th>
+                                </tr>
+                                <?php foreach ($dsketquachuyendoitheocongty as $key => $value):?>
+                                    <tr>
+                                        <td scope="col"><?php echo ($key + 1)?></td>
+                                        <td scope="col"><?php echo $value['TEN_NHANVIEN']?>
+                                        <td scope="col"><?php echo $value['DALH']?>
+                                        <td scope="col"><?php echo $value['DATHEMZALO']?>
+                                        <td scope="col"><?php echo $value['GUIDK01']?>
+                                        <td scope="col"><?php echo $value['DAPHHD']?>
+                                        <td scope="col"><?php echo $value['HDNVKHAC']?>
+                                        <td scope="col"><?php echo $value['DADUNGDNK']?>
+                                        <td scope="col"><?php echo $value['HUYDV']?>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <?php if(0) :?>
             <div class="col-md-6">
                 <div class="box">
                     <div class="box-header with-border">
@@ -125,6 +262,7 @@ $this->title = 'RA QUÂN - ' . $text;
                     </div>
                 </div>
             </div>
+            <?php endif; ?>
         </div>
     </div>
 </div>

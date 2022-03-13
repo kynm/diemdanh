@@ -31,12 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         ['class' => 'yii\grid\ActionColumn',
                         'template' => '{view}'],
                         [
-                            'attribute' => 'donvi_id',
-                            'value' => 'khachhang.donvi.TEN_DONVI',
-                            'contentOptions' => ['style' => 'width:10%; white-space: normal;'],
-                        ],
-                        [
-                            'attribute' => 'hddtmoi_id',
+                            'attribute' => 'tt32to78_id',
                             'value' => 'khachhang.TEN_KH',
                             'contentOptions' => ['style' => 'width:10%; white-space: normal;'],
                         ],
