@@ -19,8 +19,8 @@
                             <td scope="col"><?php echo ($key + 1)?></td>
                             <td scope="col"><?php echo $value->ngay_tiepxuc?>
                             <td scope="col"><?php echo $value->nhanvien->TEN_NHANVIEN?>
-                            <td scope="col"><?php echo ketqua32to78()[$value->ht_tc]?>
-                            <td scope="col"><?php echo hinhthuctx()[$value->ketqua]?>
+                            <td scope="col"><?php echo hinhthuctx()[$value->ht_tc]?>
+                            <td scope="col"><?php echo ketqua32to78()[$value->ketqua]?>
                             <td scope="col"><?php echo $value->ghichu?>
                         </tr>
                     <?php endforeach; ?>

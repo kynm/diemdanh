@@ -35,6 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     'EMAIL',
                     'ghichu',
+                    'TRANGTHAINANGCAP',
                     'TEN_NV_KD',
                 ],
             ]) ?>

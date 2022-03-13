@@ -142,7 +142,7 @@
       return [
             1 => 'Gọi điện',
             2 => 'Gặp trực tiếp',
-            2 => 'Liên hệ qua Zalo,facebook,..',
+            3 => 'Liên hệ qua Zalo,facebook,..',
         ];
     }
 

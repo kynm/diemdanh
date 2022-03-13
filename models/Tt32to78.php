@@ -35,7 +35,8 @@ class Tt32to78 extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['donvi_id', 'nhanvien_id', 'MST','TEN_KH', 'DIACHI', 'LIENHE', 'EMAIL', 'SDT'], 'required'],
+            [['TRANGTHAINANGCAP', 'nhanvien_id', 'MST','TEN_KH', 'DIACHI', 'LIENHE', 'EMAIL', 'SDT'], 'required'],
+            [['TEN_KETOAN'], 'string', 'max' => 100],
         ];
     }
 
@@ -79,7 +80,7 @@ class Tt32to78 extends \yii\db\ActiveRecord
      */
     public function getLichsutiepxuc()
     {
-        return $this->hasMany(Tiepxuchoadon::className(), ['hddtmoi_id' => 'id']);
+        return $this->hasMany(Hotrott32to78::className(), ['tt32to78_id' => 'id']);
     }
 
     public function getChatid()

@@ -99,14 +99,15 @@ class Tt32to78Controller extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $dsdonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', [2,3,4,5,6,7]])->all(), 'ID_DONVI', 'TEN_DONVI');
-        if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
+       // $dsdonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', [2,3,4,5,6,7]])->all(), 'ID_DONVI', 'TEN_DONVI');
+        if ($model->load(Yii::$app->request->post())) {
+            $model->save(false);
             Yii::$app->session->setFlash('success', "cập nhật khách hàng thành công!");
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
-                'dsdonvi' => $dsdonvi,
+                // 'dsdonvi' => $dsdonvi,
             ]);
         }
     }
