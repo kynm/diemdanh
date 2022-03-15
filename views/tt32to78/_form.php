@@ -44,6 +44,7 @@ use app\models\Donvi;
                 </div>
                 <div class="col-md-6">
                     <?= $form->field($model, 'link')->textInput(['maxlength' => true]) ?>
+                    <a href="<?= $model->link?>" target="_blank">Truy cập</a>
                 </div>
                 <div class="col-md-3">
                     <?= $form->field($model, 'taikhoan')->textInput(['maxlength' => true]) ?>
