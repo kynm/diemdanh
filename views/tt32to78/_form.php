@@ -42,6 +42,18 @@ use app\models\Donvi;
                 <div class="col-md-12">
                     <?= $form->field($model, 'DIACHI')->textInput(['maxlength' => true]) ?>
                 </div>
+                <div class="col-md-6">
+                    <?= $form->field($model, 'link')->textInput(['maxlength' => true]) ?>
+                </div>
+                <div class="col-md-3">
+                    <?= $form->field($model, 'taikhoan')->textInput(['maxlength' => true]) ?>
+                </div>
+                <div class="col-md-3">
+                    <?= $form->field($model, 'matkhau')->textInput(['maxlength' => true]) ?>
+                </div>
+                <div class="col-md-12">
+                    <?= $form->field($model, 'view')->textInput(['maxlength' => true]) ?>
+                </div>
             </div>
         </div>
             

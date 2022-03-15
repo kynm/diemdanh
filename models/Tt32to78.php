@@ -36,7 +36,7 @@ class Tt32to78 extends \yii\db\ActiveRecord
     {
         return [
             [['TRANGTHAINANGCAP', 'nhanvien_id', 'MST','TEN_KH', 'DIACHI', 'LIENHE', 'EMAIL', 'SDT'], 'required'],
-            [['TEN_KETOAN'], 'string', 'max' => 100],
+            [['TEN_KETOAN', 'link', 'taikhoan', 'matkhau', 'view'], 'string', 'max' => 100],
         ];
     }
 
@@ -57,7 +57,11 @@ class Tt32to78 extends \yii\db\ActiveRecord
             'TEN_KETOAN' => 'Tên kế toán',
             'TRANGTHAINANGCAP' => 'Trạng thái nâng cấp',
             'TEN_NV_KD' => 'Tên nhân viên kinh doanh',
-            'LOAIHETHONG' => 'Loại hệ thống'
+            'LOAIHETHONG' => 'Loại hệ thống',
+            'link' => 'Link',
+            'taikhoan' => 'Tài khoản',
+            'matkhau' => 'Mật khẩu',
+            'view' => 'view',
         ];
     }
 

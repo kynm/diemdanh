@@ -37,6 +37,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     'ghichu',
                     'TRANGTHAINANGCAP',
                     'TEN_NV_KD',
+                    [
+                        'attribute' => 'link',
+                        'value' => Html::a($model->link, $model->link, ['target' => '_blank']),
+                        'format' => 'raw',
+                    ],
+                    'taikhoan',
+                    'matkhau',
+                    'view',
                 ],
             ]) ?>
         </div>
