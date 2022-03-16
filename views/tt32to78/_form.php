@@ -55,6 +55,9 @@ use app\models\Donvi;
                 <div class="col-md-12">
                     <?= $form->field($model, 'view')->textInput(['maxlength' => true]) ?>
                 </div>
+                <div class="col-md-12">
+                    <?= $form->field($model, 'ghichu')->textarea(['rows' => '6']) ?>
+                </div>
             </div>
         </div>
             

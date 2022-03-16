@@ -37,6 +37,7 @@ class Tt32to78 extends \yii\db\ActiveRecord
         return [
             [['TRANGTHAINANGCAP', 'nhanvien_id', 'MST','TEN_KH', 'DIACHI', 'LIENHE', 'EMAIL', 'SDT'], 'required'],
             [['TEN_KETOAN', 'link', 'taikhoan', 'matkhau', 'view'], 'string', 'max' => 100],
+            [['ghichu'], 'string', 'max' => 1000],
         ];
     }
 
@@ -62,6 +63,7 @@ class Tt32to78 extends \yii\db\ActiveRecord
             'taikhoan' => 'Tài khoản',
             'matkhau' => 'Mật khẩu',
             'view' => 'view',
+            'ghichu' => 'Ghi chú',
         ];
     }
 
