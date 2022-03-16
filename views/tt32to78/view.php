@@ -45,6 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'taikhoan',
                     'matkhau',
                     'view',
+                    'ghichu',
                 ],
             ]) ?>
         </div>
