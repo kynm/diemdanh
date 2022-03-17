@@ -143,6 +143,7 @@
             1 => 'Gọi điện',
             2 => 'Gặp trực tiếp',
             3 => 'Liên hệ qua Zalo,facebook,..',
+            4 => 'Khác',
         ];
     }
 
