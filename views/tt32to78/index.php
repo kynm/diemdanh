@@ -43,8 +43,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         'LOAIHETHONG',
                         'TEN_KETOAN',
                         'LIENHE',
-                        'EMAIL',
-                        'ghichu',
+                        [
+                            'attribute' => 'ghichu',
+                            'contentOptions' => ['style' => 'width:15%; white-space: normal;'],
+                        ],
                         'TRANGTHAINANGCAP',
                         [
                             'attribute' => 'nhanvien_id',
