@@ -302,4 +302,9 @@ class SiteController extends Controller
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
         }
     }
+
+    public function actionThuthuat()
+    {
+        return $this->render('thuthuat');
+    }
 }

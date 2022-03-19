@@ -14,17 +14,9 @@ use yii\helpers\Url;
                 </button>
             </div>
             <div class="navbar-collapse pull-left collapse" id="navbar-collapse">
-<!--                 <ul class="nav navbar-nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Báo cáo <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="<?= Url::to(['baohong/lichsuxl'])?>">Lịch sử XL báo hỏng</a></li>
-                            <li><a href="<?= Url::to(['baohong/baocaotheonhanvienxuly'])?>">Báo cáo theo nhân viên xử lý</a></li>
-                            <li><a href="<?= Url::to(['baohong/baocaotheonhanvienbaohong'])?>">Báo cáo theo nhân viên báo hỏng</a></li>
-                            <li><a href="<?= Url::to(['baohong/baocaobaohongnhieulan'])?>">Báo cáo thuê bao báo hỏng nhiều lần</a></li>
-                        </ul>
-                    </li>
-                </ul> -->
+                <ul class="nav navbar-nav">
+                    <li><a href="<?= Url::to(['site/thuthuat'])?>">Thủ thuật</a></li>
+                </ul>
                 <ul class="nav navbar-nav">
                     <?php if (Yii::$app->user->can('Administrator')): ?>
                         <li class="dropdown">
