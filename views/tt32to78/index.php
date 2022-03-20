@@ -19,8 +19,10 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="tramvt-index">
     <p>
+        <?php if(Yii::$app->user->can('Administrator')): ?>
         <?= (Yii::$app->user->can('import-dshddtmoi')) ? Html::a('<i class="fa fa-plus"></i> Import dữ liệu', ['import'], ['class' => 'btn btn-primary btn-flat']) : '' ?>
         <?= Html::a('Lịch sử tiếp xúc', ['lichsutiepxuc'], ['class' => 'btn btn-primary btn-flat']) ?>
+        <?php endif; ?>
     </p>
     <div class="box box-primary">
         <div class="box-body">

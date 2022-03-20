@@ -16,8 +16,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="box box-primary">
         <div class="box-body">
             <p>
+                <?php if(!Yii::$app->user->can('quanly-dulieu')): ?>
                 <?= Html::a('<i class="fa fa-pencil-square-o"></i> Cập nhật', ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-flat']) ?>
                 <?= Html::a('<i class="fa fa-pencil-square-o"></i> Tiếp xúc khách hàng', ['tiepxuckhachhang', 'id' => $model->id], ['class' => 'btn btn-primary btn-flat']) ?>
+                <?php endif; ?>
             </p>
 
             <?= DetailView::widget([
