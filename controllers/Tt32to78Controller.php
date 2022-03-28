@@ -47,6 +47,8 @@ class Tt32to78Controller extends Controller
                 $params = Yii::$app->request->bodyParams;
                 $model->fileupload = UploadedFile::getInstance($model, 'fileupload');
                 $data = \moonland\phpexcel\Excel::import($model->fileupload->tempName);
+                // $data = $data[0];
+                // die(var_dump($data));
                 $keys = array_keys($data[0]);
                 $arrkeyCheck = ['TEN_KH', 'MST', 'DIACHI', 'LIENHE', 'EMAIL'];
                 if (array_diff($arrkeyCheck, $keys)) {
@@ -55,18 +57,23 @@ class Tt32to78Controller extends Controller
                 }
                 foreach ($data as $key => $value) {
                     if ($value['MST']) {
-                        $model1 = new tt32to78();
-                        $model1->nhanvien_id = 1;
+                        $model1 = new Tt32to78();
+                        $model1->nhanvien_id = $value['nhanvien_id'];
                         $model1->donvi_id = 1;
                         $model1->TEN_KH = $value['TEN_KH'];
+                        $model1->SDT = $value['SDT'];
+                        // $model1->SLDANGKY = $value['SLDANGKY'];
+                        // $model1->SLTHONGBAO = $value['SLTHONGBAO'];
+                        // $model1->SLDAPHATHANH = $value['SLDAPHATHANH'];
                         $model1->MST = $value['MST'];
                         $model1->DIACHI = $value['DIACHI'];
                         $model1->LIENHE = $value['LIENHE'];
                         $model1->EMAIL = $value['EMAIL'];
-                        $model1->GUIDK01 = $value['GUIDK01'];
-                        $model1->TRANGTHAINANGCAP = $value['TRANGTHAINANGCAP'];
+                        $model1->GUIDK01 = '0';
+                        $model1->TRANGTHAINANGCAP = '0';
                         $model1->TEN_NV_KD = $value['TEN_NV_KD'];
-                        $model1->NHANVIENHOTRO = $value['NHANVIENHOTRO'];
+                        $model1->LOAIHETHONG = $value['LOAIHETHONG'];
+                        $model1->NHANVIENHOTRO = 'xxx';
                         $model1->save(false);
                     }
                 }

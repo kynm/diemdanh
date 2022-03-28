@@ -22,7 +22,7 @@ class Tt32to78Search extends Tt32to78
     public function rules()
     {
         return [
-            [['MST', 'TEN_KH', 'DIACHI', 'LIENHE', 'EMAIL', 'TRANGTHAINANGCAP'], 'safe'],
+            [['MST', 'TEN_KH', 'DIACHI', 'LIENHE', 'EMAIL', 'TRANGTHAINANGCAP', 'nhanvien_id'], 'safe'],
         ];
     }
 
@@ -67,6 +67,7 @@ class Tt32to78Search extends Tt32to78
         $query->andFilterWhere(['like', 'DIACHI', $this->DIACHI]);
         $query->andFilterWhere(['like', 'LIENHE', $this->LIENHE]);
         $query->andFilterWhere(['like', 'EMAIL', $this->EMAIL]);
+        $query->andFilterWhere(['like', 'nhanvien.TEN_NHANVIEN', $this->nhanvien_id]);
         $query->andFilterWhere(['=', 'TRANGTHAINANGCAP', $this->TRANGTHAINANGCAP]);
         $query->orderBy([
             'ngay_lh' => SORT_ASC,
