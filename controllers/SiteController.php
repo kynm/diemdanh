@@ -16,7 +16,7 @@ use app\models\AuthItemChild;
 use app\models\Baoduongtong;
 use app\models\Donvi;
 use app\models\Nhanvien;
-use app\models\Dotbaoduong;
+use app\models\Hotrott32to78Search;
 use app\models\DotbaoduongSearch;
 use app\models\BaohongSearch;
 use moonland\phpexcel\Excel;
@@ -72,6 +72,9 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        if (Yii::$app->user->can('cucthuetinh')) {
+            return $this->redirect(['baocaothue']);
+        }
         if (Yii::$app->user->isGuest) {
             return $this->redirect(['login']);
         } else {
@@ -121,6 +124,19 @@ class SiteController extends Controller
                 $assign->save();
             }
         }
+    }
+
+    public function actionBaocaothue()
+    {
+
+        $this->layout = 'layoutBaocaothue';
+        $searchModel = new Hotrott32to78Search();
+        $params = Yii::$app->request->queryParams;
+        $dataProvider = $searchModel->searchBaocaothue($params);
+        return $this->render('baocaothue', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     /**

@@ -18,7 +18,7 @@ class Hotrott32to78Search extends Hotrott32to78
     public function rules()
     {
         return [
-            // [['activity_type', 'activity_name', 'class'], 'safe'],
+            [['tt32to78_id'], 'safe'],
         ];
     }
 
@@ -64,6 +64,32 @@ class Hotrott32to78Search extends Hotrott32to78
         if (!Yii::$app->user->can('quanly-dulieu')) {
            $query->andFilterWhere(['nhanvien_id' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN]);
         }
+        $query->orderBy([
+            'ngay_tiepxuc' => SORT_DESC,
+        ]);
+        return $dataProvider;
+    }
+
+    public function searchBaocaothue($params)
+    {
+        $query = Hotrott32to78::find();
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+        $query->joinWith('khachhang');
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        $query->andFilterWhere(['like', 'TEN_KH', $this->tt32to78_id]);
         $query->orderBy([
             'ngay_tiepxuc' => SORT_DESC,
         ]);
