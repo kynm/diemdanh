@@ -28,13 +28,16 @@ class Tt32to78Controller extends Controller
 {
     public function actionIndex()
     {
-            $searchModel = new Tt32to78Search();
-            $params = Yii::$app->request->queryParams;
-            $dataProvider = $searchModel->search($params);
-            return $this->render('index', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
-            ]);
+        if (Yii::$app->user->can('cucthuetinh')) {
+            return $this->redirect(['baocaothue']);
+        }
+        $searchModel = new Tt32to78Search();
+        $params = Yii::$app->request->queryParams;
+        $dataProvider = $searchModel->search($params);
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
         public function actionImport()
