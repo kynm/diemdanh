@@ -130,12 +130,15 @@ class SiteController extends Controller
     {
 
         $this->layout = 'layoutBaocaothue';
+        $dsketquachuyendoitheocongty = Yii::$app->db->createCommand('SELECT c.TEN_NHANVIEN, SUM(CASE WHEN b.ketqua = 1 THEN 1 ELSE 0 END) AS DALH , SUM(CASE WHEN b.ketqua = 2 THEN 1 ELSE 0 END) AS DATHEMZALO , SUM(CASE WHEN b.ketqua = 3 THEN 1 ELSE 0 END) AS GUIDK01 , SUM(CASE WHEN b.ketqua = 4 THEN 1 ELSE 0 END) AS DAPHHD , SUM(CASE WHEN b.ketqua = 5 THEN 1 ELSE 0 END) AS HDNVKHAC , SUM(CASE WHEN b.ketqua = 6 THEN 1 ELSE 0 END) AS DADUNGDNK , SUM(CASE WHEN b.ketqua = 7 THEN 1 ELSE 0 END) AS HUYDV FROM khchuyendoi32to78 b, nhanvien c WHERE b.nhanvien_id = c.ID_NHANVIEN  group by c.TEN_NHANVIEN')->queryAll();
+
         $searchModel = new Hotrott32to78Search();
         $params = Yii::$app->request->queryParams;
         $dataProvider = $searchModel->searchBaocaothue($params);
         return $this->render('baocaothue', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'dsketquachuyendoitheocongty' => $dsketquachuyendoitheocongty,
         ]);
     }
 
