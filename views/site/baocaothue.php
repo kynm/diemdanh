@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <tr>
                                         <td scope="col"><?php echo ($key + 1)?></td>
                                         <td scope="col"><?php echo $value['TEN_NHANVIEN']?>
-                                        <td scope="col"><?php echo $value['DALH']?>
+                                        <td scope="col"><?php echo ($value['DALH'] + $value['GUIDK01'] + $value['DAPHHD'] + $value['HDNVKHAC'] + $value['HUYDV'])?>
                                         <td scope="col"><?php echo ($value['GUIDK01'] + $value['DAPHHD'] + $value['HDNVKHAC'])?>
                                         <td scope="col"><?php echo $value['DADUNGDNK']?>
                                         <td scope="col"><?php echo $value['HUYDV']?>
