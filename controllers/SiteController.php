@@ -13,7 +13,7 @@ use app\models\User;
 use app\models\AuthAssignment;
 use app\models\AuthItem;
 use app\models\AuthItemChild;
-use app\models\Baoduongtong;
+use app\models\Tt32to78Search;
 use app\models\Donvi;
 use app\models\Nhanvien;
 use app\models\Hotrott32to78Search;
@@ -132,9 +132,9 @@ class SiteController extends Controller
         $this->layout = 'layoutBaocaothue';
         $dsketquachuyendoitheocongty = Yii::$app->db->createCommand('SELECT c.TEN_NHANVIEN, SUM(CASE WHEN b.ketqua = 1 THEN 1 ELSE 0 END) AS DALH , SUM(CASE WHEN b.ketqua = 2 THEN 1 ELSE 0 END) AS DATHEMZALO , SUM(CASE WHEN b.ketqua = 3 THEN 1 ELSE 0 END) AS GUIDK01 , SUM(CASE WHEN b.ketqua = 4 THEN 1 ELSE 0 END) AS DAPHHD , SUM(CASE WHEN b.ketqua = 5 THEN 1 ELSE 0 END) AS HDNVKHAC , SUM(CASE WHEN b.ketqua = 6 THEN 1 ELSE 0 END) AS DADUNGDNK , SUM(CASE WHEN b.ketqua = 7 THEN 1 ELSE 0 END) AS HUYDV FROM khchuyendoi32to78 b, nhanvien c WHERE b.nhanvien_id = c.ID_NHANVIEN  group by c.TEN_NHANVIEN')->queryAll();
 
-        $searchModel = new Hotrott32to78Search();
+        $searchModel = new Tt32to78Search();
         $params = Yii::$app->request->queryParams;
-        $dataProvider = $searchModel->searchBaocaothue($params);
+        $dataProvider = $searchModel->search($params);
         return $this->render('baocaothue', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -262,32 +262,6 @@ class SiteController extends Controller
                 $thietbitram->NGAYSD = $record['NGAYSD'];
                 $thietbitram->save(false);
             }
-        }
-    }
-
-    public function actionBaoduong()
-    {
-        $this->layout = 'baoduongLayout';
-        if (!Yii::$app->user->isGuest) {
-            return $this->render('baoduongcanhan', [
-            ]);
-        }
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        }
-    }
-
-    public function actionIoc()
-    {
-        $this->layout = 'iocLayout';
-        if (!Yii::$app->user->isGuest) {
-            return $this->render('chucnangioc', [
-            ]);
-        }
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
         }
     }
 

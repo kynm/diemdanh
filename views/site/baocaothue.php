@@ -31,12 +31,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <tr class="bg-primary">
                                     <th style="width: 10px">#</th>
                                     <th>TÊN NHÂN VIÊN</th>
-                                    <th>ĐÃ LH, HẸN LÚC KHÁC</th>
-                                    <th>ĐÃ THÊM VÀO NHÓM ZALO</th>
-                                    <th>ĐÃ TƯ VẤN NGHIỆP VỤ</th>
-                                    <th>ĐÃ GỬI DK01</th>
-                                    <th>ĐÃ PHÁT HÀNH HĐ</th>
-                                    <th>ĐÃ HD NGHIỆP VỤ SAU PHÁT HÀNH</th>
+                                    <th>ĐÃ LH</th>
+                                    <th>ĐÃ GỬI DK01 - HOÀN THÀNH NÂNG CẤP</th>
+                                    <th>ĐÃ DÙNG DOANH NGHIỆP KHÁC</th>
                                     <th>ĐÃ HỦY</th>
                                 </tr>
                                 <?php foreach ($dsketquachuyendoitheocongty as $key => $value):?>
@@ -44,10 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <td scope="col"><?php echo ($key + 1)?></td>
                                         <td scope="col"><?php echo $value['TEN_NHANVIEN']?>
                                         <td scope="col"><?php echo $value['DALH']?>
-                                        <td scope="col"><?php echo $value['DATHEMZALO']?>
-                                        <td scope="col"><?php echo $value['GUIDK01']?>
-                                        <td scope="col"><?php echo $value['DAPHHD']?>
-                                        <td scope="col"><?php echo $value['HDNVKHAC']?>
+                                        <td scope="col"><?php echo ($value['GUIDK01'] + $value['DAPHHD'] + $value['HDNVKHAC'])?>
                                         <td scope="col"><?php echo $value['DADUNGDNK']?>
                                         <td scope="col"><?php echo $value['HUYDV']?>
                                     </tr>
@@ -58,34 +52,24 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </div>
         <div class="box-body">
-            <?php Pjax::begin(); ?>    <?= GridView::widget([
+            <?php Pjax::begin(); ?><?= GridView::widget([
                     'dataProvider' => $dataProvider,
                     'filterModel' => $searchModel,
                     'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
-                        ['class' => 'yii\grid\ActionColumn',
-                        'template' => '{view}'],
+                        [
+                            'attribute' => 'MST',
+                            'value' => 'MST',
+                            'contentOptions' => ['style' => 'width:10%; white-space: normal;'],
+                        ],
                         [
                             'attribute' => 'tt32to78_id',
-                            'value' => 'khachhang.TEN_KH',
+                            'value' => 'TEN_KH',
                             'contentOptions' => ['style' => 'width:10%; white-space: normal;'],
                         ],
                         [
                             'attribute' => 'nhanvien_id',
                             'value' => 'nhanvien.TEN_NHANVIEN'
-                        ],
-                        'ngay_tiepxuc',
-                        [
-                            'attribute' => 'ht_tc',
-                            'value' => function ($model) {
-                                return hinhthuctx()[$model->ht_tc];
-                            }
-                        ],
-                        [
-                            'attribute' => 'ketqua',
-                            'value' => function ($model) {
-                                return ketqua32to78()[$model->ketqua];
-                            }
                         ],
                         'ghichu',
                     ],
