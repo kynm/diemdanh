@@ -157,6 +157,7 @@
             5 => 'Đã phát hành hóa đơn thành công',
             6 => 'Hướng dẫn nghiệp vụ khác',
             7 => 'Đã hủy dịch vụ',
+            8 => 'Giải thể',
         ];
     }
 
