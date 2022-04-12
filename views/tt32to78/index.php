@@ -49,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'attribute' => 'ghichu',
                             'contentOptions' => ['style' => 'width:15%; white-space: normal;'],
                         ],
-                        'TRANGTHAINANGCAP',
+                        'ketqua',
                         [
                             'attribute' => 'nhanvien_id',
                             'value' => 'nhanvien.TEN_NHANVIEN',
