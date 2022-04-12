@@ -82,13 +82,13 @@
                 $color = 'red';
                 break;
             case 1:
-                $color = 'red';
+                $color = '#008000';
                 break;
             case 2:
-                $color = 'red';
+                $color = '#008000';
                 break;
             case 3:
-                $color = 'red';
+                $color = '#008000';
                 break;
             case 4:
                 $color = '#1E90FF';
