@@ -74,6 +74,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'value' => 'nhanvien.TEN_NHANVIEN'
                         ],
                         'ghichu',
+                        'ngay_lh',
                     ],
                 ]); ?>
             <?php Pjax::end(); ?>
