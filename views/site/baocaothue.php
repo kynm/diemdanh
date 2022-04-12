@@ -73,7 +73,14 @@ $this->params['breadcrumbs'][] = $this->title;
                             'attribute' => 'nhanvien_id',
                             'value' => 'nhanvien.TEN_NHANVIEN'
                         ],
-                        'ghichu',
+                        [
+                            'attribute' => 'ghichu',
+                            'value' => function ($model) {
+                                return $model->ghichu;
+                            },
+                            // 'contentOptions' => ['style' => 'width:20%; white-space: normal;'],
+                            'format' => 'raw',
+                        ],
                         'ngay_lh',
                     ],
                 ]); ?>

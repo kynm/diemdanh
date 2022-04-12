@@ -52,6 +52,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                 return ketqua32to78()[$model->ketqua];
                             }
                         ],
+                        [
+                            'attribute' => 'ghichu',
+                            'value' => function ($model) {
+                                return '<textarea>' . $model->ghichu . '</textarea>';
+                            },
+                            'format' => 'raw',
+                        ],
                         'ghichu',
                     ],
                 ]); ?>

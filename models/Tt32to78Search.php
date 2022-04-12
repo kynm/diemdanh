@@ -62,6 +62,7 @@ class Tt32to78Search extends Tt32to78
         if (Yii::$app->user->can('nhanvien-hotro-chuyendoi')) {
             $query->andFilterWhere(['nhanvien_id' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN]);
         }
+        $query->andFilterWhere(['not in', 'ketqua', [4,5,6,7,8,9]]);
         $query->andFilterWhere(['like', 'MST', $this->MST]);
         $query->andFilterWhere(['like', 'TEN_KH', $this->TEN_KH]);
         $query->andFilterWhere(['like', 'DIACHI', $this->DIACHI]);
