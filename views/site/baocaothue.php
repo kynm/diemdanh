@@ -37,7 +37,21 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <th>ĐÃ HỦY</th>
                                     <th>GIẢI THỂ</th>
                                 </tr>
+                                <?php
+                                $tongdalienhe = 0;
+                                $tongdanangcap = 0;
+                                $tongdadungdoanhnghiepkhac = 0;
+                                $tongdahuy = 0;
+                                $tonggiaithe = 0;
+                                    ?>
                                 <?php foreach ($dsketquachuyendoitheocongty as $key => $value):?>
+                                    <?php
+                                $tongdalienhe += $value['DALH'] + $value['DATHEMZALO'] + $value['TVNV'] + $value['GUIDK01'] + $value['DAPHHD'] + $value['HDNVKHAC'] + $value['DADUNGDNK'] + $value['HUYDV'] + $value['GIAITHE'];
+                                $tongdanangcap += $value['GUIDK01'] + $value['DAPHHD'] + $value['HDNVKHAC']  + $value['DADUNGDNK'] + $value['HUYDV'] + $value['GIAITHE'];
+                                $tongdadungdoanhnghiepkhac += $value['DADUNGDNK'];
+                                $tongdahuy += $value['HUYDV'];
+                                $tonggiaithe += $value['GIAITHE'];
+                                    ?>
                                     <tr>
                                         <td scope="col"><?php echo ($key + 1)?></td>
                                         <td scope="col"><?php echo $value['TEN_NHANVIEN']?>
@@ -48,6 +62,15 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <td scope="col"><?php echo $value['GIAITHE']?>
                                     </tr>
                                 <?php endforeach; ?>
+                                <tr>
+                                        <td scope="col"><?php echo ($key + 1)?></td>
+                                        <td scope="col"><?php echo $value['TEN_NHANVIEN']?>
+                                        <td scope="col"><?php echo $tongdalienhe?>
+                                        <td scope="col"><?php echo $tongdanangcap?>
+                                        <td scope="col"><?php echo $tongdadungdoanhnghiepkhac?>
+                                        <td scope="col"><?php echo $tongdahuy?>
+                                        <td scope="col"><?php echo $tonggiaithe?>
+                                    </tr>
                             </tbody>
                         </table>
                     </div>
