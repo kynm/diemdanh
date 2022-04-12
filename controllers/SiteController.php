@@ -134,7 +134,7 @@ class SiteController extends Controller
 
         $searchModel = new Tt32to78Search();
         $params = Yii::$app->request->queryParams;
-        $dataProvider = $searchModel->search($params);
+        $dataProvider = $searchModel->searchBaocaothue($params);
         return $this->render('baocaothue', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
