@@ -74,6 +74,49 @@
         return $color;
     }
 
+    function colorketqua($ketqua)
+    {
+        $color = '';
+        switch ($ketqua) {
+            case 0:
+                $color = 'red';
+                break;
+            case 1:
+                $color = 'red';
+                break;
+            case 2:
+                $color = 'red';
+                break;
+            case 3:
+                $color = 'red';
+                break;
+            case 4:
+                $color = '#1E90FF';
+                break;
+            case 5:
+                $color = '#1E90FF';
+                break;
+            case 6:
+                $color = '#1E90FF';
+                break;
+            case 7:
+                $color = '#1E90FF';
+                break;
+            case 8:
+                $color = '#1E90FF';
+                break;
+            case 9:
+                $color = '#1E90FF';
+                break;
+            
+            default:
+                $color = 'red';
+                break;
+        }
+
+        return $color;
+    }
+
     function testbyaccount($matb)
     {
         $matb = trim(strtolower($matb));

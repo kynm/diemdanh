@@ -29,6 +29,9 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php Pjax::begin(); ?>    <?= GridView::widget([
                     'dataProvider' => $dataProvider,
                     'filterModel' => $searchModel,
+                    'rowOptions' => function ($model, $index, $widget, $grid){
+                      return ['style'=>'color:'. colorketqua($model->ketqua) .';'];
+                    },
                     'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
                         ['class' => 'yii\grid\ActionColumn',
