@@ -54,22 +54,22 @@ $this->params['breadcrumbs'][] = $this->title;
                                     ?>
                                     <tr>
                                         <td scope="col"><?php echo ($key + 1)?></td>
-                                        <td scope="col"><?php echo $value['TEN_NHANVIEN']?>
-                                        <td scope="col"><?php echo ($value['DALH'] + $value['DATHEMZALO'] + $value['TVNV'] + $value['GUIDK01'] + $value['DAPHHD'] + $value['HDNVKHAC'] + $value['DADUNGDNK'] + $value['HUYDV'] + $value['GIAITHE'])?>
-                                        <td scope="col"><?php echo ($value['GUIDK01'] + $value['DAPHHD'] + $value['HDNVKHAC']  + $value['DADUNGDNK'] + $value['HUYDV'] + $value['GIAITHE'])?>
-                                        <td scope="col"><?php echo $value['DADUNGDNK']?>
-                                        <td scope="col"><?php echo $value['HUYDV']?>
-                                        <td scope="col"><?php echo $value['GIAITHE']?>
+                                        <td scope="col"><?php echo $value['TEN_NHANVIEN']?></td>
+                                        <td scope="col"><?php echo ($value['DALH'] + $value['DATHEMZALO'] + $value['TVNV'] + $value['GUIDK01'] + $value['DAPHHD'] + $value['HDNVKHAC'] + $value['DADUNGDNK'] + $value['HUYDV'] + $value['GIAITHE'])?></td>
+                                        <td scope="col"><?php echo ($value['GUIDK01'] + $value['DAPHHD'] + $value['HDNVKHAC']  + $value['DADUNGDNK'] + $value['HUYDV'] + $value['GIAITHE'])?></td>
+                                        <td scope="col"><?php echo $value['DADUNGDNK']?></td>
+                                        <td scope="col"><?php echo $value['HUYDV']?></td>
+                                        <td scope="col"><?php echo $value['GIAITHE']?></td>
                                     </tr>
                                 <?php endforeach; ?>
                                 <tr>
                                         <td scope="col"><?php echo ($key + 1)?></td>
-                                        <td scope="col"><?php echo $value['TEN_NHANVIEN']?>
-                                        <td scope="col"><?php echo $tongdalienhe?>
-                                        <td scope="col"><?php echo $tongdanangcap?>
-                                        <td scope="col"><?php echo $tongdadungdoanhnghiepkhac?>
-                                        <td scope="col"><?php echo $tongdahuy?>
-                                        <td scope="col"><?php echo $tonggiaithe?>
+                                        <td scope="col"></td>
+                                        <td scope="col"><?php echo $tongdalienhe?></td>
+                                        <td scope="col"><?php echo $tongdanangcap?></td>
+                                        <td scope="col"><?php echo $tongdadungdoanhnghiepkhac?></td>
+                                        <td scope="col"><?php echo $tongdahuy?></td>
+                                        <td scope="col"><?php echo $tonggiaithe?></td>
                                     </tr>
                             </tbody>
                         </table>
