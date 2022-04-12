@@ -70,7 +70,7 @@ class Tt32to78Search extends Tt32to78
         $query->andFilterWhere(['like', 'nhanvien.TEN_NHANVIEN', $this->nhanvien_id]);
         $query->andFilterWhere(['=', 'TRANGTHAINANGCAP', $this->TRANGTHAINANGCAP]);
         $query->orderBy([
-            'ngay_lh' => SORT_ASC,
+            'ngay_lh' => SORT_DESC,
         ]);
         return $dataProvider;
     }
