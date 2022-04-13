@@ -48,6 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'LOAIHETHONG',
                         'TEN_KETOAN',
                         'LIENHE',
+                        'SDT',
                         [
                             'attribute' => 'ghichu',
                             'contentOptions' => ['style' => 'width:15%; white-space: normal;'],
