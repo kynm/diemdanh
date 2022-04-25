@@ -23,6 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= (Yii::$app->user->can('import-dshddtmoi')) ? Html::a('<i class="fa fa-plus"></i> Import dữ liệu', ['import'], ['class' => 'btn btn-primary btn-flat']) : '' ?>
         <?= Html::a('Lịch sử tiếp xúc', ['lichsutiepxuc'], ['class' => 'btn btn-primary btn-flat']) ?>
         <?php endif; ?>
+        <?= Html::a('Excel', ['excellichsutiepxuc'], ['class' => 'btn btn-primary btn-flat']) ?>
     </p>
     <div class="box box-primary">
         <div class="box-body">

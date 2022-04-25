@@ -164,5 +164,43 @@ class Tt32to78Controller extends Controller
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
             ]);
-    } 
+    }
+
+    public function actionExcellichsutiepxuc()
+    {
+        $result = Yii::$app->db->createCommand('SELECT a.MST, a.TEN_KH, a.LIENHE, a.EMAIL, a.ht_lh, a.ketqua, a.ghichu, a.ngay_lh,b.TEN_NHANVIEN FROM khchuyendoi32to78 a, nhanvien b WHERE a.nhanvien_id = b.ID_NHANVIEN')->queryAll();
+        foreach ($result as $key => $value) {
+            $result[$key]['ketqua'] = isset(ketqua32to78()[$value['ketqua']]) ? ketqua32to78()[$value['ketqua']] : null;
+            $result[$key]['ht_lh'] = isset(ketqua32to78()[$value['ht_lh']]) ? ketqua32to78()[$value['ht_lh']] : null;
+        }
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $spreadsheet->getDefaultStyle()->getFont()->setName('Arial');
+        $spreadsheet->getDefaultStyle()->getFont()->setSize(10);
+        $spreadsheet->getActiveSheet()->fromArray(
+            [
+                'MÃ SỐ THUẾ',
+                'TÊN KHÁCH HÀNG',
+                'SỐ LIÊN HỆ',
+                'EMAIL',
+                'HÌNH THỨC LIÊN HỆ',
+                'KẾT QUẢ',
+                'GHI CHÚ',
+                'NGÀY LIÊN HỆ',
+                'NHÂN VIÊN HỖ TRỢ',
+            ],
+            '',
+            'A1'         
+        );
+        $key = 0;
+        $x = 2;
+        $spreadsheet->getActiveSheet()->fromArray($result,'','A2');
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $file_name = "Chuyển đổi tt78 ".date('Ymd_His');
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="'.$file_name.'.xlsx"');
+        header('Cache-Control: max-age=0');
+        $writer->save("php://output");
+        exit;
+    }
 }
