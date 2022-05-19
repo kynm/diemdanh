@@ -92,6 +92,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'value' => 'TEN_KH',
                             'contentOptions' => ['style' => 'width:10%; white-space: normal;'],
                         ],
+                        'DIACHI',
                         [
                             'attribute' => 'nhanvien_id',
                             'value' => 'nhanvien.TEN_NHANVIEN'
