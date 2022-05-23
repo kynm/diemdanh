@@ -47,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <?php foreach ($dsketquachuyendoitheocongty as $key => $value):?>
                                     <?php
                                 $tongdalienhe += $value['DALH'] + $value['DATHEMZALO'] + $value['TVNV'] + $value['GUIDK01'] + $value['DAPHHD'] + $value['HDNVKHAC'] + $value['DADUNGDNK'] + $value['HUYDV'] + $value['GIAITHE'];
-                                $tongdanangcap += $value['GUIDK01'] + $value['DAPHHD'] + $value['HDNVKHAC']  + $value['DADUNGDNK'] + $value['HUYDV'] + $value['GIAITHE'];
+                                $tongdanangcap += $value['GUIDK01'] + $value['DAPHHD'] + $value['HDNVKHAC'];
                                 $tongdadungdoanhnghiepkhac += $value['DADUNGDNK'];
                                 $tongdahuy += $value['HUYDV'];
                                 $tonggiaithe += $value['GIAITHE'];
@@ -56,7 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <td scope="col"><?php echo ($key + 1)?></td>
                                         <td scope="col"><?php echo $value['TEN_NHANVIEN']?></td>
                                         <td scope="col"><?php echo ($value['DALH'] + $value['DATHEMZALO'] + $value['TVNV'] + $value['GUIDK01'] + $value['DAPHHD'] + $value['HDNVKHAC'] + $value['DADUNGDNK'] + $value['HUYDV'] + $value['GIAITHE'])?></td>
-                                        <td scope="col"><?php echo ($value['GUIDK01'] + $value['DAPHHD'] + $value['HDNVKHAC']  + $value['DADUNGDNK'] + $value['HUYDV'] + $value['GIAITHE'])?></td>
+                                        <td scope="col"><?php echo ($value['GUIDK01'] + $value['DAPHHD'] + $value['HDNVKHAC'])?></td>
                                         <td scope="col"><?php echo $value['DADUNGDNK']?></td>
                                         <td scope="col"><?php echo $value['HUYDV']?></td>
                                         <td scope="col"><?php echo $value['GIAITHE']?></td>
