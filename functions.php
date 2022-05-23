@@ -193,7 +193,9 @@
     function ketqua32to78()
     {
         return [
-            1 => 'Đã liên hệ hẹn lúc khác',
+            -3 => 'Đang làm thủ tục giải thể',
+            -2 => 'Không đồng ý chuyển',
+            -1 => 'Không liên hệ được',
             2 => 'Lý do khác',
             3 => 'Đã tư vấn nghiệp vụ',
             4 => 'Đã hướng dẫn sử dụng (GỬI DK01)',
