@@ -16,6 +16,7 @@ use yii\helpers\Url;
             <div class="navbar-collapse pull-left collapse" id="navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="<?= Url::to(['site/thuthuat'])?>">Thủ thuật</a></li>
+                    <li><a href="<?= Url::to(['site/baocaothue'])?>">Báo cáo thuế</a></li>
                 </ul>
                 <ul class="nav navbar-nav">
                     <?php if (Yii::$app->user->can('Administrator')): ?>
