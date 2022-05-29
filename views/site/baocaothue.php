@@ -98,6 +98,13 @@ $this->params['breadcrumbs'][] = $this->title;
                             'value' => 'nhanvien.TEN_NHANVIEN'
                         ],
                         [
+                            'attribute' => 'ketqua',
+                            'value' => function ($model) {
+                                return ketqua32to78()[$model->ketqua];
+                            },
+                            'format' => 'raw',
+                        ],
+                        [
                             'attribute' => 'ghichu',
                             'value' => function ($model) {
                                 return $model->ghichu;
