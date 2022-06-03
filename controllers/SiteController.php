@@ -78,7 +78,7 @@ class SiteController extends Controller
         if (Yii::$app->user->isGuest) {
             return $this->redirect(['login']);
         } else {
-            $dsketquachuyendoitheocongty = Yii::$app->db->createCommand('SELECT c.TEN_NHANVIEN, SUM(CASE WHEN b.ketqua = 1 THEN 1 ELSE 0 END) AS DALH , SUM(CASE WHEN b.ketqua = 2 THEN 1 ELSE 0 END) AS DATHEMZALO , SUM(CASE WHEN b.ketqua = 3 THEN 1 ELSE 0 END) AS TVNV , SUM(CASE WHEN b.ketqua = 4 THEN 1 ELSE 0 END) AS GUIDK01 , SUM(CASE WHEN b.ketqua = 5 THEN 1 ELSE 0 END) AS DAPHHD , SUM(CASE WHEN b.ketqua = 6 THEN 1 ELSE 0 END) AS HDNVKHAC , SUM(CASE WHEN b.ketqua = 7 THEN 1 ELSE 0 END) AS HUYDV, SUM(CASE WHEN b.ketqua = 8 THEN 1 ELSE 0 END) AS GIAITHE, SUM(CASE WHEN b.ketqua = 9 THEN 1 ELSE 0 END) AS DADUNGDNK FROM khchuyendoi32to78 b, nhanvien c WHERE b.nhanvien_id = c.ID_NHANVIEN  group by c.TEN_NHANVIEN')->queryAll();
+            $dsketquachuyendoitheocongty = Yii::$app->db->createCommand('SELECT c.TEN_NHANVIEN, SUM(CASE WHEN b.ketqua = 1 THEN 1 ELSE 0 END) AS DALH , SUM(CASE WHEN b.ketqua = 2 THEN 1 ELSE 0 END) AS DATHEMZALO , SUM(CASE WHEN b.ketqua = 3 THEN 1 ELSE 0 END) AS TVNV , SUM(CASE WHEN b.ketqua = 4 THEN 1 ELSE 0 END) AS GUIDK01 , SUM(CASE WHEN b.ketqua = 5 THEN 1 ELSE 0 END) AS DAPHHD , SUM(CASE WHEN b.ketqua = 6 THEN 1 ELSE 0 END) AS HDNVKHAC , SUM(CASE WHEN b.ketqua = 7 THEN 1 ELSE 0 END) AS HUYDV, SUM(CASE WHEN b.ketqua = 8 THEN 1 ELSE 0 END) AS GIAITHE, SUM(CASE WHEN b.ketqua = 9 THEN 1 ELSE 0 END) AS DADUNGDNK, count(*) TONG FROM khchuyendoi32to78 b, nhanvien c WHERE b.nhanvien_id = c.ID_NHANVIEN  group by c.TEN_NHANVIEN')->queryAll();
 
             $searchModel = new Tt32to78Search();
             $params = Yii::$app->request->queryParams;
@@ -110,7 +110,7 @@ class SiteController extends Controller
     {
 
         $this->layout = 'layoutBaocaothue';
-        $dsketquachuyendoitheocongty = Yii::$app->db->createCommand('SELECT c.TEN_NHANVIEN, SUM(CASE WHEN b.ketqua = 1 THEN 1 ELSE 0 END) AS DALH , SUM(CASE WHEN b.ketqua = 2 THEN 1 ELSE 0 END) AS DATHEMZALO , SUM(CASE WHEN b.ketqua = 3 THEN 1 ELSE 0 END) AS TVNV , SUM(CASE WHEN b.ketqua = 4 THEN 1 ELSE 0 END) AS GUIDK01 , SUM(CASE WHEN b.ketqua = 5 THEN 1 ELSE 0 END) AS DAPHHD , SUM(CASE WHEN b.ketqua = 6 THEN 1 ELSE 0 END) AS HDNVKHAC , SUM(CASE WHEN b.ketqua = 7 THEN 1 ELSE 0 END) AS HUYDV, SUM(CASE WHEN b.ketqua = 8 THEN 1 ELSE 0 END) AS GIAITHE, SUM(CASE WHEN b.ketqua = 9 THEN 1 ELSE 0 END) AS DADUNGDNK FROM khchuyendoi32to78 b, nhanvien c WHERE b.nhanvien_id = c.ID_NHANVIEN  group by c.TEN_NHANVIEN')->queryAll();
+        $dsketquachuyendoitheocongty = Yii::$app->db->createCommand('SELECT c.TEN_NHANVIEN, SUM(CASE WHEN b.ketqua = 1 THEN 1 ELSE 0 END) AS DALH , SUM(CASE WHEN b.ketqua = 2 THEN 1 ELSE 0 END) AS DATHEMZALO , SUM(CASE WHEN b.ketqua = 3 THEN 1 ELSE 0 END) AS TVNV , SUM(CASE WHEN b.ketqua = 4 THEN 1 ELSE 0 END) AS GUIDK01 , SUM(CASE WHEN b.ketqua = 5 THEN 1 ELSE 0 END) AS DAPHHD , SUM(CASE WHEN b.ketqua = 6 THEN 1 ELSE 0 END) AS HDNVKHAC , SUM(CASE WHEN b.ketqua = 7 THEN 1 ELSE 0 END) AS HUYDV, SUM(CASE WHEN b.ketqua = 8 THEN 1 ELSE 0 END) AS GIAITHE, SUM(CASE WHEN b.ketqua = 9 THEN 1 ELSE 0 END) AS DADUNGDNK, count(*) TONG FROM khchuyendoi32to78 b, nhanvien c WHERE b.nhanvien_id = c.ID_NHANVIEN  group by c.TEN_NHANVIEN')->queryAll();
 
         $searchModel = new Tt32to78Search();
         $params = Yii::$app->request->queryParams;
