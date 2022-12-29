@@ -5,12 +5,9 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Activity;
+use app\models\Lichsutiepxuc;
 
-/**
- * ActivitySearch represents the model behind the search form of `app\models\Activity`.
- */
-class TiepxuchoadonSearch extends Activity
+class LichsutiepxucSearch extends Lichsutiepxuc
 {
     /**
      * @inheritdoc
@@ -18,7 +15,7 @@ class TiepxuchoadonSearch extends Activity
     public function rules()
     {
         return [
-            // [['activity_type', 'activity_name', 'class'], 'safe'],
+            [['khachhanggh_id'], 'safe'],
         ];
     }
 
@@ -40,7 +37,7 @@ class TiepxuchoadonSearch extends Activity
      */
     public function search($params)
     {
-        $query = Tiepxuchoadon::find();
+        $query = Lichsutiepxuc::find();
 
         // add conditions that should always apply here
 
@@ -64,6 +61,32 @@ class TiepxuchoadonSearch extends Activity
         if (!Yii::$app->user->can('quanly-dulieu')) {
            $query->andFilterWhere(['nhanvien_id' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN]);
         }
+        $query->orderBy([
+            'ngay_tiepxuc' => SORT_DESC,
+        ]);
+        return $dataProvider;
+    }
+
+    public function searchBaocaothue($params)
+    {
+        $query = Lichsutiepxuc::find();
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+        $query->joinWith('khachhang');
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        $query->andFilterWhere(['like', 'TEN_KH', $this->tt32to78_id]);
         $query->orderBy([
             'ngay_tiepxuc' => SORT_DESC,
         ]);

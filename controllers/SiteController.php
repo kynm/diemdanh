@@ -13,13 +13,13 @@ use app\models\User;
 use app\models\AuthAssignment;
 use app\models\AuthItem;
 use app\models\AuthItemChild;
-use app\models\Tt32to78Search;
+use app\models\Khachhanggiahan;
 use app\models\Donvi;
 use app\models\Nhanvien;
-use app\models\Hotrott32to78Search;
-use app\models\DotbaoduongSearch;
-use app\models\BaohongSearch;
+use app\models\Dichvu;
+use app\models\KhachhanggiahanSearch;
 use moonland\phpexcel\Excel;
+use yii\helpers\ArrayHelper;
 
 class SiteController extends Controller
 {
@@ -72,21 +72,24 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        if (Yii::$app->user->can('cucthuetinh')) {
-            return $this->redirect(['baocaothue']);
-        }
         if (Yii::$app->user->isGuest) {
             return $this->redirect(['login']);
         } else {
-            $dsketquachuyendoitheocongty = Yii::$app->db->createCommand('SELECT c.TEN_NHANVIEN, SUM(CASE WHEN b.ketqua = 1 THEN 1 ELSE 0 END) AS DALH , SUM(CASE WHEN b.ketqua = 2 THEN 1 ELSE 0 END) AS DATHEMZALO , SUM(CASE WHEN b.ketqua = 3 THEN 1 ELSE 0 END) AS TVNV , SUM(CASE WHEN b.ketqua = 4 THEN 1 ELSE 0 END) AS GUIDK01 , SUM(CASE WHEN b.ketqua = 5 THEN 1 ELSE 0 END) AS DAPHHD , SUM(CASE WHEN b.ketqua = 6 THEN 1 ELSE 0 END) AS HDNVKHAC , SUM(CASE WHEN b.ketqua = 7 THEN 1 ELSE 0 END) AS HUYDV, SUM(CASE WHEN b.ketqua = 8 THEN 1 ELSE 0 END) AS GIAITHE, SUM(CASE WHEN b.ketqua = 9 THEN 1 ELSE 0 END) AS DADUNGDNK, count(*) TONG FROM khchuyendoi32to78 b, nhanvien c WHERE b.nhanvien_id = c.ID_NHANVIEN  group by c.TEN_NHANVIEN')->queryAll();
+            $dsketquagiahanca = Yii::$app->db->createCommand('SELECT c.TEN_NHANVIEN,SUM(CASE WHEN MONTH(b.NGAY_HH) = MONTH(CURRENT_DATE()) THEN 1 ELSE 0 END) AS KEHOACHTHANG, SUM(CASE WHEN b.ketqua = 1 OR b.ketqua = 3 OR b.ketqua = 5 OR b.ketqua = 6 OR b.ketqua = 7 OR b.ketqua = 8 THEN 1 ELSE 0 END) AS DALH ,  SUM(CASE WHEN b.ketqua = 5 THEN 1 ELSE 0 END) AS DAGIAHAN ,  count(*) TONG FROM khachhanggiahan b, nhanvien c WHERE b.nhanvien_id = c.ID_NHANVIEN AND b.DICHVU_ID = 10  group by c.TEN_NHANVIEN')->queryAll();
+            $dsketquagiahanivan = Yii::$app->db->createCommand('SELECT c.TEN_NHANVIEN,SUM(CASE WHEN MONTH(b.NGAY_HH) = MONTH(CURRENT_DATE()) THEN 1 ELSE 0 END) AS KEHOACHTHANG, SUM(CASE WHEN b.ketqua = 1 OR b.ketqua = 3 OR b.ketqua = 5 OR b.ketqua = 6 OR b.ketqua = 7 OR b.ketqua = 8 THEN 1 ELSE 0 END) AS DALH ,  SUM(CASE WHEN b.ketqua = 5 THEN 1 ELSE 0 END) AS DAGIAHAN ,  count(*) TONG FROM khachhanggiahan b, nhanvien c WHERE b.nhanvien_id = c.ID_NHANVIEN AND b.DICHVU_ID = 15  group by c.TEN_NHANVIEN')->queryAll();
 
-            $searchModel = new Tt32to78Search();
+            $searchModel = new KhachhanggiahanSearch();
             $params = Yii::$app->request->queryParams;
             $dataProvider = $searchModel->searchtrangchu($params);
+            $dsDichvu = ArrayHelper::map(Dichvu::find()->all(), 'id', 'ten_dv');
+            $dsNhanvien = ArrayHelper::map(Nhanvien::find()->where(['in', 'ID_DAI', [25280]])->all(), 'ID_NHANVIEN', 'TEN_NHANVIEN');
             return $this->render('index', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
-                'dsketquachuyendoitheocongty' => $dsketquachuyendoitheocongty,
+                'dsketquagiahanca' => $dsketquagiahanca,
+                'dsketquagiahanivan' => $dsketquagiahanivan,
+                'dsDichvu' => $dsDichvu,
+                'dsNhanvien' => $dsNhanvien,
             ]);
         }
         // return $this->render('index');
@@ -110,9 +113,9 @@ class SiteController extends Controller
     {
 
         $this->layout = 'layoutBaocaothue';
-        $dsketquachuyendoitheocongty = Yii::$app->db->createCommand('SELECT c.TEN_NHANVIEN, SUM(CASE WHEN b.ketqua = 1 THEN 1 ELSE 0 END) AS DALH , SUM(CASE WHEN b.ketqua = 2 THEN 1 ELSE 0 END) AS DATHEMZALO , SUM(CASE WHEN b.ketqua = 3 THEN 1 ELSE 0 END) AS TVNV , SUM(CASE WHEN b.ketqua = 4 THEN 1 ELSE 0 END) AS GUIDK01 , SUM(CASE WHEN b.ketqua = 5 THEN 1 ELSE 0 END) AS DAPHHD , SUM(CASE WHEN b.ketqua = 6 THEN 1 ELSE 0 END) AS HDNVKHAC , SUM(CASE WHEN b.ketqua = 7 THEN 1 ELSE 0 END) AS HUYDV, SUM(CASE WHEN b.ketqua = 8 THEN 1 ELSE 0 END) AS GIAITHE, SUM(CASE WHEN b.ketqua = 9 THEN 1 ELSE 0 END) AS DADUNGDNK, count(*) TONG FROM khchuyendoi32to78 b, nhanvien c WHERE b.nhanvien_id = c.ID_NHANVIEN  group by c.TEN_NHANVIEN')->queryAll();
+        $dsketquachuyendoitheocongty = Yii::$app->db->createCommand('SELECT c.TEN_NHANVIEN, SUM(CASE WHEN b.ketqua = 1 THEN 1 ELSE 0 END) AS DALH , SUM(CASE WHEN b.ketqua = 2 THEN 1 ELSE 0 END) AS DATHEMZALO , SUM(CASE WHEN b.ketqua = 3 THEN 1 ELSE 0 END) AS TVNV , SUM(CASE WHEN b.ketqua = 4 THEN 1 ELSE 0 END) AS GUIDK01 , SUM(CASE WHEN b.ketqua = 5 THEN 1 ELSE 0 END) AS DAPHHD , SUM(CASE WHEN b.ketqua = 6 THEN 1 ELSE 0 END) AS HDNVKHAC , SUM(CASE WHEN b.ketqua = 7 THEN 1 ELSE 0 END) AS HUYDV, SUM(CASE WHEN b.ketqua = 8 THEN 1 ELSE 0 END) AS GIAITHE, SUM(CASE WHEN b.ketqua = 9 THEN 1 ELSE 0 END) AS DADUNGDNK, count(*) TONG FROM khachhanggiahan b, nhanvien c WHERE b.nhanvien_id = c.ID_NHANVIEN  group by c.TEN_NHANVIEN')->queryAll();
 
-        $searchModel = new Tt32to78Search();
+        $searchModel = new KhachhanggiahanSearch();
         $params = Yii::$app->request->queryParams;
         $dataProvider = $searchModel->searchBaocaothue($params);
         return $this->render('baocaothue', [
@@ -193,56 +196,6 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
-    }
-
-    public function actionImport()
-    {
-        ini_set('max_execution_time', 0);
-        $file = 'data/ImportThietbi.xlsx';
-        $data = Excel::import($file);
-        $count = 1;
-        $imported = 0;
-        foreach ($data as $record) {
-            $count++;
-            if ( Nhomtbi::find()->where(['MA_NHOM' => $record['MA_NHOM']])->exists() ) {
-                $nhomtbi = Nhomtbi::find()->where(['MA_NHOM' => $record['MA_NHOM']])->one();
-            } else {
-                $nhomtbi = new Nhomtbi;
-                $nhomtbi->MA_NHOM = $record['MA_NHOM'];
-                $nhomtbi->TEN_NHOM = $record['TEN_NHOM'];
-                $nhomtbi->save(false);
-            }
-            if ( Thietbi::find()->where(['MA_THIETBI' => $record['MA_THIETBI']])->exists() ) {
-                $thietbi = Thietbi::find()->where(['MA_THIETBI' => $record['MA_THIETBI']])->one();
-            } else {
-                $thietbi = new Thietbi;
-                $thietbi->MA_THIETBI = $record['MA_THIETBI'];
-                $thietbi->TEN_THIETBI = $record['TEN_THIETBI'];
-                $thietbi->ID_NHOM = $nhomtbi->ID_NHOM;
-                $thietbi->HANGSX = $record['HANGSX'];
-                $thietbi->THONGSOKT = $record['THONGSOKT'];
-                $thietbi->PHUKIEN = $record['PHUKIEN'];
-                $thietbi->save(false);
-            }
-            if (!Tramvt::find()->where(['MA_TRAM' => $record['MA_TRAM']])->exists()) {
-                echo "Mã trạm tại dòng $count không đúng. Yêu cầu xem lại!<br>";
-                continue;
-            } else {
-                $tram = Tramvt::find()->where(['MA_TRAM' => $record['MA_TRAM']])->one();
-            }
-            if ( Thietbitram::find()->where(['SERIAL_MAC' => $record['SERIAL_MAC']])->exists() ) {
-                echo "Thiết bị tại dòng $count bị trùng serial / mac.<br>";
-                continue;
-            } else {
-                $thietbitram = new Thietbitram;
-                $thietbitram->ID_LOAITB = $thietbi->ID_THIETBI;
-                $thietbitram->ID_TRAM = $record['TEN_THIETBI'];
-                $thietbitram->SERIAL_MAC = $record['SERIAL_MAC'];
-                $thietbitram->NGAYSX = $record['NGAYSX'];
-                $thietbitram->NGAYSD = $record['NGAYSD'];
-                $thietbitram->save(false);
-            }
-        }
     }
 
     public function actionTinnhandieuhanh()

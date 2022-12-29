@@ -7,8 +7,7 @@ use yii\helpers\Url;
         <div class="container">
             <div class="navbar-header">
                 <a href="<?= Url::to(['/'])?>" class="navbar-brand">Dashboard</a>
-                <!-- <a href="<?= Url::to(['hoadondientumoi/index'])?>" class="navbar-brand">Hóa đơn điện tử</a> -->
-                <a href="<?= Url::to(['tt32to78/index'])?>" class="navbar-brand">Chuyển đổi HĐ TT78</a>
+                <a href="<?= Url::to(['giahandichvu/index'])?>" class="navbar-brand">DS cần gia hạn</a>
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
                 <i class="fa fa-bars"></i>
                 </button>
@@ -16,7 +15,6 @@ use yii\helpers\Url;
             <div class="navbar-collapse pull-left collapse" id="navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="<?= Url::to(['site/thuthuat'])?>">Thủ thuật</a></li>
-                    <li><a href="<?= Url::to(['site/baocaothue'])?>">Báo cáo thuế</a></li>
                 </ul>
                 <ul class="nav navbar-nav">
                     <?php if (Yii::$app->user->can('Administrator')): ?>

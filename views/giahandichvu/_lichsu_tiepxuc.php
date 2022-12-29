@@ -20,7 +20,7 @@
                             <td scope="col"><?php echo $value->ngay_tiepxuc?>
                             <td scope="col"><?php echo $value->nhanvien->TEN_NHANVIEN?>
                             <td scope="col"><?php echo hinhthuctx()[$value->ht_tc]?>
-                            <td scope="col"><?php echo ketquatxhoadon()[$value->ketqua]?>
+                            <td scope="col"><?php echo ketquagiahan()[$value->ketqua]?>
                             <td scope="col"><?php echo $value->ghichu?>
                         </tr>
                     <?php endforeach; ?>

@@ -18,10 +18,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 <div class="tramvt-index">
-    <p>
-        <?= (Yii::$app->user->can('import-dshddtmoi')) ? Html::a('<i class="fa fa-plus"></i> Import dữ liệu', ['import'], ['class' => 'btn btn-primary btn-flat']) : '' ?>
-        <?= Html::a('Lịch sử tiếp xúc', ['lichsutiepxuc'], ['class' => 'btn btn-primary btn-flat']) ?>
-    </p>
     <div class="box box-primary">
         <div class="box-body">
             <?php Pjax::begin(); ?>    <?= GridView::widget([
@@ -32,22 +28,35 @@ $this->params['breadcrumbs'][] = $this->title;
                         ['class' => 'yii\grid\ActionColumn',
                         'template' => '{view}'],
                         [
-                            'attribute' => 'TEN_KH',
+                            'attribute' => 'khachhanggh_id',
+                            'value' => 'khachhang.TEN_KH',
                             'contentOptions' => ['style' => 'width:10%; white-space: normal;'],
                         ],
-                        'MST',
                         [
-                            'attribute' => 'DIACHI',
-                            'contentOptions' => ['style' => 'width:10%; white-space: normal;'],
+                            'attribute' => 'nhanvien_id',
+                            'value' => 'nhanvien.TEN_NHANVIEN'
                         ],
-                        'LIENHE',
-                        'EMAIL',
-                        'ngay_lh',
+                        'ngay_tiepxuc',
                         [
-                            'attribute' => 'donvi_id',
-                            'value' => 'donvi.TEN_DONVI'
+                            'attribute' => 'ht_tc',
+                            'value' => function ($model) {
+                                return hinhthuctx()[$model->ht_tc];
+                            }
                         ],
-                        
+                        [
+                            'attribute' => 'ketqua',
+                            'value' => function ($model) {
+                                return ketquagiahan()[$model->ketqua];
+                            }
+                        ],
+                        [
+                            'attribute' => 'ghichu',
+                            'value' => function ($model) {
+                                return '<textarea>' . $model->ghichu . '</textarea>';
+                            },
+                            'format' => 'raw',
+                        ],
+                        'ghichu',
                     ],
                 ]); ?>
             <?php Pjax::end(); ?>

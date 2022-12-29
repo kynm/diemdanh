@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = 'Cập nhật';
                 </div> 
                 <div class="col-md-2">
                     <?= $form->field($model, 'ketqua')->widget(Select2::classname(), [
-                        'data' => ketqua32to78(),
+                        'data' => ketquagiahan(),
                         'pluginOptions' => [
                             'placeholder' => 'Kết quả',
                             'allowClear' => true,

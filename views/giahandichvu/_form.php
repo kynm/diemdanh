@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
-use app\models\Donvi;
+use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Donvi */
@@ -16,18 +16,27 @@ use app\models\Donvi;
     <div class="box box-primary">
         <div class="box-body">
             <div class="row">
-                <div class="col-md-4">
-                    <?= $form->field($model, 'donvi_id')->dropDownList($dsdonvi,['prompt' => 'Chọn dịa bàn']) ?>
+                <?php if(Yii::$app->user->can('Administrator')): ?>
+                <div class="col-md-2">
+                    <?= $form->field($model, 'nhanvien_id')->widget(Select2::classname(), [
+                        'data' => $dsNhanvien,
+                        'pluginOptions' => [
+                            'placeholder' => 'Nhân viên',
+                            'allowClear' => true,
+                            // 'multiple' => true
+                        ],
+                    ]); ?>
                 </div>
-                <div class="col-md-4">
-                    <?= $form->field($model, 'donvi_id')->textInput(['maxlength' => true]) ?>
-                </div>
+                <?php endif; ?>
                 <div class="col-md-4">
                     <?= $form->field($model, 'TEN_KH')->textInput(['maxlength' => true]) ?>
                 </div>
                     
                 <div class="col-md-4">
                     <?= $form->field($model, 'MST')->textInput(['maxlength' => true]) ?>
+                </div>
+                <div class="col-md-4">
+                    <?= $form->field($model, 'EMAIL')->textInput(['maxlength' => true]) ?>
                 </div>
                 <div class="col-md-3">
                     <?= $form->field($model, 'LIENHE')->textInput(['maxlength' => true]) ?>
@@ -38,6 +47,9 @@ use app\models\Donvi;
                 </div>  
                 <div class="col-md-12">
                     <?= $form->field($model, 'DIACHI')->textInput(['maxlength' => true]) ?>
+                </div>
+                <div class="col-md-12">
+                    <?= $form->field($model, 'ghichu')->textarea(['rows' => '6']) ?>
                 </div>
             </div>
         </div>

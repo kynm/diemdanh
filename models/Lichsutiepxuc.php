@@ -26,14 +26,14 @@ use yii\helpers\ArrayHelper;
  * @property Thuchienbd[] $thuchienbds
  * @property Tramvt[] $tramvts
  */
-class Hotrott32to78 extends \yii\db\ActiveRecord
+class Lichsutiepxuc extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'lichsuhotrott32to78';
+        return 'lichsutiepxuc';
     }
 
     /**
@@ -42,10 +42,10 @@ class Hotrott32to78 extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nhanvien_id','tt32to78_id', 'ketqua', 'ht_tc'], 'required'],
+            [['nhanvien_id','khachhanggh_id', 'ketqua', 'ht_tc', 'ghichu'], 'required'],
             [['nhanvien_id', 'donvi_id', 'ketqua', 'ht_tc'], 'integer'],
             [['nhanvien_id'], 'exist', 'skipOnError' => true, 'targetClass' => Nhanvien::className(), 'targetAttribute' => ['nhanvien_id' => 'ID_NHANVIEN']],
-            [['tt32to78_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tt32to78::className(), 'targetAttribute' => ['tt32to78_id' => 'id']],
+            [['khachhanggh_id'], 'exist', 'skipOnError' => true, 'targetClass' => Khachhanggiahan::className(), 'targetAttribute' => ['khachhanggh_id' => 'id']],
         ];
     }
 
@@ -58,7 +58,7 @@ class Hotrott32to78 extends \yii\db\ActiveRecord
             'ketqua' => 'Kết quả',
             'ht_tc' => 'Hình thức tiếp xúc',
             'ghichu' => 'Ghi chú',
-            'tt32to78_id' => 'Khách hàng',
+            'khachhanggh_id' => 'Khách hàng',
             'tentrangthai' => 'Trạng thái',
             'ngay_tiepxuc' => 'Ngày tiếp xúc',
             'nhanvien_id' => 'Nhân viên liên hệ',
@@ -80,7 +80,7 @@ class Hotrott32to78 extends \yii\db\ActiveRecord
      */
     public function getKhachhang()
     {
-        return $this->hasOne(Tt32to78::className(), ['id' => 'tt32to78_id']);
+        return $this->hasOne(Khachhanggiahan::className(), ['id' => 'khachhanggh_id']);
     }
 
     /**
@@ -101,21 +101,9 @@ class Hotrott32to78 extends \yii\db\ActiveRecord
         return $this->hasOne(Nguyennhan::className(), ['id' => 'nguyennhan_id']);
     }
 
-    public function getDichvubaohong()
-    {
-        return $this->hasMany(Dichvubaohong::class, ['baohong_id' => 'id']);
-    }
-
     public function getDichvu()
     {
-        return $this->hasMany(Dichvu::class, ['id' => 'dichvu_id'])
-            ->via('dichvubaohong');
-    }
-
-    public function getTendsdichvu()
-    {
-        $dsdv = ArrayHelper::map($this->dichvu, 'id', 'ten_dv');
-        return implode($dsdv, ', ');
+        return $this->hasMany(Dichvu::class, ['DICHVU_ID' => 'id']);
     }
 
     public function getTentrangthai()

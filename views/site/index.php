@@ -13,73 +13,23 @@ use kartik\select2\Select2;
 /* @var $searchModel app\models\TramvtSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Điều hành chiến dịch HDDT mới';
+$this->title = '';
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 <div class="tramvt-index">
 
     <div class="box box-primary">
-            <div class="col-md-12">
-                <div class="box">
-                    <div class="box-header with-border">
-                        <h3><b>KẾT QUẢ CHUYỂN ĐỔI HÓA ĐƠN SANG TT 78(THEO LƯỢT CÔNG TY)</b></h3>
-                    </div>
-                    <div class="box-body">
-                        <table class="table table-bordered">
-                            <tbody>
-                                <tr class="bg-primary">
-                                    <th style="width: 10px">#</th>
-                                    <th>TÊN NHÂN VIÊN</th>
-                                    <th>ĐÃ LH</th>
-                                    <th>ĐÃ GỬI DK01 - HOÀN THÀNH NÂNG CẤP</th>
-                                    <th>ĐÃ DÙNG DOANH NGHIỆP KHÁC</th>
-                                    <th>ĐÃ HỦY</th>
-                                    <th>GIẢI THỂ</th>
-                                </tr>
-                                <?php
-                                $tongdalienhe = 0;
-                                $tongdanangcap = 0;
-                                $tongdadungdoanhnghiepkhac = 0;
-                                $tongdahuy = 0;
-                                $tonggiaithe = 0;
-                                    ?>
-                                <?php foreach ($dsketquachuyendoitheocongty as $key => $value):?>
-                                    <?php
-                                $tongdalienhe += $value['DALH'] + $value['DATHEMZALO'] + $value['TVNV'] + $value['GUIDK01'] + $value['DAPHHD'] + $value['HDNVKHAC'] + $value['DADUNGDNK'] + $value['HUYDV'] + $value['GIAITHE'];
-                                $tongdanangcap += $value['GUIDK01'] + $value['DAPHHD'] + $value['HDNVKHAC']  + $value['DADUNGDNK'] + $value['HUYDV'] + $value['GIAITHE'];
-                                $tongdadungdoanhnghiepkhac += $value['DADUNGDNK'];
-                                $tongdahuy += $value['HUYDV'];
-                                $tonggiaithe += $value['GIAITHE'];
-                                    ?>
-                                    <tr>
-                                        <td scope="col"><?php echo ($key + 1)?></td>
-                                        <td scope="col"><?php echo $value['TEN_NHANVIEN']?></td>
-                                        <td scope="col"><?php echo ($value['DALH'] + $value['DATHEMZALO'] + $value['TVNV'] + $value['GUIDK01'] + $value['DAPHHD'] + $value['HDNVKHAC'] + $value['DADUNGDNK'] + $value['HUYDV'] + $value['GIAITHE'])?></td>
-                                        <td scope="col"><?php echo ($value['GUIDK01'] + $value['DAPHHD'] + $value['HDNVKHAC']  + $value['DADUNGDNK'] + $value['HUYDV'] + $value['GIAITHE'])?></td>
-                                        <td scope="col"><?php echo $value['DADUNGDNK']?></td>
-                                        <td scope="col"><?php echo $value['HUYDV']?></td>
-                                        <td scope="col"><?php echo $value['GIAITHE']?></td>
-                                    </tr>
-                                <?php endforeach; ?>
-                                <tr>
-                                        <td scope="col"><?php echo ($key + 1)?></td>
-                                        <td scope="col"></td>
-                                        <td scope="col"><?php echo $tongdalienhe?></td>
-                                        <td scope="col"><?php echo $tongdanangcap?></td>
-                                        <td scope="col"><?php echo $tongdadungdoanhnghiepkhac?></td>
-                                        <td scope="col"><?php echo $tongdahuy?></td>
-                                        <td scope="col"><?php echo $tonggiaithe?></td>
-                                    </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+        <?= $this->render('_table_ketqua', ['tendv' => 'KẾT QUẢ GIA  HẠN DỊCH VỤ VNPT-CA', 'data' => $dsketquagiahanca,]) ?>
+        <?= $this->render('_table_ketqua', ['tendv' => 'KẾT QUẢ GIA  HẠN DỊCH VỤ VNPT-IVAN', 'data' => $dsketquagiahanivan,]) ?>
+        <h3><b class="text text-danger">LỊCH SỬ TIẾP XÚC KHÁCH HÀNG</b></h3>
         <div class="box-body">
             <?php Pjax::begin(); ?><?= GridView::widget([
                     'dataProvider' => $dataProvider,
                     'filterModel' => $searchModel,
+                    'rowOptions' => function ($model, $index, $widget, $grid){
+                      return ['style'=>'color:'. colorgiahan($model) .';'];
+                    },
                     'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
                         [
@@ -88,13 +38,31 @@ $this->params['breadcrumbs'][] = $this->title;
                             'contentOptions' => ['style' => 'width:10%; white-space: normal;'],
                         ],
                         [
-                            'attribute' => 'tt32to78_id',
+                            'attribute' => 'khachhanggh_id',
                             'value' => 'TEN_KH',
                             'contentOptions' => ['style' => 'width:10%; white-space: normal;'],
                         ],
                         [
+                            'contentOptions' => ['style' => 'width:10%; white-space: normal;'],
                             'attribute' => 'nhanvien_id',
-                            'value' => 'nhanvien.TEN_NHANVIEN'
+                            'value' => 'nhanvien.TEN_NHANVIEN',
+                            'filter'=> $dsNhanvien,
+                            'filterType' => GridView::FILTER_SELECT2,
+                            'filterWidgetOptions' => [
+                                'options' => ['prompt' => ''],
+                                'pluginOptions' => ['allowClear' => true],
+                            ],
+                        ],
+                        [
+                            'contentOptions' => ['style' => 'width:10%; white-space: normal;'],
+                            'attribute' => 'DICHVU_ID',
+                            'value' => 'dichvu.ten_dv',
+                            'filter'=> $dsDichvu,
+                            'filterType' => GridView::FILTER_SELECT2,
+                            'filterWidgetOptions' => [
+                                'options' => ['prompt' => ''],
+                                'pluginOptions' => ['allowClear' => true],
+                            ],
                         ],
                         [
                             'attribute' => 'ghichu',
@@ -104,7 +72,14 @@ $this->params['breadcrumbs'][] = $this->title;
                             // 'contentOptions' => ['style' => 'width:20%; white-space: normal;'],
                             'format' => 'raw',
                         ],
+                        'NGAY_HH',
                         'ngay_lh',
+                        [
+                            'attribute' => 'ketqua',
+                            'value' => function ($model) {
+                                return $model->ketqua ? ketquagiahan()[$model->ketqua] : 'Chưa liên hệ';
+                            }
+                        ],
                     ],
                 ]); ?>
             <?php Pjax::end(); ?>

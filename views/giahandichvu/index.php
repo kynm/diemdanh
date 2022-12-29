@@ -13,7 +13,7 @@ use kartik\select2\Select2;
 /* @var $searchModel app\models\TramvtSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Điều hành chiến dịch HDDT mới';
+$this->title = 'DANH SÁCH GIA HẠN DỊCH VỤ';
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
@@ -21,8 +21,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?php if(Yii::$app->user->can('Administrator')): ?>
         <?= (Yii::$app->user->can('import-dshddtmoi')) ? Html::a('<i class="fa fa-plus"></i> Import dữ liệu', ['import'], ['class' => 'btn btn-primary btn-flat']) : '' ?>
-        <?= Html::a('Lịch sử tiếp xúc', ['lichsutiepxuc'], ['class' => 'btn btn-primary btn-flat']) ?>
         <?php endif; ?>
+        <?= Html::a('Lịch sử tiếp xúc', ['lichsutiepxuc'], ['class' => 'btn btn-primary btn-flat']) ?>
         <?= Html::a('Excel', ['excellichsutiepxuc'], ['class' => 'btn btn-primary btn-flat']) ?>
     </p>
     <div class="box box-primary">
@@ -46,19 +46,39 @@ $this->params['breadcrumbs'][] = $this->title;
                             'attribute' => 'DIACHI',
                             'contentOptions' => ['style' => 'width:10%; white-space: normal;'],
                         ],
-                        'LOAIHETHONG',
-                        'TEN_KETOAN',
+                        [
+                            'contentOptions' => ['style' => 'width:10%; white-space: normal;'],
+                            'attribute' => 'DICHVU_ID',
+                            'value' => 'dichvu.ten_dv',
+                            'filter'=> $dsDichvu,
+                            'filterType' => GridView::FILTER_SELECT2,
+                            'filterWidgetOptions' => [
+                                'options' => ['prompt' => ''],
+                                'pluginOptions' => ['allowClear' => true],
+                            ],
+                        ],
                         'LIENHE',
-                        'SDT',
+                        'NGAY_HH',
                         [
                             'attribute' => 'ghichu',
                             'contentOptions' => ['style' => 'width:15%; white-space: normal;'],
                         ],
-                        'ketqua',
                         [
+                            'attribute' => 'ketqua',
+                            'value' => function ($model) {
+                                return $model->ketqua ? ketquagiahan()[$model->ketqua] : 'Chưa liên hệ';
+                            }
+                        ],
+                        [
+                            'contentOptions' => ['style' => 'width:10%; white-space: normal;'],
                             'attribute' => 'nhanvien_id',
                             'value' => 'nhanvien.TEN_NHANVIEN',
-                            'contentOptions' => ['style' => 'width:5%; white-space: normal;'],
+                            'filter'=> $dsNhanvien,
+                            'filterType' => GridView::FILTER_SELECT2,
+                            'filterWidgetOptions' => [
+                                'options' => ['prompt' => ''],
+                                'pluginOptions' => ['allowClear' => true],
+                            ],
                         ],
                         'ngay_lh',
                         

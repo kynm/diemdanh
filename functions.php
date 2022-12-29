@@ -31,18 +31,6 @@
         ]);
     }
 
-    function statusbaohong()
-    {
-        return [
-            0 => 'Chờ tiếp nhận',
-            1 => 'Báo sai',
-            2 => 'Đang xử lý',
-            3 => 'Đã xử lý',
-            4 => 'Đóng yêu cầu',
-            5 => 'Xác nhận báo sai',
-        ];
-    }
-
     function colorstatus($status)
     {
         $color = '';
@@ -74,6 +62,23 @@
         return $color;
     }
 
+    function colorgiahan($model)
+    {
+        $color = '#1E90FF';
+        $now = time(); // or your date as well
+        $your_date = strtotime($model->NGAY_HH);
+        $datediff = $your_date - $now;
+        $datediff = round($datediff / (60 * 60 * 24));
+        if (!$model->ngay_lh && $datediff < 7 && $model->ketqua != 5) {
+            $color = 'red';
+        }
+        if ($model->ketqua == 5) {
+            $color = 'green';
+        }
+
+        return $color;
+    }
+
     function colorketqua($ketqua)
     {
         $color = '';
@@ -94,7 +99,7 @@
                 $color = '#1E90FF';
                 break;
             case 5:
-                $color = '#1E90FF';
+                $color = 'green';
                 break;
             case 6:
                 $color = '#1E90FF';
@@ -115,54 +120,6 @@
         }
 
         return $color;
-    }
-
-    function testbyaccount($matb)
-    {
-        $matb = trim(strtolower($matb));
-        $request_url = 'https://cts.vnpt.vn:8085/LineTestAPI/TestbyAccount?accountName=' . $matb . '&serviceType=3';
-        $data = [
-          "accountName"        => $matb,
-              "serviceType"        => 3,
-        ];
-        $curl = curl_init($request_url);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');
-        curl_setopt($curl, CURLOPT_POSTFIELDS,  json_encode($data));
-        curl_setopt($curl, CURLOPT_HTTPHEADER, [
-          'Authorization: Y3RzLmhubUAyOC8wMi8yMDIyIDE3OjA3',
-          'Content-Type: application/json'
-        ]);
-        $response = curl_exec($curl);
-        curl_close($curl);
-        return json_decode($response);
-        return $response;
-
-    }
-
-    function getByAccount($matb)
-    {
-        $matb = trim(strtolower($matb));
-        $request_url = 'https://cts.vnpt.vn:8085/LineTestAPI/GetByAccount?accountName=' . $matb . '&serviceType=3';
-        $data = [
-          "accountName"        => $matb,
-              "serviceType"        => 3,
-        ];
-        $curl = curl_init($request_url);
-        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');
-        curl_setopt($curl, CURLOPT_POSTFIELDS,  json_encode($data));
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, false);
-        curl_setopt($curl, CURLOPT_HTTPHEADER, [
-          'Authorization: Y3RzLmhubUAyOC8wMi8yMDIyIDE3OjA3',
-        ]);
-        $response = curl_exec($curl);
-       $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-        curl_close($curl);
-        if ($httpcode == '0') {
-            getByAccount($matb);
-        }
-
-        return $response;
     }
 
     function ketquatxhoadon()
@@ -190,21 +147,18 @@
         ];
     }
 
-    function ketqua32to78()
+    function ketquagiahan()
     {
         return [
-            -3 => 'Đang làm thủ tục giải thể',
-            -2 => 'Không đồng ý chuyển',
-            -1 => 'Không liên hệ được',
-            1 => 'Đã liên hệ hẹn lúc khác',
-            2 => 'Lý do khác',
-            3 => 'Đã tư vấn nghiệp vụ',
-            4 => 'Đã hướng dẫn sử dụng (GỬI DK01)',
-            5 => 'Đã phát hành hóa đơn thành công',
-            6 => 'Hướng dẫn nghiệp vụ khác',
-            7 => 'Đã hủy dịch vụ',
-            8 => 'Giải thể',
-            9 => 'Đã dùng nhà mạng khác',
+            0 => 'Chưa liên hệ',
+            1 => 'Chưa đồng gia hạn',
+            2 => 'Không liên hệ được',
+            3 => 'Đã liên hệ hẹn lúc khác',
+            4 => 'Lý do khác',
+            5 => 'Đã gia hạn',
+            6 => 'Đã hủy dịch vụ',
+            7 => 'Giải thể',
+            8 => 'Đã dùng nhà mạng khác',
         ];
     }
 

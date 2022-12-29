@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Tt32to78;
+use app\models\Khachhanggiahan;
 
 /**
  * DotbaoduongSearch represents the model behind the search form about `app\models\Dotbaoduong`.
  */
-class Tt32to78Search extends Tt32to78
+class KhachhanggiahanSearch extends Khachhanggiahan
 {
      // Virtual variable
     public $ID_DAI;
@@ -22,7 +22,7 @@ class Tt32to78Search extends Tt32to78
     public function rules()
     {
         return [
-            [['MST', 'TEN_KH', 'DIACHI', 'LIENHE', 'EMAIL', 'TRANGTHAINANGCAP', 'nhanvien_id'], 'safe'],
+            [['MST', 'TEN_KH', 'DIACHI', 'LIENHE', 'EMAIL', 'nhanvien_id', 'DICHVU_ID'], 'safe'],
         ];
     }
 
@@ -44,7 +44,7 @@ class Tt32to78Search extends Tt32to78
      */
     public function search($params)
     {
-        $query = Tt32to78::find();
+        $query = Khachhanggiahan::find();
 
         // add conditions that should always apply here
 
@@ -64,57 +64,23 @@ class Tt32to78Search extends Tt32to78
         }
         $query->joinWith('nhanvien');
 
-        //$query->andFilterWhere(['not in', 'ketqua', [4,5,6,7,8,9]]);
+        $query->andFilterWhere(['in', 'ketqua', [0,1,2,3,4]]);
         $query->andFilterWhere(['like', 'MST', $this->MST]);
         $query->andFilterWhere(['like', 'TEN_KH', $this->TEN_KH]);
         $query->andFilterWhere(['like', 'DIACHI', $this->DIACHI]);
         $query->andFilterWhere(['like', 'LIENHE', $this->LIENHE]);
         $query->andFilterWhere(['like', 'EMAIL', $this->EMAIL]);
-        $query->andFilterWhere(['like', 'nhanvien.TEN_NHANVIEN', $this->nhanvien_id]);
-        $query->andFilterWhere(['=', 'TRANGTHAINANGCAP', $this->TRANGTHAINANGCAP]);
+        $query->andFilterWhere(['=', 'DICHVU_ID', $this->DICHVU_ID]);
+        $query->andFilterWhere(['=', 'nhanvien.ID_NHANVIEN', $this->nhanvien_id]);
         $query->orderBy([
-            'ngay_lh' => SORT_DESC,
-        ]);
-        return $dataProvider;
-    }
-
-    public function searchBaocaothue($params)
-    {
-        $query = Tt32to78::find();
-
-        // add conditions that should always apply here
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
-
-        $this->load($params);
-
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
-            return $dataProvider;
-        }
-        $query->joinWith('nhanvien');
-
-        $query->andFilterWhere(['not in', 'ketqua', [4,5,6,7,8,9]]);
-        $query->andFilterWhere(['like', 'MST', $this->MST]);
-        $query->andFilterWhere(['like', 'TEN_KH', $this->TEN_KH]);
-        $query->andFilterWhere(['like', 'DIACHI', $this->DIACHI]);
-        $query->andFilterWhere(['like', 'LIENHE', $this->LIENHE]);
-        $query->andFilterWhere(['like', 'EMAIL', $this->EMAIL]);
-        $query->andFilterWhere(['like', 'nhanvien.TEN_NHANVIEN', $this->nhanvien_id]);
-        $query->andFilterWhere(['=', 'TRANGTHAINANGCAP', $this->TRANGTHAINANGCAP]);
-        $query->orderBy([
-            'ngay_lh' => SORT_DESC,
-            'ketqua' => SORT_DESC,
+            'NGAY_HH' => SORT_ASC,
         ]);
         return $dataProvider;
     }
 
     public function searchtrangchu($params)
     {
-        $query = Tt32to78::find();
+        $query = Khachhanggiahan::find();
 
         // add conditions that should always apply here
 
@@ -131,17 +97,17 @@ class Tt32to78Search extends Tt32to78
         }
         $query->joinWith('nhanvien');
 
-        // $query->andFilterWhere(['not in', 'ketqua', [4,5,6,7,8,9]]);
+        $query->andFilterWhere(['in', 'ketqua', [0,1,2,3,4]]);
         $query->andFilterWhere(['like', 'MST', $this->MST]);
         $query->andFilterWhere(['like', 'TEN_KH', $this->TEN_KH]);
         $query->andFilterWhere(['like', 'DIACHI', $this->DIACHI]);
         $query->andFilterWhere(['like', 'LIENHE', $this->LIENHE]);
         $query->andFilterWhere(['like', 'EMAIL', $this->EMAIL]);
-        $query->andFilterWhere(['like', 'nhanvien.TEN_NHANVIEN', $this->nhanvien_id]);
-        $query->andFilterWhere(['=', 'TRANGTHAINANGCAP', $this->TRANGTHAINANGCAP]);
+        $query->andFilterWhere(['=', 'nhanvien.ID_NHANVIEN', $this->nhanvien_id]);
+        $query->andFilterWhere(['=', 'DICHVU_ID', $this->DICHVU_ID]);
         $query->orderBy([
-            'ngay_lh' => SORT_DESC,
-            'ketqua' => SORT_DESC,
+            'NGAY_HH' => SORT_ASC,
+            'ketqua' => SORT_ASC,
         ]);
         return $dataProvider;
     }

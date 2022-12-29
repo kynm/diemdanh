@@ -6,10 +6,11 @@ use Yii;
 use app\models\ActivitiesLog;
 use app\models\Nhanvien;
 use app\models\Donvi;
-use app\models\Tt32to78;
-use app\models\Hotrott32to78;
-use app\models\Hotrott32to78Search;
-use app\models\Tt32to78Search;
+use app\models\Khachhanggiahan;
+use app\models\LichsutiepxucSearch;
+use app\models\Lichsutiepxuc;
+use app\models\Dichvu;
+use app\models\KhachhanggiahanSearch;
 use app\models\UploadForm;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -24,19 +25,20 @@ use yii\web\UploadedFile;
 /**
  * TramvtController implements the CRUD actions for Tramvt model.
  */
-class Tt32to78Controller extends Controller
+class GiahandichvuController extends Controller
 {
     public function actionIndex()
     {
-        if (Yii::$app->user->can('cucthuetinh')) {
-            return $this->redirect(['baocaothue']);
-        }
-        $searchModel = new Tt32to78Search();
+        $searchModel = new KhachhanggiahanSearch();
         $params = Yii::$app->request->queryParams;
         $dataProvider = $searchModel->search($params);
+        $dsDichvu = ArrayHelper::map(Dichvu::find()->all(), 'id', 'ten_dv');
+        $dsNhanvien = ArrayHelper::map(Nhanvien::find()->where(['in', 'ID_DONVI', [668,9]])->all(), 'ID_NHANVIEN', 'TEN_NHANVIEN');
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'dsDichvu' => $dsDichvu,
+            'dsNhanvien' => $dsNhanvien,
         ]);
     }
 
@@ -60,23 +62,20 @@ class Tt32to78Controller extends Controller
                 }
                 foreach ($data as $key => $value) {
                     if ($value['MST']) {
-                        $model1 = new Tt32to78();
-                        $model1->nhanvien_id = $value['nhanvien_id'];
-                        $model1->donvi_id = 1;
+                        $model1 = Khachhanggiahan::find()->where(['MST' => $value['MST']])->andWhere(['DICHVU_ID' => $value['DICHVU_ID']])->one();
+                        if(!$model1) {
+                            $model1 = new Khachhanggiahan();
+                        }
+                        $nhanvien = Nhanvien::find()->where(['TEN_NHANVIEN' => $value['TEN_NV_KD']])->one();
+                        $model1->nhanvien_id = $nhanvien ? $nhanvien->ID_NHANVIEN : 0;
+                        $model1->TEN_NV_KD = $value['TEN_NV_KD'];
                         $model1->TEN_KH = $value['TEN_KH'];
-                        $model1->SDT = $value['SDT'];
-                        // $model1->SLDANGKY = $value['SLDANGKY'];
-                        // $model1->SLTHONGBAO = $value['SLTHONGBAO'];
-                        // $model1->SLDAPHATHANH = $value['SLDAPHATHANH'];
                         $model1->MST = $value['MST'];
                         $model1->DIACHI = $value['DIACHI'];
                         $model1->LIENHE = $value['LIENHE'];
                         $model1->EMAIL = $value['EMAIL'];
-                        $model1->GUIDK01 = '0';
-                        $model1->TRANGTHAINANGCAP = '0';
-                        $model1->TEN_NV_KD = $value['TEN_NV_KD'];
-                        $model1->LOAIHETHONG = $value['LOAIHETHONG'];
-                        $model1->NHANVIENHOTRO = 'xxx';
+                        $model1->DICHVU_ID = $value['DICHVU_ID'];
+                        $model1->NGAY_HH = $value['NGAY_HH'];
                         $model1->save(false);
                     }
                 }
@@ -99,7 +98,7 @@ class Tt32to78Controller extends Controller
 
     protected function findModel($id)
     {
-        if (($model = Tt32to78::findOne($id)) !== null) {
+        if (($model = Khachhanggiahan::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -109,7 +108,7 @@ class Tt32to78Controller extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-       // $dsdonvi = ArrayHelper::map(Donvi::find()->where(['in', 'ID_DONVI', [2,3,4,5,6,7]])->all(), 'ID_DONVI', 'TEN_DONVI');
+        $dsNhanvien = ArrayHelper::map(Nhanvien::find()->all(), 'ID_NHANVIEN', 'TEN_NHANVIEN');
         if ($model->load(Yii::$app->request->post())) {
             $model->save(false);
             Yii::$app->session->setFlash('success', "cập nhật khách hàng thành công!");
@@ -117,7 +116,7 @@ class Tt32to78Controller extends Controller
         } else {
             return $this->render('update', [
                 'model' => $model,
-                // 'dsdonvi' => $dsdonvi,
+                'dsNhanvien' => $dsNhanvien,
             ]);
         }
     }
@@ -125,20 +124,20 @@ class Tt32to78Controller extends Controller
     public function actionTiepxuckhachhang($id)
     {
         $khachhang = $this->findModel($id);
-        $model = Hotrott32to78::find()->where([
+        $model = Lichsutiepxuc::find()->where([
             'nhanvien_id' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN,
-            'tt32to78_id' => $id,
+            'khachhanggh_id' => $id,
             'date(ngay_tiepxuc)' => Yii::$app->formatter->asDatetime('now', 'php:Y-m-d'),
         ])->one();
         if (!$model) {
-            $model = new Hotrott32to78();
-            $model->tt32to78_id = $id;
+            $model = new Lichsutiepxuc();
+            $model->khachhanggh_id = $id;
             $model->nhanvien_id = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
         }
 
         if ($model->load(Yii::$app->request->post())) {
             $params = Yii::$app->request->post();
-            $model->ghichu = $params['Hotrott32to78']['ghichu'];
+            $model->ghichu = $params['Lichsutiepxuc']['ghichu'];
             $model->save(false);
             $khachhang->ngay_lh = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d H:i:s');
             $khachhang->ht_lh = $model->ht_tc;
@@ -157,7 +156,7 @@ class Tt32to78Controller extends Controller
 
     public function actionLichsutiepxuc()
     {
-            $searchModel = new Hotrott32to78Search();
+            $searchModel = new LichsutiepxucSearch();
             $params = Yii::$app->request->queryParams;
             $dataProvider = $searchModel->search($params);
             return $this->render('lichsutiepxuc', [
@@ -168,10 +167,10 @@ class Tt32to78Controller extends Controller
 
     public function actionExcellichsutiepxuc()
     {
-        $result = Yii::$app->db->createCommand('SELECT a.MST, a.TEN_KH, a.LIENHE, a.EMAIL, a.ht_lh, a.ketqua, a.ghichu, a.ngay_lh,b.TEN_NHANVIEN FROM khchuyendoi32to78 a, nhanvien b WHERE a.nhanvien_id = b.ID_NHANVIEN')->queryAll();
+        $result = Yii::$app->db->createCommand('SELECT a.MST, a.TEN_KH, a.LIENHE, a.EMAIL, a.ht_lh, a.ketqua, a.ghichu, a.ngay_lh,b.TEN_NHANVIEN FROM khachhanggiahan a, nhanvien b WHERE a.nhanvien_id = b.ID_NHANVIEN')->queryAll();
         foreach ($result as $key => $value) {
-            $result[$key]['ketqua'] = isset(ketqua32to78()[$value['ketqua']]) ? ketqua32to78()[$value['ketqua']] : null;
-            $result[$key]['ht_lh'] = isset(ketqua32to78()[$value['ht_lh']]) ? ketqua32to78()[$value['ht_lh']] : null;
+            $result[$key]['ketqua'] = isset(ketquagiahan()[$value['ketqua']]) ? ketquagiahan()[$value['ketqua']] : null;
+            $result[$key]['ht_lh'] = isset(hinhthuctx()[$value['ht_lh']]) ? hinhthuctx()[$value['ht_lh']] : null;
         }
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $spreadsheet->getDefaultStyle()->getFont()->setName('Arial');
@@ -189,13 +188,13 @@ class Tt32to78Controller extends Controller
                 'NHÂN VIÊN HỖ TRỢ',
             ],
             '',
-            'A1'         
+            'A1'
         );
         $key = 0;
         $x = 2;
         $spreadsheet->getActiveSheet()->fromArray($result,'','A2');
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
-        $file_name = "Chuyển đổi tt78 ".date('Ymd_His');
+        $file_name = "Gia hạn dịch vụ ".date('Ymd_His');
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="'.$file_name.'.xlsx"');
