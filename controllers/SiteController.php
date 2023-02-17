@@ -75,21 +75,7 @@ class SiteController extends Controller
         if (Yii::$app->user->isGuest) {
             return $this->redirect(['login']);
         } else {
-            $dsketquagiahanca = Yii::$app->db->createCommand('SELECT c.TEN_NHANVIEN,SUM(CASE WHEN MONTH(b.NGAY_HH) = MONTH(CURRENT_DATE()) THEN 1 ELSE 0 END) AS KEHOACHTHANG, SUM(CASE WHEN b.ketqua = 1 OR b.ketqua = 3 OR b.ketqua = 5 OR b.ketqua = 6 OR b.ketqua = 7 OR b.ketqua = 8 THEN 1 ELSE 0 END) AS DALH ,  SUM(CASE WHEN b.ketqua = 5 THEN 1 ELSE 0 END) AS DAGIAHAN ,  count(*) TONG FROM khachhanggiahan b, nhanvien c WHERE b.nhanvien_id = c.ID_NHANVIEN AND b.DICHVU_ID = 10  group by c.TEN_NHANVIEN')->queryAll();
-            $dsketquagiahanivan = Yii::$app->db->createCommand('SELECT c.TEN_NHANVIEN,SUM(CASE WHEN MONTH(b.NGAY_HH) = MONTH(CURRENT_DATE()) THEN 1 ELSE 0 END) AS KEHOACHTHANG, SUM(CASE WHEN b.ketqua = 1 OR b.ketqua = 3 OR b.ketqua = 5 OR b.ketqua = 6 OR b.ketqua = 7 OR b.ketqua = 8 THEN 1 ELSE 0 END) AS DALH ,  SUM(CASE WHEN b.ketqua = 5 THEN 1 ELSE 0 END) AS DAGIAHAN ,  count(*) TONG FROM khachhanggiahan b, nhanvien c WHERE b.nhanvien_id = c.ID_NHANVIEN AND b.DICHVU_ID = 15  group by c.TEN_NHANVIEN')->queryAll();
-
-            $searchModel = new KhachhanggiahanSearch();
-            $params = Yii::$app->request->queryParams;
-            $dataProvider = $searchModel->searchtrangchu($params);
-            $dsDichvu = ArrayHelper::map(Dichvu::find()->all(), 'id', 'ten_dv');
-            $dsNhanvien = ArrayHelper::map(Nhanvien::find()->where(['in', 'ID_DAI', [25280]])->all(), 'ID_NHANVIEN', 'TEN_NHANVIEN');
             return $this->render('index', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
-                'dsketquagiahanca' => $dsketquagiahanca,
-                'dsketquagiahanivan' => $dsketquagiahanivan,
-                'dsDichvu' => $dsDichvu,
-                'dsNhanvien' => $dsNhanvien,
             ]);
         }
         // return $this->render('index');

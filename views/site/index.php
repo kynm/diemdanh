@@ -1,89 +1,53 @@
 <?php
 
-use yii\helpers\Html;
-use yii\helpers\Url;
-use yii\helpers\ArrayHelper;
-use kartik\grid\GridView;
-use yii\widgets\Pjax;
-use app\models\Daivt;
-use app\models\Tramvt;
-use kartik\select2\Select2;
-
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\TramvtSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = '';
-$this->params['breadcrumbs'][] = $this->title;
+use yii\helpers\Html;
 
+$this->title = 'TRANG CHỦ';
 ?>
-<div class="tramvt-index">
-
-    <div class="box box-primary">
-        <?= $this->render('_table_ketqua', ['tendv' => 'KẾT QUẢ GIA  HẠN DỊCH VỤ VNPT-CA', 'data' => $dsketquagiahanca,]) ?>
-        <?= $this->render('_table_ketqua', ['tendv' => 'KẾT QUẢ GIA  HẠN DỊCH VỤ VNPT-IVAN', 'data' => $dsketquagiahanivan,]) ?>
-        <h3><b class="text text-danger">LỊCH SỬ TIẾP XÚC KHÁCH HÀNG</b></h3>
-        <div class="box-body">
-            <?php Pjax::begin(); ?><?= GridView::widget([
-                    'dataProvider' => $dataProvider,
-                    'filterModel' => $searchModel,
-                    'rowOptions' => function ($model, $index, $widget, $grid){
-                      return ['style'=>'color:'. colorgiahan($model) .';'];
-                    },
-                    'columns' => [
-                        ['class' => 'yii\grid\SerialColumn'],
-                        [
-                            'attribute' => 'MST',
-                            'value' => 'MST',
-                            'contentOptions' => ['style' => 'width:10%; white-space: normal;'],
-                        ],
-                        [
-                            'attribute' => 'khachhanggh_id',
-                            'value' => 'TEN_KH',
-                            'contentOptions' => ['style' => 'width:10%; white-space: normal;'],
-                        ],
-                        [
-                            'contentOptions' => ['style' => 'width:10%; white-space: normal;'],
-                            'attribute' => 'nhanvien_id',
-                            'value' => 'nhanvien.TEN_NHANVIEN',
-                            'filter'=> $dsNhanvien,
-                            'filterType' => GridView::FILTER_SELECT2,
-                            'filterWidgetOptions' => [
-                                'options' => ['prompt' => ''],
-                                'pluginOptions' => ['allowClear' => true],
-                            ],
-                        ],
-                        [
-                            'contentOptions' => ['style' => 'width:10%; white-space: normal;'],
-                            'attribute' => 'DICHVU_ID',
-                            'value' => 'dichvu.ten_dv',
-                            'filter'=> $dsDichvu,
-                            'filterType' => GridView::FILTER_SELECT2,
-                            'filterWidgetOptions' => [
-                                'options' => ['prompt' => ''],
-                                'pluginOptions' => ['allowClear' => true],
-                            ],
-                        ],
-                        [
-                            'attribute' => 'ghichu',
-                            'value' => function ($model) {
-                                return $model->ghichu;
-                            },
-                            // 'contentOptions' => ['style' => 'width:20%; white-space: normal;'],
-                            'format' => 'raw',
-                        ],
-                        'NGAY_HH',
-                        'ngay_lh',
-                        [
-                            'attribute' => 'ketqua',
-                            'value' => function ($model) {
-                                return $model->ketqua ? ketquagiahan()[$model->ketqua] : 'Chưa liên hệ';
-                            }
-                        ],
-                    ],
-                ]); ?>
-            <?php Pjax::end(); ?>
-            
+<div class="row">
+    <?php if (false): ?>
+    <div class="col-md-3">
+        <div class="box box-widget widget-user">
+            <div class="widget-user-header bg-aqua-active"  style="background-color: #de4d88  !important;">
+            <a href="/giahandichvu/index"><h3 class="widget-user-username" style="text-align: center;color: white;">GIA HẠN DỊCH VỤ</h3></a>
+            </div>
+            <div class="widget-user-image">
+            <img class="img-circle" src="/dist/img/1_ava.png" alt="giahandichvu">
+            <div class="box-footer">
+                <div class="row">
+                    <div class="col-sm-12 border-right">
+                        <div class="description-block">
+                        <span class="description-header"><?= Html::a('KHÁCH HÀNG', ['/giahandichvu/index'], ['class' => 'btn btn-primary btn-flat'])?></span>
+                        <span class="description-header"><?= Html::a('BÁO CÁO', ['/giahandichvu/baocao'], ['class' => 'btn btn-primary btn-flat'])?></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+    <?php endif; ?>
+    <?php if (true): ?>
+    <div class="col-md-3">
+        <div class="box box-widget widget-user">
+            <div class="widget-user-header bg-aqua-active"  style="background-color: #de4d88  !important;">
+            <a href="/thamcanhdichvu/index"><h3 class="widget-user-username" style="text-align: center;color: white;">THÂM CANH DỊCH VỤ</h3></a>
+            </div>
+            <div class="widget-user-image">
+            <img class="img-circle" src="/dist/img/1_ava.png" alt="thamcanhdichvu">
+            </div>
+            <div class="box-footer">
+                <div class="row">
+                    <div class="col-sm-12 border-right">
+                        <div class="description-block">
+                        <span class="description-header"><?= Html::a('KHÁCH HÀNG', ['/thamcanhdichvu/index'], ['class' => 'btn btn-primary btn-flat'])?></span>
+                        <span class="description-header"><?= Html::a('LỊCH SỬ', ['/thamcanhdichvu/lichsutiepxuc'], ['class' => 'btn btn-primary btn-flat'])?></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php endif; ?>
 </div>

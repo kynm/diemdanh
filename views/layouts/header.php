@@ -6,8 +6,7 @@ use yii\helpers\Url;
     <nav class="navbar navbar-static-top">
         <div class="container">
             <div class="navbar-header">
-                <a href="<?= Url::to(['/'])?>" class="navbar-brand">Dashboard</a>
-                <a href="<?= Url::to(['giahandichvu/index'])?>" class="navbar-brand">DS cần gia hạn</a>
+                <a href="<?= Url::to(['/'])?>" class="navbar-brand">TRANG CHỦ</a>
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
                 <i class="fa fa-bars"></i>
                 </button>

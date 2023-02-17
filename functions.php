@@ -81,45 +81,11 @@
 
     function colorketqua($ketqua)
     {
-        $color = '';
-        switch ($ketqua) {
-            case 0:
-                $color = 'red';
-                break;
-            case 1:
-                $color = '#008000';
-                break;
-            case 2:
-                $color = '#008000';
-                break;
-            case 3:
-                $color = '#008000';
-                break;
-            case 4:
-                $color = '#1E90FF';
-                break;
-            case 5:
-                $color = 'green';
-                break;
-            case 6:
-                $color = '#1E90FF';
-                break;
-            case 7:
-                $color = '#1E90FF';
-                break;
-            case 8:
-                $color = '#1E90FF';
-                break;
-            case 9:
-                $color = '#1E90FF';
-                break;
-            
-            default:
-                $color = 'red';
-                break;
+        if ($ketqua) {
+            return 'green';
         }
 
-        return $color;
+        return 'red';
     }
 
     function ketquatxhoadon()
