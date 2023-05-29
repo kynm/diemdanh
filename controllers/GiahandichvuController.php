@@ -6,11 +6,11 @@ use Yii;
 use app\models\ActivitiesLog;
 use app\models\Nhanvien;
 use app\models\Donvi;
-use app\models\Khachhangthamcanh;
+use app\models\Khachhanggiahan;
 use app\models\LichsutiepxucSearch;
 use app\models\Lichsutiepxuc;
 use app\models\Dichvu;
-use app\models\KhachhangthamcanhSearch;
+use app\models\KhachhanggiahanSearch;
 use app\models\UploadForm;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -29,7 +29,7 @@ class GiahandichvuController extends Controller
 {
     public function actionIndex()
     {
-        $searchModel = new KhachhangthamcanhSearch();
+        $searchModel = new KhachhanggiahanSearch();
         $params = Yii::$app->request->queryParams;
         $dataProvider = $searchModel->search($params);
         $dsDichvu = ArrayHelper::map(Dichvu::find()->all(), 'id', 'ten_dv');
@@ -62,9 +62,9 @@ class GiahandichvuController extends Controller
                 }
                 foreach ($data as $key => $value) {
                     if ($value['MST']) {
-                        $model1 = Khachhangthamcanh::find()->where(['MST' => $value['MST']])->andWhere(['DICHVU_ID' => $value['DICHVU_ID']])->one();
+                        $model1 = Khachhanggiahan::find()->where(['MST' => $value['MST']])->andWhere(['DICHVU_ID' => $value['DICHVU_ID']])->one();
                         if(!$model1) {
-                            $model1 = new Khachhangthamcanh();
+                            $model1 = new Khachhanggiahan();
                         }
                         $nhanvien = Nhanvien::find()->where(['TEN_NHANVIEN' => $value['TEN_NV_KD']])->one();
                         $model1->nhanvien_id = $nhanvien ? $nhanvien->ID_NHANVIEN : 0;
@@ -76,6 +76,8 @@ class GiahandichvuController extends Controller
                         $model1->EMAIL = $value['EMAIL'];
                         $model1->DICHVU_ID = $value['DICHVU_ID'];
                         $model1->NGAY_HH = $value['NGAY_HH'];
+                        $model1->THUEBAO_ID = $value['THUEBAO_ID'];
+                        $model1->MA_TB = $value['MA_TB'];
                         $model1->save(false);
                     }
                 }
@@ -98,7 +100,7 @@ class GiahandichvuController extends Controller
 
     protected function findModel($id)
     {
-        if (($model = Khachhangthamcanh::findOne($id)) !== null) {
+        if (($model = Khachhanggiahan::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -167,7 +169,7 @@ class GiahandichvuController extends Controller
 
     public function actionExcellichsutiepxuc()
     {
-        $result = Yii::$app->db->createCommand('SELECT a.MST, a.TEN_KH, a.LIENHE, a.EMAIL, a.ht_lh, a.ketqua, a.ghichu, a.ngay_lh,b.TEN_NHANVIEN FROM khachhangthamcanh a, nhanvien b WHERE a.nhanvien_id = b.ID_NHANVIEN')->queryAll();
+        $result = Yii::$app->db->createCommand('SELECT a.MST, a.TEN_KH, a.LIENHE, a.EMAIL, a.ht_lh, a.ketqua, a.ghichu, a.ngay_lh,b.TEN_NHANVIEN FROM khachhanggiahan a, nhanvien b WHERE a.nhanvien_id = b.ID_NHANVIEN')->queryAll();
         foreach ($result as $key => $value) {
             $result[$key]['ketqua'] = isset(ketquagiahan()[$value['ketqua']]) ? ketquagiahan()[$value['ketqua']] : null;
             $result[$key]['ht_lh'] = isset(hinhthuctx()[$value['ht_lh']]) ? hinhthuctx()[$value['ht_lh']] : null;
@@ -201,5 +203,27 @@ class GiahandichvuController extends Controller
         header('Cache-Control: max-age=0');
         $writer->save("php://output");
         exit;
+    }
+
+    public function actionDashboard()
+    {
+        $thang = 6;
+        $dsketquagiahanca = Yii::$app->db->createCommand('SELECT c.TEN_NHANVIEN, COUNT(1) AS KEHOACHTHANG, SUM(CASE WHEN b.ketqua = 1 OR b.ketqua = 3 OR b.ketqua = 5 OR b.ketqua = 6 OR b.ketqua = 7 OR b.ketqua = 8 THEN 1 ELSE 0 END) AS DALH ,  SUM(CASE WHEN b.ketqua = 5 THEN 1 ELSE 0 END) AS DAGIAHAN ,  count(*) TONG FROM khachhanggiahan b, nhanvien c WHERE b.nhanvien_id = c.ID_NHANVIEN AND MONTH(b.NGAY_HH) = ' . $thang . ' AND b.DICHVU_ID = 116  group by c.TEN_NHANVIEN')->queryAll();
+        $dsketquagiahanivan = Yii::$app->db->createCommand('SELECT c.TEN_NHANVIEN, COUNT(1) AS KEHOACHTHANG, SUM(CASE WHEN b.ketqua = 1 OR b.ketqua = 3 OR b.ketqua = 5 OR b.ketqua = 6 OR b.ketqua = 7 OR b.ketqua = 8 THEN 1 ELSE 0 END) AS DALH ,  SUM(CASE WHEN b.ketqua = 5 THEN 1 ELSE 0 END) AS DAGIAHAN ,  count(*) TONG FROM khachhanggiahan b, nhanvien c WHERE b.nhanvien_id = c.ID_NHANVIEN AND MONTH(b.NGAY_HH) = ' . $thang . ' AND b.DICHVU_ID in (132)  group by c.TEN_NHANVIEN')->queryAll();
+        $dsketquagiahandvkhac = Yii::$app->db->createCommand('SELECT c.TEN_NHANVIEN, COUNT(1) AS KEHOACHTHANG, SUM(CASE WHEN b.ketqua = 1 OR b.ketqua = 3 OR b.ketqua = 5 OR b.ketqua = 6 OR b.ketqua = 7 OR b.ketqua = 8 THEN 1 ELSE 0 END) AS DALH ,  SUM(CASE WHEN b.ketqua = 5 THEN 1 ELSE 0 END) AS DAGIAHAN ,  count(*) TONG FROM khachhanggiahan b, nhanvien c WHERE b.nhanvien_id = c.ID_NHANVIEN AND MONTH(b.NGAY_HH) = ' . $thang . ' AND b.DICHVU_ID not in (132,116)  group by c.TEN_NHANVIEN')->queryAll();
+        $searchModel = new KhachhanggiahanSearch();
+        $params = Yii::$app->request->queryParams;
+        $dataProvider = $searchModel->searchtrangchu($params);
+        $dsDichvu = ArrayHelper::map(Dichvu::find()->all(), 'id', 'ten_dv');
+        $dsNhanvien = ArrayHelper::map(Nhanvien::find()->where(['in', 'ID_DAI', [25280]])->all(), 'ID_NHANVIEN', 'TEN_NHANVIEN');
+        return $this->render('dashboard', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'dsketquagiahanca' => $dsketquagiahanca,
+            'dsketquagiahanivan' => $dsketquagiahanivan,
+            'dsketquagiahandvkhac' => $dsketquagiahandvkhac,
+            'dsDichvu' => $dsDichvu,
+            'dsNhanvien' => $dsNhanvien,
+        ]);
     }
 }
