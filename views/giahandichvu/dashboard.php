@@ -73,8 +73,16 @@ $this->params['breadcrumbs'][] = $this->title;
                             // 'contentOptions' => ['style' => 'width:20%; white-space: normal;'],
                             'format' => 'raw',
                         ],
-                        'NGAY_HH',
-                        'ngay_lh',
+                        ['attribute'=>'NGAY_HH',
+                            'value' => function ($model) {
+                                return Yii::$app->formatter->asDatetime($model->NGAY_HH, 'php:d-m-Y');
+                            },
+                        ],
+                        ['attribute'=>'ngay_lh',
+                            'value' => function ($model) {
+                                return Yii::$app->formatter->asDatetime($model->ngay_lh, 'php:d-m-Y');
+                            },
+                        ],
                         [
                             'attribute' => 'ketqua',
                             'value' => function ($model) {

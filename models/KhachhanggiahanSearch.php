@@ -103,7 +103,9 @@ class KhachhanggiahanSearch extends Khachhanggiahan
         $query->andFilterWhere(['like', 'DIACHI', $this->DIACHI]);
         $query->andFilterWhere(['like', 'LIENHE', $this->LIENHE]);
         $query->andFilterWhere(['like', 'EMAIL', $this->EMAIL]);
-        $query->andFilterWhere(['=', 'nhanvien.ID_NHANVIEN', $this->nhanvien_id]);
+        if (!Yii::$app->user->can('quanly-dulieu')) {
+            $query->andFilterWhere(['=', 'nhanvien.ID_NHANVIEN', $this->nhanvien_id]);
+        }
         $query->andFilterWhere(['=', 'DICHVU_ID', $this->DICHVU_ID]);
         $query->orderBy([
             'NGAY_HH' => SORT_ASC,
