@@ -59,7 +59,7 @@ class KhachhanggiahanSearch extends Khachhanggiahan
             // $query->where('0=1');
             return $dataProvider;
         }
-        if (Yii::$app->user->can('nhanvien-hotro-chuyendoi')) {
+        if (Yii::$app->user->can('nhanvien-hotro-chuyendoi') &&  !Yii::$app->user->can('Administrator')) {
             $query->andFilterWhere(['nhanvien_id' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN]);
         }
         $query->joinWith('nhanvien');
