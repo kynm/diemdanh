@@ -14,6 +14,10 @@ $config = [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
+        'telegram' => [
+            'class' => 'aki\telegram\Telegram',
+            'botToken' => '1694558864:AAF3PSSRvWlI3iVsdu8_bZDuguCF2ziLnMs',
+        ],
         'log' => [
             'targets' => [
                 [

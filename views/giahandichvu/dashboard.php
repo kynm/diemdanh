@@ -18,13 +18,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 <div class="tramvt-index">
-
     <div class="box box-primary">
         <?= $this->render('_table_ketqua', ['tendv' => 'KẾT QUẢ GIA  HẠN DỊCH VỤ VNPT-CA', 'data' => $dsketquagiahanca,]) ?>
         <?= $this->render('_table_ketqua', ['tendv' => 'KẾT QUẢ GIA  HẠN DỊCH VỤ VNPT-IVAN', 'data' => $dsketquagiahanivan,]) ?>
         <?= $this->render('_table_ketqua', ['tendv' => 'KẾT QUẢ GIA  HẠN DỊCH VỤ CNTT KHÁC', 'data' => $dsketquagiahandvkhac,]) ?>
         <h3><b class="text text-danger">LỊCH SỬ TIẾP XÚC KHÁCH HÀNG</b></h3>
-        <div class="box-body col-md-12">
+        <div class="col-md-12">
             <?php Pjax::begin(); ?><?= GridView::widget([
                     'dataProvider' => $dataProvider,
                     'filterModel' => $searchModel,
@@ -92,7 +91,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                 ]); ?>
             <?php Pjax::end(); ?>
-            
         </div>
     </div>
 </div>
