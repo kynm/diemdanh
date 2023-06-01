@@ -171,7 +171,7 @@ class GiahandichvuController extends Controller
 
     public function actionExcellichsutiepxuc()
     {
-        $result = Yii::$app->db->createCommand('SELECT a.MST, a.TEN_KH, a.LIENHE, a.EMAIL, a.ht_lh, a.ketqua, a.ghichu, a.ngay_lh,b.TEN_NHANVIEN FROM khachhanggiahan a, nhanvien b WHERE a.nhanvien_id = b.ID_NHANVIEN')->queryAll();
+        $result = Yii::$app->db->createCommand('SELECT c.ten_dv,a.MST, a.TEN_KH, a.LIENHE, a.EMAIL,a.NGAY_HH, a.ht_lh, a.ketqua, a.ghichu, a.ngay_lh,b.TEN_NHANVIEN FROM khachhanggiahan a, nhanvien b,dichvu c WHERE a.nhanvien_id = b.ID_NHANVIEN AND a.DICHVU_ID = c.id ORDER BY a.NGAY_HH')->queryAll();
         foreach ($result as $key => $value) {
             $result[$key]['ketqua'] = isset(ketquagiahan()[$value['ketqua']]) ? ketquagiahan()[$value['ketqua']] : null;
             $result[$key]['ht_lh'] = isset(hinhthuctx()[$value['ht_lh']]) ? hinhthuctx()[$value['ht_lh']] : null;
