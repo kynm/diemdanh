@@ -10,6 +10,7 @@ use app\models\Khachhanggiahan;
 use app\models\LichsutiepxucSearch;
 use app\models\Lichsutiepxuc;
 use app\models\Dichvu;
+use app\models\Anhgiahan;
 use app\models\KhachhanggiahanSearch;
 use app\models\UploadForm;
 use yii\web\Controller;
@@ -21,6 +22,7 @@ use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
 use moonland\phpexcel\Excel;
 use yii\web\UploadedFile;
+
 
 /**
  * TramvtController implements the CRUD actions for Tramvt model.
@@ -225,5 +227,29 @@ class GiahandichvuController extends Controller
             'dsDichvu' => $dsDichvu,
             'dsNhanvien' => $dsNhanvien,
         ]);
+    }
+
+    public function actionUploadbase64v2()
+    {
+        $inputs = Yii::$app->request->bodyParams;
+        $id = Yii::$app->request->post('giahan_id');
+        $phieu = $this->findModel($id);
+        if ($inputs['IMAGEBASE64']) {
+            $model = new Anhgiahan();
+            $model->giahan_id = $id;
+            $model->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
+            $img_data = str_replace('data:image/jpeg;base64,',  '', $inputs['IMAGEBASE64']);
+            $filename = Yii::$app->user->identity->nhanvien->ID_NHANVIEN . $id . time() . '.jpeg';
+            $img_data = base64_decode($img_data);
+            file_put_contents(\Yii::getAlias('@webroot') . '/dist/anhgiahan/' .  $filename , $img_data);
+            $model->image_url = $filename;
+            if ($model->save(false)) {
+                return json_encode(["message" => "True","error" => 0, 'id' => $model->id, 'image_url' => $model->urlimage], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            } else {
+                return json_encode(["message" => "False!","error" => 1], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            }
+        } else {
+            Yii::$app->api->sendFailedResponse('Failed!');
+        }
     }
 }

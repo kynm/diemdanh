@@ -100,4 +100,14 @@ class Khachhanggiahan extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Dichvu::class, ['id' => 'DICHVU_ID']);
     }
+
+    public function getImages()
+    {
+        return $this->hasMany(Anhgiahan::className(), ['giahan_id' => 'id']);
+    }
+
+    public function getAnhgiahan()
+    {
+        return $this->getImages();
+    }
 }

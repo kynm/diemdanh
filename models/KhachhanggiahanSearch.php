@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Khachhanggiahan;
+use app\models\Anhgiahan;
 
 /**
  * DotbaoduongSearch represents the model behind the search form about `app\models\Dotbaoduong`.
