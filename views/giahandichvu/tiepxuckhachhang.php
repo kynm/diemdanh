@@ -48,6 +48,9 @@ $this->params['breadcrumbs'][] = 'Cập nhật';
                         ],
                     ]); ?>
                 </div>
+                <div class="col-md-8">
+                    <?= $form->field($model, 'ghichu')->textarea(['rows' => '6']) ?>
+                </div>
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="box box-primary">
@@ -70,9 +73,6 @@ $this->params['breadcrumbs'][] = 'Cập nhật';
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-8">
-                    <?= $form->field($model, 'ghichu')->textarea(['rows' => '6']) ?>
                 </div>
             </div>
         </div>
