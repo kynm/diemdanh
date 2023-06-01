@@ -23,7 +23,7 @@ class KhachhanggiahanSearch extends Khachhanggiahan
     public function rules()
     {
         return [
-            [['MST', 'TEN_KH', 'DIACHI', 'LIENHE', 'EMAIL', 'nhanvien_id', 'DICHVU_ID'], 'safe'],
+            [['MST', 'TEN_KH', 'DIACHI', 'LIENHE', 'EMAIL', 'nhanvien_id', 'DICHVU_ID', 'MA_TB'], 'safe'],
         ];
     }
 

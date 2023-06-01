@@ -42,6 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'contentOptions' => ['style' => 'width:10%; white-space: normal;'],
                         ],
                         'MST',
+                        'MA_TB',
                         [
                             'attribute' => 'DIACHI',
                             'contentOptions' => ['style' => 'width:10%; white-space: normal;'],

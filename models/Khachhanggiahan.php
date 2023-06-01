@@ -66,6 +66,7 @@ class Khachhanggiahan extends \yii\db\ActiveRecord
             'view' => 'view',
             'ghichu' => 'Ghi chú',
             'ngay_lh' => 'NGÀY LIÊN HỆ',
+            'MA_TB' => 'MÃ THUÊ BAO',
         ];
     }
 
