@@ -1,4 +1,4 @@
-<div class="col-md-4">
+<div class="col-md-6">
     <div class="box">
         <div class="box-header with-border">
             <h3><b class="text text-danger"><?= $tendv?></b></h3>

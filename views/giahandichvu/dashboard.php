@@ -21,6 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="box box-primary">
         <?= $this->render('_table_ketqua', ['tendv' => 'KẾT QUẢ GIA  HẠN DỊCH VỤ VNPT-CA', 'data' => $dsketquagiahanca,]) ?>
         <?= $this->render('_table_ketqua', ['tendv' => 'KẾT QUẢ GIA  HẠN DỊCH VỤ VNPT-IVAN', 'data' => $dsketquagiahanivan,]) ?>
+        <?= $this->render('_table_ketqua', ['tendv' => 'KẾT QUẢ GIA  HẠN DỊCH VỤ HĐĐT', 'data' => $dsketquagiahanhddt,]) ?>
         <?= $this->render('_table_ketqua', ['tendv' => 'KẾT QUẢ GIA  HẠN DỊCH VỤ CNTT KHÁC', 'data' => $dsketquagiahandvkhac,]) ?>
         <div class="col-md-12">
             <div class="box box-primary">
