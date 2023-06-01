@@ -57,14 +57,15 @@ class GiahandichvuController extends Controller
                 // $data = $data[0];
                 // die(var_dump($data));
                 $keys = array_keys($data[0]);
-                $arrkeyCheck = ['TEN_KH', 'MST', 'DIACHI', 'LIENHE', 'EMAIL'];
+                $arrkeyCheck = ['TEN_KH', 'MST', 'DIACHI', 'NGAY_HH'];
                 if (array_diff($arrkeyCheck, $keys)) {
                     Yii::$app->session->setFlash('error', "Cập nhật không thành công. Thiếu trường: " . implode(',', array_diff($arrkeyCheck, $keys)));
                     return $this->redirect(['import']);
                 }
                 foreach ($data as $key => $value) {
                     if ($value['MST']) {
-                        $model1 = Khachhanggiahan::find()->where(['MST' => $value['MST']])->andWhere(['DICHVU_ID' => $value['DICHVU_ID']])->one();
+                        $model1 = Khachhanggiahan::find()->where(['MST' => $value['MST']])
+                        ->andWhere(['DICHVU_ID' => $params['UploadForm']['DICHVU_ID']])->andWhere(['in', 'ketqua', [0,1,2,3,4]])->one();
                         if(!$model1) {
                             $model1 = new Khachhanggiahan();
                         }
@@ -73,10 +74,11 @@ class GiahandichvuController extends Controller
                         $model1->TEN_NV_KD = $value['TEN_NV_KD'];
                         $model1->TEN_KH = $value['TEN_KH'];
                         $model1->MST = $value['MST'];
+                        $model1->MA_TB = $value['MA_TB'];
                         $model1->DIACHI = $value['DIACHI'];
                         $model1->LIENHE = $value['LIENHE'];
                         $model1->EMAIL = $value['EMAIL'];
-                        $model1->DICHVU_ID = $value['DICHVU_ID'];
+                        $model1->DICHVU_ID = $params['UploadForm']['DICHVU_ID'];
                         $model1->NGAY_HH = $value['NGAY_HH'];
                         $model1->THUEBAO_ID = $value['THUEBAO_ID'];
                         $model1->MA_TB = $value['MA_TB'];
@@ -86,10 +88,13 @@ class GiahandichvuController extends Controller
                 Yii::$app->session->setFlash('success', "Cập nhật thành công!");
             }
 
+            $dsDichvu = ArrayHelper::map(Dichvu::find()->all(), 'id', 'ten_dv');
+            $model->DICHVU_ID = 122;
             return $this->render('import', [
                 'model' => $model,
                 'dsdonvi' => $dsdonvi,
                 'dsNhanvien' => $dsNhanvien,
+                'dsDichvu' => $dsDichvu,
             ]);
     }
 

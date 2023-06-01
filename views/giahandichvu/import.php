@@ -12,16 +12,15 @@ use yii\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Tramvt */
-$this->title = 'Đẩy dữ liệu điện';
+$this->title = 'Import công ty';
 $this->params['breadcrumbs'][] = 'Cập nhật';
 ?>
     <p>
-        <?= (Yii::$app->user->can('import-qldien')) ? Html::a('<i class="fa fa-plus"></i> Tải file mẫu', 'https://drive.google.com/file/d/1aimVmS5dZAtJMU_dX5snZB59oDsUqNWM/view?usp=sharing', ['class' => 'btn btn-primary btn-flat', 'target' => '_blank']) : '' ?>
+        <?= (Yii::$app->user->can('Administrator')) ? Html::a('<i class="fa fa-plus"></i> Tải file mẫu', 'https://docs.google.com/spreadsheets/d/1eVPez4436ySG7v6pnqyalNnlsN9zoDzb4lDt3XsBQRg/edit?usp=sharing', ['class' => 'btn btn-primary btn-flat', 'target' => '_blank']) : '' ?>
     </p>
 <div class="tramvt-update">
     <?= $this->render('_form_import', [
-        'dsNhanvien' => $dsNhanvien,
+        'dsDichvu' => $dsDichvu,
         'model' => $model,
-        'dsdonvi' => $dsdonvi,
     ]) ?>
 </div>

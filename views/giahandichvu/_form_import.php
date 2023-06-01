@@ -18,6 +18,16 @@ use kartik\file\FileInput;
                 <div class="col-md-2 col-xs-2">
                     <?= $form->field($model, 'fileupload')->fileInput();?>
                 </div>
+                <div class="col-md-2">
+                    <?= $form->field($model, 'DICHVU_ID')->widget(Select2::classname(), [
+                        'data' => $dsDichvu,
+                        'pluginOptions' => [
+                            'placeholder' => 'Nhân viên',
+                            'allowClear' => true,
+                            // 'multiple' => true
+                        ],
+                    ]); ?>
+                </div>
             </div>
             <div class="col-md-2 col-xs-2">
                 <?= Html::submitButton(

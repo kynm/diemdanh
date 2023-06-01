@@ -12,12 +12,14 @@ class UploadForm extends Model
     public $fileupload;
     public $nhanvien_id;
     public $donvi_id;
+    public $DICHVU_ID;
 
     public function rules()
     {
         return [
             [['fileupload'], 'file', 'skipOnEmpty' => false, 'extensions' => 'xlsx, xls'],
-            [['nhanvien_id', 'donvi_id'], 'required'],
+            [['DICHVU_ID'], 'required'],
+            [['nhanvien_id', 'donvi_id', 'DICHVU_ID'], 'string'],
         ];
     }
     
@@ -35,6 +37,7 @@ class UploadForm extends Model
         return [
             'nhanvien_id' => 'Nhân viên',
             'donvi_id' => 'Đơn vị',
+            'DICHVU_ID' => 'Dịch vụ',
         ];
     }
 }
