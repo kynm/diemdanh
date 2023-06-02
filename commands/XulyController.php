@@ -50,5 +50,18 @@ class XulyController extends Controller
             'text' => $message,
             'parse_mode' => 'HTML',
         ]);
+        $nowdate = date('Y-m-d');
+        $sql = "SELECT b.TEN_NHANVIEN, COUNT(1) SO_LUONG FROM khachhanggiahan a, nhanvien b WHERE a.nhanvien_id =b.ID_NHANVIEN and a.ketqua IN (0,1,2,3,4) AND a.NGAY_HH <= '" . $nowdate . "' GROUP BY b.TEN_NHANVIEN;";
+        $result = Yii::$app->db->createCommand($sql)->queryAll();
+        $message = 'SỐ LƯỢNG THUÊ BAO CHƯA GIA TRONG NGÀY VÀ QUÁ HẠN: ' . PHP_EOL;
+        foreach ($result as $key => $value) {
+            $message .= $value['TEN_NHANVIEN'] . '      :     ' . $value['SO_LUONG'] . '   thuê bao' . PHP_EOL;
+        }
+        $message .= '<u> <a href="https://hotro.vnpthanam.vn/giahandichvu/dashboard">Chi tiết</a></u>' . PHP_EOL;
+        Yii::$app->telegram->sendMessage([
+            'chat_id' => '-955693011',
+            'text' => $message,
+            'parse_mode' => 'HTML',
+        ]);
     }
 }
