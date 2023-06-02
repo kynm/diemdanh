@@ -36,7 +36,16 @@ $this->params['breadcrumbs'][] = $this->title;
                     'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
                         ['class' => 'yii\grid\ActionColumn',
-                        'template' => '{view}'],
+                        'template' => '{tiepxuckhachhang}',
+                            'buttons' => [
+                                'tiepxuckhachhang' => function ($url, $model) {
+                                    return Html::a('<span class="glyphicon glyphicon-eye-open">Chi tiết</span>', $url, [
+                                        'title' => Yii::t('app', 'lead-update'),
+                                    ]);
+                                },
+
+                            ],
+                        ],
                         [
                             'attribute' => 'TEN_KH',
                             'contentOptions' => ['style' => 'width:10%; white-space: normal;'],

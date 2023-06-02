@@ -153,8 +153,19 @@ class GiahandichvuController extends Controller
             $khachhang->ketqua = $model->ketqua;
             $khachhang->ghichu = $model->ghichu;
             $khachhang->save(false);
+            $message = '';
+            $message .= $khachhang->nhanvien->TEN_NHANVIEN . ' Đã tiếp xúc khách hàng: ' . $khachhang->TEN_KH . PHP_EOL;
+            $message .= 'Dịch vụ' . $khachhang->dichvu->ten_dv . PHP_EOL;
+            $message .= 'Kết quả' . ($model->ketqua ? ketquagiahan()[$model->ketqua] : 'Chưa liên hệ') . PHP_EOL;
+            $message .= 'Ghi chú' . $khachhang->ghichu . PHP_EOL;
+            die(var_dump($message));
+            Yii::$app->telegram->sendMessage([
+                'chat_id' => '-955693011',
+                'text' => $message,
+                'parse_mode' => 'HTML',
+            ]);
             Yii::$app->session->setFlash('success', "Đã thực thiện tiếp xúc khách hàng thành công!");
-            return $this->redirect(['view', 'id' => $khachhang->id]);
+            return $this->redirect(['tiepxuckhachhang', 'id' => $khachhang->id]);
         } else {
             return $this->render('tiepxuckhachhang', [
                 'model' => $model,

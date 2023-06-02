@@ -47,16 +47,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="box-body">
                             <p id="b64"></p>
                         <ul class="anhgiahan">
-                        <?php foreach ($khachhang->anhgiahan as $image): ?>
+                        <?php foreach ($model->anhgiahan as $image): ?>
                             <a href="<?php echo $image->urlimage;?>">
                                 <img  height="150"  src="<?php echo $image->urlimage;?>"></a>
                                 <i class="fa fa-remove delete-image-dantem" style="color:red" data-id="<?=$image->id?>"></i>
                         <?php endforeach; ?>
                         </ul>
-                        <input type="hidden" name="giahan_id" value="<?= $khachhang->id ?>" id="giahan_id">
-                        <input type="button" id="load-anhgiahan" value="Thêm ảnh" onclick="document.getElementById('inp').click();" />
-                        <input id="inp" type='file' accept="image/*" style="display:none;">
-                        <?= $form->field($model, 'nhanvien_id')->hiddenInput(['value'=> $model->nhanvien_id])->label(false); ?>
                     </div>
                 </div>
             </div>
