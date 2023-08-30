@@ -43,7 +43,8 @@ class Lichsutiepxuc extends \yii\db\ActiveRecord
     {
         return [
             [['nhanvien_id','khachhanggh_id', 'ketqua', 'ht_tc', 'ghichu'], 'required'],
-            [['nhanvien_id', 'donvi_id', 'ketqua', 'ht_tc'], 'integer'],
+            [['nhucau'], 'string'],
+            [['nhanvien_id', 'donvi_id', 'ketqua', 'ht_tc', 'nguyennhan_id'], 'integer'],
             [['nhanvien_id'], 'exist', 'skipOnError' => true, 'targetClass' => Nhanvien::className(), 'targetAttribute' => ['nhanvien_id' => 'ID_NHANVIEN']],
             [['khachhanggh_id'], 'exist', 'skipOnError' => true, 'targetClass' => Khachhanggiahan::className(), 'targetAttribute' => ['khachhanggh_id' => 'id']],
         ];

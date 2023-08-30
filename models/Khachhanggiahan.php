@@ -36,8 +36,8 @@ class Khachhanggiahan extends \yii\db\ActiveRecord
     {
         return [
             [['TRANGTHAINANGCAP', 'nhanvien_id', 'MST','TEN_KH', 'DIACHI', 'LIENHE', 'EMAIL', 'SDT'], 'required'],
-            [['TEN_KETOAN', 'link', 'taikhoan', 'matkhau', 'view'], 'string', 'max' => 100],
-            [['ghichu'], 'string', 'max' => 1000],
+            [['TEN_KETOAN', 'link', 'taikhoan', 'matkhau', 'view', 'nguyennhan_id'], 'string', 'max' => 100],
+            [['ghichu', 'nhucau'], 'string', 'max' => 1000],
         ];
     }
 

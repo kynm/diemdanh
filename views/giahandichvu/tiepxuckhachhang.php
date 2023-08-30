@@ -12,6 +12,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Đơn vị', 'url' => ['hoadondien
 $this->params['breadcrumbs'][] = ['label' => 'Đơn vị chủ quản', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $khachhang->TEN_KH, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Cập nhật';
+$model->ht_tc = 2;
 
 ?>
 <div class="donvi-update">
@@ -48,8 +49,21 @@ $this->params['breadcrumbs'][] = 'Cập nhật';
                         ],
                     ]); ?>
                 </div>
+                <div class="col-md-2">
+                    <?= $form->field($model, 'nguyennhan_id')->widget(Select2::classname(), [
+                        'data' => $dsNguyennhan,
+                        'pluginOptions' => [
+                            'placeholder' => 'Kết quả',
+                            'allowClear' => true,
+                            // 'multiple' => true
+                        ],
+                    ]); ?>
+                </div>
                 <div class="col-md-8">
                     <?= $form->field($model, 'ghichu')->textarea(['rows' => '6']) ?>
+                </div>
+                <div class="col-md-8">
+                    <?= $form->field($model, 'nhucau')->textarea(['rows' => '6']) ?>
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
