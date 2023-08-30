@@ -64,6 +64,8 @@ class Lichsutiepxuc extends \yii\db\ActiveRecord
             'ngay_tiepxuc' => 'Ngày tiếp xúc',
             'nhanvien_id' => 'Nhân viên liên hệ',
             'donvi_id' => 'Địa bàn',
+            'nguyennhan_id' => 'Nguyên nhân',
+            'nhucau' => 'Nhu cầu triển khai các dịch vụ khác',
         ];
     }
 
