@@ -10,6 +10,9 @@
                         <th style="width: 10px">#</th>
                         <th>Ngày tiếp xúc</th>
                         <th>Nhân viên tiếp xúc</th>
+                        <th>Hỗ trợ kịp thời?</th>
+                        <th>Giá cước?</th>
+                        <th>Khó khăn khi dùng VNPT?</th>
                         <th>Hình thức tiếp xúc</th>
                         <th>Kết quả tiếp xúc</th>
                         <th>Ghi chú</th>
@@ -19,6 +22,9 @@
                             <td scope="col"><?php echo ($key + 1)?></td>
                             <td scope="col"><?php echo $value->ngay_tiepxuc?>
                             <td scope="col"><?php echo $value->nhanvien->TEN_NHANVIEN?>
+                            <td scope="col"><?php echo $value->hotrokipthoi?>
+                            <td scope="col"><?php echo $value->giacuoc?>
+                            <td scope="col"><?php echo $value->khokhan?>
                             <td scope="col"><?php echo hinhthuctx()[$value->ht_tc]?>
                             <td scope="col"><?php echo ketquagiahan()[$value->ketqua]?>
                             <td scope="col"><?php echo $value->ghichu?>
