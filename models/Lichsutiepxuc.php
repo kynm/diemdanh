@@ -65,7 +65,13 @@ class Lichsutiepxuc extends \yii\db\ActiveRecord
             'nhanvien_id' => 'Nhân viên liên hệ',
             'donvi_id' => 'Địa bàn',
             'nguyennhan_id' => 'Nguyên nhân',
-            'nhucau' => 'Nhu cầu triển khai các dịch vụ khác',
+            'nhucau' => 'Nhu cầu triển khai các dịch vụ khác?',
+            'hotrokipthoi' => 'Công tác hỗ trợ có kịp thời không?',
+            'giacuoc' => 'Giá cước dịch vụ, chiết khấu hoa hồng thế nào?',
+            'khokhan' => 'Khó khăn khi sử dụng dịch vụ của VNPT là gì?',
+            'dnk_hotro' => 'Doanh nghiệp khác đang hỗ trợ bằng hình thức nào?',
+            'nhucau_hotro' => 'Anh/chị có muốn triển khai hệ thống cskh không?',
+            'noidung_canhotronhat' => 'Anh/chị cần VNPT hỗ trợ nội dung nào nhất khi sử dụng dịch vụ?',
         ];
     }
 

@@ -59,12 +59,33 @@ $model->ht_tc = 2;
                         ],
                     ]); ?>
                 </div>
-                <div class="col-md-8">
+            </div>
+            <div>
+                <div class="col-md-6">
+                    <?= $form->field($model, 'hotrokipthoi')->textarea(['rows' => '6']) ?>
+                </div>
+                <div class="col-md-6">
+                    <?= $form->field($model, 'giacuoc')->textarea(['rows' => '6']) ?>
+                </div>
+                <div class="col-md-6">
+                    <?= $form->field($model, 'khokhan')->textarea(['rows' => '6']) ?>
+                </div>
+                <div class="col-md-6">
+                    <?= $form->field($model, 'dnk_hotro')->textarea(['rows' => '6']) ?>
+                </div>
+                <div class="col-md-6">
+                    <?= $form->field($model, 'nhucau_hotro')->textarea(['rows' => '6']) ?>
+                </div>
+                <div class="col-md-6">
+                    <?= $form->field($model, 'noidung_canhotronhat')->textarea(['rows' => '6']) ?>
+                </div>
+                <div class="col-md-6">
                     <?= $form->field($model, 'ghichu')->textarea(['rows' => '6']) ?>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-6">
                     <?= $form->field($model, 'nhucau')->textarea(['rows' => '6']) ?>
                 </div>
+            </div>
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="box box-primary">

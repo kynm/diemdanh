@@ -26,7 +26,15 @@ $this->params['breadcrumbs'][] = $this->title;
                     'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
                         ['class' => 'yii\grid\ActionColumn',
-                        'template' => '{view}'],
+                        'template' => '{viewchitiet}',
+                            'buttons' => [
+                                'viewchitiet' => function ($url, $model) {
+                                    return Html::a('<span class="glyphicon glyphicon-eye-open">Chi tiết</span>', '/giahandichvu/view?id=' . $model->khachhanggh_id, [
+                                        'title' => Yii::t('app', 'lead-update'),
+                                    ]);
+                                },
+                            ],
+                        ],
                         [
                             'attribute' => 'khachhanggh_id',
                             'value' => 'khachhang.TEN_KH',
