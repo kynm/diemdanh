@@ -40,31 +40,63 @@ $this->params['breadcrumbs'][] = $this->title;
                             'value' => 'khachhang.TEN_KH',
                             'contentOptions' => ['style' => 'width:10%; white-space: normal;'],
                         ],
-                        [
-                            'attribute' => 'nhanvien_id',
-                            'value' => 'nhanvien.TEN_NHANVIEN'
-                        ],
+                        // [
+                        //     'attribute' => 'nhanvien_id',
+                        //     'value' => 'nhanvien.TEN_NHANVIEN'
+                        // ],
                         'ngay_tiepxuc',
                         [
-                            'attribute' => 'ht_tc',
-                            'value' => function ($model) {
-                                return hinhthuctx()[$model->ht_tc];
-                            }
+                            'attribute' => 'hotrokipthoi',
+                            'contentOptions' => ['style' => 'width:10%; white-space: normal;'],
                         ],
+                        [
+                            'attribute' => 'giacuoc',
+                            'contentOptions' => ['style' => 'width:10%; white-space: normal;'],
+                        ],
+                        [
+                            'attribute' => 'khokhan',
+                            'contentOptions' => ['style' => 'width:10%; white-space: normal;'],
+                        ],
+                        [
+                            'attribute' => 'dnk_hotro',
+                            'contentOptions' => ['style' => 'width:10%; white-space: normal;'],
+                        ],
+                        [
+                            'attribute' => 'nhucau_hotro',
+                            'contentOptions' => ['style' => 'width:10%; white-space: normal;'],
+                        ],
+                        [
+                            'attribute' => 'noidung_canhotronhat',
+                            'contentOptions' => ['style' => 'width:10%; white-space: normal;'],
+                        ],
+                        [
+                            'attribute' => 'nhucau',
+                            'contentOptions' => ['style' => 'width:10%; white-space: normal;'],
+                        ],
+                        [
+                            'attribute' => 'ghichu',
+                            'contentOptions' => ['style' => 'width:10%; white-space: normal;'],
+                        ],
+                        // [
+                        //     'attribute' => 'ht_tc',
+                        //     'value' => function ($model) {
+                        //         return hinhthuctx()[$model->ht_tc];
+                        //     }
+                        // ],
                         [
                             'attribute' => 'ketqua',
                             'value' => function ($model) {
                                 return ketquagiahan()[$model->ketqua];
                             }
                         ],
-                        [
-                            'attribute' => 'ghichu',
-                            'value' => function ($model) {
-                                return '<textarea>' . $model->ghichu . '</textarea>';
-                            },
-                            'format' => 'raw',
-                        ],
-                        'ghichu',
+                        // [
+                        //     'attribute' => 'ghichu',
+                        //     'value' => function ($model) {
+                        //         return '<textarea>' . $model->ghichu . '</textarea>';
+                        //     },
+                        //     'format' => 'raw',
+                        // ],
+                        // 'ghichu',
                     ],
                 ]); ?>
             <?php Pjax::end(); ?>
