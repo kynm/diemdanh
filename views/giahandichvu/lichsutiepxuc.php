@@ -91,12 +91,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         //         return hinhthuctx()[$model->ht_tc];
                         //     }
                         // ],
-                        [
-                            'attribute' => 'ketqua',
-                            'value' => function ($model) {
-                                return ketquagiahan()[$model->ketqua];
-                            }
-                        ],
+                        // [
+                        //     'attribute' => 'ketqua',
+                        //     'value' => function ($model) {
+                        //         return ketquagiahan()[$model->ketqua];
+                        //     }
+                        // ],
                         // [
                         //     'attribute' => 'ghichu',
                         //     'value' => function ($model) {
