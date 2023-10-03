@@ -48,34 +48,42 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'attribute' => 'hotrokipthoi',
                             'contentOptions' => ['style' => 'width:10%; white-space: normal;'],
+                            'format' => 'raw',
                         ],
                         [
                             'attribute' => 'giacuoc',
                             'contentOptions' => ['style' => 'width:10%; white-space: normal;'],
+                            'format' => 'raw',
                         ],
                         [
                             'attribute' => 'khokhan',
                             'contentOptions' => ['style' => 'width:10%; white-space: normal;'],
+                            'format' => 'raw',
                         ],
                         [
                             'attribute' => 'dnk_hotro',
                             'contentOptions' => ['style' => 'width:10%; white-space: normal;'],
+                            'format' => 'raw',
                         ],
                         [
                             'attribute' => 'nhucau_hotro',
                             'contentOptions' => ['style' => 'width:10%; white-space: normal;'],
+                            'format' => 'raw',
                         ],
                         [
                             'attribute' => 'noidung_canhotronhat',
                             'contentOptions' => ['style' => 'width:10%; white-space: normal;'],
+                            'format' => 'raw',
                         ],
                         [
                             'attribute' => 'nhucau',
                             'contentOptions' => ['style' => 'width:10%; white-space: normal;'],
+                            'format' => 'raw',
                         ],
                         [
                             'attribute' => 'ghichu',
                             'contentOptions' => ['style' => 'width:10%; white-space: normal;'],
+                            'format' => 'raw',
                         ],
                         // [
                         //     'attribute' => 'ht_tc',
