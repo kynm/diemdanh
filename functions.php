@@ -128,4 +128,15 @@
         ];
     }
 
+    function ketquasuamau()
+    {
+        return [
+            0 => 'Chưa liên hệ',
+            1 => 'Yêu cầu sửa mẫu hóa đơn',
+            2 => 'Đã sửa mẫu hóa đơn',
+            3 => 'Đóng phiếu',
+            4 => 'Không chuẩn hóa',
+        ];
+    }
+
 ?>

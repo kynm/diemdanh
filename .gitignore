@@ -33,5 +33,6 @@ temp.php
 # uploads dir
 /uploads/*
 /disk/anhgiahan/*
+/disk/anhchuanhoahddt/*
 vendor/kartik-v/yii2-builder
 runtime/debug/index.data
