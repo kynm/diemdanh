@@ -55,6 +55,7 @@ class ChuanhoamauhoadonSearch extends Chuanhoamauhoadon
             ->andFilterWhere(['like', 'TEN_TB', $this->TEN_TB])
             ->andFilterWhere(['=', 'ketqua', 0])
             ->andFilterWhere(['like', 'DIACHI_LD', $this->DIACHI_LD])
+            ->andFilterWhere(['like', 'TEN_NV', $this->TEN_NV])
             ->andFilterWhere(['like', 'MST', $this->MST]);
 
         return $dataProvider;
@@ -76,6 +77,7 @@ class ChuanhoamauhoadonSearch extends Chuanhoamauhoadon
         $query->andFilterWhere(['like', 'MA_TB', $this->MA_TB])
             ->andFilterWhere(['like', 'TEN_TB', $this->TEN_TB])
             ->andFilterWhere(['like', 'DIACHI_LD', $this->DIACHI_LD])
+            ->andFilterWhere(['like', 'TEN_NV', $this->TEN_NV])
             ->andFilterWhere(['like', 'MST', $this->MST]);
 
         return $dataProvider;

@@ -71,6 +71,7 @@ class Chuanhoamauhoadon extends \yii\db\ActiveRecord
             'ngay_sua' => 'Ngày sửa',
             'ngay_dong' => 'Ngày đóng',
             'MA_TB' => 'MÃ THUÊ BAO',
+            'TEN_NV' => 'Nhân viên quản lý'
         ];
     }
 
