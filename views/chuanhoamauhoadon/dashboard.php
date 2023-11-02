@@ -25,18 +25,18 @@ $this->title = 'THỜI GIAN THỰC HIỆN TỬ NGÀY 03/11/2023 đến 03/12/202
                 <div class="box-body">
                     <table class="table table-bordered">
                         <tbody>
-                            <tr class="box box-primary">
+                            <tr class="bg-primary">
                                 <th style="width: 10px">#</th>
-                                <th>NHÂN VIÊN</th>
-                                <th>SỐ LƯỢNG</th>
-                                <th>SỐ LƯỢNG CẦN <br/>THỰC HIỆN/NGÀY</th>
-                                <th>SỐ LƯỢNG CẦN<br/> THỰC HIỆN<br/> ĐẾN <?= date('d/m/Y')?></th>
-                                <th>CHƯA THỰC HIỆN</th>
-                                <th>ĐANG YÊU CẦU SỬA</th>
-                                <th>ĐÃ SỬA</th>
-                                <th>HOÀN THÀNH SỬA</th>
-                                <th>KHÔNG CẦN SỬA</th>
-                                <th>TỈ LỆ HOÀN THÀNH</th>
+                                <th style="text-align:center;">NHÂN VIÊN</th>
+                                <th style="text-align:center;">SỐ LƯỢNG</th>
+                                <th style="text-align:center;">SỐ LƯỢNG CẦN <br/>THỰC HIỆN/NGÀY</th>
+                                <th style="text-align:center;">SỐ LƯỢNG CẦN<br/> THỰC HIỆN<br/> ĐẾN <?= date('d/m/Y')?></th>
+                                <th style="text-align:center;">CHƯA THỰC HIỆN</th>
+                                <th style="text-align:center;">ĐANG YÊU CẦU SỬA</th>
+                                <th style="text-align:center;">ĐÃ SỬA</th>
+                                <th style="text-align:center;">HOÀN THÀNH SỬA</th>
+                                <th style="text-align:center;">KHÔNG CẦN SỬA</th>
+                                <th style="text-align:center;">TỈ LỆ HOÀN THÀNH</th>
                             </tr>
                             <?php
                              foreach ($baocaotonghop as $key => $value):
