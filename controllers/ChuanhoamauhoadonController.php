@@ -114,26 +114,18 @@ class ChuanhoamauhoadonController extends Controller
 
     public function actionDashboard()
     {
-        $params = Yii::$app->request->queryParams;
-        $thang = isset($params['thang']) ? $params['thang']  : date('m');
-        $dsketquagiahanca = Yii::$app->db->createCommand('SELECT c.TEN_NHANVIEN, COUNT(1) AS KEHOACHTHANG, SUM(CASE WHEN b.ketqua = 1 OR b.ketqua = 3 OR b.ketqua = 5 OR b.ketqua = 6 OR b.ketqua = 7 OR b.ketqua = 8 THEN 1 ELSE 0 END) AS DALH ,  SUM(CASE WHEN b.ketqua = 5 THEN 1 ELSE 0 END) AS DAGIAHAN ,  count(*) TONG FROM Chuanhoamauhoadon b, nhanvien c WHERE b.nhanvien_id = c.ID_NHANVIEN AND MONTH(b.NGAY_HH) = ' . $thang . ' AND b.DICHVU_ID = 116  group by c.TEN_NHANVIEN')->queryAll();
-        $dsketquagiahanivan = Yii::$app->db->createCommand('SELECT c.TEN_NHANVIEN, COUNT(1) AS KEHOACHTHANG, SUM(CASE WHEN b.ketqua = 1 OR b.ketqua = 3 OR b.ketqua = 5 OR b.ketqua = 6 OR b.ketqua = 7 OR b.ketqua = 8 THEN 1 ELSE 0 END) AS DALH ,  SUM(CASE WHEN b.ketqua = 5 THEN 1 ELSE 0 END) AS DAGIAHAN ,  count(*) TONG FROM Chuanhoamauhoadon b, nhanvien c WHERE b.nhanvien_id = c.ID_NHANVIEN AND MONTH(b.NGAY_HH) = ' . $thang . ' AND b.DICHVU_ID in (132)  group by c.TEN_NHANVIEN')->queryAll();
-        $dsketquagiahanhddt = Yii::$app->db->createCommand('SELECT c.TEN_NHANVIEN, COUNT(1) AS KEHOACHTHANG, SUM(CASE WHEN b.ketqua = 1 OR b.ketqua = 3 OR b.ketqua = 5 OR b.ketqua = 6 OR b.ketqua = 7 OR b.ketqua = 8 THEN 1 ELSE 0 END) AS DALH ,  SUM(CASE WHEN b.ketqua = 5 THEN 1 ELSE 0 END) AS DAGIAHAN ,  count(*) TONG FROM Chuanhoamauhoadon b, nhanvien c WHERE b.nhanvien_id = c.ID_NHANVIEN AND MONTH(b.NGAY_HH) = ' . $thang . ' AND b.DICHVU_ID in (122)  group by c.TEN_NHANVIEN')->queryAll();
-        $dsketquagiahandvkhac = Yii::$app->db->createCommand('SELECT c.TEN_NHANVIEN, COUNT(1) AS KEHOACHTHANG, SUM(CASE WHEN b.ketqua = 1 OR b.ketqua = 3 OR b.ketqua = 5 OR b.ketqua = 6 OR b.ketqua = 7 OR b.ketqua = 8 THEN 1 ELSE 0 END) AS DALH ,  SUM(CASE WHEN b.ketqua = 5 THEN 1 ELSE 0 END) AS DAGIAHAN ,  count(*) TONG FROM Chuanhoamauhoadon b, nhanvien c WHERE b.nhanvien_id = c.ID_NHANVIEN AND MONTH(b.NGAY_HH) = ' . $thang . ' AND b.DICHVU_ID not in (132,116,122)  group by c.TEN_NHANVIEN')->queryAll();
-        $searchModel = new ChuanhoamauhoadonSearch();
-        $params = Yii::$app->request->queryParams;
-        $dataProvider = $searchModel->searchtrangchu($params);
-        $dsDichvu = ArrayHelper::map(Dichvu::find()->all(), 'id', 'ten_dv');
-        $dsNhanvien = ArrayHelper::map(Nhanvien::find()->where(['in', 'ID_DAI', [25280]])->all(), 'ID_NHANVIEN', 'TEN_NHANVIEN');
+        $baocaotonghop = Yii::$app->db->createCommand('SELECT b.TEN_NHANVIEN
+,COUNT(1) SO_LUONG
+,ROUND(COUNT(1) / 30) SO_LUONG_NGAY
+, SUM(case when a.ketqua = 0 then 1 ELSE 0 END) CHUA_TH
+, SUM(case when a.ketqua = 1 then 1 ELSE 0 END) DANG_YC_SUA
+, SUM(case when a.ketqua = 2 then 1 ELSE 0 END) CHUA_DA_SUA
+, SUM(case when a.ketqua = 3 then 1 ELSE 0 END) HOANTHANH_SUA
+, SUM(case when a.ketqua = 4 then 1 ELSE 0 END) KHONG_SUA
+,round(SUM(case when a.ketqua = 4 OR a.ketqua = 3 then 1 ELSE 0 END) * 100 / COUNT(1)) TI_LE
+FROM chuanhoahddt a, nhanvien b WHERE a.NVQL_ID = b.ID_NHANVIEN GROUP BY b.TEN_NHANVIEN')->queryAll();
         return $this->render('dashboard', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'dsketquagiahanca' => $dsketquagiahanca,
-            'dsketquagiahanivan' => $dsketquagiahanivan,
-            'dsketquagiahanhddt' => $dsketquagiahanhddt,
-            'dsketquagiahandvkhac' => $dsketquagiahandvkhac,
-            'dsDichvu' => $dsDichvu,
-            'dsNhanvien' => $dsNhanvien,
+            'baocaotonghop' => $baocaotonghop,
         ]);
     }
 
