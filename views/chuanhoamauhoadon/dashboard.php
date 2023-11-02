@@ -43,16 +43,16 @@ $this->title = 'THỜI GIAN THỰC HIỆN TỬ NGÀY 03/11/2023 đến 03/12/202
                                 ?>
                                 <tr>
                                     <td scope="col"><?= ($key + 1)?></td>
-                                    <td scope="col"><?= $value['TEN_NHANVIEN']?></td>
-                                    <td scope="col"><?= $value['SO_LUONG']?></td>
-                                    <td scope="col"><?= $value['SO_LUONG_NGAY']?></td>
-                                    <td scope="col"><?= $date1 < $date0 ? 0 : $value['SO_LUONG_NGAY'] * ($diff1->days + 1)?></td>
-                                    <td scope="col"><?= $value['CHUA_TH']?></td>
-                                    <td scope="col"><?= $value['DANG_YC_SUA']?></td>
-                                    <td scope="col"><?= $value['CHUA_DA_SUA']?></td>
-                                    <td scope="col"><?= $value['HOANTHANH_SUA']?></td>
-                                    <td scope="col"><?= $value['KHONG_SUA']?></td>
-                                    <td scope="col"><?= $value['TI_LE']?></td>
+                                    <td scope="col" style="font-size: 15px;"><?= $value['TEN_NHANVIEN']?></td>
+                                    <td scope="col" style="font-size: 15px;"><?= $value['SO_LUONG']?></td>
+                                    <td scope="col" style="font-size: 15px;"><?= $value['SO_LUONG_NGAY']?></td>
+                                    <td scope="col" style="font-size: 15px;"><?= $date1 < $date0 ? 0 : $value['SO_LUONG_NGAY'] * ($diff1->days + 1)?></td>
+                                    <td scope="col" style="font-size: 15px;"><?= $value['CHUA_TH']?></td>
+                                    <td scope="col" style="font-size: 15px;"><?= $value['DANG_YC_SUA']?></td>
+                                    <td scope="col" style="font-size: 15px;"><?= $value['CHUA_DA_SUA']?></td>
+                                    <td scope="col" style="font-size: 15px;"><?= $value['HOANTHANH_SUA']?></td>
+                                    <td scope="col" style="font-size: 15px;"><?= $value['KHONG_SUA']?></td>
+                                    <td scope="col" style="font-size: 15px;"><?= $value['TI_LE']?></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
