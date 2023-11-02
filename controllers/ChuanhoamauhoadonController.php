@@ -122,7 +122,7 @@ class ChuanhoamauhoadonController extends Controller
 , SUM(case when a.ketqua = 2 then 1 ELSE 0 END) CHUA_DA_SUA
 , SUM(case when a.ketqua = 3 then 1 ELSE 0 END) HOANTHANH_SUA
 , SUM(case when a.ketqua = 4 then 1 ELSE 0 END) KHONG_SUA
-,SUM(case when a.ketqua = 4 OR a.ketqua = 3 then 1 ELSE 0 END TONG_HOANTHANH
+,SUM(case when a.ketqua = 4 OR a.ketqua = 3 then 1 ELSE 0 END) TONG_HOANTHANH
 ,round(SUM(case when a.ketqua = 4 OR a.ketqua = 3 then 1 ELSE 0 END) * 100 / COUNT(1)) TI_LE
 FROM chuanhoahddt a, nhanvien b WHERE a.NVQL_ID = b.ID_NHANVIEN GROUP BY b.TEN_NHANVIEN')->queryAll();
         return $this->render('dashboard', [
