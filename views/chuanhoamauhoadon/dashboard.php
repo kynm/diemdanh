@@ -53,7 +53,7 @@ $this->title = 'THỜI GIAN THỰC HIỆN TỬ NGÀY 03/11/2023 đến 03/12/202
                                     <td scope="col" style="font-size: 15px;"><?= $value['HOANTHANH_SUA']?></td>
                                     <td scope="col" style="font-size: 15px;"><?= $value['KHONG_SUA']?></td>
                                     <td scope="col" style="font-size: 15px;"><?= $date1 < $date0 ? 0 : $value['SO_LUONG_NGAY'] * ($diff1->days + 1)?></td>
-                                    <td scope="col" style="font-size: 15px;"><?= $value['TONG_HOANTHANH']?> %</td>
+                                    <td scope="col" style="font-size: 15px;"><?= $value['TONG_HOANTHANH']?></td>
                                     <td scope="col" style="font-size: 15px;"><?= $value['TI_LE']?> %</td>
                                 </tr>
                             <?php endforeach; ?>
