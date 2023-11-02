@@ -30,7 +30,7 @@ $this->title = 'THỜI GIAN THỰC HIỆN TỬ NGÀY 03/11/2023 đến 03/12/202
                                 <th>NHÂN VIÊN</th>
                                 <th>SỐ LƯỢNG</th>
                                 <th>SỐ LƯỢNG CẦN <br/>THỰC HIỆN/NGÀY</th>
-                                <th>SỐ LƯỢNG CẦN<br/> THỰC HIỆN<br/> ĐẾN HÔM NAY</th>
+                                <th>SỐ LƯỢNG CẦN<br/> THỰC HIỆN<br/> ĐẾN <?= date('d/m/Y')?></th>
                                 <th>CHƯA THỰC HIỆN</th>
                                 <th>ĐANG YÊU CẦU SỬA</th>
                                 <th>ĐÃ SỬA</th>
