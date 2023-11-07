@@ -88,6 +88,12 @@ class ChuanhoamauhoadonController extends Controller
                 Yii::$app->session->setFlash('error', "Cần cập nhật ảnh sau chỉnh sửa trước khi đóng phiếu!");
                 return $this->redirect(['update', 'id' => $id]);
             }
+
+            if ($params['Chuanhoamauhoadon']['ketqua'] == 4 && !$model->anhtruocchuanhoa) {
+                $model->ketqua = 0;
+                Yii::$app->session->setFlash('error', "Cần cập nhật ảnh sau chỉnh sửa trước khi đóng phiếu!");
+                return $this->redirect(['update', 'id' => $id]);
+            }
             $model->ketqua = $params['Chuanhoamauhoadon']['ketqua'];
             if ($model->ketqua == 1) {
                 $model->ngay_yc = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d H:i:s');
