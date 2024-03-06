@@ -124,6 +124,7 @@ class ChuanhoamauhoadonController extends Controller
 ,COUNT(1) SO_LUONG
 ,ROUND(COUNT(1) / 20) SO_LUONG_NGAY
 , SUM(case when a.ketqua = 0 then 1 ELSE 0 END) CHUA_TH
+, SUM(case when a.ketqua > 0 AND DATE(a.ngay_yc) = CURDATE() then 1 ELSE 0 END) SO_LUONG_TRONG_NGAY
 , SUM(case when a.ketqua = 1 then 1 ELSE 0 END) DANG_YC_SUA
 , SUM(case when a.ketqua = 2 then 1 ELSE 0 END) CHUA_DA_SUA
 , SUM(case when a.ketqua = 3 then 1 ELSE 0 END) HOANTHANH_SUA
