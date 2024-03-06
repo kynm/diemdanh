@@ -7,9 +7,9 @@ use yii\widgets\Pjax;
 use kartik\select2\Select2;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
-$date0= date_create(date('2024-06-03'));
+$date0= date_create(date('2024-03-06'));
 $date1= date_create(date('Y-m-d'));
-$date2 = date_create("2023-25-03");
+$date2 = date_create("2023-03-25");
 $diff = date_diff($date1,$date2);
 $diff1 = date_diff($date1,$date0);
 /* @var $this yii\web\View */
