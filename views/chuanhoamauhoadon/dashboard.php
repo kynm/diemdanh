@@ -30,15 +30,15 @@ $this->title = 'THỜI GIAN THỰC HIỆN TỬ NGÀY 06/03/2024 đến 25/03/202
                                 <th style="text-align:center;">NHÂN VIÊN</th>
                                 <th style="text-align:center;">SỐ LƯỢNG</th>
                                 <th style="text-align:center;">SỐ LƯỢNG CẦN <br/>THỰC HIỆN/NGÀY</th>
-                                <th style="text-align:center;color: blue;">SỐ LƯỢNG ĐÃ THỰC HIỆN TRONG NGÀY</th>
-                                <th style="text-align:center;color: red;">CHƯA THỰC HIỆN</th>
+                                <th style="text-align:center;">SỐ LƯỢNG ĐÃ THỰC HIỆN TRONG NGÀY</th>
+                                <th style="text-align:center;">CHƯA THỰC HIỆN</th>
                                 <th style="text-align:center;">ĐANG YÊU CẦU SỬA</th>
                                 <th style="text-align:center;">ĐÃ SỬA</th>
                                 <th style="text-align:center;">HOÀN THÀNH SỬA</th>
                                 <th style="text-align:center;">KHÔNG CẦN SỬA</th>
                                 <th style="text-align:center;">SỐ LƯỢNG CẦN<br/> THỰC HIỆN<br/> ĐẾN <?= date('d/m/Y')?></th>
                                 <th style="text-align:center;">TỔNG HOÀN THÀNH</th>
-                                <th style="text-align:center;color: red;">TỈ LỆ HOÀN THÀNH</th>
+                                <th style="text-align:center;">TỈ LỆ HOÀN THÀNH</th>
                             </tr>
                             <?php
                              foreach ($baocaotonghop as $key => $value):
@@ -48,15 +48,15 @@ $this->title = 'THỜI GIAN THỰC HIỆN TỬ NGÀY 06/03/2024 đến 25/03/202
                                     <td scope="col" style="font-size: 15px;"><?= $value['TEN_NHANVIEN']?></td>
                                     <td scope="col" style="font-size: 15px;"><?= $value['SO_LUONG']?></td>
                                     <td scope="col" style="font-size: 15px;"><?= $value['SO_LUONG_NGAY']?></td>
-                                    <td scope="col" style="font-size: 15px;"><?= $value['SO_LUONG_TRONG_NGAY']?></td>
-                                    <td scope="col" style="font-size: 15px;"><?= $value['CHUA_TH']?></td>
+                                    <td scope="col" style="font-size: 15px;color: blue;"><?= $value['SO_LUONG_TRONG_NGAY']?></td>
+                                    <td scope="col" style="font-size: 15px;color: red;"><?= $value['CHUA_TH']?></td>
                                     <td scope="col" style="font-size: 15px;"><?= $value['DANG_YC_SUA']?></td>
                                     <td scope="col" style="font-size: 15px;"><?= $value['CHUA_DA_SUA']?></td>
                                     <td scope="col" style="font-size: 15px;"><?= $value['HOANTHANH_SUA']?></td>
                                     <td scope="col" style="font-size: 15px;"><?= $value['KHONG_SUA']?></td>
                                     <td scope="col" style="font-size: 15px;"><?= $date1 < $date0 ? 0 : $value['SO_LUONG_NGAY'] * ($diff1->days + 1)?></td>
                                     <td scope="col" style="font-size: 15px;"><?= $value['TONG_HOANTHANH']?></td>
-                                    <td scope="col" style="font-size: 15px;"><?= $value['TI_LE']?> %</td>
+                                    <td scope="col" style="font-size: 15px;color: red;"><?= $value['TI_LE']?> %</td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
