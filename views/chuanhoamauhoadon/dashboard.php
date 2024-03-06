@@ -7,16 +7,16 @@ use yii\widgets\Pjax;
 use kartik\select2\Select2;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
-$date0= date_create(date('2023-11-03'));
+$date0= date_create(date('2024-06-03'));
 $date1= date_create(date('Y-m-d'));
-$date2 = date_create("2023-12-03");
+$date2 = date_create("2023-25-03");
 $diff = date_diff($date1,$date2);
 $diff1 = date_diff($date1,$date0);
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\DotbaoduongSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'THỜI GIAN THỰC HIỆN TỬ NGÀY 03/11/2023 đến 03/12/2023. THỜI GIAN CÒN LẠI: ' . $diff->days . ' NGÀY';
+$this->title = 'THỜI GIAN THỰC HIỆN TỬ NGÀY 06/03/2024 đến 25/03/2024. THỜI GIAN CÒN LẠI: ' . $diff->days . ' NGÀY';
 ?>
 <div class="index">
     <div class="row">

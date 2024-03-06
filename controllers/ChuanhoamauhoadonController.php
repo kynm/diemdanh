@@ -122,7 +122,7 @@ class ChuanhoamauhoadonController extends Controller
     {
         $baocaotonghop = Yii::$app->db->createCommand('SELECT b.TEN_NHANVIEN
 ,COUNT(1) SO_LUONG
-,ROUND(COUNT(1) / 30) SO_LUONG_NGAY
+,ROUND(COUNT(1) / 20) SO_LUONG_NGAY
 , SUM(case when a.ketqua = 0 then 1 ELSE 0 END) CHUA_TH
 , SUM(case when a.ketqua = 1 then 1 ELSE 0 END) DANG_YC_SUA
 , SUM(case when a.ketqua = 2 then 1 ELSE 0 END) CHUA_DA_SUA

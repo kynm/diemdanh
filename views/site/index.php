@@ -11,7 +11,7 @@ $this->title = 'TRANG CHỦ';
     <div class="col-md-3">
         <div class="box box-widget widget-user">
             <div class="widget-user-header bg-aqua-active"  style="background-color: #de4d88  !important;">
-                <a href="/giahandichvu/index"><h3 class="widget-user-username" style="text-align: center;color: white;">GIA HẠN DỊCH VỤ</h3></a>
+                <a href="/giahandichvu/index"><h3 class="widget-user-username" style="text-align: center;color: white;">KHẢO SÁT DOANH NGHIỆP, KẾ TOÁN</h3></a>
             </div>
             <div class="widget-user-image">
             <img class="img-circle" src="/dist/img/1_ava.png" alt="thamcanhdichvu">

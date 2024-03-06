@@ -13,7 +13,7 @@ use kartik\select2\Select2;
 /* @var $searchModel app\models\TramvtSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Điều hành chiến dịch HDDT mới';
+$this->title = 'KHẢO SÁT DOANH NGHIỆP, KẾ TOÁN';
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
