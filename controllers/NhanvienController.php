@@ -83,9 +83,7 @@ class NhanvienController extends Controller
 
             if ($model->load(Yii::$app->request->post())) {
                     if (User::find()->where(['username' => $model->USER_NAME])->exists() == false) {
-                        //Luu thong tin nhan vien
                         $model->save();
-                        // $user = new User;
                         $user->username = $model->USER_NAME;
                         $user->email = $model->USER_NAME."@vnpt.vn";
                         $user->setPassword(rand_string(8));
@@ -148,9 +146,6 @@ class NhanvienController extends Controller
             
             $data = Yii::$app->request->post();
             if ($model->load($data) && $model->save()) {
-                // $authModel->user_id = $user->id;
-                // $authModel->load($data);
-                // $authModel->save(false);
                 if ($data['User']['password']) {
                     $user->setPassword($data['User']['password']);
                     $user->save(false);
@@ -227,41 +222,41 @@ class NhanvienController extends Controller
         }
     }
 
-    public function actionImport()
-    {
-        ini_set('max_execution_time', 0);
-        // $filename = 'data/nhanvien.csv';
-        $handle = fopen($filename, "r");
-        $list = [];
-        while (($fileop = fgetcsv($handle, 5000, ",")) !== false) 
-        {
-                // 0       1       2           3        4
-            //Họ tên,Chức vụ,Điện thoại,Đài (nếu có),TTVT
-            $model = new Nhanvien;
-            $model->TEN_NHANVIEN = $fileop[0];
-            $model->CHUC_VU = $fileop[1];
-            $model->DIEN_THOAI = $fileop[2];
-            $model->ID_DAI = $fileop[3];
-            $model->ID_DONVI = $fileop[4];
-            $model->USER_NAME = Nhanvien::makeEmail(Nhanvien::stripUnicode($model->TEN_NHANVIEN));
+    // public function actionImport()
+    // {
+    //     ini_set('max_execution_time', 0);
+    //     // $filename = 'data/nhanvien.csv';
+    //     $handle = fopen($filename, "r");
+    //     $list = [];
+    //     while (($fileop = fgetcsv($handle, 5000, ",")) !== false) 
+    //     {
+    //             // 0       1       2           3        4
+    //         //Họ tên,Chức vụ,Điện thoại,Đài (nếu có),TTVT
+    //         $model = new Nhanvien;
+    //         $model->TEN_NHANVIEN = $fileop[0];
+    //         $model->CHUC_VU = $fileop[1];
+    //         $model->DIEN_THOAI = $fileop[2];
+    //         $model->ID_DAI = $fileop[3];
+    //         $model->ID_DONVI = $fileop[4];
+    //         $model->USER_NAME = Nhanvien::makeEmail(Nhanvien::stripUnicode($model->TEN_NHANVIEN));
 
-            $model->save(false);
+    //         $model->save(false);
 
-            if (User::find()->where(['username' => $model->USER_NAME])->exists()) {
-                $list[] = $model->TEN_NHANVIEN;
-                continue;
-            }
-            $user = new User;
-            $user->username = $model->USER_NAME;
-            $user->setPassword('vnpt1234');
-            $user->generateAuthKey();
-            $user->status = 10;
-            $user->created_at = time();
-            $user->save(false);
-        }
-        echo "Success! \n";
-        print_r($list);
-    }
+    //         if (User::find()->where(['username' => $model->USER_NAME])->exists()) {
+    //             $list[] = $model->TEN_NHANVIEN;
+    //             continue;
+    //         }
+    //         $user = new User;
+    //         $user->username = $model->USER_NAME;
+    //         $user->setPassword('vnpt1234');
+    //         $user->generateAuthKey();
+    //         $user->status = 10;
+    //         $user->created_at = time();
+    //         $user->save(false);
+    //     }
+    //     echo "Success! \n";
+    //     print_r($list);
+    // }
 
 
     public function actionExport()
