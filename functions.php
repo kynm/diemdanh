@@ -140,10 +140,16 @@
     }
 
     function rand_string( $length ) {
+        $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        return substr(str_shuffle($chars),0,$length);
+    }
 
-    $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    return substr(str_shuffle($chars),0,$length);
+    function except_pass()
+    {
+        return [
+            '12345678', 'Vnpt@12345', 'Vnpt@123456789', '123456789', '123456',
+        ];
 
-}
+    }
 
 ?>

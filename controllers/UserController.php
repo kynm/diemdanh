@@ -177,71 +177,51 @@ class UserController extends Controller
         $user = User::findOne(Yii::$app->user->identity->id);
         $nhanvien = Nhanvien::find()->where(['USER_NAME' => $user->username])->one();
         $alert = '';
-        
-
         if (Yii::$app->request->post()) {
-            
-            //Update Nhanvien's Infomations
             $nhanvien->load(Yii::$app->request->post());
             if (!$nhanvien->save()) {
                 var_dump($nhanvien->errors); die;
             }
 
             $user->load(Yii::$app->request->post());
-
-            //Change Password
             if ($user->password != '') {
-                if (Yii::$app->getSecurity()->validatePassword($user->password, $user->password_hash)) {
-                    if(!($user->newPassword == '') && !($user->confirmPassword == '')) {
-                        if($user->newPassword == $user->confirmPassword) {
-                            $user->setPassword($user->newPassword);
-                            
-                            $alert = 'Đổi mật khẩu thành cmn công.';
+                if (!in_array($user->newPassword, except_pass())) {
+                    if (Yii::$app->getSecurity()->validatePassword($user->password, $user->password_hash)) {
+                        if(!($user->newPassword == '') && !($user->confirmPassword == '')) {
+                            if($user->newPassword == $user->confirmPassword) {
+                                $user->setPassword($user->newPassword);
+                                
+                                $alert = 'Đổi mật khẩu thành cmn công.';
+                            } else {
+                                $alert = 'Mật khẩu không khớp. Vui lòng thử lại!!!';
+                            }
                         } else {
-                            $alert = 'Mật khẩu không khớp. Vui lòng thử lại!!!';
-                        }
+                            $alert = 'Bạn cần nhập mật khẩu mới và xác nhận lại.';
+                        }   
                     } else {
-                        $alert = 'Bạn cần nhập mật khẩu mới và xác nhận lại.';
-                    }   
+                        $alert = 'Mật khẩu cũ không đúng';
+                    }
                 } else {
-                    $alert = 'Mật khẩu cũ không đúng';
+                    $alert = "Mật khẩu bảo mật kém, không thể cập nhật!";
                 }
             }
 
-
-            //Change Avatar
             $user->file = UploadedFile::getInstance($user, 'file');
             if (isset($user->file)) {
                 $filePath = 'dist/img/' . $user->id .'_ava.' . $user->file->extension;
-
-                //save file to host
                 $user->file->saveAs($filePath);
-                //save filePath to DB
                 $user->avatar = $filePath;
             }
             $user->save(false);
-
-            return $this->redirect(['edit-profile']);
+            return $this->redirect(['edit-profile' , [
+               'alert' => $alert,
+            ]]);
         } 
         return $this->render('profile', [
             'alert' => $alert,
             'user' => $user,
             'nhanvien' => $nhanvien,
         ]);                
-    }
-
-    public function actionTest($value='')
-    {
-        if ($value == 1) {
-            $command= Yii::$app->db_sms->createCommand(
-                "INSERT INTO SMS_SEND 
-                    (ALARMID,TIMECREATE,SMSTYPE,SMSMOBILE,CONTENT,SENDED,USERNAME)
-                VALUES (911911911,sysdate,'SMARTBASE','0888011544','Test SMS',0,'SMAPID')");        
-            echo "Da test!";
-        } else {
-            echo "Khong thuc hien!";
-        }
-        exit;
     }
 
     /**

@@ -13,7 +13,6 @@ use kartik\select2\Select2;
 
 $this->title = 'Thông tin cá nhân';
 $this->params['breadcrumbs'][] = $this->title;
-
 ?>
 <?php if ($alert != ''): ?>
   <div class="alert alert-info text-center">

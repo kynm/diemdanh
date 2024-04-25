@@ -147,8 +147,12 @@ class NhanvienController extends Controller
             $data = Yii::$app->request->post();
             if ($model->load($data) && $model->save()) {
                 if ($data['User']['password']) {
-                    $user->setPassword($data['User']['password']);
-                    $user->save(false);
+                    if (!in_array($data['User']['password'], except_pass())) {
+                        $user->setPassword($data['User']['password']);
+                        $user->save(false);
+                    } else {
+                        Yii::$app->session->setFlash('error', "Mật khẩu bảo mật kém, không thể cập nhật!");
+                    }
                 }
 
                 return $this->redirect(['view', 'id' => $model->ID_NHANVIEN]);
