@@ -27,6 +27,18 @@ use yii\web\UploadedFile;
  */
 class ThamcanhdichvuController extends Controller
 {
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
+    }
+
     public function actionIndex()
     {
         $searchModel = new KhachhangthamcanhSearch();

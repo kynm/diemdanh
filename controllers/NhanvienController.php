@@ -88,7 +88,7 @@ class NhanvienController extends Controller
                         // $user = new User;
                         $user->username = $model->USER_NAME;
                         $user->email = $model->USER_NAME."@vnpt.vn";
-                        $user->setPassword('Vnpt@12345');
+                        $user->setPassword(rand_string(8));
                         $user->generateAuthKey();
                         $user->status = 10;
                         $user->created_at = time();

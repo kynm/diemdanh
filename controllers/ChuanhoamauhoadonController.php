@@ -28,6 +28,18 @@ use yii\web\UploadedFile;
  */
 class ChuanhoamauhoadonController extends Controller
 {
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
+    }
+
     public function actionIndex()
     {
         $searchModel = new ChuanhoamauhoadonSearch();
