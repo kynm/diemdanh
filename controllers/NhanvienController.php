@@ -84,7 +84,7 @@ class NhanvienController extends Controller
             if ($model->load(Yii::$app->request->post())) {
                     if (User::find()->where(['username' => $model->USER_NAME])->exists() == false) {
                         $model->save();
-                        $user->username = $model->USER_NAME;
+                        $user->username = trim($model->USER_NAME);
                         $user->email = $model->USER_NAME."@vnpt.vn";
                         $user->setPassword($user->username);
                         $user->generateAuthKey();
@@ -105,7 +105,6 @@ class NhanvienController extends Controller
             } 
             return $this->render('create', [
                 'model' => $model,
-                // 'authModel' => $authModel,
                 'user' => $user,
             ]);
         } else {
@@ -123,7 +122,7 @@ class NhanvienController extends Controller
             $user = new User;
             $user->username = $model->USER_NAME;
             $user->email = $model->USER_NAME."@vnpt.vn";
-            $user->setPassword('Vnpt@12345');
+            $user->setPassword('Diemdanh@123');
             $user->generateAuthKey();
             $user->status = 10;
             $user->created_at = time();
@@ -145,16 +144,20 @@ class NhanvienController extends Controller
             $user = User::find()->where(['username' => $model->USER_NAME])->one();
             
             $data = Yii::$app->request->post();
-            if ($model->load($data) && $model->save()) {
-                if ($data['User']['password']) {
+            if ($model->load($data) && $model->save(false)) {
+                $password = trim($data['User']['password']);
+                if ($password) {
                     if (!in_array($data['User']['password'], except_pass())) {
-                        $user->setPassword($data['User']['password']);
+                        $user->setPassword($password);
                         $user->save(false);
+                        Yii::$app->session->setFlash('success', "Cập nhật mật khẩu thành công!");
+                        return $this->redirect(['view', 'id' => $model->ID_NHANVIEN]);
                     } else {
                         Yii::$app->session->setFlash('error', "Mật khẩu bảo mật kém, không thể cập nhật!");
                     }
                 }
 
+                Yii::$app->session->setFlash('success', "Cập nhật thành công!");
                 return $this->redirect(['view', 'id' => $model->ID_NHANVIEN]);
             } else {
                 return $this->render('update', [
@@ -225,43 +228,6 @@ class NhanvienController extends Controller
             echo "<option value=''>Chọn lớp</option>";
         }
     }
-
-    // public function actionImport()
-    // {
-    //     ini_set('max_execution_time', 0);
-    //     // $filename = 'data/nhanvien.csv';
-    //     $handle = fopen($filename, "r");
-    //     $list = [];
-    //     while (($fileop = fgetcsv($handle, 5000, ",")) !== false) 
-    //     {
-    //             // 0       1       2           3        4
-    //         //Họ tên,Chức vụ,Điện thoại,Đài (nếu có),TTVT
-    //         $model = new Nhanvien;
-    //         $model->TEN_NHANVIEN = $fileop[0];
-    //         $model->CHUC_VU = $fileop[1];
-    //         $model->DIEN_THOAI = $fileop[2];
-    //         $model->ID_DAI = $fileop[3];
-    //         $model->ID_DONVI = $fileop[4];
-    //         $model->USER_NAME = Nhanvien::makeEmail(Nhanvien::stripUnicode($model->TEN_NHANVIEN));
-
-    //         $model->save(false);
-
-    //         if (User::find()->where(['username' => $model->USER_NAME])->exists()) {
-    //             $list[] = $model->TEN_NHANVIEN;
-    //             continue;
-    //         }
-    //         $user = new User;
-    //         $user->username = $model->USER_NAME;
-    //         $user->setPassword('vnpt1234');
-    //         $user->generateAuthKey();
-    //         $user->status = 10;
-    //         $user->created_at = time();
-    //         $user->save(false);
-    //     }
-    //     echo "Success! \n";
-    //     print_r($list);
-    // }
-
 
     public function actionExport()
     {
