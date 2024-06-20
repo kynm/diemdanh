@@ -50,13 +50,14 @@ class Lophoc extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'ID_LOP' => 'ID lớp',
-            'MA_LOP' => 'Mã lớp',
-            'TEN_LOP' => 'Tên lớp',
-            'DIA_CHI' => 'Địa chỉ',
-            'SO_DT' => 'Điện thoại',
-            'ID_DONVI' => 'Đơn vị chủ quản',
-            'ID_NHANVIEN_DIEMDANH' => 'NGƯỜI ĐIỂM DANH'
+            'ID_LOP' => 'ID',
+            'MA_LOP' => 'MÃ LỚP',
+            'TEN_LOP' => 'TÊN LỚP',
+            'DIA_CHI' => 'ĐỊA CHỈ',
+            'SO_DT' => 'ĐIỆN THOẠI',
+            'ID_DONVI' => 'ĐƠN VỊ',
+            'ID_NHANVIEN_DIEMDANH' => 'NGƯỜI ĐIỂM DANH',
+            'SOHOCSINH' => 'TỔNG SỐ HỌC SINH',
         ];
     }
 

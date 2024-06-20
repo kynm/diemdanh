@@ -17,8 +17,15 @@ use yii\widgets\DetailView;
                         },
                         'format' => 'raw',
                     ],
-                    'DIA_CHI',
-                    'SO_DT',
+                    // 'DIA_CHI',
+                    // 'SO_DT',
+                    [
+                        'attribute' => 'SOHOCSINH',
+                        'value' => function ($model) {
+                            return  '<span style="font-size: 20px; color: red">' . $model->getDshocsinh()->count() . '</span>';
+                        },
+                        'format' => 'raw',
+                    ],
                 ],
             ]) ?>
         </div>
