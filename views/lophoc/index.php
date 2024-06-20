@@ -18,34 +18,36 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="box box-primary">
         <div class="box-body">
-            <?php Pjax::begin(); ?>    <?= GridView::widget([
-                    'dataProvider' => $dataProvider,
-                    'filterModel' => $searchModel,
-                    'columns' => [
-                        ['class' => 'yii\grid\SerialColumn'],
-                        'MA_LOP',
-                        [
-                            'attribute' => 'TEN_LOP',
-                            'contentOptions' => ['style' => 'width:40%; white-space: normal;'],
-                            'value' => function ($model) {
-                                return Html::a($model->TEN_LOP, ['view', 'id' => $model->ID_LOP]);
-                            },
-                            'format' => 'raw',
-                        ],
-                        'DIA_CHI',
-                        'SO_DT',
-                        [
-                            'attribute' => 'ID_DONVI',
-                            'value' => 'iDDONVI.TEN_DONVI'
-                        ],
+            <div class="table-responsive">
+                <?php Pjax::begin(); ?>    <?= GridView::widget([
+                        'dataProvider' => $dataProvider,
+                        'filterModel' => $searchModel,
+                        'columns' => [
+                            ['class' => 'yii\grid\SerialColumn'],
+                            'MA_LOP',
+                            [
+                                'attribute' => 'TEN_LOP',
+                                'contentOptions' => ['style' => 'width:40%; white-space: normal;'],
+                                'value' => function ($model) {
+                                    return Html::a($model->TEN_LOP, ['view', 'id' => $model->ID_LOP]);
+                                },
+                                'format' => 'raw',
+                            ],
+                            // 'DIA_CHI',
+                            // 'SO_DT',
+                            [
+                                'attribute' => 'ID_DONVI',
+                                'value' => 'iDDONVI.TEN_DONVI'
+                            ],
 
-                        [
-                            'class' => 'yii\grid\ActionColumn',
-                            'template' => (Yii::$app->user->can('edit-lophoc')) ? '{update}' : ''
+                            [
+                                'class' => 'yii\grid\ActionColumn',
+                                'template' => (Yii::$app->user->can('edit-lophoc')) ? '{update}' : ''
+                            ],
                         ],
-                    ],
-                ]); ?>
-            <?php Pjax::end(); ?>
+                    ]); ?>
+                <?php Pjax::end(); ?>
+            </div>
         </div>
     </div>
 </div>

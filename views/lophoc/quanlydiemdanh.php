@@ -22,44 +22,46 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php endif; ?>
 <div class="box box-primary">
     <div class="box-body">
-        <?php Pjax::begin(); ?>    <?= GridView::widget([
-                'dataProvider' => $dataProvider,
-                'filterModel' => $searchModel,
-                'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
-                    [
-                        'class' => 'yii\grid\ActionColumn',
-                        'template' => (Yii::$app->user->can('diemdanhlophoc')) ? '{updatediemdanh}' : '',
-                        'buttons' => [
-                            'updatediemdanh' => function ($url, $model) {
-                                return Html::a($model->TIEUDE, '/lophoc/capnhatdiemdanh?diemdanhid=' . $model->ID);
-                            },
+        <div class="table-responsive">
+            <?php Pjax::begin(); ?>    <?= GridView::widget([
+                    'dataProvider' => $dataProvider,
+                    'filterModel' => $searchModel,
+                    'columns' => [
+                        ['class' => 'yii\grid\SerialColumn'],
+                        [
+                            'class' => 'yii\grid\ActionColumn',
+                            'template' => (Yii::$app->user->can('diemdanhlophoc')) ? '{updatediemdanh}' : '',
+                            'buttons' => [
+                                'updatediemdanh' => function ($url, $model) {
+                                    return Html::a($model->TIEUDE, '/lophoc/capnhatdiemdanh?diemdanhid=' . $model->ID);
+                                },
 
+                            ],
                         ],
+                        [
+                            'attribute' => 'THU',
+                            'value'  => function($model) {
+                                return dateofmonth()[date_format(date_create($model->NGAY_DIEMDANH), 'w')];
+                            },
+                            'format' => 'raw',
+                        ],
+                        'NGAY_DIEMDANH',
+                        [
+                            'attribute' => 'SOHOCSINH',
+                            'value' =>function($model) {
+                                return $model->getDschitietdiemdanh()->count();
+                            }
+                        ],
+                        [
+                            'attribute' => 'SOHOCSINHDIHOC',
+                            'value' =>function($model) {
+                                return $model->getDschitietdiemdanh()->andWhere(['STATUS' => 1])->count();
+                            }
+                        ],
+                        
                     ],
-                    [
-                        'attribute' => 'THU',
-                        'value'  => function($model) {
-                            return dateofmonth()[date_format(date_create($model->NGAY_DIEMDANH), 'w')];
-                        },
-                        'format' => 'raw',
-                    ],
-                    'NGAY_DIEMDANH',
-                    [
-                        'attribute' => 'SOHOCSINH',
-                        'value' =>function($model) {
-                            return $model->getDschitietdiemdanh()->count();
-                        }
-                    ],
-                    [
-                        'attribute' => 'SOHOCSINHDIHOC',
-                        'value' =>function($model) {
-                            return $model->getDschitietdiemdanh()->andWhere(['STATUS' => 1])->count();
-                        }
-                    ],
-                    
-                ],
-            ]); ?>
-        <?php Pjax::end(); ?>
+                ]); ?>
+            <?php Pjax::end(); ?>
+        </div>
     </div>
 </div>

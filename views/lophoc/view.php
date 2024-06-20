@@ -42,8 +42,8 @@ $this->params['breadcrumbs'][] = $this->title;
             <tr class="bg-primary">
                 <th>THỨ</th>
                 <th>NGÀY</th>
-                <th>TỔNG SỐ HỌC SINH</th>
-                <th>SỐ HỌC SINH ĐI HỌC</th>
+                <th>TỔNG SỐ <br/>HỌC SINH</th>
+                <th>SỐ HỌC SINH <br/>ĐI HỌC</th>
             </tr>
             <?php
             $diemdanh = $model->getDsdiemdanh()->andWhere(['NGAY_DIEMDANH' => date('Y-m-d')])->one();
@@ -115,9 +115,9 @@ $this->params['breadcrumbs'][] = $this->title;
             <tr class="bg-primary">
                 <th style="width: 10px">#</th>
                 <th >HỌC SINH</th>
-                <th >TỔNG SỐ BUỔI</th>
-                <th >SỐ BUỔI HỌC</th>
-                <th >SỐ BUỔI NGHỈ</th>
+                <th >TỔNG SỐ <br/>BUỔI</th>
+                <th >SỐ BUỔI <br/>HỌC</th>
+                <th >SỐ BUỔI <br/>NGHỈ</th>
             </tr>
             <?php foreach ($data as $key => $value): ?>
                 <tr>
