@@ -32,14 +32,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         'template' => (Yii::$app->user->can('diemdanhlophoc')) ? '{updatediemdanh}' : '',
                         'buttons' => [
                             'updatediemdanh' => function ($url, $model) {
-                                return Html::a('<span class="glyphicon glyphicon-pencil"></span>', '/lophoc/capnhatdiemdanh?diemdanhid=' . $model->ID, [
-                                    'title' => Yii::t('app', 'lead-update'),
-                                ]);
+                                return Html::a($model->TIEUDE, '/lophoc/capnhatdiemdanh?diemdanhid=' . $model->ID);
                             },
 
                         ],
                     ],
-                    'TIEUDE',
                     [
                         'attribute' => 'THU',
                         'value'  => function($model) {
