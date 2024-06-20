@@ -24,7 +24,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
                         'MA_LOP',
-                        'TEN_LOP',
+                        [
+                            'attribute' => 'TEN_LOP',
+                            'contentOptions' => ['style' => 'width:40%; white-space: normal;'],
+                            'value' => function ($model) {
+                                return Html::a($model->TEN_LOP, ['view', 'id' => $model->ID_LOP]);
+                            },
+                            'format' => 'raw',
+                        ],
                         'DIA_CHI',
                         'SO_DT',
                         [
@@ -34,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         [
                             'class' => 'yii\grid\ActionColumn',
-                            'template' => (Yii::$app->user->can('edit-lophoc')) ? '{view} {update} {delete}' : '{view}'
+                            'template' => (Yii::$app->user->can('edit-lophoc')) ? '{update}' : ''
                         ],
                     ],
                 ]); ?>
