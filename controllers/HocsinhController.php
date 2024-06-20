@@ -38,9 +38,9 @@ class HocsinhController extends Controller
     public function actionIndex()
     {
         $searchModel = new HocsinhSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->searchhocsinhtheodonvi(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
+        return $this->render('hocsinhtheodonvi', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);

@@ -75,6 +75,12 @@ class SiteController extends Controller
         if (Yii::$app->user->isGuest) {
             return $this->redirect(['login']);
         } else {
+            if (Yii::$app->user->can('quanlyhocsinh')) {
+                $solop = Yii::$app->user->identity->nhanvien->iDDONVI->getLophoc()->count();
+                return $this->render('quanlyhocsinh', [
+                    'solop' => $solop,
+                ]);
+            }
             if (Yii::$app->user->can('diemdanhlophoc')) {
                 $dslop = Yii::$app->user->identity->nhanvien->iDDONVI->getLophoc()->andWhere(['ID_NHANVIEN_DIEMDANH' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN])->all();
                 return $this->render('diemdanhlophoc', [
