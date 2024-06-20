@@ -86,6 +86,6 @@ class Lophoc extends \yii\db\ActiveRecord
 
     public function getDsdiemdanh()
     {
-        return $this->hasMany(Hocsinh::className(), ['ID_LOP' => 'ID_LOP']);
+        return $this->hasMany(Quanlydiemdanh::className(), ['ID_LOP' => 'ID_LOP']);
     }
 }

@@ -60,8 +60,21 @@ class LophocController extends Controller
     {
         $model = $this->findModel($id);
         if ($model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+            $params = Yii::$app->request->queryParams;
+            $params['TU_NGAY'] = isset($params['TU_NGAY']) ? $params['TU_NGAY'] : date('Y-m-1');
+            $params['DEN_NGAY'] = isset($params['DEN_NGAY']) ? $params['DEN_NGAY'] : date('Y-m-d');
+            $sql = "SELECT c.HO_TEN, COUNT(1) SO_LUONG, SUM(CASE WHEN b.`STATUS` > 0 then 1 ELSE 0 END) SOLUONGDIHOC FROM quanlydiemdanh a, diemdanhhocsinh b, hocsinh c
+                WHERE a.ID = b.ID_DIEMDANH AND b.ID_HOCSINH = c.ID and a.ID_LOP = :ID_LOP AND a.NGAY_DIEMDANH BETWEEN :TU_NGAY and :DEN_NGAY GROUP BY c.HO_TEN,c.ID order by c.ID";
+            $data = Yii::$app->db->createCommand($sql)->bindValues(
+                [
+                    ':TU_NGAY' => $params['TU_NGAY'],
+                    ':DEN_NGAY' => $params['DEN_NGAY'],
+                    ':ID_LOP' => $id,
+                ])->queryAll();
             return $this->render('view', [
                 'model' => $model,
+                'params' => $params,
+                'data' => $data,
             ]);
         } else {
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');           
