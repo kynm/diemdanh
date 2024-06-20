@@ -86,7 +86,7 @@ class NhanvienController extends Controller
                         $model->save();
                         $user->username = $model->USER_NAME;
                         $user->email = $model->USER_NAME."@vnpt.vn";
-                        $user->setPassword(rand_string(8));
+                        $user->setPassword($user->username);
                         $user->generateAuthKey();
                         $user->status = 10;
                         $user->created_at = time();
@@ -200,13 +200,13 @@ class NhanvienController extends Controller
         ->all();
 
         if(isset($danhsachdai) && count($danhsachdai)>0) {
-            echo "<option value=''>Chọn đài viễn thông</option>";
+            echo "<option value=''>Chọn lớp</option>";
             foreach($danhsachdai as $each) {
-                echo "<option value='".$each->ID_DAI."'>".$each->TEN_DAIVT."</option>";
+                echo "<option value='".$each->ID_LOP."'>".$each->TEN_LOP."</option>";
             }
             return;
         }else {
-            echo "<option value=''>Chọn đài viễn thông</option>";
+            echo "<option value=''>Chọn lớp</option>";
         }
     }
 
@@ -216,13 +216,13 @@ class NhanvienController extends Controller
         ->all();
 
         if(isset($danhsachnhanvien) && count($danhsachnhanvien)>0) {
-            echo "<option value=''>Chọn đài viễn thông</option>";
+            echo "<option value=''>Chọn lớp</option>";
             foreach($danhsachnhanvien as $each) {
                 echo "<option value='".$each->ID_NHANVIEN."'>".$each->TEN_NHANVIEN."</option>";
             }
             return;
         }else {
-            echo "<option value=''>Chọn đài viễn thông</option>";
+            echo "<option value=''>Chọn lớp</option>";
         }
     }
 

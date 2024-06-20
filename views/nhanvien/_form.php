@@ -31,17 +31,7 @@ $model->CHUC_VU = 3;
                     <?= $form->field($model, 'DIEN_THOAI')->textInput(['maxlength' => true]) ?>
                 </div>
                 <div class="col-sm-4">
-                    <?= $form->field($model, 'ID_DONVI')->dropDownList(ArrayHelper::map(Donvi::find()->all(), 'ID_DONVI', 'TEN_DONVI'), 
-                        [
-                            'prompt' => "Chọn đơn vị",
-                            'onchange' => '
-                                $.post("'.Yii::$app->homeUrl.'nhanvien/list?id="+$(this).val(), function( data ) {
-                                    $("#nhanvien-id_dai").html( data );
-                                });'
-                        ]); ?>
-                </div>
-                <div class="col-sm-4">
-                    <?= $form->field($model, 'ID_DAI')->dropDownList(ArrayHelper::map(Daivt::find()->all(), 'ID_DAI', 'TEN_DAIVT'), ['prompt' => 'Chọn đài viễn thông' ]); ?> 
+                    <?= $form->field($model, 'ID_DONVI')->dropDownList(ArrayHelper::map(Donvi::find()->all(), 'ID_DONVI', 'TEN_DONVI'), []); ?>
                 </div>
             </div>
             <div class="row">
@@ -62,7 +52,5 @@ $model->CHUC_VU = 3;
             </div>
         </div>
     </div>
-
     <?php ActiveForm::end(); ?>
-
 </div>

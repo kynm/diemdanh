@@ -3,20 +3,17 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
-use yii\bootstrap\Modal;
-use app\models\Donvi;
-
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\DonviSearch */
+/* @var $searchModel app\models\lophocSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Đơn vị chủ quản';
+$this->title = 'QUẢN LÝ LỚP';
 $this->params['breadcrumbs'][] = ['label' => 'Đơn vị', 'url' => ['donvi/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="donvi-index">
+<div class="lophoc-index">
     <p>
-        <?= (Yii::$app->user->can('create-donvi')) ? Html::a('<i class="fa fa-plus"></i> Thêm đơn vị', ['create'], ['class' => 'btn btn-primary btn-flat']) : ''?>
+        <?= (Yii::$app->user->can('create-lophoc')) ? Html::a('<i class="fa fa-plus"></i> Thêm lớp học', ['create'], ['class' => 'btn btn-primary btn-flat']) :'' ?>
     </p>
 
     <div class="box box-primary">
@@ -26,16 +23,22 @@ $this->params['breadcrumbs'][] = $this->title;
                     'filterModel' => $searchModel,
                     'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
-                        'MA_DONVI',
-                        'TEN_DONVI',
+                        'MA_LOP',
+                        'TEN_LOP',
                         'DIA_CHI',
                         'SO_DT',
-                        ['class' => 'yii\grid\ActionColumn',
-                        'template' => (Yii::$app->user->can('edit-donvi')) ? '{view} {update} {delete}' : '{view}'],
+                        [
+                            'attribute' => 'ID_DONVI',
+                            'value' => 'iDDONVI.TEN_DONVI'
+                        ],
+
+                        [
+                            'class' => 'yii\grid\ActionColumn',
+                            'template' => (Yii::$app->user->can('edit-lophoc')) ? '{view} {update} {delete}' : '{view}'
+                        ],
                     ],
                 ]); ?>
             <?php Pjax::end(); ?>
-            
         </div>
     </div>
 </div>

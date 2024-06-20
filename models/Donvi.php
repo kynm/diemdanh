@@ -35,7 +35,7 @@ class Donvi extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ID_DONVI', 'MA_DONVI', 'CAP_TREN','MA_DONVIKT'], 'required'],
+            [['ID_DONVI', 'MA_DONVI','MA_DONVIKT'], 'required'],
             [['ID_DONVI', 'CAP_TREN'], 'integer'],
             [['MA_DONVI'], 'string', 'max' => 30],
             [['TEN_DONVI', 'DIA_CHI'], 'string', 'max' => 100],
@@ -64,9 +64,9 @@ class Donvi extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getDaivts()
+    public function getLophoc()
     {
-        return $this->hasMany(Daivt::className(), ['ID_DONVI' => 'ID_DONVI']);
+        return $this->hasMany(Lophoc::className(), ['ID_DONVI' => 'ID_DONVI']);
     }
 
     /**

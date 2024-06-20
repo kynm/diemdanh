@@ -38,13 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'attribute' => 'ID_DONVI',
                             'value' => 'iDDONVI.TEN_DONVI'
                         ],
-                        [
-                            'attribute' => 'ID_DAI',
-                            'value' => 'iDDAI.TEN_DAIVT'
-                        ],
-                        
                         'USER_NAME',
-
                         ['class' => 'yii\grid\ActionColumn',
                         'template' => (Yii::$app->user->can('edit-nhanvien')) ? '{view} {update} {delete}' : '{view}'],
                     ],

@@ -13,18 +13,20 @@ use yii\helpers\Url;
             </div>
             <div class="navbar-collapse pull-left collapse" id="navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="<?= Url::to(['site/thuthuat'])?>">Thủ thuật</a></li>
-                </ul>
-                <ul class="nav navbar-nav">
-                    <?php if (Yii::$app->user->can('Administrator')): ?>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Quản trị <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="<?= Url::to(['nhanvien/index'])?>">Nhân viên</a></li>
-                                <li><a href="<?= Url::to(['/admin'])?>">Phân quyền</a></li>
+                                <?php if (Yii::$app->user->can('Administrator')): ?>
+                                    <li><a href="<?= Url::to(['donvi/index'])?>">Đơn vị</a></li>
+                                    <li><a href="<?= Url::to(['nhanvien/index'])?>">Nhân viên</a></li>
+                                    <li><a href="<?= Url::to(['/admin'])?>">Phân quyền</a></li>
+                                <?php endif; ?>
+                                <?php if (Yii::$app->user->can('quanlytruonghoc')): ?>
+                                    <li><a href="<?= Url::to(['lophoc/index'])?>">Lớp học</a></li>
+                                    <li><a href="<?= Url::to(['hocsinh/index'])?>">Học sinh</a></li>
+                                <?php endif; ?>
                             </ul>
                         </li>
-                    <?php endif; ?>
                 </ul>
             </div>
             <div class="navbar-custom-menu">

@@ -22,7 +22,7 @@ class TramvtSearch extends Tramvt
     {
         return [
             [['ID_TRAM'], 'integer'],
-            [['MA_TRAM','MA_CSHT', 'TEN_TRAM', 'DIADIEM', 'ID_DAI', 'ID_NHANVIEN'], 'safe'],
+            [['MA_TRAM','MA_CSHT', 'TEN_TRAM', 'DIADIEM', 'ID_LOP', 'ID_NHANVIEN'], 'safe'],
         ];
     }
 
@@ -54,7 +54,7 @@ class TramvtSearch extends Tramvt
             $query->andWhere(['daivt.ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI]);
         }
         if (Yii::$app->user->identity->nhanvien->chucvu->cap == 3) {
-            $query->andWhere(['tramvt.ID_DAI' => Yii::$app->user->identity->nhanvien->ID_DAI]);
+            $query->andWhere(['tramvt.ID_LOP' => Yii::$app->user->identity->nhanvien->ID_LOP]);
         }
         if (Yii::$app->user->identity->nhanvien->chucvu->cap >= 4) {
             $query->andWhere(['tramvt.ID_NHANVIEN' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN]);
@@ -80,7 +80,7 @@ class TramvtSearch extends Tramvt
         ]);
 
         $query->andFilterWhere(['like', 'MA_TRAM', $this->MA_TRAM])
-            ->andFilterWhere(['like', 'daivt.TEN_DAIVT', $this->ID_DAI])
+            ->andFilterWhere(['like', 'daivt.TEN_DAIVT', $this->ID_LOP])
             ->andFilterWhere(['like', 'TEN_TRAM', $this->TEN_TRAM])
             ->andFilterWhere(['like', 'MA_CSHT', $this->MA_CSHT])
             ->andFilterWhere(['like', 'nhanvien.TEN_NHANVIEN', $this->ID_NHANVIEN])
@@ -114,7 +114,7 @@ class TramvtSearch extends Tramvt
             'ID_TRAM' => $this->ID_TRAM,
         ]);
 
-        $query->andFilterWhere(['=', 'daivt.ID_DAI', $this->ID_DAI])
+        $query->andFilterWhere(['=', 'daivt.ID_LOP', $this->ID_LOP])
             ->andFilterWhere(['in', 'ID_TRAM', $allIdsTramMayno])
             ->andFilterWhere(['like', 'TEN_TRAM', $this->TEN_TRAM]);
         $query->orderBy(['TEN_TRAM' => SORT_ASC]);
@@ -142,7 +142,7 @@ class TramvtSearch extends Tramvt
         $query->andFilterWhere([
             'ID_TRAM' => $this->ID_TRAM,
         ]);
-        $query->andFilterWhere(['=', 'daivt.ID_DAI', $this->ID_DAI])
+        $query->andFilterWhere(['=', 'daivt.ID_LOP', $this->ID_LOP])
             ->andFilterWhere(['in', 'daivt.ID_DONVI', $iddv])
             ->andFilterWhere(['like', 'TEN_TRAM', $this->TEN_TRAM]);
 
@@ -169,7 +169,7 @@ class TramvtSearch extends Tramvt
         $query->andFilterWhere([
             'ID_TRAM' => $this->ID_TRAM,
         ]);
-        $query->andFilterWhere(['=', 'daivt.ID_DAI', $this->ID_DAI])
+        $query->andFilterWhere(['=', 'daivt.ID_LOP', $this->ID_LOP])
             ->andFilterWhere(['like', 'MA_CSHT', $this->MA_CSHT])
             ->andFilterWhere(['in', 'daivt.ID_DONVI', $iddv])
             ->andFilterWhere(['like', 'TEN_TRAM', $this->TEN_TRAM]);
@@ -180,14 +180,14 @@ class TramvtSearch extends Tramvt
     public function searchDSTramvt($idDonvi)
     {
         $dsDonvi = is_array($idDonvi) ? implode(',', $idDonvi) : $idDonvi;
-        $sql = "SELECT a.ID_TRAM,a.MA_CSHT,a.TEN_TRAM,a.DIADIEM,c.TEN_DONVI FROM tramvt a, daivt b, donvi c WHERE a.ID_DAI = b.ID_DAI AND b.ID_DONVI = c.ID_DONVI AND c.ID_DONVI IN (" . $dsDonvi . ") ORDER BY a.TEN_TRAM";
+        $sql = "SELECT a.ID_TRAM,a.MA_CSHT,a.TEN_TRAM,a.DIADIEM,c.TEN_DONVI FROM tramvt a, daivt b, donvi c WHERE a.ID_LOP = b.ID_LOP AND b.ID_DONVI = c.ID_DONVI AND c.ID_DONVI IN (" . $dsDonvi . ") ORDER BY a.TEN_TRAM";
 
         return Yii::$app->db->createCommand($sql)->queryAll();
     }
 
     public function searchExportdstram()
     {
-        $sql = "SELECT c.TEN_DONVI,b.TEN_DAIVT,a.MA_CSHT,a.TEN_TRAM,a.DIADIEM,d.TEN_KIEU_CSHT,e.TEN_LOAIHINH_CSHT,f.TEN_TRANGTHAI_CSHT,g.type_payment kieu_thanh_toan FROM tramvt a, daivt b, donvi c,kieu_csht d,loaihinh_csht e,trangthai_csht f,type_payments g WHERE a.ID_DAI = b.ID_DAI AND b.ID_DONVI = c.ID_DONVI and a.KIEUTRAM = d.id and a.LOAITRAM = e.id and a.TRANGTHAI_CSHT_ID = f.id and a.type_payment_id = g.id and a.IS_DELETE is null ORDER BY c.TEN_DONVI";
+        $sql = "SELECT c.TEN_DONVI,b.TEN_DAIVT,a.MA_CSHT,a.TEN_TRAM,a.DIADIEM,d.TEN_KIEU_CSHT,e.TEN_LOAIHINH_CSHT,f.TEN_TRANGTHAI_CSHT,g.type_payment kieu_thanh_toan FROM tramvt a, daivt b, donvi c,kieu_csht d,loaihinh_csht e,trangthai_csht f,type_payments g WHERE a.ID_LOP = b.ID_LOP AND b.ID_DONVI = c.ID_DONVI and a.KIEUTRAM = d.id and a.LOAITRAM = e.id and a.TRANGTHAI_CSHT_ID = f.id and a.type_payment_id = g.id and a.IS_DELETE is null ORDER BY c.TEN_DONVI";
 
         return Yii::$app->db->createCommand($sql)->queryAll();
     }

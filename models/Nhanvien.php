@@ -13,7 +13,7 @@ use Yii;
  * @property string $CHUC_VU
  * @property string $DIEN_THOAI
  * @property integer $ID_DONVI
- * @property integer $ID_DAI
+ * @property integer $ID_LOP
  * @property string $GHI_CHU
  * @property string $USER_NAME
  *
@@ -47,9 +47,9 @@ class Nhanvien extends \yii\db\ActiveRecord
             [['USER_NAME'], 'string', 'max' => 50],
             [['DIEN_THOAI'], 'string', 'max' => 15],
             [['GHI_CHU'], 'string', 'max' => 200],
-            [['ID_DAI', 'DIEN_THOAI'], 'safe'],
+            [['ID_LOP', 'DIEN_THOAI'], 'safe'],
             [['USER_NAME'], 'unique'],
-            [['ID_DAI'], 'exist', 'skipOnError' => true, 'targetClass' => Daivt::className(), 'targetAttribute' => ['ID_DAI' => 'ID_DAI']],
+            [['ID_LOP'], 'exist', 'skipOnError' => true, 'targetClass' => Lophoc::className(), 'targetAttribute' => ['ID_LOP' => 'ID_LOP']],
             [['ID_DONVI'], 'exist', 'skipOnError' => true, 'targetClass' => Donvi::className(), 'targetAttribute' => ['ID_DONVI' => 'ID_DONVI']],
         ];
     }
@@ -61,12 +61,12 @@ class Nhanvien extends \yii\db\ActiveRecord
     {
         return [
             'ID_NHANVIEN' => 'ID Nhân viên',
-            'MA_NHANVIEN' => 'Mã nhân viên',
-            'TEN_NHANVIEN' => 'Tên nhân viên',
+            'MA_NHANVIEN' => 'Mã cá nhân',
+            'TEN_NHANVIEN' => 'Họ và tên',
             'CHUC_VU' => 'Chức vụ',
             'DIEN_THOAI' => 'Điện thoại',
             'ID_DONVI' => 'Đơn vị',
-            'ID_DAI' => 'Đài',
+            'ID_LOP' => 'Đài',
             'GHI_CHU' => 'Ghi chú',
             'USER_NAME' => 'User  Name',
         ];
@@ -113,34 +113,10 @@ class Nhanvien extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getDotbaoduongs()
-    {
-        return $this->hasMany(Dotbaoduong::className(), ['ID_NHANVIEN' => 'ID_NHANVIEN']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getKehoachbdtbs()
-    {
-        return $this->hasMany(Kehoachbdtb::className(), ['ID_NHANVIEN' => 'ID_NHANVIEN']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getUser()
     {
         return $this->hasOne(User::className(), ['username' => 'USER_NAME']);
     }    
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getIDDAI()
-    {
-        return $this->hasOne(Daivt::className(), ['ID_DAI' => 'ID_DAI']);
-    }
 
     /**
      * @return \yii\db\ActiveQuery
@@ -156,21 +132,5 @@ class Nhanvien extends \yii\db\ActiveRecord
     public function getChucvu()
     {
         return $this->hasOne(Chucvu::className(), ['id' => 'CHUC_VU']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getThuchienbds()
-    {
-        return $this->hasMany(Thuchienbd::className(), ['ID_NHANVIEN' => 'ID_NHANVIEN']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getTramvts()
-    {
-        return $this->hasMany(Tramvt::className(), ['ID_NHANVIEN' => 'ID_NHANVIEN']);
     }
 }

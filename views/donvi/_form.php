@@ -18,11 +18,7 @@ use app\models\Donvi;
             <div class="row">
                 <div class="col-md-4">
                     <?= $form->field($model, 'MA_DONVI')->textInput(['maxlength' => true]) ?>
-                </div>
-                <div class="col-md-4">
-                    <?= $form->field($model, 'MA_DONVIKT')->textInput(['maxlength' => true]) ?>
-                </div>
-                    
+                </div>                    
                 <div class="col-md-4">
                     <?= $form->field($model, 'TEN_DONVI')->textInput(['maxlength' => true]) ?>
                 </div>

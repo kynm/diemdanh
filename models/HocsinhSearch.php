@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Nhanvien;
+use app\models\Hocsinh;
 
 /**
- * NhanvienSearch represents the model behind the search form about `app\models\Nhanvien`.
+ * HocsinhSearch represents the model behind the search form about `app\models\Hocsinh`.
  */
-class NhanvienSearch extends Nhanvien
+class HocsinhSearch extends Hocsinh
 {
     /**
      * @inheritdoc
@@ -18,8 +18,7 @@ class NhanvienSearch extends Nhanvien
     public function rules()
     {
         return [
-            [['ID_NHANVIEN'], 'integer'],
-            [['MA_NHANVIEN', 'TEN_NHANVIEN', 'CHUC_VU', 'DIEN_THOAI', 'GHI_CHU', 'USER_NAME', 'ID_DONVI', 'ID_LOP'], 'safe'],
+            [['MA_HOCSINH', 'HO_TEN', 'DIA_CHI', 'SO_DT'], 'safe'],
         ];
     }
 
@@ -39,9 +38,9 @@ class NhanvienSearch extends Nhanvien
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function searchhocsinhtheolop($params, $id)
     {
-        $query = Nhanvien::find()->where(['>', 'ID_NHANVIEN', 0]);
+        $query = Hocsinh::find();
 
         // add conditions that should always apply here
 
@@ -57,19 +56,15 @@ class NhanvienSearch extends Nhanvien
             return $dataProvider;
         }
 
-        $query->joinWith('iDDONVI');
-
         // grid filtering conditions
         $query->andFilterWhere([
-            'ID_NHANVIEN' => $this->ID_NHANVIEN,
+            'ID_LOP' => $id,
         ]);
 
-        $query->andFilterWhere(['like', 'MA_NHANVIEN', $this->MA_NHANVIEN])
-            ->andFilterWhere(['like', 'TEN_NHANVIEN', $this->TEN_NHANVIEN])
-            ->andFilterWhere(['like', 'donvi.TEN_DONVI', $this->ID_DONVI])
-            ->andFilterWhere(['like', 'DIEN_THOAI', $this->DIEN_THOAI])
-            ->andFilterWhere(['like', 'GHI_CHU', $this->GHI_CHU])
-            ->andFilterWhere(['like', 'USER_NAME', $this->USER_NAME]);
+        $query->andFilterWhere(['like', 'MA_HOCSINH', $this->MA_HOCSINH])
+            ->andFilterWhere(['like', 'HO_TEN', $this->HO_TEN])
+            ->andFilterWhere(['like', 'DIA_CHI', $this->DIA_CHI])
+            ->andFilterWhere(['like', 'SO_DT', $this->SO_DT]);
 
         return $dataProvider;
     }

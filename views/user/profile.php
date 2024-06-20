@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
         
         <div class="btn btn-default btn-file btn-block btn-flat">
             <i class="fa fa-image"></i> Chọn ảnh đại diện
-            <input type="file" name="User[file]" id="user-file">
+            <input type="file" name="User[file]" id="user-file" accept="image/*">
         </div> <br>
 
         <ul class="list-group list-group-unbordered">
@@ -80,8 +80,8 @@ $this->params['breadcrumbs'][] = $this->title;
           </div>
           
           <div class="col-sm-4 col-md-4"> 
-            <?= $form->field($nhanvien, 'ID_DAI')->dropDownList(
-                ArrayHelper::map(Daivt::find()->all(), 'ID_DAI', 'TEN_DAIVT'),
+            <?= $form->field($nhanvien, 'ID_LOP')->dropDownList(
+                ArrayHelper::map(Daivt::find()->all(), 'ID_LOP', 'TEN_LOP'),
                 ['prompt' => 'Không thuộc đài' , 'disabled' => true]
             ) ?>
           </div>

@@ -35,18 +35,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     'ID_NHANVIEN',
                     'MA_NHANVIEN',
                     'TEN_NHANVIEN',
-                    [ 
-                        'attribute' => 'CHUC_VU',
-                        'value' => $model->chucvu->ten_chucvu
-                    ],
                     'DIEN_THOAI',
                     [ 
                         'attribute' => 'ID_DONVI',
                         'value' => $model->iDDONVI->TEN_DONVI
-                    ],
-                    [ 
-                        'attribute' => 'ID_DAI',
-                        'value' => @$model->iDDAI->TEN_DAIVT
                     ],
                     'GHI_CHU',
                     'USER_NAME',
