@@ -78,14 +78,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 ['prompt' => 'Chọn đơn vị chủ quản' , 'disabled' => true]
             ) ?>
           </div>
-          
-          <div class="col-sm-4 col-md-4"> 
-            <?= $form->field($nhanvien, 'ID_LOP')->dropDownList(
-                ArrayHelper::map(Daivt::find()->all(), 'ID_LOP', 'TEN_LOP'),
-                ['prompt' => 'Không thuộc đài' , 'disabled' => true]
-            ) ?>
-          </div>
-
           <div class="col-sm-4 col-md-4"> 
             <?= $form->field($nhanvien, 'DIEN_THOAI')->textInput(['maxlength' => true]) ?>
           </div>
