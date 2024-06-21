@@ -36,7 +36,7 @@ if (Yii::$app->controller->action->id === 'login') {
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic">
         <meta charset="<?= Yii::$app->charset ?>"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="icon"  href="/dist/icon/icon.png" type="image/x-icon" />
+        <link rel="icon"  href="/dist/img/icon.png" type="image/x-icon" />
         <?= Html::csrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
