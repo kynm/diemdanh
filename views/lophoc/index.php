@@ -24,7 +24,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         'filterModel' => $searchModel,
                         'columns' => [
                             ['class' => 'yii\grid\SerialColumn'],
-                            'MA_LOP',
                             [
                                 'attribute' => 'TEN_LOP',
                                 'contentOptions' => ['style' => 'width:40%; white-space: normal;'],
@@ -33,16 +32,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                 },
                                 'format' => 'raw',
                             ],
-                            // 'DIA_CHI',
-                            // 'SO_DT',
                             [
-                                'attribute' => 'ID_DONVI',
-                                'value' => 'iDDONVI.TEN_DONVI'
-                            ],
-
-                            [
-                                'class' => 'yii\grid\ActionColumn',
-                                'template' => (Yii::$app->user->can('edit-lophoc')) ? '{update}' : ''
+                                'attribute' => 'SOHOCSINH',
+                                'value' => function ($model) {
+                                    return $model->getDshocsinh()->count();
+                                }
                             ],
                         ],
                     ]); ?>
