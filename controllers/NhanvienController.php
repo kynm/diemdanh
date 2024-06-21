@@ -85,7 +85,7 @@ class NhanvienController extends Controller
                     if (User::find()->where(['username' => $model->USER_NAME])->exists() == false) {
                         $model->save();
                         $user->username = trim($model->USER_NAME);
-                        $user->email = $model->USER_NAME."@vnpt.vn";
+                        $user->email = $model->USER_NAME."@diemdanh.online";
                         $user->setPassword($user->username);
                         $user->generateAuthKey();
                         $user->status = 10;
@@ -121,7 +121,7 @@ class NhanvienController extends Controller
         foreach ($models as $model) {
             $user = new User;
             $user->username = $model->USER_NAME;
-            $user->email = $model->USER_NAME."@vnpt.vn";
+            $user->email = $model->USER_NAME."@diemdanh.online";
             $user->setPassword('Diemdanh@123');
             $user->generateAuthKey();
             $user->status = 10;
@@ -227,19 +227,6 @@ class NhanvienController extends Controller
         }else {
             echo "<option value=''>Chọn lớp</option>";
         }
-    }
-
-    public function actionExport()
-    {
-        ini_set('max_execution_time', 0);
-        $filename = 'data/tram_update.csv';
-        // $handle = fopen($filename, "w");
-        $users = User::find()->all();
-        foreach ($users as $user) {
-            echo "<br>$user->username, vnpt1234, ".$user->nhanvien->TEN_NHANVIEN.", ".$user->nhanvien->chucvu->ten_chucvu.", ".$user->nhanvien->iDDAI->TEN_DAIVT;
-            
-        }
-        // echo "Success!";
     }
 
     public function actionGanquyen()

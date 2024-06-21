@@ -77,7 +77,7 @@ class Nhanvien extends \yii\db\ActiveRecord
      */
     public function makeEmail($name)
     {
-        $suffix = ".qnm@vnpt.vn";
+        $suffix = ".@diemdanh.online";
         $words = explode(" ", $name);
         $email = end($words);
         for ($i=0; $i < sizeof($words) - 1; $i++) { 
