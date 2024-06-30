@@ -42,13 +42,17 @@ class LophocController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new LophocSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if (Yii::$app->user->can('quanlytruonghoc')) {
+            $searchModel = new LophocSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');           
+        }
     }
 
     /**
@@ -63,7 +67,9 @@ class LophocController extends Controller
             $params = Yii::$app->request->queryParams;
             $params['TU_NGAY'] = isset($params['TU_NGAY']) ? $params['TU_NGAY'] : date('Y-m-1');
             $params['DEN_NGAY'] = isset($params['DEN_NGAY']) ? $params['DEN_NGAY'] : date('Y-m-d');
-            $sql = "SELECT c.HO_TEN, COUNT(1) SO_LUONG, SUM(CASE WHEN b.`STATUS` > 0 then 1 ELSE 0 END) SOLUONGDIHOC FROM quanlydiemdanh a, diemdanhhocsinh b, hocsinh c
+            $sql = "SELECT c.HO_TEN, COUNT(1) SO_LUONG, SUM(CASE WHEN b.`STATUS` > 0 then 1 ELSE 0 END) SOLUONGDIHOC
+            , GROUP_CONCAT(CASE WHEN b.`STATUS` = 0 then day(a.NGAY_DIEMDANH) ELSE null END) NGAYNGHI
+            FROM quanlydiemdanh a, diemdanhhocsinh b, hocsinh c
                 WHERE a.ID = b.ID_DIEMDANH AND b.ID_HOCSINH = c.ID and a.ID_LOP = :ID_LOP AND a.NGAY_DIEMDANH BETWEEN :TU_NGAY and :DEN_NGAY GROUP BY c.HO_TEN,c.ID order by c.ID";
             $data = Yii::$app->db->createCommand($sql)->bindValues(
                 [
@@ -105,7 +111,7 @@ class LophocController extends Controller
 
     public function actionThemhocsinh($id)
     {
-        if (Yii::$app->user->can('create-lophoc') && $id) {
+        if (Yii::$app->user->can('create-hocsinh') && $id) {
             $hocsinh = new Hocsinh();
             $model = $this->findModel($id);
             $hocsinh->ID_DONVI = $model->ID_DONVI;

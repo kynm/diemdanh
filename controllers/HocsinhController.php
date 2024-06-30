@@ -99,7 +99,7 @@ class HocsinhController extends Controller
             $model = $this->findModel($id);
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->ID_LOP]);
+                return $this->redirect(['view', 'id' => $model->ID]);
             } else {
                 return $this->render('update', [
                     'model' => $model,
@@ -119,7 +119,7 @@ class HocsinhController extends Controller
     public function actionDelete($id)
     {
         if (Yii::$app->user->can('delete-hocsinh')) {
-            $this->findModel($id)->delete();
+           // $this->findModel($id)->delete();
             
             return $this->redirect(['index']);
         } else {

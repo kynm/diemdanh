@@ -19,14 +19,20 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filterModel' => $searchModel,
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
+                    [
+                        'attribute' => 'ID_LOP',
+                        'value' => 'lop.TEN_LOP',
+                    ],
                     'MA_HOCSINH',
                     'HO_TEN',
                     'DIA_CHI',
                     'SO_DT',
-                    // [
-                    //     'class' => 'yii\grid\ActionColumn',
-                    //     'template' => (Yii::$app->user->can('edit-lophoc')) ? '{view} {update} {delete}' : '{view}'
-                    // ],
+                    'NGAY_BD',
+                    'NGAY_KT',
+                    [
+                        'class' => 'yii\grid\ActionColumn',
+                        'template' => (Yii::$app->user->can('edit-hocsinh')) ? '{view} {update}' : '{view}'
+                    ],
                 ],
             ]); ?>
         <?php Pjax::end(); ?>

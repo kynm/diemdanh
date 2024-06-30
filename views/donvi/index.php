@@ -30,6 +30,24 @@ $this->params['breadcrumbs'][] = $this->title;
                         'TEN_DONVI',
                         'DIA_CHI',
                         'SO_DT',
+                        [
+                            'attribute' => 'NHANVIEN',
+                            'value' => function ($model) {
+                                return $model->getNhanviens()->count();
+                            },
+                        ],
+                        [
+                            'attribute' => 'LOP',
+                            'value' => function ($model) {
+                                return $model->getLophoc()->count();
+                            },
+                        ],
+                        [
+                            'attribute' => 'HOCSINH',
+                            'value' => function ($model) {
+                                return $model->getHocsinh()->count();
+                            },
+                        ],
                         ['class' => 'yii\grid\ActionColumn',
                         'template' => (Yii::$app->user->can('edit-donvi')) ? '{view} {update} {delete}' : '{view}'],
                     ],

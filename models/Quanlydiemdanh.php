@@ -43,6 +43,9 @@ class Quanlydiemdanh extends \yii\db\ActiveRecord
             'SOHOCSINH' => 'TỔNG SỐ HỌC SINH',
             'SOHOCSINHDIHOC' => 'SỐ HỌC SINH ĐI HỌC',
             'THU' => 'THỨ',
+            'ID_LOP' => 'LỚP',
+            'VANG' => 'VẮNG',
+            'DSHOCSINHVANG' => 'DANH SÁCH VẮNG',
         ];
     }
 

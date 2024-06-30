@@ -77,8 +77,22 @@ class SiteController extends Controller
         } else {
             if (Yii::$app->user->can('quanlyhocsinh')) {
                 $solop = Yii::$app->user->identity->nhanvien->iDDONVI->getLophoc()->count();
+                $tongsohocvien = Yii::$app->user->identity->nhanvien->iDDONVI->getHocsinh()->count();
+                $sql = "SELECT b.TEN_LOP, b.ID_LOP
+                    ,COUNT(1) SOHOCSINH
+                    , SUM(case when d.STATUS = 1 then 1 ELSE 0 END) SOLUONGDIHOC
+                    ,SUM(case when d.STATUS = 0 then 1 ELSE 0 END) SOLUONGNGHI
+                    ,GROUP_CONCAT(CASE WHEN d.`STATUS` = 0 then e.HO_TEN ELSE NULL END) HOCSINHNGHI
+                    FROM donvi a, lophoc b, quanlydiemdanh c,diemdanhhocsinh d, hocsinh e
+                    WHERE a.ID_DONVI = b.ID_DONVI AND b.ID_LOP = c.ID_LOP AND c.ID = d.ID_DIEMDANH AND d.ID_HOCSINH = e.ID
+                        AND a.ID_DONVI = :ID_DONVI
+                        AND c.NGAY_DIEMDANH = :NGAY_DIEMDANH
+                        GROUP BY b.TEN_LOP, b.ID_LOP  ORDER BY b.ID_LOP";
+                $dulieungay = Yii::$app->db->createCommand($sql)->bindValues(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI, ':NGAY_DIEMDANH' => date('Y-m-d')])->queryAll();
                 return $this->render('quanlyhocsinh', [
                     'solop' => $solop,
+                    'tongsohocvien' => $tongsohocvien,
+                    'dulieungay' => $dulieungay,
                 ]);
             }
             if (Yii::$app->user->can('diemdanhlophoc')) {

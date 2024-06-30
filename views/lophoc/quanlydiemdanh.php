@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use yii\helpers\ArrayHelper;
+use app\models\Hocsinh;
 /* @var $this yii\web\View */
 /* @var $model app\models\Daivt */
 
@@ -16,9 +18,15 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= $this->render('_detail', ['model' => $diemdanh->lop,]) ?>
 </div>
 <?php if (Yii::$app->user->can('diemdanhlophoc')):?>
-<div class="daivt-view">
-    <?= $this->render('_form_diemdanh', ['model' => $diemdanh, 'id' => $diemdanh->ID_LOP,]) ?>
-</div>
+<?php
+        $diemdanhnow = $model->getDsdiemdanh()->andWhere(['NGAY_DIEMDANH' => date('Y-m-d')])->one();
+        if(!$diemdanhnow):?>
+            <div class="daivt-view">
+                <?= $this->render('_form_diemdanh', ['model' => $diemdanh, 'id' => $diemdanh->ID_LOP,]) ?>
+            </div>
+        <?php else:?>
+            <h1 class="text-center text-danger">LỚP HỌC ĐÃ ĐIỂM ĐANH TRONG NGÀY!</h1>
+        <?php endif;?>
 <?php endif; ?>
 <div class="box box-primary">
     <div class="box-body">
@@ -35,7 +43,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'updatediemdanh' => function ($url, $model) {
                                     return Html::a($model->TIEUDE, '/lophoc/capnhatdiemdanh?diemdanhid=' . $model->ID);
                                 },
-
                             ],
                         ],
                         [
@@ -58,7 +65,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                 return $model->getDschitietdiemdanh()->andWhere(['STATUS' => 1])->count();
                             }
                         ],
-                        
+                        [
+                            'attribute' => 'DSHOCSINHVANG',
+                            'value' =>function($model) {
+                                $idhocsinh = ArrayHelper::map($model->getDschitietdiemdanh()->andWhere(['STATUS' => 0])->all(), 'ID_HOCSINH', 'ID_HOCSINH');
+                                $dshocsinhvang = ArrayHelper::map(Hocsinh::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->andWhere(['in', 'ID', $idhocsinh])->all(), 'ID', 'HO_TEN');
+                                return implode($dshocsinhvang, ',');
+                            }
+                        ],
                     ],
                 ]); ?>
             <?php Pjax::end(); ?>

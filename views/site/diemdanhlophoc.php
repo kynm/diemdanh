@@ -12,9 +12,8 @@ $this->title = 'QUẢN LÝ ĐIỂM DANH';
 		<div class="info-box">
 			<span class="info-box-icon bg-aqua"><i class="fa fa-address-book" aria-hidden="true"></i></span>
 			<div class="info-box-content">
-				<span class="info-box-number"><?= $lop->TEN_LOP?></span>
+				<?= Html::a($lop->TEN_LOP, ['/lophoc/view', 'id' => $lop->ID_LOP], ['class' => 'info-box-number']) ?>
 				<span class="info-box-number"  style="font-size: 20px; color: red;"><?= $lop->getDshocsinh()->count()?> Học viên</span>
-				<?= Html::a('<i class="fa fa-arrow-circle-right"></i> CHI TIẾT', ['/lophoc/view', 'id' => $lop->ID_LOP], ['class' => 'small-box-footer']) ?>
 			</div>
 		</div>
 	</div>

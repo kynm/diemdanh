@@ -69,6 +69,11 @@ class Donvi extends \yii\db\ActiveRecord
         return $this->hasMany(Lophoc::className(), ['ID_DONVI' => 'ID_DONVI']);
     }
 
+    public function getHocsinh()
+    {
+        return $this->hasMany(Hocsinh::className(), ['ID_DONVI' => 'ID_DONVI']);
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */

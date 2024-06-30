@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\widgets\ActiveForm;
 use kartik\date\DatePicker;
+use yii\helpers\ArrayHelper;
+use app\models\Hocsinh;
 /* @var $this yii\web\View */
 /* @var $model app\models\Daivt */
 
@@ -13,12 +15,15 @@ $this->params['breadcrumbs'][] = ['label' => 'Đài viễn thông', 'url' => ['i
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="daivt-view">
+    <?= $this->render('_detail', [
+        'model' => $model,
+    ]) ?>
     <p>
         <?php if (Yii::$app->user->can('quanlyhocsinh')):?>
             <?= Html::a('<i class="fa fa-pencil-square-o"></i> Cập nhật', ['update', 'id' => $model->ID_LOP], ['class' => 'btn btn-primary btn-flat']) ?>
         <?php endif; ?>
         <?php if (Yii::$app->user->can('diemdanhlophoc')):?>
-            <?= Html::a('<i class="fa fa-pencil-square-o"></i> Quản lý điểm danh', ['lophoc/quanlydiemdanh', 'id' => $model->ID_LOP], ['class' => 'btn btn-primary btn-flat']) ?>
+            <?= Html::a('<i class="fa fa-pencil-square-o"></i> Quản lý điểm danh', ['lophoc/quanlydiemdanh', 'id' => $model->ID_LOP], ['class' => 'btn btn-danger btn-flat']) ?>
         <?php endif; ?>
         <?= Html::a('<i class="fa fa-pencil-square-o"></i> Quản lý học sinh', ['quanlyhocsinh', 'id' => $model->ID_LOP], ['class' => 'btn btn-primary btn-flat']) ?>
         <?php if (Yii::$app->user->can('quanlyhocsinh') && !$model->getDshocsinh()->count()): ?>
@@ -31,9 +36,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ]) ?>
         <?php endif; ?>
     </p>
-    <?= $this->render('_detail', [
-        'model' => $model,
-    ]) ?>
 </div>
 <div class="box-body table-responsive">
     <h1>NGÀY HIỆN TẠI</h1>
@@ -44,6 +46,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 <th>NGÀY</th>
                 <th>TỔNG SỐ <br/>HỌC SINH</th>
                 <th>SỐ HỌC SINH <br/>ĐI HỌC</th>
+                <th>DANH SÁCH HS NGHỈ</th>
+                <th></th>
             </tr>
             <?php
             $diemdanh = $model->getDsdiemdanh()->andWhere(['NGAY_DIEMDANH' => date('Y-m-d')])->one();
@@ -53,7 +57,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     <th><?= $diemdanh->NGAY_DIEMDANH?></th>
                     <th><?= $diemdanh->getDschitietdiemdanh()->count()?></th>
                     <th><?= $diemdanh->getDschitietdiemdanh()->andWhere(['STATUS' => 1])->count()?></th>
-                    <th><?=  Html::a('<span class="glyphicon glyphicon-pencil"></span>', '/lophoc/capnhatdiemdanh?diemdanhid=' . $diemdanh->ID, [
+                    <th><?php
+                        $idhocsinh = ArrayHelper::map($diemdanh->getDschitietdiemdanh()->andWhere(['STATUS' => 0])->all(), 'ID_HOCSINH', 'ID_HOCSINH');
+                                $dshocsinhvang = ArrayHelper::map(Hocsinh::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->andWhere(['in', 'ID', $idhocsinh])->all(), 'ID', 'HO_TEN');
+                        echo implode($dshocsinhvang, ',');
+                        ?>
+                    </th>
+                    <th><?=  Html::a('<i class="fa fa-pencil-square-o"></i>Cập nhật', '/lophoc/capnhatdiemdanh?diemdanhid=' . $diemdanh->ID, ['class' => 'btn btn-primary',
                                     'title' => Yii::t('app', 'lead-update')]);?></th>
                 </tr>
             <?php else:?>
@@ -118,6 +128,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <th >TỔNG SỐ <br/>BUỔI</th>
                 <th >SỐ BUỔI <br/>HỌC</th>
                 <th >SỐ BUỔI <br/>NGHỈ</th>
+                <th >NGÀY NGHỈ</th>
             </tr>
             <?php foreach ($data as $key => $value): ?>
                 <tr>
@@ -126,6 +137,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <td scope="col"><?= $value['SO_LUONG']?></td>
                     <td scope="col"><?= $value['SOLUONGDIHOC']?></td>
                     <td scope="col" style="<?= $value['SO_LUONG'] != $value['SOLUONGDIHOC'] ? 'color: red;' : ''?>"><?= $value['SO_LUONG'] - $value['SOLUONGDIHOC']?></td>
+                    <td scope="col"><?= $value['NGAYNGHI']?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

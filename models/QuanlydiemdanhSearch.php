@@ -66,4 +66,34 @@ class QuanlydiemdanhSearch extends Quanlydiemdanh
 
         return $dataProvider;
     }
+
+    public function searchdiemdanhtheodonvi($params)
+    {
+        $query = Quanlydiemdanh::find();
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            return $dataProvider;
+        }
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI,
+        ]);
+
+        $query->andFilterWhere(['like', 'TIEUDE', $this->TIEUDE]);
+        $query->orderBy([
+            'NGAY_DIEMDANH' => SORT_DESC,
+            'ID_LOP' => SORT_DESC,
+        ]);
+
+        return $dataProvider;
+    }
 }
