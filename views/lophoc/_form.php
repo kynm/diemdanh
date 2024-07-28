@@ -46,6 +46,9 @@ $dsnhanvien = ArrayHelper::map(Nhanvien::find()->where(['ID_DONVI' => $model->ID
                 <div class="col-sm-4">
                     <?= $form->field($model, 'SO_DT')->textInput(['maxlength' => true]) ?>
                 </div>
+                <div class="col-sm-4">
+                    <?= $form->field($model, 'TIENHOC')->textInput(['maxlength' => true]) ?>
+                </div>
                 <?php if (Yii::$app->user->can('Administrator')): ?>
                     <div class="col-sm-4">
                         <?= $form->field($model, 'ID_DONVI')->dropDownList(

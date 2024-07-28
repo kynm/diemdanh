@@ -205,13 +205,6 @@ class UserController extends Controller
                     $alert = "Mật khẩu bảo mật kém, không thể cập nhật!";
                 }
             }
-
-            $user->file = UploadedFile::getInstance($user, 'file');
-            if (isset($user->file)) {
-                $filePath = 'dist/img/' . $user->id .'_ava.' . $user->file->extension;
-                $user->file->saveAs($filePath);
-                $user->avatar = $filePath;
-            }
             $user->save(false);
             return $this->redirect(['edit-profile' , [
                'alert' => $alert,

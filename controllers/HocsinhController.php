@@ -10,6 +10,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
+use app\models\Lophoc;
 
 /**
  * HocsinhController implements the CRUD actions for hocsinh model.
@@ -101,8 +103,10 @@ class HocsinhController extends Controller
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->ID]);
             } else {
+                $dslop = ArrayHelper::map(Lophoc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->all(), 'ID_LOP', 'TEN_LOP');
                 return $this->render('update', [
                     'model' => $model,
+                    'dslop' => $dslop,
                 ]);
             }
         } else {

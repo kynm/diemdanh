@@ -60,7 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <th><?php
                         $idhocsinh = ArrayHelper::map($diemdanh->getDschitietdiemdanh()->andWhere(['STATUS' => 0])->all(), 'ID_HOCSINH', 'ID_HOCSINH');
                                 $dshocsinhvang = ArrayHelper::map(Hocsinh::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->andWhere(['in', 'ID', $idhocsinh])->all(), 'ID', 'HO_TEN');
-                        echo implode($dshocsinhvang, ',');
+                        echo implode(',', $dshocsinhvang);
                         ?>
                     </th>
                     <th><?=  Html::a('<i class="fa fa-pencil-square-o"></i>Cập nhật', '/lophoc/capnhatdiemdanh?diemdanhid=' . $diemdanh->ID, ['class' => 'btn btn-primary',

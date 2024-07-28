@@ -18,15 +18,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= $this->render('_detail', ['model' => $diemdanh->lop,]) ?>
 </div>
 <?php if (Yii::$app->user->can('diemdanhlophoc')):?>
-<?php
-        $diemdanhnow = $model->getDsdiemdanh()->andWhere(['NGAY_DIEMDANH' => date('Y-m-d')])->one();
-        if(!$diemdanhnow):?>
-            <div class="daivt-view">
-                <?= $this->render('_form_diemdanh', ['model' => $diemdanh, 'id' => $diemdanh->ID_LOP,]) ?>
-            </div>
-        <?php else:?>
-            <h1 class="text-center text-danger">LỚP HỌC ĐÃ ĐIỂM ĐANH TRONG NGÀY!</h1>
-        <?php endif;?>
+    <div class="daivt-view">
+        <?= $this->render('_form_diemdanh', ['model' => $diemdanh, 'id' => $diemdanh->ID_LOP,]) ?>
+    </div>
+    <h1 class="text-center text-danger">LỚP HỌC ĐÃ ĐIỂM ĐANH TRONG NGÀY!</h1>
 <?php endif; ?>
 <div class="box box-primary">
     <div class="box-body">
@@ -70,7 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'value' =>function($model) {
                                 $idhocsinh = ArrayHelper::map($model->getDschitietdiemdanh()->andWhere(['STATUS' => 0])->all(), 'ID_HOCSINH', 'ID_HOCSINH');
                                 $dshocsinhvang = ArrayHelper::map(Hocsinh::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->andWhere(['in', 'ID', $idhocsinh])->all(), 'ID', 'HO_TEN');
-                                return implode($dshocsinhvang, ',');
+                                return implode(',', $dshocsinhvang);
                             }
                         ],
                     ],

@@ -35,7 +35,7 @@ class Lophoc extends \yii\db\ActiveRecord
     {
         return [
             [['MA_LOP', 'ID_DONVI', 'ID_NHANVIEN_DIEMDANH'], 'required'],
-            [['ID_DONVI'], 'integer'],
+            [['ID_DONVI', 'TIENHOC'], 'integer'],
             [['MA_LOP'], 'string', 'max' => 10],
             [['TEN_LOP', 'DIA_CHI'], 'string', 'max' => 100],
             [['SO_DT'], 'string', 'max' => 20],
@@ -56,6 +56,7 @@ class Lophoc extends \yii\db\ActiveRecord
             'DIA_CHI' => 'ĐỊA CHỈ',
             'SO_DT' => 'ĐIỆN THOẠI',
             'ID_DONVI' => 'ĐƠN VỊ',
+            'TIENHOC' => 'SỐ TIỀN MỖI BUỔI HỌC',
             'ID_NHANVIEN_DIEMDANH' => 'NGƯỜI ĐIỂM DANH',
             'SOHOCSINH' => 'TỔNG SỐ HỌC SINH',
         ];

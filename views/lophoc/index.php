@@ -38,6 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     return $model->getDshocsinh()->count();
                                 }
                             ],
+                            'TIENHOC',
                         ],
                     ]); ?>
                 <?php Pjax::end(); ?>

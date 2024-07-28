@@ -14,5 +14,6 @@ $this->params['breadcrumbs'][] = 'Cập nhật';
 <div class="nhanvien-update">
     <?= $this->render('_form', [
         'model' => $model,
+        'dslop' =>$dslop,
     ]) ?>
 </div>

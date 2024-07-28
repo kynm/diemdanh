@@ -98,6 +98,7 @@ class LophocController extends Controller
             $hocsinh->MA_HOCSINH  = $model->MA_LOP . '-' . ($model->getDshocsinh()->count() + 1);
             $searchModel = new HocsinhSearch();
             $dataProvider = $searchModel->searchhocsinhtheolop(Yii::$app->request->queryParams, $id);
+            $hocsinh->TIENHOC = $hocsinh->lop->TIENHOC;
             return $this->render('quanlyhocsinh', [
                 'model' => $model,
                 'hocsinh' => $hocsinh,
@@ -156,7 +157,13 @@ class LophocController extends Controller
             $diemdanh->ID_DONVI = $model->ID_DONVI;
             $diemdanh->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
             $diemdanh->ID_LOP  = $id;
-            if ($diemdanh->load(Yii::$app->request->post()) && $diemdanh->save(false)) {
+            if ($diemdanh->load(Yii::$app->request->post())) {
+                $diemdanhnow = $model->getDsdiemdanh()->andWhere(['NGAY_DIEMDANH' => $diemdanh->NGAY_DIEMDANH])->one();
+                if ($diemdanhnow) {
+                    Yii::$app->session->setFlash('error', "Điểm danh đã tồn tại!");
+                    return $this->redirect(['capnhatdiemdanh', 'diemdanhid' => $diemdanhnow->ID]);
+                }
+                $diemdanh->save(false);
                 foreach ($model->dshocsinh as $key => $hocsinh) {
                     $diemdanhhocsinh = Diemdanhhocsinh::find()->where(['ID_HOCSINH' => $hocsinh->ID])->andWhere(['ID_DIEMDANH' => $diemdanh->ID])->one();
                     if (!$diemdanhhocsinh) {
@@ -196,7 +203,6 @@ class LophocController extends Controller
             $params = Yii::$app->request->post();
             $diemdanhhs->STATUS = $params['STATUS'];
             $diemdanhhs->save();
-            die(var_dump($diemdanhhs));
             $result['error'] = 0;
             $result['message'] = 'Cập nhật thành công';
 

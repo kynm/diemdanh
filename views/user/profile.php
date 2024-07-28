@@ -26,16 +26,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="box box-primary">
       <div class="box-body box-profile">
         <img class="profile-user-img img-responsive img-circle" id="avatar" src="<?= Yii::getAlias('@web') ?>/<?= Yii::$app->user->identity->avatar ?>" alt="User profile picture" style="height: 100px" > 
-
         <h3 class="profile-username text-center"><?= $nhanvien->TEN_NHANVIEN ?></h3>
-
         <p class="text-muted text-center"><?= $nhanvien->chucvu->ten_chucvu ?></p>
-        
-        <div class="btn btn-default btn-file btn-block btn-flat">
-            <i class="fa fa-image"></i> Chọn ảnh đại diện
-            <input type="file" name="User[file]" id="user-file" accept="image/*">
-        </div> <br>
-
         <ul class="list-group list-group-unbordered">
           <li class="list-group-item">
             <label>Đổi mật khẩu</label>
@@ -102,23 +94,6 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 <?php
 $script = <<< JS
-  function readURL(input) {
-
-    if (input.files && input.files[0]) {
-      var reader = new FileReader();
-
-      reader.onload = function(e) {
-        $('#avatar').attr('src', e.target.result);
-      }
-
-      reader.readAsDataURL(input.files[0]);
-    }
-  }
-
-  $("#user-file").change(function() {
-    readURL(this);
-  });
-
   $('#user-newpassword, #user-confirmpassword').on('keyup', function () {
     if ($('#user-password').val() == '') {
       $('#message').html('Chưa nhập mật khẩu cũ').css('color', 'red');

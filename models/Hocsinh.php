@@ -39,7 +39,7 @@ class Hocsinh extends \yii\db\ActiveRecord
             [['MA_HOCSINH', 'HO_TEN', 'ID_NHANVIEN', 'ID_LOP', 'ID_DONVI'], 'required'],
             [['HO_TEN', 'SO_DT', 'DIA_CHI', 'GHICHU'], 'string'],
             [['NGAY_SINH', 'NGAY_BD', 'NGAY_KT'], 'safe'],
-            [['ID_LOP', 'ID_NHANVIEN'], 'integer'],
+            [['ID_LOP', 'ID_NHANVIEN', 'TIENHOC'], 'integer'],
             [['MA_HOCSINH'], 'string', 'max' => 32],
             [['HO_TEN'], 'string', 'max' => 100],
             [['MA_HOCSINH'], 'unique'],
@@ -65,6 +65,7 @@ class Hocsinh extends \yii\db\ActiveRecord
             'NGAY_BD' => 'NGÀY BĐ',
             'NGAY_KT' => 'NGÀY KT',
             'GHICHU' => 'GHI CHÚ',
+            'TIENHOC' => 'SỐ TIỀN MỖI BUỔI HỌC'
         ];
     }
 

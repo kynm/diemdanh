@@ -34,6 +34,17 @@ $this->title = 'QUẢN LÝ ĐIỂM DANH';
             </div>
         </div>
     </div>
+    <?php if (Yii::$app->user->can('quanlyhocphi')):?>
+    <div class="col-lg-3 col-6">
+        <div class="info-box">
+            <span class="info-box-icon bg-aqua"><i class="fa fa-check" aria-hidden="true"></i></span>
+            <div class="info-box-content">
+                <span class="info-box-number"  style="font-size: 20px; color: red;">QUẢN LÝ HỌC PHÍ</span>
+                <?= Html::a('<i class="fa fa-arrow-circle-right"></i> QUẢN LÝ HỌC PHÍ', ['/quanlyhocphi/index'], ['class' => 'small-box-footer']) ?>
+            </div>
+        </div>
+    </div>
+    <?php endif; ?>
 </div>
 <div class="box-body table-responsive">
     <h1>NGÀY HIỆN TẠI</h1>

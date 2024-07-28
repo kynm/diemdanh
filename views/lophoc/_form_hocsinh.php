@@ -11,20 +11,16 @@ use kartik\date\DatePicker;
 ?>
 
 <div class="daivt-form">
-
     <?php $form = ActiveForm::begin(['action' =>['lophoc/themhocsinh', 'id' => $id], 'method' => 'post',]); ?>
-
     <div class="box box-primary">
         <div class="box-body">
             <div class="row">
                 <div class="col-sm-2">
                     <?= $form->field($model, 'MA_HOCSINH')->textInput(['maxlength' => true]) ?>
                 </div>
-                    
                 <div class="col-sm-4">
                     <?= $form->field($model, 'HO_TEN')->textInput(['maxlength' => true]) ?>
                 </div>
-                    
                 <div class="col-sm-3">
                     <label class="control-label">Ngày sinh</label>
                     <?= DatePicker::widget([
@@ -42,6 +38,9 @@ use kartik\date\DatePicker;
                 </div>
             </div>
             <div class="row">
+                <div class="col-sm-2">
+                    <?= $form->field($model, 'TIENHOC')->textInput(['maxlength' => true]) ?>
+                </div>
                 <div class="col-sm-2">
                     <?= $form->field($model, 'SO_DT')->textInput(['maxlength' => true]) ?>
                 </div>

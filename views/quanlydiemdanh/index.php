@@ -55,18 +55,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'format' => 'raw',
                             ],
                             [
-                                'attribute' => 'HO',
-                                'value' =>function($model) {
-                                    return '<span style="color: red; font-size:20px">' . $model->getDschitietdiemdanh()->andWhere(['STATUS' => 0])->count() . '</span>';
-                                },
-                                'format' => 'raw',
-                            ],
-                            [
                             'attribute' => 'DSHOCSINHVANG',
                             'value' =>function($model) {
                                 $idhocsinh = ArrayHelper::map($model->getDschitietdiemdanh()->andWhere(['STATUS' => 0])->all(), 'ID_HOCSINH', 'ID_HOCSINH');
                                 $dshocsinhvang = ArrayHelper::map(Hocsinh::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->andWhere(['in', 'ID', $idhocsinh])->all(), 'ID', 'HO_TEN');
-                                return implode($dshocsinhvang, ',');
+                                return $dshocsinhvang ? implode(',', $dshocsinhvang) : null;
                             }
                         ],
                             

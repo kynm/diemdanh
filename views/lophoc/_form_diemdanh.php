@@ -54,4 +54,3 @@ $script = <<< JS
 JS;
 $this->registerJs($script);
 ?>
-?>

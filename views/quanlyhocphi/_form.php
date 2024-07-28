@@ -3,7 +3,6 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
-use app\models\Donvi;
 use kartik\date\DatePicker;
 use kartik\select2\Select2;
 /* @var $this yii\web\View */
@@ -17,27 +16,8 @@ use kartik\select2\Select2;
     <div class="box box-primary">
         <div class="box-body">
             <div class="row">
-                <div class="col-sm-2">
-                    <?= $form->field($model, 'MA_HOCSINH')->textInput(['maxlength' => true]) ?>
-                </div>
-                    
-                <div class="col-sm-3">
-                    <?= $form->field($model, 'HO_TEN')->textInput(['maxlength' => true]) ?>
-                </div>
-                <div class="col-sm-2">
-                    <label class="control-label">Ngày sinh</label>
-                    <?= DatePicker::widget([
-                        'model' => $model,
-                        'attribute' => 'NGAY_SINH',
-                        'name' => 'NGAY_SINH', 
-                        'removeButton' => false,
-                        'options' => ['placeholder' => 'Ngày sinh'],
-                        'pluginOptions' => [
-
-                            'format' => 'yyyy-mm-dd',
-                            'todayHighlight' => true
-                        ]
-                    ]); ?>
+                <div class="col-sm-4">
+                    <?= $form->field($model, 'TIEUDE')->textInput(['maxlength' => true]) ?>
                 </div>
                 <div class="col-md-3">
                     <?= $form->field($model, 'ID_LOP')->widget(Select2::classname(), [
@@ -49,49 +29,34 @@ use kartik\select2\Select2;
                         ],
                     ]); ?>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-sm-2">
-                    <?= $form->field($model, 'SO_DT')->textInput(['maxlength' => true]) ?>
-                </div>
-                <div class="col-sm-8">
-                    <?= $form->field($model, 'DIA_CHI')->textInput(['maxlength' => true]) ?>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label class="control-label">Ngày BD</label>
+                    <label class="control-label">TỪ NGÀY</label>
                     <?= DatePicker::widget([
                         'model' => $model,
-                        'attribute' => 'NGAY_BD',
-                        'name' => 'NGAY_BD', 
+                        'attribute' => 'TU_NGAY',
+                        'name' => 'TU_NGAY', 
                         'removeButton' => false,
-                        'options' => ['placeholder' => 'Ngày BD'],
+                        'options' => ['placeholder' => 'TỪ NGÀY'],
                         'pluginOptions' => [
-
                             'format' => 'yyyy-mm-dd',
                             'todayHighlight' => true
                         ]
                     ]); ?>
                 </div>
-                <div class="col-sm-3">
-                    <label class="control-label">Ngày KT</label>
+                <div class="col-sm-2">
+                    <label class="control-label">ĐẾN NGÀY</label>
                     <?= DatePicker::widget([
                         'model' => $model,
-                        'attribute' => 'NGAY_KT',
-                        'name' => 'NGAY_KT', 
+                        'attribute' => 'DEN_NGAY',
+                        'name' => 'DEN_NGAY', 
                         'removeButton' => false,
-                        'options' => ['placeholder' => 'Ngày KT'],
+                        'options' => ['placeholder' => 'ĐẾN NGÀY'],
                         'pluginOptions' => [
-
                             'format' => 'yyyy-mm-dd',
                             'todayHighlight' => true
                         ]
                     ]); ?>
                 </div>
-                <div class="col-sm-6">
-                    <?= $form->field($model, 'GHICHU')->textarea(['rows' => '6']) ?>
-            </div>
             </div>
         </div>
         <div class="box-footer">
@@ -102,3 +67,8 @@ use kartik\select2\Select2;
     </div>
     <?php ActiveForm::end(); ?>
 </div>
+<?php
+$script = <<< JS
+JS;
+$this->registerJs($script);
+?>
