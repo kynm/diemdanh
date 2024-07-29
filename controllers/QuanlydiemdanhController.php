@@ -121,4 +121,31 @@ class QuanlydiemdanhController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    public function actionXoadiemdanh()
+    {
+            $params = Yii::$app->request->post();
+            $diemdanh = Quanlydiemdanh::findOne($params['id']);
+            $result = [
+                'error' => 1,
+                'message' => 'LỖI CẬP NHẬT',
+            ];
+        if (Yii::$app->user->can('quanlytruonghoc') && $diemdanh && $diemdanh->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+            $log = new ActivitiesLog;
+            $log->activity_type = 'xoadiemdanh';
+            $log->description = Yii::$app->user->identity->nhanvien->TEN_NHANVIEN." đã xóa điểm danh:  ". $diemdanh->ID . ', ' . $diemdanh->TIEUDE . ', ĐƠN VỊ: ' . $diemdanh->donvi->TEN_DONVI  . ', LỚP:' . $diemdanh->lop->TEN_LOP;
+            $log->user_id = Yii::$app->user->identity->id;
+            $log->create_at = time();
+            $log->save();
+            Diemdanhhocsinh::deleteAll(['ID_DIEMDANH' => $diemdanh->ID]);
+            $diemdanh->delete();
+            Yii::$app->session->setFlash('success', "Xóa thành công!");
+            $result = [
+                'error' => null,
+                'message' => 'Xóa thành công',
+            ];
+        }
+
+        return json_encode($result);
+    }
 }

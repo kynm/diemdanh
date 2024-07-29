@@ -16,7 +16,8 @@ use app\models\AuthItemChild;
 use app\models\Khachhanggiahan;
 use app\models\Donvi;
 use app\models\Nhanvien;
-use app\models\Dichvu;
+use app\models\Hocsinh;
+use app\models\Lophoc;
 use app\models\KhachhanggiahanSearch;
 use moonland\phpexcel\Excel;
 use yii\helpers\ArrayHelper;
@@ -75,6 +76,18 @@ class SiteController extends Controller
         if (Yii::$app->user->isGuest) {
             return $this->redirect(['login']);
         } else {
+            if (Yii::$app->user->can('Administrator')) {
+                $sldonvi = Donvi::find()->count();
+                $sltk = Nhanvien::find()->count();
+                $sllh = Lophoc::find()->count();
+                $slhs = Hocsinh::find()->count();
+                return $this->render('index', [
+                    'sldonvi' => $sldonvi,
+                    'sltk' => $sltk,
+                    'sllh' => $sllh,
+                    'slhs' => $slhs,
+            ]);
+            }
             if (Yii::$app->user->can('quanlyhocsinh')) {
                 $solop = Yii::$app->user->identity->nhanvien->iDDONVI->getLophoc()->count();
                 $tongsohocvien = Yii::$app->user->identity->nhanvien->iDDONVI->getHocsinh()->count();

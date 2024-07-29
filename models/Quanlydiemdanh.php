@@ -47,6 +47,7 @@ class Quanlydiemdanh extends \yii\db\ActiveRecord
             'VANG' => 'VẮNG',
             'DSHOCSINHVANG' => 'DANH SÁCH VẮNG',
             'GHICHU' => 'GHI CHÚ',
+            'HANHDONG' => 'HÀNH ĐỘNG',
         ];
     }
 
@@ -58,6 +59,11 @@ class Quanlydiemdanh extends \yii\db\ActiveRecord
     public function getLop()
     {
         return $this->hasOne(Lophoc::className(), ['ID_LOP' => 'ID_LOP']);
+    }
+
+    public function getDonvi()
+    {
+        return $this->hasOne(Donvi::className(), ['ID_DONVI' => 'ID_DONVI']);
     }
 
 

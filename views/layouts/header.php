@@ -23,6 +23,15 @@ use yii\helpers\Url;
                             </ul>
                         </li>
                     <?php endif; ?>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">HƯỚNG DẪN<span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <?php if (Yii::$app->user->can('Administrator') || Yii::$app->user->can('quanlyhocsinh')): ?>
+                                    <li><a href="https://docs.google.com/document/d/1uYMzSlUt7E9Zu2qf2hMxrszn0LZ8PE7CzvuHL8pDVOI/edit?usp=sharing" target="_blank">QUẢN LÝ TRUNG TÂM</a></li>
+                                <?php endif; ?>
+                                    <li><a href="https://docs.google.com/document/d/1mGWRUdnxj4CLGiNJbLctc57NmPYJ0A4RsQs-hORecxY/edit?usp=sharing" target="_blank">ĐIỂM DANH</a></li>
+                            </ul>
+                        </li>
                 </ul>
             </div>
             <div class="navbar-custom-menu">
@@ -35,7 +44,9 @@ use yii\helpers\Url;
                         <li class="user-footer">
                             <div class="pull-left">
                                 <a href="<?= Url::to(['user/edit-profile'])?>" class="btn btn-default btn-flat">Profile</a>
-                                <a href="<?= Url::to(['user/cauhinhdonvi'])?>" class="btn btn-default btn-flat">CẤU HÌNH</a>
+                                <?php if (Yii::$app->user->can('quanlyhocsinh')): ?>
+                                    <a href="<?= Url::to(['user/cauhinhdonvi'])?>" class="btn btn-default btn-flat">CẤU HÌNH</a>
+                                <?php endif; ?>
                             </div>
                             <div class="pull-right">
                                 <a href="<?= Url::to(['site/logout'])?>" data-method="post" class="btn btn-default btn-flat">

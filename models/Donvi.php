@@ -40,7 +40,7 @@ class Donvi extends \yii\db\ActiveRecord
             [['MA_DONVI'], 'string', 'max' => 30],
             [['TEN_DONVI', 'DIA_CHI'], 'string', 'max' => 100],
             [['SO_DT'], 'string', 'max' => 20],
-            [['MA_DONVI'], 'unique'],
+            [['MA_DONVI', 'SO_DT'], 'unique'],
             [['TTTT', 'QDLH', 'TTLH'], 'string'],
             [['CAP_TREN'], 'exist', 'skipOnError' => true, 'targetClass' => Donvi::className(), 'targetAttribute' => ['CAP_TREN' => 'ID_DONVI']],
         ];

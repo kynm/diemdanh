@@ -69,7 +69,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                 return $dshocsinhvang ? implode(',', $dshocsinhvang) : null;
                             }
                         ],
-                            
+                        [
+                                'attribute' => 'HANHDONG',
+                                'value'  => function($model) {
+                                    return Yii::$app->user->can('quanlytruonghoc') ? '<span class="btn btn-danger btn-default text-white xoadiemdanh" data-id="' . $model->ID . '" style="color: white;">Xóa điểm danh</span>' : '';
+                                },
+                                'format' => 'raw',
+                            ],
                         ],
                     ]); ?>
                 <?php Pjax::end(); ?>
@@ -77,3 +83,40 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+<?php
+$script = <<< JS
+$('.xoadiemdanh').on('click', function() {
+    Swal.fire({
+    title: 'Dữ liệu sẽ bị xóa vĩnh viễn, không thể khôi phục lại.Bạn có chắc chắc muốn xóa lượt điểm danh không?',
+    type: "warning",
+    showCancelButton: true,
+    confirmButtonColor: '#DD6B55',
+    confirmButtonText: 'Xóa ngay!',
+    cancelButtonText: "Không!"
+  }).then((result) => {
+    if (result['isConfirmed']) {
+        var id = $(this).data('id');
+        $.ajax({
+            url: '/quanlydiemdanh/xoadiemdanh',
+            method: 'post',
+            data: {
+                id: id,
+            },
+            success:function(data) {
+                data = jQuery.parseJSON(data);
+                if (!data.error) {
+                    Swal.fire('Xác nhận thành công');
+                    setTimeout(() => {
+                        window.location.reload(true);
+                      }, 1000);
+                } else {
+                    Swal.fire(data.message);
+                }
+            }
+        });
+    }
+  });
+    });
+JS;
+$this->registerJs($script);
+?>

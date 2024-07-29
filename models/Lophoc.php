@@ -36,7 +36,7 @@ class Lophoc extends \yii\db\ActiveRecord
         return [
             [['MA_LOP', 'ID_DONVI', 'ID_NHANVIEN_DIEMDANH'], 'required'],
             [['ID_DONVI', 'TIENHOC'], 'integer'],
-            [['MA_LOP'], 'string', 'max' => 10],
+            [['MA_LOP'], 'string', 'max' => 20],
             [['TEN_LOP', 'DIA_CHI'], 'string', 'max' => 100],
             [['SO_DT'], 'string', 'max' => 20],
             [['MA_LOP'], 'unique'],

@@ -31,3 +31,30 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+<div class="col-lg-3 col-6">
+    <div class="info-box">
+        <span class="info-box-icon bg-aqua"><i class="fa fa-check" aria-hidden="true"></i></span>
+        <div class="info-box-content">
+            <span class="info-box-number" style="font-size: 20px; color: red;">NHÂN VIÊN</span>
+            <?= $model->getNhanviens()->count() ?>
+        </div>
+    </div>
+</div>
+<div class="col-lg-3 col-6">
+    <div class="info-box">
+        <span class="info-box-icon bg-aqua"><i class="fa fa-check" aria-hidden="true"></i></span>
+        <div class="info-box-content">
+            <span class="info-box-number" style="font-size: 20px; color: red;">LỚP HỌC</span>
+            <?= $model->getLophoc()->count() ?>
+        </div>
+    </div>
+</div>
+<div class="col-lg-3 col-6">
+    <div class="info-box">
+        <span class="info-box-icon bg-aqua"><i class="fa fa-check" aria-hidden="true"></i></span>
+        <div class="info-box-content">
+            <span class="info-box-number" style="font-size: 20px; color: red;">HỌC SINH</span>
+            <?= $model->getHocsinh()->count() ?>
+        </div>
+    </div>
+</div>
