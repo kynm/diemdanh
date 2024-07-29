@@ -41,6 +41,7 @@ class Donvi extends \yii\db\ActiveRecord
             [['TEN_DONVI', 'DIA_CHI'], 'string', 'max' => 100],
             [['SO_DT'], 'string', 'max' => 20],
             [['MA_DONVI'], 'unique'],
+            [['TTTT', 'QDLH', 'TTLH'], 'string'],
             [['CAP_TREN'], 'exist', 'skipOnError' => true, 'targetClass' => Donvi::className(), 'targetAttribute' => ['CAP_TREN' => 'ID_DONVI']],
         ];
     }
@@ -58,6 +59,9 @@ class Donvi extends \yii\db\ActiveRecord
             'DIA_CHI' => 'Địa chỉ',
             'SO_DT' => 'Điện thoại',
             'CAP_TREN' => 'Đơn vị cấp trên',
+            'TTTT' => 'THÔNG TIN THANH TOÁN',
+            'QDLH' => 'QUY ĐỊNH LỚP HỌC',
+            'TTLH' => 'THÔNG TIN LIÊN HỆ',
         ];
     }
 

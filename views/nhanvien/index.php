@@ -29,10 +29,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         ['class' => 'yii\grid\SerialColumn'],
                         // 'MA_NHANVIEN',
                         'TEN_NHANVIEN',
-                        [
-                            'attribute' => 'CHUC_VU',
-                            'value' => 'chucvu.ten_chucvu'
-                        ],
                         'DIEN_THOAI',
                         [
                             'attribute' => 'ID_DONVI',
@@ -40,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                         'USER_NAME',
                         ['class' => 'yii\grid\ActionColumn',
-                        'template' => (Yii::$app->user->can('edit-nhanvien')) ? '{view} {update} {delete}' : '{view}'],
+                        'template' => (Yii::$app->user->can('edit-nhanvien')) ? '{view} {update}' : '{view}'],
                     ],
                 ]); ?>
             <?php Pjax::end(); ?>

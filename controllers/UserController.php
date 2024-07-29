@@ -7,6 +7,7 @@ use app\models\User;
 use app\models\UserSearch;
 use app\models\AuthAssignment;
 use app\models\Nhanvien;
+use app\models\Donvi;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
@@ -145,6 +146,22 @@ class UserController extends Controller
         }
         
     }
+
+    public function actionCauhinhdonvi()
+    {
+        if (Yii::$app->user->can('quanlytruonghoc')) {
+            $model = Donvi::findOne(Yii::$app->user->identity->nhanvien->ID_DONVI);
+            if ($model->load(Yii::$app->request->post())) {
+                $model->save(false);
+                Yii::$app->session->setFlash('success', "Cập nhật thành công!");
+                return $this->redirect(['cauhinhdonvi', 'id' => $model->ID_DONVI]);
+            }
+            return $this->render('cauhinhdonvi', ['model' => $model]);
+        } else {
+            # code...
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');            
+        }
+    }    
 
     /** 
      *  fucntion

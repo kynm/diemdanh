@@ -1,15 +1,15 @@
 <?php
-
 use yii\helpers\Html;
-use yii\widgets\DetailView;
-use yii\grid\GridView;
+use yii\helpers\Url;
+use yii\helpers\ArrayHelper;
+use kartik\grid\GridView;
 use yii\widgets\Pjax;
+use kartik\select2\Select2;
 /* @var $this yii\web\View */
 /* @var $model app\models\Daivt */
 
 $this->title = 'QUẢN LÝ HỌC SINH';
 $this->params['breadcrumbs'][] = ['label' => 'Đơn vị', 'url' => ['donvi/index']];
-$this->params['breadcrumbs'][] = ['label' => 'Đài viễn thông', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="box box-primary">
@@ -22,6 +22,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'ID_LOP',
                         'value' => 'lop.TEN_LOP',
+                        'contentOptions' => ['style' => 'width:20%; white-space: normal;'],
+                        'filter'=> $dslop,
+                        'filterType' => GridView::FILTER_SELECT2,
+                        'filterWidgetOptions' => [
+                            'options' => ['prompt' => ''],
+                            'pluginOptions' => ['allowClear' => true],
+                        ],
                     ],
                     'MA_HOCSINH',
                     'HO_TEN',

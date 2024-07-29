@@ -11,7 +11,6 @@ use app\models\Hocsinh;
 
 $this->title = $model->MA_LOP;
 $this->params['breadcrumbs'][] = ['label' => 'Đơn vị', 'url' => ['donvi/index']];
-$this->params['breadcrumbs'][] = ['label' => 'Đài viễn thông', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="daivt-view">

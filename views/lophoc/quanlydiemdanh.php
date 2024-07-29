@@ -11,7 +11,6 @@ use app\models\Hocsinh;
 
 $this->title = $diemdanh->lop->MA_LOP;
 $this->params['breadcrumbs'][] = ['label' => 'Đơn vị', 'url' => ['donvi/index']];
-$this->params['breadcrumbs'][] = ['label' => 'Đài viễn thông', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="daivt-view">
@@ -67,6 +66,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                 $dshocsinhvang = ArrayHelper::map(Hocsinh::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->andWhere(['in', 'ID', $idhocsinh])->all(), 'ID', 'HO_TEN');
                                 return implode(',', $dshocsinhvang);
                             }
+                        ],
+                        [
+                            'attribute' => 'GHICHU',
+                            'value' =>function($model) {
+                                return $model->ghichu;
+                            },
+                            'format' => 'raw',
                         ],
                     ],
                 ]); ?>

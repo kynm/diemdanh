@@ -1,10 +1,10 @@
 <?php
-
 use yii\helpers\Html;
-use yii\grid\GridView;
+use yii\helpers\Url;
+use yii\helpers\ArrayHelper;
+use kartik\grid\GridView;
 use yii\widgets\Pjax;
-use yii\bootstrap\Modal;
-use app\models\Donvi;
+use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\DonviSearch */
@@ -26,8 +26,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     'filterModel' => $searchModel,
                     'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
-                        'MA_DONVI',
-                        'TEN_DONVI',
+                        [
+                            'attribute' => 'TEN_DONVI',
+                            'value' => function ($model) {
+                                return (Yii::$app->user->can('edit-donvi')) ? Html::a($model->TEN_DONVI, ['view', 'id' => $model->ID_DONVI]) : $model->TEN_DONVI;
+                            },
+                            'contentOptions' => ['style' => 'width:20%; white-space: normal;'],
+                            'format' => 'raw',
+                        ],
                         'DIA_CHI',
                         'SO_DT',
                         [
@@ -48,8 +54,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                 return $model->getHocsinh()->count();
                             },
                         ],
-                        ['class' => 'yii\grid\ActionColumn',
-                        'template' => (Yii::$app->user->can('edit-donvi')) ? '{view} {update} {delete}' : '{view}'],
                     ],
                 ]); ?>
             <?php Pjax::end(); ?>

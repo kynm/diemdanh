@@ -30,6 +30,7 @@ class Diemdanhhocsinh extends \yii\db\ActiveRecord
     {
         return [
             [['ID_NHANVIEN', 'ID_LOP', 'ID_HOCSINH', 'ID_DIEMDANH', 'STATUS'], 'required'],
+            [['NHAN_XET'], 'string'],
         ];
     }
 

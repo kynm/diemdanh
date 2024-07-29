@@ -9,7 +9,6 @@ use yii\widgets\Pjax;
 
 $this->title = $model->MA_LOP;
 $this->params['breadcrumbs'][] = ['label' => 'Đơn vị', 'url' => ['donvi/index']];
-$this->params['breadcrumbs'][] = ['label' => 'Đài viễn thông', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="daivt-view">
@@ -32,10 +31,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'TIENHOC',
                     'DIA_CHI',
                     'SO_DT',
-                    // [
-                    //     'class' => 'yii\grid\ActionColumn',
-                    //     'template' => (Yii::$app->user->can('edit-lophoc')) ? '{view} {update} {delete}' : '{view}'
-                    // ],
                 ],
             ]); ?>
         <?php Pjax::end(); ?>

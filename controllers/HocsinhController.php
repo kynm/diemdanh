@@ -41,10 +41,11 @@ class HocsinhController extends Controller
     {
         $searchModel = new HocsinhSearch();
         $dataProvider = $searchModel->searchhocsinhtheodonvi(Yii::$app->request->queryParams);
-
+        $dslop = ArrayHelper::map(Lophoc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->all(), 'ID_LOP', 'TEN_LOP');
         return $this->render('hocsinhtheodonvi', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'dslop' => $dslop,
         ]);
     }
 

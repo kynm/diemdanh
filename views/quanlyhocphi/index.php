@@ -41,7 +41,6 @@ $this->params['breadcrumbs'][] = $this->title;
                             'TIEUDE',
                             'TU_NGAY',
                             'DEN_NGAY',
-                            
                         ],
                     ]); ?>
                 <?php Pjax::end(); ?>

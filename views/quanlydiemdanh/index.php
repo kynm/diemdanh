@@ -1,10 +1,10 @@
 <?php
-
 use yii\helpers\Html;
-use yii\widgets\DetailView;
-use yii\grid\GridView;
-use yii\widgets\Pjax;
+use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
+use kartik\grid\GridView;
+use yii\widgets\Pjax;
+use kartik\select2\Select2;
 use app\models\Hocsinh;
 /* @var $this yii\web\View */
 /* @var $model app\models\Daivt */
@@ -25,6 +25,13 @@ $this->params['breadcrumbs'][] = $this->title;
                             [
                                 'attribute' => 'ID_LOP',
                                 'value' => 'lop.TEN_LOP',
+                                'contentOptions' => ['style' => 'width:20%; white-space: normal;'],
+                                'filter'=> $dslop,
+                                'filterType' => GridView::FILTER_SELECT2,
+                                'filterWidgetOptions' => [
+                                    'options' => ['prompt' => ''],
+                                    'pluginOptions' => ['allowClear' => true],
+                                ],
                             ],
                             [
                                 'attribute' => 'THU',

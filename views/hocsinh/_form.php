@@ -49,6 +49,9 @@ use kartik\select2\Select2;
                         ],
                     ]); ?>
                 </div>
+                <div class="col-sm-2">
+                    <?= $form->field($model, 'TIENHOC')->textInput(['maxlength' => true, 'type' => 'number']) ?>
+                </div>
             </div>
             <div class="row">
                 <div class="col-sm-2">
@@ -91,7 +94,7 @@ use kartik\select2\Select2;
                 </div>
                 <div class="col-sm-6">
                     <?= $form->field($model, 'GHICHU')->textarea(['rows' => '6']) ?>
-            </div>
+                </div>
             </div>
         </div>
         <div class="box-footer">

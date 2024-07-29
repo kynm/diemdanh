@@ -62,6 +62,7 @@ class HocsinhSearch extends Hocsinh
             'ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI,
         ]);
 
+        $query->andFilterWhere(['=', 'ID_LOP', $this->ID_LOP]);
         $query->andFilterWhere(['like', 'MA_HOCSINH', $this->MA_HOCSINH])
             ->andFilterWhere(['like', 'HO_TEN', $this->HO_TEN])
             ->andFilterWhere(['like', 'DIA_CHI', $this->DIA_CHI])

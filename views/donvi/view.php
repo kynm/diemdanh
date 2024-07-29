@@ -17,13 +17,6 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="box-body">
             <p>
                 <?= Html::a('<i class="fa fa-pencil-square-o"></i> Cập nhật', ['update', 'id' => $model->ID_DONVI], ['class' => 'btn btn-primary btn-flat']) ?>
-                <?= Html::a('<i class="fa fa-trash-o"></i> Xóa', ['delete', 'id' => $model->ID_DONVI], [
-                    'class' => 'btn btn-danger btn-flat',
-                    'data' => [
-                        'confirm' => 'Bạn chắc chắn muốn xóa mục này?',
-                        'method' => 'post',
-                    ],
-                ]) ?>
             </p>
 
             <?= DetailView::widget([

@@ -18,7 +18,7 @@ class QuanlydiemdanhSearch extends Quanlydiemdanh
     public function rules()
     {
         return [
-            [['TIEUDE'], 'safe'],
+            [['TIEUDE', 'ID_LOP'], 'safe'],
         ];
     }
 
@@ -59,6 +59,7 @@ class QuanlydiemdanhSearch extends Quanlydiemdanh
             'ID_LOP' => $id,
         ]);
 
+        $query->andFilterWhere(['=', 'ID_LOP', $this->ID_LOP]);
         $query->andFilterWhere(['like', 'TIEUDE', $this->TIEUDE]);
         $query->orderBy([
             'NGAY_DIEMDANH' => SORT_DESC,

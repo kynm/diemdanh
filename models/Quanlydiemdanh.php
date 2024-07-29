@@ -46,6 +46,7 @@ class Quanlydiemdanh extends \yii\db\ActiveRecord
             'ID_LOP' => 'LỚP',
             'VANG' => 'VẮNG',
             'DSHOCSINHVANG' => 'DANH SÁCH VẮNG',
+            'GHICHU' => 'GHI CHÚ',
         ];
     }
 
@@ -72,5 +73,16 @@ class Quanlydiemdanh extends \yii\db\ActiveRecord
     public function getDschitietdiemdanh()
     {
         return $this->hasMany(Diemdanhhocsinh::className(), ['ID_DIEMDANH' => 'ID']);
+    }
+
+    public function getGhichu()
+    {
+        $dsnhanxet = $this->getDschitietdiemdanh()->andWhere(['is not', 'NHAN_XET', new \yii\db\Expression('null')])->all();
+        $text = '';
+        foreach ($dsnhanxet as $nhanxet) {
+            $text .= '<p>' . $nhanxet->hocsinh->HO_TEN . ' : ' . $nhanxet->NHAN_XET . '</p>';
+        }
+
+        return $text;
     }
 }

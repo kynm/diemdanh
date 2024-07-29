@@ -35,6 +35,7 @@ use yii\helpers\Url;
                         <li class="user-footer">
                             <div class="pull-left">
                                 <a href="<?= Url::to(['user/edit-profile'])?>" class="btn btn-default btn-flat">Profile</a>
+                                <a href="<?= Url::to(['user/cauhinhdonvi'])?>" class="btn btn-default btn-flat">CẤU HÌNH</a>
                             </div>
                             <div class="pull-right">
                                 <a href="<?= Url::to(['site/logout'])?>" data-method="post" class="btn btn-default btn-flat">

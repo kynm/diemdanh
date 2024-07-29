@@ -19,10 +19,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="box-body">
         <div class="row">
             <?php foreach ($diemdanh->dschitietdiemdanh as $key => $chitiet):?>
-                <div class="col-sm-4">
-                    <input type="checkbox" name="" <?= $chitiet->STATUS ? "checked" : null?> class="chuyendoitrangthaidiemdanh" data-diemdanhhsid="<?= $chitiet->ID?>"> <?= $chitiet->hocsinh->HO_TEN?>
-                    <br/>
-                    <br/>
+                <div class="col-sm-6">
+                    <div class="col-sm-3" style="font-size:20px">
+                        <input type="checkbox" name="" <?= $chitiet->STATUS ? "checked" : null?> class="chuyendoitrangthaidiemdanh" data-diemdanhhsid="<?= $chitiet->ID?>" style="height: 25px;width: 25px;"> <?= $chitiet->hocsinh->HO_TEN?>
+                    </div>
+                    <div class="col-sm-9">
+                    <textarea class="form-control capnhatghichu" data-id="<?= $chitiet->ID ?>" placeholder="GHI CHÚ"><?= $chitiet->NHAN_XET?></textarea>
+                    </div>
                 </div>
             <?php endforeach; ?>
         </div>
@@ -42,6 +45,25 @@ $script = <<< JS
             success:function(data) {
                 if (!data.error) {
                     Swal.fire('ĐÃ CẬP NHẬT!','success');
+                }
+            }
+        });
+    });
+
+    $('.capnhatghichu').on('change', function() {
+        var capnhatghichu = $(this).val();
+        var id = $(this).data('id');
+        $.ajax({
+            url: '/quanlydiemdanh/capnhatghichu',
+            method: 'post',
+            data: {
+                id: id,
+                capnhatghichu: capnhatghichu,
+            },
+            success:function(data) {
+                data = jQuery.parseJSON(data);
+                if (!data.error) {
+                    Swal.fire(data.message);
                 }
             }
         });

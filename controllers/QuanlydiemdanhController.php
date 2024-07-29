@@ -5,11 +5,14 @@ namespace app\controllers;
 use Yii;
 use app\models\ActivitiesLog;
 use app\models\Quanlydiemdanh;
+use app\models\Diemdanhhocsinh;
+use app\models\Lophoc;
 use app\models\QuanlydiemdanhSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 
 /**
  * diemdanhController implements the CRUD actions for diemdanh model.
@@ -41,9 +44,11 @@ class QuanlydiemdanhController extends Controller
             $searchModel = new QuanlydiemdanhSearch();
             $dataProvider = $searchModel->searchdiemdanhtheodonvi(Yii::$app->request->queryParams);
 
+            $dslop = ArrayHelper::map(Lophoc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->all(), 'ID_LOP', 'TEN_LOP');
             return $this->render('index', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
+                'dslop' => $dslop,
             ]);
         } else {
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
@@ -90,6 +95,28 @@ class QuanlydiemdanhController extends Controller
     {
         if (($model = Quanlydiemdanh::findOne($id)) !== null) {
             return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function actionCapnhatghichu()
+    {
+        if (Yii::$app->request->post() && Yii::$app->user->identity->nhanvien->ID_NHANVIEN) {
+            $params = Yii::$app->request->post();
+            $diemdanh = Diemdanhhocsinh::findOne($params['id']);
+            $result = [
+                'error' => 1,
+                'message' => 'LỖI CẬP NHẬT',
+            ];
+            if ($diemdanh && $diemdanh->diemdanh->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+                $diemdanh->NHAN_XET = $params['capnhatghichu'];
+                $diemdanh->save();
+                $result['error'] = 0;
+                $result['message'] = 'Cập nhật thành công';
+            }
+
+            return json_encode($result);
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
