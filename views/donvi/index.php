@@ -31,10 +31,14 @@ $this->params['breadcrumbs'][] = $this->title;
                             'value' => function ($model) {
                                 return (Yii::$app->user->can('edit-donvi')) ? Html::a($model->TEN_DONVI, ['view', 'id' => $model->ID_DONVI]) : $model->TEN_DONVI;
                             },
-                            'contentOptions' => ['style' => 'width:20%; white-space: normal;'],
+                            'contentOptions' => ['style' => 'width:20%;white-space: normal;word-break: break-word;word-break: break-word;'],
                             'format' => 'raw',
                         ],
-                        'DIA_CHI',
+                        [
+                            'contentOptions' => ['style' => 'width:20%;white-space: normal;word-break: break-word;word-break: break-word;'],
+                            'attribute' => 'DIA_CHI',
+                            'value' => 'DIA_CHI',
+                        ],
                         'SO_DT',
                         [
                             'attribute' => 'NHANVIEN',

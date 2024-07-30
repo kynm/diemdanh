@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'ID_LOP',
                         'value' => 'lop.TEN_LOP',
-                        'contentOptions' => ['style' => 'width:20%; white-space: normal;'],
+                        'contentOptions' => ['style' => 'width:20%;white-space: normal;word-break: break-word;word-break: break-word'],
                         'filter'=> $dslop,
                         'filterType' => GridView::FILTER_SELECT2,
                         'filterWidgetOptions' => [
@@ -36,6 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'SO_DT',
                     'NGAY_BD',
                     'NGAY_KT',
+                    'TIENHOC',
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'template' => (Yii::$app->user->can('edit-hocsinh')) ? '{view} {update}' : '{view}'

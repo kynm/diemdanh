@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ['class' => 'yii\grid\SerialColumn'],
                             [
                                 'attribute' => 'ID_LOP',
-                                'contentOptions' => ['style' => 'width:15%; white-space: normal;'],
+                                'contentOptions' => ['style' => 'width:15%; white-space: normal;word-break: break-word;'],
                                 'value' => 'lop.TEN_LOP',
                                 'filter'=> $dslop,
                                 'filterType' => GridView::FILTER_SELECT2,
@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                             [
                                 'attribute' => 'ID_HOCSINH',
-                                'contentOptions' => ['style' => 'width:15%; white-space: normal;'],
+                                'contentOptions' => ['style' => 'width:15%; white-space: normal;word-break: break-word;'],
                                 'value' => function ($model) {
                                     return $model->hocsinh->HO_TEN;
                                 },
@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'NGAY_KT',
                             [
                                 'attribute' => 'GHICHU',
-                                'contentOptions' => ['style' => 'width:15%; white-space: normal;'],
+                                'contentOptions' => ['style' => 'width:15%; white-space: normal;word-break: break-word;'],
                                 'value' => function($model) {
                                     return $model->GHICHU;
                                 },

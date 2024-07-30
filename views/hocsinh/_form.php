@@ -62,37 +62,7 @@ use kartik\select2\Select2;
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-3">
-                    <label class="control-label">Ngày BD</label>
-                    <?= DatePicker::widget([
-                        'model' => $model,
-                        'attribute' => 'NGAY_BD',
-                        'name' => 'NGAY_BD', 
-                        'removeButton' => false,
-                        'options' => ['placeholder' => 'Ngày BD'],
-                        'pluginOptions' => [
-
-                            'format' => 'yyyy-mm-dd',
-                            'todayHighlight' => true
-                        ]
-                    ]); ?>
-                </div>
-                <div class="col-sm-3">
-                    <label class="control-label">Ngày KT</label>
-                    <?= DatePicker::widget([
-                        'model' => $model,
-                        'attribute' => 'NGAY_KT',
-                        'name' => 'NGAY_KT', 
-                        'removeButton' => false,
-                        'options' => ['placeholder' => 'Ngày KT'],
-                        'pluginOptions' => [
-
-                            'format' => 'yyyy-mm-dd',
-                            'todayHighlight' => true
-                        ]
-                    ]); ?>
-                </div>
-                <div class="col-sm-6">
+                <div class="col-sm-12">
                     <?= $form->field($model, 'GHICHU')->textarea(['rows' => '6']) ?>
                 </div>
             </div>

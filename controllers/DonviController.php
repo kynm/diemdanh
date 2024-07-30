@@ -40,13 +40,17 @@ class DonviController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new DonviSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if (Yii::$app->user->can('Administrator')) {
+            $searchModel = new DonviSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
+        }  
     }
 
     /**
@@ -56,10 +60,14 @@ class DonviController extends Controller
      */
     public function actionView($id)
     {
-        $model = $this->findModel($id);
-        return $this->render('view', [
-            'model' => $model,
-        ]);
+        if (Yii::$app->user->can('Administrator')) {
+            $model = $this->findModel($id);
+            return $this->render('view', [
+                'model' => $model,
+            ]);
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
+        } 
     }
 
     /**
@@ -100,7 +108,7 @@ class DonviController extends Controller
      */
     public function actionUpdate($id)
     {
-        if (Yii::$app->user->can('edit-donvi')) {
+        if (Yii::$app->user->can('Administrator')) {
             $model = $this->findModel($id);
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {

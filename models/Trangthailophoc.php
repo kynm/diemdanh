@@ -24,14 +24,14 @@ use Yii;
  * @property Thuchienbd[] $thuchienbds
  * @property Tramvt[] $tramvts
  */
-class Dichvu extends \yii\db\ActiveRecord
+class Trangthailophoc extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'dichvu';
+        return 'trangthailophoc';
     }
 
     /**
@@ -40,7 +40,7 @@ class Dichvu extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ten_dv'], 'required'],
+            [['TRANGTHAI', 'MA_TRANGTHAI'], 'required'],
         ];
     }
 
@@ -50,7 +50,8 @@ class Dichvu extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'ten_dv' => 'Tên dịch vụ',
+            'MA_TRANGTHAI' => 'MÃ TRẠNG THÁI',
+            'TRANGTHAI' => 'TÊN TRẠNG THÁI',
         ];
     }
 }

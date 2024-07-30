@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ['class' => 'yii\grid\SerialColumn'],
                             [
                                 'attribute' => 'TEN_LOP',
-                                'contentOptions' => ['style' => 'width:40%; white-space: normal;'],
+                                'contentOptions' => ['style' => 'width:40%; white-space: normal;word-break: break-word;'],
                                 'value' => function ($model) {
                                     return Html::a($model->TEN_LOP, ['view', 'id' => $model->ID_LOP]);
                                 },
@@ -39,6 +39,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                 }
                             ],
                             'TIENHOC',
+                             [
+                                'attribute' => 'CHANGE_STATUS',
+                                'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
+                                'value' => function ($model) {
+                                    return '<input type="checkbox" '.  ($model->STATUS ? 'checked' : '') .  ' data-id="'  . $model->ID_LOP .  '" class="doitrangthailophoc"/> ' . $model->trangthai->TRANGTHAI;
+                                },
+                                'format' => 'raw',
+                            ],
                         ],
                     ]); ?>
                 <?php Pjax::end(); ?>
@@ -46,3 +54,30 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+<?php
+$script = <<< JS
+    $('.doitrangthailophoc').on('change', function() {
+        var idlop = $(this).data('id');
+        var status = $(this).is(":checked") ? 1 : 0;
+        $.ajax({
+            url: '/lophoc/doitrangthailop',
+            method: 'POST',
+            data: {
+                'STATUS' : status,
+                'idlop' : idlop,
+            },
+            success:function(data) {
+                data = jQuery.parseJSON(data);
+                if (!data.error) {
+                    Swal.fire(data.message);
+                }
+
+                setTimeout(() => {
+                    window.location.reload(true);
+                }, 1000);
+            }
+        });
+    });
+JS;
+$this->registerJs($script);
+?>

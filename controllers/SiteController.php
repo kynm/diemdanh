@@ -109,7 +109,7 @@ class SiteController extends Controller
                 ]);
             }
             if (Yii::$app->user->can('diemdanhlophoc')) {
-                $dslop = Yii::$app->user->identity->nhanvien->iDDONVI->getLophoc()->andWhere(['ID_NHANVIEN_DIEMDANH' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN])->all();
+                $dslop = Yii::$app->user->identity->nhanvien->iDDONVI->getLophoc()->andWhere(['STATUS' => 1])->andWhere(['ID_NHANVIEN_DIEMDANH' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN])->all();
                 return $this->render('diemdanhlophoc', [
                     'dslop' => $dslop,
                 ]);

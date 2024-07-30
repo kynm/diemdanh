@@ -35,7 +35,7 @@ class Lophoc extends \yii\db\ActiveRecord
     {
         return [
             [['MA_LOP', 'ID_DONVI', 'ID_NHANVIEN_DIEMDANH'], 'required'],
-            [['ID_DONVI', 'TIENHOC'], 'integer'],
+            [['ID_DONVI', 'TIENHOC', 'STATUS'], 'integer'],
             [['MA_LOP'], 'string', 'max' => 20],
             [['TEN_LOP', 'DIA_CHI'], 'string', 'max' => 100],
             [['SO_DT'], 'string', 'max' => 20],
@@ -59,6 +59,7 @@ class Lophoc extends \yii\db\ActiveRecord
             'TIENHOC' => 'SỐ TIỀN MỖI BUỔI HỌC',
             'ID_NHANVIEN_DIEMDANH' => 'NGƯỜI ĐIỂM DANH',
             'SOHOCSINH' => 'TỔNG SỐ HỌC SINH',
+            'CHANGE_STATUS' => 'ĐỔI TRẠNG THÁI',
         ];
     }
 
@@ -89,5 +90,10 @@ class Lophoc extends \yii\db\ActiveRecord
     public function getDsdiemdanh()
     {
         return $this->hasMany(Quanlydiemdanh::className(), ['ID_LOP' => 'ID_LOP']);
+    }
+
+    public function getTrangthai()
+    {
+        return $this->hasOne(Trangthailophoc::className(), ['MA_TRANGTHAI' => 'STATUS']);
     }
 }

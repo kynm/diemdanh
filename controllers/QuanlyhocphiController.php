@@ -60,7 +60,8 @@ class QuanlyhocphiController extends Controller
             $model->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 self::taochitiethocphi($model);
-                return $this->redirect(['view', 'id' => $model->ID_LOP]);
+                Yii::$app->session->setFlash('success', "Tạo thành công!");
+                return $this->redirect(['view', 'id' => $model->ID]);
             } else {
                 $dslop = ArrayHelper::map(Lophoc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->all(), 'ID_LOP', 'TEN_LOP');
                 return $this->render('create', [
@@ -116,7 +117,6 @@ class QuanlyhocphiController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
-                self::taochitiethocphi($model);
         return $this->render('view', [
             'model' => $model,
         ]);

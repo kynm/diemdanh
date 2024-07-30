@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php if (Yii::$app->user->can('quanlyhocsinh')):?>
             <?= Html::a('<i class="fa fa-pencil-square-o"></i> Cập nhật', ['update', 'id' => $model->ID_LOP], ['class' => 'btn btn-primary btn-flat']) ?>
         <?php endif; ?>
-        <?php if (Yii::$app->user->can('diemdanhlophoc')):?>
+        <?php if (Yii::$app->user->can('diemdanhlophoc') && $model->STATUS == 1):?>
             <?= Html::a('<i class="fa fa-pencil-square-o"></i> Quản lý điểm danh', ['lophoc/quanlydiemdanh', 'id' => $model->ID_LOP], ['class' => 'btn btn-danger btn-flat']) ?>
         <?php endif; ?>
         <?php if (Yii::$app->user->can('quanlyhocsinh')):?>
@@ -64,8 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         echo implode(',', $dshocsinhvang);
                         ?>
                     </th>
-                    <th><?=  Html::a('<i class="fa fa-pencil-square-o"></i>Cập nhật', '/lophoc/capnhatdiemdanh?diemdanhid=' . $diemdanh->ID, ['class' => 'btn btn-primary',
-                                    'title' => Yii::t('app', 'lead-update')]);?></th>
+                    <th><?=  $diemdanh->lop->STATUS ? Html::a('<i class="fa fa-pencil-square-o"></i>Cập nhật', '/lophoc/capnhatdiemdanh?diemdanhid=' . $diemdanh->ID, ['class' => 'btn btn-primary']) : '';?></th>
                 </tr>
             <?php else:?>
             <?php endif;?>

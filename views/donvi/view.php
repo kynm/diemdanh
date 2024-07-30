@@ -58,3 +58,10 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+<p>
+    Link: https://diemdanh.online<br>
+Tài khoản quản lý: <?= $model->SO_DT?> / <?= $model->SO_DT?> : Dùng để tạo lớp học, tạo học sinh.<br>
+Tài khoản điểm danh: <?= $model->SO_DT?>_diemdanh / <?= $model->SO_DT?>_diemdanh<br>
+VUI LÒNG ĐỔI MẬT KHẨU ĐỂ SỬ DỤNG!<br>
+</p>
+

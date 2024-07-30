@@ -26,6 +26,12 @@ use yii\widgets\DetailView;
                         },
                         'format' => 'raw',
                     ],
+                    [
+                        'attribute' => 'STATUS',
+                        'value' => function ($model) {
+                            return $model->trangthai ? $model->trangthai->TRANGTHAI : $model->STATUS;
+                        },
+                    ],
                 ],
             ]) ?>
         </div>

@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="daivt-view">
     <?= $this->render('_detail', ['model' => $diemdanh->lop,]) ?>
 </div>
-<?php if (Yii::$app->user->can('diemdanhlophoc')):?>
+<?php if (Yii::$app->user->can('diemdanhlophoc') && $diemdanh->lop->STATUS == 1):?>
     <div class="daivt-view">
         <?= $this->render('_form_diemdanh', ['model' => $diemdanh, 'id' => $diemdanh->ID_LOP,]) ?>
     </div>
@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'template' => (Yii::$app->user->can('diemdanhlophoc')) ? '{updatediemdanh}' : '',
                             'buttons' => [
                                 'updatediemdanh' => function ($url, $model) {
-                                    return Html::a($model->TIEUDE, '/lophoc/capnhatdiemdanh?diemdanhid=' . $model->ID);
+                                    return $model->lop->STATUS ? Html::a($model->TIEUDE, '/lophoc/capnhatdiemdanh?diemdanhid=' . $model->ID) : $model->TIEUDE;
                                 },
                             ],
                         ],

@@ -71,6 +71,10 @@ class LophocSearch extends Lophoc
             ->andFilterWhere(['like', 'TEN_DONVI', $this->ID_DONVI])
             ->andFilterWhere(['like', 'SO_DT', $this->SO_DT]);
 
+        $query->orderBy([
+            'STATUS' => SORT_DESC,
+            'TEN_LOP' => SORT_ASC,
+        ]);
         return $dataProvider;
     }
 }

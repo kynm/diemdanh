@@ -28,11 +28,11 @@ $this->params['breadcrumbs'][] = $this->title;
                             [
                                 'attribute' => 'ID_LOP',
                                 'value' => 'lop.TEN_LOP',
-                                'contentOptions' => ['style' => 'width:10%; white-space: normal;'],
+                                'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
                             ],
                             [
                                 'attribute' => 'TIEUDE',
-                                'contentOptions' => ['style' => 'width:30%; white-space: normal;'],
+                                'contentOptions' => ['style' => 'width:30%; white-space: normal;word-break: break-word;'],
                                 'value' => function ($model) {
                                     return Html::a($model->TIEUDE, ['view', 'id' => $model->ID]);
                                 },

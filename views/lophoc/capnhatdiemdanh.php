@@ -15,6 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $diemdanh,
     ]) ?>
 </div>
+<?php if (Yii::$app->user->can('diemdanhlophoc') && $diemdanh->lop->STATUS == 1):?>
 <div class="box box-primary">
     <div class="box-body">
         <div class="row">
@@ -31,6 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+<?php endif; ?>
 <?php
 $script = <<< JS
     $('.chuyendoitrangthaidiemdanh').on('change', function() {

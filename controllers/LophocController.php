@@ -152,7 +152,7 @@ class LophocController extends Controller
     public function actionThemdiemdanh($id)
     {
         $model = $this->findModel($id);
-        if (Yii::$app->user->can('diemdanhlophoc') && $id && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+        if (Yii::$app->user->can('diemdanhlophoc') && $id && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI && $model->STATUS == 1) {
             $diemdanh = new Quanlydiemdanh();
             $diemdanh->ID_DONVI = $model->ID_DONVI;
             $diemdanh->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
@@ -185,8 +185,8 @@ class LophocController extends Controller
 
     public function actionCapnhatdiemdanh($diemdanhid)
     {
-        if (Yii::$app->user->can('diemdanhlophoc') && $diemdanhid) {
-            $diemdanh = Quanlydiemdanh::find()->where(['ID' => $diemdanhid])->one();
+        $diemdanh = Quanlydiemdanh::find()->where(['ID' => $diemdanhid])->one();
+        if (Yii::$app->user->can('diemdanhlophoc') && $diemdanh && $diemdanh->lop->STATUS == 1) {
             return $this->render('capnhatdiemdanh', [
                 'diemdanh' => $diemdanh,
             ]);
@@ -311,5 +311,26 @@ class LophocController extends Controller
             }
             return;
         }
+    }
+
+    public function actionDoitrangthailop() {
+        $result = [
+            'error' => 1,
+            'message' => 'LỖI CẬP NHẬT',
+        ];
+        if (Yii::$app->request->post()) {
+            $params = Yii::$app->request->post();
+            $lop = Lophoc::findOne($params['idlop']);
+            if ($lop->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI && Yii::$app->user->can('quanlytruonghoc')) {
+                $lop->STATUS = $params['STATUS'] ? 1 : 0;
+                $lop->save();
+                $result = [
+                    'error' => 0,
+                    'message' => 'CẬP NHẬT THÀNH CÔNG',
+                ];
+            }
+        }
+
+        return json_encode($result);
     }
 }

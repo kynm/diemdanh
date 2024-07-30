@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             [
                                 'attribute' => 'ID_LOP',
                                 'value' => 'lop.TEN_LOP',
-                                'contentOptions' => ['style' => 'width:20%; white-space: normal;'],
+                                'contentOptions' => ['style' => 'width:20%; white-space: normal;word-break: break-word;'],
                                 'filter'=> $dslop,
                                 'filterType' => GridView::FILTER_SELECT2,
                                 'filterWidgetOptions' => [
