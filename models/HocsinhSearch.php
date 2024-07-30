@@ -69,8 +69,8 @@ class HocsinhSearch extends Hocsinh
             ->andFilterWhere(['like', 'SO_DT', $this->SO_DT]);
 
         $query->orderBy([
-            'ID_LOP' => SORT_DESC,
-            'NGAY_KT' => SORT_ASC,
+            'STATUS' => SORT_DESC,
+            'HO_TEN' => SORT_ASC,
         ]);
 
         return $dataProvider;
@@ -97,6 +97,11 @@ class HocsinhSearch extends Hocsinh
         // grid filtering conditions
         $query->andFilterWhere([
             'ID_LOP' => $id,
+        ]);
+
+        $query->orderBy([
+            'STATUS' => SORT_DESC,
+            'HO_TEN' => SORT_ASC,
         ]);
 
         $query->andFilterWhere(['like', 'MA_HOCSINH', $this->MA_HOCSINH])

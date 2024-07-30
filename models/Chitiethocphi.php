@@ -35,12 +35,13 @@ class Chitiethocphi extends \yii\db\ActiveRecord
         return [
             'ID' => 'ID',
             'TIEUDE' => 'TIÊU ĐỀ',
-            'THU' => 'THỨ',
-            'ID_LOP' => 'LỚP',
-            'VANG' => 'VẮNG',
-            'TU_NGAY' => 'TỪ NGÀY',
-            'DEN_NGAY' => 'ĐẾN NGÀY',
-            'NGAY_NGHI' => 'NGÀY NGHỈ',
+            'SO_BH' => 'TỔNG SỐ BUỔI',
+            'SO_BN' => 'SỐ BUỔI NGHỈ',
+            'TIENHOC' => 'TIỀN HỌC',
+            'TONG_TIEN' => 'TỔNG TIỀN',
+            'SO_BTT' => 'SỐ BUỔI TÍNH TIỀN',
+            'SO_BDH' => 'SỐ BUỔI ĐI HỌC',
+            'ID_LOP' => 'LỚP HỌC',
         ];
     }
 

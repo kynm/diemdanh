@@ -6,6 +6,7 @@ use Yii;
 use app\models\ActivitiesLog;
 use app\models\Quanlyhocphi;
 use app\models\QuanlyhocphiSearch;
+use app\models\ChitiethocphiSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
@@ -263,5 +264,47 @@ class QuanlyhocphiController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionXacnhanthuhocphi()
+    {
+        if (Yii::$app->request->post() && Yii::$app->user->identity->nhanvien->ID_NHANVIEN) {
+            $params = Yii::$app->request->post();
+            $hocphi = Chitiethocphi::findOne($params['id']);
+            $result = [
+                'error' => 1,
+                'message' => '',
+            ];
+            if ($hocphi && $hocphi->hocphi->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+                $hocphi->STATUS = 1;
+                $hocphi->save();
+                $result['error'] = 0;
+                $result['ID'] = $hocphi->ID;
+                $result['SO_BTT'] = $hocphi->SO_BTT;
+                $result['TONG_TIEN'] = $hocphi->TONG_TIEN;
+                $result['message'] = 'Cập nhật thành công';
+            }
+
+            return json_encode($result);
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function actionChitietthuhocphidonvi()
+    {
+
+        if (Yii::$app->user->can('quanlyhocphi')) {
+            $searchModel = new ChitiethocphiSearch();
+            $dataProvider = $searchModel->searchchitiethocphitheodonvi(Yii::$app->request->queryParams);
+
+            return $this->render('chitietthuhocphidonvi', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
+        }
+
     }
 }

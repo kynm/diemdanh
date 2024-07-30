@@ -47,6 +47,7 @@ class DonviSearch extends Donvi
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => array('pageSize' => 50),
         ]);
 
         $this->load($params);

@@ -147,4 +147,25 @@ class HocsinhController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    public function actionDoitrangthailop() {
+        $result = [
+            'error' => 1,
+            'message' => 'LỖI CẬP NHẬT',
+        ];
+        if (Yii::$app->request->post()) {
+            $params = Yii::$app->request->post();
+            $hocsinh = Hocsinh::findOne($params['idhocsinh']);
+            if ($hocsinh->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI && Yii::$app->user->can('quanlytruonghoc')) {
+                $hocsinh->STATUS = $params['STATUS'] ? 1 : 0;
+                $hocsinh->save();
+                $result = [
+                    'error' => 0,
+                    'message' => 'CẬP NHẬT THÀNH CÔNG',
+                ];
+            }
+        }
+
+        return json_encode($result);
+    }
 }

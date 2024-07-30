@@ -49,7 +49,7 @@ class Hocsinh extends \yii\db\ActiveRecord
             'NGAY_BD' => 'NGÀY BĐ',
             'NGAY_KT' => 'NGÀY KT',
             'GHICHU' => 'GHI CHÚ',
-            'TIENHOC' => 'SỐ TIỀN MỖI BUỔI HỌC'
+            'TIENHOC' => 'SỐ TIỀN MỖI BUỔI HỌC',
         ];
     }
 
@@ -69,5 +69,10 @@ class Hocsinh extends \yii\db\ActiveRecord
     public function getNhanvien()
     {
         return $this->hasOne(Nhanvien::className(), ['ID_NHANVIEN' => 'ID_NHANVIEN']);
+    }
+
+    public function getTrangthai()
+    {
+        return $this->hasOne(Trangthaihocsinh::className(), ['MA_TRANGTHAI' => 'STATUS']);
     }
 }

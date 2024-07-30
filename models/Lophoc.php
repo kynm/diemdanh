@@ -59,6 +59,7 @@ class Lophoc extends \yii\db\ActiveRecord
             'TIENHOC' => 'SỐ TIỀN MỖI BUỔI HỌC',
             'ID_NHANVIEN_DIEMDANH' => 'NGƯỜI ĐIỂM DANH',
             'SOHOCSINH' => 'TỔNG SỐ HỌC SINH',
+            'SOHOCSINHHOATDONG' => 'SỐ HỌC SINH HOẠT ĐỘNG',
             'CHANGE_STATUS' => 'ĐỔI TRẠNG THÁI',
         ];
     }
@@ -95,5 +96,10 @@ class Lophoc extends \yii\db\ActiveRecord
     public function getTrangthai()
     {
         return $this->hasOne(Trangthailophoc::className(), ['MA_TRANGTHAI' => 'STATUS']);
+    }
+
+     public function getNhanviendiemdanh()
+    {
+        return $this->hasOne(Nhanvien::className(), ['ID_NHANVIEN' => 'ID_NHANVIEN_DIEMDANH']);
     }
 }

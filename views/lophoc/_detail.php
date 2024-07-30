@@ -27,6 +27,13 @@ use yii\widgets\DetailView;
                         'format' => 'raw',
                     ],
                     [
+                        'attribute' => 'SOHOCSINHHOATDONG',
+                        'value' => function ($model) {
+                            return  '<span style="font-size: 20px; color: red">' . $model->getDshocsinh()->andWhere(['STATUS' => 1])->count() . '</span>';
+                        },
+                        'format' => 'raw',
+                    ],
+                    [
                         'attribute' => 'STATUS',
                         'value' => function ($model) {
                             return $model->trangthai ? $model->trangthai->TRANGTHAI : $model->STATUS;

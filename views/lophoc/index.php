@@ -38,6 +38,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     return $model->getDshocsinh()->count();
                                 }
                             ],
+                            [
+                                'attribute' => 'ID_NHANVIEN_DIEMDANH',
+                                'value' => 'nhanviendiemdanh.TEN_NHANVIEN',
+                            ],
                             'TIENHOC',
                              [
                                 'attribute' => 'CHANGE_STATUS',

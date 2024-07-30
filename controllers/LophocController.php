@@ -158,7 +158,7 @@ class LophocController extends Controller
             $diemdanh->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
             $diemdanh->ID_LOP  = $id;
             if ($diemdanh->load(Yii::$app->request->post())) {
-                $diemdanhnow = $model->getDsdiemdanh()->andWhere(['NGAY_DIEMDANH' => $diemdanh->NGAY_DIEMDANH])->one();
+                $diemdanhnow = $model->getDsdiemdanh()->andWhere(['NGAY_DIEMDANH' => $diemdanh->NGAY_DIEMDANH])->andWhere(['STATUS' => 1])->one();
                 if ($diemdanhnow) {
                     Yii::$app->session->setFlash('error', "Điểm danh đã tồn tại!");
                     return $this->redirect(['capnhatdiemdanh', 'diemdanhid' => $diemdanhnow->ID]);

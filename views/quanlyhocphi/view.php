@@ -60,7 +60,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     <td><input class="form-control capnhatsobuoitinhtien" type="number" value="<?= $chitiet->SO_BTT?>" data-id="<?= $chitiet->ID ?>"></td>
                     <td><input class="form-control capnhattongtien" id="tongtien-<?= $chitiet->ID ?>" type="number" value="<?= $chitiet->TONG_TIEN?>" data-id="<?= $chitiet->ID ?>"></td>
                     <td><textarea class="form-control capnhatghichu" data-id="<?= $chitiet->ID ?>"><?= $chitiet->NHAN_XET?></textarea></td>
-                    <td><?= Html::a('<i class="fa fa-pencil-square-o"></i> Chi tiết học phí', ['/quanlyhocphi/chitiethocphi', 'id' => $chitiet->ID], ['class' => 'btn btn-primary btn-flat', 'target' => '_blank']) ?></td>
+                    <td>
+                        <?= Html::a('<i class="fa fa-pencil-square-o"></i> Chi tiết học phí', ['/quanlyhocphi/chitiethocphi', 'id' => $chitiet->ID], ['class' => 'btn btn-primary btn-flat', 'target' => '_blank']) ?>
+                        <?php if (Yii::$app->user->can('quanlyhocphi') && !$chitiet->STATUS):?>
+                            <span class="btn btn-flat btn-danger xacnhanthuhocphi" data-id="<?= $chitiet->ID ?>">Xác nhận thu tiền</span>
+                        <?php else: ?>
+                            <span class="btn btn-flat btn-success">Đã thu</span>
+                        <?php endif; ?>
+                    </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
@@ -144,6 +151,39 @@ $('.capnhatsotienmoibuoi').on('change', function() {
                 }
             }
         });
+    });
+
+    $('.xacnhanthuhocphi').on('click', function() {
+        Swal.fire({
+            title: 'Bạn có chắc chắn đã thu học phí học sinh này không?',
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: 'ĐÃ THU!',
+            cancelButtonText: "TÔI NHẦM!"
+        }).then((result) => {
+        if (result['isConfirmed']) {
+            var capnhatghichu = $(this).val();
+            var id = $(this).data('id');
+            $.ajax({
+                url: '/quanlyhocphi/xacnhanthuhocphi',
+                method: 'post',
+                data: {
+                    id: id,
+                },
+                success:function(data) {
+                    data = jQuery.parseJSON(data);
+                    if (!data.error) {
+                        Swal.fire('Xác nhận thành công');
+                        setTimeout(() => {
+                            window.location.reload(true);
+                        }, 1000);
+                    }
+                }
+            });
+        }
+        });
+        
     });
 JS;
 $this->registerJs($script);

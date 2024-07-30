@@ -87,13 +87,13 @@ $this->params['breadcrumbs'][] = $this->title;
 $script = <<< JS
 $('.xoadiemdanh').on('click', function() {
     Swal.fire({
-    title: 'Dữ liệu sẽ bị xóa vĩnh viễn, không thể khôi phục lại.Bạn có chắc chắc muốn xóa lượt điểm danh không?',
-    type: "warning",
-    showCancelButton: true,
-    confirmButtonColor: '#DD6B55',
-    confirmButtonText: 'Xóa ngay!',
-    cancelButtonText: "Không!"
-  }).then((result) => {
+        title: 'Dữ liệu sẽ bị xóa vĩnh viễn, không thể khôi phục lại.Bạn có chắc chắc muốn xóa lượt điểm danh không?',
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#DD6B55',
+        confirmButtonText: 'Xóa ngay!',
+        cancelButtonText: "Không!"
+    }).then((result) => {
     if (result['isConfirmed']) {
         var id = $(this).data('id');
         $.ajax({
@@ -115,8 +115,8 @@ $('.xoadiemdanh').on('click', function() {
             }
         });
     }
-  });
     });
+});
 JS;
 $this->registerJs($script);
 ?>

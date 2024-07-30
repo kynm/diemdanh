@@ -10,6 +10,7 @@ $this->title = 'Tạo mới';
 $this->params['breadcrumbs'][] = ['label' => 'Đơn vị', 'url' => ['donvi/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<?= $this->render('/partial/_header_quanlyhocphi', []) ?>
 <div class="daivt-create">
 
     <?= $this->render('_form', [

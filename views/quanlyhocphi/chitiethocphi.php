@@ -11,7 +11,11 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="box-body table-responsive">
-	<h2 class="text-center"><b>THÔNG BÁO  <?= mb_strtoupper($model->hocphi->TIEUDE)?></b></h2>
+	<h2 class="text-center"><b>THÔNG BÁO  <?= mb_strtoupper($model->hocphi->TIEUDE)?></b>
+    <?php if ($model->STATUS):?>
+        <span class="btn btn-flat btn-success">Đã thu</span>
+    <?php endif; ?>
+    </h2>
     <table class="table table-bordered" style="font-size: 20px;">
         <tbody>
             <tr class="bg-primary text-center">

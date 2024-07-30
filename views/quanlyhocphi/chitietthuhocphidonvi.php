@@ -24,21 +24,30 @@ $this->params['breadcrumbs'][] = $this->title;
                         'columns' => [
                             ['class' => 'yii\grid\SerialColumn'],
                             [
-                                'attribute' => 'ID_LOP',
-                                'value' => 'lop.TEN_LOP',
-                                'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
-                            ],
-                            [
                                 'attribute' => 'TIEUDE',
                                 'contentOptions' => ['style' => 'width:30%; white-space: normal;word-break: break-word;'],
                                 'value' => function ($model) {
-                                    return Html::a($model->TIEUDE, ['view', 'id' => $model->ID]);
+                                    return $model->hocphi->TIEUDE;
                                 },
                                 'format' => 'raw',
                             ],
-                            'TIEUDE',
-                            'TU_NGAY',
-                            'DEN_NGAY',
+                            [
+                                'attribute' => 'ID_LOP',
+                                'value' => 'hocphi.lop.TEN_LOP',
+                            ],
+                            'SO_BH',
+                            'SO_BDH',
+                            'SO_BN',
+                            'SO_BTT',
+                            'TIENHOC',
+                            'TONG_TIEN',
+                            [
+                                'attribute' => 'STATUS',
+                                'value' => function ($model) {
+                                    return $model->STATUS ? '<span class="btn btn-flat btn-success">Đã thu</span>' : '<span class="btn btn-flat btn-danger">Chưa thu</span>';
+                                },
+                                'format' => 'raw',
+                            ],
                         ],
                     ]); ?>
                 <?php Pjax::end(); ?>
