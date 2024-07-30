@@ -106,7 +106,7 @@ class LophocController extends Controller
                 'dataProvider' => $dataProvider,
             ]);
         } else {
-            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');           
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
         }
     }
 
@@ -295,6 +295,21 @@ class LophocController extends Controller
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function actionListdshocsinhtheolop() {
+        if (Yii::$app->request->post()) {
+            $params = Yii::$app->request->post();
+            $result = Hocsinh::find()
+            ->where(['ID_DONVI'=> Yii::$app->user->identity->nhanvien->ID_DONVI])
+            ->where(['ID_LOP'=> $params['lopid']])
+            ->all();
+            echo "<option value=''>Chọn công việc</option>";
+            foreach($result as $each) {
+                echo "<option value='" . $each->ID . "'>" . $each->HO_TEN . "</option>";
+            }
+            return;
         }
     }
 }
