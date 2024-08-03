@@ -1,7 +1,8 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\DetailView;
+use yii\widgets\ActiveForm;
+use kartik\editors\Summernote;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Daivt */
@@ -15,14 +16,31 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $diemdanh,
     ]) ?>
 </div>
+<?php if (Yii::$app->user->can('diemdanhlophoc')):?>
+    <?= Html::a('<i class="fa fa-back"></i> QUAY LẠI', ['lophoc/quanlydiemdanh', 'id' => $diemdanh->ID_LOP], ['class' => 'btn btn-primary btn-flat']) ?>
+<?php endif; ?>
 <?php if (Yii::$app->user->can('diemdanhlophoc') && $diemdanh->lop->STATUS == 1):?>
 <div class="box box-primary">
     <div class="box-body">
         <div class="row">
+            <?php $form = ActiveForm::begin(['action' =>['quanlydiemdanh/capnhatghichubuoihoc', 'id' => $diemdanh->ID], 'method' => 'post']); ?>
+            <div class="col-sm-12">
+                <?= $form->field($diemdanh, 'NOIDUNG')->widget(Summernote::class, [
+                    'options' => ['placeholder' => 'NỘI DUNG BUỔI HỌC',
+                    'data-id' => $diemdanh->ID,
+                    'class' => 'noidungbuoihoc',
+                ]
+                ]);
+                ?>
+            </div>
+            <?php ActiveForm::end(); ?>
             <?php foreach ($diemdanh->dschitietdiemdanh as $key => $chitiet):?>
                 <div class="col-sm-6">
                     <div class="col-sm-3" style="font-size:20px">
                         <input type="checkbox" name="" <?= $chitiet->STATUS ? "checked" : null?> class="chuyendoitrangthaidiemdanh" data-diemdanhhsid="<?= $chitiet->ID?>" style="height: 25px;width: 25px;"> <?= $chitiet->hocsinh->HO_TEN?>
+                        <?php if (Yii::$app->user->identity->nhanvien->iDDONVI->SHOWALL):?>
+                            <span class="xemtoanbothongtin">(<?= $chitiet->hocsinh->SO_DT . ' - ' . $chitiet->hocsinh->DIA_CHI?>)</span>
+                        <?php endif; ?>
                     </div>
                     <div class="col-sm-9">
                     <textarea class="form-control capnhatghichu" data-id="<?= $chitiet->ID ?>" placeholder="GHI CHÚ"><?= $chitiet->NHAN_XET?></textarea>
@@ -35,6 +53,25 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php endif; ?>
 <?php
 $script = <<< JS
+    $(document).on('blur', '.note-editable', function () {
+        $('#w1').submit();
+        // var capnhatghichu = $(this).val();
+        // var id = $(this).data('id');
+        // $.ajax({
+        //     url: '/quanlydiemdanh/capnhatghichubuoihoc',
+        //     method: 'post',
+        //     data: {
+        //         id: id,
+        //         capnhatghichu: capnhatghichu,
+        //     },
+        //     success:function(data) {
+        //         data = jQuery.parseJSON(data);
+        //         if (!data.error) {
+        //             Swal.fire(data.message);
+        //         }
+        //     }
+        // });
+    });
     $('.chuyendoitrangthaidiemdanh').on('change', function() {
         var diemdanhhsid = $(this).data('diemdanhhsid');
         var status = $(this).is(":checked") ? 1 : 0;

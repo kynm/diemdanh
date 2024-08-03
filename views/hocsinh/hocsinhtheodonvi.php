@@ -17,6 +17,9 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php Pjax::begin(); ?>    <?= GridView::widget([
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
+                'rowOptions' => function ($model, $index, $widget, $grid){
+                      return $model->SOBH_DAMUA ?  ['style'=>'color:'. colorsthuhocphi($model->SOBH_DAMUA - $model->getDsdiemdanh()->andWhere(['STATUS' => 1])->count()) .' !important;'] : [];
+                    },
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     [
@@ -30,13 +33,19 @@ $this->params['breadcrumbs'][] = $this->title;
                             'pluginOptions' => ['allowClear' => true],
                         ],
                     ],
-                    'MA_HOCSINH',
                     'HO_TEN',
-                    'DIA_CHI',
                     'SO_DT',
                     'NGAY_BD',
-                    'NGAY_KT',
                     'TIENHOC',
+                    'SOBH_DAMUA',
+                    [
+                        'attribute' => 'SOBH_DAHOC',
+                        'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
+                        'value' => function ($model) {
+                            return $model->getDsdiemdanh()->andWhere(['STATUS' => 1])->count();
+                        },
+                        'format' => 'raw',
+                    ],
                     [
                         'attribute' => 'CHANGE_STATUS',
                         'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
@@ -47,7 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     [
                         'class' => 'yii\grid\ActionColumn',
-                        'template' => (Yii::$app->user->can('edit-hocsinh')) ? '{view} {update}' : '{view}'
+                        'template' => (Yii::$app->user->can('edit-hocsinh')) ? '{update}{view}' : 'view'
                     ],
                 ],
             ]); ?>

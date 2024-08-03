@@ -54,7 +54,7 @@ class Diemdanhhocsinh extends \yii\db\ActiveRecord
         return $this->hasMany(Nhanvien::className(), ['CHUC_VU' => 'id']);
     }
 
-    public function getdiemdanh()
+    public function getDiemdanh()
     {
         return $this->hasOne(Quanlydiemdanh::className(), ['ID' => 'ID_DIEMDANH']);
     }
@@ -62,5 +62,10 @@ class Diemdanhhocsinh extends \yii\db\ActiveRecord
     public function getHocsinh()
     {
         return $this->hasOne(Hocsinh::className(), ['ID' => 'ID_HOCSINH']);
+    }
+
+    public function getLop()
+    {
+        return $this->hasOne(Hocsinh::className(), ['ID' => 'ID_LOP']);
     }
 }

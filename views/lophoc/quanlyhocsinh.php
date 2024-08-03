@@ -26,11 +26,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filterModel' => $searchModel,
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
-                    'MA_HOCSINH',
-                    'HO_TEN',
-                    'TIENHOC',
-                    'DIA_CHI',
-                    'SO_DT',
                     [
                         'attribute' => 'CHANGE_STATUS',
                         'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
@@ -39,6 +34,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         },
                         'format' => 'raw',
                     ],
+                    'MA_HOCSINH',
+                    'HO_TEN',
+                    'TIENHOC',
+                    'DIA_CHI',
+                    'SO_DT',
+                    
                 ],
             ]); ?>
         <?php Pjax::end(); ?>

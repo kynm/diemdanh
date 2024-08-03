@@ -20,9 +20,9 @@ class Quanlydiemdanh extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['NGAY_DIEMDANH', 'TIEUDE', 'ID_NHANVIEN', 'ID_LOP', 'ID_DONVI', 'ID_DIEMDANH'], 'required'],
+            [['NGAY_DIEMDANH', 'TIEUDE', 'ID_NHANVIEN', 'ID_LOP', 'ID_DONVI'], 'required'],
             [['TIEUDE'], 'string'],
-            [['NGAY_DIEMDANH'], 'safe'],
+            [['NGAY_DIEMDANH', 'NOIDUNG'], 'safe'],
             [['ID_LOP', 'ID_NHANVIEN'], 'integer'],
             [['TIEUDE'], 'string', 'max' => 50],
             [['ID_LOP'], 'exist', 'skipOnError' => true, 'targetClass' => Lophoc::className(), 'targetAttribute' => ['ID_LOP' => 'ID_LOP']],
@@ -48,6 +48,7 @@ class Quanlydiemdanh extends \yii\db\ActiveRecord
             'DSHOCSINHVANG' => 'DANH SÁCH VẮNG',
             'GHICHU' => 'GHI CHÚ',
             'HANHDONG' => 'HÀNH ĐỘNG',
+            'NOIDUNG' => 'NỘI DUNG',
         ];
     }
 

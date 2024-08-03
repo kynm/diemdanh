@@ -22,7 +22,7 @@ class Chitiethocphi extends \yii\db\ActiveRecord
         return [
             [['ID_NHANVIEN', 'ID_HOCSINH', 'ID_QUANLYHOCPHI'], 'required'],
             [['NHAN_XET', 'NGAY_NGHI', 'NGAYDIHOC'], 'safe'],
-            [['SO_BH', 'SO_BDH', 'SO_BN', 'TONG_TIEN', 'SO_BTT', 'TIENHOC'], 'integer'],
+            [['SO_BH', 'SO_BDH', 'SO_BN', 'TONG_TIEN', 'SO_BTT', 'TIENHOC', 'TIENKHAC'], 'integer'],
             [['ID_NHANVIEN'], 'exist', 'skipOnError' => true, 'targetClass' => Nhanvien::className(), 'targetAttribute' => ['ID_NHANVIEN' => 'ID_NHANVIEN']],
         ];
     }
@@ -42,6 +42,9 @@ class Chitiethocphi extends \yii\db\ActiveRecord
             'SO_BTT' => 'SỐ BUỔI TÍNH TIỀN',
             'SO_BDH' => 'SỐ BUỔI ĐI HỌC',
             'ID_LOP' => 'LỚP HỌC',
+            'STATUS' => 'TRẠNG THÁI',
+            'created_at' => 'NGÀY TẠO',
+            'TIENKHAC' => 'TIỀN KHÁC',
         ];
     }
 

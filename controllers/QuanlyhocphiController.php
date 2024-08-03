@@ -77,11 +77,11 @@ class QuanlyhocphiController extends Controller
 
     public function taochitiethocphi($quanlyhocphi)
      {
-        $sql = "SELECT c.ID ID_HOCSINH,c.HO_TEN, COUNT(1) SO_LUONG, SUM(CASE WHEN b.`STATUS` > 0 then 1 ELSE 0 END) SOLUONGDIHOC
+        $sql = "SELECT c.ID ID_HOCSINH,c.HO_TEN,c.TIENHOC, COUNT(1) SO_LUONG, SUM(CASE WHEN b.`STATUS` > 0 then 1 ELSE 0 END) SOLUONGDIHOC
             , GROUP_CONCAT(CASE WHEN b.`STATUS` = 0 then day(a.NGAY_DIEMDANH) ELSE null END) NGAYNGHI
             , GROUP_CONCAT(CASE WHEN b.`STATUS` = 1 then day(a.NGAY_DIEMDANH) ELSE null END) NGAYDIHOC
             FROM quanlydiemdanh a, diemdanhhocsinh b, hocsinh c
-                WHERE a.ID = b.ID_DIEMDANH AND b.ID_HOCSINH = c.ID and a.ID_LOP = :ID_LOP AND a.NGAY_DIEMDANH BETWEEN :TU_NGAY and :DEN_NGAY GROUP BY c.HO_TEN,c.ID order by c.ID";
+                WHERE a.ID = b.ID_DIEMDANH AND b.ID_HOCSINH = c.ID and a.ID_LOP = :ID_LOP AND a.NGAY_DIEMDANH BETWEEN :TU_NGAY and :DEN_NGAY GROUP BY c.HO_TEN,c.ID,c.TIENHOC order by c.ID";
         $data = Yii::$app->db->createCommand($sql)->bindValues(
             [
                 ':TU_NGAY' => $quanlyhocphi->TU_NGAY,
@@ -104,7 +104,7 @@ class QuanlyhocphiController extends Controller
             $hocphi->NGAYDIHOC = $chitiet['NGAYDIHOC'];
             $hocphi->SO_BDH = $chitiet['SOLUONGDIHOC'];
             $hocphi->SO_BTT = $chitiet['SOLUONGDIHOC'];
-            $hocphi->TIENHOC = $quanlyhocphi->TIENHOC;
+            $hocphi->TIENHOC = $chitiet['TIENHOC'];
             $hocphi->TONG_TIEN = $hocphi->SO_BTT * $hocphi->TIENHOC;
             $hocphi->save(false);
         }
@@ -125,6 +125,7 @@ class QuanlyhocphiController extends Controller
 
     public function actionChitiethocphi($id)
     {
+        $this->layout = 'printLayout';
         $model = Chitiethocphi::findOne($id);
         return $this->render('chitiethocphi', [
             'model' => $model,
@@ -139,9 +140,16 @@ class QuanlyhocphiController extends Controller
      */
     public function actionDelete($id)
     {
-        if (Yii::$app->user->can('delete-diemdanh')) {
-            $this->findModel($id)->delete();
-            
+        if (Yii::$app->user->can('quanlytruonghoc')) {
+            $model = $this->findModel($id);
+            if ($model->getChitiethocphi()->where(['STATUS' => 1])->count()) {
+                Yii::$app->session->setFlash('error', "Không thể xóa do đã tồn tại lượt thanh toán học phí");
+                return $this->redirect(['view', 'id' => $id]);
+            }   else {
+                Chitiethocphi::deleteAll(['ID_QUANLYHOCPHI' => $id]);
+                $model->delete();
+            }
+            Yii::$app->session->setFlash('success', "Xóa thành công!");
             return $this->redirect(['index']);
         } else {
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
@@ -175,7 +183,7 @@ class QuanlyhocphiController extends Controller
             ];
             if ($hocphi && $hocphi->hocphi->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
                 $hocphi->TIENHOC = $params['sotienmoibuoi'];
-                $hocphi->TONG_TIEN = $hocphi->SO_BTT * $hocphi->TIENHOC;
+                $hocphi->TONG_TIEN = $hocphi->SO_BTT * $hocphi->TIENHOC + $hocphi->TIENKHAC;
                 $hocphi->save();
                 $result['error'] = 0;
                 $result['ID'] = $hocphi->ID;
@@ -201,7 +209,33 @@ class QuanlyhocphiController extends Controller
             ];
             if ($hocphi && $hocphi->hocphi->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
                 $hocphi->SO_BTT = $params['sobuoi'];
-                $hocphi->TONG_TIEN = $hocphi->SO_BTT * $hocphi->TIENHOC;
+                $hocphi->TONG_TIEN = $hocphi->SO_BTT * $hocphi->TIENHOC + $hocphi->TIENKHAC;
+                $hocphi->save();
+                $result['error'] = 0;
+                $result['ID'] = $hocphi->ID;
+                $result['SO_BTT'] = $hocphi->SO_BTT;
+                $result['TONG_TIEN'] = $hocphi->TONG_TIEN;
+                $result['message'] = 'Cập nhật thành công';
+            }
+
+            return json_encode($result);
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function actionCapnhattienkhac()
+    {
+        if (Yii::$app->request->post() && Yii::$app->user->identity->nhanvien->ID_NHANVIEN) {
+            $params = Yii::$app->request->post();
+            $hocphi = Chitiethocphi::findOne($params['id']);
+            $result = [
+                'error' => 1,
+                'message' => '',
+            ];
+            if ($hocphi && $hocphi->hocphi->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+                $hocphi->TIENKHAC = $params['tiencongthem'];
+                $hocphi->TONG_TIEN = $hocphi->SO_BTT * $hocphi->TIENHOC + $hocphi->TIENKHAC;
                 $hocphi->save();
                 $result['error'] = 0;
                 $result['ID'] = $hocphi->ID;

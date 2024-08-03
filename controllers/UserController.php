@@ -161,27 +161,6 @@ class UserController extends Controller
             # code...
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');            
         }
-    }    
-
-    /** 
-     *  fucntion
-     */
-
-    public function actionEditNhaTram()
-    {
-        $models = User::find()->joinWith('nhanvien')->where(['CHUC_VU' => [5,7,8,9]])->all();
-        // print_r($models); die;
-        foreach ($models as $model) {
-            $exists = AuthAssignment::find()->where(['item_name' => 'create-dbd', 'user_id' => $model->id])->exists();
-            if (!$exists) {
-                $permit = new AuthAssignment;
-                $permit->item_name = 'create-dbd';
-                $permit->user_id = $model->id;
-                $permit->created_at = time();
-                $permit->save();
-            }
-        }
-        echo "Successful";
     }
 
     /**

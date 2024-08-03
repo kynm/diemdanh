@@ -112,6 +112,10 @@ class LophocController extends Controller
 
     public function actionThemhocsinh($id)
     {
+        if (Yii::$app->user->identity->nhanvien->iDDONVI->SO_HS <= Yii::$app->user->identity->nhanvien->iDDONVI->getHocsinh()->andWhere(['STATUS' => 1])->count()) {
+            Yii::$app->session->setFlash('error', "SỐ HỌC SINH VƯỢT QUÁ GIỚI HẠN CỦA GÓI, VUI LÒNG LIÊN HỆ QUẢN ĐỂ ĐƯỢC HỖ TRỢ!");
+                return $this->redirect(['quanlyhocsinh', 'id' => $id]);
+        }
         if (Yii::$app->user->can('create-hocsinh') && $id) {
             $hocsinh = new Hocsinh();
             $model = $this->findModel($id);
@@ -136,13 +140,16 @@ class LophocController extends Controller
             $diemdanh->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
             $diemdanh->ID_LOP  = $id;
             $diemdanh->NGAY_DIEMDANH = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
+            $params = Yii::$app->request->queryParams;
+            $params['TU_NGAY'] = isset($params['TU_NGAY']) ? $params['TU_NGAY'] : date("Y-m-d", strtotime("-1 month"));
+            $params['DEN_NGAY'] = isset($params['DEN_NGAY']) ? $params['DEN_NGAY'] : date('Y-m-d');
             $searchModel = new QuanlydiemdanhSearch();
-            $dataProvider = $searchModel->searchDiemdanhtheolop(Yii::$app->request->queryParams, $id);
+            $result = $searchModel->searchDiemdanhtheolop($params, $id);
             return $this->render('quanlydiemdanh', [
                 'model' => $model,
                 'diemdanh' => $diemdanh,
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
+                'result' => $result,
+                'params' => $params,
             ]);
         } else {
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');           
@@ -157,14 +164,15 @@ class LophocController extends Controller
             $diemdanh->ID_DONVI = $model->ID_DONVI;
             $diemdanh->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
             $diemdanh->ID_LOP  = $id;
+            $diemdanh->NOIDUNG = $model->TEMP_NHANXET;
             if ($diemdanh->load(Yii::$app->request->post())) {
-                $diemdanhnow = $model->getDsdiemdanh()->andWhere(['NGAY_DIEMDANH' => $diemdanh->NGAY_DIEMDANH])->andWhere(['STATUS' => 1])->one();
+                $diemdanhnow = $model->getDsdiemdanh()->andWhere(['NGAY_DIEMDANH' => $diemdanh->NGAY_DIEMDANH])->one();
                 if ($diemdanhnow) {
                     Yii::$app->session->setFlash('error', "Điểm danh đã tồn tại!");
                     return $this->redirect(['capnhatdiemdanh', 'diemdanhid' => $diemdanhnow->ID]);
                 }
-                $diemdanh->save(false);
-                foreach ($model->dshocsinh as $key => $hocsinh) {
+                $diemdanh->save();
+                foreach ($model->getDshocsinh()->andWhere(['STATUS' => 1])->all() as $key => $hocsinh) {
                     $diemdanhhocsinh = Diemdanhhocsinh::find()->where(['ID_HOCSINH' => $hocsinh->ID])->andWhere(['ID_DIEMDANH' => $diemdanh->ID])->one();
                     if (!$diemdanhhocsinh) {
                         $diemdanhhocsinh = new Diemdanhhocsinh();
@@ -208,7 +216,7 @@ class LophocController extends Controller
 
             return json_encode($result);
         } else {
-            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');           
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
         }
     }
 
@@ -219,6 +227,10 @@ class LophocController extends Controller
      */
     public function actionCreate()
     {
+        if (Yii::$app->user->identity->nhanvien->iDDONVI->SO_LOP <= Yii::$app->user->identity->nhanvien->iDDONVI->getLophoc()->andWhere(['STATUS' => 1])->count()) {
+            Yii::$app->session->setFlash('error', "SỐ LỚP HỌC VƯỢT QUÁ GIỚI HẠN CỦA GÓI, VUI LÒNG LIÊN HỆ QUẢN ĐỂ ĐƯỢC HỖ TRỢ!");
+                return $this->redirect(['index']);
+        }
         if (Yii::$app->user->can('create-lophoc')) {
             $model = new Lophoc();
             $model->ID_DONVI = Yii::$app->user->identity->nhanvien->ID_DONVI;
@@ -252,7 +264,6 @@ class LophocController extends Controller
     {
         if (Yii::$app->user->can('edit-lophoc')) {
             $model = $this->findModel($id);
-
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->ID_LOP]);
             } else {

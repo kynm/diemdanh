@@ -18,6 +18,7 @@ use app\models\Donvi;
 use app\models\Nhanvien;
 use app\models\Hocsinh;
 use app\models\Lophoc;
+use app\models\Donhang;
 use app\models\KhachhanggiahanSearch;
 use moonland\phpexcel\Excel;
 use yii\helpers\ArrayHelper;
@@ -81,15 +82,18 @@ class SiteController extends Controller
                 $sltk = Nhanvien::find()->count();
                 $sllh = Lophoc::find()->count();
                 $slhs = Hocsinh::find()->count();
+                $sldh = Donhang::find()->count();
                 return $this->render('index', [
                     'sldonvi' => $sldonvi,
                     'sltk' => $sltk,
                     'sllh' => $sllh,
                     'slhs' => $slhs,
+                    'sldh' => $sldh,
             ]);
             }
             if (Yii::$app->user->can('quanlyhocsinh')) {
                 $solop = Yii::$app->user->identity->nhanvien->iDDONVI->getLophoc()->count();
+                $sonhanvien = Yii::$app->user->identity->nhanvien->iDDONVI->getNhanviens()->count();
                 $tongsohocvien = Yii::$app->user->identity->nhanvien->iDDONVI->getHocsinh()->count();
                 $sql = "SELECT b.TEN_LOP, b.ID_LOP
                     ,COUNT(1) SOHOCSINH
@@ -106,6 +110,7 @@ class SiteController extends Controller
                     'solop' => $solop,
                     'tongsohocvien' => $tongsohocvien,
                     'dulieungay' => $dulieungay,
+                    'sonhanvien' => $sonhanvien,
                 ]);
             }
             if (Yii::$app->user->can('diemdanhlophoc')) {

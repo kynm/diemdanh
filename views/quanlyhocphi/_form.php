@@ -23,7 +23,7 @@ use kartik\select2\Select2;
                     <?= $form->field($model, 'ID_LOP')->widget(Select2::classname(), [
                         'data' => $dslop,
                         'pluginOptions' => [
-                            'placeholder' => 'Chọn nhân viên điểm danh',
+                            'placeholder' => 'Chọn lớp',
                             'allowClear' => true,
                             // 'multiple' => true
                         ],

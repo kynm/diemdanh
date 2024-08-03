@@ -41,54 +41,33 @@ class QuanlydiemdanhSearch extends Quanlydiemdanh
     public function searchDiemdanhtheolop($params, $id)
     {
         $query = Quanlydiemdanh::find();
-
-        // add conditions that should always apply here
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
-
-        $this->load($params);
-
-        if (!$this->validate()) {
-            return $dataProvider;
-        }
-
-        // grid filtering conditions
         $query->andFilterWhere([
             'ID_LOP' => $id,
         ]);
-
         $query->andFilterWhere(['=', 'ID_LOP', $this->ID_LOP]);
         $query->andFilterWhere(['like', 'TIEUDE', $this->TIEUDE]);
+        $query->andFilterWhere(['>=', 'date(quanlydiemdanh.NGAY_DIEMDANH)', $params['TU_NGAY']]);
+        $query->andFilterWhere(['<=', 'date(quanlydiemdanh.NGAY_DIEMDANH)', $params['DEN_NGAY']]);
         $query->orderBy([
             'NGAY_DIEMDANH' => SORT_DESC,
         ]);
 
-        return $dataProvider;
+        return $query->all();
     }
 
     public function searchdiemdanhtheodonvi($params)
     {
         $query = Quanlydiemdanh::find();
-
-        // add conditions that should always apply here
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-
         $this->load($params);
-
         if (!$this->validate()) {
             return $dataProvider;
         }
-
-        // grid filtering conditions
         $query->andFilterWhere([
             'ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI,
         ]);
-
         $query->andFilterWhere(['like', 'TIEUDE', $this->TIEUDE]);
         $query->orderBy([
             'NGAY_DIEMDANH' => SORT_DESC,

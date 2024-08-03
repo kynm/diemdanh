@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             [
                                 'attribute' => 'ID_LOP',
                                 'value' => 'lop.TEN_LOP',
-                                'contentOptions' => ['style' => 'width:20%; white-space: normal;word-break: break-word;'],
+                                'contentOptions' => ['style' => 'width:8%; white-space: normal;word-break: break-word;'],
                                 'filter'=> $dslop,
                                 'filterType' => GridView::FILTER_SELECT2,
                                 'filterWidgetOptions' => [
@@ -41,7 +41,22 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'format' => 'raw',
                             ],
                             'NGAY_DIEMDANH',
-                            'TIEUDE',
+                            [
+                                'attribute' => 'NOIDUNG',
+                                'contentOptions' => ['style' => 'width:25%; white-space: normal;word-break: break-word;'],
+                                'value'  => function($model) {
+                                    return nl2br($model->NOIDUNG);
+                                },
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'TIEUDE',
+                                'value' => function ($model) {
+                                    return Html::a($model->TIEUDE, ['view', 'id' => $model->ID]);
+                                },
+                                'contentOptions' => ['style' => 'width:10%;white-space: normal;word-break: break-word;word-break: break-word;'],
+                                'format' => 'raw',
+                            ],
                             [
                                 'attribute' => 'SOHOCSINH',
                                 'value' =>function($model) {
@@ -62,17 +77,26 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'format' => 'raw',
                             ],
                             [
-                            'attribute' => 'DSHOCSINHVANG',
-                            'value' =>function($model) {
-                                $idhocsinh = ArrayHelper::map($model->getDschitietdiemdanh()->andWhere(['STATUS' => 0])->all(), 'ID_HOCSINH', 'ID_HOCSINH');
-                                $dshocsinhvang = ArrayHelper::map(Hocsinh::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->andWhere(['in', 'ID', $idhocsinh])->all(), 'ID', 'HO_TEN');
-                                return $dshocsinhvang ? implode(',', $dshocsinhvang) : null;
-                            }
-                        ],
+                                'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
+                                'attribute' => 'DSHOCSINHVANG',
+                                'value' =>function($model) {
+                                    $idhocsinh = ArrayHelper::map($model->getDschitietdiemdanh()->andWhere(['STATUS' => 0])->all(), 'ID_HOCSINH', 'ID_HOCSINH');
+                                    $dshocsinhvang = ArrayHelper::map(Hocsinh::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->andWhere(['in', 'ID', $idhocsinh])->all(), 'ID', 'HO_TEN');
+                                    return $dshocsinhvang ? implode(',', $dshocsinhvang) : null;
+                                }
+                            ],
+                            [
+                                'attribute' => 'GHICHU',
+                                'contentOptions' => ['style' => 'width:25%; white-space: normal;word-break: break-word;'],
+                                'value' =>function($model) {
+                                    return $model->ghichu;
+                                },
+                                'format' => 'raw',
+                            ],
                         [
                                 'attribute' => 'HANHDONG',
                                 'value'  => function($model) {
-                                    return Yii::$app->user->can('quanlytruonghoc') ? '<span class="btn btn-danger btn-default text-white xoadiemdanh" data-id="' . $model->ID . '" style="color: white;">Xóa điểm danh</span>' : '';
+                                    return Yii::$app->user->can('quanlytruonghoc') ? '<span class="btn btn-danger btn-default text-white xoadiemdanh" data-id="' . $model->ID . '" style="color: white;">Xóa</span>' : '';
                                 },
                                 'format' => 'raw',
                             ],

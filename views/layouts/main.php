@@ -30,13 +30,20 @@ if (Yii::$app->controller->action->id === 'login') {
     <!DOCTYPE html>
     <html lang="<?= Yii::$app->language ?>">
     <head>
-        <meta name="google-site-verification" content="jyVCK93M5I1ZxnLA5jJXdtKBlPHkQAKqjCIuuT_cx50" />
-        
         <link rel="icon" href="<?= Url::to(Yii::$app->homeUrl) ?>favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic">
         <meta charset="<?= Yii::$app->charset ?>"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon"  href="/dist/img/icon.png" type="image/x-icon" />
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-FGTRKNLMQ0"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-FGTRKNLMQ0');
+        </script>
         <?= Html::csrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
@@ -58,11 +65,10 @@ if (Yii::$app->controller->action->id === 'login') {
 
     </div>
 <footer class="main-footer">
-    <div class="pull-right hidden-xs">
-        <span class="pull-right" ><b>Phiên bản</b> 1.0</span>
-    </div>
-    <br>
-    <br>
+    <span><b>Easy Check</b> 1.0</span>
+    <span class="pull-right">
+        <a href="#"> <a href="https://www.facebook.com/hethongquanlydiemdanheasycheck" target="_blank"><i class="fa fa-facebook" style="font-size: 36px;"></i> LIÊN HỆ HỖ TRỢ QUA FACEBOOK</a>
+    </span>
 </footer>
     <?php $this->endBody() ?>
     </body>

@@ -37,6 +37,9 @@ use kartik\editors\Summernote;
                             'options' => ['placeholder' => 'Nội dung']
                         ]) ?>
                 </div>
+                <div class="col-sm-12">
+                    <?= $form->field($model, 'SHOWALL')->checkBox(['label' => 'HIỂN THỊ TOÀN BỘ THÔNG TIN HỌC VIÊN KHI ĐIỂM DANH']) ?>
+                </div>
             </div>
         </div>
             

@@ -148,40 +148,34 @@ class QuanlyhocphithutruocController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Hocsinh::findOne($id)) !== null) {
+        if (($model = Quanlyhocphithutruoc::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
 
-    public function  actionChecksobuoi()
+    public function actionDuyetthuphitruoc()
     {
-        if (Yii::$app->request->post()) {
+        if (Yii::$app->request->post() && Yii::$app->user->identity->nhanvien->ID_NHANVIEN) {
+            $params = Yii::$app->request->post();
+            $hocphi = Quanlyhocphithutruoc::findOne($params['id']);
             $result = [
                 'error' => 1,
-                'message' => 'LỖI CẬP NHẬT',
+                'message' => 'Lỗi cập nhật!',
             ];
-            $params = Yii::$app->request->post();
-            $hocsinh = Hocsinh::find(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])
-                ->andWhere(['ID_LOP' => $params['lopid']])
-                ->andWhere(['ID' => $params['idhocsinh']])
-                ->one();
-            $sotien = $params['sotien'];
-            if (!$hocsinh->TIENHOC) {
-                $result = [
-                    'error' => 1,
-                    'message' => 'CẦN CẬP NHẬT TIỀN HỌC/BUỔI HỌC CHO HỌC SINH!',
-                ];
-            } else {
-                $result = [
-                    'error' => null,
-                    'message' => 'CẦN CẬP NHẬT TIỀN HỌC/BUỔI HỌC CHO HỌC SINH!',
-                    'value' => round($sotien / $hocsinh->TIENHOC, 0),
-                ];
+            if ($hocphi && $hocphi->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI && $hocphi->STATUS == 1) {
+                $hocphi->STATUS = 2;
+                $hocphi->save();
+                $hocphi->hocsinh->SOBH_DAMUA += $hocphi->SO_BH;
+                $hocphi->hocsinh->save();
+                $result['error'] = 0;
+                $result['message'] = 'Cập nhật thành công';
             }
 
             return json_encode($result);
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
 }

@@ -36,9 +36,9 @@ class Donvi extends \yii\db\ActiveRecord
     {
         return [
             [['ID_DONVI', 'MA_DONVI','MA_DONVIKT'], 'required'],
-            [['ID_DONVI', 'CAP_TREN'], 'integer'],
+            [['ID_DONVI', 'CAP_TREN', 'SO_LOP', 'SO_HS', 'SHOWALL'], 'integer'],
             [['MA_DONVI'], 'string', 'max' => 30],
-            [['TEN_DONVI', 'DIA_CHI'], 'string', 'max' => 100],
+            [['TEN_DONVI', 'DIA_CHI', 'NGAY_BD', 'NGAY_KT'], 'string', 'max' => 100],
             [['SO_DT'], 'string', 'max' => 20],
             [['MA_DONVI', 'SO_DT'], 'unique'],
             [['TTTT', 'QDLH', 'TTLH'], 'string'],
@@ -62,6 +62,14 @@ class Donvi extends \yii\db\ActiveRecord
             'TTTT' => 'THÔNG TIN THANH TOÁN',
             'QDLH' => 'QUY ĐỊNH LỚP HỌC',
             'TTLH' => 'THÔNG TIN LIÊN HỆ',
+            'SO_LOP' => 'SỐ LỚP TỐI ĐA',
+            'SO_HS' => 'SỐ HS TỐI ĐA',
+            'NGAY_BD' => 'NGÀY BẮT ĐẦU',
+            'NGAY_KT' => 'NGÀY HẾT HẠN',
+            'LUOTDIEMDANH' => 'LƯỢT ĐIỂM DANH',
+            'NHANVIEN' => 'NHÂN VIÊN',
+            'HOCSINH' => 'HỌC SINH',
+            'SHOWALL' => 'HIỂN THỊ TOÀN BỘ THÔNG TIN HỌC VIÊN KHI ĐIỂM DANH',
         ];
     }
 
@@ -102,8 +110,18 @@ class Donvi extends \yii\db\ActiveRecord
         return $this->hasMany(Nhanvien::className(), ['ID_DONVI' => 'ID_DONVI']);
     }
 
+    public function getDsdiemdanh()
+    {
+        return $this->hasMany(Quanlydiemdanh::className(), ['ID_DONVI' => 'ID_DONVI']);
+    }
+
     public function getChatid()
     {
         return $this->telegram_id ? $this->telegram_id : '-1001641206920';
+    }
+
+    public function getDsdonhang()
+    {
+        return $this->hasMany(Donhang::className(), ['ID_DONVI' => 'ID_DONVI']);
     }
 }

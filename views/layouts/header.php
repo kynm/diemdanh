@@ -6,7 +6,7 @@ use yii\helpers\Url;
     <nav class="navbar navbar-static-top">
         <div class="container">
             <div class="navbar-header">
-                <a href="<?= Url::to(['/'])?>" class="navbar-brand">TRANG CHỦ</a>
+                <a href="<?= Url::to(['/'])?>" class="navbar-brand"><img src="/dist/img/icon.png" style="height:30px; margin-bottom: 5px;"></a>
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
                 <i class="fa fa-bars"></i>
                 </button>
@@ -24,13 +24,26 @@ use yii\helpers\Url;
                         </li>
                     <?php endif; ?>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">HƯỚNG DẪN<span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Hướng dẫn<span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <?php if (Yii::$app->user->can('Administrator') || Yii::$app->user->can('quanlyhocsinh')): ?>
-                                    <li><a href="https://docs.google.com/document/d/1uYMzSlUt7E9Zu2qf2hMxrszn0LZ8PE7CzvuHL8pDVOI/edit?usp=sharing" target="_blank">QUẢN LÝ TRUNG TÂM</a></li>
+                                    <li><a href="https://docs.google.com/document/d/1uYMzSlUt7E9Zu2qf2hMxrszn0LZ8PE7CzvuHL8pDVOI/edit?usp=sharing" target="_blank">Quản lý trung tâm</a></li>
                                 <?php endif; ?>
-                                    <li><a href="https://docs.google.com/document/d/1mGWRUdnxj4CLGiNJbLctc57NmPYJ0A4RsQs-hORecxY/edit?usp=sharing" target="_blank">ĐIỂM DANH</a></li>
+                                    <li><a href="https://docs.google.com/document/d/1mGWRUdnxj4CLGiNJbLctc57NmPYJ0A4RsQs-hORecxY/edit?usp=sharing" target="_blank">Điểm danh</a></li>
                             </ul>
+                        </li>
+                        <?php if (Yii::$app->user->can('quanlyhocsinh')): ?>
+                            <li>
+                                <a href="<?= Url::to(['user/cauhinhdonvi'])?>" class="btn btn-primary btn-flat">CẤU HÌNH</a>
+                            </li>
+                        <?php endif; ?>
+                        <li>
+                            <a href="<?= Url::to(['user/edit-profile'])?>" class="btn btn-primary btn-flat">Profile</a>
+                            
+                        </li>
+                        <li class="pull-right"><a href="<?= Url::to(['site/logout'])?>" data-method="post" class="btn btn-primary btn-flat">
+                                <i style="color: red;" class="fa fa-sign-out"></i> Đăng xuất
+                            </a>
                         </li>
                 </ul>
             </div>
@@ -40,21 +53,6 @@ use yii\helpers\Url;
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                         <span><?= Yii::$app->user->identity->nhanvien->TEN_NHANVIEN ?></span>
                     </a>
-                    <ul class="dropdown-menu">
-                        <li class="user-footer">
-                            <div class="pull-left">
-                                <a href="<?= Url::to(['user/edit-profile'])?>" class="btn btn-default btn-flat">Profile</a>
-                                <?php if (Yii::$app->user->can('quanlyhocsinh')): ?>
-                                    <a href="<?= Url::to(['user/cauhinhdonvi'])?>" class="btn btn-default btn-flat">CẤU HÌNH</a>
-                                <?php endif; ?>
-                            </div>
-                            <div class="pull-right">
-                                <a href="<?= Url::to(['site/logout'])?>" data-method="post" class="btn btn-default btn-flat">
-                                    <i class="fa fa-sign-out"></i> Đăng xuất
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
                     </li>
                 </ul>
             </div>

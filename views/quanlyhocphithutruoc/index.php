@@ -57,6 +57,27 @@ $this->params['breadcrumbs'][] = $this->title;
                                 },
                                 'format' => 'raw',
                             ],
+                            [
+                                'attribute' => 'STATUS',
+                                'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
+                                'value' => function ($model) {
+                                    return statusdonhang()[$model->STATUS];
+                                },
+                                'filter'=> statusdonhang(),
+                                'filterType' => GridView::FILTER_SELECT2,
+                                'filterWidgetOptions' => [
+                                    'options' => ['prompt' => ''],
+                                    'pluginOptions' => ['allowClear' => true],
+                                ],
+                            ],
+                            [
+                                'attribute' => 'GHICHU',
+                                'contentOptions' => ['style' => 'width:15%; white-space: normal;word-break: break-word;'],
+                                'value' => function($model) {
+                                    return $model->STATUS == 1 ? '<span class="btn btn-primary duyetthuphitruoc" data-id="' . $model->ID . '">Duyệt</span>' : '';
+                                },
+                                'format' => 'raw',
+                            ],
                         ],
                     ]); ?>
                 <?php Pjax::end(); ?>
@@ -64,3 +85,39 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+<?php
+$script = <<< JS
+    $('.duyetthuphitruoc').on('click', function() {
+        Swal.fire({
+            title: 'Bạn có chắc chắn đã thu học phí học sinh này không?',
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: 'ĐÃ THU!',
+            cancelButtonText: "CHƯA THU!"
+        }).then((result) => {
+        if (result['isConfirmed']) {
+            var id = $(this).data('id');
+            $.ajax({
+                url: '/quanlyhocphithutruoc/duyetthuphitruoc',
+                method: 'post',
+                data: {
+                    id: id,
+                },
+                success:function(data) {
+                    data = jQuery.parseJSON(data);
+                    if (!data.error) {
+                        Swal.fire('Xác nhận thành công');
+                        setTimeout(() => {
+                            window.location.reload(true);
+                        }, 1000);
+                    }
+                }
+            });
+        }
+        });
+        
+    });
+JS;
+$this->registerJs($script);
+?>

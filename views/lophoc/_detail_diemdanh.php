@@ -8,7 +8,6 @@ use yii\widgets\DetailView;
         <?= DetailView::widget([
             'model' => $model,
             'attributes' => [
-                // 'ID_LOP',
                 'TIEUDE',
                 [
                     'attribute' => 'LOP',

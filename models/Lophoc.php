@@ -34,11 +34,12 @@ class Lophoc extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['MA_LOP', 'ID_DONVI', 'ID_NHANVIEN_DIEMDANH'], 'required'],
+            [['MA_LOP', 'ID_DONVI', 'ID_NHANVIEN_DIEMDANH', 'TEN_LOP'], 'required'],
             [['ID_DONVI', 'TIENHOC', 'STATUS'], 'integer'],
             [['MA_LOP'], 'string', 'max' => 20],
             [['TEN_LOP', 'DIA_CHI'], 'string', 'max' => 100],
             [['SO_DT'], 'string', 'max' => 20],
+            [['TEMP_NHANXET'], 'safe'],
             [['MA_LOP'], 'unique'],
             [['ID_DONVI'], 'exist', 'skipOnError' => true, 'targetClass' => Donvi::className(), 'targetAttribute' => ['ID_DONVI' => 'ID_DONVI']],
         ];
@@ -61,6 +62,8 @@ class Lophoc extends \yii\db\ActiveRecord
             'SOHOCSINH' => 'TỔNG SỐ HỌC SINH',
             'SOHOCSINHHOATDONG' => 'SỐ HỌC SINH HOẠT ĐỘNG',
             'CHANGE_STATUS' => 'ĐỔI TRẠNG THÁI',
+            'STATUS' => 'TRẠNG THÁI',
+            'TEMP_NHANXET' => 'MẪU NHẬN XÉT LỚP HỌC',
         ];
     }
 

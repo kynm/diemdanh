@@ -39,4 +39,65 @@
         ];
     }
 
+    function statusdonvi()
+    {
+        return [
+            0 => 'HẾT HẠN',
+            1 => 'ĐANG THỬ NGHIỆM',
+            2 => 'ĐANG HOẠT ĐỘNG CHÍNH THỨC',
+        ];
+    }
+
+    function colorstatusdonvi($status)
+    {
+        $color = '';
+        switch ($status) {
+            case 0:
+                $color = 'red';
+                break;
+            case 1:
+                $color = '#f39c12';
+                break;
+            case 2:
+                $color = 'green';
+                break;
+            
+            default:
+                $color = '#1E90FF';
+                break;
+        }
+
+        return $color;
+    }
+
+    function colorsthuhocphi($so)
+    {
+        $color = '';
+        if ($so < 3 && $so >= 1) {
+            $color = '#b18e05';
+        }
+        if ($so < 1) {
+            $color = 'red';
+        }
+
+        return $color;
+    }
+
+    function statusdonhang()
+    {
+        return [
+            0 => 'TỪ CHỐI',
+            1 => 'CHỜ DUYỆT',
+            2 => 'ĐÃ DUYỆT',
+        ];
+    }
+
+    function statusdiemdanh()
+    {
+        // return [
+        //     0 => 'VẮNG',
+        //     0 => '',
+        // ];
+    }
+
 ?>

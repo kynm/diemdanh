@@ -73,4 +73,39 @@ class NhanvienSearch extends Nhanvien
 
         return $dataProvider;
     }
+
+    public function dsnhanviendonvi($params)
+    {
+        $query = Nhanvien::find()->where(['>', 'ID_NHANVIEN', 0]);
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        $query->joinWith('iDDONVI');
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'donvi.ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI,
+        ]);
+
+        $query->andFilterWhere(['like', 'MA_NHANVIEN', $this->MA_NHANVIEN])
+            ->andFilterWhere(['like', 'TEN_NHANVIEN', $this->TEN_NHANVIEN])
+            ->andFilterWhere(['like', 'donvi.TEN_DONVI', $this->ID_DONVI])
+            ->andFilterWhere(['like', 'DIEN_THOAI', $this->DIEN_THOAI])
+            ->andFilterWhere(['like', 'GHI_CHU', $this->GHI_CHU])
+            ->andFilterWhere(['like', 'USER_NAME', $this->USER_NAME]);
+
+        return $dataProvider;
+    }
 }

@@ -6,6 +6,8 @@ use Yii;
 use app\models\ActivitiesLog;
 use app\models\Hocsinh;
 use app\models\HocsinhSearch;
+use app\models\DiemdanhhocsinhSearch;
+use app\models\ChitiethocphiSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
@@ -56,8 +58,26 @@ class HocsinhController extends Controller
      */
     public function actionView($id)
     {
+        $searchModel = new ChitiethocphiSearch();
+        $dataProvider = $searchModel->searchhocphitheohocsinh(Yii::$app->request->queryParams, $id);
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionLichsudiemdanh($id)
+    {
+        $params = Yii::$app->request->queryParams;
+        $params['TU_NGAY'] = isset($params['TU_NGAY']) ? $params['TU_NGAY'] : date("Y-m-d", strtotime("-1 month"));
+        $params['DEN_NGAY'] = isset($params['DEN_NGAY']) ? $params['DEN_NGAY'] : date('Y-m-d');
+        $searchModel = new DiemdanhhocsinhSearch();
+        $result = $searchModel->searchDiemdanhtheohocsinh($params, $id);
+        return $this->render('lichsudiemdanh', [
+            'model' => $this->findModel($id),
+            'result' => $result,
+            'params' => $params,
         ]);
     }
 

@@ -12,6 +12,17 @@ $this->params['breadcrumbs'][] = ['label' => 'Đơn vị chủ quản', 'url' =>
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="quanlyhocphi-view">
+    <?php if (Yii::$app->user->can('quanlyhocphi') && !$model->getChitiethocphi()->where(['STATUS' => 1])->count()):?>
+    <p>
+        <?= Html::a('<i class="fa fa-trash-o"></i> Xóa', ['delete', 'id' => $model->ID], [
+            'class' => 'btn btn-danger btn-flat',
+            'data' => [
+                'confirm' => 'Bạn chắc chắn muốn xóa mục này?',
+                'method' => 'post',
+            ],
+        ]) ?>
+    </p>
+    <?php endif; ?>
     <div class="box box-primary">
         <div class="box-body">
             <?= DetailView::widget([
@@ -31,37 +42,40 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 </div>
 <div class="box-body table-responsive">
-    <table class="table table-bordered" style="font-size: 20px;">
+    <table class="table table-bordered" style="font-size: 14px;">
         <tbody>
             <tr class="bg-primary text-center">
-                <th style="width: 10px">#</th>
-                <th >HỌC SINH</th>
-                <th >TỔNG SỐ <br/>BUỔI</th>
-                <th >SỐ BUỔI <br/>NGHỈ</th>
-                <th >NGÀY NGHỈ</th>
-                <th >SỐ BUỔI <br/>ĐI HỌC</th>
-                <th >NGÀY ĐI HỌC</th>
-                <th >SỐ BUỔI <br/>TÍNH TIỀN</th>
-                <th >SỐ TIỀN <br/>MỖI BUỔI</th>
-                <th >TIỀN HỌC</th>
-                <th >GHI CHÚ</th>
-                <th ></th>
+                <th class="text-center" style="width: 10px">#</th>
+                <th class="text-center">HỌC SINH</th>
+                <th class="text-center">TỔNG SỐ BUỔI</th>
+                <th class="text-center">SỐ BUỔI NGHỈ</th>
+                <th class="text-center">NGÀY NGHỈ</th>
+                <th class="text-center">SỐ BUỔI ĐI HỌC</th>
+                <th class="text-center">NGÀY ĐI HỌC</th>
+                <th class="text-center">SỐ TIỀN MỖI BUỔI</th>
+                <th class="text-center">SỐ BUỔI TÍNH TIỀN</th>
+                <th class="text-center">TIỀN KHÁC</th>
+                <th class="text-center">TỔNG TIỀN</th>
+                <th class="text-center">GHI CHÚ</th>
+                <th class="text-center"></th>
             </tr>
-            <?php foreach ($model->chitiethocphi as $key => $chitiet): ?>
+            <?php foreach ($model->chitiethocphi as $key => $chitiet):
+                ?>
                 <tr>
                     <td scope="col"><?= $key + 1;?></td>
                     <td><?= $chitiet->hocsinh->HO_TEN?></td>
-                    <td><?= $chitiet->SO_BH?></td>
-                    <td><?= $chitiet->SO_BN?></td>
-                    <td><?= $chitiet->NGAY_NGHI?></td>
-                    <td><?= $chitiet->SO_BDH?></td>
-                    <td><?= $chitiet->NGAYDIHOC?></td>
+                    <td width="5%"><?= $chitiet->SO_BH?></td>
+                    <td width="5%"><?= $chitiet->SO_BN?></td>
+                    <td width="5%"><?= $chitiet->NGAY_NGHI?></td>
+                    <td width="5%"><?= $chitiet->SO_BDH?></td>
+                    <td width="10%"><?= $chitiet->NGAYDIHOC?></td>
                     <td><input class="form-control capnhatsotienmoibuoi" type="number" value="<?= $chitiet->TIENHOC?>" data-id="<?= $chitiet->ID ?>"></td>
                     <td><input class="form-control capnhatsobuoitinhtien" type="number" value="<?= $chitiet->SO_BTT?>" data-id="<?= $chitiet->ID ?>"></td>
+                    <td><input class="form-control capnhattienkhac" type="number" value="<?= $chitiet->TIENKHAC?>" data-id="<?= $chitiet->ID ?>"></td>
                     <td><input class="form-control capnhattongtien" id="tongtien-<?= $chitiet->ID ?>" type="number" value="<?= $chitiet->TONG_TIEN?>" data-id="<?= $chitiet->ID ?>"></td>
-                    <td><textarea class="form-control capnhatghichu" data-id="<?= $chitiet->ID ?>"><?= $chitiet->NHAN_XET?></textarea></td>
-                    <td>
-                        <?= Html::a('<i class="fa fa-pencil-square-o"></i> Chi tiết học phí', ['/quanlyhocphi/chitiethocphi', 'id' => $chitiet->ID], ['class' => 'btn btn-primary btn-flat', 'target' => '_blank']) ?>
+                    <td width="15%"><textarea class="form-control capnhatghichu" data-id="<?= $chitiet->ID ?>"><?= $chitiet->NHAN_XET?></textarea></td>
+                    <td width="5%">
+                        <?= Html::a('<i class="fa fa-pencil-square-o"></i> In học phí', ['/quanlyhocphi/chitiethocphi', 'id' => $chitiet->ID], ['class' => 'btn btn-primary btn-flat', 'target' => '_blank']) ?>
                         <?php if (Yii::$app->user->can('quanlyhocphi') && !$chitiet->STATUS):?>
                             <span class="btn btn-flat btn-danger xacnhanthuhocphi" data-id="<?= $chitiet->ID ?>">Xác nhận thu tiền</span>
                         <?php else: ?>
@@ -103,6 +117,26 @@ $('.capnhatsotienmoibuoi').on('change', function() {
             data: {
                 id: id,
                 sobuoi: sobuoi,
+            },
+            success:function(data) {
+                data = jQuery.parseJSON(data);
+                if (!data.error) {
+                    $('#tongtien-' + data.ID).val(data.TONG_TIEN);
+                    Swal.fire('Xác nhận thành công');
+                }
+            }
+        });
+    });
+
+    $('.capnhattienkhac').on('change', function() {
+        var tiencongthem = $(this).val();
+        var id = $(this).data('id');
+        $.ajax({
+            url: '/quanlyhocphi/capnhattienkhac',
+            method: 'post',
+            data: {
+                id: id,
+                tiencongthem: tiencongthem,
             },
             success:function(data) {
                 data = jQuery.parseJSON(data);
@@ -160,7 +194,7 @@ $('.capnhatsotienmoibuoi').on('change', function() {
             showCancelButton: true,
             confirmButtonColor: '#DD6B55',
             confirmButtonText: 'ĐÃ THU!',
-            cancelButtonText: "TÔI NHẦM!"
+            cancelButtonText: "CHƯA THU!"
         }).then((result) => {
         if (result['isConfirmed']) {
             var capnhatghichu = $(this).val();

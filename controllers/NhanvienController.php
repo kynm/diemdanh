@@ -56,6 +56,22 @@ class NhanvienController extends Controller
         ]);
     }
 
+    public function actionDsnhanviendonvi()
+    {
+        if (Yii::$app->user->can('quanlytruonghoc')) {
+            $searchModel = new NhanvienSearch();
+            $dataProvider = $searchModel->dsnhanviendonvi(Yii::$app->request->queryParams);
+            return $this->render('dsnhanviendonvi', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }else {
+            # code...
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
+            
+        }
+    }
+
     /**
      * Displays a single Nhanvien model.
      * @param string $id

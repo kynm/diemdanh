@@ -19,7 +19,7 @@ class DonviSearch extends Donvi
     {
         return [
             [['ID_DONVI'], 'integer'],
-            [['MA_DONVI', 'TEN_DONVI', 'DIA_CHI', 'SO_DT', 'CAP_TREN'], 'safe'],
+            [['MA_DONVI', 'TEN_DONVI', 'DIA_CHI', 'SO_DT', 'STATUS'], 'safe'],
         ];
     }
 
@@ -47,7 +47,7 @@ class DonviSearch extends Donvi
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'pagination' => array('pageSize' => 50),
+            'pagination' => array('pageSize' => 20),
         ]);
 
         $this->load($params);
@@ -63,11 +63,15 @@ class DonviSearch extends Donvi
             'ID_DONVI' => $this->ID_DONVI,
         ]);
 
-        $query->andFilterWhere(['like', 'MA_DONVI', $this->MA_DONVI])
+        $query->andFilterWhere(['=', 'STATUS', $this->STATUS])
+        ->andFilterWhere(['like', 'MA_DONVI', $this->MA_DONVI])
             ->andFilterWhere(['like', 'TEN_DONVI', $this->TEN_DONVI])
             ->andFilterWhere(['like', 'DIA_CHI', $this->DIA_CHI])
             ->andFilterWhere(['like', 'SO_DT', $this->SO_DT]);
 
+        $query->orderBy([
+            'STATUS' => SORT_ASC,
+        ]);
         return $dataProvider;
     }
 }

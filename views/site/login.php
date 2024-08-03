@@ -41,6 +41,10 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
 
         <?php ActiveForm::end(); ?>
+
+        <div class="social-auth-links text-center">
+        <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"> <a href="https://www.facebook.com/hethongquanlydiemdanheasycheck" target="_blank"><i class="fa fa-facebook" style="font-size: 36px;"></i> LIÊN HỆ VỚI CHÚNG TÔI QUA FACEBOOK</a>
+        </div>
     </div>
 
 </div>

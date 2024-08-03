@@ -24,6 +24,9 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php Pjax::begin(); ?>    <?= GridView::widget([
                     'dataProvider' => $dataProvider,
                     'filterModel' => $searchModel,
+                    'rowOptions' => function ($model, $index, $widget, $grid){
+                      return ['style'=>'color:'. colorstatusdonvi($model->STATUS) .' !important;'];
+                    },
                     'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
                         [
@@ -35,9 +38,17 @@ $this->params['breadcrumbs'][] = $this->title;
                             'format' => 'raw',
                         ],
                         [
-                            'contentOptions' => ['style' => 'width:20%;white-space: normal;word-break: break-word;word-break: break-word;'],
-                            'attribute' => 'DIA_CHI',
-                            'value' => 'DIA_CHI',
+                            'attribute' => 'STATUS',
+                            'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
+                            'value' => function ($model) {
+                                return statusdonvi()[$model->STATUS];
+                            },
+                            'filter'=> statusdonvi(),
+                            'filterType' => GridView::FILTER_SELECT2,
+                            'filterWidgetOptions' => [
+                                'options' => ['prompt' => ''],
+                                'pluginOptions' => ['allowClear' => true],
+                            ],
                         ],
                         'SO_DT',
                         [
@@ -49,15 +60,25 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'attribute' => 'LOP',
                             'value' => function ($model) {
-                                return $model->getLophoc()->count();
+                                return $model->getLophoc()->andWhere(['STATUS' => 1])->count();
                             },
                         ],
+                        'SO_LOP',
                         [
                             'attribute' => 'HOCSINH',
                             'value' => function ($model) {
-                                return $model->getHocsinh()->count();
+                                return $model->getHocsinh()->andWhere(['STATUS' => 1])->count();
                             },
                         ],
+                        [
+                            'attribute' => 'LUOTDIEMDANH',
+                            'value' => function ($model) {
+                                return $model->getDsdiemdanh()->count();
+                            },
+                        ],
+                        'SO_HS',
+                        'NGAY_BD',
+                        'NGAY_KT',
                     ],
                 ]); ?>
             <?php Pjax::end(); ?>

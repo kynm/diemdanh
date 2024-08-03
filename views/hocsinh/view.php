@@ -2,7 +2,10 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
+use yii\grid\GridView;
+use yii\widgets\Pjax;
+use yii\helpers\ArrayHelper;
+use app\models\Hocsinh;
 /* @var $this yii\web\View */
 /* @var $model app\models\hocsinh */
 
@@ -11,40 +14,54 @@ $this->params['breadcrumbs'][] = ['label' => 'Đơn vị', 'url' => ['donvi/inde
 $this->params['breadcrumbs'][] = ['label' => 'Nhân viên', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="hocsinh-view">
-
-    <div class="box box-primary">
-        <div class="box-body">
-            <?php 
-                if (Yii::$app->user->can('edit-hocsinh')) { ?>
-                <p>
-                <?= Html::a('<i class="fa fa-pencil-square-o"></i> Cập nhật', ['update', 'id' => $model->ID], ['class' => 'btn btn-primary btn-flat']) ?>
-<!--                 <?= Html::a('<i class="fa fa-trash-o"></i> Xóa', ['delete', 'id' => $model->ID], [
-                    'class' => 'btn btn-danger btn-flat',
-                    'data' => [
-                        'confirm' => Yii::t('app', 'Bạn chắc chắn muốn xóa mục này?'),
-                        'method' => 'post',
-                    ],
-                ]) ?> -->
-                </p>
-            <?php } ?>
-
-            <?= DetailView::widget([
-                'model' => $model,
-                'attributes' => [
-                    'ID',
-                    'HO_TEN',
-                    'NGAY_SINH',
-                    'ID_LOP',
-                    [ 
-                        'attribute' => 'ID_LOP',
-                        'value' => $model->lop->TEN_LOP
-                    ],
-                    'DIA_CHI',
-                    'NGAY_BD',
-                    'NGAY_KT',
-                ],
-            ]) ?>
+<div class="row">
+    <div class="col-md-3">
+        <?= $this->render('_detail', ['model' => $model,]) ?>
+    </div>
+    <div class="col-md-9">
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                <?= $this->render('/partial/_header_hocsinh', ['model' => $model,]) ?>
+            </ul>
+            <div class="tab-content">
+                <div class="table-responsive">
+                <?php Pjax::begin(); ?>    <?= GridView::widget([
+                        'dataProvider' => $dataProvider,
+                        'filterModel' => $searchModel,
+                        'columns' => [
+                            ['class' => 'yii\grid\SerialColumn'],
+                            [
+                                'attribute' => 'STATUS',
+                                'value' => function ($model) {
+                                    return $model->STATUS ? '<span class="btn btn-flat btn-success">Đã thu</span>' : '<span class="btn btn-flat btn-danger">Chưa thu</span>';
+                                },
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'created_at',
+                                'value' => function ($model) {
+                                    return date("d/m/Y",  strtotime($model->created_at));
+                                },
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'TIEUDE',
+                                'contentOptions' => ['style' => 'width:30%; white-space: normal;word-break: break-word;'],
+                                'value' => function ($model) {
+                                    return $model->hocphi->TIEUDE;
+                                },
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'ID_LOP',
+                                'value' => 'hocphi.lop.TEN_LOP',
+                            ],
+                            'TONG_TIEN',
+                        ],
+                    ]); ?>
+                <?php Pjax::end(); ?>
+            </div>
+            </div>
         </div>
     </div>
 </div>

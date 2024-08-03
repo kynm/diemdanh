@@ -6,7 +6,8 @@ use yii\helpers\ArrayHelper;
 use app\models\Donvi;
 use app\models\Nhanvien;
 use kartik\select2\Select2;
-$dsnhanvien = ArrayHelper::map(Nhanvien::find()->where(['ID_DONVI' => $model->ID_DONVI])->all(), 'ID_NHANVIEN', 'TEN_NHANVIEN');
+use kartik\editors\Summernote;
+$dsnhanvien = ArrayHelper::map(Nhanvien::find()->where(['ID_DONVI' => $model->ID_DONVI])->andWhere(['!=', 'ID_NHANVIEN', Yii::$app->user->identity->nhanvien->ID_NHANVIEN])->all(), 'ID_NHANVIEN', 'TEN_NHANVIEN');
 /* @var $this yii\web\View */
 /* @var $model app\models\Daivt */
 /* @var $form yii\widgets\ActiveForm */
@@ -19,18 +20,13 @@ $dsnhanvien = ArrayHelper::map(Nhanvien::find()->where(['ID_DONVI' => $model->ID
     <div class="box box-primary">
         <div class="box-body">
             <div class="row">
-                <div class="col-sm-4">
+                <div class="col-md-2">
                     <?= $form->field($model, 'MA_LOP')->textInput(['maxlength' => true]) ?>
                 </div>
-                    
-                <div class="col-sm-4">
+                <div class="col-md-4">
                     <?= $form->field($model, 'TEN_LOP')->textInput(['maxlength' => true]) ?>
                 </div>
-                    
-                <div class="col-sm-4">
-                    <?= $form->field($model, 'DIA_CHI')->textInput(['maxlength' => true]) ?>
-                </div>
-                <div class="col-md-4">
+                <div class="col-md-2">
                     <?= $form->field($model, 'ID_NHANVIEN_DIEMDANH')->widget(Select2::classname(), [
                         'data' => $dsnhanvien,
                         'pluginOptions' => [
@@ -40,23 +36,14 @@ $dsnhanvien = ArrayHelper::map(Nhanvien::find()->where(['ID_DONVI' => $model->ID
                         ],
                     ]); ?>
                 </div>
-            </div>
-
-            <div class="row">
-                <div class="col-sm-4">
-                    <?= $form->field($model, 'SO_DT')->textInput(['maxlength' => true]) ?>
-                </div>
-                <div class="col-sm-4">
+                <div class="col-md-2">
                     <?= $form->field($model, 'TIENHOC')->textInput(['maxlength' => true]) ?>
                 </div>
-                <?php if (Yii::$app->user->can('Administrator')): ?>
-                    <div class="col-sm-4">
-                        <?= $form->field($model, 'ID_DONVI')->dropDownList(
-                            ArrayHelper::map(Donvi::find()->all(), 'ID_DONVI', 'TEN_DONVI'),
-                            ['prompt' => 'Chọn đơn vị chủ quản']
-                        ) ?>
-                    </div>
-                <?php endif; ?>
+                <div class="col-sm-12">
+                    <?= $form->field($model, 'TEMP_NHANXET')->widget(Summernote::class, [
+                            'options' => ['placeholder' => 'MẪU NHẬN XÉT LỚP HỌC CỦA GIÁO VIÊN']
+                        ]) ?>
+                </div>
             </div>
         </div>
         <div class="box-footer">

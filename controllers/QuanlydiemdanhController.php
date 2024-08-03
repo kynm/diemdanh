@@ -148,4 +148,16 @@ class QuanlydiemdanhController extends Controller
 
         return json_encode($result);
     }
+
+    public function actionCapnhatghichubuoihoc($id)
+    {
+        $quanlydiemdanh = Quanlydiemdanh::findOne($id);
+        if ($quanlydiemdanh->load(Yii::$app->request->post()) && Yii::$app->user->identity->nhanvien->ID_NHANVIEN == $quanlydiemdanh->ID_NHANVIEN) {
+            $quanlydiemdanh->save();
+            Yii::$app->session->setFlash('success', "Cập nhật thành công!");
+            return $this->redirect(['/lophoc/capnhatdiemdanh', 'diemdanhid' => $quanlydiemdanh->ID]);
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
 }

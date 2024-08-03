@@ -6,15 +6,15 @@ use yii\helpers\ArrayHelper;
 use app\models\Donvi;
 use app\models\Daivt;
 use app\models\Chucvu;
+use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Nhanvien */
 /* @var $form yii\widgets\ActiveForm */
 $model->CHUC_VU = 3;
+$dsdonvi = ArrayHelper::map(Donvi::find()->where(['STATUS' => 2])->all(), 'ID_DONVI', 'TEN_DONVI');
 ?>
-
 <div class="nhanvien-form">
-
     <?php $form = ActiveForm::begin(); ?>
     <div class="box box-primary">
         <div class="box-body">
@@ -31,7 +31,14 @@ $model->CHUC_VU = 3;
                     <?= $form->field($model, 'DIEN_THOAI')->textInput(['maxlength' => true]) ?>
                 </div>
                 <div class="col-sm-4">
-                    <?= $form->field($model, 'ID_DONVI')->dropDownList(ArrayHelper::map(Donvi::find()->all(), 'ID_DONVI', 'TEN_DONVI'), []); ?>
+                    <?= $form->field($model, 'ID_DONVI')->widget(Select2::classname(), [
+                        'data' => $dsdonvi,
+                        'pluginOptions' => [
+                            'placeholder' => 'Chọn đơn vị',
+                            'allowClear' => true,
+                            // 'multiple' => true
+                        ],
+                    ]); ?>
                 </div>
             </div>
             <div class="row">

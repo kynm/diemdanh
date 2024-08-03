@@ -81,6 +81,8 @@ class DonviController extends Controller
             $model = new Donvi();
             if ($model->load(Yii::$app->request->post())) {
                 $model->SO_DT = trim($model->SO_DT);
+                $model->TEN_DONVI = trim($model->TEN_DONVI);
+                $model->NGAY_BD = date('Y-m-d');
                 $model->save(false);
                 $log = new ActivitiesLog;
                 $log->activity_type = 'unit-add';

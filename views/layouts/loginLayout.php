@@ -34,8 +34,7 @@ LoginAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; <a>ĐIỂM DANH</a> <?= date('Y') ?></p>
-
+        <p class="pull-left">&copy; <a>EASY CHECK</a> 2024</p>
     </div>
 </footer>
 

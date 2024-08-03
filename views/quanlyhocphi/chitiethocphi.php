@@ -19,35 +19,37 @@ $this->params['breadcrumbs'][] = $this->title;
     <table class="table table-bordered" style="font-size: 20px;">
         <tbody>
             <tr class="bg-primary text-center">
-                <th >Tên con</th>
-                <th >Lớp</th>
-                <th >Ngày học</th>
-                <th >Ngày nghỉ</th>
-                <th >TỔNG TIỀN</th>
-                <th >GHI CHÚ</th>
+                <th class="text-center">Tên con</th>
+                <th class="text-center">Lớp</th>
+                <th class="text-center">Ngày học</th>
+                <th class="text-center">Ngày nghỉ</th>
+                <th class="text-center">TIỀN HỌC/BUỔI</th>
+                <th class="text-center">TỔNG TIỀN</th>
+                <th class="text-center">GHI CHÚ</th>
             </tr>
             <tr class="text-center">
-            	<td style="border: 1px solid;"><?= $model->hocsinh->HO_TEN?></td>
-            	<td style="border: 1px solid;"><?= $model->hocphi->lop->TEN_LOP?></td>
-            	<td style="border: 1px solid;"><?= $model->NGAYDIHOC?></td>
-            	<td style="border: 1px solid;"><?= $model->NGAY_NGHI?></td>
-            	<td style="border: 1px solid;"><?= number_format($model->TONG_TIEN)?></td>
-            	<td style="border: 1px solid;"><?= nl2br($model->NHAN_XET)?></td>
+            	<td style="border: 1px solid; width: 10%;"><?= $model->hocsinh->HO_TEN?></td>
+            	<td style="border: 1px solid; width: 20%;"><?= $model->hocphi->lop->TEN_LOP?></td>
+            	<td style="border: 1px solid; width: 7%;"><?= $model->NGAYDIHOC?></td>
+                <td style="border: 1px solid; width: 7%;"><?= $model->NGAY_NGHI?></td>
+            	<td style="border: 1px solid; width: 16%;"><?= number_format($model->TIENHOC)?></td>
+            	<td style="border: 1px solid; width: 10%;"><?= number_format($model->TONG_TIEN)?></td>
+            	<td style="border: 1px solid; width: 30%;"><?= nl2br($model->NHAN_XET)?></td>
             </tr>
             <tr>
-            	<td colspan="6" style="border: 1px solid;">
+            	<td colspan="7" style="border: 1px solid;">
             		<b>1. Kính gửi quý phụ huynh <?= $model->hocphi->TIEUDE?> của con!</b><br>
 					<?=  isset($model->hocphi->lop->iDDONVI->TTTT) ? nl2br($model->hocphi->lop->iDDONVI->TTTT) : ''?>
 
             	</td>
             </tr>
             <tr>
-            	<td colspan="6" style="border: 1px solid;">
+            	<td colspan="7" style="border: 1px solid;">
                     <?=  isset($model->hocphi->lop->iDDONVI->QDLH) ? nl2br($model->hocphi->lop->iDDONVI->QDLH) : ''?>
             	</td>
             </tr>
             <tr>
-            	<td colspan="6" style="border: 1px solid;">
+            	<td colspan="7" style="border: 1px solid;">
                     <?=  isset($model->hocphi->lop->iDDONVI->TTLH) ? nl2br($model->hocphi->lop->iDDONVI->TTLH) : ''?>
             	</td>
             </tr>

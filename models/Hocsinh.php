@@ -23,7 +23,7 @@ class Hocsinh extends \yii\db\ActiveRecord
             [['MA_HOCSINH', 'HO_TEN', 'ID_NHANVIEN', 'ID_LOP', 'ID_DONVI'], 'required'],
             [['HO_TEN', 'SO_DT', 'DIA_CHI', 'GHICHU'], 'string'],
             [['NGAY_SINH', 'NGAY_BD', 'NGAY_KT'], 'safe'],
-            [['ID_LOP', 'ID_NHANVIEN', 'TIENHOC'], 'integer'],
+            [['ID_LOP', 'ID_NHANVIEN', 'TIENHOC', 'SOBH_DAMUA', 'SOBH_DAHOC'], 'integer'],
             [['MA_HOCSINH'], 'string', 'max' => 32],
             [['HO_TEN'], 'string', 'max' => 100],
             [['MA_HOCSINH'], 'unique'],
@@ -50,6 +50,10 @@ class Hocsinh extends \yii\db\ActiveRecord
             'NGAY_KT' => 'NGÀY KT',
             'GHICHU' => 'GHI CHÚ',
             'TIENHOC' => 'SỐ TIỀN MỖI BUỔI HỌC',
+            'CHANGE_STATUS' => 'ĐỔI TRẠNG THÁI',
+            'STATUS' => 'TRẠNG THÁI',
+            'SOBH_DAMUA' => 'SỐ BUỔI ĐÃ NỘP',
+            'SOBH_DAHOC' => 'SỐ BUỔI ĐÃ HỌC',
         ];
     }
 
@@ -74,5 +78,15 @@ class Hocsinh extends \yii\db\ActiveRecord
     public function getTrangthai()
     {
         return $this->hasOne(Trangthaihocsinh::className(), ['MA_TRANGTHAI' => 'STATUS']);
+    }
+
+    public function getDshocphi()
+    {
+        return $this->hasOne(Chitiethocphi::className(), ['ID_HOCSINH' => 'ID']);
+    }
+
+    public function getDsdiemdanh()
+    {
+        return $this->hasMany(Diemdanhhocsinh::className(), ['ID_HOCSINH' => 'ID']);
     }
 }

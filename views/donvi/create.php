@@ -12,9 +12,6 @@ $this->params['breadcrumbs'][] = ['label' => 'Đơn vị chủ quản', 'url' =>
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="donvi-create">
-
-    
-
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>
