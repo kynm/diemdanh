@@ -131,6 +131,62 @@ class NhanvienController extends Controller
         
     }
 
+    public function actionTaomoinhanviendonvi()
+    {
+        if (Yii::$app->user->can('quanlytruonghoc')) {
+            # code...
+            $model = new Nhanvien();
+            $model->ID_DONVI = Yii::$app->user->identity->nhanvien->ID_DONVI;
+            $user = new User;
+            if ($model->load(Yii::$app->request->post())) {
+                    if (User::find()->where(['username' => $model->USER_NAME])->exists() == false) {
+                        $model->ID_DONVI = Yii::$app->user->identity->nhanvien->ID_DONVI;
+                        $model->save();
+                        if ($model->errors) {
+                            $this->render('taomoinhanviendonvi', [
+                                'model' => $model,
+                                'errors' => $model->errors,
+                            ]);
+                        }
+                        $user->username = trim($model->USER_NAME);
+                        $user->email = $model->USER_NAME."@diemdanh.online";
+                        $user->setPassword($user->username);
+                        $user->generateAuthKey();
+                        $user->status = 10;
+                        $user->created_at = time();
+                        $user->save(false);
+                        $assign = new AuthAssignment;
+                        $assign->user_id = $user->id;
+                        $assign->item_name = 'diemdanhlophoc';
+                        $assign->save(false);
+
+                        //Luu log them nhan vien
+                        $log = new ActivitiesLog;
+                        $log->activity_type = 'user-add';
+                        $log->description = Yii::$app->user->identity->nhanvien->TEN_NHANVIEN." đã thêm nhân viên ". $model->TEN_NHANVIEN;
+                        $log->user_id = Yii::$app->user->identity->id;
+                        $log->create_at = time();
+                        $log->save();
+                        
+                        Yii::$app->session->setFlash('success', "Thêm mới thành công!");
+                        return $this->redirect(['dsnhanviendonvi']);
+                    }
+                    Yii::$app->session->setFlash('error', "Nhân viên đã tồn tại trên hệ thống, vui lòng chọn tên khác!");
+                    return $this->render('taomoinhanviendonvi', [
+                        'model' => $model,
+                    ]);
+            } 
+            return $this->render('taomoinhanviendonvi', [
+                'model' => $model,
+            ]);
+        } else {
+            # code...
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
+            
+        }
+        
+    }
+
     public function actionGenerateUser()
     {
         $models = Nhanvien::find()->all();

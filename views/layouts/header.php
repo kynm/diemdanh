@@ -41,17 +41,15 @@ use yii\helpers\Url;
                             <a href="<?= Url::to(['user/edit-profile'])?>" class="btn btn-primary btn-flat">Profile</a>
                             
                         </li>
-                        <li class="pull-right"><a href="<?= Url::to(['site/logout'])?>" data-method="post" class="btn btn-primary btn-flat">
-                                <i style="color: red;" class="fa fa-sign-out"></i> Đăng xuất
-                            </a>
+                        <li class="pull-right">
                         </li>
                 </ul>
             </div>
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
                     <li class="dropdown user user-menu">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-                        <span><?= Yii::$app->user->identity->nhanvien->TEN_NHANVIEN ?></span>
+                    <a href="<?= Url::to(['site/logout'])?>" data-method="post" class="btn btn-primary btn-flat">
+                        <?= Yii::$app->user->identity->nhanvien->TEN_NHANVIEN ?> <i style="color: red;" class="fa fa-sign-out"></i> Đăng xuất
                     </a>
                     </li>
                 </ul>

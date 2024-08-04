@@ -67,6 +67,15 @@ class QuanlydiemdanhController extends Controller
         ]);
     }
 
+    public function actionIndiemdanhngay($id)
+    {
+        $this->layout = 'printLayout';
+        $model = Quanlydiemdanh::findOne($id);
+        return $this->render('indeimdanhngay', [
+            'model' => $model,
+        ]);
+    }
+
     /**
      * Deletes an existing diemdanh model.
      * If deletion is successful, the browser will be redirected to the 'index' page.

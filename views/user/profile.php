@@ -26,8 +26,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="box box-primary">
       <div class="box-body box-profile">
         <img class="profile-user-img img-responsive img-circle" id="avatar" src="<?= Yii::getAlias('@web') ?>/<?= Yii::$app->user->identity->avatar ?>" alt="User profile picture" style="height: 100px" > 
-        <h3 class="profile-username text-center"><?= $nhanvien->TEN_NHANVIEN ?></h3>
-        <p class="text-muted text-center"><?= $nhanvien->chucvu->ten_chucvu ?></p>
+        <h3 class="profile-username text-center"><?=  $nhanvien->TEN_NHANVIEN ?></h3>
+        <p class="text-muted text-center"><?= $nhanvien->USER_NAME ?></p>
+        <p class="text-muted text-center"><?= $nhanvien->iDDONVI->TEN_DONVI ?></p>
         <ul class="list-group list-group-unbordered">
           <li class="list-group-item">
             <label>Đổi mật khẩu</label>
@@ -53,31 +54,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="box box-primary">
       <div class="box-body">
           <div class="col-sm-4 col-md-4"> 
-            <?= $form->field($nhanvien, 'USER_NAME')->textInput(['maxlength' => true, 'disabled' => true]) ?>
-          </div>
-
-          <div class="col-sm-4 col-md-4"> 
-            <?= $form->field($nhanvien, 'TEN_NHANVIEN')->textInput(['maxlength' => true, 'disabled' => true]) ?>
-          </div>
-
-          <div class="col-sm-4 col-md-4"> 
-            <?= $form->field($nhanvien->chucvu, 'ten_chucvu')->textInput(['maxlength' => true, 'disabled' => true]) ?>
-          </div>
-
-          <div class="col-sm-4 col-md-4"> 
-            <?= $form->field($nhanvien, 'ID_DONVI')->dropDownList(
-                ArrayHelper::map(Donvi::find()->all(), 'ID_DONVI', 'TEN_DONVI'),
-                ['prompt' => 'Chọn đơn vị chủ quản' , 'disabled' => true]
-            ) ?>
+            <?= $form->field($nhanvien, 'TEN_NHANVIEN')->textInput(['maxlength' => true]) ?>
           </div>
           <div class="col-sm-4 col-md-4"> 
             <?= $form->field($nhanvien, 'DIEN_THOAI')->textInput(['maxlength' => true]) ?>
           </div>
-    
-          <div class="col-sm-4 col-md-4"> 
-            <?= $form->field($nhanvien, 'GHI_CHU')->textInput(['maxlength' => true]) ?>
-          </div>
-        
       </div>
       <!-- /.box-body -->
       <div class="box-footer">

@@ -11,19 +11,17 @@ $this->title = 'DANH SÁCH NHÂN VIÊN ĐƠN VỊ';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="nhanvien-index">
+    <p>
+        <?= (Yii::$app->user->can('quanlytruonghoc')) ? Html::a('<i class="fa fa-plus"></i> Thêm nhân viên', ['taomoinhanviendonvi'], ['class' => 'btn btn-primary btn-flat']) : '' ?>
+    </p>
     <div class="box box-primary">
         <div class="box-body">
             <div class="table-responsive">
             <?php Pjax::begin(); ?>    <?= GridView::widget([
                     'dataProvider' => $dataProvider,
                     'filterModel' => $searchModel,
-                    // 'formatter' => [
-                    //     'class' => 'yii\i18n\Formatter',
-                    //     'nullDisplay' => '',
-                    // ],
                     'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
-                        // 'MA_NHANVIEN',
                         'TEN_NHANVIEN',
                         'DIEN_THOAI',
                         'USER_NAME',

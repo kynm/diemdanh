@@ -154,14 +154,14 @@ class DonviController extends Controller
                 }
 
                 // TẠO TÀI KHOẢN ĐIỂM DANH
-                $nhanvien1 = Nhanvien::find()->where(['USER_NAME' => $donvi->SO_DT . '_diemdanh'])->one();
+                $nhanvien1 = Nhanvien::find()->where(['USER_NAME' => $donvi->SO_DT . 'diemdanh'])->one();
                 if(!$nhanvien1) {
                     $nhanvien1 = new Nhanvien();
                     $nhanvien1->ID_DONVI = $donvi->ID_DONVI;
-                    $nhanvien1->MA_NHANVIEN = $donvi->SO_DT . '_diemdanh';
+                    $nhanvien1->MA_NHANVIEN = $donvi->SO_DT . 'diemdanh';
                     $nhanvien1->TEN_NHANVIEN = 'ĐIỂM DANH - ' . $donvi->TEN_DONVI;
                     $nhanvien1->DIEN_THOAI = $donvi->SO_DT;
-                    $nhanvien1->USER_NAME = $donvi->SO_DT . '_diemdanh';
+                    $nhanvien1->USER_NAME = $donvi->SO_DT . 'diemdanh';
                     $nhanvien1->save();
                     $user1 = new User;
                     $user1->username = trim($nhanvien1->USER_NAME);

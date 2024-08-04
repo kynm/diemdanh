@@ -92,12 +92,12 @@
         ];
     }
 
-    function statusdiemdanh()
+    function statusthutien()
     {
-        // return [
-        //     0 => 'VẮNG',
-        //     0 => '',
-        // ];
+        return [
+            0 => 'CHƯA ĐÓNG',
+            1 => 'ĐÃ ĐÓNG',
+        ];
     }
 
 ?>

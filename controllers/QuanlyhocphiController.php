@@ -132,6 +132,15 @@ class QuanlyhocphiController extends Controller
         ]);
     }
 
+    public function actionInhocphitheolop($id)
+    {
+        $this->layout = 'printLayout';
+        $model = Quanlyhocphi::findOne($id);
+        return $this->render('inhocphitheolop', [
+            'model' => $model,
+        ]);
+    }
+
     /**
      * Deletes an existing diemdanh model.
      * If deletion is successful, the browser will be redirected to the 'index' page.

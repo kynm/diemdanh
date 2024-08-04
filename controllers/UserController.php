@@ -174,11 +174,10 @@ class UserController extends Controller
         $nhanvien = Nhanvien::find()->where(['USER_NAME' => $user->username])->one();
         $alert = '';
         if (Yii::$app->request->post()) {
-            $nhanvien->load(Yii::$app->request->post());
-            if (!$nhanvien->save()) {
-                var_dump($nhanvien->errors); die;
-            }
-
+            $params = Yii::$app->request->post();
+            $nhanvien->TEN_NHANVIEN = $params['Nhanvien']['TEN_NHANVIEN'];
+            $nhanvien->DIEN_THOAI = $params['Nhanvien']['DIEN_THOAI'];
+            $nhanvien->save(false);
             $user->load(Yii::$app->request->post());
             if ($user->password != '') {
                 if (!in_array($user->newPassword, except_pass())) {

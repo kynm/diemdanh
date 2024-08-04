@@ -40,12 +40,13 @@ class Nhanvien extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['TEN_NHANVIEN', 'ID_DONVI'], 'required'],
+            [['TEN_NHANVIEN', 'ID_DONVI', 'DIEN_THOAI', 'USER_NAME'], 'required'],
             [['CHUC_VU', 'ID_DONVI'], 'integer'],
             [['MA_NHANVIEN'], 'string', 'max' => 20],
             [['TEN_NHANVIEN'], 'string', 'max' => 100],
             [['USER_NAME'], 'string', 'max' => 50],
-            [['DIEN_THOAI'], 'string', 'max' => 15],
+            [['USER_NAME'], 'match', 'pattern' => '/^[a-zA-Z0-9]*$/i'],
+            [['DIEN_THOAI'], 'string', 'max' => 10],
             [['GHI_CHU'], 'string', 'max' => 200],
             [['ID_LOP', 'DIEN_THOAI'], 'safe'],
             [['USER_NAME'], 'unique'],
