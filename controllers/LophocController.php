@@ -116,13 +116,14 @@ class LophocController extends Controller
             Yii::$app->session->setFlash('error', "SỐ HỌC SINH VƯỢT QUÁ GIỚI HẠN CỦA GÓI, VUI LÒNG LIÊN HỆ QUẢN ĐỂ ĐƯỢC HỖ TRỢ!");
                 return $this->redirect(['quanlyhocsinh', 'id' => $id]);
         }
-        if (Yii::$app->user->can('create-hocsinh') && $id) {
+        if (Yii::$app->user->can('quanlyhocsinh') && $id) {
             $hocsinh = new Hocsinh();
             $model = $this->findModel($id);
             $hocsinh->ID_DONVI = $model->ID_DONVI;
             $hocsinh->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
             $hocsinh->ID_LOP  = $id;
-            if ($hocsinh->load(Yii::$app->request->post()) && $hocsinh->save()) {
+            if ($hocsinh->load(Yii::$app->request->post())) {
+                $hocsinh->save();
                 Yii::$app->session->setFlash('success', "Thêm học sinh thành công!");
                 return $this->redirect(['quanlyhocsinh', 'id' => $id]);
             }
@@ -284,7 +285,7 @@ class LophocController extends Controller
      */
     public function actionDelete($id)
     {
-        if (Yii::$app->user->can('delete-lophoc')) {
+        if (Yii::$app->user->can('quanlytruonghoc')) {
             $this->findModel($id)->delete();
             
             return $this->redirect(['index']);

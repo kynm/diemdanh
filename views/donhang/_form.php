@@ -34,6 +34,16 @@ use kartik\date\DatePicker;
                         ],
                     ]); ?>
                 </div>
+                <div class="col-md-4">
+                    <?= $form->field($model, 'TYPE')->widget(Select2::classname(), [
+                        'data' => loaidonhang(),
+                        'pluginOptions' => [
+                            'placeholder' => 'CHỌN LOẠI ĐƠN HÀNG',
+                            'allowClear' => true,
+                            // 'multiple' => true
+                        ],
+                    ]); ?>
+                </div>
             </div>
             <div class="row">
                 <div class="col-sm-2">

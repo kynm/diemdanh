@@ -10,3 +10,8 @@ RedirectMatch 404 /vendor
 RedirectMatch 404 /controllers
 RedirectMatch 404 /models
 RedirectMatch 404 /config
+<IfModule mod_headers.c>
+Header set X-Frame-Options "DENY"
+Header set X-XSS-Protection "1; mode=block"
+Header set X-Content-Type-Options "nosniff"
+</IfModule>

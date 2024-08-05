@@ -70,15 +70,15 @@ $this->params['breadcrumbs'][] = $this->title;
                                 return $model->getHocsinh()->andWhere(['STATUS' => 1])->count();
                             },
                         ],
+                        'SO_HS',
+                        'NGAY_BD',
+                        'NGAY_KT',
                         [
                             'attribute' => 'LUOTDIEMDANH',
                             'value' => function ($model) {
                                 return $model->getDsdiemdanh()->count();
                             },
                         ],
-                        'SO_HS',
-                        'NGAY_BD',
-                        'NGAY_KT',
                     ],
                 ]); ?>
             <?php Pjax::end(); ?>

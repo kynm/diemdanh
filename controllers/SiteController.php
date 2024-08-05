@@ -91,7 +91,7 @@ class SiteController extends Controller
                     'sldh' => $sldh,
             ]);
             }
-            if (Yii::$app->user->can('quanlyhocsinh')) {
+            if (Yii::$app->user->can('quanlytruonghoc')) {
                 $solop = Yii::$app->user->identity->nhanvien->iDDONVI->getLophoc()->count();
                 $sonhanvien = Yii::$app->user->identity->nhanvien->iDDONVI->getNhanviens()->count();
                 $tongsohocvien = Yii::$app->user->identity->nhanvien->iDDONVI->getHocsinh()->count();
@@ -106,7 +106,7 @@ class SiteController extends Controller
                         AND c.NGAY_DIEMDANH = :NGAY_DIEMDANH
                         GROUP BY b.TEN_LOP, b.ID_LOP  ORDER BY b.ID_LOP";
                 $dulieungay = Yii::$app->db->createCommand($sql)->bindValues(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI, ':NGAY_DIEMDANH' => date('Y-m-d')])->queryAll();
-                return $this->render('quanlyhocsinh', [
+                return $this->render('quanlytruonghoc', [
                     'solop' => $solop,
                     'tongsohocvien' => $tongsohocvien,
                     'dulieungay' => $dulieungay,

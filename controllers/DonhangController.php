@@ -81,19 +81,28 @@ class DonhangController extends Controller
             $model = new Donhang();
             $model->NGAY_BD = date('Y-m-d');
             $model->NGAY_KT = date('Y-m-d', strtotime('+1 year'));
-            $model->SOTIEN = 200000;
+            $model->SOTIEN = 350000;
             $model->SO_LOP = 10;
             $model->SO_HS = 200;
             $model->STATUS = 2;
+            $model->TYPE = 1;
             if ($model->load(Yii::$app->request->post())) {
                 $model->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
                 $model->NHANVIEN_XL = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
                 $model->save();
-                $model->donvi->NGAY_KT = $model->NGAY_KT;
-                $model->donvi->SO_LOP = $model->SO_LOP;
-                $model->donvi->SO_HS = $model->SO_HS;
-                $model->donvi->STATUS = $model->STATUS;
-                $model->donvi->save(false);
+                if ($model->STATUS && $model->TYPE == 1) {
+                    $model->donvi->NGAY_KT = $model->NGAY_KT;
+                    $model->donvi->SO_LOP = $model->SO_LOP;
+                    $model->donvi->SO_HS = $model->SO_HS;
+                    $model->donvi->STATUS = $model->STATUS;
+                    $model->donvi->save(false);
+                } elseif ($model->STATUS && $model->TYPE == 2) {
+                    $model->donvi->SO_LOP += $model->SO_LOP;
+                    $model->donvi->SO_HS += $model->SO_HS;
+                    $model->donvi->STATUS = $model->STATUS;
+                    $model->donvi->save(false);
+                }
+                
                 Yii::$app->session->setFlash('success', "TẠO MỚI THÀNH CÔNG!");
                 return $this->redirect(['index']);
             } else {
@@ -121,10 +130,15 @@ class DonhangController extends Controller
             $model->NHANVIEN_XL = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
             if ($model->load(Yii::$app->request->post())) {
                 $model->save();
-                if ($model->STATUS == 2) {
+                if ($model->STATUS && $model->TYPE == 1) {
                     $model->donvi->NGAY_KT = $model->NGAY_KT;
                     $model->donvi->SO_LOP = $model->SO_LOP;
                     $model->donvi->SO_HS = $model->SO_HS;
+                    $model->donvi->STATUS = $model->STATUS;
+                    $model->donvi->save(false);
+                } elseif ($model->STATUS && $model->TYPE == 2) {
+                    $model->donvi->SO_LOP += $model->SO_LOP;
+                    $model->donvi->SO_HS += $model->SO_HS;
                     $model->donvi->STATUS = $model->STATUS;
                     $model->donvi->save(false);
                 }
@@ -204,5 +218,13 @@ class DonhangController extends Controller
                     'dsdonvi' => $dsdonvi,
                 ]);
             }
+    }
+
+    public function actionDoanhthu()
+    {
+        $tongdoanhthu = Donhang::find()->sum('SOTIEN');
+        return $this->render('doanhthu', [
+            'tongdoanhthu' => $tongdoanhthu,
+        ]);
     }
 }

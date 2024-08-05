@@ -21,7 +21,7 @@ class Donhang extends \yii\db\ActiveRecord
     {
         return [
             [['ID_DONVI', 'ID_NHANVIEN', 'NGAY_BD', 'NGAY_KT'], 'required'],
-            [['SOTIEN', 'SO_LOP', 'SO_HS', 'NHANVIEN_XL', 'STATUS'], 'integer'],
+            [['SOTIEN', 'SO_LOP', 'SO_HS', 'NHANVIEN_XL', 'STATUS', 'TYPE'], 'integer'],
             [['GHICHU', 'NGAY_BD', 'NGAY_KT'], 'string'],
             [['ID_NHANVIEN'], 'exist', 'skipOnError' => true, 'targetClass' => Nhanvien::className(), 'targetAttribute' => ['ID_NHANVIEN' => 'ID_NHANVIEN']],
         ];

@@ -1,0 +1,7 @@
+<?php
+use yii\helpers\Html;
+?>
+<p>
+    <?= (Yii::$app->user->can('Administrator')) ? Html::a('<i class="fa fa-plus"></i> Thêm mới', ['create'], ['class' => 'btn btn-primary btn-flat']) :'' ?>
+    <?= (Yii::$app->user->can('Administrator')) ? Html::a('Doanh thu', ['doanhthu'], ['class' => 'btn btn-primary btn-flat']) :'' ?>
+</p>

@@ -20,7 +20,7 @@ class DonhangSearch extends Donhang
     public function rules()
     {
         return [
-            [['ID_DONVI', 'STATUS'], 'safe'],
+            [['ID_DONVI', 'STATUS', 'TYPE'], 'safe'],
         ];
     }
 
@@ -52,7 +52,9 @@ class DonhangSearch extends Donhang
 
         $query->andFilterWhere(['=', 'ID_DONVI', $this->ID_DONVI]);
         $query->andFilterWhere(['=', 'STATUS', $this->STATUS]);
+        $query->andFilterWhere(['=', 'TYPE', $this->TYPE]);
         $query->orderBy([
+            'created_at' => SORT_DESC,
             'STATUS' => SORT_ASC,
         ]);
 

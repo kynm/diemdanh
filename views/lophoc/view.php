@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
     ]) ?>
     <p>
-        <?php if (Yii::$app->user->can('quanlyhocsinh')):?>
+        <?php if (Yii::$app->user->can('quanlytruonghoc')):?>
             <?= Html::a('<i class="fa fa-pencil-square-o"></i> Cập nhật', ['update', 'id' => $model->ID_LOP], ['class' => 'btn btn-primary btn-flat']) ?>
         <?php endif; ?>
         <?php if (Yii::$app->user->can('diemdanhlophoc') && $model->STATUS == 1):?>

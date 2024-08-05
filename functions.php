@@ -100,4 +100,11 @@
         ];
     }
 
+    function loaidonhang() {
+        return [
+            1 => 'ĐĂNG KÝ MỚI',
+            2 => 'MUA THÊM GÓI',
+        ];
+    }
+
 ?>
