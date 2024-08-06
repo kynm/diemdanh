@@ -78,8 +78,8 @@ class QuanlyhocphiController extends Controller
     public function taochitiethocphi($quanlyhocphi)
      {
         $sql = "SELECT c.ID ID_HOCSINH,c.HO_TEN,c.TIENHOC, COUNT(1) SO_LUONG, SUM(CASE WHEN b.`STATUS` > 0 then 1 ELSE 0 END) SOLUONGDIHOC
-            , GROUP_CONCAT(CASE WHEN b.`STATUS` = 0 then day(a.NGAY_DIEMDANH) ELSE null END) NGAYNGHI
-            , GROUP_CONCAT(CASE WHEN b.`STATUS` = 1 then day(a.NGAY_DIEMDANH) ELSE null END) NGAYDIHOC
+            , GROUP_CONCAT(CASE WHEN b.`STATUS` = 0 then DATE_FORMAT(a.NGAY_DIEMDANH,'%d/%m') ELSE null END ORDER BY a.NGAY_DIEMDANH asc SEPARATOR ', ') NGAYNGHI
+            , GROUP_CONCAT(CASE WHEN b.`STATUS` = 1 then DATE_FORMAT(a.NGAY_DIEMDANH,'%d/%m') ELSE null END ORDER BY a.NGAY_DIEMDANH asc SEPARATOR ', ') NGAYDIHOC
             FROM quanlydiemdanh a, diemdanhhocsinh b, hocsinh c
                 WHERE a.ID = b.ID_DIEMDANH AND b.ID_HOCSINH = c.ID and a.ID_LOP = :ID_LOP AND a.NGAY_DIEMDANH BETWEEN :TU_NGAY and :DEN_NGAY GROUP BY c.HO_TEN,c.ID,c.TIENHOC order by c.ID";
         $data = Yii::$app->db->createCommand($sql)->bindValues(

@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <th class="text-center">Ngày nghỉ</th>
                 <th class="text-center">TIỀN HỌC/BUỔI</th>
                 <th class="text-center">TIỀN HỌC</th>
-                <th class="text-center">TIỀN KHÁC</th>
+                <th class="text-center">TIỀN SÁCH/ TÀI LIỆU</th>
                 <th class="text-center">TỔNG TIỀN</th>
                 <th class="text-center">GHI CHÚ</th>
                 <th class="text-center"></th>
@@ -33,18 +33,18 @@ $this->params['breadcrumbs'][] = $this->title;
             <tr class="text-center">
             	<td style="border: 1px solid; width: 10%;"><?= $model->hocsinh->HO_TEN?><br><?= $model->hocsinh->SO_DT?><br><?= $model->hocsinh->DIA_CHI?></td>
             	<td style="border: 1px solid; width: 10%;"><?= $model->hocphi->lop->TEN_LOP?></td>
-            	<td style="border: 1px solid; width: 7%;"><?= $model->NGAYDIHOC?></td>
-                <td style="border: 1px solid; width: 7%;"><?= $model->NGAY_NGHI?></td>
-                <td style="border: 1px solid; width: 10%;"><?= number_format($model->TIENHOC)?></td>
-            	<td style="border: 1px solid; width: 10%;"><?= number_format($model->TIENHOC * $model->SO_BTT)?></td>
-                <td style="border: 1px solid; width: 10%;"><?= number_format($model->TIENKHAC)?></td>
+            	<td style="border: 1px solid; width: 15%;"><?= $model->NGAYDIHOC?></td>
+                <td style="border: 1px solid; width: 10%;"><?= $model->NGAY_NGHI?></td>
+                <td style="border: 1px solid; width: 7%;"><?= number_format($model->TIENHOC)?></td>
+            	<td style="border: 1px solid; width: 7%;"><?= number_format($model->TIENHOC * $model->SO_BTT)?></td>
+                <td style="border: 1px solid; width: 7%;"><?= number_format($model->TIENKHAC)?></td>
             	<td style="border: 1px solid; width: 10%;"><?= number_format($model->TONG_TIEN)?></td>
                 <td style="border: 1px solid; width: 20%;"><?= nl2br($model->NHAN_XET)?></td>
             	<td style="border: 1px solid; width: 10%;"><?= statusthutien()[$model->STATUS]?></td>
             </tr>
             <tr>
             	<td colspan="10" style="border: 1px solid;">
-            		<b>1. Kính gửi quý phụ huynh <?= $model->hocphi->TIEUDE?> của con!</b><br>
+            		<b>1. Kính gửi quý phụ huynh <?= $model->hocphi->TIEUDE?>!</b><br>
 					<?=  isset($model->hocphi->lop->iDDONVI->TTTT) ? nl2br($model->hocphi->lop->iDDONVI->TTTT) : ''?>
 
             	</td>

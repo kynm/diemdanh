@@ -45,6 +45,7 @@ class Chitiethocphi extends \yii\db\ActiveRecord
             'STATUS' => 'TRẠNG THÁI',
             'created_at' => 'NGÀY TẠO',
             'TIENKHAC' => 'TIỀN KHÁC',
+            'ID_HOCSINH' => 'HỌC SINH',
         ];
     }
 

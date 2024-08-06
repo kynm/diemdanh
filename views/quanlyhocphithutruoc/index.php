@@ -87,7 +87,7 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 <?php
 $script = <<< JS
-    $('.duyetthuphitruoc').on('click', function() {
+    $(document).on('click', '.duyetthuphitruoc', function() {
         Swal.fire({
             title: 'Bạn có chắc chắn đã thu học phí học sinh này không?',
             type: "warning",

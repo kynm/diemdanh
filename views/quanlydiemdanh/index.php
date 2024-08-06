@@ -109,7 +109,7 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 <?php
 $script = <<< JS
-$('.xoadiemdanh').on('click', function() {
+    $(document).on('click', '.xoadiemdanh', function() {
     Swal.fire({
         title: 'Dữ liệu sẽ bị xóa vĩnh viễn, không thể khôi phục lại.Bạn có chắc chắc muốn xóa lượt điểm danh không?',
         type: "warning",

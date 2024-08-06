@@ -15,9 +15,6 @@ use kartik\date\DatePicker;
     <div class="box box-primary">
         <div class="box-body">
             <div class="row">
-                <div class="col-sm-2">
-                    <?= $form->field($model, 'MA_HOCSINH')->textInput(['maxlength' => true]) ?>
-                </div>
                 <div class="col-sm-4">
                     <?= $form->field($model, 'HO_TEN')->textInput(['maxlength' => true]) ?>
                 </div>

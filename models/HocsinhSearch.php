@@ -18,7 +18,7 @@ class HocsinhSearch extends Hocsinh
     public function rules()
     {
         return [
-            [['MA_HOCSINH', 'HO_TEN', 'DIA_CHI', 'SO_DT', 'ID_LOP'], 'safe'],
+            [['MA_HOCSINH', 'HO_TEN', 'DIA_CHI', 'SO_DT', 'ID_LOP', 'STATUS'], 'safe'],
         ];
     }
 
@@ -107,6 +107,7 @@ class HocsinhSearch extends Hocsinh
         $query->andFilterWhere(['like', 'MA_HOCSINH', $this->MA_HOCSINH])
             ->andFilterWhere(['like', 'HO_TEN', $this->HO_TEN])
             ->andFilterWhere(['like', 'DIA_CHI', $this->DIA_CHI])
+            ->andFilterWhere(['=', 'STATUS', isset($this->STATUS) ? $this->STATUS : 1])
             ->andFilterWhere(['like', 'SO_DT', $this->SO_DT]);
 
         return $dataProvider;

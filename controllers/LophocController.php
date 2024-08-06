@@ -122,6 +122,7 @@ class LophocController extends Controller
             $hocsinh->ID_DONVI = $model->ID_DONVI;
             $hocsinh->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
             $hocsinh->ID_LOP  = $id;
+            $hocsinh->MA_HOCSINH  = $model->MA_LOP . '-' . ($model->getDshocsinh()->count() + 1);
             if ($hocsinh->load(Yii::$app->request->post())) {
                 $hocsinh->save();
                 Yii::$app->session->setFlash('success', "Thêm học sinh thành công!");
@@ -137,7 +138,7 @@ class LophocController extends Controller
         if ((Yii::$app->user->can('quanlydiemdanh') || Yii::$app->user->can('diemdanhlophoc')) && $id) {
             $diemdanh = new Quanlydiemdanh();
             $model = $this->findModel($id);
-            $diemdanh->ID_DONVI = $model->ID_DONVI;
+            $diemdanh->ID_DONVI = Yii::$app->user->identity->nhanvien->ID_DONVI;
             $diemdanh->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
             $diemdanh->ID_LOP  = $id;
             $diemdanh->NGAY_DIEMDANH = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
@@ -162,7 +163,7 @@ class LophocController extends Controller
         $model = $this->findModel($id);
         if (Yii::$app->user->can('diemdanhlophoc') && $id && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI && $model->STATUS == 1) {
             $diemdanh = new Quanlydiemdanh();
-            $diemdanh->ID_DONVI = $model->ID_DONVI;
+            $diemdanh->ID_DONVI = Yii::$app->user->identity->nhanvien->ID_DONVI;
             $diemdanh->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
             $diemdanh->ID_LOP  = $id;
             $diemdanh->NOIDUNG = $model->TEMP_NHANXET;
@@ -235,9 +236,11 @@ class LophocController extends Controller
         if (Yii::$app->user->can('create-lophoc')) {
             $model = new Lophoc();
             $model->ID_DONVI = Yii::$app->user->identity->nhanvien->ID_DONVI;
-            $model->MA_LOP = Yii::$app->user->identity->nhanvien->iDDONVI->MA_DONVI . Yii::$app->user->identity->nhanvien->iDDONVI->getLophoc()->count();
+            $model->MA_LOP = $model->ID_DONVI . '-' . Yii::$app->user->identity->nhanvien->iDDONVI->MA_DONVI . '-' . Yii::$app->user->identity->nhanvien->iDDONVI->getLophoc()->count();
 
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if ($model->load(Yii::$app->request->post())) {
+                $model->save();
+                $model->MA_LOP = Yii::$app->user->identity->nhanvien->iDDONVI->MA_DONVI . Yii::$app->user->identity->nhanvien->iDDONVI->getLophoc()->count();
                 $log = new ActivitiesLog;
                 $log->activity_type = 'unit-add';
                 $log->description = Yii::$app->user->identity->nhanvien->TEN_NHANVIEN." đã thêm đơn vị ". $model->MA_LOP;
@@ -335,6 +338,19 @@ class LophocController extends Controller
             $lop = Lophoc::findOne($params['idlop']);
             if ($lop->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI && Yii::$app->user->can('quanlytruonghoc')) {
                 $lop->STATUS = $params['STATUS'] ? 1 : 0;
+                $condition = ['and',
+                    ['=', 'ID_LOP', $lop->ID_LOP],
+                    ['=', 'ID_DONVI', $lop->ID_DONVI],
+                ];
+                if ($lop->STATUS) {
+                    Hocsinh::updateAll([
+                        'STATUS' => 1,
+                    ], $condition);
+                } else {
+                    Hocsinh::updateAll([
+                        'STATUS' => 0,
+                    ], $condition);
+                }
                 $lop->save();
                 $result = [
                     'error' => 0,

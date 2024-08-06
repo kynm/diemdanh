@@ -60,7 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 <?php
 $script = <<< JS
-    $('.doitrangthailophoc').on('change', function() {
+    $(document).on('click', '.doitrangthailophoc', function() {
         var idlop = $(this).data('id');
         var status = $(this).is(":checked") ? 1 : 0;
         $.ajax({

@@ -1,13 +1,24 @@
 <?php
-use yii\widgets\DetailView;
+use yii\helpers\Html;
 ?>
 <div class="box box-primary">
+    <?php if (!$model->getDsdiemdanh()->andWhere(['STATUS' => 1])->count() && Yii::$app->user->can('quanlyhocsinh') && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI):?>
+        <p>
+            <?= Html::a('<i class="fa fa-trash-o"></i> Xóa', ['delete', 'id' => $model->ID], [
+                'class' => 'btn btn-danger btn-flat pull-right',
+                'data' => [
+                    'confirm' => 'Hành động này sẽ xóa vĩnh viên học sinh và các thông tin liên quan.Bạn chắc chắn muốn xóa học sinh này?',
+                    'method' => 'post',
+                ],
+            ]) ?>
+        </p>
+    <?php endif;?>
     <div class="box-body box-profile">
         <h3 class="profile-username text-center"><?= $model->HO_TEN ?></h3>
         <p class="text-muted text-center"><?= $model->lop->TEN_LOP?></p>
         <ul class="list-group list-group-unbordered">
-        </ul>
         <a href="#" class="btn btn-primary btn-block"><b><?= $model->trangthai->TRANGTHAI?></b></a>
+        </ul>
     </div>
 </div>
 <div class="box box-primary">

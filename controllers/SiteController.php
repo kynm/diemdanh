@@ -243,8 +243,71 @@ class SiteController extends Controller
         }
     }
 
-    public function actionThuthuat()
+    public function actionCongcuhotro()
     {
-        return $this->render('thuthuat');
+        return $this->render('congcuhotro');
+    }
+
+
+    public function actionTinhngay()
+    {
+        $params = Yii::$app->request->queryParams;
+        $params['TU_NGAY'] = isset($params['TU_NGAY']) ? $params['TU_NGAY'] : date('Y-m-d');
+        $params['DEN_NGAY'] = isset($params['DEN_NGAY']) ? $params['DEN_NGAY'] : date('Y-m-d');
+        $date1=date_create($params['TU_NGAY']);
+        $date2=date_create($params['DEN_NGAY']);
+        if ($date1 < $date2) {
+        echo "Ngày 1 đến trước ngày 2";
+        } elseif ($date1 > $date2) {
+            echo "Ngày 1 đến sau ngày 2";
+        } else {
+            echo "Ngày 1 và ngày 2 bằng nhau";
+        }
+        // echo "<pre>";
+        $diffs = $date1->diff($date2)->format("%a");
+        $result = [
+            0 => 0,
+            1 => 0,
+            2 => 0,
+            3 => 0,
+            4 => 0,
+            5 => 0,
+            6 => 0,
+        ];
+        for ($i=0; $i <= $diffs; $i++) {
+            $date = date('Y-m-d', strtotime($params['TU_NGAY'] . ' + ' . $i . ' days'));
+            $thu = date('w', strtotime($date));
+            switch ($thu) {
+                case 0:
+                    $result[0] ++;
+                    break;
+                case 1:
+                    $result[1] ++;
+                    break;
+                case 2:
+                    $result[2] ++;
+                    break;
+                case 3:
+                    $result[3] ++;
+                    break;
+                case 4:
+                    $result[4] ++;
+                    break;
+                case 5:
+                    $result[5] ++;
+                    break;
+                case 6:
+                    $result[6] ++;
+                    break;
+                
+                default:
+                    break;
+            }
+        }
+        
+        return $this->render('tinhngay', [
+            'params' => $params,
+            'result' => $result,
+        ]);
     }
 }

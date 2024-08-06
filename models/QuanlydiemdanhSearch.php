@@ -68,6 +68,7 @@ class QuanlydiemdanhSearch extends Quanlydiemdanh
         $query->andFilterWhere([
             'ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI,
         ]);
+        $query->andFilterWhere(['=', 'ID_LOP', $this->ID_LOP]);
         $query->andFilterWhere(['like', 'TIEUDE', $this->TIEUDE]);
         $query->orderBy([
             'NGAY_DIEMDANH' => SORT_DESC,

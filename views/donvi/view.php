@@ -58,6 +58,15 @@ $this->params['breadcrumbs'][] = $this->title;
         <span class="info-box-icon bg-aqua"><i class="fa fa-check" aria-hidden="true"></i></span>
         <div class="info-box-content">
             <span class="info-box-number" style="font-size: 20px; color: red;">LỚP HỌC</span>
+            <?= $model->getLophoc()->andWhere(['STATUS' => 1])->count() ?>
+        </div>
+    </div>
+</div>
+<div class="col-lg-3 col-6">
+    <div class="info-box">
+        <span class="info-box-icon bg-aqua"><i class="fa fa-check" aria-hidden="true"></i></span>
+        <div class="info-box-content">
+            <span class="info-box-number" style="font-size: 20px; color: red;">LỚP HỌC (BAO GỒM LỚP ĐÃ ĐÓNG)</span>
             <?= $model->getLophoc()->count() ?>
         </div>
     </div>
@@ -67,6 +76,15 @@ $this->params['breadcrumbs'][] = $this->title;
         <span class="info-box-icon bg-aqua"><i class="fa fa-check" aria-hidden="true"></i></span>
         <div class="info-box-content">
             <span class="info-box-number" style="font-size: 20px; color: red;">HỌC SINH</span>
+            <?= $model->getHocsinh()->andWhere(['STATUS' => 1])->count() ?>
+        </div>
+    </div>
+</div>
+<div class="col-lg-3 col-6">
+    <div class="info-box">
+        <span class="info-box-icon bg-aqua"><i class="fa fa-check" aria-hidden="true"></i></span>
+        <div class="info-box-content">
+            <span class="info-box-number" style="font-size: 20px; color: red;">HỌC SINH (BAO GỒM HS NGHỈ)</span>
             <?= $model->getHocsinh()->count() ?>
         </div>
     </div>
@@ -86,7 +104,7 @@ Link: https://diemdanh.online<br>
 Tài khoản quản lý: <?= $model->SO_DT?> / Mật khẩu: <?= $model->SO_DT?> : Dùng để tạo lớp học, tạo học sinh.<br>
 Hướng dẫn sử dụng: https://docs.google.com/document/d/1uYMzSlUt7E9Zu2qf2hMxrszn0LZ8PE7CzvuHL8pDVOI/edit#heading=h.wjpc9wqfwiay<br>
 Sau khi  thực hiện tạo lớp, học sinh xong vui lòng đăng xuất và  đăng nhập vào tài khoản<br>
-Tài khoản điểm danh: <?= $model->SO_DT?>_diemdanh / Mật khẩu:<?= $model->SO_DT?>_diemdanh<br>
+Tài khoản điểm danh: <?= $model->SO_DT?>diemdanh / Mật khẩu:<?= $model->SO_DT?>diemdanh<br>
 Để thực hiện điểm danh theo hướng dẫn: https://docs.google.com/document/d/1mGWRUdnxj4CLGiNJbLctc57NmPYJ0A4RsQs-hORecxY/edit#heading=h.9sd1lqn6f2r3<br>
 VUI LÒNG ĐỔI MẬT KHẨU ĐỂ SỬ DỤNG!<br>
 </p>

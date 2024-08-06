@@ -32,7 +32,7 @@ use yii\helpers\Url;
                                     <li><a href="https://docs.google.com/document/d/1mGWRUdnxj4CLGiNJbLctc57NmPYJ0A4RsQs-hORecxY/edit?usp=sharing" target="_blank">Điểm danh</a></li>
                             </ul>
                         </li>
-                        <?php if (Yii::$app->user->can('quanlyhocsinh')): ?>
+                        <?php if (Yii::$app->user->can('quanlytruonghoc')): ?>
                             <li>
                                 <a href="<?= Url::to(['user/cauhinhdonvi'])?>" class="btn btn-primary btn-flat">CẤU HÌNH</a>
                             </li>
@@ -41,7 +41,9 @@ use yii\helpers\Url;
                             <a href="<?= Url::to(['user/edit-profile'])?>" class="btn btn-primary btn-flat">Profile</a>
                             
                         </li>
-                        <li class="pull-right">
+                        <li>
+                            <a href="<?= Url::to(['site/congcuhotro'])?>" class="btn btn-primary btn-flat">Công cụ</a>
+                            
                         </li>
                 </ul>
             </div>

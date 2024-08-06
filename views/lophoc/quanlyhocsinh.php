@@ -2,10 +2,15 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 use yii\widgets\Pjax;
+use yii\helpers\ArrayHelper;
+use app\models\Trangthaihocsinh;
+use kartik\select2\Select2;
+
 /* @var $this yii\web\View */
 /* @var $model app\models\Daivt */
+$tranghtaihs = ArrayHelper::map(Trangthaihocsinh::find()->all(), 'MA_TRANGTHAI', 'TRANGTHAI');
 
 $this->title = $model->MA_LOP;
 $this->params['breadcrumbs'][] = ['label' => 'Đơn vị', 'url' => ['donvi/index']];
@@ -27,8 +32,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     [
-                        'attribute' => 'CHANGE_STATUS',
+                        'attribute' => 'STATUS',
                         'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
+                        'filter'=> $tranghtaihs,
+                        'filterType' => GridView::FILTER_SELECT2,
+                        'filterWidgetOptions' => [
+                            'options' => ['prompt' => ''],
+                            'pluginOptions' => ['allowClear' => true],
+                        ],
                         'value' => function ($model) {
                             return '<input type="checkbox" '.  ($model->STATUS ? 'checked' : '') .  ' data-id="'  . $model->ID .  '" class="doitrangthaihocsinh"/> ' . $model->trangthai->TRANGTHAI;
                         },
@@ -36,10 +47,23 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     'MA_HOCSINH',
                     'HO_TEN',
+                    [
+                        'attribute' => 'HO_TEN',
+                        'value' => function($model) {
+                            return Yii::$app->user->can('quanlyhocsinh') && Yii::$app->user->identity->nhanvien->ID_DONVI == $model->ID_DONVI ? Html::a($model->HO_TEN, ['/hocsinh/lichsudiemdanh', 'id' => $model->ID], ['class' => 'text text-primary']) : '';
+                        },
+                        'format' => 'raw',
+                    ],
                     'TIENHOC',
                     'DIA_CHI',
                     'SO_DT',
-                    
+                    [
+                        'attribute' => '',
+                        'value' => function($model) {
+                            return Yii::$app->user->can('quanlyhocsinh') && Yii::$app->user->identity->nhanvien->ID_DONVI == $model->ID_DONVI ? Html::a('<i class="fa fa-pencil-square-o"></i> Chỉnh sửa', ['/hocsinh/update', 'id' => $model->ID], ['class' => 'btn btn-primary btn-flat']) : '';
+                        },
+                        'format' => 'raw',
+                    ],
                 ],
             ]); ?>
         <?php Pjax::end(); ?>
@@ -47,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 <?php
 $script = <<< JS
-    $('.doitrangthaihocsinh').on('change', function() {
+    $(document).on('click', '.doitrangthaihocsinh', function() {
         var idhocsinh = $(this).data('id');
         var status = $(this).is(":checked") ? 1 : 0;
         $.ajax({

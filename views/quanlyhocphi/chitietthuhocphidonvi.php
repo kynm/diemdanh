@@ -35,6 +35,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'attribute' => 'ID_LOP',
                                 'value' => 'hocphi.lop.TEN_LOP',
                             ],
+                            [
+                                'attribute' => 'ID_HOCSINH',
+                                'value' => 'hocsinh.HO_TEN',
+                            ],
                             'SO_BH',
                             'SO_BDH',
                             'SO_BN',

@@ -14,6 +14,7 @@ use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use app\models\Lophoc;
+use app\models\Diemdanhhocsinh;
 
 /**
  * HocsinhController implements the CRUD actions for hocsinh model.
@@ -93,12 +94,13 @@ class HocsinhController extends Controller
             $model->ID_DONVI = Yii::$app->user->identity->nhanvien->ID_DONVI;
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                $log = new ActivitiesLog;
-                $log->activity_type = 'unit-add';
-                $log->description = Yii::$app->user->identity->nhanvien->TEN_NHANVIEN." đã thêm đơn vị ". $model->MA_LOP;
-                $log->user_id = Yii::$app->user->identity->id;
-                $log->create_at = time();
-                $log->save();
+                // $log = new ActivitiesLog;
+                // $log->activity_type = 'unit-add';
+                // $log->description = Yii::$app->user->identity->nhanvien->TEN_NHANVIEN." đã thêm đơn vị ". $model->MA_LOP;
+                // $log->user_id = Yii::$app->user->identity->id;
+                // $log->create_at = time();
+                // $log->save();
+                Yii::$app->session->setFlash('success', "Thêm mới thành công!");
                 return $this->redirect(['view', 'id' => $model->ID_LOP]);
             } else {
                 return $this->render('create', [
@@ -118,11 +120,11 @@ class HocsinhController extends Controller
      */
     public function actionUpdate($id)
     {
-        if (Yii::$app->user->can('edit-hocsinh')) {
-            $model = $this->findModel($id);
-
+        $model = $this->findModel($id);
+        if (Yii::$app->user->can('quanlyhocsinh') && Yii::$app->user->identity->nhanvien->ID_DONVI == $model->ID_DONVI) {
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->ID]);
+                Yii::$app->session->setFlash('success', "Cập nhật thành công!");
+                return $this->redirect(['/lophoc/quanlyhocsinh', 'id' => $model->ID_LOP]);
             } else {
                 $dslop = ArrayHelper::map(Lophoc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->all(), 'ID_LOP', 'TEN_LOP');
                 return $this->render('update', [
@@ -143,10 +145,12 @@ class HocsinhController extends Controller
      */
     public function actionDelete($id)
     {
-        if (Yii::$app->user->can('delete-hocsinh')) {
-           // $this->findModel($id)->delete();
-            
-            return $this->redirect(['index']);
+        $model = $this->findModel($id);
+        if (!$model->getDsdiemdanh()->andWhere(['STATUS' => 1])->count() && Yii::$app->user->can('quanlyhocsinh') && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+            Diemdanhhocsinh::deleteAll(['ID_HOCSINH' => $id]);
+            $model->delete();
+            Yii::$app->session->setFlash('success', "Xóa học sinh thành công!");
+            return $this->redirect(['/lophoc/quanlyhocsinh', 'id' => $model->ID_LOP]);
         } else {
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
         }
@@ -176,7 +180,7 @@ class HocsinhController extends Controller
         if (Yii::$app->request->post()) {
             $params = Yii::$app->request->post();
             $hocsinh = Hocsinh::findOne($params['idhocsinh']);
-            if ($hocsinh->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI && Yii::$app->user->can('quanlytruonghoc')) {
+            if ($hocsinh->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI && Yii::$app->user->can('quanlyhocsinh')) {
                 $hocsinh->STATUS = $params['STATUS'] ? 1 : 0;
                 $hocsinh->save();
                 $result = [
