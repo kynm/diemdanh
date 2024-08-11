@@ -74,15 +74,30 @@ class QuanlyhocphithutruocController extends Controller
             $model->ID_DONVI = Yii::$app->user->identity->nhanvien->ID_DONVI;
             $model->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
             $model->STATUS = 1;
-            if ($model->load(Yii::$app->request->post())) {
-                if ($model->getErrors()) {
-                    Yii::$app->session->setFlash('error', "Lỗi khởi tạo!");
-                    return $this->redirect(['create']);
+            if (Yii::$app->request->post()) {
+                $inputs = Yii::$app->request->post();
+                if ($inputs['Quanlyhocphithutruoc']['ID_HOCSINH']) {
+                    $dshocsinh = $inputs['Quanlyhocphithutruoc']['ID_HOCSINH'];
+                    foreach ($dshocsinh as $key => $value) {
+                        $model = new Quanlyhocphithutruoc();
+                        $model->ID_HOCSINH = $value;
+                        if ($model->hocsinh->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+                            $model->ID_DONVI = Yii::$app->user->identity->nhanvien->ID_DONVI;
+                            $model->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
+                            $model->STATUS = 1;
+                            $model->ID_LOP = $inputs['Quanlyhocphithutruoc']['ID_LOP'];
+                            $model->SOTIEN = $inputs['Quanlyhocphithutruoc']['SOTIEN'];
+                            $model->SO_BH = $inputs['Quanlyhocphithutruoc']['SO_BH'];
+                            $model->NGAY_BD = $inputs['Quanlyhocphithutruoc']['NGAY_BD'];
+                            $model->NGAY_KT = $inputs['Quanlyhocphithutruoc']['NGAY_KT'];
+                            $model->GHICHU = $inputs['Quanlyhocphithutruoc']['GHICHU'];
+                            $model->TIENKHAC = $inputs['Quanlyhocphithutruoc']['TIENKHAC'];
+                            $model->TIENKHAC = $model->TIENKHAC ? $model->TIENKHAC : null;
+                            $model->TONGTIEN = $model->SOTIEN + $model->TIENKHAC;
+                            $model->save();
+                        }
+                    }
                 }
-                $model->save();
-                $hocsinh = $model->hocsinh;
-                $hocsinh->NGAY_KT = $model->NGAY_KT;
-                $hocsinh->save();
                 Yii::$app->session->setFlash('success', "Thêm mới thành công!");
                 return $this->redirect(['index']);
             } else {
@@ -109,7 +124,8 @@ class QuanlyhocphithutruocController extends Controller
             $model = $this->findModel($id);
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->ID]);
+                Yii::$app->session->setFlash('success', "Cập nhật thành công!");
+                return $this->redirect(['index']);
             } else {
                 $dslop = ArrayHelper::map(Lophoc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->all(), 'ID_LOP', 'TEN_LOP');
                 return $this->render('update', [
@@ -130,9 +146,10 @@ class QuanlyhocphithutruocController extends Controller
      */
     public function actionDelete($id)
     {
-        if (Yii::$app->user->can('delete-hocsinh')) {
-           // $this->findModel($id)->delete();
-            
+        $model = $this->findModel($id);
+        if (Yii::$app->user->can('quanlyhocphi') && $model->STATUS == 1 && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+           $model->delete();
+            Yii::$app->session->setFlash('success', "Hoàn thành xóa dữ liệu!");
             return $this->redirect(['index']);
         } else {
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
@@ -168,6 +185,32 @@ class QuanlyhocphithutruocController extends Controller
                 $hocphi->STATUS = 2;
                 $hocphi->save();
                 $hocphi->hocsinh->SOBH_DAMUA += $hocphi->SO_BH;
+                $hocphi->hocsinh->NGAY_KT = $hocphi->NGAY_KT;
+                $hocphi->hocsinh->save();
+                $result['error'] = 0;
+                $result['message'] = 'Cập nhật thành công';
+            }
+
+            return json_encode($result);
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function actionModieuchinh()
+    {
+        if (Yii::$app->request->post() && Yii::$app->user->identity->nhanvien->ID_NHANVIEN) {
+            $params = Yii::$app->request->post();
+            $hocphi = Quanlyhocphithutruoc::findOne($params['id']);
+            $result = [
+                'error' => 1,
+                'message' => 'Lỗi cập nhật!',
+            ];
+            if ($hocphi && $hocphi->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI && $hocphi->STATUS == 2) {
+                $hocphi->STATUS = 1;
+                $hocphi->save();
+                $hocphi->hocsinh->SOBH_DAMUA -= $hocphi->SO_BH;
+                $hocphi->hocsinh->NGAY_KT = $hocphi->NGAY_BD ? $hocphi->NGAY_BD : null;
                 $hocphi->hocsinh->save();
                 $result['error'] = 0;
                 $result['message'] = 'Cập nhật thành công';
@@ -179,3 +222,31 @@ class QuanlyhocphithutruocController extends Controller
         }
     }
 }
+
+
+    // $('#quanlyhocphithutruoc-sotien').on('change', function() {
+    //   var sotien = $(this).val();
+    //   var idhocsinh = $("#quanlyhocphithutruoc-id_hocsinh").val();
+    //   var lopid = $("#quanlyhocphithutruoc-id_lop").val();
+    //   if (!idhocsinh) {
+    //         Swal.fire('Cần chọn học sinh nộp học phí');
+    //         return 1;
+    //   }
+    //     $.ajax({
+    //         url: '/quanlyhocphithutruoc/checksobuoi',
+    //         method: 'POST',
+    //         data: {
+    //             'lopid' : lopid,
+    //             'idhocsinh' : idhocsinh,
+    //             'sotien' : sotien,
+    //         },
+    //         success:function(data) {
+    //             data = jQuery.parseJSON(data);
+    //             if (!data.error) {
+    //                 $("#quanlyhocphithutruoc-so_bh").val(data.value);
+    //             } else {
+    //                 Swal.fire(data.message);
+    //             }
+    //         }
+    //     });
+    // });

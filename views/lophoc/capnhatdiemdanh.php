@@ -18,6 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 <?php if (Yii::$app->user->can('diemdanhlophoc')):?>
     <?= Html::a('<i class="fa fa-back"></i> QUAY LẠI', ['lophoc/quanlydiemdanh', 'id' => $diemdanh->ID_LOP], ['class' => 'btn btn-primary btn-flat']) ?>
+    <span class="btn btn-danger btn-flat pull-right" id="boxungdiemdanhlophoc" data-diemdanhid="<?= $diemdanh->ID?>">Bổ Sung học sinh</span>
 <?php endif; ?>
 <?php if (Yii::$app->user->can('diemdanhlophoc') && $diemdanh->lop->STATUS == 1):?>
 <div class="box box-primary">
@@ -103,6 +104,30 @@ $script = <<< JS
                 data = jQuery.parseJSON(data);
                 if (!data.error) {
                     Swal.fire(data.message);
+                }
+            }
+        });
+    });
+
+    $('#boxungdiemdanhlophoc').on('click', function() {
+        var diemdanhid = $(this).data('diemdanhid');
+        console.log(diemdanhid);
+        $.ajax({
+            url: '/lophoc/boxungdiemdanhlophoc',
+            method: 'POST',
+            data: {
+                'diemdanhid' : diemdanhid,
+            },
+            success:function(data) {
+                data = jQuery.parseJSON(data);
+                if (!data.error) {
+                    Swal.fire(data.message,'success');
+                    setTimeout(() => {
+                        window.location.reload(true);
+                    }, 1000);
+                } else {
+                    Swal.fire(data.message,'success');
+
                 }
             }
         });

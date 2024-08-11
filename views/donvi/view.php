@@ -17,6 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="box-body">
             <p>
                 <?= Html::a('<i class="fa fa-pencil-square-o"></i> Cập nhật', ['update', 'id' => $model->ID_DONVI], ['class' => 'btn btn-primary btn-flat']) ?>
+                <?= (Yii::$app->user->can('create-donvi')) ? Html::a('Import lớp học', ['importlophochocsinh', 'id' => $model->ID_DONVI], ['class' => 'btn btn-primary btn-flat']) : ''?>
             </p>
 
             <div class="col-lg-6 col-6">

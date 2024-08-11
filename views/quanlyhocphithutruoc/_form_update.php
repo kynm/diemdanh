@@ -14,28 +14,6 @@ use kartik\date\DatePicker;
     <div class="box box-primary">
         <div class="box-body">
             <div class="row">
-                <div class="col-md-4">
-                    <?= $form->field($model, 'ID_LOP')->widget(Select2::classname(), [
-                        'data' => $dslop,
-                        'pluginOptions' => [
-                            'placeholder' => 'Chọn lớp',
-                            'allowClear' => true,
-                            // 'multiple' => true
-                        ],
-                    ]); ?>
-                </div>
-                <div class="col-md-4">
-                    <?= $form->field($model, 'ID_HOCSINH')->widget(Select2::classname(), [
-                        'data' => [],
-                        'pluginOptions' => [
-                            'placeholder' => 'Chọn học sinh',
-                            'allowClear' => true,
-                            'multiple' => true
-                        ],
-                    ]); ?>
-                </div>
-            </div>
-            <div class="row">
                 <div class="col-sm-2">
                     <?= $form->field($model, 'SOTIEN')->textInput(['maxlength' => true, 'type' => 'number']) ?>
                 </div>
@@ -86,26 +64,3 @@ use kartik\date\DatePicker;
     </div>
     <?php ActiveForm::end(); ?>
 </div>
-<?php
-$script = <<< JS
-    $('#quanlyhocphithutruoc-id_lop').on('change', function() {
-      var lopid = $(this).val();
-        $.ajax({
-            url: '/lophoc/listdshocsinhtheolop',
-            method: 'POST',
-            data: {
-                'lopid' : lopid,
-            },
-            success:function(data) {
-                $("#quanlyhocphithutruoc-id_hocsinh").html(data);
-            }
-        });
-    });
-
-    $('#quanlyhocphithutruoc-id_hocsinh').on('change', function() {
-        $('#quanlyhocphithutruoc-sotien').val(null);
-        $('#quanlyhocphithutruoc-so_bh').val(null);
-    });
-JS;
-$this->registerJs($script);
-?>

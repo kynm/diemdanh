@@ -35,8 +35,8 @@ class Donvi extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ID_DONVI', 'MA_DONVI','MA_DONVIKT'], 'required'],
-            [['ID_DONVI', 'CAP_TREN', 'SO_LOP', 'SO_HS', 'SHOWALL'], 'integer'],
+            [['ID_DONVI', 'MA_DONVI','TEN_DONVI'], 'required'],
+            [['ID_DONVI', 'CAP_TREN', 'SO_LOP', 'SO_HS', 'SHOWALL', 'DIEMDANHTHUCONG'], 'integer'],
             [['MA_DONVI'], 'string', 'max' => 30],
             [['TEN_DONVI', 'DIA_CHI', 'NGAY_BD', 'NGAY_KT'], 'string', 'max' => 100],
             [['SO_DT'], 'string', 'max' => 20],
@@ -70,6 +70,7 @@ class Donvi extends \yii\db\ActiveRecord
             'NHANVIEN' => 'NHÂN VIÊN',
             'HOCSINH' => 'HỌC SINH',
             'SHOWALL' => 'HIỂN THỊ TOÀN BỘ THÔNG TIN HỌC VIÊN KHI ĐIỂM DANH',
+            'DIEMDANHTHUCONG' => 'ĐIỂM DANH THỦ CÔNG (KHÔNG TỰ ĐỘNG TẠO ĐIỂM DANH CHO CẢ LỚP, THỰC HIỆN ĐIỂM DANH HỌC SINH NÀO THÌ GHI NHẬN HỌC SINH ĐÓ)',
         ];
     }
 

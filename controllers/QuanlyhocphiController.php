@@ -105,7 +105,8 @@ class QuanlyhocphiController extends Controller
             $hocphi->SO_BDH = $chitiet['SOLUONGDIHOC'];
             $hocphi->SO_BTT = $chitiet['SOLUONGDIHOC'];
             $hocphi->TIENHOC = $chitiet['TIENHOC'];
-            $hocphi->TONG_TIEN = $hocphi->SO_BTT * $hocphi->TIENHOC;
+            $hocphi->TONG_TIENHOC = $hocphi->SO_BTT * $hocphi->TIENHOC;
+            $hocphi->TONG_TIEN = $hocphi->TONG_TIENHOC + $hocphi->TIENKHAC;
             $hocphi->save(false);
         }
      }
@@ -118,9 +119,42 @@ class QuanlyhocphiController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
-        return $this->render('view', [
-            'model' => $model,
-        ]);
+        if (Yii::$app->user->can('quanlytruonghoc') && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+            if (Yii::$app->request->post()) {
+                $inputs = Yii::$app->request->post();
+                $sobuoi = $inputs['SOBUOITINHTIEN'] ? $inputs['SOBUOITINHTIEN'] : 0;
+                $tiensach = $inputs['NHAPTIENSACH'] ? $inputs['NHAPTIENSACH'] : 0;
+                $tongtien = $inputs['NHAPTONGTIEN'] ? $inputs['NHAPTONGTIEN'] : 0;
+                if (!is_numeric($sobuoi) || !is_numeric($sobuoi) || !is_numeric($tongtien)) {
+                    Yii::$app->session->setFlash('error', "Lỗi dữ liệu!");
+                    return $this->redirect(['view', 'id' => $model->ID]);
+                }
+
+                foreach ($model->chitiethocphi as $key => $chitiet) {
+                    if ($sobuoi) {
+                        $chitiet->SO_BTT = $sobuoi;
+                    }
+
+                    if ($tongtien) {
+                        $chitiet->TONG_TIENHOC = $tongtien;
+                    }
+
+                    if ($tiensach) {
+                        $chitiet->TIENKHAC = $tiensach;
+                    }
+
+                    $chitiet->TONG_TIEN = $chitiet->TONG_TIENHOC + $chitiet->TIENKHAC;
+                    $chitiet->save();
+                }
+                Yii::$app->session->setFlash('success', "Cập nhật thành công!");
+                return $this->redirect(['view', 'id' => $model->ID, 'inputs' => $inputs]);
+            }
+            return $this->render('view', [
+                'model' => $model,
+            ]);
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
+        }
     }
 
     public function actionChitiethocphi($id)
@@ -192,7 +226,8 @@ class QuanlyhocphiController extends Controller
             ];
             if ($hocphi && $hocphi->hocphi->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
                 $hocphi->TIENHOC = $params['sotienmoibuoi'];
-                $hocphi->TONG_TIEN = $hocphi->SO_BTT * $hocphi->TIENHOC + $hocphi->TIENKHAC;
+                $hocphi->TONG_TIENHOC = $hocphi->SO_BTT * $hocphi->TIENHOC;
+                $hocphi->TONG_TIEN = $hocphi->TONG_TIENHOC + $hocphi->TIENKHAC;
                 $hocphi->save();
                 $result['error'] = 0;
                 $result['ID'] = $hocphi->ID;
@@ -218,7 +253,8 @@ class QuanlyhocphiController extends Controller
             ];
             if ($hocphi && $hocphi->hocphi->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
                 $hocphi->SO_BTT = $params['sobuoi'];
-                $hocphi->TONG_TIEN = $hocphi->SO_BTT * $hocphi->TIENHOC + $hocphi->TIENKHAC;
+                $hocphi->TONG_TIENHOC = $hocphi->SO_BTT * $hocphi->TIENHOC;
+                $hocphi->TONG_TIEN = $hocphi->TONG_TIENHOC + $hocphi->TIENKHAC;
                 $hocphi->save();
                 $result['error'] = 0;
                 $result['ID'] = $hocphi->ID;
@@ -244,7 +280,7 @@ class QuanlyhocphiController extends Controller
             ];
             if ($hocphi && $hocphi->hocphi->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
                 $hocphi->TIENKHAC = $params['tiencongthem'];
-                $hocphi->TONG_TIEN = $hocphi->SO_BTT * $hocphi->TIENHOC + $hocphi->TIENKHAC;
+                $hocphi->TONG_TIEN = $hocphi->TONG_TIENHOC + $hocphi->TIENKHAC;
                 $hocphi->save();
                 $result['error'] = 0;
                 $result['ID'] = $hocphi->ID;
@@ -325,6 +361,27 @@ class QuanlyhocphiController extends Controller
                 $result['ID'] = $hocphi->ID;
                 $result['SO_BTT'] = $hocphi->SO_BTT;
                 $result['TONG_TIEN'] = $hocphi->TONG_TIEN;
+                $result['message'] = 'Cập nhật thành công';
+            }
+
+            return json_encode($result);
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function actionXoaluotthuhocphi()
+    {
+        if (Yii::$app->request->post() && Yii::$app->user->identity->nhanvien->ID_NHANVIEN) {
+            $params = Yii::$app->request->post();
+            $hocphi = Chitiethocphi::findOne($params['id']);
+            $result = [
+                'error' => 1,
+                'message' => '',
+            ];
+            if ($hocphi && $hocphi->hocphi->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI && Yii::$app->user->can('quanlyhocphi')) {
+                $hocphi->delete();
+                $result['error'] = 0;
                 $result['message'] = 'Cập nhật thành công';
             }
 

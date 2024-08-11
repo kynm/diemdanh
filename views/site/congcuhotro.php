@@ -17,8 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="info-box">
             <span class="info-box-icon bg-aqua"><i class="fa fa-check" aria-hidden="true"></i></span>
             <div class="info-box-content">
-                <span class="info-box-number" style="font-size: 20px; color: red;"><?= Html::a('ĐẾM SỐ NGÀY TRONG TUẦN', ['/site/tinhngay'], ['class' => 'small-box-footer']) ?></span>
-                
+                <span class="info-box-number" style="font-size: 20px; color: red;"><?= Html::a('ĐẾM NGÀY', ['/site/tinhngay'], ['class' => 'small-box-footer']) ?></span>
             </div>
         </div>
     </div>

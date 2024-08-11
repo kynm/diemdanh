@@ -5,15 +5,14 @@ use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Donvi */
-
 $this->title = $model->TIEUDE;
 $this->params['breadcrumbs'][] = ['label' => 'Đơn vị', 'url' => ['quanlyhocphi/index']];
 $this->params['breadcrumbs'][] = ['label' => 'Đơn vị chủ quản', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="quanlyhocphi-view">
-    <?php if (Yii::$app->user->can('quanlyhocphi') && !$model->getChitiethocphi()->where(['STATUS' => 1])->count()):?>
     <p>
+    <?php if (Yii::$app->user->can('quanlyhocphi') && !$model->getChitiethocphi()->where(['STATUS' => 1])->count()):?>
         <?= Html::a('<i class="fa fa-trash-o"></i> Xóa', ['delete', 'id' => $model->ID], [
             'class' => 'btn btn-danger btn-flat',
             'data' => [
@@ -21,9 +20,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
+    <?php endif; ?>
     <?= Html::a('<i class="fa fa-pencil-square-o"></i> In theo lớp', ['/quanlyhocphi/inhocphitheolop', 'id' => $model->ID], ['class' => 'btn btn-primary btn-flat', 'target' => '_blank']) ?>
     </p>
-    <?php endif; ?>
     <div class="box box-primary">
         <div class="box-body">
             <?= DetailView::widget([
@@ -31,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attributes' => [
                     [
                         'attribute' => 'ID_LOP',
-                        'value' => $model->lop->TEN_LOP,
+                        'value' => $model->lop ? $model->lop->TEN_LOP : '',
                     ],
                     'TIEUDE',
                     'TU_NGAY',
@@ -42,6 +41,12 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+<?php if (Yii::$app->user->can('quanlyhocphi') && !$model->getChitiethocphi()->where(['STATUS' => 1])->count()):?>
+<?= $this->render('_form_updatealldata', [
+    'model' => $model,
+    'inputs' => isset($inputs) ?? [],
+]) ?>
+<?php endif; ?>
 <div class="box-body table-responsive">
     <table class="table table-bordered" style="font-size: 14px;">
         <tbody>
@@ -78,7 +83,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     <td width="5%">
                         <?= Html::a('<i class="fa fa-pencil-square-o"></i> In học phí', ['/quanlyhocphi/chitiethocphi', 'id' => $chitiet->ID], ['class' => 'btn btn-primary btn-flat', 'target' => '_blank']) ?>
                         <?php if (Yii::$app->user->can('quanlyhocphi') && !$chitiet->STATUS):?>
-                            <span class="btn btn-flat btn-danger xacnhanthuhocphi" data-id="<?= $chitiet->ID ?>">Xác nhận thu tiền</span>
+                            <span class="btn btn-flat btn-warning xacnhanthuhocphi" data-id="<?= $chitiet->ID ?>">Xác nhận thu tiền</span>
+                            <span class="btn btn-flat btn-danger xoaluotthuhocphi" data-id="<?= $chitiet->ID ?>">Xóa</span>
                         <?php else: ?>
                             <span class="btn btn-flat btn-success">Đã thu</span>
                         <?php endif; ?>
@@ -202,6 +208,39 @@ $('.capnhatsotienmoibuoi').on('change', function() {
             var id = $(this).data('id');
             $.ajax({
                 url: '/quanlyhocphi/xacnhanthuhocphi',
+                method: 'post',
+                data: {
+                    id: id,
+                },
+                success:function(data) {
+                    data = jQuery.parseJSON(data);
+                    if (!data.error) {
+                        Swal.fire('Xác nhận thành công');
+                        setTimeout(() => {
+                            window.location.reload(true);
+                        }, 1000);
+                    }
+                }
+            });
+        }
+        });
+        
+    });
+
+    $('.xoaluotthuhocphi').on('click', function() {
+        Swal.fire({
+            title: 'Thao tác này sẽ xóa vĩnh viễn dữ liệu.Bạn có chắc chắn muốn xóa học phí học sinh này không?',
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: 'CÓ, xÓA NGAY!',
+            cancelButtonText: "KHÔNG XÓA!"
+        }).then((result) => {
+        if (result['isConfirmed']) {
+            var capnhatghichu = $(this).val();
+            var id = $(this).data('id');
+            $.ajax({
+                url: '/quanlyhocphi/xoaluotthuhocphi',
                 method: 'post',
                 data: {
                     id: id,

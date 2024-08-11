@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= Html::a('<i class="fa fa-pencil-square-o"></i> Cập nhật', ['update', 'id' => $model->ID_LOP], ['class' => 'btn btn-primary btn-flat']) ?>
         <?php endif; ?>
         <?php if (Yii::$app->user->can('diemdanhlophoc') && $model->STATUS == 1):?>
-            <?= Html::a('<i class="fa fa-pencil-square-o"></i> Đểm danh', ['lophoc/quanlydiemdanh', 'id' => $model->ID_LOP], ['class' => 'btn btn-danger btn-flat']) ?>
+            <?= Html::a('<i class="fa fa-pencil-square-o"></i> Điểm danh', ['lophoc/quanlydiemdanh', 'id' => $model->ID_LOP], ['class' => 'btn btn-danger btn-flat']) ?>
         <?php endif; ?>
         <?php if (Yii::$app->user->can('quanlyhocsinh')):?>
             <?= Html::a('<i class="fa fa-pencil-square-o"></i> Quản lý học sinh', ['quanlyhocsinh', 'id' => $model->ID_LOP], ['class' => 'btn btn-primary btn-flat']) ?>

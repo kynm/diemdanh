@@ -40,6 +40,9 @@ use kartik\editors\Summernote;
                 <div class="col-sm-12">
                     <?= $form->field($model, 'SHOWALL')->checkBox(['label' => 'HIỂN THỊ TOÀN BỘ THÔNG TIN HỌC VIÊN KHI ĐIỂM DANH']) ?>
                 </div>
+                <div class="col-sm-12">
+                    <?= $form->field($model, 'DIEMDANHTHUCONG')->checkBox(['label' => 'ĐIỂM DANH THỦ CÔNG (KHÔNG TỰ ĐỘNG TẠO ĐIỂM DANH CHO CẢ LỚP, THỰC HIỆN ĐIỂM DANH HỌC SINH NÀO THÌ GHI NHẬN HỌC SINH ĐÓ)']) ?>
+                </div>
             </div>
         </div>
             

@@ -7,12 +7,16 @@ use app\models\ActivitiesLog;
 use app\models\Donvi;
 use app\models\Nhanvien;
 use app\models\User;
+use app\models\Lophoc;
+use app\models\Hocsinh;
+use app\models\UploadForm;
 use app\models\DonviSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
 use app\models\AuthAssignment;
+use yii\web\UploadedFile;
 
 /**
  * DonviController implements the CRUD actions for Donvi model.
@@ -113,7 +117,9 @@ class DonviController extends Controller
         if (Yii::$app->user->can('Administrator')) {
             $model = $this->findModel($id);
 
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if ($model->load(Yii::$app->request->post())) {
+                $model->save();
+                Yii::$app->session->setFlash('success', "CẬP NHẬT THÀNH CÔNG!");
                 return $this->redirect(['view', 'id' => $model->ID_DONVI]);
             } else {
                 return $this->render('update', [
@@ -150,6 +156,10 @@ class DonviController extends Controller
                     $assign = new AuthAssignment;
                     $assign->user_id = $user->id;
                     $assign->item_name = 'quanlytruonghoc';
+                    $assign->save(false);
+                    $assign = new AuthAssignment;
+                    $assign->user_id = $user->id;
+                    $assign->item_name = 'diemdanhlophoc';
                     $assign->save(false);
                 }
 
@@ -213,6 +223,64 @@ class DonviController extends Controller
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function actionImportlophochocsinh($id) {
+        if (Yii::$app->user->can('Administrator') && $id) {
+            $model = new UploadForm();
+            if (Yii::$app->request->post())
+            {
+                $params = Yii::$app->request->bodyParams;
+                $model->fileupload = UploadedFile::getInstance($model, 'fileupload');
+                $data = \moonland\phpexcel\Excel::import($model->fileupload->tempName);
+                $keys = array_keys($data[0]);
+                $arrkeyCheck = ['TEN_LOP', 'HO_TEN', 'ID_NHANVIEN_DIEMDANH'];
+                if (array_diff($arrkeyCheck, $keys)) {
+                    Yii::$app->session->setFlash('error', "Cập nhật không thành công. Thiếu trường: " . implode(',', array_diff($arrkeyCheck, $keys)));
+                    return $this->redirect(['importlophochocsinh']);
+                }
+                $i = 0;
+                foreach ($data as $key => $value) {
+                    if ($value['TEN_LOP'] && $value['TEN_LOP']) {
+                        $lop = Lophoc::find()->where(['ID_DONVI' => $id])->andWhere(['TEN_LOP' => $value['TEN_LOP']])->one();
+                        if (!$lop) {
+                            $lop = new Lophoc();
+                            $lop->ID_DONVI = $id;
+                            $lop->MA_LOP = $model->ID_DONVI . '-' . $id . '-' . rand_string(4);;
+                            $lop->TEN_LOP = $value['TEN_LOP'];
+                            $lop->ID_NHANVIEN_DIEMDANH = $value['ID_NHANVIEN_DIEMDANH'];
+                            $lop->save();
+                            if ($lop->errors) {
+                                die(var_dump($lop->errors));
+                            }
+                        }
+                        $hocsinh = Hocsinh::find()->where(['ID_DONVI' => $id])->andWhere(['ID_LOP' => $lop->ID_LOP])->andWhere(['HO_TEN' => $value['HO_TEN']])->one();
+                        
+                        if (!$hocsinh) {
+                            $hocsinh = new Hocsinh();
+                            $hocsinh->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
+                            $hocsinh->ID_DONVI = $id;
+                            $hocsinh->ID_LOP = $lop->ID_LOP;
+                            $hocsinh->MA_HOCSINH  = $lop->MA_LOP . '-' . ($lop->getDshocsinh()->count() + 1);
+                            $hocsinh->HO_TEN = $value['HO_TEN'];
+                            $hocsinh->SO_DT = '';
+                            $hocsinh->save();
+                            if ($hocsinh->errors) {
+                                die(var_dump($hocsinh->errors));
+                            }
+                            $i ++;                     }
+                    }
+                }
+                Yii::$app->session->setFlash('success', "Khởi tạo thành công " . $i . ' Khách hàng!');
+                return $this->redirect(['view', 'id' => $id]);
+            }
+
+            return $this->render('importlophochocsinh', [
+                'model' => $model,
+            ]);
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
         }
     }
 }

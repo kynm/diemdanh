@@ -36,6 +36,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'format' => 'raw',
                             ],
                             [
+                                'attribute' => 'SO_DT',
+                                'value' => 'donvi.SO_DT',
+                                'contentOptions' => ['style' => 'width:15%; white-space: normal;word-break: break-word;'],
+                            ],
+                            [
                             'attribute' => 'STATUS',
                                 'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
                                 'value' => function ($model) {

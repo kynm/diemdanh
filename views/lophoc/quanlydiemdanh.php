@@ -19,9 +19,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= $this->render('_detail', ['model' => $diemdanh->lop,]) ?>
 </div>
 <?php if (Yii::$app->user->can('diemdanhlophoc') && $diemdanh->lop->STATUS == 1):?>
+<?php if (!Yii::$app->user->identity->nhanvien->iDDONVI->DIEMDANHTHUCONG):?>
     <div class="daivt-view">
         <?= $this->render('_form_diemdanh', ['model' => $diemdanh, 'id' => $diemdanh->ID_LOP,]) ?>
     </div>
+<?php else: ?>
+    <?= Html::a('THÊM ĐIỂM DANH', ['/lophoc/themdiemdanhthucong', 'id' => $diemdanh->ID_LOP], ['class' => 'btn btn-primary btn-flat'])?>
+<?php endif; ?>
 <?php else: ?>
 <?php endif; ?>
 <div class="row">

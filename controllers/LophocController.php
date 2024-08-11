@@ -15,6 +15,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 
 /**
  * LophocController implements the CRUD actions for Lophoc model.
@@ -95,7 +96,6 @@ class LophocController extends Controller
             $hocsinh->ID_DONVI = $model->ID_DONVI;
             $hocsinh->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
             $hocsinh->ID_LOP  = $id;
-            $hocsinh->MA_HOCSINH  = $model->MA_LOP . '-' . ($model->getDshocsinh()->count() + 1);
             $searchModel = new HocsinhSearch();
             $dataProvider = $searchModel->searchhocsinhtheolop(Yii::$app->request->queryParams, $id);
             $hocsinh->TIENHOC = $hocsinh->lop->TIENHOC;
@@ -122,7 +122,7 @@ class LophocController extends Controller
             $hocsinh->ID_DONVI = $model->ID_DONVI;
             $hocsinh->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
             $hocsinh->ID_LOP  = $id;
-            $hocsinh->MA_HOCSINH  = $model->MA_LOP . '-' . ($model->getDshocsinh()->count() + 1);
+            $hocsinh->MA_HOCSINH  = $model->MA_LOP . '-' . rand_string(4);
             if ($hocsinh->load(Yii::$app->request->post())) {
                 $hocsinh->save();
                 Yii::$app->session->setFlash('success', "Thêm học sinh thành công!");
@@ -236,7 +236,7 @@ class LophocController extends Controller
         if (Yii::$app->user->can('create-lophoc')) {
             $model = new Lophoc();
             $model->ID_DONVI = Yii::$app->user->identity->nhanvien->ID_DONVI;
-            $model->MA_LOP = $model->ID_DONVI . '-' . Yii::$app->user->identity->nhanvien->iDDONVI->MA_DONVI . '-' . Yii::$app->user->identity->nhanvien->iDDONVI->getLophoc()->count();
+            $model->MA_LOP = $model->ID_DONVI . '-' . Yii::$app->user->identity->nhanvien->iDDONVI->MA_DONVI . '-' . rand_string(4);
 
             if ($model->load(Yii::$app->request->post())) {
                 $model->save();
@@ -360,5 +360,95 @@ class LophocController extends Controller
         }
 
         return json_encode($result);
+    }
+
+
+    public function actionThemdiemdanhthucong($id)
+    {
+        $model = $this->findModel($id);
+        if (Yii::$app->user->can('diemdanhlophoc') && $id && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI && $model->STATUS == 1) {
+            $diemdanh = new Quanlydiemdanh();
+            $diemdanh->ID_DONVI = Yii::$app->user->identity->nhanvien->ID_DONVI;
+            $diemdanh->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
+            $diemdanh->NGAY_DIEMDANH  = date('Y-m-d');
+            $diemdanh->ID_LOP  = $id;
+            if ($diemdanh->load(Yii::$app->request->post())) {
+                $diemdanhnow = $model->getDsdiemdanh()->andWhere(['NGAY_DIEMDANH' => $diemdanh->NGAY_DIEMDANH])->one();
+                if ($diemdanhnow) {
+                    Yii::$app->session->setFlash('error', "Điểm danh đã tồn tại!");
+                    return $this->redirect(['capnhatdiemdanh', 'diemdanhid' => $diemdanhnow->ID]);
+                }
+                if (!$diemdanh->NGAY_DIEMDANH) {
+                    Yii::$app->session->setFlash('error', "Bạn phải nhập ngày điểm danh!");
+                    return $this->redirect(['/lophoc/quanlydiemdanh', 'id' => $id]);
+                }
+                $diemdanh->save();
+                if (!$diemdanh->errors) {
+                    $inputs = Yii::$app->request->post();
+                    foreach ($inputs['HOCSINH'] as $key => $chitiet) {
+                        if (isset($chitiet['STATUS'])) {
+                            $diemdanhhocsinh = new Diemdanhhocsinh();
+                            $diemdanhhocsinh->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
+                            $diemdanhhocsinh->ID_LOP = $id;
+                            $diemdanhhocsinh->ID_HOCSINH = $chitiet['ID_HOCSINH'];
+                            $diemdanhhocsinh->ID_DIEMDANH = $diemdanh->ID;
+                            $diemdanhhocsinh->STATUS = $chitiet['STATUS'];
+                            $diemdanhhocsinh->NHAN_XET = isset($chitiet['NHAN_XET']) ? $chitiet['NHAN_XET'] : null;
+                            $diemdanhhocsinh->save();
+                        }
+                    }
+                }
+                Yii::$app->session->setFlash('success', "Thêm điểm danh thành công!");
+                return $this->redirect(['capnhatdiemdanh', 'diemdanhid' => $diemdanh->ID]);
+            }
+
+            return $this->render('themdiemdanhthucong', [
+                'diemdanh' => $diemdanh,
+                'dshocsinh' => $model->getDshocsinh()->andWhere(['STATUS' => 1])->all(),
+            ]);
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');           
+        }
+    }
+
+    public function actionBoxungdiemdanhlophoc()
+    {
+        if (Yii::$app->user->can('diemdanhlophoc') && Yii::$app->request->post()) {
+        $params = Yii::$app->request->post();
+        $diemdanh = Quanlydiemdanh::find()->where(['ID' => $params['diemdanhid']])->one();
+        if ($diemdanh) {
+            $result = [
+                'error' => 1,
+                'message' => 'LỖI CẬP NHẬT',
+            ];
+            $dshsdadt = ArrayHelper::map(Diemdanhhocsinh::find()->where(['ID_DIEMDANH' => $params['diemdanhid']])->all(), 'ID_HOCSINH', 'ID_HOCSINH');
+            $dshocsinhthieu = Hocsinh::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->andWhere(['ID_LOP' => $diemdanh->ID_LOP])->andWhere(['STATUS' => 1])->andWhere(['not in', 'ID', $dshsdadt])->all();
+            if (!$dshocsinhthieu) {
+                $result = [
+                    'error' => 1,
+                    'message' => 'KHÔNG CÓ HỌC SINH MỚI',
+                ];
+            } else {
+                foreach ($dshocsinhthieu as $key => $hocsinh) {
+                    $diemdanhhocsinh = new Diemdanhhocsinh();
+                    $diemdanhhocsinh->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
+                    $diemdanhhocsinh->ID_LOP = $diemdanh->ID_LOP;
+                    $diemdanhhocsinh->ID_HOCSINH = $hocsinh->ID;
+                    $diemdanhhocsinh->ID_DIEMDANH = $diemdanh->ID;
+                    $diemdanhhocsinh->STATUS = 1;
+                    $diemdanhhocsinh->save();
+                }
+                $result = [
+                    'error' => 0,
+                    'message' => 'CẬP NHẬT THÀNH CÔNG: ' . ($key + 1) . ' HỌC SINH',
+                ];
+            }
+
+            return json_encode($result);
+
+        }
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');           
+        }
     }
 }

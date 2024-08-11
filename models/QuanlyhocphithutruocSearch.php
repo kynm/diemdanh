@@ -19,7 +19,7 @@ class QuanlyhocphithutruocSearch extends Quanlyhocphithutruoc
     {
         return [
             [['ID_LOP'], 'integer'],
-            [['ID_DONVI'], 'safe'],
+            [['ID_DONVI', 'STATUS', 'ID_HOCSINH'], 'safe'],
         ];
     }
 
@@ -51,6 +51,7 @@ class QuanlyhocphithutruocSearch extends Quanlyhocphithutruoc
 
         $this->load($params);
 
+        $query->joinWith('hocsinh');
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
@@ -60,8 +61,10 @@ class QuanlyhocphithutruocSearch extends Quanlyhocphithutruoc
             'quanlyhocphithutruoc.ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI,
         ]);
 
-        $query->andFilterWhere(['=', 'ID_LOP', $this->ID_LOP])
+        $query->andFilterWhere(['=', 'quanlyhocphithutruoc.ID_LOP', $this->ID_LOP])
             ->andFilterWhere(['like', 'SOTIEN', $this->SOTIEN])
+            ->andFilterWhere(['like', 'hocsinh.HO_TEN', $this->ID_HOCSINH])
+            ->andFilterWhere(['=', 'quanlyhocphithutruoc.STATUS', $this->STATUS])
             ->andFilterWhere(['like', 'SO_BH', $this->SO_BH]);
 
         return $dataProvider;

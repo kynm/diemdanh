@@ -45,8 +45,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         },
                         'format' => 'raw',
                     ],
-                    'MA_HOCSINH',
-                    'HO_TEN',
                     [
                         'attribute' => 'HO_TEN',
                         'value' => function($model) {

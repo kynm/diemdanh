@@ -36,7 +36,30 @@ $this->params['breadcrumbs'][] = $this->title;
                                 },
                                 'format' => 'raw',
                             ],
-                            'TIEUDE',
+                            [
+                                'attribute' => 'SOLUONG',
+                                'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
+                                'value' => function ($model) {
+                                    return $model->getChitiethocphi()->count();
+                                },
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'SOLUONGCHUATHU',
+                                'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
+                                'value' => function ($model) {
+                                    return $model->getChitiethocphi()->andWhere(['STATUS' => 0])->count();
+                                },
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'SOLUONGDATHU',
+                                'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
+                                'value' => function ($model) {
+                                    return $model->getChitiethocphi()->andWhere(['STATUS' => 1])->count();
+                                },
+                                'format' => 'raw',
+                            ],
                             'TU_NGAY',
                             'DEN_NGAY',
                         ],

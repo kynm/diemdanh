@@ -20,10 +20,10 @@ class Quanlyhocphithutruoc extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ID_HOCSINH', 'SOTIEN', 'ID_NHANVIEN', 'ID_LOP', 'ID_DONVI', 'SO_BH', 'STATUS'], 'required'],
+            [['SOTIEN', 'ID_NHANVIEN', 'ID_LOP', 'ID_DONVI', 'SO_BH', 'STATUS'], 'required'],
             [['GHICHU'], 'string'],
             [['NGAY_BD', 'NGAY_KT'], 'safe'],
-            [['ID_LOP', 'ID_NHANVIEN', 'SOTIEN'], 'integer'],
+            [['ID_LOP', 'ID_NHANVIEN', 'SOTIEN', 'TIENKHAC', 'TONGTIEN'], 'integer'],
             [['ID_LOP'], 'exist', 'skipOnError' => true, 'targetClass' => Lophoc::className(), 'targetAttribute' => ['ID_LOP' => 'ID_LOP']],
             [['ID_NHANVIEN'], 'exist', 'skipOnError' => true, 'targetClass' => Nhanvien::className(), 'targetAttribute' => ['ID_NHANVIEN' => 'ID_NHANVIEN']],
             [['ID_DONVI'], 'exist', 'skipOnError' => true, 'targetClass' => Donvi::className(), 'targetAttribute' => ['ID_DONVI' => 'ID_DONVI']],
@@ -46,6 +46,9 @@ class Quanlyhocphithutruoc extends \yii\db\ActiveRecord
             'SOTIEN' => 'SỐ TIỀN',
             'ID_HOCSINH' => 'HỌC SINH',
             'created_at' => 'NGÀY ĐÓNG HỌC PHÍ',
+            'TIENKHAC' => 'TIỀN SÁCH/TÀI LIỆU',
+            'TONGTIEN' => 'TỔNG TIỀN THU',
+            'STATUS' => 'TRẠNG THÁI',
         ];
     }
 

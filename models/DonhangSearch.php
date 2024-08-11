@@ -16,11 +16,13 @@ class DonhangSearch extends Donhang
      * @inheritdoc
      */
 
+    public $SO_DT;
+
 
     public function rules()
     {
         return [
-            [['ID_DONVI', 'STATUS', 'TYPE'], 'safe'],
+            [['ID_DONVI', 'STATUS', 'TYPE', 'SO_DT'], 'safe'],
         ];
     }
 
@@ -49,8 +51,10 @@ class DonhangSearch extends Donhang
         if (!$this->validate()) {
             return $dataProvider;
         }
+        $query->joinWith('donvi');
 
-        $query->andFilterWhere(['=', 'ID_DONVI', $this->ID_DONVI]);
+        $query->andFilterWhere(['like', 'donvi.TEN_DONVI', $this->ID_DONVI]);
+        $query->andFilterWhere(['like', 'donvi.SO_DT', $this->SO_DT]);
         $query->andFilterWhere(['=', 'STATUS', $this->STATUS]);
         $query->andFilterWhere(['=', 'TYPE', $this->TYPE]);
         $query->orderBy([

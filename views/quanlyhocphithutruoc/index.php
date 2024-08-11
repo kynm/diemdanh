@@ -41,12 +41,16 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'attribute' => 'ID_HOCSINH',
                                 'contentOptions' => ['style' => 'width:15%; white-space: normal;word-break: break-word;'],
                                 'value' => function ($model) {
-                                    return $model->hocsinh->HO_TEN;
+                                    $hoten = $model->hocsinh ? $model->hocsinh->HO_TEN : 'Không tìm thấy học sinh';
+                                    return $model->STATUS == 1 ? Html::a($hoten, ['view', 'id' => $model->ID]) : $hoten;
                                 },
+                                'format' => 'raw',
                             ],
                             'created_at',
                             'SOTIEN',
                             'SO_BH',
+                            'TIENKHAC',
+                            'TONGTIEN',
                             'NGAY_BD',
                             'NGAY_KT',
                             [
@@ -74,9 +78,27 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'attribute' => 'GHICHU',
                                 'contentOptions' => ['style' => 'width:15%; white-space: normal;word-break: break-word;'],
                                 'value' => function($model) {
-                                    return $model->STATUS == 1 ? '<span class="btn btn-primary duyetthuphitruoc" data-id="' . $model->ID . '">Duyệt</span>' : '';
+                                    return ;
                                 },
                                 'format' => 'raw',
+                            ],
+                            [
+                                'class' => 'yii\grid\ActionColumn',
+                                'template' => Yii::$app->user->can('quanlyhocphi') ? '{duyetthuphitruoc}{delete}' : '',
+                                'buttons' => [
+                                    'delete' => function ($url, $model) {
+                                        return $model->STATUS == 1 ? Html::a('<i class="fa fa-trash-o"></i> Xóa', ['delete', 'id' => $model->ID], [
+                                            'class' => 'btn btn-danger btn-flat',
+                                            'data' => [
+                                                'confirm' => Yii::t('app', 'Dữ liệu sẽ bị xóa vĩnh viễn không thể khôi phục lại.Bạn chắc chắn muốn xóa mục này?'),
+                                                'method' => 'post',
+                                            ],
+                                        ]) : null;
+                                    },
+                                    'duyetthuphitruoc' => function ($url, $model) {
+                                        return $model->STATUS == 1 ? '<span class="btn btn-primary duyetthuphitruoc" data-id="' . $model->ID . '">Duyệt</span>' : '<span class="btn btn-danger modieuchinh" data-id="' . $model->ID . '">Mở điều chỉnh</span>';
+                                    },
+                                ],
                             ],
                         ],
                     ]); ?>
@@ -100,6 +122,37 @@ $script = <<< JS
             var id = $(this).data('id');
             $.ajax({
                 url: '/quanlyhocphithutruoc/duyetthuphitruoc',
+                method: 'post',
+                data: {
+                    id: id,
+                },
+                success:function(data) {
+                    data = jQuery.parseJSON(data);
+                    if (!data.error) {
+                        Swal.fire('Xác nhận thành công');
+                        setTimeout(() => {
+                            window.location.reload(true);
+                        }, 1000);
+                    }
+                }
+            });
+        }
+        });
+        
+    });
+    $(document).on('click', '.modieuchinh', function() {
+        Swal.fire({
+            title: 'Bạn có chắc chắn mở lại để điều chỉnh học sinh này không?',
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: 'ĐÃ THU!',
+            cancelButtonText: "CHƯA THU!"
+        }).then((result) => {
+        if (result['isConfirmed']) {
+            var id = $(this).data('id');
+            $.ajax({
+                url: '/quanlyhocphithutruoc/modieuchinh',
                 method: 'post',
                 data: {
                     id: id,

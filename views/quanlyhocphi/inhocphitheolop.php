@@ -17,7 +17,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <table class="table table-bordered">
         <tbody>
             <tr class="bg-primary text-center">
-                <th class="text-center">Tên con</th>
+                <th class="text-center">Họ tên</th>
+                <th class="text-center">SĐT</th>
+                <th class="text-center">Địa chỉ</th>
                 <th class="text-center">Ngày học</th>
                 <th class="text-center">Ngày nghỉ</th>
                 <th class="text-center">TIỀN HỌC</th>
@@ -28,12 +30,14 @@ $this->params['breadcrumbs'][] = $this->title;
             </tr>
             <?php foreach ($model->chitiethocphi as $key => $chitiet): ?>
             <tr class="text-center">
-            	<td style="border: 1px solid; width: 10%;"><?= $chitiet->hocsinh->HO_TEN?><br><?= $chitiet->hocsinh->SO_DT?><br><?= $chitiet->hocsinh->DIA_CHI?></td>
+                <td style="border: 1px solid; width: 10%;"><?= $chitiet->hocsinh->HO_TEN?></td>
+                <td style="border: 1px solid; width: 10%;"><?= $chitiet->hocsinh->SO_DT?></td>
+            	<td style="border: 1px solid; width: 10%;"><?= $chitiet->hocsinh->DIA_CHI?></td>
             	<td style="border: 1px solid; width: 7%;"><?= $chitiet->NGAYDIHOC?></td>
                 <td style="border: 1px solid; width: 7%;"><?= $chitiet->NGAY_NGHI?></td>
-            	<td style="border: 1px solid; width: 10%;"><?= number_format($chitiet->TIENHOC * $chitiet->SO_BTT)?></td>
-                <td style="border: 1px solid; width: 10%;"><?= number_format($chitiet->TIENKHAC)?></td>
-            	<td style="border: 1px solid; width: 10%;"><?= number_format($chitiet->TONG_TIEN)?></td>
+            	<td style="border: 1px solid; width: 8%;"><?= $chitiet->TONG_TIENHOC ? $chitiet->TONG_TIENHOC : number_format($chitiet->TIENHOC * $chitiet->SO_BTT)?></td>
+                <td style="border: 1px solid; width: 8%;"><?= number_format($chitiet->TIENKHAC)?></td>
+            	<td style="border: 1px solid; width: 8%;"><?= number_format($chitiet->TONG_TIEN)?></td>
                 <td style="border: 1px solid; width: 20%;"><?= nl2br($chitiet->NHAN_XET)?></td>
             	<td style="border: 1px solid; width: 10%;"><?= statusthutien()[$chitiet->STATUS]?></td>
             </tr>
