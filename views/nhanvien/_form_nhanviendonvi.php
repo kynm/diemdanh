@@ -16,9 +16,6 @@ $model->CHUC_VU = 3;
         <div class="box-body">
             <div class="row">
                 <div class="col-sm-4">
-                    <?= $form->field($model, 'MA_NHANVIEN')->textInput(['maxlength' => true]) ?>
-                </div>
-                <div class="col-sm-4">
                     <?= $form->field($model, 'TEN_NHANVIEN')->textInput(['maxlength' => true]) ?>
                 </div>
                 <div class="col-sm-4">

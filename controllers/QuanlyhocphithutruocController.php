@@ -7,6 +7,7 @@ use app\models\ActivitiesLog;
 use app\models\Quanlyhocphithutruoc;
 use app\models\Lophoc;
 use app\models\Hocsinh;
+use app\models\HocsinhSearch;
 use app\models\QuanlyhocphithutruocSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -123,7 +124,9 @@ class QuanlyhocphithutruocController extends Controller
         if (Yii::$app->user->can('edit-hocsinh')) {
             $model = $this->findModel($id);
 
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if ($model->load(Yii::$app->request->post())) {
+                $model->TONGTIEN = $model->SOTIEN + $model->TIENKHAC;
+                $model->save();
                 Yii::$app->session->setFlash('success', "Cập nhật thành công!");
                 return $this->redirect(['index']);
             } else {
@@ -174,7 +177,7 @@ class QuanlyhocphithutruocController extends Controller
 
     public function actionDuyetthuphitruoc()
     {
-        if (Yii::$app->request->post() && Yii::$app->user->identity->nhanvien->ID_NHANVIEN) {
+        if (Yii::$app->user->can('quanlyhocphi') &&Yii::$app->request->post() && Yii::$app->user->identity->nhanvien->ID_NHANVIEN) {
             $params = Yii::$app->request->post();
             $hocphi = Quanlyhocphithutruoc::findOne($params['id']);
             $result = [
@@ -199,7 +202,7 @@ class QuanlyhocphithutruocController extends Controller
 
     public function actionModieuchinh()
     {
-        if (Yii::$app->request->post() && Yii::$app->user->identity->nhanvien->ID_NHANVIEN) {
+        if (Yii::$app->user->can('quanlyhocphi') &&Yii::$app->request->post() && Yii::$app->user->identity->nhanvien->ID_NHANVIEN) {
             $params = Yii::$app->request->post();
             $hocphi = Quanlyhocphithutruoc::findOne($params['id']);
             $result = [
@@ -221,32 +224,126 @@ class QuanlyhocphithutruocController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    public function actionThaydoisotien()
+    {
+        if (Yii::$app->user->can('quanlyhocphi') &&Yii::$app->request->post() && Yii::$app->user->identity->nhanvien->ID_NHANVIEN) {
+            $inputs = Yii::$app->request->post();
+            $hocphi = Quanlyhocphithutruoc::findOne($inputs['id']);
+            $sotien = $inputs['sotien'];
+            $result = [
+                'error' => 1,
+                'data' => [],
+                'message' => 'Lỗi cập nhật!',
+            ];
+            if ($hocphi && $hocphi->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI && $hocphi->STATUS == 1) {
+                $hocphi->SOTIEN = $sotien;
+                $hocphi->SO_BH = $hocphi->hocsinh->TIENHOC ? round($hocphi->SOTIEN / $hocphi->hocsinh->TIENHOC, 0) : $hocphi->SO_BH;
+                $hocphi->TONGTIEN = $hocphi->SOTIEN + $hocphi->TIENKHAC;
+                $hocphi->save();
+                $result['error'] = 0;
+                $result['data'] = [
+                    'ID' => $hocphi->ID,
+                    'SOTIEN' => $hocphi->SOTIEN,
+                    'SO_BH' => $hocphi->SO_BH,
+                    'TIENKHAC' => $hocphi->TIENKHAC,
+                    'TONGTIEN' => $hocphi->TONGTIEN,
+                ];
+                $result['message'] = 'Cập nhật thành công';
+            }
+
+            return json_encode($result);
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function actionThaydoisobuoihoc()
+    {
+        if (Yii::$app->user->can('quanlyhocphi') &&Yii::$app->request->post() && Yii::$app->user->identity->nhanvien->ID_NHANVIEN) {
+            $inputs = Yii::$app->request->post();
+            $hocphi = Quanlyhocphithutruoc::findOne($inputs['id']);
+            $sobh = $inputs['so_bh'];
+            $result = [
+                'error' => 1,
+                'data' => [],
+                'message' => 'Lỗi cập nhật!',
+            ];
+            if ($hocphi && $hocphi->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI && $hocphi->STATUS == 1) {
+                $hocphi->SO_BH = $sobh;
+                $hocphi->SOTIEN = $hocphi->hocsinh->TIENHOC ? $hocphi->hocsinh->TIENHOC * $hocphi->SO_BH : $hocphi->SOTIEN;
+                $hocphi->TONGTIEN = $hocphi->SOTIEN + $hocphi->TIENKHAC;
+                $hocphi->save();
+                $result['error'] = 0;
+                $result['data'] = [
+                    'ID' => $hocphi->ID,
+                    'SOTIEN' => $hocphi->SOTIEN,
+                    'SO_BH' => $hocphi->SO_BH,
+                    'TIENKHAC' => $hocphi->TIENKHAC,
+                    'TONGTIEN' => $hocphi->TONGTIEN,
+                ];
+                $result['message'] = 'Cập nhật thành công';
+            }
+
+            return json_encode($result);
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function actionThaydoitienkhac()
+    {
+        if (Yii::$app->user->can('quanlyhocphi') &&Yii::$app->request->post() && Yii::$app->user->identity->nhanvien->ID_NHANVIEN) {
+            $inputs = Yii::$app->request->post();
+            $hocphi = Quanlyhocphithutruoc::findOne($inputs['id']);
+            $tienkhac = $inputs['tienkhac'];
+            $result = [
+                'error' => 1,
+                'data' => [],
+                'message' => 'Lỗi cập nhật!',
+            ];
+            if ($hocphi && $hocphi->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI && $hocphi->STATUS == 1) {
+                $hocphi->TIENKHAC = $tienkhac;
+                $hocphi->TONGTIEN = $hocphi->SOTIEN + $hocphi->TIENKHAC;
+                $hocphi->save();
+                $result['error'] = 0;
+                $result['data'] = [
+                    'ID' => $hocphi->ID,
+                    'SOTIEN' => $hocphi->SOTIEN,
+                    'SO_BH' => $hocphi->SO_BH,
+                    'TIENKHAC' => $hocphi->TIENKHAC,
+                    'TONGTIEN' => $hocphi->TONGTIEN,
+                ];
+                $result['message'] = 'Cập nhật thành công';
+            }
+
+            return json_encode($result);
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function actionCanhbaotheongay()
+    {
+        $searchModel = new HocsinhSearch();
+        $dataProvider = $searchModel->searchhocsinhhethantheongay(Yii::$app->request->queryParams);
+        $dslop = ArrayHelper::map(Lophoc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->all(), 'ID_LOP', 'TEN_LOP');
+        return $this->render('canhbaotheongay', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'dslop' => $dslop,
+        ]);
+    }
+
+    public function actionCanhbaotheosobuoihoc()
+    {
+        $searchModel = new HocsinhSearch();
+        $dataProvider = $searchModel->searchhocsinhhetheosobuoihoc(Yii::$app->request->queryParams);
+        $dslop = ArrayHelper::map(Lophoc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->all(), 'ID_LOP', 'TEN_LOP');
+        return $this->render('canhbaotheosobuoihoc', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'dslop' => $dslop,
+        ]);
+    }
 }
-
-
-    // $('#quanlyhocphithutruoc-sotien').on('change', function() {
-    //   var sotien = $(this).val();
-    //   var idhocsinh = $("#quanlyhocphithutruoc-id_hocsinh").val();
-    //   var lopid = $("#quanlyhocphithutruoc-id_lop").val();
-    //   if (!idhocsinh) {
-    //         Swal.fire('Cần chọn học sinh nộp học phí');
-    //         return 1;
-    //   }
-    //     $.ajax({
-    //         url: '/quanlyhocphithutruoc/checksobuoi',
-    //         method: 'POST',
-    //         data: {
-    //             'lopid' : lopid,
-    //             'idhocsinh' : idhocsinh,
-    //             'sotien' : sotien,
-    //         },
-    //         success:function(data) {
-    //             data = jQuery.parseJSON(data);
-    //             if (!data.error) {
-    //                 $("#quanlyhocphithutruoc-so_bh").val(data.value);
-    //             } else {
-    //                 Swal.fire(data.message);
-    //             }
-    //         }
-    //     });
-    // });

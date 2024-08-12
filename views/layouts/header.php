@@ -42,6 +42,10 @@ use yii\helpers\Url;
                             
                         </li>
                         <li>
+                            <a href="<?= Url::to(['donhang/donvimuagoi'])?>" class="btn btn-primary btn-flat">Bảng giá</a>
+                            
+                        </li>
+                        <li>
                             <a href="<?= Url::to(['site/congcuhotro'])?>" class="btn btn-primary btn-flat">Công cụ</a>
                             
                         </li>

@@ -9,7 +9,7 @@ use kartik\select2\Select2;
 /* @var $searchModel app\models\lophocSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'QUẢN LÝ HỌC PHÍ THU TRƯỚC';
+$this->title = 'QUẢN LÝ ĐƠN HÀNG';
 $this->params['breadcrumbs'][] = ['label' => 'Đơn vị', 'url' => ['donvi/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

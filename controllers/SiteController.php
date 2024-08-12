@@ -263,7 +263,6 @@ class SiteController extends Controller
         } else {
             echo "Ngày 1 và ngày 2 bằng nhau";
         }
-        // echo "<pre>";
         $diffs = $date1->diff($date2)->format("%a");
         $result = [
             0 => 0,

@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="lophoc-index">
     <p>
-        <?= (Yii::$app->user->can('quanlytruonghoc')) ? Html::a('<i class="fa fa-plus"></i> Thêm mới', ['create'], ['class' => 'btn btn-primary btn-flat']) :'' ?>
+        <?= $this->render('/partial/_header_hocphithutruoc', []) ?>
     </p>
 
     <div class="box box-primary">
@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ['class' => 'yii\grid\SerialColumn'],
                             [
                                 'attribute' => 'ID_LOP',
-                                'contentOptions' => ['style' => 'width:15%; white-space: normal;word-break: break-word;'],
+                                'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
                                 'value' => 'lop.TEN_LOP',
                                 'filter'=> $dslop,
                                 'filterType' => GridView::FILTER_SELECT2,
@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                             [
                                 'attribute' => 'ID_HOCSINH',
-                                'contentOptions' => ['style' => 'width:15%; white-space: normal;word-break: break-word;'],
+                                'contentOptions' => ['style' => 'width:5%; white-space: normal;word-break: break-word;'],
                                 'value' => function ($model) {
                                     $hoten = $model->hocsinh ? $model->hocsinh->HO_TEN : 'Không tìm thấy học sinh';
                                     return $model->STATUS == 1 ? Html::a($hoten, ['view', 'id' => $model->ID]) : $hoten;
@@ -47,10 +47,38 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'format' => 'raw',
                             ],
                             'created_at',
-                            'SOTIEN',
-                            'SO_BH',
-                            'TIENKHAC',
-                            'TONGTIEN',
+                            [
+                                'attribute' => 'SOTIEN',
+                                'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
+                                'value' => function($model) {
+                                    return $model->STATUS == 1 ? '<input type="number" id="SOTIEN-' . $model->ID . '" name="SOTIEN" class="form-control" value="' . $model->SOTIEN . '" data-id="' . $model->ID  . '">' : $model->SOTIEN;
+                                },
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'SO_BH',
+                                'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
+                                'value' => function($model) {
+                                    return $model->STATUS == 1 ? '<input type="number" id="SO_BH-' . $model->ID . '" name="SO_BH" class="form-control" value="' . $model->SO_BH . '" data-id="' . $model->ID  . '">' : $model->SO_BH;
+                                },
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'TIENKHAC',
+                                'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
+                                'value' => function($model) {
+                                    return $model->STATUS == 1 ? '<input type="number" id="TIENKHAC-' . $model->ID . '" name="TIENKHAC" class="form-control" value="' . $model->TIENKHAC . '" data-id="' . $model->ID  . '">' : $model->TIENKHAC;
+                                },
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'TONGTIEN',
+                                'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
+                                'value' => function($model) {
+                                    return '<span id="TONGTIEN-' . $model->ID . '">' . $model->TONGTIEN . '</span>';
+                                },
+                                'format' => 'raw',
+                            ],
                             'NGAY_BD',
                             'NGAY_KT',
                             [
@@ -73,14 +101,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'options' => ['prompt' => ''],
                                     'pluginOptions' => ['allowClear' => true],
                                 ],
-                            ],
-                            [
-                                'attribute' => 'GHICHU',
-                                'contentOptions' => ['style' => 'width:15%; white-space: normal;word-break: break-word;'],
-                                'value' => function($model) {
-                                    return ;
-                                },
-                                'format' => 'raw',
                             ],
                             [
                                 'class' => 'yii\grid\ActionColumn',
@@ -138,7 +158,6 @@ $script = <<< JS
             });
         }
         });
-        
     });
     $(document).on('click', '.modieuchinh', function() {
         Swal.fire({
@@ -146,8 +165,8 @@ $script = <<< JS
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: '#DD6B55',
-            confirmButtonText: 'ĐÃ THU!',
-            cancelButtonText: "CHƯA THU!"
+            confirmButtonText: 'MỞ NGAY!',
+            cancelButtonText: "KHÔNG!"
         }).then((result) => {
         if (result['isConfirmed']) {
             var id = $(this).data('id');
@@ -169,7 +188,85 @@ $script = <<< JS
             });
         }
         });
-        
+    });
+    $(document).on('change', 'input[name=SOTIEN]', function() {
+        var id = $(this).data('id');
+        var sotien = $(this).val();
+        $.ajax({
+            url: '/quanlyhocphithutruoc/thaydoisotien',
+            method: 'post',
+            data: {
+                id: id,
+                sotien: sotien,
+            },
+            success:function(data) {
+                data = jQuery.parseJSON(data);
+                if (!data.error) {
+                    $('#SOTIEN-' + data.data.ID).val(data.data.SOTIEN);
+                    $('#SO_BH-' + data.data.ID).val(data.data.SO_BH);
+                    $('#TIENKHAC-' + data.data.ID).val(data.data.TIENKHAC);
+                    $('#TONGTIEN-' + data.data.ID).html(data.data.TONGTIEN);
+                    console.log('#SOTIEN-' + data.data.ID);
+                    console.log('#SO_BH-' + data.data.ID);
+                    console.log('#TIENKHAC-' + data.data.ID);
+                    console.log('#TONGTIEN-' + data.data.ID);
+                    Swal.fire('Xác nhận thành công');
+                }
+            }
+        });
+    });
+
+    $(document).on('change', 'input[name=SO_BH]', function() {
+        var id = $(this).data('id');
+        var so_bh = $(this).val();
+        $.ajax({
+            url: '/quanlyhocphithutruoc/thaydoisobuoihoc',
+            method: 'post',
+            data: {
+                id: id,
+                so_bh: so_bh,
+            },
+            success:function(data) {
+                data = jQuery.parseJSON(data);
+                if (!data.error) {
+                    $('#SOTIEN-' + data.data.ID).val(data.data.SOTIEN);
+                    $('#SO_BH-' + data.data.ID).val(data.data.SO_BH);
+                    $('#TIENKHAC-' + data.data.ID).val(data.data.TIENKHAC);
+                    $('#TONGTIEN-' + data.data.ID).html(data.data.TONGTIEN);
+                    console.log('#SOTIEN-' + data.data.ID);
+                    console.log('#SO_BH-' + data.data.ID);
+                    console.log('#TIENKHAC-' + data.data.ID);
+                    console.log('#TONGTIEN-' + data.data.ID);
+                    Swal.fire('Xác nhận thành công');
+                }
+            }
+        });
+    });
+    $(document).on('change', 'input[name=TIENKHAC]', function() {
+        var id = $(this).data('id');
+        var tienkhac = $(this).val();
+        $.ajax({
+            url: '/quanlyhocphithutruoc/thaydoitienkhac',
+            method: 'post',
+            data: {
+                id: id,
+                tienkhac: tienkhac,
+            },
+            success:function(data) {
+                data = jQuery.parseJSON(data);
+                if (!data.error) {
+                    $('#SOTIEN-' + data.data.ID).val(data.data.SOTIEN);
+                    $('#SO_BH-' + data.data.ID).val(data.data.SO_BH);
+                    $('#TIENKHAC-' + data.data.ID).val(data.data.TIENKHAC);
+                    $('#TONGTIEN-' + data.data.ID).html(data.data.TONGTIEN);
+                    console.log('#SOTIEN-' + data.data.ID);
+                    console.log('#SO_BH-' + data.data.ID);
+                    console.log('#TIENKHAC-' + data.data.ID);
+                    console.log('#TONGTIEN-' + data.data.ID);
+                    Swal.fire('Xác nhận thành công');
+                }
+            }
+        });
     });
 JS;
 $this->registerJs($script);

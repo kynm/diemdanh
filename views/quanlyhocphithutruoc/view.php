@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Nhân viên', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="nhanvien-view">
-
+    <?= $this->render('/partial/_header_hocphithutruoc', []) ?>
     <div class="box box-primary">
         <div class="box-body">
             <?php 

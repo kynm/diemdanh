@@ -112,4 +112,82 @@ class HocsinhSearch extends Hocsinh
 
         return $dataProvider;
     }
+
+    public function searchhocsinhhethantheongay($params)
+    {
+        $query = Hocsinh::find();
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI,
+        ]);
+
+        $query->andFilterWhere(['is not', 'NGAY_KT', new \yii\db\Expression('null')]);
+        $query->andFilterWhere(['=', 'ID_LOP', $this->ID_LOP]);
+        $query->andFilterWhere(['like', 'MA_HOCSINH', $this->MA_HOCSINH])
+            ->andFilterWhere(['like', 'HO_TEN', $this->HO_TEN])
+            ->andFilterWhere(['like', 'DIA_CHI', $this->DIA_CHI])
+            ->andFilterWhere(['like', 'SO_DT', $this->SO_DT]);
+
+        $query->orderBy([
+            'DATEDIFF(NGAY_KT, NOW())' => SORT_ASC,
+            'STATUS' => SORT_DESC,
+            'HO_TEN' => SORT_ASC,
+        ]);
+
+        return $dataProvider;
+    }
+
+    public function searchhocsinhhetheosobuoihoc($params)
+    {
+        $query = Hocsinh::find();
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI,
+        ]);
+
+        $query->andFilterWhere(['<>', 'SOBH_DAMUA', 0]);
+        $query->andFilterWhere(['is', 'NGAY_KT', new \yii\db\Expression('null')]);
+        $query->andFilterWhere(['=', 'ID_LOP', $this->ID_LOP]);
+        $query->andFilterWhere(['like', 'MA_HOCSINH', $this->MA_HOCSINH])
+            ->andFilterWhere(['like', 'HO_TEN', $this->HO_TEN])
+            ->andFilterWhere(['like', 'DIA_CHI', $this->DIA_CHI])
+            ->andFilterWhere(['like', 'SO_DT', $this->SO_DT]);
+
+        $query->orderBy([
+            'STATUS' => SORT_DESC,
+            'HO_TEN' => SORT_ASC,
+        ]);
+
+        return $dataProvider;
+    }
 }

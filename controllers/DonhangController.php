@@ -82,7 +82,7 @@ class DonhangController extends Controller
             $model->NGAY_BD = date('Y-m-d');
             $model->NGAY_KT = date('Y-m-d', strtotime('+1 year'));
             $model->SOTIEN = 350000;
-            $model->SO_LOP = 10;
+            $model->SO_LOP = 100;
             $model->SO_HS = 200;
             $model->STATUS = 2;
             $model->TYPE = 1;
@@ -146,7 +146,7 @@ class DonhangController extends Controller
                 return $this->redirect(['index']);
             } else {
                 $dsdonvi = ArrayHelper::map(Donvi::find()->all(), 'ID_DONVI', 'TEN_DONVI');
-                $model->SO_LOP = $model->SO_LOP ? $model->SO_LOP : 10;
+                $model->SO_LOP = $model->SO_LOP ? $model->SO_LOP : 100;
                 $model->SO_HS = $model->SO_HS ? $model->SO_HS : 200;
                 return $this->render('update', [
                     'model' => $model,

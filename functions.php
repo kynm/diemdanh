@@ -70,6 +70,26 @@
         return $color;
     }
 
+    function colorsthuhocphitheongay($ngay)
+    {
+        $date1=date_create($ngay);
+        $date2=date_create();
+        if ($date1 < $date2) {
+            $color = 'red';
+            return $color;
+        }
+        $diffs = $date1->diff($date2)->format("%a");
+        $color = '';
+        if ($diffs < 3 && $diffs >= 1) {
+            $color = '#b18e05';
+        }
+        if ($diffs < 1) {
+            $color = 'red';
+        }
+
+        return $color;
+    }
+
     function colorsthuhocphi($so)
     {
         $color = '';
