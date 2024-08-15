@@ -46,6 +46,9 @@ class Quanlyhocphi extends \yii\db\ActiveRecord
             'TIENHOC' => 'SỐ TIỀN/BUỔI',
             'SOLUONG' => 'SỐ LƯỢNG',
             'SOLUONGCHUATHU' => 'SỐ LƯỢNG CHƯA THU',
+            'TONGTIEN' => 'TỔNG TIỀN',
+            'TONGTIENDATHU' => 'TỔNG TIỀN ĐÃ THU',
+            'TONGTIENCHUATHU' => 'TỔNG TIỀN CHƯA THU',
             'SOLUONGDATHU' => 'SỐ LƯỢNG ĐÃ THU',
         ];
     }

@@ -63,6 +63,15 @@ class QuanlyhocphithutruocController extends Controller
         ]);
     }
 
+    public function actionInchitiet($id)
+    {
+        $this->layout = 'printLayout';
+        $model = Quanlyhocphithutruoc::findOne($id);
+        return $this->render('inchitiet', [
+            'model' => $model,
+        ]);
+    }
+
     /**
      * Creates a new hocsinh model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -86,6 +95,7 @@ class QuanlyhocphithutruocController extends Controller
                             $model->ID_DONVI = Yii::$app->user->identity->nhanvien->ID_DONVI;
                             $model->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
                             $model->STATUS = 1;
+                            $model->TIEUDE = $inputs['Quanlyhocphithutruoc']['TIEUDE'];
                             $model->ID_LOP = $inputs['Quanlyhocphithutruoc']['ID_LOP'];
                             $model->SOTIEN = $inputs['Quanlyhocphithutruoc']['SOTIEN'];
                             $model->SO_BH = $inputs['Quanlyhocphithutruoc']['SO_BH'];
@@ -125,7 +135,7 @@ class QuanlyhocphithutruocController extends Controller
             $model = $this->findModel($id);
 
             if ($model->load(Yii::$app->request->post())) {
-                $model->TONGTIEN = $model->SOTIEN + $model->TIENKHAC;
+                $model->TONGTIEN = (int)$model->SOTIEN + (int)$model->TIENKHAC;
                 $model->save();
                 Yii::$app->session->setFlash('success', "Cập nhật thành công!");
                 return $this->redirect(['index']);
@@ -188,6 +198,7 @@ class QuanlyhocphithutruocController extends Controller
                 $hocphi->STATUS = 2;
                 $hocphi->save();
                 $hocphi->hocsinh->SOBH_DAMUA += $hocphi->SO_BH;
+                $hocphi->hocsinh->NGAY_BD = $hocphi->hocsinh->NGAY_BD ? $hocphi->hocsinh->NGAY_BD : $hocphi->NGAY_BD;
                 $hocphi->hocsinh->NGAY_KT = $hocphi->NGAY_KT;
                 $hocphi->hocsinh->save();
                 $result['error'] = 0;
@@ -213,7 +224,8 @@ class QuanlyhocphithutruocController extends Controller
                 $hocphi->STATUS = 1;
                 $hocphi->save();
                 $hocphi->hocsinh->SOBH_DAMUA -= $hocphi->SO_BH;
-                $hocphi->hocsinh->NGAY_KT = $hocphi->NGAY_BD ? $hocphi->NGAY_BD : null;
+                $hocphi->hocsinh->SOBH_DAMUA = $hocphi->hocsinh->SOBH_DAMUA > 0 ? $hocphi->SO_BH : 0;
+                $hocphi->hocsinh->NGAY_KT = $hocphi->hocsinh->NGAY_BD;
                 $hocphi->hocsinh->save();
                 $result['error'] = 0;
                 $result['message'] = 'Cập nhật thành công';
@@ -344,6 +356,19 @@ class QuanlyhocphithutruocController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'dslop' => $dslop,
+        ]);
+    }
+
+    public function actionBaocaohocphithutruoc()
+    {
+        $params = Yii::$app->request->queryParams;
+        $params['TU_NGAY'] = isset($params['TU_NGAY']) ? $params['TU_NGAY'] : date("Y-m-1");
+        $params['DEN_NGAY'] = isset($params['DEN_NGAY']) ? $params['DEN_NGAY'] : date('Y-m-d');
+        $searchModel = new QuanlyhocphithutruocSearch();
+        $result = $searchModel->baocaohocphithutruoc($params);
+        return $this->render('baocaohocphithutruoc', [
+            'result' => $result,
+            'params' => $params,
         ]);
     }
 }

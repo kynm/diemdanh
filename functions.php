@@ -127,4 +127,15 @@
         ];
     }
 
+    function sendmail($email, $title, $body)
+    {
+        Yii::$app->mailer
+        ->compose()
+        ->setFrom('thongbao@easycheck.io.vn')
+        ->setTo($email)
+        ->setSubject($title)
+        ->setHtmlBody($body)
+        ->send();
+    }
+
 ?>

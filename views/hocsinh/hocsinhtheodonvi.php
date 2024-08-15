@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'ID_LOP',
                         'value' => 'lop.TEN_LOP',
-                        'contentOptions' => ['style' => 'width:20%;white-space: normal;word-break: break-word;word-break: break-word'],
+                        'contentOptions' => ['style' => 'width:10%;white-space: normal;word-break: break-word;word-break: break-word'],
                         'filter'=> $dslop,
                         'filterType' => GridView::FILTER_SELECT2,
                         'filterWidgetOptions' => [
@@ -35,8 +35,24 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     'HO_TEN',
                     'SO_DT',
-                    'NGAY_BD',
-                    'NGAY_KT',
+                    [
+                        'attribute' => 'NGAY_SINH',
+                        'value' => function($model) {
+                            return $model->NGAY_SINH ? Yii::$app->formatter->asDatetime($model->NGAY_SINH, 'php:d/m/Y') : NULL;
+                        },
+                    ],
+                    [
+                        'attribute' => 'NGAY_BD',
+                        'value' => function($model) {
+                            return $model->NGAY_BD ? Yii::$app->formatter->asDatetime($model->NGAY_BD, 'php:d/m/Y') : NULL;
+                        },
+                    ],
+                    [
+                        'attribute' => 'NGAY_KT',
+                        'value' => function($model) {
+                            return $model->NGAY_KT ? Yii::$app->formatter->asDatetime($model->NGAY_KT, 'php:d/m/Y') : NULL;
+                        },
+                    ],
                     'TIENHOC',
                     'SOBH_DAMUA',
                     [

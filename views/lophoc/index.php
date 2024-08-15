@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             [
                                 'attribute' => 'SOHOCSINH',
                                 'value' => function ($model) {
-                                    return $model->getDshocsinh()->count();
+                                    return $model->getDshocsinh()->andWhere(['STATUS' => 1])->count();
                                 }
                             ],
                             [

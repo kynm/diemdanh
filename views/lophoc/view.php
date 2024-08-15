@@ -9,7 +9,7 @@ use app\models\Hocsinh;
 /* @var $this yii\web\View */
 /* @var $model app\models\Daivt */
 
-$this->title = $model->MA_LOP;
+$this->title = $model->TEN_LOP;
 $this->params['breadcrumbs'][] = ['label' => 'Đơn vị', 'url' => ['donvi/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

@@ -7,20 +7,25 @@ use kartik\editors\Summernote;
 
 /* @var $this yii\web\View */
 /* @var $form yii\widgets\ActiveForm */
+$this->title = 'CẤU HÌNH ĐƠN VỊ';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="donvi-form">
     <?php $form = ActiveForm::begin(); ?>
     <div class="box box-primary">
         <div class="box-body">
             <div class="row">              
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <?= $form->field($model, 'TEN_DONVI')->textInput(['maxlength' => true]) ?>
                 </div>
                 <div class="col-md-4">
                     <?= $form->field($model, 'DIA_CHI')->textInput(['maxlength' => true]) ?>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-2">
                     <?= $form->field($model, 'SO_DT')->textInput(['maxlength' => true]) ?>
+                </div>
+                <div class="col-md-3">
+                    <?= $form->field($model, 'EMAIL')->textInput(['maxlength' => true]) ?>
                 </div>
                 <div class="col-sm-12">
                     <?= $form->field($model, 'TTTT')->widget(Summernote::class, [
@@ -42,6 +47,12 @@ use kartik\editors\Summernote;
                 </div>
                 <div class="col-sm-12">
                     <?= $form->field($model, 'DIEMDANHTHUCONG')->checkBox(['label' => 'ĐIỂM DANH THỦ CÔNG (KHÔNG TỰ ĐỘNG TẠO ĐIỂM DANH CHO CẢ LỚP, THỰC HIỆN ĐIỂM DANH HỌC SINH NÀO THÌ GHI NHẬN HỌC SINH ĐÓ)']) ?>
+                </div>
+                <div class="col-sm-12">
+                    <?= $form->field($model, 'HPTT')->checkBox(['label' => 'HỌC PHÍ THEO THÁNG)']) ?>
+                </div>
+                <div class="col-sm-12">
+                    <?= $form->field($model, 'HP_T')->checkBox(['label' => 'HỌC PHÍ THU TRƯỚC']) ?>
                 </div>
             </div>
         </div>

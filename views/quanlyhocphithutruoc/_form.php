@@ -14,6 +14,9 @@ use kartik\date\DatePicker;
     <div class="box box-primary">
         <div class="box-body">
             <div class="row">
+                <div class="col-sm-4">
+                    <?= $form->field($model, 'TIEUDE')->textInput(['maxlength' => true]) ?>
+                </div>
                 <div class="col-md-4">
                     <?= $form->field($model, 'ID_LOP')->widget(Select2::classname(), [
                         'data' => $dslop,

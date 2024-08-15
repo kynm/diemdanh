@@ -44,9 +44,11 @@ class QuanlyhocphiController extends Controller
             $searchModel = new QuanlyhocphiSearch();
             $dataProvider = $searchModel->searchhocphitheodonvi(Yii::$app->request->queryParams);
 
+            $dslop = ArrayHelper::map(Lophoc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->all(), 'ID_LOP', 'TEN_LOP');
             return $this->render('index', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
+                'dslop' => $dslop,
             ]);
         } else {
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
@@ -370,6 +372,31 @@ class QuanlyhocphiController extends Controller
         }
     }
 
+    public function actionModieuchinh()
+    {
+        if (Yii::$app->request->post() && Yii::$app->user->identity->nhanvien->ID_NHANVIEN) {
+            $params = Yii::$app->request->post();
+            $hocphi = Chitiethocphi::findOne($params['id']);
+            $result = [
+                'error' => 1,
+                'message' => '',
+            ];
+            if ($hocphi && $hocphi->hocphi->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+                $hocphi->STATUS = 0;
+                $hocphi->save();
+                $result['error'] = 0;
+                $result['ID'] = $hocphi->ID;
+                $result['SO_BTT'] = $hocphi->SO_BTT;
+                $result['TONG_TIEN'] = $hocphi->TONG_TIEN;
+                $result['message'] = 'Cập nhật thành công';
+            }
+
+            return json_encode($result);
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
     public function actionXoaluotthuhocphi()
     {
         if (Yii::$app->request->post() && Yii::$app->user->identity->nhanvien->ID_NHANVIEN) {
@@ -398,13 +425,51 @@ class QuanlyhocphiController extends Controller
             $searchModel = new ChitiethocphiSearch();
             $dataProvider = $searchModel->searchchitiethocphitheodonvi(Yii::$app->request->queryParams);
 
+            $dslop = ArrayHelper::map(Lophoc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->all(), 'ID_LOP', 'TEN_LOP');
             return $this->render('chitietthuhocphidonvi', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
+                'dslop' => $dslop,
             ]);
         } else {
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
         }
 
+    }
+
+    public function actionBosunghocsinh()
+    {
+        if (Yii::$app->request->post() && Yii::$app->user->identity->nhanvien->ID_NHANVIEN && Yii::$app->user->can('quanlyhocphi')) {
+            $result = [
+                'error' => 1,
+                'message' => 'Lỗi cập nhật!',
+            ];
+            $params = Yii::$app->request->post();
+            $quanlyhocphi = Quanlyhocphi::findOne($params['id']);
+            self::taochitiethocphi($quanlyhocphi);
+            $dshocsinhlop = ArrayHelper::map($quanlyhocphi->lop->dshocsinh, 'ID', 'ID');
+            $dshocsinhdatinhhp = ArrayHelper::map($quanlyhocphi->chitiethocphi, 'ID_HOCSINH', 'ID_HOCSINH');
+            $dshschuatinhhocphi = array_diff_key($dshocsinhdatinhhp, $dshocsinhlop);
+            foreach ($dshocsinhlop as $key => $value) {
+                if (!in_array($value, $dshocsinhdatinhhp)) {
+                    $hocphi = Chitiethocphi::find()->where(['ID_QUANLYHOCPHI' => $quanlyhocphi->ID])->andWhere(['ID_HOCSINH' => $value])->one();
+                    if (!$hocphi) {
+                        $hocphi = new Chitiethocphi();
+                        $hocphi->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
+                        $hocphi->ID_QUANLYHOCPHI = $quanlyhocphi->ID;
+                        $hocphi->ID_HOCSINH = $value;
+                        $hocphi->save();
+                    }
+                }
+            }
+            $result = [
+                'error' => 0,
+                'message' => 'Cập nhật thành công!',
+            ];
+
+            return json_encode($result);
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
     }
 }

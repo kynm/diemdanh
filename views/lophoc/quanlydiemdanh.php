@@ -11,7 +11,7 @@ use kartik\date\DatePicker;
 /* @var $this yii\web\View */
 /* @var $model app\models\Daivt */
 
-$this->title = $diemdanh->lop->MA_LOP;
+$this->title = $diemdanh->lop->TEN_LOP;
 $this->params['breadcrumbs'][] = ['label' => 'Đơn vị', 'url' => ['donvi/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

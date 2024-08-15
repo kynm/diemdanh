@@ -26,6 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'filterModel' => $searchModel,
                         'columns' => [
                             ['class' => 'yii\grid\SerialColumn'],
+                            'TIEUDE',
                             [
                                 'attribute' => 'ID_LOP',
                                 'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
@@ -79,8 +80,18 @@ $this->params['breadcrumbs'][] = $this->title;
                                 },
                                 'format' => 'raw',
                             ],
-                            'NGAY_BD',
-                            'NGAY_KT',
+                            [
+                                'attribute' => 'NGAY_BD',
+                                'value' => function($model) {
+                                    return $model->NGAY_BD ? Yii::$app->formatter->asDatetime($model->NGAY_BD, 'php:d/m/Y') : NULL;
+                                },
+                            ],
+                            [
+                                'attribute' => 'NGAY_KT',
+                                'value' => function($model) {
+                                    return $model->NGAY_KT ? Yii::$app->formatter->asDatetime($model->NGAY_KT, 'php:d/m/Y') : NULL;
+                                },
+                            ],
                             [
                                 'attribute' => 'GHICHU',
                                 'contentOptions' => ['style' => 'width:15%; white-space: normal;word-break: break-word;'],
@@ -104,7 +115,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                             [
                                 'class' => 'yii\grid\ActionColumn',
-                                'template' => Yii::$app->user->can('quanlyhocphi') ? '{duyetthuphitruoc}{delete}' : '',
+                                'template' => Yii::$app->user->can('quanlyhocphi') ? '{duyetthuphitruoc}{delete}{print}' : '{print}',
                                 'buttons' => [
                                     'delete' => function ($url, $model) {
                                         return $model->STATUS == 1 ? Html::a('<i class="fa fa-trash-o"></i> Xóa', ['delete', 'id' => $model->ID], [
@@ -117,6 +128,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                     },
                                     'duyetthuphitruoc' => function ($url, $model) {
                                         return $model->STATUS == 1 ? '<span class="btn btn-primary duyetthuphitruoc" data-id="' . $model->ID . '">Duyệt</span>' : '<span class="btn btn-danger modieuchinh" data-id="' . $model->ID . '">Mở điều chỉnh</span>';
+                                    },
+                                    'print' => function ($url, $model) {
+                                        return Html::a('<i class="fa fa-print"></i>', ['/quanlyhocphithutruoc/inchitiet', 'id' => $model->ID], ['class' => 'btn btn-primary btn-flat', 'target' => '_blank']);
                                     },
                                 ],
                             ],

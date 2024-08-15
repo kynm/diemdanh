@@ -18,7 +18,7 @@ class QuanlyhocphiSearch extends Quanlyhocphi
     public function rules()
     {
         return [
-            [['TIEUDE'], 'safe'],
+            [['TIEUDE', 'ID_LOP'], 'safe'],
         ];
     }
 
@@ -54,6 +54,7 @@ class QuanlyhocphiSearch extends Quanlyhocphi
         ]);
 
         $query->andFilterWhere(['like', 'TIEUDE', $this->TIEUDE]);
+        $query->andFilterWhere(['=', 'ID_LOP', $this->ID_LOP]);
         $query->orderBy([
             'TU_NGAY' => SORT_DESC,
             'DEN_NGAY' => SORT_DESC,

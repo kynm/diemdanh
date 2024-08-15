@@ -28,6 +28,18 @@ $config = [
         ],
         'db' => $db,
         'db_sms' => $db_sms,
+        'mailer' => [
+            'class' => 'yii\swiftmailer\Mailer',
+            'useFileTransport' => false,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'zmhn042402.onemail.vn',
+                'username' => 'thongbao@easycheck.io.vn',
+                'password' => 'Thongbao@1234',
+                'port' => '587',
+                'encryption' => 'tls',
+            ],
+        ],
     ],
     'params' => $params,
     /*

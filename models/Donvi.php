@@ -36,9 +36,10 @@ class Donvi extends \yii\db\ActiveRecord
     {
         return [
             [['ID_DONVI', 'MA_DONVI','TEN_DONVI'], 'required'],
-            [['ID_DONVI', 'CAP_TREN', 'SO_LOP', 'SO_HS', 'SHOWALL', 'DIEMDANHTHUCONG'], 'integer'],
+            [['ID_DONVI', 'CAP_TREN', 'SO_LOP', 'SO_HS', 'SHOWALL', 'DIEMDANHTHUCONG', 'HPTT', 'HP_T'], 'integer'],
             [['MA_DONVI'], 'string', 'max' => 30],
-            [['TEN_DONVI', 'DIA_CHI', 'NGAY_BD', 'NGAY_KT'], 'string', 'max' => 100],
+            [['TEN_DONVI', 'DIA_CHI', 'NGAY_BD', 'NGAY_KT', 'EMAIL'], 'string', 'max' => 100],
+            ['EMAIL', 'email'],
             [['SO_DT'], 'string', 'max' => 20],
             [['MA_DONVI', 'SO_DT'], 'unique'],
             [['TTTT', 'QDLH', 'TTLH'], 'string'],
@@ -71,6 +72,8 @@ class Donvi extends \yii\db\ActiveRecord
             'HOCSINH' => 'HỌC SINH',
             'SHOWALL' => 'HIỂN THỊ TOÀN BỘ THÔNG TIN HỌC VIÊN KHI ĐIỂM DANH',
             'DIEMDANHTHUCONG' => 'ĐIỂM DANH THỦ CÔNG (KHÔNG TỰ ĐỘNG TẠO ĐIỂM DANH CHO CẢ LỚP, THỰC HIỆN ĐIỂM DANH HỌC SINH NÀO THÌ GHI NHẬN HỌC SINH ĐÓ)',
+            'HPTT' => 'HỌC PHÍ THU TRƯỚC',
+            'HP_T' => 'HỌC PHÍ THEO THÁNG',
         ];
     }
 

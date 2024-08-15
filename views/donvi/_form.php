@@ -16,10 +16,10 @@ use app\models\Donvi;
     <div class="box box-primary">
         <div class="box-body">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-2">
                     <?= $form->field($model, 'MA_DONVI')->textInput(['maxlength' => true]) ?>
-                </div>                    
-                <div class="col-md-4">
+                </div>
+                <div class="col-md-3">
                     <?= $form->field($model, 'TEN_DONVI')->textInput(['maxlength' => true]) ?>
                 </div>
                     
@@ -27,10 +27,26 @@ use app\models\Donvi;
                     <?= $form->field($model, 'DIA_CHI')->textInput(['maxlength' => true]) ?>
                 </div>
             </div>
-                
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-2">
                     <?= $form->field($model, 'SO_DT')->textInput(['maxlength' => true]) ?>
+                </div>
+                <div class="col-md-3">
+                    <?= $form->field($model, 'EMAIL')->textInput(['maxlength' => true]) ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <?= $form->field($model, 'SHOWALL')->checkBox(['label' => 'HIỂN THỊ TOÀN BỘ THÔNG TIN HỌC VIÊN KHI ĐIỂM DANH']) ?>
+                </div>
+                <div class="col-sm-12">
+                    <?= $form->field($model, 'DIEMDANHTHUCONG')->checkBox(['label' => 'ĐIỂM DANH THỦ CÔNG (KHÔNG TỰ ĐỘNG TẠO ĐIỂM DANH CHO CẢ LỚP, THỰC HIỆN ĐIỂM DANH HỌC SINH NÀO THÌ GHI NHẬN HỌC SINH ĐÓ)']) ?>
+                </div>
+                <div class="col-sm-12">
+                    <?= $form->field($model, 'HPTT')->checkBox(['label' => 'HỌC PHÍ THEO THÁNG)']) ?>
+                </div>
+                <div class="col-sm-12">
+                    <?= $form->field($model, 'HP_T')->checkBox(['label' => 'HỌC PHÍ THU TRƯỚC']) ?>
                 </div>
             </div>
         </div>

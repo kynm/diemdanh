@@ -12,7 +12,7 @@ use kartik\select2\Select2;
 /* @var $model app\models\Daivt */
 $tranghtaihs = ArrayHelper::map(Trangthaihocsinh::find()->all(), 'MA_TRANGTHAI', 'TRANGTHAI');
 
-$this->title = $model->MA_LOP;
+$this->title = $model->TEN_LOP;
 $this->params['breadcrumbs'][] = ['label' => 'Đơn vị', 'url' => ['donvi/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -51,6 +51,24 @@ $this->params['breadcrumbs'][] = $this->title;
                             return Yii::$app->user->can('quanlyhocsinh') && Yii::$app->user->identity->nhanvien->ID_DONVI == $model->ID_DONVI ? Html::a($model->HO_TEN, ['/hocsinh/lichsudiemdanh', 'id' => $model->ID], ['class' => 'text text-primary']) : '';
                         },
                         'format' => 'raw',
+                    ],
+                    [
+                        'attribute' => 'NGAY_SINH',
+                        'value' => function($model) {
+                            return $model->NGAY_SINH ? Yii::$app->formatter->asDatetime($model->NGAY_SINH, 'php:d/m/Y') : NULL;
+                        },
+                    ],
+                    [
+                        'attribute' => 'NGAY_BD',
+                        'value' => function($model) {
+                            return $model->NGAY_BD ? Yii::$app->formatter->asDatetime($model->NGAY_BD, 'php:d/m/Y') : NULL;
+                        },
+                    ],
+                    [
+                        'attribute' => 'NGAY_KT',
+                        'value' => function($model) {
+                            return $model->NGAY_KT ? Yii::$app->formatter->asDatetime($model->NGAY_KT, 'php:d/m/Y') : NULL;
+                        },
                     ],
                     'TIENHOC',
                     'DIA_CHI',

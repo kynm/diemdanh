@@ -53,6 +53,28 @@ class DonhangController extends Controller
         }  
     }
 
+    public function actionTheodoidungthu()
+    {
+        if (Yii::$app->user->can('Administrator')) {
+            $sqldsdonvi = 'SELECT a.TEN_DONVI, a.SO_DT FROM donvi a WHERE date(a.created_at) = CURDATE() ORDER BY a.TEN_DONVI';
+            $dsdonvi = Yii::$app->db->createCommand($sqldsdonvi)->queryAll();
+            $sqllophoc = 'SELECT a.TEN_DONVI, a.SO_DT, b.TEN_LOP FROM donvi a, lophoc b WHERE a.ID_DONVI = b. ID_DONVI and a.STATUS = 1 AND DATE(b.created_at) = CURDATE() ORDER BY a.TEN_DONVI';
+            $dslophoc = Yii::$app->db->createCommand($sqllophoc)->queryAll();
+            $sqlhocsinh = 'SELECT a.TEN_DONVI, a.SO_DT, b.TEN_LOP, c.HO_TEN FROM donvi a, lophoc b, hocsinh c WHERE a.ID_DONVI = b. ID_DONVI and b.ID_LOP = c.ID_LOP and a.STATUS = 1 AND DATE(c.created_at) = CURDATE() ORDER BY a.TEN_DONVI,b.TEN_LOP,c.HO_TEN';
+            $dshocsinh = Yii::$app->db->createCommand($sqlhocsinh)->queryAll();
+            $sqldiemdanh = 'SELECT a.TEN_DONVI, a.SO_DT, b.TEN_LOP, c.NGAY_DIEMDANH FROM donvi a, lophoc b, quanlydiemdanh c WHERE a.ID_DONVI = b. ID_DONVI and b.ID_LOP = c.ID_LOP and a.STATUS = 1 AND DATE(c.created_at) = CURDATE() ORDER BY a.TEN_DONVI,b.TEN_LOP,c.NGAY_DIEMDANH';
+            $dsdiemdanh = Yii::$app->db->createCommand($sqldiemdanh)->queryAll();
+            return $this->render('theodoidungthu', [
+                'dsdonvi' => $dsdonvi,
+                'dslophoc' => $dslophoc,
+                'dshocsinh' => $dshocsinh,
+                'dsdiemdanh' => $dsdiemdanh,
+            ]);
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
+        }  
+    }
+
     /**
      * Displays a single Donvi model.
      * @param integer $id
@@ -83,7 +105,7 @@ class DonhangController extends Controller
             $model->NGAY_KT = date('Y-m-d', strtotime('+1 year'));
             $model->SOTIEN = 350000;
             $model->SO_LOP = 100;
-            $model->SO_HS = 200;
+            $model->SO_HS = 150;
             $model->STATUS = 2;
             $model->TYPE = 1;
             if ($model->load(Yii::$app->request->post())) {
@@ -147,7 +169,7 @@ class DonhangController extends Controller
             } else {
                 $dsdonvi = ArrayHelper::map(Donvi::find()->all(), 'ID_DONVI', 'TEN_DONVI');
                 $model->SO_LOP = $model->SO_LOP ? $model->SO_LOP : 100;
-                $model->SO_HS = $model->SO_HS ? $model->SO_HS : 200;
+                $model->SO_HS = $model->SO_HS ? $model->SO_HS : 150;
                 return $this->render('update', [
                     'model' => $model,
                     'dsdonvi' => $dsdonvi,

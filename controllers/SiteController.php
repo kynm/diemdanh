@@ -94,7 +94,7 @@ class SiteController extends Controller
             if (Yii::$app->user->can('quanlytruonghoc')) {
                 $solop = Yii::$app->user->identity->nhanvien->iDDONVI->getLophoc()->count();
                 $sonhanvien = Yii::$app->user->identity->nhanvien->iDDONVI->getNhanviens()->count();
-                $tongsohocvien = Yii::$app->user->identity->nhanvien->iDDONVI->getHocsinh()->count();
+                $tongsohocvien = Yii::$app->user->identity->nhanvien->iDDONVI->getHocsinh()->andWhere(['STATUS' => 1])->count();
                 $sql = "SELECT b.TEN_LOP, b.ID_LOP
                     ,COUNT(1) SOHOCSINH
                     , SUM(case when d.STATUS = 1 then 1 ELSE 0 END) SOLUONGDIHOC

@@ -28,6 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'TEN_DONVI',
                     'DIA_CHI',
                     'SO_DT',
+                    'EMAIL',
                 ],
             ]) ?>
             </div>

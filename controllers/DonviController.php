@@ -83,6 +83,7 @@ class DonviController extends Controller
     {
         if (Yii::$app->user->can('create-donvi')) {
             $model = new Donvi();
+                $model->HP_T = 1;
             if ($model->load(Yii::$app->request->post())) {
                 $model->SO_DT = trim($model->SO_DT);
                 $model->TEN_DONVI = trim($model->TEN_DONVI);
@@ -264,12 +265,15 @@ class DonviController extends Controller
                             $hocsinh->ID_LOP = $lop->ID_LOP;
                             $hocsinh->MA_HOCSINH  = $lop->MA_LOP . '-' . ($lop->getDshocsinh()->count() + 1);
                             $hocsinh->HO_TEN = $value['HO_TEN'];
-                            $hocsinh->SO_DT = '';
+                            $hocsinh->NGAY_SINH = date('Y-m-d',strtotime($value['NGAY_SINH']));
+                            $hocsinh->DIA_CHI = $value['DIA_CHI'];
+                            $hocsinh->SO_DT = $value['SO_DT'] ? $value['SO_DT'] : '';
                             $hocsinh->save();
                             if ($hocsinh->errors) {
                                 die(var_dump($hocsinh->errors));
                             }
-                            $i ++;                     }
+                            $i ++;
+                        }
                     }
                 }
                 Yii::$app->session->setFlash('success', "Khởi tạo thành công " . $i . ' Khách hàng!');

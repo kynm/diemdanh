@@ -21,7 +21,9 @@ $this->title = 'QUẢN LÝ ĐIỂM DANH';
             <br>
         <?php endif; ?>
     <?php endif; ?>
-
+    <?php if (!Yii::$app->user->identity->nhanvien->iDDONVI->EMAIL):?>
+        <marquee onmouseover="this.stop();" onmouseout="this.start();" class="text-danger text-center" style="color:red">THÔNG BÁO: EASYCHECK hiện đã có tính năng tự động gửi email thông báo tình hình điểm danh. Vui lòng cập nhật Email để nhận thông báo:<?= Html::a('Cấu hình', ['/user/cauhinhdonvi'], ['class' => 'small-box-footer']) ?></marquee>
+    <?php endif; ?>
 <div class="row">
     <div class="col-lg-3 col-6">
         <div class="info-box">
@@ -59,7 +61,7 @@ $this->title = 'QUẢN LÝ ĐIỂM DANH';
             </div>
         </div>
     </div>
-    <?php if (Yii::$app->user->can('quanlyhocphi')):?>
+    <?php if (Yii::$app->user->can('quanlyhocphi') && Yii::$app->user->identity->nhanvien->iDDONVI->HPTT):?>
     <div class="col-lg-3 col-6">
         <div class="info-box">
             <span class="info-box-icon bg-aqua"><i class="fa fa-check" aria-hidden="true"></i></span>
@@ -69,6 +71,8 @@ $this->title = 'QUẢN LÝ ĐIỂM DANH';
             </div>
         </div>
     </div>
+    <?php endif; ?>
+    <?php if (Yii::$app->user->can('quanlyhocphi') && Yii::$app->user->identity->nhanvien->iDDONVI->HP_T):?>
     <div class="col-lg-3 col-6">
         <div class="info-box">
             <span class="info-box-icon bg-aqua"><i class="fa fa-check" aria-hidden="true"></i></span>

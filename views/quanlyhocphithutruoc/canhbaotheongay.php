@@ -36,7 +36,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     'HO_TEN',
                     'SO_DT',
-                    'NGAY_KT',
+                    [
+                        'attribute' => 'NGAY_KT',
+                        'value' => function($model) {
+                            return $model->NGAY_KT ? Yii::$app->formatter->asDatetime($model->NGAY_KT, 'php:d/m/Y') : NULL;
+                        },
+                    ],
                     'TIENHOC',
                     [
                         'attribute' => 'SOBH_DAHOC',

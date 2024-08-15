@@ -2,7 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-use yii\grid\GridView;
+use kartik\select2\Select2;
+use kartik\grid\GridView;
 use yii\widgets\Pjax;
 use yii\helpers\ArrayHelper;
 use app\models\Hocsinh;
@@ -27,6 +28,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'attribute' => 'ID_LOP',
                                 'value' => 'lop.TEN_LOP',
                                 'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
+                                'filter'=> $dslop,
+                                'filterType' => GridView::FILTER_SELECT2,
+                                'filterWidgetOptions' => [
+                                    'options' => ['prompt' => ''],
+                                    'pluginOptions' => ['allowClear' => true],
+                                ],
                             ],
                             [
                                 'attribute' => 'TIEUDE',
@@ -57,6 +64,30 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
                                 'value' => function ($model) {
                                     return $model->getChitiethocphi()->andWhere(['STATUS' => 1])->count();
+                                },
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'TONGTIEN',
+                                'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
+                                'value' => function ($model) {
+                                    return $model->getChitiethocphi()->sum('TONG_TIEN');
+                                },
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'TONGTIENDATHU',
+                                'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
+                                'value' => function ($model) {
+                                    return $model->getChitiethocphi()->andWhere(['STATUS' => 1])->sum('TONG_TIEN');
+                                },
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'TONGTIENCHUATHU',
+                                'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
+                                'value' => function ($model) {
+                                    return $model->getChitiethocphi()->andWhere(['STATUS' => 0])->sum('TONG_TIEN');
                                 },
                                 'format' => 'raw',
                             ],

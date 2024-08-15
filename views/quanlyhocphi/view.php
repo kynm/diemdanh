@@ -22,6 +22,9 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     <?php endif; ?>
     <?= Html::a('<i class="fa fa-pencil-square-o"></i> In theo lớp', ['/quanlyhocphi/inhocphitheolop', 'id' => $model->ID], ['class' => 'btn btn-primary btn-flat', 'target' => '_blank']) ?>
+    <?php if (Yii::$app->user->can('quanlyhocphi')):?>
+    <span class="pull-right btn btn-warning bosunghocsinh" data-id="<?= $model->ID?>">Bổ sung HS</span>
+    <?php endif; ?>
     </p>
     <div class="box box-primary">
         <div class="box-body">
@@ -69,7 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ?>
                 <tr>
                     <td scope="col"><?= $key + 1;?></td>
-                    <td><?= $chitiet->hocsinh->HO_TEN?></td>
+                    <td><?= $chitiet->hocsinh ? $chitiet->hocsinh->HO_TEN : 'HỌC SINH KHÔNG TỒN TẠI'?></td>
                     <td width="5%"><?= $chitiet->SO_BH?></td>
                     <td width="5%"><?= $chitiet->SO_BN?></td>
                     <td width="5%"><?= $chitiet->NGAY_NGHI?></td>
@@ -257,7 +260,37 @@ $('.capnhatsotienmoibuoi').on('change', function() {
             });
         }
         });
-        
+    });
+    $('.bosunghocsinh').on('click', function() {
+        Swal.fire({
+            title: 'Bạn có muốn bổ sung toàn bộ học sinh của lớp vào danh sách thu học phí tháng không?',
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: 'CÓ, xÓA NGAY!',
+            cancelButtonText: "KHÔNG XÓA!"
+        }).then((result) => {
+        if (result['isConfirmed']) {
+            var capnhatghichu = $(this).val();
+            var id = $(this).data('id');
+            $.ajax({
+                url: '/quanlyhocphi/bosunghocsinh',
+                method: 'post',
+                data: {
+                    id: id,
+                },
+                success:function(data) {
+                    data = jQuery.parseJSON(data);
+                    if (!data.error) {
+                        Swal.fire('Bổ sung thành công!');
+                        setTimeout(() => {
+                            window.location.reload(true);
+                        }, 1000);
+                    }
+                }
+            });
+        }
+        });
     });
 JS;
 $this->registerJs($script);

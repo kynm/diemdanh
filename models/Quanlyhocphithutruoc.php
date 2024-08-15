@@ -21,7 +21,7 @@ class Quanlyhocphithutruoc extends \yii\db\ActiveRecord
     {
         return [
             [['SOTIEN', 'ID_NHANVIEN', 'ID_LOP', 'ID_DONVI', 'SO_BH', 'STATUS'], 'required'],
-            [['GHICHU'], 'string'],
+            [['GHICHU','TIEUDE'], 'string'],
             [['NGAY_BD', 'NGAY_KT'], 'safe'],
             [['ID_LOP', 'ID_NHANVIEN', 'SOTIEN', 'TIENKHAC', 'TONGTIEN'], 'integer'],
             [['ID_LOP'], 'exist', 'skipOnError' => true, 'targetClass' => Lophoc::className(), 'targetAttribute' => ['ID_LOP' => 'ID_LOP']],
@@ -49,6 +49,7 @@ class Quanlyhocphithutruoc extends \yii\db\ActiveRecord
             'TIENKHAC' => 'TIỀN SÁCH/TÀI LIỆU',
             'TONGTIEN' => 'TỔNG TIỀN THU',
             'STATUS' => 'TRẠNG THÁI',
+            'TIEUDE' => 'TIÊU ĐỀ',
         ];
     }
 

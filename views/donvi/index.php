@@ -17,6 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="donvi-index">
     <p>
         <?= (Yii::$app->user->can('create-donvi')) ? Html::a('<i class="fa fa-plus"></i> Thêm đơn vị', ['create'], ['class' => 'btn btn-primary btn-flat']) : ''?>
+        <?= (Yii::$app->user->can('Administrator')) ? Html::a('Dùng Thử', ['/donhang/theodoidungthu'], ['class' => 'btn btn-primary btn-flat']) :'' ?>
     </p>
 
     <div class="box box-primary">
@@ -71,8 +72,19 @@ $this->params['breadcrumbs'][] = $this->title;
                             },
                         ],
                         'SO_HS',
-                        'NGAY_BD',
-                        'NGAY_KT',
+                        [
+                            'attribute' => 'NGAY_BD',
+                            'value' => function($model) {
+                                return $model->NGAY_BD ? Yii::$app->formatter->asDatetime($model->NGAY_BD, 'php:d/m/Y') : NULL;
+                            },
+                        ],
+                        [
+                            'attribute' => 'NGAY_KT',
+                            'value' => function($model) {
+                                return $model->NGAY_KT ? Yii::$app->formatter->asDatetime($model->NGAY_KT, 'php:d/m/Y') : NULL;
+                            },
+                        ],
+                        'EMAIL',
                         [
                             'attribute' => 'LUOTDIEMDANH',
                             'value' => function ($model) {

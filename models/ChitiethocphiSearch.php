@@ -16,11 +16,12 @@ class ChitiethocphiSearch extends Chitiethocphi
      */
 
     public $TIEUDE;
+    public $ID_LOP;
 
     public function rules()
     {
         return [
-            [['ID_QUANLYHOCPHI', 'TIEUDE', 'STATUS'], 'safe'],
+            [['ID_QUANLYHOCPHI', 'TIEUDE', 'STATUS', 'ID_LOP'], 'safe'],
         ];
     }
 
@@ -57,6 +58,8 @@ class ChitiethocphiSearch extends Chitiethocphi
         ]);
 
         $query->andFilterWhere(['like', 'quanlyhocphi.TIEUDE', $this->TIEUDE]);
+        $query->andFilterWhere(['=', 'quanlyhocphi.ID_LOP', $this->ID_LOP]);
+        $query->andFilterWhere(['=', 'STATUS', $this->STATUS]);
         $query->orderBy([
             'STATUS' => SORT_ASC,
             'quanlyhocphi.created_at' => SORT_DESC,
