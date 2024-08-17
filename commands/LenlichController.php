@@ -40,6 +40,7 @@ class LenlichController extends Controller
         //->andWhere(['STATUS' => 2])
         ->all();
         foreach ($dsdonvi as $key => $donvi) {
+            die(var_dump($donvi));
             $sldiemdanh = $donvi->getDsdiemdanh()->andWhere(['date(created_at)' => date('Y-m-d')])->count();
             $tongsohocsinh = Diemdanhhocsinh::find()->where(['in', 'ID_DIEMDANH', ArrayHelper::map($donvi->getDsdiemdanh()->andWhere(['date(created_at)' => date('Y-m-d')])->all(), 'ID', 'ID')])->count();
             $slhocsinhnghi = Diemdanhhocsinh::find()->where(['in', 'ID_DIEMDANH', ArrayHelper::map($donvi->getDsdiemdanh()->andWhere(['date(created_at)' => date('Y-m-d')])->all(), 'ID', 'ID')])->andWhere(['STATUS' => 0])->count();

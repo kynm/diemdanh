@@ -93,7 +93,7 @@ class SiteController extends Controller
             }
             if (Yii::$app->user->can('quanlytruonghoc')) {
                 $solop = Yii::$app->user->identity->nhanvien->iDDONVI->getLophoc()->count();
-                $sonhanvien = Yii::$app->user->identity->nhanvien->iDDONVI->getNhanviens()->count();
+                $sonhanvien = Yii::$app->user->identity->nhanvien->iDDONVI->getNhanviens()->andWhere(['not in', 'CHUC_VU', [5]])->count();
                 $tongsohocvien = Yii::$app->user->identity->nhanvien->iDDONVI->getHocsinh()->andWhere(['STATUS' => 1])->count();
                 $sql = "SELECT b.TEN_LOP, b.ID_LOP
                     ,COUNT(1) SOHOCSINH
@@ -115,10 +115,18 @@ class SiteController extends Controller
             }
             if (Yii::$app->user->can('diemdanhlophoc')) {
                 $dslop = Yii::$app->user->identity->nhanvien->iDDONVI->getLophoc()->andWhere(['STATUS' => 1])->andWhere(['ID_NHANVIEN_DIEMDANH' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN])->all();
+                if (Yii::$app->user->can('diemdanhtoantrungtam')) {
+                    $dslop = Yii::$app->user->identity->nhanvien->iDDONVI->getLophoc()->andWhere(['STATUS' => 1])->all();
+                }
                 return $this->render('diemdanhlophoc', [
                     'dslop' => $dslop,
                 ]);
             }
+
+            if (Yii::$app->user->can('phuhuynhhocsinh')) {
+                return $this->render('phuhuynhhocsinh', []);
+            }
+
             return $this->render('index', [
             ]);
         }

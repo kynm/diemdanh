@@ -8,9 +8,9 @@ use yii\data\ActiveDataProvider;
 use app\models\Nhanvien;
 
 /**
- * NhanvienSearch represents the model behind the search form about `app\models\Nhanvien`.
+ * QuanlyphuhuynhSearch represents the model behind the search form about `app\models\Nhanvien`.
  */
-class NhanvienSearch extends Nhanvien
+class QuanlyphuhuynhSearch extends Nhanvien
 {
     /**
      * @inheritdoc
@@ -19,7 +19,7 @@ class NhanvienSearch extends Nhanvien
     {
         return [
             [['ID_NHANVIEN'], 'integer'],
-            [['MA_NHANVIEN', 'TEN_NHANVIEN', 'CHUC_VU', 'DIEN_THOAI', 'GHI_CHU', 'USER_NAME', 'ID_DONVI', 'ID_LOP'], 'safe'],
+            [['TEN_NHANVIEN',  'DIEN_THOAI', 'GHI_CHU', 'USER_NAME', 'ID_DONVI'], 'safe'],
         ];
     }
 
@@ -60,11 +60,12 @@ class NhanvienSearch extends Nhanvien
         $query->joinWith('iDDONVI');
 
         // grid filtering conditions
-        $query->andFilterWhere(['ID_NHANVIEN' => $this->ID_NHANVIEN]);
-        $query->andFilterWhere(['not in', 'CHUC_VU', [5]]);
+        $query->andFilterWhere([
+            'ID_NHANVIEN' => $this->ID_NHANVIEN,
+            'CHUC_VU' => 5,
+        ]);
 
-        $query->andFilterWhere(['like', 'MA_NHANVIEN', $this->MA_NHANVIEN])
-            ->andFilterWhere(['like', 'TEN_NHANVIEN', $this->TEN_NHANVIEN])
+        $query->andFilterWhere(['like', 'TEN_NHANVIEN', $this->TEN_NHANVIEN])
             ->andFilterWhere(['like', 'donvi.TEN_DONVI', $this->ID_DONVI])
             ->andFilterWhere(['like', 'DIEN_THOAI', $this->DIEN_THOAI])
             ->andFilterWhere(['like', 'GHI_CHU', $this->GHI_CHU])
@@ -96,11 +97,10 @@ class NhanvienSearch extends Nhanvien
         // grid filtering conditions
         $query->andFilterWhere([
             'donvi.ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI,
+            'CHUC_VU' => 5,
         ]);
-        $query->andFilterWhere(['not in', 'CHUC_VU', [5]]);
 
-        $query->andFilterWhere(['like', 'MA_NHANVIEN', $this->MA_NHANVIEN])
-            ->andFilterWhere(['like', 'TEN_NHANVIEN', $this->TEN_NHANVIEN])
+        $query->andFilterWhere(['like', 'TEN_NHANVIEN', $this->TEN_NHANVIEN])
             ->andFilterWhere(['like', 'donvi.TEN_DONVI', $this->ID_DONVI])
             ->andFilterWhere(['like', 'DIEN_THOAI', $this->DIEN_THOAI])
             ->andFilterWhere(['like', 'GHI_CHU', $this->GHI_CHU])

@@ -70,6 +70,7 @@ class Nhanvien extends \yii\db\ActiveRecord
             'ID_LOP' => 'Đài',
             'GHI_CHU' => 'Ghi chú',
             'USER_NAME' => 'User  Name',
+            'CON' => 'CON ĐANG THEO HỌC',
         ];
     }
 
@@ -133,5 +134,10 @@ class Nhanvien extends \yii\db\ActiveRecord
     public function getChucvu()
     {
         return $this->hasOne(Chucvu::className(), ['id' => 'CHUC_VU']);
+    }
+
+    public function getDshocsinh()
+    {
+        return $this->hasMany(Hocsinh::className(), ['SO_DT' => 'DIEN_THOAI']);
     }
 }

@@ -84,6 +84,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <li>
             <div class="timeline-item">
                 <span class="time"><i class="fa fa-clock-o"></i> <?= dateofmonth()[date_format(date_create($value->NGAY_DIEMDANH), 'w')]?></span>
+                <?=Yii::$app->user->can('quanlytruonghoc') ? '<span class="btn btn-danger pull-right xoadiemdanh" data-id="' . $value->ID . '" style="color: white;">Xóa</span>' : ''?>
                 <h3 class="timeline-header"><?= $value->lop->STATUS ? Html::a($value->TIEUDE, '/lophoc/capnhatdiemdanh?diemdanhid=' . $value->ID) : $value->TIEUDE?></h3>
                 <div class="timeline-body">
                     TỔNG SỐ : <?= $value->getDschitietdiemdanh()->count()?> (HỌC SINH)<br/>
@@ -127,3 +128,40 @@ $this->params['breadcrumbs'][] = $this->title;
     <br>
     <br>
 </div>
+<?php
+$script = <<< JS
+    $(document).on('click', '.xoadiemdanh', function() {
+    Swal.fire({
+        title: 'Dữ liệu sẽ bị xóa vĩnh viễn, không thể khôi phục lại.Bạn có chắc chắc muốn xóa lượt điểm danh không?',
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#DD6B55',
+        confirmButtonText: 'Xóa ngay!',
+        cancelButtonText: "Không!"
+    }).then((result) => {
+    if (result['isConfirmed']) {
+        var id = $(this).data('id');
+        $.ajax({
+            url: '/quanlydiemdanh/xoadiemdanh',
+            method: 'post',
+            data: {
+                id: id,
+            },
+            success:function(data) {
+                data = jQuery.parseJSON(data);
+                if (!data.error) {
+                    Swal.fire('Xác nhận thành công');
+                    setTimeout(() => {
+                        window.location.reload(true);
+                      }, 1000);
+                } else {
+                    Swal.fire(data.message);
+                }
+            }
+        });
+    }
+    });
+});
+JS;
+$this->registerJs($script);
+?>

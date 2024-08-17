@@ -16,6 +16,7 @@ use yii\helpers\Html;
     <div class="box-body box-profile">
         <h3 class="profile-username text-center"><?= $model->HO_TEN ?></h3>
         <p class="text-muted text-center"><?= $model->lop->TEN_LOP?></p>
+        <p class="text-muted text-center">Giáo viên: <?= $model->lop->nhanviendiemdanh->TEN_NHANVIEN?></p>
         <ul class="list-group list-group-unbordered">
         <a href="#" class="btn btn-primary btn-block"><b><?= $model->trangthai->TRANGTHAI?></b></a>
         </ul>
