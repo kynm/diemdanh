@@ -8,6 +8,7 @@ use app\models\Quanlydiemdanh;
 use app\models\Diemdanhhocsinh;
 use app\models\Lophoc;
 use app\models\QuanlydiemdanhSearch;
+use app\models\DiemdanhhocsinhSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
@@ -46,6 +47,23 @@ class QuanlydiemdanhController extends Controller
 
             $dslop = ArrayHelper::map(Lophoc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->all(), 'ID_LOP', 'TEN_LOP');
             return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'dslop' => $dslop,
+            ]);
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
+        }
+    }
+
+    public function actionTheodoihocbu()
+    {
+        if (Yii::$app->user->can('quanlytruonghoc')) {
+            $searchModel = new DiemdanhhocsinhSearch();
+            $dataProvider = $searchModel->searchtheodoihocbu(Yii::$app->request->queryParams);
+
+            $dslop = ArrayHelper::map(Lophoc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->all(), 'ID_LOP', 'TEN_LOP');
+            return $this->render('theodoihocbu', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
                 'dslop' => $dslop,
@@ -133,12 +151,12 @@ class QuanlydiemdanhController extends Controller
 
     public function actionXoadiemdanh()
     {
-            $params = Yii::$app->request->post();
-            $diemdanh = Quanlydiemdanh::findOne($params['id']);
-            $result = [
-                'error' => 1,
-                'message' => 'LỖI CẬP NHẬT',
-            ];
+        $params = Yii::$app->request->post();
+        $diemdanh = Quanlydiemdanh::findOne($params['id']);
+        $result = [
+            'error' => 1,
+            'message' => 'LỖI CẬP NHẬT',
+        ];
         if (Yii::$app->user->can('quanlytruonghoc') && $diemdanh && $diemdanh->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
             $log = new ActivitiesLog;
             $log->activity_type = 'xoadiemdanh';
@@ -168,5 +186,27 @@ class QuanlydiemdanhController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionXacnhanhocbu()
+    {
+        $params = Yii::$app->request->post();
+        $diemdanhhocsinh = Diemdanhhocsinh::findOne($params['chitietid']);
+        $diemdanh = $diemdanhhocsinh->diemdanh;
+        $result = [
+            'error' => 1,
+            'message' => 'LỖI CẬP NHẬT',
+        ];
+        if ($diemdanhhocsinh && $diemdanh && $diemdanh->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI && Yii::$app->user->can('quanlytruonghoc')) {
+            $diemdanhhocsinh->STATUS = 1;
+            $diemdanhhocsinh->NHAN_XET .= '<br/> ĐÃ HỌC BÙ';
+            $diemdanhhocsinh->save();
+            Yii::$app->session->setFlash('success', "Cập nhật thành công!");
+            $result = [
+                'error' => null,
+                'message' => 'Cập nhật thành công',
+            ];
+        }
+        return json_encode($result);
     }
 }

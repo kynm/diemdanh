@@ -8,7 +8,14 @@ use yii\helpers\Html;
 <li class="">
     <?= Yii::$app->user->can('quanlytruonghoc') ? Html::a('<i class="fa fa-pencil-square-o"></i> Cập nhật', ['update', 'id' => $model->ID], ['class' => 'btn btn-primary btn-flat']) : '' ?>
 </li>
+    <?php if (Yii::$app->user->can('quanlyhocphi') && Yii::$app->user->identity->nhanvien->iDDONVI->HPTT):?>
 <li class="">
-    <?= Yii::$app->user->can('quanlytruonghoc') ? Html::a('</i> HỌC PHÍ', ['view', 'id' => $model->ID], ['class' => 'btn btn-primary btn-flat']) : '' ?>
+    <?= Html::a('</i> THU HỌC PHÍ (THEO THÁNG)', ['/hocsinh/hocphitheothang', 'id' => $model->ID], ['class' => 'btn btn-primary btn-flat']) ?>
 </li>
+<?php endif; ?>
+<?php if (Yii::$app->user->can('quanlyhocphi') && Yii::$app->user->identity->nhanvien->iDDONVI->HP_T):?>
+<li class="">
+    <?= Html::a('</i> HỌC PHÍ THU TRƯỚC', ['/hocsinh/hocphithutruoc', 'id' => $model->ID], ['class' => 'btn btn-primary btn-flat']) ?>
+</li>
+<?php endif; ?>
 <?php endif; ?>

@@ -38,7 +38,8 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php foreach ($diemdanh->dschitietdiemdanh as $key => $chitiet):?>
                 <div class="col-sm-6">
                     <div class="col-sm-3" style="font-size:20px">
-                        <input type="checkbox" name="" <?= $chitiet->STATUS ? "checked" : null?> class="chuyendoitrangthaidiemdanh" data-diemdanhhsid="<?= $chitiet->ID?>" style="height: 25px;width: 25px;"> <?= $chitiet->hocsinh->HO_TEN?>
+                        <input type="checkbox" name="" <?= $chitiet->STATUS ? "checked" : null?> class="chuyendoitrangthaidiemdanh" data-diemdanhhsid="<?= $chitiet->ID?>" style="height: 25px;width: 25px;">
+                        <?= Html::a($chitiet->hocsinh->HO_TEN, ['/hocsinh/lichsudiemdanh', 'id' => $chitiet->hocsinh->ID], ['target' => '_blank']) ?>
                         <?php if (Yii::$app->user->identity->nhanvien->iDDONVI->SHOWALL):?>
                             <span class="xemtoanbothongtin">(<?= $chitiet->hocsinh->SO_DT . ' - ' . $chitiet->hocsinh->DIA_CHI?>)</span>
                         <?php endif; ?>

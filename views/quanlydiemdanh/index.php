@@ -14,6 +14,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Quản lý điểm danh', 'url' =>
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="quanlydiemdanh-index">
+    <?= $this->render('/partial/_header_quanlydiemdanh', []) ?>
     <div class="box box-primary">
         <div class="box-body">
             <div class="table-responsive">

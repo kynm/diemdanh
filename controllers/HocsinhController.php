@@ -8,6 +8,7 @@ use app\models\Hocsinh;
 use app\models\HocsinhSearch;
 use app\models\DiemdanhhocsinhSearch;
 use app\models\ChitiethocphiSearch;
+use app\models\QuanlyhocphithutruocSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
@@ -62,6 +63,28 @@ class HocsinhController extends Controller
         $searchModel = new ChitiethocphiSearch();
         $dataProvider = $searchModel->searchhocphitheohocsinh(Yii::$app->request->queryParams, $id);
         return $this->render('view', [
+            'model' => $this->findModel($id),
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionHocphitheothang($id)
+    {
+        $searchModel = new ChitiethocphiSearch();
+        $dataProvider = $searchModel->searchhocphitheohocsinh(Yii::$app->request->queryParams, $id);
+        return $this->render('hocphitheothang', [
+            'model' => $this->findModel($id),
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionHocphithutruoc($id)
+    {
+        $searchModel = new QuanlyhocphithutruocSearch();
+        $dataProvider = $searchModel->searchhocphitheohocsinh(Yii::$app->request->queryParams, $id);
+        return $this->render('hocphithutruoc', [
             'model' => $this->findModel($id),
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

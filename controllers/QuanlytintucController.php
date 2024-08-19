@@ -57,12 +57,8 @@ class QuanlytintucController extends Controller
      */
     public function actionView($id)
     {
-        $searchModel = new ChitiethocphiSearch();
-        $dataProvider = $searchModel->searchhocphitheohocsinh(Yii::$app->request->queryParams, $id);
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -73,11 +69,14 @@ class QuanlytintucController extends Controller
      */
     public function actionCreate()
     {
-        if (Yii::$app->user->can('create-hocsinh')) {
-            $model = new Hocsinh();
+        if (Yii::$app->user->can('quanlytintuc')) {
+            $model = new Tintuc();
             $model->ID_DONVI = Yii::$app->user->identity->nhanvien->ID_DONVI;
 
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if ($model->load(Yii::$app->request->post())) {
+                $model->STATUS = 1;
+                $model->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
+                $model->save();
                 // $log = new ActivitiesLog;
                 // $log->activity_type = 'unit-add';
                 // $log->description = Yii::$app->user->identity->nhanvien->TEN_NHANVIEN." đã thêm đơn vị ". $model->MA_LOP;
@@ -85,7 +84,7 @@ class QuanlytintucController extends Controller
                 // $log->create_at = time();
                 // $log->save();
                 Yii::$app->session->setFlash('success', "Thêm mới thành công!");
-                return $this->redirect(['view', 'id' => $model->ID_LOP]);
+                return $this->redirect(['index']);
             } else {
                 return $this->render('create', [
                     'model' => $model,
@@ -105,15 +104,13 @@ class QuanlytintucController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        if (Yii::$app->user->can('quanlyhocsinh') && Yii::$app->user->identity->nhanvien->ID_DONVI == $model->ID_DONVI) {
+        if (Yii::$app->user->can('quanlytintuc') && Yii::$app->user->identity->nhanvien->ID_DONVI == $model->ID_DONVI) {
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 Yii::$app->session->setFlash('success', "Cập nhật thành công!");
-                return $this->redirect(['/lophoc/quanlyhocsinh', 'id' => $model->ID_LOP]);
+                return $this->redirect(['index']);
             } else {
-                $dslop = ArrayHelper::map(Lophoc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->all(), 'ID_LOP', 'TEN_LOP');
                 return $this->render('update', [
                     'model' => $model,
-                    'dslop' => $dslop,
                 ]);
             }
         } else {

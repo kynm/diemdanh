@@ -98,4 +98,3 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 </div>
 </div>
-<?= $this->render('/quanlyphuhuynh/_news', []) ?>

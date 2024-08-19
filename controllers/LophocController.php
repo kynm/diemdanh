@@ -451,4 +451,58 @@ class LophocController extends Controller
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');           
         }
     }
+
+    public function actionTinhbuoihoc() {
+        $result = [
+            'error' => 1,
+            'message' => 'LỖI CẬP NHẬT',
+        ];
+        $params = Yii::$app->request->post();
+        if (Yii::$app->request->post()) {
+            $params = Yii::$app->request->post();
+            $lop = Lophoc::findOne($params['lopid']);
+            $sotien = $params['sotien'];
+            if ($lop && $lop->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI && Yii::$app->user->can('quanlytruonghoc')) {
+                if ($lop->TIENHOC) {
+                    $sobh = (int)$sotien / (int)$lop->TIENHOC;
+                    $result = [
+                        'error' => 0,
+                        'SO_BH' => round($sobh, 2),
+                        'message' => 'CẬP NHẬT THÀNH CÔNG',
+                    ];
+                }
+            } else {
+                $result['message'] = 'Chưa cấu hình số tiền mỗi buổi học cho lớp';
+            }
+        }
+
+        return json_encode($result);
+    }
+
+    public function actionTinhsotien() {
+        $result = [
+            'error' => 1,
+            'message' => 'LỖI CẬP NHẬT',
+        ];
+        $params = Yii::$app->request->post();
+        if (Yii::$app->request->post()) {
+            $params = Yii::$app->request->post();
+            $lop = Lophoc::findOne($params['lopid']);
+            $sobh = $params['sobh'];
+            if ($lop && $lop->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI && Yii::$app->user->can('quanlytruonghoc')) {
+                if ($lop->TIENHOC) {
+                    $sotien = (int)$sobh * (int)$lop->TIENHOC;
+                    $result = [
+                        'error' => 0,
+                        'SOTIEN' => round($sotien, 0),
+                        'message' => 'CẬP NHẬT THÀNH CÔNG',
+                    ];
+                }
+            } else {
+                $result['message'] = 'Chưa cấu hình số tiền mỗi buổi học cho lớp';
+            }
+        }
+
+        return json_encode($result);
+    }
 }

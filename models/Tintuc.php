@@ -55,6 +55,7 @@ class Tintuc extends \yii\db\ActiveRecord
             'TITLE' => 'TIÊU ĐỀ',
             'ID_NHANVIEN' => 'NGƯỜI TẠO',
             'ID_DONVI' => 'ĐƠN VỊ',
+            'CREATED_AT' => 'NGÀY TẠO',
         ];
     }
 

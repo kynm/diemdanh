@@ -91,4 +91,36 @@ class QuanlyhocphithutruocSearch extends Quanlyhocphithutruoc
 
         return $data;
     }
+
+
+    public function searchhocphitheohocsinh($params, $idhocsinh)
+    {
+        $query = Quanlyhocphithutruoc::find();
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            return $dataProvider;
+        }
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'ID_HOCSINH' => $idhocsinh,
+        ]);
+
+        $query->andFilterWhere(['like', 'TIEUDE', $this->TIEUDE]);
+        $query->orderBy([
+            'STATUS' => SORT_ASC,
+            'created_at' => SORT_DESC,
+            'ID_LOP' => SORT_DESC,
+        ]);
+
+        return $dataProvider;
+    }
 }

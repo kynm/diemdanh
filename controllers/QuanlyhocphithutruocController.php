@@ -99,6 +99,9 @@ class QuanlyhocphithutruocController extends Controller
                             $model->ID_LOP = $inputs['Quanlyhocphithutruoc']['ID_LOP'];
                             $model->SOTIEN = $inputs['Quanlyhocphithutruoc']['SOTIEN'];
                             $model->SO_BH = $inputs['Quanlyhocphithutruoc']['SO_BH'];
+                            if ($model->hocsinh->TIENHOC) {
+                                $model->SOTIEN = $inputs['Quanlyhocphithutruoc']['SO_BH'] * $model->hocsinh->TIENHOC;
+                            }
                             $model->NGAY_BD = $inputs['Quanlyhocphithutruoc']['NGAY_BD'];
                             $model->NGAY_KT = $inputs['Quanlyhocphithutruoc']['NGAY_KT'];
                             $model->GHICHU = $inputs['Quanlyhocphithutruoc']['GHICHU'];

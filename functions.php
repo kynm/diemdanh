@@ -120,6 +120,14 @@
         ];
     }
 
+    function statustintuc()
+    {
+        return [
+            0 => 'ĐÓNG',
+            1 => 'MỞ',
+        ];
+    }
+
     function loaidonhang() {
         return [
             1 => 'ĐĂNG KÝ MỚI',

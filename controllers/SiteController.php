@@ -19,6 +19,7 @@ use app\models\Nhanvien;
 use app\models\Hocsinh;
 use app\models\Lophoc;
 use app\models\Donhang;
+use app\models\Tintuc;
 use app\models\KhachhanggiahanSearch;
 use moonland\phpexcel\Excel;
 use yii\helpers\ArrayHelper;
@@ -124,7 +125,10 @@ class SiteController extends Controller
             }
 
             if (Yii::$app->user->can('phuhuynhhocsinh')) {
-                return $this->render('phuhuynhhocsinh', []);
+                $dstintuc = Tintuc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->andWhere(['STATUS' => 1])->all();
+                return $this->render('phuhuynhhocsinh', [
+                    'dstintuc' => $dstintuc,
+                ]);
             }
 
             return $this->render('index', [

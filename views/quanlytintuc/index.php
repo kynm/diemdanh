@@ -28,12 +28,20 @@ $this->params['breadcrumbs'][] = $this->title;
                         ['class' => 'yii\grid\SerialColumn'],
                         // 'MA_NHANVIEN',
                         'TITLE',
-                        // [
-                        //     'attribute' => 'ID_DONVI',
-                        //     'value' => 'iDDONVI.TEN_DONVI'
-                        // ],
+                        [
+                            'attribute' => 'STATUS',
+                            'value' => function($model) {
+                                return statustintuc()[$model->STATUS];
+                            }
+                        ],
+                        [
+                            'attribute' => 'CREATED_AT',
+                            'value' => function($model) {
+                                return Yii::$app->formatter->asDatetime($model->CREATED_AT, 'php:d/m/Y');
+                            }
+                        ],
                         ['class' => 'yii\grid\ActionColumn',
-                        'template' => (Yii::$app->user->can('edit-nhanvien')) ? '{view} {update}' : '{view}'],
+                        'template' => (Yii::$app->user->can('quanlytintuc')) ? '{view} {update}' : '{view}'],
                     ],
                 ]); ?>
             <?php Pjax::end(); ?>

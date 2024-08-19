@@ -20,4 +20,6 @@ $this->title = '';
 	<?php endforeach; ?>
 	<?php endif; ?>
 </div>
-<?= $this->render('/quanlyphuhuynh/_news', []) ?>
+<?= $this->render('/quanlyphuhuynh/_news', [
+	'dstintuc' => $dstintuc,
+]) ?>

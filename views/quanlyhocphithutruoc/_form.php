@@ -10,7 +10,6 @@ use kartik\date\DatePicker;
 <div class="daivt-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
     <div class="box box-primary">
         <div class="box-body">
             <div class="row">
@@ -40,7 +39,7 @@ use kartik\date\DatePicker;
             </div>
             <div class="row">
                 <div class="col-sm-2">
-                    <?= $form->field($model, 'SOTIEN')->textInput(['maxlength' => true, 'type' => 'number']) ?>
+                    <?= $form->field($model, 'SOTIEN', ['options' => ['data-lopid' => $model->ID_LOP]])->textInput(['maxlength' => true, 'type' => 'number']) ?>
                 </div>
                 <div class="col-sm-2">
                     <?= $form->field($model, 'SO_BH')->textInput(['maxlength' => true, 'type' => 'number']) ?>
@@ -101,6 +100,47 @@ $script = <<< JS
             },
             success:function(data) {
                 $("#quanlyhocphithutruoc-id_hocsinh").html(data);
+            }
+        });
+    });
+    $('#quanlyhocphithutruoc-sotien').on('change', function() {
+      var sotien = $(this).val();
+      var lopid = $('#quanlyhocphithutruoc-id_lop').val();
+        $.ajax({
+            url: '/lophoc/tinhbuoihoc',
+            method: 'post',
+            data: {
+                'lopid' : lopid,
+                'sotien' : sotien,
+            },
+            success:function(data) {
+                data = jQuery.parseJSON(data);
+                if (!data.error) {
+                    $("#quanlyhocphithutruoc-so_bh").val(data.SO_BH);
+                } else {
+                    Swal.fire(data.message);
+                }
+            }
+        });
+    });
+
+    $('#quanlyhocphithutruoc-so_bh').on('change', function() {
+      var sobh = $(this).val();
+      var lopid = $('#quanlyhocphithutruoc-id_lop').val();
+        $.ajax({
+            url: '/lophoc/tinhsotien',
+            method: 'post',
+            data: {
+                'lopid' : lopid,
+                'sobh' : sobh,
+            },
+            success:function(data) {
+                data = jQuery.parseJSON(data);
+                if (!data.error) {
+                    $("#quanlyhocphithutruoc-sotien").val(data.SOTIEN);
+                } else {
+                    Swal.fire(data.message);
+                }
             }
         });
     });

@@ -41,17 +41,12 @@ class Diemdanhhocsinh extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'ten_chucvu' => 'Chức vụ',
-            'cap' => 'Cấp',
+            'STATUS' => 'TRẠNG THÁI',
+            'ID_HOCSINH' => 'HỌC SINH',
+            'ID_LOP' => 'LỚP',
+            'NHAN_XET' => 'GHI CHÚ',
+            'NGAY_DIEMDANH' => 'NGÀY ĐIỂM DANH',
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getNhanviens()
-    {
-        return $this->hasMany(Nhanvien::className(), ['CHUC_VU' => 'id']);
     }
 
     public function getDiemdanh()

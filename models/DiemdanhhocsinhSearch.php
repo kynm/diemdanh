@@ -42,7 +42,6 @@ class DiemdanhhocsinhSearch extends Diemdanhhocsinh
     public function searchDiemdanhtheohocsinh($params, $id)
     {
         $query = Diemdanhhocsinh::find();
-
         // grid filtering conditions
         $query->andFilterWhere([
             'ID_HOCSINH' => $id,
@@ -56,5 +55,28 @@ class DiemdanhhocsinhSearch extends Diemdanhhocsinh
             'quanlydiemdanh.NGAY_DIEMDANH' => SORT_DESC,
         ]);
         return $query->all();
+    }
+
+    public function searchtheodoihocbu($params)
+    {
+        $query = Diemdanhhocsinh::find();
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+        // grid filtering conditions
+        $query->joinWith('diemdanh');
+        $query->andFilterWhere([
+            'quanlydiemdanh.ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI,
+            'STATUS' => 0,
+        ]);
+
+        // $query->andFilterWhere(['>=', 'date(quanlydiemdanh.NGAY_DIEMDANH)', $params['TU_NGAY']]);
+        // $query->andFilterWhere(['<=', 'date(quanlydiemdanh.NGAY_DIEMDANH)', $params['DEN_NGAY']]);
+
+        $query->orderBy([
+            'quanlydiemdanh.ID_LOP' => SORT_DESC,
+            'quanlydiemdanh.NGAY_DIEMDANH' => SORT_DESC,
+        ]);
+        return $dataProvider;
     }
 }
