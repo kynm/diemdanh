@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= Html::a('<i class="fa fa-pencil-square-o"></i> Quản lý học sinh', ['quanlyhocsinh', 'id' => $model->ID_LOP], ['class' => 'btn btn-primary btn-flat']) ?>
         <?php endif; ?>
         <?php if (Yii::$app->user->can('quanlyhocsinh') && !$model->getDshocsinh()->count()): ?>
-            <?= Html::a('<i class="fa fa-trash-o"></i> Xóa', ['delete', 'id' => $model->ID_LOP], [
+            <?= Html::a('<i class="fa fa-trash-o"></i> Xóa lớp', ['delete', 'id' => $model->ID_LOP], [
                 'class' => 'btn btn-danger btn-flat',
                 'data' => [
                     'confirm' => 'Bạn chắc chắn muốn xóa mục này?',
@@ -36,6 +36,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ]) ?>
         <?php endif; ?>
+        <?= Html::a('<i class="fa fa-trash-o"></i> Xóa học sinh', ['/lophoc/deletehocsinh', 'id' => $model->ID_LOP], [
+            'class' => 'btn btn-danger btn-flat',
+            'data' => [
+                'confirm' => 'Hệ thống sẽ xóa vĩnh viễn tất cả các học sinh chưa điểm danh, tính học phí. Bạn có muốn tiếp tục xóa không?',
+                'method' => 'post',
+            ],
+        ]) ?>
+        <?= (Yii::$app->user->can('quanlytruonghoc')) ? Html::a('Import học sinh', ['/lophoc/importlophochocsinh', 'id' => $model->ID_LOP], ['class' => 'btn btn-primary btn-flat']) : ''?>
     </p>
 </div>
 <div class="box-body table-responsive">

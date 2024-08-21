@@ -107,11 +107,17 @@ class SiteController extends Controller
                         AND c.NGAY_DIEMDANH = :NGAY_DIEMDANH
                         GROUP BY b.TEN_LOP, b.ID_LOP  ORDER BY b.ID_LOP";
                 $dulieungay = Yii::$app->db->createCommand($sql)->bindValues(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI, ':NGAY_DIEMDANH' => date('Y-m-d')])->queryAll();
+                $sql = "SELECT COUNT(1) SOLUONG FROM quanlyhocphi a, chitiethocphi b WHERE a.ID = b.ID_QUANLYHOCPHI AND b.STATUS = 0 and a.ID_DONVI = :ID_DONVI";
+                $slhocphichuathu = Yii::$app->db->createCommand($sql)->bindValues(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->queryAll();
+                $sql = "SELECT COUNT(1) SOLUONG FROM quanlyhocphithutruoc a WHERE a.STATUS = 1 and a.ID_DONVI = :ID_DONVI";
+                $slhocphithutruocchuathu = Yii::$app->db->createCommand($sql)->bindValues(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->queryAll();
                 return $this->render('quanlytruonghoc', [
                     'solop' => $solop,
                     'tongsohocvien' => $tongsohocvien,
                     'dulieungay' => $dulieungay,
                     'sonhanvien' => $sonhanvien,
+                    'slhocphichuathu' => $slhocphichuathu,
+                    'slhocphithutruocchuathu' => $slhocphithutruocchuathu,
                 ]);
             }
             if (Yii::$app->user->can('diemdanhlophoc')) {

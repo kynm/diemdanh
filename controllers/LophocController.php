@@ -16,6 +16,8 @@ use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
+use app\models\UploadForm;
+use yii\web\UploadedFile;
 
 /**
  * LophocController implements the CRUD actions for Lophoc model.
@@ -504,5 +506,109 @@ class LophocController extends Controller
         }
 
         return json_encode($result);
+    }
+
+    public function actionExport()
+    {
+        $sql = 'SELECT a.TEN_LOP, b.HO_TEN, b.SO_DT,b.DIA_CHI,b.NGAY_SINH FROM lophoc a, hocsinh b
+            WHERE a.ID_LOP = b.ID_LOP AND a.ID_DONVI = :ID_DONVI
+            ORDER BY a.TEN_LOP,b.HO_TEN';
+        $result =  Yii::$app->db->createCommand($sql)->bindValues([':ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->queryAll();
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $spreadsheet->getDefaultStyle()->getFont()->setName('Arial');
+        $spreadsheet->getDefaultStyle()->getFont()->setSize(10);
+        $spreadsheet->getActiveSheet()->fromArray(
+            [
+                'LỚP',
+                'HỌ TÊN',
+                'SỐ ĐT',
+                'ĐỊA CHỈ',
+                'NGÀY SINH',
+            ],
+            '',
+            'A1'         
+        );
+        $key = 0;
+        $x = 2;
+        $spreadsheet->getActiveSheet()->fromArray($result,'','A2');
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $file_name = "DS LỚP_".date('Ymd_His');
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="'.$file_name.'.xlsx"');
+        header('Cache-Control: max-age=0');
+        $writer->save("php://output");
+        exit;
+    }
+
+    public function actionDeletehocsinh($id)
+    {
+        $model = $this->findModel($id);
+        if (Yii::$app->user->can('quanlytruonghoc') && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+            $dshocsinh = $model->dshocsinh;
+            $i = 0;
+            foreach ($dshocsinh as $key => $hocsinh) {
+                if (!$hocsinh->getDsdiemdanh()->andWhere(['STATUS' => 1])->count() && Yii::$app->user->can('quanlyhocsinh') && $hocsinh->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+                    Diemdanhhocsinh::deleteAll(['ID_HOCSINH' => $hocsinh->ID]);
+                    $hocsinh->delete();
+                    $i ++;
+                }
+            }
+            Yii::$app->session->setFlash('success', "Hệ thống đã Xóa: " . $i . " học sinh!");
+            return $this->redirect(['index']);
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
+        }
+    }
+
+    public function actionImportlophochocsinh($id)
+    {
+        $model = $this->findModel($id);
+        if (Yii::$app->user->can('quanlytruonghoc') && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI && $model->getDshocsinh()->count() < $model->iDDONVI->SO_HS) {
+            $modelupload = new UploadForm();
+            if (Yii::$app->request->post())
+            {
+                $params = Yii::$app->request->bodyParams;
+                $modelupload->fileupload = UploadedFile::getInstance($modelupload, 'fileupload');
+                $data = \moonland\phpexcel\Excel::import($modelupload->fileupload->tempName);
+                $keys = array_keys($data[0]);
+                $arrkeyCheck = ['HO_TEN'];
+                if (array_diff($arrkeyCheck, $keys)) {
+                    Yii::$app->session->setFlash('error', "Cập nhật không thành công. Thiếu trường: " . implode(',', array_diff($arrkeyCheck, $keys)));
+                    return $this->redirect(['importlophochocsinh']);
+                }
+                $i = 0;
+                foreach ($data as $key => $value) {
+                    if ($value['HO_TEN']) {
+                        $hocsinh = Hocsinh::find()->where(['ID_DONVI' => $model->ID_DONVI])->andWhere(['ID_LOP' => $model->ID_LOP])->andWhere(['HO_TEN' => $value['HO_TEN']])->one();
+                        if (!$hocsinh) {
+                            $hocsinh = new Hocsinh();
+                            $hocsinh->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
+                            $hocsinh->ID_DONVI = $model->ID_DONVI;
+                            $hocsinh->ID_LOP = $model->ID_LOP;
+                            $hocsinh->TIENHOC = $model->TIENHOC;
+                            $hocsinh->MA_HOCSINH  = $model->MA_LOP . '-' . ($model->getDshocsinh()->count() + 1);
+                            $hocsinh->HO_TEN = $value['HO_TEN'];
+                            $hocsinh->NGAY_SINH = date('Y-m-d',strtotime($value['NGAY_SINH']));
+                            $hocsinh->DIA_CHI = $value['DIA_CHI'];
+                            $hocsinh->SO_DT = $value['SO_DT'] ? (string)$value['SO_DT'] : '';
+                            $hocsinh->save();
+                            if ($hocsinh->errors) {
+                                die(var_dump($hocsinh->errors));
+                            }
+                            $i ++;
+                        }
+                    }
+                }
+                Yii::$app->session->setFlash('success', "Khởi tạo thành công " . $i . ' Khách hàng!');
+                return $this->redirect(['view', 'id' => $id]);
+            }
+
+            return $this->render('importlophochocsinh', [
+                'model' => $modelupload,
+            ]);
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này hoặc số lượng học sinh vượt mức');
+        }
     }
 }

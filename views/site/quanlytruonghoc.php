@@ -143,6 +143,16 @@ $this->title = 'QUẢN LÝ ĐIỂM DANH';
         </tbody>
     </table>
 </div>
-    <?php if (Yii::$app->user->identity->nhanvien->iDDONVI->STATUS == 1):?>
-        <h3 class="text-danger text-center">TÀI KHOẢN THỬ NGHIỆM, ĐĂNG KÝ CHÍNH THỨC ĐỂ MỞ KHÓA CÁC TÍNH NĂNG:<?= Html::a('<i class="fa fa-arrow-circle-right"></i> MUA GÓI', ['/donhang/donvimuagoi'], ['class' => 'small-box-footer']) ?><h3>
-    <?php endif; ?>
+<?php if (Yii::$app->user->can('quanlyhocphi') && Yii::$app->user->identity->nhanvien->iDDONVI->HPTT):?>
+    <div class="text-center" style="color: red;font-size: 20px;">
+        <span ><i class="fa fa-star"></i>HỌC SINH CHƯA THU HỌC PHÍ HÀNG THÁNG: <span style="color: red;font-size: 30px;"><?= $slhocphichuathu[0]['SOLUONG']?></span> HỌC SINH</span> <?= Html::a('CHI TIẾT', ['/quanlyhocphi/chitietthuhocphidonvi'], ['target' => '_blank']) ?>
+    </div>
+<?php endif; ?>
+<?php if (Yii::$app->user->can('quanlyhocphi') && Yii::$app->user->identity->nhanvien->iDDONVI->HP_T):?>
+    <div class="text-center" style="color: red;font-size: 20px;">
+        <span ><i class="fa fa-star"></i>HỌC SINH CHƯA THU HỌC PHÍ (THU TRƯỚC): <span style="color: red;font-size: 30px;"><?= $slhocphithutruocchuathu[0]['SOLUONG']?></span> HỌC SINH</span> <?= Html::a('CHI TIẾT', ['/quanlyhocphithutruoc/index'], ['target' => '_blank']) ?>
+    </div>
+<?php endif; ?>
+<?php if (Yii::$app->user->identity->nhanvien->iDDONVI->STATUS == 1):?>
+    <h3 class="text-danger text-center">TÀI KHOẢN THỬ NGHIỆM, ĐĂNG KÝ CHÍNH THỨC ĐỂ MỞ KHÓA CÁC TÍNH NĂNG:<?= Html::a('<i class="fa fa-arrow-circle-right"></i> MUA GÓI', ['/donhang/donvimuagoi'], ['class' => 'small-box-footer']) ?><h3>
+<?php endif; ?>

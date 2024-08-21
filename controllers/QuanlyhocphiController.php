@@ -423,7 +423,9 @@ class QuanlyhocphiController extends Controller
 
         if (Yii::$app->user->can('quanlyhocphi')) {
             $searchModel = new ChitiethocphiSearch();
-            $dataProvider = $searchModel->searchchitiethocphitheodonvi(Yii::$app->request->queryParams);
+            $params = Yii::$app->request->queryParams;
+            $params['STATUS'] = isset( $params['STATUS']) ? $params['STATUS'] : 1;
+            $dataProvider = $searchModel->searchchitiethocphitheodonvi($params);
 
             $dslop = ArrayHelper::map(Lophoc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->all(), 'ID_LOP', 'TEN_LOP');
             return $this->render('chitietthuhocphidonvi', [

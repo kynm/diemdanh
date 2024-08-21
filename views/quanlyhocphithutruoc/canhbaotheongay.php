@@ -34,7 +34,13 @@ $this->params['breadcrumbs'][] = $this->title;
                             'pluginOptions' => ['allowClear' => true],
                         ],
                     ],
-                    'HO_TEN',
+                    [
+                        'attribute' => 'HO_TEN',
+                        'value' => function ($model) {
+                            return Yii::$app->user->can('quanlyhocsinh') && Yii::$app->user->identity->nhanvien->ID_DONVI == $model->ID_DONVI ? Html::a($model->HO_TEN, ['/hocsinh/lichsudiemdanh', 'id' => $model->ID], ['class' => 'text text-primary']) : '';
+                        },
+                        'format' => 'raw',
+                    ],
                     'SO_DT',
                     [
                         'attribute' => 'NGAY_KT',
@@ -50,10 +56,6 @@ $this->params['breadcrumbs'][] = $this->title;
                             return $model->getDsdiemdanh()->andWhere(['STATUS' => 1])->count();
                         },
                         'format' => 'raw',
-                    ],
-                    [
-                        'class' => 'yii\grid\ActionColumn',
-                        'template' => (Yii::$app->user->can('edit-hocsinh')) ? '{update}{view}' : 'view'
                     ],
                 ],
             ]); ?>

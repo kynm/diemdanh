@@ -59,11 +59,11 @@ class ChitiethocphiSearch extends Chitiethocphi
 
         $query->andFilterWhere(['like', 'quanlyhocphi.TIEUDE', $this->TIEUDE]);
         $query->andFilterWhere(['=', 'quanlyhocphi.ID_LOP', $this->ID_LOP]);
-        $query->andFilterWhere(['=', 'STATUS', $this->STATUS]);
+        $query->andFilterWhere(['=', 'STATUS', isset($this->STATUS) ? $this->STATUS : 0]);
         $query->orderBy([
             'STATUS' => SORT_ASC,
-            'quanlyhocphi.created_at' => SORT_DESC,
             'quanlyhocphi.ID_LOP' => SORT_DESC,
+            'quanlyhocphi.created_at' => SORT_DESC,
         ]);
 
         return $dataProvider;

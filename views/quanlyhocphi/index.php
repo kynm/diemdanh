@@ -47,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'attribute' => 'SOLUONG',
                                 'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
                                 'value' => function ($model) {
-                                    return $model->getChitiethocphi()->count();
+                                    return number_format($model->getChitiethocphi()->count());
                                 },
                                 'format' => 'raw',
                             ],
@@ -55,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'attribute' => 'SOLUONGCHUATHU',
                                 'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
                                 'value' => function ($model) {
-                                    return $model->getChitiethocphi()->andWhere(['STATUS' => 0])->count();
+                                    return number_format($model->getChitiethocphi()->andWhere(['STATUS' => 0])->count());
                                 },
                                 'format' => 'raw',
                             ],
@@ -63,7 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'attribute' => 'SOLUONGDATHU',
                                 'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
                                 'value' => function ($model) {
-                                    return $model->getChitiethocphi()->andWhere(['STATUS' => 1])->count();
+                                    return number_format($model->getChitiethocphi()->andWhere(['STATUS' => 1])->count());
                                 },
                                 'format' => 'raw',
                             ],
@@ -71,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'attribute' => 'TONGTIEN',
                                 'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
                                 'value' => function ($model) {
-                                    return $model->getChitiethocphi()->sum('TONG_TIEN');
+                                    return number_format($model->getChitiethocphi()->sum('TONG_TIEN'));
                                 },
                                 'format' => 'raw',
                             ],
@@ -79,7 +79,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'attribute' => 'TONGTIENDATHU',
                                 'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
                                 'value' => function ($model) {
-                                    return $model->getChitiethocphi()->andWhere(['STATUS' => 1])->sum('TONG_TIEN');
+                                    return number_format($model->getChitiethocphi()->andWhere(['STATUS' => 1])->sum('TONG_TIEN'));
                                 },
                                 'format' => 'raw',
                             ],
@@ -87,7 +87,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'attribute' => 'TONGTIENCHUATHU',
                                 'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
                                 'value' => function ($model) {
-                                    return $model->getChitiethocphi()->andWhere(['STATUS' => 0])->sum('TONG_TIEN');
+                                    return number_format($model->getChitiethocphi()->andWhere(['STATUS' => 0])->sum('TONG_TIEN'));
                                 },
                                 'format' => 'raw',
                             ],

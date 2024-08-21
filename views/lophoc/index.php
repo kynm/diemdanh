@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="lophoc-index">
     <p>
-        <?= (Yii::$app->user->can('create-lophoc')) ? Html::a('<i class="fa fa-plus"></i> Thêm lớp học', ['create'], ['class' => 'btn btn-primary btn-flat']) :'' ?>
+        <?= $this->render('/partial/_header_quanlylophoc', []) ?>
     </p>
 
     <div class="box box-primary">

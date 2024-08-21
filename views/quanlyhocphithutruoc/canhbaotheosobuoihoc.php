@@ -34,7 +34,13 @@ $this->params['breadcrumbs'][] = $this->title;
                             'pluginOptions' => ['allowClear' => true],
                         ],
                     ],
-                    'HO_TEN',
+                    [
+                        'attribute' => 'HO_TEN',
+                        'value' => function ($model) {
+                            return Yii::$app->user->can('quanlyhocsinh') && Yii::$app->user->identity->nhanvien->ID_DONVI == $model->ID_DONVI ? Html::a($model->HO_TEN, ['/hocsinh/lichsudiemdanh', 'id' => $model->ID], ['class' => 'text text-primary']) : '';
+                        },
+                        'format' => 'raw',
+                    ],
                     'SO_DT',
                     'SOBH_DAMUA',
                     [
@@ -45,38 +51,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         },
                         'format' => 'raw',
                     ],
-                    [
-                        'class' => 'yii\grid\ActionColumn',
-                        'template' => (Yii::$app->user->can('edit-hocsinh')) ? '{update}{view}' : 'view'
-                    ],
                 ],
             ]); ?>
         <?php Pjax::end(); ?>
     </div>
 </div>
-<?php
-$script = <<< JS
-    $(document).on('click', '.doitrangthaihocsinh', function() {
-        var idhocsinh = $(this).data('id');
-        var status = $(this).is(":checked") ? 1 : 0;
-        $.ajax({
-            url: '/hocsinh/doitrangthailop',
-            method: 'POST',
-            data: {
-                'STATUS' : status,
-                'idhocsinh' : idhocsinh,
-            },
-            success:function(data) {
-                data = jQuery.parseJSON(data);
-                if (!data.error) {
-                    Swal.fire(data.message);
-                }
-                setTimeout(() => {
-                    window.location.reload(true);
-                }, 1000);
-            }
-        });
-    });
-JS;
-$this->registerJs($script);
-?>

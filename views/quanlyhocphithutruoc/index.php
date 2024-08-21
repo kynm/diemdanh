@@ -83,14 +83,16 @@ $this->params['breadcrumbs'][] = $this->title;
                             [
                                 'attribute' => 'NGAY_BD',
                                 'value' => function($model) {
-                                    return $model->NGAY_BD ? Yii::$app->formatter->asDatetime($model->NGAY_BD, 'php:d/m/Y') : NULL;
+                                    return $model->STATUS == 1 ? '<input type="date" name ="NGAY_BD" value="' . $model->NGAY_BD . '" class="form-control" data-id="' . $model->ID  . '">' : ($model->NGAY_BD ? Yii::$app->formatter->asDatetime($model->NGAY_BD, 'php:d/m/Y') : NULL);
                                 },
+                                'format' => 'raw',
                             ],
                             [
                                 'attribute' => 'NGAY_KT',
                                 'value' => function($model) {
-                                    return $model->NGAY_KT ? Yii::$app->formatter->asDatetime($model->NGAY_KT, 'php:d/m/Y') : NULL;
+                                    return $model->STATUS == 1 ? '<input type="date" name="NGAY_KT" value="' . $model->NGAY_KT . '" class="form-control" data-id="' . $model->ID  . '">' : ($model->NGAY_KT ? Yii::$app->formatter->asDatetime($model->NGAY_KT, 'php:d/m/Y') : NULL);
                                 },
+                                'format' => 'raw',
                             ],
                             [
                                 'attribute' => 'GHICHU',
@@ -225,6 +227,8 @@ $script = <<< JS
                     console.log('#TIENKHAC-' + data.data.ID);
                     console.log('#TONGTIEN-' + data.data.ID);
                     Swal.fire('Xác nhận thành công');
+                } else {
+                    Swal.fire('LỖI CẬP NHẬT!');
                 }
             }
         });
@@ -252,6 +256,8 @@ $script = <<< JS
                     console.log('#TIENKHAC-' + data.data.ID);
                     console.log('#TONGTIEN-' + data.data.ID);
                     Swal.fire('Xác nhận thành công');
+                } else {
+                    Swal.fire('LỖI CẬP NHẬT!');
                 }
             }
         });
@@ -278,6 +284,48 @@ $script = <<< JS
                     console.log('#TIENKHAC-' + data.data.ID);
                     console.log('#TONGTIEN-' + data.data.ID);
                     Swal.fire('Xác nhận thành công');
+                } else {
+                    Swal.fire('LỖI CẬP NHẬT!');
+                }
+            }
+        });
+    });
+    $(document).on('change', 'input[name=NGAY_BD]', function() {
+        var id = $(this).data('id');
+        var ngaybd = $(this).val();
+        $.ajax({
+            url: '/quanlyhocphithutruoc/thaydoingaybd',
+            method: 'post',
+            data: {
+                id: id,
+                ngaybd: ngaybd,
+            },
+            success:function(data) {
+                data = jQuery.parseJSON(data);
+                if (!data.error) {
+                    Swal.fire('THAY ĐỔI THÀNH CÔNG');
+                } else {
+                    Swal.fire('LỖI CẬP NHẬT!');
+                }
+            }
+        });
+    });
+    $(document).on('change', 'input[name=NGAY_KT]', function() {
+        var id = $(this).data('id');
+        var ngaykt = $(this).val();
+        $.ajax({
+            url: '/quanlyhocphithutruoc/thaydoingaykt',
+            method: 'post',
+            data: {
+                id: id,
+                ngaykt: ngaykt,
+            },
+            success:function(data) {
+                data = jQuery.parseJSON(data);
+                if (!data.error) {
+                    Swal.fire('THAY ĐỔI THÀNH CÔNG');
+                } else {
+                    Swal.fire('LỖI CẬP NHẬT!');
                 }
             }
         });

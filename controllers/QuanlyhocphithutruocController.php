@@ -374,4 +374,52 @@ class QuanlyhocphithutruocController extends Controller
             'params' => $params,
         ]);
     }
+
+    public function actionThaydoingaybd()
+    {
+        if (Yii::$app->user->can('quanlyhocphi') &&Yii::$app->request->post() && Yii::$app->user->identity->nhanvien->ID_NHANVIEN) {
+            $inputs = Yii::$app->request->post();
+            $hocphi = Quanlyhocphithutruoc::findOne($inputs['id']);
+            $ngaybd = $inputs['ngaybd'];
+            $result = [
+                'error' => 1,
+                'data' => [],
+                'message' => 'Lỗi cập nhật!',
+            ];
+            if ($hocphi && $hocphi->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI && $hocphi->STATUS == 1) {
+                $hocphi->NGAY_BD = $ngaybd;
+                $hocphi->save();
+                $result['error'] = 0;
+                $result['message'] = 'Cập nhật thành công';
+            }
+
+            return json_encode($result);
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function actionThaydoingaykt()
+    {
+        if (Yii::$app->user->can('quanlyhocphi') &&Yii::$app->request->post() && Yii::$app->user->identity->nhanvien->ID_NHANVIEN) {
+            $inputs = Yii::$app->request->post();
+            $hocphi = Quanlyhocphithutruoc::findOne($inputs['id']);
+            $ngaykt = $inputs['ngaykt'];
+            $result = [
+                'error' => 1,
+                'data' => [],
+                'message' => 'Lỗi cập nhật!',
+            ];
+            if ($hocphi && $hocphi->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI && $hocphi->STATUS == 1) {
+                $hocphi->NGAY_KT = $ngaykt;
+                $hocphi->save();
+                $result['error'] = 0;
+                $result['message'] = 'Cập nhật thành công';
+            }
+
+            return json_encode($result);
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
 }
