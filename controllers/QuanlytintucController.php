@@ -72,9 +72,9 @@ class QuanlytintucController extends Controller
         if (Yii::$app->user->can('quanlytintuc')) {
             $model = new Tintuc();
             $model->ID_DONVI = Yii::$app->user->identity->nhanvien->ID_DONVI;
+            $model->STATUS = 1;
 
             if ($model->load(Yii::$app->request->post())) {
-                $model->STATUS = 1;
                 $model->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
                 $model->save();
                 // $log = new ActivitiesLog;

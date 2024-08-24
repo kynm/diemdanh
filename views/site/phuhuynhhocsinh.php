@@ -13,7 +13,7 @@ $this->title = '';
 		<div class="info-box">
 			<span class="info-box-icon bg-aqua"><i class="fa fa-address-book" aria-hidden="true"></i></span>
 			<div class="info-box-content">
-				<span class="info-box-number" style="font-size: 20px; color: red;"><?= Html::a($hocsinh->HO_TEN, ['/quanlyphuhuynh/chitiethocsinh', 'mahs' => $hocsinh->MA_HOCSINH], ['class' => 'info-box-number']) ?></span>
+				<span class="info-box-number" style="font-size: 20px; color: red;"><?= Html::a($hocsinh->HO_TEN . ' - ' . $hocsinh->lop->TEN_LOP, ['/quanlyphuhuynh/chitiethocsinh', 'mahs' => $hocsinh->MA_HOCSINH], ['class' => 'info-box-number']) ?></span>
 			</div>
 		</div>
 	</div>

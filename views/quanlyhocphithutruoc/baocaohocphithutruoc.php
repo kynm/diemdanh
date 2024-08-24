@@ -105,8 +105,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     <td>TỔNG</td>
                     <td class="text-center"><?= number_format($TONGSO_HS)?></td>
                     <td class="text-center"><?= number_format($TONGSOLUONG)?></td>
-                    <td class="text-center"><?= number_format($TONGDA_DONG)?></td>
                     <td class="text-center"><?= number_format($TONGCHUA_DONG)?></td>
+                    <td class="text-center"><?= number_format($TONGDA_DONG)?></td>
                     <td class="text-center"><?= number_format($TONGTONGTIEN)?></td>
                     <td class="text-center"><?= number_format($TONGTIEN_CHUA_DONG)?></td>
                     <td class="text-center"><?= number_format($TONGTIEN_DA_DONG)?></td>

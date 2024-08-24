@@ -137,13 +137,21 @@
 
     function sendmail($email, $title, $body)
     {
-        Yii::$app->mailer
+        return Yii::$app->mailer
         ->compose()
         ->setFrom('thongbao@easycheck.io.vn')
         ->setTo($email)
         ->setSubject($title)
         ->setHtmlBody($body)
         ->send();
+    }
+
+    function dsphanquyen()
+    {
+        return [
+            1 => 'Điểm danh học sinh',
+            2 => 'Điểm danh toàn trung tâm',
+        ];
     }
 
 ?>

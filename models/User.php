@@ -243,4 +243,9 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return $this->hasMany(ActivitiesLog::className(), ['user_id' => 'id']);
     }
+
+    public function getAssignments()
+    {
+        return $this->hasMany(AuthAssignment::className(), ['user_id' => 'id']);
+    }
 }

@@ -71,6 +71,7 @@ class Nhanvien extends \yii\db\ActiveRecord
             'GHI_CHU' => 'Ghi chú',
             'USER_NAME' => 'User  Name',
             'CON' => 'CON ĐANG THEO HỌC',
+            'PHANQUYEN' => 'PHÂN QUYỀN',
         ];
     }
 

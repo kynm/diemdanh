@@ -330,4 +330,88 @@ class NhanvienController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    public function actionPhanquyennhanvien()
+    {
+        if (Yii::$app->user->can('quanlytruonghoc')) {
+            $result = [
+                'error' => 1,
+                'message' => 'LỖI CẬP NHẬT',
+            ];
+            $inputs = Yii::$app->request->post();
+            $nhanvien = Nhanvien::findOne($inputs['id']);
+            if ($nhanvien && $nhanvien->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+                $user = $nhanvien->user;
+                $allrules = ArrayHelper::map($nhanvien->user->assignments, 'item_name', 'item_name');
+                if ($inputs['val'] == 1 && $inputs['name'] == 'quyenddttt' && $user && !in_array('diemdanhlophoc', $allrules)) {
+                    $assign = new AuthAssignment;
+                    $assign->user_id = $user->id;
+                    $assign->item_name = 'diemdanhtoantrungtam';
+                    $assign->save();
+                    $result = [
+                        'error' => 0,
+                        'message' => 'CẬP NHẬT THÀNH CÔNG',
+                    ];
+                }
+                if ($inputs['val'] == 0 && $inputs['name'] == 'quyenddttt' && $user && in_array('diemdanhlophoc', $allrules)) {
+                    AuthAssignment::deleteAll(['user_id' => $user->id, 'item_name' => 'diemdanhtoantrungtam']);
+                    $result = [
+                        'error' => 0,
+                        'message' => 'CẬP NHẬT THÀNH CÔNG',
+                    ];
+                }
+
+                if ($inputs['val'] == 1 && $inputs['name'] == 'quyendd' && $user && !in_array('diemdanhlophoc', $allrules)) {
+                    $assign = new AuthAssignment;
+                    $assign->user_id = $user->id;
+                    $assign->item_name = 'diemdanhlophoc';
+                    $assign->save();
+                    $result = [
+                        'error' => 0,
+                        'message' => 'CẬP NHẬT THÀNH CÔNG',
+                    ];
+                }
+                if ($inputs['val'] == 0 && $inputs['name'] == 'quyendd' && $user && in_array('diemdanhlophoc', $allrules)) {
+                    AuthAssignment::deleteAll(['user_id' => $user->id, 'item_name' => 'diemdanhtoantrungtam']);
+                    $result = [
+                        'error' => 0,
+                        'message' => 'CẬP NHẬT THÀNH CÔNG',
+                    ];
+                }
+
+            return json_encode($result);
+            } else {
+                throw new NotFoundHttpException('The requested page does not exist.');
+            }
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function actionResetpassword()
+    {
+        if (Yii::$app->user->can('quanlytruonghoc')) {
+            $result = [
+                'error' => 1,
+                'message' => 'LỖI CẬP NHẬT',
+            ];
+            $inputs = Yii::$app->request->post();
+            $nhanvien = Nhanvien::findOne($inputs['id']);
+            if ($nhanvien && $nhanvien->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+                $user = $nhanvien->user;
+                $user->setPassword($user->username);
+                $user->save(false);
+                $result = [
+                    'error' => 0,
+                    'message' => 'MẬT KHẨU ĐÃ ĐƯỢC RESET',
+                ];
+
+            return json_encode($result);
+            } else {
+                throw new NotFoundHttpException('The requested page does not exist.');
+            }
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
 }
