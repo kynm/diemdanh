@@ -37,19 +37,26 @@ class LenlichController extends Controller
     public function actionBaocaohoatdonghangngay()
     {
         $dsdonvi = Donvi::find()->where(['is not', 'EMAIL', new \yii\db\Expression('null')])
-        //->andWhere(['STATUS' => 2])
+        // ->andWhere(['STATUS' => 2])
+        ->orderBy('ID_DONVI')
         ->all();
         foreach ($dsdonvi as $key => $donvi) {
-            die(var_dump($donvi));
-            $sldiemdanh = $donvi->getDsdiemdanh()->andWhere(['date(created_at)' => date('Y-m-d')])->count();
-            $tongsohocsinh = Diemdanhhocsinh::find()->where(['in', 'ID_DIEMDANH', ArrayHelper::map($donvi->getDsdiemdanh()->andWhere(['date(created_at)' => date('Y-m-d')])->all(), 'ID', 'ID')])->count();
-            $slhocsinhnghi = Diemdanhhocsinh::find()->where(['in', 'ID_DIEMDANH', ArrayHelper::map($donvi->getDsdiemdanh()->andWhere(['date(created_at)' => date('Y-m-d')])->all(), 'ID', 'ID')])->andWhere(['STATUS' => 0])->count();
-            $noidung =  $donvi->TEN_DONVI . '<br/>';
-            $noidung .= ' - Số lượng điểm danh:<span style="font-size: 15px">' . $sldiemdanh . '</span> lượt điểm danh<br/>';
-            $noidung .= ' - Tổng số học sinh thực hiện điểm danh :<span style="font-size: 15px">' . $tongsohocsinh . '</span> Học sinh<br/>';
-            $noidung .= ' - Số lượng nghỉ:<span style="font-size: 15px">' . $slhocsinhnghi . '</span> Học sinh nghỉ<br/>';
-            $noidung .= 'Vui lòng <a href="https://diemdanh.online">Truy cập hệ thống</a> điểm danh online EASYCHECK để theo dõi chi tiết!';
-            sendmail($donvi->EMAIL, 'DỮ LIỆU ĐIỂM DANH HÀNG NGÀY', $noidung);
+            if (trim($donvi->EMAIL)) {
+                $sldiemdanh = $donvi->getDsdiemdanh()->andWhere(['date(created_at)' => date('Y-m-d')])->count();
+                $tongsohocsinh = Diemdanhhocsinh::find()->where(['in', 'ID_DIEMDANH', ArrayHelper::map($donvi->getDsdiemdanh()->andWhere(['date(created_at)' => date('Y-m-d')])->all(), 'ID', 'ID')])->count();
+                $slhocsinhnghi = Diemdanhhocsinh::find()->where(['in', 'ID_DIEMDANH', ArrayHelper::map($donvi->getDsdiemdanh()->andWhere(['date(created_at)' => date('Y-m-d')])->all(), 'ID', 'ID')])->andWhere(['STATUS' => 0])->count();
+                $noidung =  $donvi->TEN_DONVI . '<br/>';
+                $noidung .= ' - Số lượng điểm danh:<span style="font-size: 15px">' . $sldiemdanh . '</span> lượt điểm danh<br/>';
+                $noidung .= ' - Tổng số học sinh thực hiện điểm danh :<span style="font-size: 15px">' . $tongsohocsinh . '</span> Học sinh<br/>';
+                $noidung .= ' - Số lượng nghỉ:<span style="font-size: 15px">' . $slhocsinhnghi . '</span> Học sinh nghỉ<br/>';
+                $noidung .= 'Vui lòng <a href="https://diemdanh.online">Truy cập hệ thống</a> điểm danh online EASYCHECK để theo dõi chi tiết!';
+                // echo PHP_EOL;
+                // echo $donvi->TEN_DONVI . '---' . $donvi->EMAIL;
+                // $result = sendmail('ngainguyendv@gmail.com', 'DỮ LIỆU ĐIỂM DANH HÀNG NGÀY', $noidung);
+                // (var_dump($result));
+                sendmail($donvi->EMAIL, 'DỮ LIỆU ĐIỂM DANH HÀNG NGÀY', $noidung);
+                sleep(5);
+            }
         }
         return 'GỬI MAIL THÀNH CÔNG';
     }

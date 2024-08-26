@@ -1,12 +1,16 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 use yii\widgets\Pjax;
+use yii\helpers\ArrayHelper;
+use app\models\Trangthailophoc;
+use kartik\select2\Select2;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\lophocSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
+$tranghtailop = ArrayHelper::map(Trangthailophoc::find()->all(), 'MA_TRANGTHAI', 'TRANGTHAI');
 $this->title = 'QUẢN LÝ LỚP';
 $this->params['breadcrumbs'][] = ['label' => 'Đơn vị', 'url' => ['donvi/index']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -44,8 +48,14 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                             'TIENHOC',
                              [
-                                'attribute' => 'CHANGE_STATUS',
+                                'attribute' => 'STATUS',
                                 'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
+                                    'filter'=> $tranghtailop,
+                                    'filterType' => GridView::FILTER_SELECT2,
+                                    'filterWidgetOptions' => [
+                                        'options' => ['prompt' => ''],
+                                        'pluginOptions' => ['allowClear' => true],
+                                    ],
                                 'value' => function ($model) {
                                     return '<input type="checkbox" '.  ($model->STATUS ? 'checked' : '') .  ' data-id="'  . $model->ID_LOP .  '" class="doitrangthailophoc"/> ' . $model->trangthai->TRANGTHAI;
                                 },

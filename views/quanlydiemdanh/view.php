@@ -38,6 +38,13 @@ $this->params['breadcrumbs'][] = $this->title;
                         'format' => 'raw',
                     ],
                     [
+                        'attribute' => 'ID_NHANVIEN',
+                        'value' => function ($model) {
+                            return $model->nhanvien->TEN_NHANVIEN;
+                        },
+                        'format' => 'raw',
+                    ],
+                    [
                         'attribute' => 'NOIDUNG',
                         'value' => function ($model) {
                             return  nl2br($model->NOIDUNG);

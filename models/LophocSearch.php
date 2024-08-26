@@ -19,7 +19,7 @@ class LophocSearch extends Lophoc
     {
         return [
             [['ID_LOP'], 'integer'],
-            [['MA_LOP', 'TEN_LOP', 'DIA_CHI', 'SO_DT', 'ID_DONVI'], 'safe'],
+            [['MA_LOP', 'TEN_LOP', 'DIA_CHI', 'SO_DT', 'ID_DONVI', 'STATUS'], 'safe'],
         ];
     }
 
@@ -69,6 +69,7 @@ class LophocSearch extends Lophoc
             ->andFilterWhere(['like', 'TEN_LOP', $this->TEN_LOP])
             ->andFilterWhere(['like', 'DIA_CHI', $this->DIA_CHI])
             ->andFilterWhere(['like', 'TEN_DONVI', $this->ID_DONVI])
+            ->andFilterWhere(['=', 'lophoc.STATUS', isset($this->STATUS) ? $this->STATUS : 1])
             ->andFilterWhere(['like', 'SO_DT', $this->SO_DT]);
 
         $query->orderBy([

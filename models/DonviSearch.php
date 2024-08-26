@@ -71,6 +71,7 @@ class DonviSearch extends Donvi
 
         $query->orderBy([
             'STATUS' => SORT_ASC,
+            'created_at' => SORT_DESC,
         ]);
         return $dataProvider;
     }

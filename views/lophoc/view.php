@@ -44,6 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
         <?= (Yii::$app->user->can('quanlytruonghoc')) ? Html::a('Import học sinh', ['/lophoc/importlophochocsinh', 'id' => $model->ID_LOP], ['class' => 'btn btn-primary btn-flat']) : ''?>
+        <?= (Yii::$app->user->can('diemdanhlophoc')) ? Html::a('Kiểm tra', ['/chamdiem/chamdiemlophoc', 'idlophoc' => $model->ID_LOP], ['class' => 'btn btn-success btn-flat']) : ''?>
     </p>
 </div>
 <div class="box-body table-responsive">
