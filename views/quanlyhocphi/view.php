@@ -267,7 +267,7 @@ $('.capnhatsotienmoibuoi').on('change', function() {
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: '#DD6B55',
-            confirmButtonText: 'CÓ, xÓA NGAY!',
+            confirmButtonText: 'CÓ!',
             cancelButtonText: "KHÔNG XÓA!"
         }).then((result) => {
         if (result['isConfirmed']) {

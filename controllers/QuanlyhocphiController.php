@@ -449,7 +449,7 @@ class QuanlyhocphiController extends Controller
             $params = Yii::$app->request->post();
             $quanlyhocphi = Quanlyhocphi::findOne($params['id']);
             self::taochitiethocphi($quanlyhocphi);
-            $dshocsinhlop = ArrayHelper::map($quanlyhocphi->lop->dshocsinh, 'ID', 'ID');
+            $dshocsinhlop = ArrayHelper::map($quanlyhocphi->lop->getDshocsinh()->andWhere(['STATUS' => 1])->all(), 'ID', 'ID');
             $dshocsinhdatinhhp = ArrayHelper::map($quanlyhocphi->chitiethocphi, 'ID_HOCSINH', 'ID_HOCSINH');
             $dshschuatinhhocphi = array_diff_key($dshocsinhdatinhhp, $dshocsinhlop);
             foreach ($dshocsinhlop as $key => $value) {

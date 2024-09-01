@@ -24,6 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="box box-primary">
     <div class="box-body">
         <div class="row">
+            <?php if($diemdanh->NOIDUNG) :?>
             <?php $form = ActiveForm::begin(['action' =>['quanlydiemdanh/capnhatghichubuoihoc', 'id' => $diemdanh->ID], 'method' => 'post']); ?>
             <div class="col-sm-12">
                 <?= $form->field($diemdanh, 'NOIDUNG')->widget(Summernote::class, [
@@ -35,6 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ?>
             </div>
             <?php ActiveForm::end(); ?>
+        <?php endif;?>
             <?php foreach ($diemdanh->dschitietdiemdanh as $key => $chitiet):?>
                 <div class="col-sm-6">
                     <div class="col-sm-3" style="font-size:20px">

@@ -69,6 +69,8 @@ use kartik\select2\Select2;
 </div>
 <?php
 $script = <<< JS
+    $('#quanlyhocphi-tieude').focus();
+
 JS;
 $this->registerJs($script);
 ?>

@@ -54,3 +54,9 @@ use kartik\date\DatePicker;
     </div>
     <?php ActiveForm::end(); ?>
 </div>
+<?php
+$script = <<< JS
+$('#hocsinh-ho_ten').focus();
+JS;
+$this->registerJs($script);
+?>

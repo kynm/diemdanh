@@ -137,9 +137,9 @@ class LophocController extends Controller
 
     public function actionQuanlydiemdanh($id)
     {
-        if ((Yii::$app->user->can('quanlydiemdanh') || Yii::$app->user->can('diemdanhlophoc')) && $id) {
+        $model = $this->findModel($id);
+        if ((Yii::$app->user->can('quanlydiemdanh') || Yii::$app->user->can('diemdanhlophoc')) && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
             $diemdanh = new Quanlydiemdanh();
-            $model = $this->findModel($id);
             $diemdanh->ID_DONVI = Yii::$app->user->identity->nhanvien->ID_DONVI;
             $diemdanh->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
             $diemdanh->ID_LOP  = $id;
@@ -153,6 +153,51 @@ class LophocController extends Controller
                 'model' => $model,
                 'diemdanh' => $diemdanh,
                 'result' => $result,
+                'params' => $params,
+            ]);
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');           
+        }
+    }
+
+    public function actionQuanlydiemdanhnew($id)
+    {
+        $model = $this->findModel($id);
+        if ((Yii::$app->user->can('quanlydiemdanh') || Yii::$app->user->can('diemdanhlophoc')) && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+            $diemdanh = new Quanlydiemdanh();
+            $diemdanh->ID_DONVI = Yii::$app->user->identity->nhanvien->ID_DONVI;
+            $diemdanh->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
+            $diemdanh->ID_LOP  = $id;
+            $diemdanh->NGAY_DIEMDANH = Yii::$app->formatter->asDatetime('now', 'php:Y-m-d');
+            $params = Yii::$app->request->queryParams;
+            $params['TU_NGAY'] = isset($params['TU_NGAY']) ? $params['TU_NGAY'] : date("Y-m-d", strtotime("-1 month"));
+            $params['DEN_NGAY'] = isset($params['DEN_NGAY']) ? $params['DEN_NGAY'] : date('Y-m-d');
+            // $searchModel = new QuanlydiemdanhSearch();
+            // $result = $searchModel->searchDiemdanhtheolop($params, $id);
+            $sql = 'SELECT a.ID  ID_DIEMDANH,a.TIEUDE, a.NGAY_DIEMDANH,c.ID ID_HOCSINH,c.HO_TEN,b.STATUS,b.NHAN_XET FROM quanlydiemdanh a, diemdanhhocsinh b, hocsinh c
+                WHERE a.ID = b.ID_DIEMDANH AND b.ID_HOCSINH = c.ID AND c.ID_DONVI = :ID_DONVI AND c.ID_LOP = ' . $id . ' and a.NGAY_DIEMDANH BETWEEN :TU_NGAY and :DEN_NGAY
+                ORDER BY a.NGAY_DIEMDANH, c.HO_TEN desc';
+            $result = Yii::$app->db->createCommand($sql)->bindValues(
+                [
+                    ':TU_NGAY' => $params['TU_NGAY'],
+                    ':DEN_NGAY' => $params['DEN_NGAY'],
+                    ':ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI,
+                ])->queryAll();
+            $header = [];
+            $rows= [];
+            foreach ($result as $key => $value) {
+                $header[$value['ID_DIEMDANH']]['NGAY'] = Yii::$app->formatter->asDatetime($value['NGAY_DIEMDANH'], 'php:d/m/Y');
+                $header[$value['ID_DIEMDANH']]['ID'] = $value['ID_DIEMDANH'];
+                $rows[$value['ID_HOCSINH']]['HO_TEN'] = $value['HO_TEN'];
+                $rows[$value['ID_HOCSINH']]['STATUS'][$value['ID_DIEMDANH']]['STATUS'] = $value['STATUS'];
+                $rows[$value['ID_HOCSINH']]['NHAN_XET'][$value['ID_DIEMDANH']]['NHAN_XET'] = $value['NHAN_XET'];
+            }
+
+            return $this->render('quanlydiemdanhnew', [
+                'model' => $model,
+                'diemdanh' => $diemdanh,
+                'rows' => $rows,
+                'header' => $header,
                 'params' => $params,
             ]);
         } else {
@@ -198,7 +243,7 @@ class LophocController extends Controller
     public function actionCapnhatdiemdanh($diemdanhid)
     {
         $diemdanh = Quanlydiemdanh::find()->where(['ID' => $diemdanhid])->one();
-        if (Yii::$app->user->can('diemdanhlophoc') && $diemdanh && $diemdanh->lop->STATUS == 1) {
+        if (Yii::$app->user->can('diemdanhlophoc') && $diemdanh && $diemdanh->lop->STATUS == 1 && $diemdanh->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
             return $this->render('capnhatdiemdanh', [
                 'diemdanh' => $diemdanh,
             ]);

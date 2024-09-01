@@ -93,4 +93,26 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         </div>
     </div>
+<div class="box-body table-responsive">
+        <div class="col-lg-12">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr class="bg-primary text-center">
+                        <th class="text-center">STT</th>
+                        <th class="text-center">Học sinh</th>
+                        <th class="text-center">Đi học</th>
+                        <th class="text-center">Nhận xét</th>
+                    </tr>
+                    <?php foreach ($model->dschitietdiemdanh as $key => $value): ?>
+                    <tr class="text-center">
+                        <td><?= $key + 1?></td>
+                        <td><?= $value->hocsinh->HO_TEN?></td>
+                        <td><?= $value->STATUS == 1 ? 'X' : ''?></td>
+                        <td><?= $value->NHAN_XET?></td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>

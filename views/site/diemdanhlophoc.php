@@ -14,7 +14,7 @@ $this->title = 'QUẢN LÝ ĐIỂM DANH';
 			<span class="info-box-icon bg-aqua"><i class="fa fa-address-book" aria-hidden="true"></i></span>
 			<div class="info-box-content">
 				<?= Html::a($lop->TEN_LOP, ['/lophoc/quanlydiemdanh', 'id' => $lop->ID_LOP], ['class' => 'info-box-number']) ?>
-				<span class="info-box-number"  style="font-size: 20px; color: red;"><?= $lop->getDshocsinh()->count()?> Học viên</span>
+				<span class="info-box-number"  style="font-size: 20px; color: red;"><?= $lop->getDshocsinh()->where(['STATUS' => 1])->count()?> Học viên</span>
 			</div>
 		</div>
 	</div>

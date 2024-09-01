@@ -24,9 +24,6 @@ $model->CHUC_VU = 3;
             </div>
             <div class="row">
                 <div class="col-sm-4">
-                    <?= $form->field($model, 'USER_NAME')->textInput(['maxlength' => true, 'disabled' => $model->isNewRecord ? false : true ]) ?>
-                </div>
-                <div class="col-sm-4">
                     <?php if (!$model->isNewRecord) {
                         echo $form->field($model->user, 'password')->passwordInput(['maxlength' => true]);
                     }  ?>

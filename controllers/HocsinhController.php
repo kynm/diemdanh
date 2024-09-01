@@ -60,49 +60,69 @@ class HocsinhController extends Controller
      */
     public function actionView($id)
     {
-        $searchModel = new ChitiethocphiSearch();
-        $dataProvider = $searchModel->searchhocphitheohocsinh(Yii::$app->request->queryParams, $id);
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        $model =$this->findModel($id);
+        if ($model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+            $searchModel = new ChitiethocphiSearch();
+            $dataProvider = $searchModel->searchhocphitheohocsinh(Yii::$app->request->queryParams, $id);
+            return $this->render('view', [
+                'model' => $model,
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');           
+        }
     }
 
     public function actionHocphitheothang($id)
     {
-        $searchModel = new ChitiethocphiSearch();
-        $dataProvider = $searchModel->searchhocphitheohocsinh(Yii::$app->request->queryParams, $id);
-        return $this->render('hocphitheothang', [
-            'model' => $this->findModel($id),
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        $model =$this->findModel($id);
+        if ($model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+            $searchModel = new ChitiethocphiSearch();
+            $dataProvider = $searchModel->searchhocphitheohocsinh(Yii::$app->request->queryParams, $id);
+            return $this->render('hocphitheothang', [
+                'model' => $this->findModel($id),
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');           
+        }
     }
 
     public function actionHocphithutruoc($id)
     {
-        $searchModel = new QuanlyhocphithutruocSearch();
-        $dataProvider = $searchModel->searchhocphitheohocsinh(Yii::$app->request->queryParams, $id);
-        return $this->render('hocphithutruoc', [
-            'model' => $this->findModel($id),
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        $model =$this->findModel($id);
+        if ($model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+            $searchModel = new QuanlyhocphithutruocSearch();
+            $dataProvider = $searchModel->searchhocphitheohocsinh(Yii::$app->request->queryParams, $id);
+            return $this->render('hocphithutruoc', [
+                'model' => $model,
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');           
+        }
     }
 
     public function actionLichsudiemdanh($id)
     {
         $params = Yii::$app->request->queryParams;
-        $params['TU_NGAY'] = isset($params['TU_NGAY']) ? $params['TU_NGAY'] : date("Y-m-d", strtotime("-1 month"));
-        $params['DEN_NGAY'] = isset($params['DEN_NGAY']) ? $params['DEN_NGAY'] : date('Y-m-d');
-        $searchModel = new DiemdanhhocsinhSearch();
-        $result = $searchModel->searchDiemdanhtheohocsinh($params, $id);
-        return $this->render('lichsudiemdanh', [
-            'model' => $this->findModel($id),
-            'result' => $result,
-            'params' => $params,
-        ]);
+        $model =$this->findModel($id);
+        if ($model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+            $params['TU_NGAY'] = isset($params['TU_NGAY']) ? $params['TU_NGAY'] : date("Y-m-d", strtotime("-1 month"));
+            $params['DEN_NGAY'] = isset($params['DEN_NGAY']) ? $params['DEN_NGAY'] : date('Y-m-d');
+            $searchModel = new DiemdanhhocsinhSearch();
+            $result = $searchModel->searchDiemdanhtheohocsinh($params, $id);
+            return $this->render('lichsudiemdanh', [
+                'model' => $model,
+                'result' => $result,
+                'params' => $params,
+            ]);
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');           
+        }
     }
 
     /**

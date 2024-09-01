@@ -90,6 +90,7 @@ use kartik\date\DatePicker;
 </div>
 <?php
 $script = <<< JS
+    $('#quanlyhocphithutruoc-tieude').focus();
     $('#quanlyhocphithutruoc-id_lop').on('change', function() {
       var lopid = $(this).val();
         $.ajax({

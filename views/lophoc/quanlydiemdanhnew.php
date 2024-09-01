@@ -9,13 +9,12 @@ use app\models\Hocsinh;
 use yii\widgets\ActiveForm;
 use kartik\date\DatePicker;
 /* @var $this yii\web\View */
-/* @var $model app\models\Daivt */
 
 $this->title = $diemdanh->lop->TEN_LOP;
 $this->params['breadcrumbs'][] = ['label' => 'Đơn vị', 'url' => ['donvi/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="daivt-view">
+<div class="quanlydiemdanh-view">
     <?= $this->render('_detail', ['model' => $diemdanh->lop,]) ?>
 </div>
 <?php if (Yii::$app->user->can('diemdanhlophoc') && $diemdanh->lop->STATUS == 1):?>
@@ -28,7 +27,6 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php endif; ?>
 <?php else: ?>
 <?php endif; ?>
-<?= $this->render('/partial/_header_diemdanh', ['model' => $diemdanh->lop,]) ?>
 <div class="row">
     <?php $form = ActiveForm::begin([
         'method' => 'get',
@@ -72,64 +70,37 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <?php ActiveForm::end(); ?>
 </div>
-<div class="box box-primary">
-    <ul class="timeline timeline-inverse">
-        <?php
-            foreach ($result as $key => $value):
-        ?>
-        <li class="time-label">
-            <span class="bg-green">
-                <span class="time"><i class="fa fa-clock-o"></i> <?= dateofmonth()[date_format(date_create($value->NGAY_DIEMDANH), 'w')]?></span> - <?= Yii::$app->formatter->asDate($value->NGAY_DIEMDANH, 'd-M-Y');?>
-            </span>
-        </li>
-        <li>
-            <div class="timeline-item">
-                
-                <?=Yii::$app->user->can('quanlytruonghoc') ? '<span class="btn btn-danger pull-right xoadiemdanh" data-id="' . $value->ID . '" style="color: white;">Xóa</span>' : ''?>
-                <?= Html::a('<i class="fa fa-print"></i> CHI TIẾT', '/quanlydiemdanh/indiemdanhngay?id=' . $value->ID, ['class' => 'pull-right btn btn-success', 'target' => '_blank'])?>
-                <h3 class="timeline-header"><?= $value->lop->STATUS ? Html::a($value->TIEUDE, '/lophoc/capnhatdiemdanh?diemdanhid=' . $value->ID) : $value->TIEUDE?></h3>
-                <div class="timeline-body">
-                    TỔNG SỐ : <?= $value->getDschitietdiemdanh()->count()?> (HỌC SINH)<br/>
-                    ĐI HỌC: <?= $value->getDschitietdiemdanh()->andWhere(['STATUS' => 1])->count()?> (HỌC SINH)
-                </div>
-            </div>
-        </li>
-        <?php if ($value->NOIDUNG):?>
-            <li>
-                <i class="fa fa-user bg-aqua"></i>
-                <div class="timeline-item">
-                    <?= nl2br($value->NOIDUNG)?>
-                </div>
-            </li>
-        <?php endif; ?>
-        <li>
-            <i class="fa fa-comments bg-yellow"></i>
-            <div class="timeline-item">
-                <h3 class="timeline-header">DANH SÁCH HỌC SINH VẮNG</h3>
-                <div class="timeline-body">
-                <?php
-                        $idhocsinh = ArrayHelper::map($value->getDschitietdiemdanh()->andWhere(['STATUS' => 0])->all(), 'ID_HOCSINH', 'ID_HOCSINH');
-                        $dshocsinhvang = ArrayHelper::map(Hocsinh::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->andWhere(['in', 'ID', $idhocsinh])->all(), 'ID', 'HO_TEN');
+<?= $this->render('/partial/_header_diemdanh', ['model' => $diemdanh->lop,]) ?>
+<div class="">
+        <table class="table table-bordered">
+            <tbody>
+                <tr class="bg-primary text-center">
+                    <th class="text-center">HỌ TÊN</th>
+                    <?php foreach ($header as $key => $value):?>
+                        <th class="text-center">
+                            <?= $value['NGAY']?><br>
+                            <?= Html::a('<i class="fa fa-print"></i> CHI TIẾT', '/quanlydiemdanh/indiemdanhngay?id=' . $value['ID'], ['class' => 'btn btn-success', 'target' => '_blank'])?><br>
+                            <?=Yii::$app->user->can('quanlytruonghoc') ? '<span class="btn btn-danger xoadiemdanh" data-id="' . $value['ID'] . '" style="color: white;">Xóa</span>' : ''?>
+                        </th>
+                    <?php endforeach; ?>
+                </tr>
+                <?php foreach ($rows as $a => $row):
                     ?>
-                    <?= nl2br(implode(',', $dshocsinhvang))?>
-                </div>
-            </div>
-        </li>
-        <li>
-            <i class="fa fa-comments bg-yellow"></i>
-            <div class="timeline-item">
-                <h3 class="timeline-header">GHI CHÚ</h3>
-                <div class="timeline-body">
-                <?= nl2br($value->ghichu)?>
-                </div>
-            </div>
-        </li>
-        <?php endforeach; ?>
-    </ul>
-    <br>
-    <br>
-    <br>
-</div>
+                    <tr class="">
+                        <td><?= $row['HO_TEN']?></td>
+                        <?php foreach ($header as $b => $h):
+                        ?>
+                            <td class="text-center">
+                                <?= (isset($row['STATUS'][$b]['STATUS']) && $row['STATUS'][$b]['STATUS']) ? 'X' : 'NGHỈ'?><br/>
+                                <?= isset($row['NHAN_XET'][$b]['NHAN_XET']) ? nl2br($row['NHAN_XET'][$b]['NHAN_XET']) : null?><br/>
+                            </td>
+                        <?php endforeach; ?>
+                    </tr>
+                <?php endforeach; ?>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 <?php
 $script = <<< JS
     $(document).on('click', '.xoadiemdanh', function() {

@@ -97,8 +97,8 @@ class QuanlyphuhuynhController extends Controller
             if ($model->load(Yii::$app->request->post())) {
                     if (User::find()->where(['username' => $model->USER_NAME])->exists() == false) {
                         $model->CHUC_VU = 5;
-                        $model->SO_DT = trim($model->SO_DT);
-                        $model->USER_NAME = trim($model->USER_NAME);
+                        $model->DIEN_THOAI = preg_replace('/\s+/', '', $model->DIEN_THOAI);;
+                        $model->USER_NAME = $model->DIEN_THOAI;
                         $model->ID_DONVI = Yii::$app->user->identity->nhanvien->ID_DONVI;
                         $model->save();
                         $user->username = trim($model->USER_NAME);
@@ -111,7 +111,7 @@ class QuanlyphuhuynhController extends Controller
                         $assign = new AuthAssignment;
                         $assign->user_id = $user->id;
                         $assign->item_name = 'phuhuynhhocsinh';
-                        $assign->save(false);
+                        $assign->save();
                         //Luu log them nhan vien
                         $log = new ActivitiesLog;
                         $log->activity_type = 'user-add';
@@ -119,6 +119,7 @@ class QuanlyphuhuynhController extends Controller
                         $log->user_id = Yii::$app->user->identity->id;
                         $log->create_at = time();
                         $log->save();
+                        Yii::$app->session->setFlash('success', "Khởi tạo tài khoản thành công!");
                         return $this->redirect(['index']);
                     } else {
                         Yii::$app->session->setFlash('error', "Tài khoản đã tồn tại trên hệ thống!");

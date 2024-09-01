@@ -20,9 +20,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 <th class="text-center">Họ tên</th>
                 <th class="text-center">SĐT</th>
                 <th class="text-center">Địa chỉ</th>
-                <th class="text-center">Ngày học</th>
-                <th class="text-center">Ngày nghỉ</th>
-                <th class="text-center">TIỀN HỌC</th>
                 <th class="text-center">TIỀN SÁCH/ TÀI LIỆU</th>
                 <th class="text-center">TỔNG TIỀN</th>
                 <th class="text-center">GHI CHÚ</th>
@@ -33,9 +30,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 <td style="border: 1px solid; width: 10%;"><?= $chitiet->hocsinh->HO_TEN?></td>
                 <td style="border: 1px solid; width: 10%;"><?= $chitiet->hocsinh->SO_DT?></td>
             	<td style="border: 1px solid; width: 10%;"><?= $chitiet->hocsinh->DIA_CHI?></td>
-            	<td style="border: 1px solid; width: 7%;"><?= $chitiet->NGAYDIHOC?></td>
-                <td style="border: 1px solid; width: 7%;"><?= $chitiet->NGAY_NGHI?></td>
-            	<td style="border: 1px solid; width: 8%;"><?= $chitiet->TONG_TIENHOC ? $chitiet->TONG_TIENHOC : number_format($chitiet->TIENHOC * $chitiet->SO_BTT)?></td>
                 <td style="border: 1px solid; width: 8%;"><?= number_format($chitiet->TIENKHAC)?></td>
             	<td style="border: 1px solid; width: 8%;"><?= number_format($chitiet->TONG_TIEN)?></td>
                 <td style="border: 1px solid; width: 20%;"><?= nl2br($chitiet->NHAN_XET)?></td>

@@ -93,7 +93,7 @@ class SiteController extends Controller
             ]);
             }
             if (Yii::$app->user->can('quanlytruonghoc')) {
-                $solop = Yii::$app->user->identity->nhanvien->iDDONVI->getLophoc()->count();
+                $solop = Yii::$app->user->identity->nhanvien->iDDONVI->getLophoc()->andWhere(['STATUS' => 1])->count();
                 $sonhanvien = Yii::$app->user->identity->nhanvien->iDDONVI->getNhanviens()->andWhere(['not in', 'CHUC_VU', [5]])->count();
                 $tongsohocvien = Yii::$app->user->identity->nhanvien->iDDONVI->getHocsinh()->andWhere(['STATUS' => 1])->count();
                 $sql = "SELECT b.TEN_LOP, b.ID_LOP

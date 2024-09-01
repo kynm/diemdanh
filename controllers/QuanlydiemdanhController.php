@@ -80,18 +80,23 @@ class QuanlydiemdanhController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        $model = $this->findModel($id);
+        if ($model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+            return $this->render('view', [
+                'model' => $model,
+            ]);
+        }
     }
 
     public function actionIndiemdanhngay($id)
     {
         $this->layout = 'printLayout';
         $model = Quanlydiemdanh::findOne($id);
-        return $this->render('indeimdanhngay', [
-            'model' => $model,
-        ]);
+        if ($model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+            return $this->render('indeimdanhngay', [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**
@@ -102,8 +107,9 @@ class QuanlydiemdanhController extends Controller
      */
     public function actionDelete($id)
     {
-        if (Yii::$app->user->can('delete-diemdanh')) {
-            $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        if (Yii::$app->user->can('delete-diemdanh') && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+            $model->delete();
             
             return $this->redirect(['index']);
         } else {
@@ -179,7 +185,7 @@ class QuanlydiemdanhController extends Controller
     public function actionCapnhatghichubuoihoc($id)
     {
         $quanlydiemdanh = Quanlydiemdanh::findOne($id);
-        if ($quanlydiemdanh->load(Yii::$app->request->post()) && Yii::$app->user->identity->nhanvien->ID_NHANVIEN == $quanlydiemdanh->ID_NHANVIEN) {
+        if ($quanlydiemdanh->load(Yii::$app->request->post()) && Yii::$app->user->identity->nhanvien->ID_DONVI == $quanlydiemdanh->ID_DONVI) {
             $quanlydiemdanh->save();
             Yii::$app->session->setFlash('success', "Cập nhật thành công!");
             return $this->redirect(['/lophoc/capnhatdiemdanh', 'diemdanhid' => $quanlydiemdanh->ID]);
