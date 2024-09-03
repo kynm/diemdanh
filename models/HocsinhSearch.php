@@ -63,6 +63,7 @@ class HocsinhSearch extends Hocsinh
         ]);
 
         $query->andFilterWhere(['=', 'ID_LOP', $this->ID_LOP]);
+        $query->andFilterWhere(['=', 'STATUS', isset($params['STATUS']) ? $this->STATUS : 1]);
         $query->andFilterWhere(['like', 'MA_HOCSINH', $this->MA_HOCSINH])
             ->andFilterWhere(['like', 'HO_TEN', $this->HO_TEN])
             ->andFilterWhere(['like', 'DIA_CHI', $this->DIA_CHI])

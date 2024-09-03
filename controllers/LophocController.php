@@ -316,6 +316,16 @@ class LophocController extends Controller
         if (Yii::$app->user->can('edit-lophoc')) {
             $model = $this->findModel($id);
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                if ($model->TIENHOC) {
+                    $dshocsinhchuacotienhoc = $model->getDshocsinh()->andWhere(['is', 'TIENHOC', new \yii\db\Expression('null')])->all();
+                    foreach ($dshocsinhchuacotienhoc as $key => $hocsinh) {
+                        if (!$hocsinh->TIENHOC) {
+                            $hocsinh->TIENHOC = $model->TIENHOC;
+                            $hocsinh->save();
+                        }
+                    }
+                }
+                Yii::$app->session->setFlash('success', "Cập nhật thành công!");
                 return $this->redirect(['view', 'id' => $model->ID_LOP]);
             } else {
                 return $this->render('update', [

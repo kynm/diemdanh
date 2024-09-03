@@ -37,9 +37,17 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                             [
                                 'attribute' => 'TIEUDE',
-                                'contentOptions' => ['style' => 'width:30%; white-space: normal;word-break: break-word;'],
+                                'contentOptions' => ['style' => 'width:20%; white-space: normal;word-break: break-word;'],
                                 'value' => function ($model) {
                                     return Html::a($model->TIEUDE, ['view', 'id' => $model->ID]);
+                                },
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'created_at',
+                                'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
+                                'value' => function ($model) {
+                                    return Yii::$app->formatter->asDatetime($model->created_at, 'php:d/m/Y');
                                 },
                                 'format' => 'raw',
                             ],

@@ -5,8 +5,10 @@ use yii\helpers\ArrayHelper;
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
 use kartik\select2\Select2;
+use app\models\Trangthaihocsinh;
 /* @var $this yii\web\View */
 /* @var $model app\models\Daivt */
+$tranghtaihs = ArrayHelper::map(Trangthaihocsinh::find()->all(), 'MA_TRANGTHAI', 'TRANGTHAI');
 
 $this->title = 'QUẢN LÝ HỌC SINH';
 $this->params['breadcrumbs'][] = ['label' => 'Đơn vị', 'url' => ['donvi/index']];
@@ -70,8 +72,14 @@ $this->params['breadcrumbs'][] = $this->title;
                         'format' => 'raw',
                     ],
                     [
-                        'attribute' => 'CHANGE_STATUS',
+                        'attribute' => 'STATUS',
                         'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
+                        'filter'=> $tranghtaihs,
+                        'filterType' => GridView::FILTER_SELECT2,
+                        'filterWidgetOptions' => [
+                            'options' => ['prompt' => ''],
+                            'pluginOptions' => ['allowClear' => true],
+                        ],
                         'value' => function ($model) {
                             return '<input type="checkbox" '.  ($model->STATUS ? 'checked' : '') .  ' data-id="'  . $model->ID .  '" class="doitrangthaihocsinh"/> ' . $model->trangthai->TRANGTHAI;
                         },

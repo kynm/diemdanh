@@ -36,6 +36,22 @@ $this->params['breadcrumbs'][] = $this->title;
             	<td style="border: 1px solid; width: 10%;"><?= statusthutien()[$chitiet->STATUS]?></td>
             </tr>
             <?php endforeach; ?>
+            <tr>
+                <td colspan="7">
+                    HỌC PHÍ THEO KHÓA
+                </td>
+            </tr>
+            <?php foreach ($dshocphithutruoc as $key => $chitiet1): ?>
+            <tr class="text-center">
+                <td style="border: 1px solid; width: 10%;"><?= $chitiet1->hocsinh->HO_TEN?></td>
+                <td style="border: 1px solid; width: 10%;"><?= $chitiet1->hocsinh->SO_DT?></td>
+                <td style="border: 1px solid; width: 10%;"><?= $chitiet1->hocsinh->DIA_CHI?></td>
+                <td style="border: 1px solid; width: 8%;"><?= number_format($chitiet1->TIENKHAC)?></td>
+                <td style="border: 1px solid; width: 8%;"><?= number_format($chitiet1->TONGTIEN)?></td>
+                <td style="border: 1px solid; width: 20%;"><?= nl2br($chitiet1->GHICHU)?></td>
+                <td style="border: 1px solid; width: 10%;"><?= statusthutien()[$chitiet1->STATUS]?></td>
+            </tr>
+            <?php endforeach; ?>
         </tbody>
     </table>
 </div>

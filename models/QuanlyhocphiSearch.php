@@ -47,15 +47,17 @@ class QuanlyhocphiSearch extends Quanlyhocphi
         if (!$this->validate()) {
             return $dataProvider;
         }
-
+        $query->joinWith('lop');
         // grid filtering conditions
         $query->andFilterWhere([
-            'ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI,
+            'quanlyhocphi.ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI,
         ]);
 
         $query->andFilterWhere(['like', 'TIEUDE', $this->TIEUDE]);
         $query->andFilterWhere(['=', 'ID_LOP', $this->ID_LOP]);
         $query->orderBy([
+            'created_at' => SORT_DESC,
+            'lophoc.TEN_LOP' => SORT_DESC,
             'TU_NGAY' => SORT_DESC,
             'DEN_NGAY' => SORT_DESC,
         ]);

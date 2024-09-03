@@ -14,6 +14,7 @@ use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use app\models\Lophoc;
 use app\models\Chitiethocphi;
+use app\models\Quanlyhocphithutruoc;
 /**
  * diemdanhController implements the CRUD actions for diemdanh model.
  */
@@ -163,18 +164,35 @@ class QuanlyhocphiController extends Controller
     {
         $this->layout = 'printLayout';
         $model = Chitiethocphi::findOne($id);
-        return $this->render('chitiethocphi', [
-            'model' => $model,
-        ]);
+        if (Yii::$app->user->can('quanlytruonghoc') && $model && $model->hocphi->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+            $view = 'chitiethocphi';
+            if (Yii::$app->user->can('inngayhoc')) {
+                $view = 'chitiethocphicongayhoc';//thutrang yeu cau
+            }
+            return $this->render($view, [
+                'model' => $model,
+            ]);
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
+        }
     }
 
     public function actionInhocphitheolop($id)
     {
         $this->layout = 'printLayout';
         $model = Quanlyhocphi::findOne($id);
-        return $this->render('inhocphitheolop', [
-            'model' => $model,
-        ]);
+        if (Yii::$app->user->can('quanlytruonghoc') && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+            $dshocphithutruoc = Quanlyhocphithutruoc::find()->where(['ID_DONVI' => $model->ID_DONVI])
+                ->andWhere(['ID_LOP' => $model->ID_LOP])
+                ->andWhere(['between', 'date(NGAY_BD)', Yii::$app->formatter->asDatetime($model->TU_NGAY, 'php:Y-m-d'), Yii::$app->formatter->asDatetime($model->DEN_NGAY, 'php:Y-m-d')])
+                ->all();
+            return $this->render('inhocphitheolop', [
+                'model' => $model,
+                'dshocphithutruoc' => $dshocphithutruoc,
+            ]);
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
+        }
     }
 
     /**
