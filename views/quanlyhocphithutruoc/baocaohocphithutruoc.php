@@ -36,7 +36,6 @@ $this->params['breadcrumbs'][] = $this->title;
             }"],
         ]); ?>
     </div>
-
     <div class="col-sm-3">
         <label class="control-label">Đến ngày</label>
         <?= DatePicker::widget([

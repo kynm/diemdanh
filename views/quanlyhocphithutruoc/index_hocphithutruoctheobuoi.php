@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'attribute' => 'SOTIEN',
                                 'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
                                 'value' => function($model) {
-                                    return $model->STATUS == 1 ? '<input type="number" id="SOTIEN-' . $model->ID . '" name="SOTIEN" class="form-control" value="' . $model->SOTIEN . '" data-id="' . $model->ID  . '">' : $model->SOTIEN;
+                                    return $model->STATUS == 1 ? '<input type="number" id="SOTIEN-' . $model->ID . '" name="SOTIEN" class="form-control" value="' . $model->SOTIEN . '" data-id="' . $model->ID  . '">' : number_format($model->SOTIEN);
                                 },
                                 'format' => 'raw',
                             ],
@@ -67,29 +67,15 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'attribute' => 'TIENKHAC',
                                 'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
                                 'value' => function($model) {
-                                    return $model->STATUS == 1 ? '<input type="number" id="TIENKHAC-' . $model->ID . '" name="TIENKHAC" class="form-control" value="' . $model->TIENKHAC . '" data-id="' . $model->ID  . '">' : $model->TIENKHAC;
+                                    return $model->STATUS == 1 ? '<input type="number" id="TIENKHAC-' . $model->ID . '" name="TIENKHAC" class="form-control" value="' . $model->TIENKHAC . '" data-id="' . $model->ID  . '">' : number_format($model->TIENKHAC);
                                 },
                                 'format' => 'raw',
                             ],
                             [
                                 'attribute' => 'TONGTIEN',
-                                'contentOptions' => ['style' => 'width:6; white-space: normal;word-break: break-word;'],
+                                'contentOptions' => ['style' => 'width:6%; white-space: normal;word-break: break-word;'],
                                 'value' => function($model) {
                                     return '<span id="TONGTIEN-' . $model->ID . '">' . number_format($model->TONGTIEN) . '</span>';
-                                },
-                                'format' => 'raw',
-                            ],
-                            [
-                                'attribute' => 'NGAY_BD',
-                                'value' => function($model) {
-                                    return $model->STATUS == 1 ? '<input type="date" name ="NGAY_BD" value="' . $model->NGAY_BD . '" class="form-control" data-id="' . $model->ID  . '">' : ($model->NGAY_BD ? Yii::$app->formatter->asDatetime($model->NGAY_BD, 'php:d/m/Y') : NULL);
-                                },
-                                'format' => 'raw',
-                            ],
-                            [
-                                'attribute' => 'NGAY_KT',
-                                'value' => function($model) {
-                                    return $model->STATUS == 1 ? '<input type="date" name="NGAY_KT" value="' . $model->NGAY_KT . '" class="form-control" data-id="' . $model->ID  . '">' : ($model->NGAY_KT ? Yii::$app->formatter->asDatetime($model->NGAY_KT, 'php:d/m/Y') : NULL);
                                 },
                                 'format' => 'raw',
                             ],
@@ -131,7 +117,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         return $model->STATUS == 1 ? '<span class="btn btn-primary duyetthuphitruoc" data-id="' . $model->ID . '">Duyệt</span>' : '<span class="btn btn-danger modieuchinh" data-id="' . $model->ID . '">Mở điều chỉnh</span>';
                                     },
                                     'print' => function ($url, $model) {
-                                        return Html::a('<i class="fa fa-print"></i>', ['/quanlyhocphithutruoc/inchitiet', 'id' => $model->ID], ['class' => 'btn btn-primary', 'target' => '_blank']);
+                                        return Html::a('<i class="fa fa-print"></i>', ['/quanlyhocphithutruoc/inchitiet', 'id' => $model->ID], ['class' => 'btn btn-primary btn-flat', 'target' => '_blank']);
                                     },
                                 ],
                             ],

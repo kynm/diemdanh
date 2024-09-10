@@ -47,6 +47,8 @@ use kartik\date\DatePicker;
                 <div class="col-sm-2">
                     <?= $form->field($model, 'TIENKHAC')->textInput(['maxlength' => true, 'type' => 'number']) ?>
                 </div>
+                <?php 
+                if (!Yii::$app->user->can('hocphithutruoctheobuoi')) { ?>
                 <div class="col-sm-3">
                     <label class="control-label">TỪ NGÀY</label>
                     <?= DatePicker::widget([
@@ -75,6 +77,7 @@ use kartik\date\DatePicker;
                         ]
                     ]); ?>
                 </div>
+                <?php } ?>
                 <div class="col-sm-12">
                     <?= $form->field($model, 'GHICHU')->textarea(['rows' => '6']) ?>
                 </div>

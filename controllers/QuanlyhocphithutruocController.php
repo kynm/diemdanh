@@ -44,7 +44,11 @@ class QuanlyhocphithutruocController extends Controller
         $searchModel = new QuanlyhocphithutruocSearch();
         $dataProvider = $searchModel->searchhocphithutruoctheodonvi(Yii::$app->request->queryParams);
         $dslop = ArrayHelper::map(Lophoc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->all(), 'ID_LOP', 'TEN_LOP');
-        return $this->render('index', [
+        $view = 'index';
+        if (Yii::$app->user->can('hocphithutruoctheobuoi')) {
+            $view = 'index_hocphithutruoctheobuoi';
+        }
+        return $this->render($view, [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'dslop' => $dslop,
@@ -58,18 +62,28 @@ class QuanlyhocphithutruocController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        $model = $this->findModel($id);
+        if (Yii::$app->user->can('quanlyhocphi') && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');           
+        }
     }
 
     public function actionInchitiet($id)
     {
         $this->layout = 'printLayout';
         $model = Quanlyhocphithutruoc::findOne($id);
-        return $this->render('inchitiet', [
-            'model' => $model,
-        ]);
+        if (Yii::$app->user->can('quanlyhocphi') && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+            $view = Yii::$app->user->identity->nhanvien->iDDONVI->invoice_hocphithutruoc ? Yii::$app->user->identity->nhanvien->iDDONVI->invoice_hocphithutruoc : 'inchitiet';
+            return $this->render($view, [
+                'model' => $model,
+            ]);
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');           
+        }
     }
 
     /**
@@ -102,8 +116,8 @@ class QuanlyhocphithutruocController extends Controller
                             if ($model->hocsinh->TIENHOC) {
                                 $model->SOTIEN = $inputs['Quanlyhocphithutruoc']['SO_BH'] * $model->hocsinh->TIENHOC;
                             }
-                            $model->NGAY_BD = $inputs['Quanlyhocphithutruoc']['NGAY_BD'];
-                            $model->NGAY_KT = $inputs['Quanlyhocphithutruoc']['NGAY_KT'];
+                            $model->NGAY_BD = isset($inputs['Quanlyhocphithutruoc']['NGAY_BD']) ? $inputs['Quanlyhocphithutruoc']['NGAY_BD'] : null;
+                            $model->NGAY_KT = isset($inputs['Quanlyhocphithutruoc']['NGAY_KT']) ? $inputs['Quanlyhocphithutruoc']['NGAY_KT'] : null;
                             $model->GHICHU = $inputs['Quanlyhocphithutruoc']['GHICHU'];
                             $model->TIENKHAC = $inputs['Quanlyhocphithutruoc']['TIENKHAC'];
                             $model->TIENKHAC = $model->TIENKHAC ? $model->TIENKHAC : null;
@@ -136,8 +150,7 @@ class QuanlyhocphithutruocController extends Controller
     {
         if (Yii::$app->user->can('edit-hocsinh')) {
             $model = $this->findModel($id);
-
-            if ($model->load(Yii::$app->request->post())) {
+            if ($model->load(Yii::$app->request->post()) && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
                 $model->TONGTIEN = (int)$model->SOTIEN + (int)$model->TIENKHAC;
                 $model->save();
                 Yii::$app->session->setFlash('success', "Cập nhật thành công!");
@@ -340,26 +353,65 @@ class QuanlyhocphithutruocController extends Controller
 
     public function actionCanhbaotheongay()
     {
-        $searchModel = new HocsinhSearch();
-        $dataProvider = $searchModel->searchhocsinhhethantheongay(Yii::$app->request->queryParams);
-        $dslop = ArrayHelper::map(Lophoc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->all(), 'ID_LOP', 'TEN_LOP');
-        return $this->render('canhbaotheongay', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'dslop' => $dslop,
-        ]);
+        if (Yii::$app->user->can('quanlyhocphi')) {
+            $searchModel = new HocsinhSearch();
+            $dataProvider = $searchModel->searchhocsinhhethantheongay(Yii::$app->request->queryParams);
+            $dslop = ArrayHelper::map(Lophoc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->all(), 'ID_LOP', 'TEN_LOP');
+            return $this->render('canhbaotheongay', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'dslop' => $dslop,
+            ]);
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
     }
 
     public function actionCanhbaotheosobuoihoc()
     {
-        $searchModel = new HocsinhSearch();
-        $dataProvider = $searchModel->searchhocsinhhetheosobuoihoc(Yii::$app->request->queryParams);
-        $dslop = ArrayHelper::map(Lophoc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->all(), 'ID_LOP', 'TEN_LOP');
-        return $this->render('canhbaotheosobuoihoc', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'dslop' => $dslop,
-        ]);
+        if (Yii::$app->user->can('quanlyhocphi')) {
+            $params = Yii::$app->request->queryParams;
+            $dslop = ArrayHelper::map(Lophoc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->andWhere(['STATUS' => 1])->all(), 'ID_LOP', 'TEN_LOP');
+            $dsidlop = (isset($params['ID_LOP'])  && $params['ID_LOP']) ? [$params['ID_LOP'] => $params['ID_LOP']] : array_keys($dslop);
+            $sql = "SELECT bh.TEN_LOP, bh.HO_TEN,bh.SOLUONG_DAHOC, bdt.SOLUONG_DADONGTIEN,(bdt.SOLUONG_DADONGTIEN - bh.SOLUONG_DAHOC) SOBUOI_CONLAI FROM
+            (SELECT b.ID,a.TEN_LOP, b.HO_TEN, sum(case when c.`STATUS` = 1 then 1 ELSE 0 END) SOLUONG_DAHOC FROM lophoc a, hocsinh b, diemdanhhocsinh c WHERE a.ID_LOP = b.ID_LOP AND b.ID = c.ID_HOCSINH AND a.ID_DONVI = :ID_DONVI and a.ID_LOP IN (" . implode(',', $dsidlop) . ") and b.NGAY_KT IS NULL GROUP BY b.ID,a.TEN_LOP, b.HO_TEN) bh,
+            (SELECT b.ID, sum(case when c.`STATUS` = 2 then c.SO_BH ELSE 0 END) SOLUONG_DADONGTIEN FROM lophoc a, hocsinh b, quanlyhocphithutruoc c WHERE a.ID_LOP = b.ID_LOP AND b.ID = c.ID_HOCSINH AND a.ID_DONVI = :ID_DONVI and a.ID_LOP IN (" . implode(',', $dsidlop) . ") and b.NGAY_KT IS NULL GROUP BY b.ID) bdt
+            WHERE bh.ID = bdt.ID ORDER BY bh.TEN_LOP asc, (bdt.SOLUONG_DADONGTIEN - bh.SOLUONG_DAHOC) ASC";
+            $result = Yii::$app->db->createCommand($sql)->bindValues(
+                [
+                    ':ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI,
+                ])->queryAll();
+            if (isset($params['is_excel']) && $params['is_excel']) {
+                $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+                $spreadsheet->createSheet();
+                $spreadsheet->setActiveSheetIndex(0);
+                $sheet = $spreadsheet->getActiveSheet();
+                $sheet->fromArray(
+                    ['STT', 'LỚP', 'HỌC SINH', 'SỐ BUỔI ĐÃ THU TIỀN', 'SỐ BUỔI ĐÃ HỌC', 'SỐ BUỔI CÒN LẠI'],
+                    '',
+                    'A1'
+                );
+                $sheet->fromArray(
+                    $result,
+                    '',
+                    'A2'
+                );
+                $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+                $file_name = "DS CHƯA 5S";
+                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                header('Content-Disposition: attachment;filename="'. 'DỮ LIỆU TỔNG HỢP HỌC PHÍ - ' . Yii::$app->user->identity->nhanvien->iDDONVI->TEN_DONVI .'.xlsx"');
+                header('Cache-Control: max-age=0');
+                $writer->save("php://output");
+                exit;
+            }
+            return $this->render('canhbaotheosobuoihoc', [
+                'result' => $result,
+                'dslop' => $dslop,
+                'params' => $params,
+            ]);
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
     }
 
     public function actionBaocaohocphithutruoc()

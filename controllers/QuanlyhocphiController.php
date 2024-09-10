@@ -15,6 +15,7 @@ use yii\helpers\ArrayHelper;
 use app\models\Lophoc;
 use app\models\Chitiethocphi;
 use app\models\Quanlyhocphithutruoc;
+use kartik\mpdf\Pdf;
 /**
  * diemdanhController implements the CRUD actions for diemdanh model.
  */
@@ -108,8 +109,10 @@ class QuanlyhocphiController extends Controller
             $hocphi->SO_BDH = $chitiet['SOLUONGDIHOC'];
             $hocphi->SO_BTT = $chitiet['SOLUONGDIHOC'];
             $hocphi->TIENHOC = $chitiet['TIENHOC'];
-            $hocphi->TONG_TIENHOC = $hocphi->SO_BTT * $hocphi->TIENHOC;
-            $hocphi->TONG_TIEN = $hocphi->TONG_TIENHOC + $hocphi->TIENKHAC;
+            if ($hocphi->STATUS == 0) {
+                $hocphi->TONG_TIENHOC = $hocphi->SO_BTT * $hocphi->TIENHOC;
+                $hocphi->TONG_TIEN = $hocphi->TONG_TIENHOC + $hocphi->TIENKHAC;
+            }
             $hocphi->save(false);
         }
      }
@@ -136,6 +139,7 @@ class QuanlyhocphiController extends Controller
                 foreach ($model->chitiethocphi as $key => $chitiet) {
                     if ($sobuoi) {
                         $chitiet->SO_BTT = $sobuoi;
+                        $chitiet->TONG_TIENHOC = $chitiet->SO_BTT * $chitiet->TIENHOC;
                     }
 
                     if ($tongtien) {
@@ -184,7 +188,7 @@ class QuanlyhocphiController extends Controller
         if (Yii::$app->user->can('quanlytruonghoc') && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
             $dshocphithutruoc = Quanlyhocphithutruoc::find()->where(['ID_DONVI' => $model->ID_DONVI])
                 ->andWhere(['ID_LOP' => $model->ID_LOP])
-                ->andWhere(['between', 'date(NGAY_BD)', Yii::$app->formatter->asDatetime($model->TU_NGAY, 'php:Y-m-d'), Yii::$app->formatter->asDatetime($model->DEN_NGAY, 'php:Y-m-d')])
+                // ->andWhere(['between', 'date(NGAY_BD)', Yii::$app->formatter->asDatetime($model->TU_NGAY, 'php:Y-m-d'), Yii::$app->formatter->asDatetime($model->DEN_NGAY, 'php:Y-m-d')])
                 ->all();
             return $this->render('inhocphitheolop', [
                 'model' => $model,
@@ -205,7 +209,7 @@ class QuanlyhocphiController extends Controller
     {
         if (Yii::$app->user->can('quanlytruonghoc')) {
             $model = $this->findModel($id);
-            if ($model->getChitiethocphi()->where(['STATUS' => 1])->count()) {
+            if ($model->getChitiethocphi()->where(['STATUS' => 1])->count() && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
                 Yii::$app->session->setFlash('error', "Không thể xóa do đã tồn tại lượt thanh toán học phí");
                 return $this->redirect(['view', 'id' => $id]);
             }   else {
@@ -490,6 +494,80 @@ class QuanlyhocphiController extends Controller
             return json_encode($result);
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+
+    public function actionExportpdf($id)
+    {
+        $this->layout = 'printLayout';
+        $model = Quanlyhocphi::findOne($id);
+        if (Yii::$app->user->can('quanlytruonghoc') && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+            $html = '';
+            foreach ($model->chitiethocphi as $key => $chitiet) {
+                $html .= $this->renderPartial('chitiethocphi', ['model' => $chitiet]);
+            }
+            Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
+            $filename = $model->TIEUDE . ' - ' . $model->lop->TEN_LOP . ' - '  . Yii::$app->user->identity->nhanvien->iDDONVI->TEN_DONVI . '.pdf';
+            $pdf = new Pdf([
+                'mode' => Pdf::MODE_UTF8,
+                'content' => $html,
+                'options' => [
+                    // any mpdf options you wish to set
+                ],
+                'filename' => $filename,
+                'destination' => Pdf::DEST_DOWNLOAD,
+                'methods' => [
+                    'SetTitle' => Yii::$app->user->identity->nhanvien->iDDONVI->TEN_DONVI,
+                    'SetSubject' => Yii::$app->user->identity->nhanvien->iDDONVI->TEN_DONVI,
+                    'SetHeader' => [Yii::$app->user->identity->nhanvien->iDDONVI->TEN_DONVI . ' - ' .  $model->TIEUDE],
+                    'SetFooter' => ['|Page {PAGENO}|'],
+                    'SetAuthor' => Yii::$app->user->identity->nhanvien->TEN_NHANVIEN,
+                    'SetCreator' => Yii::$app->user->identity->nhanvien->TEN_NHANVIEN,
+                    'SetKeywords' => 'Krajee, Yii2, Export, PDF, MPDF, Output, Privacy, Policy, yii2-mpdf',
+                ]
+            ]);
+            Yii::$app->response->headers->add('Content-Type', 'application/pdf');
+            return $pdf->render();
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
+        }
+    }
+
+    public function actionExportpdfchitiet($id)
+    {
+        $this->layout = 'printLayout';
+        $model = Chitiethocphi::findOne($id);
+        if (Yii::$app->user->can('quanlytruonghoc') && $model && $model->hocphi->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+            $view = 'chitiethocphi';
+            if (Yii::$app->user->can('inngayhoc')) {
+                $view = 'chitiethocphicongayhoc';//thutrang yeu cau
+            }
+            Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
+            $filename = $model->hocphi->TIEUDE . ' - ' . $model->hocsinh->HO_TEN . '.pdf';
+            $pdf = new Pdf([
+                'mode' => Pdf::MODE_UTF8,
+                'content' => $this->renderPartial($view, ['model' => $model]),
+                'options' => [
+                    // any mpdf options you wish to set
+                ],
+                'filename' => $filename,
+                'destination' => Pdf::DEST_DOWNLOAD,
+                'methods' => [
+                    'SetTitle' => Yii::$app->user->identity->nhanvien->iDDONVI->TEN_DONVI,
+                    'SetSubject' => Yii::$app->user->identity->nhanvien->iDDONVI->TEN_DONVI,
+                    'SetHeader' => [$model->hocsinh->HO_TEN . ' - ' .  $model->hocphi->TIEUDE],
+                    'SetFooter' => ['|Page {PAGENO}|'],
+                    'SetAuthor' => Yii::$app->user->identity->nhanvien->TEN_NHANVIEN,
+                    'SetCreator' => Yii::$app->user->identity->nhanvien->TEN_NHANVIEN,
+                    'SetKeywords' => 'Krajee, Yii2, Export, PDF, MPDF, Output, Privacy, Policy, yii2-mpdf',
+                ]
+            ]);
+            Yii::$app->response->headers->add('Content-Type', 'application/pdf');
+            return $pdf->render();
+
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
         }
     }
 }

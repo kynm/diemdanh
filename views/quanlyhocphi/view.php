@@ -12,6 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="quanlyhocphi-view">
     <p>
+    <?= Html::a('<i class="fa fa-arrow-left"></i> Quay lại', ['/quanlyhocphi/index'], ['class' => 'btn btn-danger btn-flat']) ?>
     <?php if (Yii::$app->user->can('quanlyhocphi') && !$model->getChitiethocphi()->where(['STATUS' => 1])->count()):?>
         <?= Html::a('<i class="fa fa-trash-o"></i> Xóa', ['delete', 'id' => $model->ID], [
             'class' => 'btn btn-danger btn-flat',
@@ -21,7 +22,8 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     <?php endif; ?>
-    <?= Html::a('<i class="fa fa-pencil-square-o"></i> In theo lớp', ['/quanlyhocphi/inhocphitheolop', 'id' => $model->ID], ['class' => 'btn btn-primary btn-flat', 'target' => '_blank']) ?>
+    <?= Html::a('<i class="fa fa-print"></i> In theo lớp', ['/quanlyhocphi/inhocphitheolop', 'id' => $model->ID], ['class' => 'btn btn-primary btn-flat', 'target' => '_blank']) ?>
+    <?= Html::a('<i class="fa fa-file-pdf-o"></i> Export Pdf', ['/quanlyhocphi/exportpdf', 'id' => $model->ID], ['class' => 'btn btn-success btn-flat', 'target' => '_blank']) ?>
     <?php if (Yii::$app->user->can('quanlyhocphi')):?>
     <span class="pull-right btn btn-warning bosunghocsinh" data-id="<?= $model->ID?>">Bổ sung HS</span>
     <?php endif; ?>
@@ -51,6 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ]) ?>
 <?php endif; ?>
 <div class="box-body table-responsive">
+    <h4 class="text-center text-success invisible text-alert">Xác nhận thành công</h4>
     <table class="table table-bordered" style="font-size: 14px;">
         <tbody>
             <tr class="bg-primary text-center">
@@ -68,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <th class="text-center">GHI CHÚ</th>
                 <th class="text-center"></th>
             </tr>
-            <?php foreach ($model->chitiethocphi as $key => $chitiet):
+            <?php foreach ($model->getChitiethocphi()->orderBy(['STATUS' => SORT_ASC])->all() as $key => $chitiet):
                 ?>
                 <tr>
                     <td scope="col"><?= $key + 1;?></td>
@@ -84,12 +87,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     <td><input class="form-control capnhattongtien" id="tongtien-<?= $chitiet->ID ?>" type="number" value="<?= $chitiet->TONG_TIEN?>" data-id="<?= $chitiet->ID ?>"></td>
                     <td width="15%"><textarea class="form-control capnhatghichu" data-id="<?= $chitiet->ID ?>"><?= $chitiet->NHAN_XET?></textarea></td>
                     <td width="5%">
-                        <?= Html::a('<i class="fa fa-pencil-square-o"></i> In học phí', ['/quanlyhocphi/chitiethocphi', 'id' => $chitiet->ID], ['class' => 'btn btn-primary btn-flat', 'target' => '_blank']) ?>
+                        <?= Html::a('<i class="fa fa-print"></i> In', ['/quanlyhocphi/chitiethocphi', 'id' => $chitiet->ID], ['class' => 'btn btn-primary btn-flat', 'target' => '_blank']) ?>
+                        <?= Html::a('<i class="fa fa-file-pdf-o"></i> Pdf', ['/quanlyhocphi/exportpdfchitiet', 'id' => $chitiet->ID], ['class' => 'btn btn-primary btn-flat', 'target' => '_blank']) ?>
                         <?php if (Yii::$app->user->can('quanlyhocphi') && !$chitiet->STATUS):?>
                             <span class="btn btn-flat btn-warning xacnhanthuhocphi" data-id="<?= $chitiet->ID ?>">Xác nhận thu tiền</span>
                             <span class="btn btn-flat btn-danger xoaluotthuhocphi" data-id="<?= $chitiet->ID ?>">Xóa</span>
                         <?php else: ?>
-                            <span class="btn btn-flat btn-success">Đã thu</span>
+                            <span class="btn btn-danger modieuchinh" data-id="<?= $chitiet->ID ?>">Mở điều chỉnh</span>
                         <?php endif; ?>
                     </td>
                 </tr>
@@ -221,7 +225,7 @@ $('.capnhatsotienmoibuoi').on('change', function() {
                         Swal.fire('Xác nhận thành công');
                         setTimeout(() => {
                             window.location.reload(true);
-                        }, 1000);
+                        }, 800);
                     }
                 }
             });
@@ -254,7 +258,7 @@ $('.capnhatsotienmoibuoi').on('change', function() {
                         Swal.fire('Xác nhận thành công');
                         setTimeout(() => {
                             window.location.reload(true);
-                        }, 1000);
+                        }, 800);
                     }
                 }
             });
@@ -285,7 +289,38 @@ $('.capnhatsotienmoibuoi').on('change', function() {
                         Swal.fire('Bổ sung thành công!');
                         setTimeout(() => {
                             window.location.reload(true);
-                        }, 1000);
+                        }, 800);
+                    }
+                }
+            });
+        }
+        });
+    });
+    $(document).on('click', '.modieuchinh', function() {
+        Swal.fire({
+            title: 'Bạn có chắc chắn chưa thu học phí học sinh này không?',
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: 'ĐÃ THU!',
+            cancelButtonText: "CHƯA THU!"
+        }).then((result) => {
+        if (result['isConfirmed']) {
+            var capnhatghichu = $(this).val();
+            var id = $(this).data('id');
+            $.ajax({
+                url: '/quanlyhocphi/modieuchinh',
+                method: 'post',
+                data: {
+                    id: id,
+                },
+                success:function(data) {
+                    data = jQuery.parseJSON(data);
+                    if (!data.error) {
+                        Swal.fire('Xác nhận thành công');
+                        setTimeout(() => {
+                            window.location.reload(true);
+                        }, 800);
                     }
                 }
             });

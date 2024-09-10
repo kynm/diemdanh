@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             {
                                 $allrules = ArrayHelper::map($model->user->assignments, 'item_name', 'item_name');
                                 $text = '';
-                                if (Yii::$app->user->can('diemdanhlophoc') && $model->ID_NHANVIEN != Yii::$app->user->identity->nhanvien->ID_NHANVIEN) {
+                                if (Yii::$app->user->can('quanlytruonghoc') && $model->ID_NHANVIEN != Yii::$app->user->identity->nhanvien->ID_NHANVIEN) {
                                     $text .= '<input type="checkbox" name="quyendd" value="1" data-id="'  . $model->ID_NHANVIEN . '" class="phanquyennhanvien" ' .  (in_array('diemdanhlophoc', $allrules) ? 'checked' : '') . '> Diểm danh lớp học<br>';
                                     $text .= '<input type="checkbox" name="quyenddttt" data-id="'  . $model->ID_NHANVIEN . '" value="1" class="phanquyennhanvien"  ' .  (in_array('diemdanhtoantrungtam', $allrules) ? 'checked' : '') . '> Diểm danh toàn trung tâm<br>';
                                 }

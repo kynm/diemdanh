@@ -54,7 +54,7 @@ class QuanlyhocphiSearch extends Quanlyhocphi
         ]);
 
         $query->andFilterWhere(['like', 'TIEUDE', $this->TIEUDE]);
-        $query->andFilterWhere(['=', 'ID_LOP', $this->ID_LOP]);
+        $query->andFilterWhere(['=', 'quanlyhocphi.ID_LOP', $this->ID_LOP]);
         $query->orderBy([
             'created_at' => SORT_DESC,
             'lophoc.TEN_LOP' => SORT_DESC,

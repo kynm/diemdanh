@@ -91,7 +91,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?php foreach ($header as $b => $h):
                         ?>
                             <td class="text-center">
-                                <?= (isset($row['STATUS'][$b]['STATUS']) && $row['STATUS'][$b]['STATUS']) ? 'X' : 'NGHỈ'?><br/>
+                                <?= (isset($row['STATUS'][$b]['STATUS']) && $row['STATUS'][$b]['STATUS']) ? '<i class="fa fa-check-square-o" aria-hidden="true"></i>' : 'NGHỈ'?><br/>
                                 <?= isset($row['NHAN_XET'][$b]['NHAN_XET']) ? nl2br($row['NHAN_XET'][$b]['NHAN_XET']) : null?><br/>
                             </td>
                         <?php endforeach; ?>

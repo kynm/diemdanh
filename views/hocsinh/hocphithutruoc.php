@@ -30,6 +30,15 @@ $this->params['breadcrumbs'][] = $this->title;
                         'filterModel' => $searchModel,
                         'columns' => [
                             ['class' => 'yii\grid\SerialColumn'],
+
+                            [
+                                'attribute' => 'TIEUDE',
+                                'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
+                                'value' => function ($model) {
+                                    return $model->TIEUDE;
+                                },
+                                'format' => 'raw',
+                            ],
                             [
                                 'attribute' => 'STATUS',
                                 'value' => function ($model) {
@@ -44,14 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 },
                                 'format' => 'raw',
                             ],
-                            [
-                                'attribute' => 'TIEUDE',
-                                'contentOptions' => ['style' => 'width:30%; white-space: normal;word-break: break-word;'],
-                                'value' => function ($model) {
-                                    return $model->TIEUDE;
-                                },
-                                'format' => 'raw',
-                            ],
+                            'SO_BH',
                             [
                                 'attribute' => 'ID_LOP',
                                 'value' => 'lop.TEN_LOP',

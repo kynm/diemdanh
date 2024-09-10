@@ -61,6 +61,11 @@ class Quanlyhocphithutruoc extends \yii\db\ActiveRecord
         return $this->hasOne(Lophoc::className(), ['ID_LOP' => 'ID_LOP']);
     }
 
+    public function getDonvi()
+    {
+        return $this->hasOne(Donvi::className(), ['ID_DONVI' => 'ID_DONVI']);
+    }
+
     public function getHocsinh()
     {
         return $this->hasOne(Hocsinh::className(), ['ID' => 'ID_HOCSINH']);

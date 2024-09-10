@@ -36,6 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
             	<td style="border: 1px solid; width: 10%;"><?= statusthutien()[$chitiet->STATUS]?></td>
             </tr>
             <?php endforeach; ?>
+            <?php if($dshocphithutruoc) :?>
             <tr>
                 <td colspan="7">
                     HỌC PHÍ THEO KHÓA
@@ -49,9 +50,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 <td style="border: 1px solid; width: 8%;"><?= number_format($chitiet1->TIENKHAC)?></td>
                 <td style="border: 1px solid; width: 8%;"><?= number_format($chitiet1->TONGTIEN)?></td>
                 <td style="border: 1px solid; width: 20%;"><?= nl2br($chitiet1->GHICHU)?></td>
-                <td style="border: 1px solid; width: 10%;"><?= statusthutien()[$chitiet1->STATUS]?></td>
+                <td style="border: 1px solid; width: 10%;"><?= statusduyethocphithutruoc()[$chitiet1->STATUS]?></td>
             </tr>
             <?php endforeach; ?>
+            <?php endif; ?>
         </tbody>
     </table>
 </div>

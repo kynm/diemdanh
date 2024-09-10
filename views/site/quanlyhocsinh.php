@@ -21,9 +21,7 @@ $this->title = 'QUẢN LÝ ĐIỂM DANH';
             <br>
         <?php endif; ?>
     <?php endif; ?>
-    <?php if (!Yii::$app->user->identity->nhanvien->iDDONVI->EMAIL):?>
-        <marquee onmouseover="this.stop();" onmouseout="this.start();" class="text-danger text-center" style="color:red">THÔNG BÁO: EASYCHECK hiện đã có tính năng tự động gửi email thông báo tình hình điểm danh. Vui lòng cập nhật Email để nhận thông báo:<?= Html::a('Cấu hình', ['/user/cauhinhdonvi'], ['class' => 'small-box-footer']) ?></marquee>
-    <?php endif; ?>
+
 <div class="row">
     <div class="col-lg-3 col-6">
         <div class="info-box">
@@ -61,7 +59,7 @@ $this->title = 'QUẢN LÝ ĐIỂM DANH';
             </div>
         </div>
     </div>
-    <?php if (Yii::$app->user->can('quanlyhocphi') && Yii::$app->user->identity->nhanvien->iDDONVI->HPTT):?>
+    <?php if (Yii::$app->user->can('quanlyhocphi')):?>
     <div class="col-lg-3 col-6">
         <div class="info-box">
             <span class="info-box-icon bg-aqua"><i class="fa fa-check" aria-hidden="true"></i></span>
@@ -71,36 +69,12 @@ $this->title = 'QUẢN LÝ ĐIỂM DANH';
             </div>
         </div>
     </div>
-    <?php endif; ?>
-    <?php if (Yii::$app->user->can('quanlyhocphi') && Yii::$app->user->identity->nhanvien->iDDONVI->HP_T):?>
     <div class="col-lg-3 col-6">
         <div class="info-box">
             <span class="info-box-icon bg-aqua"><i class="fa fa-check" aria-hidden="true"></i></span>
             <div class="info-box-content">
                 <span class="info-box-number"  style="font-size: 20px; color: red;">QUẢN LÝ HỌC PHÍ THU TRƯỚC</span>
                 <?= Html::a('<i class="fa fa-arrow-circle-right"></i> QUẢN LÝ HỌC PHÍ THU TRƯỚC', ['/quanlyhocphithutruoc/index'], ['class' => 'small-box-footer']) ?>
-            </div>
-        </div>
-    </div>
-    <?php endif; ?>
-    <?php if (Yii::$app->user->can('quanlytruonghoc') && Yii::$app->user->can('quanlyphuhuynh')):?>
-    <div class="col-lg-3 col-6">
-        <div class="info-box">
-            <span class="info-box-icon bg-aqua"><i class="fa fa-check" aria-hidden="true"></i></span>
-            <div class="info-box-content">
-                <span class="info-box-number"  style="font-size: 20px; color: red;">QUẢN LÝ PHỤ HUYNH</span>
-                <?= Html::a('<i class="fa fa-arrow-circle-right"></i> DS PHỤ HUYNH', ['/quanlyphuhuynh/index'], ['class' => 'small-box-footer']) ?>
-            </div>
-        </div>
-    </div>
-    <?php endif; ?>
-    <?php if (Yii::$app->user->can('quanlytruonghoc') && Yii::$app->user->can('quanlytintuc')):?>
-    <div class="col-lg-3 col-6">
-        <div class="info-box">
-            <span class="info-box-icon bg-aqua"><i class="fa fa-check" aria-hidden="true"></i></span>
-            <div class="info-box-content">
-                <span class="info-box-number"  style="font-size: 20px; color: red;">QUẢN LÝ TIN TỨC</span>
-                <?= Html::a('<i class="fa fa-arrow-circle-right"></i> DS TIN TỨC', ['/quanlytintuc/index'], ['class' => 'small-box-footer']) ?>
             </div>
         </div>
     </div>
@@ -143,17 +117,6 @@ $this->title = 'QUẢN LÝ ĐIỂM DANH';
         </tbody>
     </table>
 </div>
-<?php if (Yii::$app->user->can('quanlyhocphi') && Yii::$app->user->identity->nhanvien->iDDONVI->HPTT):?>
-    <div class="text-center" style="color: red;font-size: 20px;">
-        <span ><i class="fa fa-star"></i>HỌC SINH CHƯA THU HỌC PHÍ HÀNG THÁNG: <span style="color: red;font-size: 30px;"><?= $slhocphichuathu[0]['SOLUONG']?></span> HỌC SINH</span> <?= Html::a('CHI TIẾT', ['/quanlyhocphi/chitietthuhocphidonvi'], ['target' => '_blank']) ?>
-    </div>
-<?php endif; ?>
-<?php if (Yii::$app->user->can('quanlyhocphi') && Yii::$app->user->identity->nhanvien->iDDONVI->HP_T):?>
-    <div class="text-center" style="color: red;font-size: 20px;">
-        <span ><i class="fa fa-star"></i>HỌC SINH CHƯA THU HỌC PHÍ (THU TRƯỚC): <span style="color: red;font-size: 30px;"><?= $slhocphithutruocchuathu[0]['SOLUONG']?></span> HỌC SINH</span> <?= Html::a('CHI TIẾT', ['/quanlyhocphithutruoc/index'], ['target' => '_blank']) ?>
-        <br/><span><i class="fa fa-star"></i>HỌC SINH HẾT HỌC PHÍ (THEO BUỔI): <span style="color: red;font-size: 30px;"><?= $slhocsinhhethocphitheobuoi[0]['SOLUONG']?></span> HỌC SINH</span> <?= Html::a('CHI TIẾT', ['/quanlyhocphithutruoc/canhbaotheosobuoihoc'], ['target' => '_blank']) ?>
-    </div>
-<?php endif; ?>
-<?php if (Yii::$app->user->identity->nhanvien->iDDONVI->STATUS == 1):?>
-    <h3 class="text-danger text-center">TÀI KHOẢN THỬ NGHIỆM, ĐĂNG KÝ CHÍNH THỨC ĐỂ MỞ KHÓA CÁC TÍNH NĂNG:<?= Html::a('<i class="fa fa-arrow-circle-right"></i> MUA GÓI', ['/donhang/donvimuagoi'], ['class' => 'small-box-footer']) ?><h3>
-<?php endif; ?>
+    <?php if (Yii::$app->user->identity->nhanvien->iDDONVI->STATUS == 1):?>
+        <h3 class="text-danger text-center">TÀI KHOẢN THỬ NGHIỆM, ĐĂNG KÝ CHÍNH THỨC ĐỂ MỞ KHÓA CÁC TÍNH NĂNG:<?= Html::a('<i class="fa fa-arrow-circle-right"></i> MUA GÓI', ['/donhang/donvimuagoi'], ['class' => 'small-box-footer']) ?><h3>
+    <?php endif; ?>

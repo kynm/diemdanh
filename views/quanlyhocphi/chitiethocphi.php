@@ -19,14 +19,14 @@ $this->params['breadcrumbs'][] = $this->title;
     <table class="table table-bordered" style="font-size: 20px;">
         <tbody>
             <tr class="bg-primary text-center">
-                <th class="text-center">Họ tên</th>
-                <th class="text-center">Lớp</th>
-                <th class="text-center">Ngày nghỉ</th>
-                <th class="text-center">TIỀN HỌC</th>
-                <th class="text-center">TIỀN SÁCH/ TÀI LIỆU</th>
-                <th class="text-center">TỔNG TIỀN</th>
-                <th class="text-center">GHI CHÚ</th>
-                <th class="text-center"></th>
+                <th class="text-center" style="border:  1px solid;">Họ tên</th>
+                <th class="text-center" style="border:  1px solid;">Lớp</th>
+                <th class="text-center" style="border:  1px solid;">Ngày nghỉ</th>
+                <th class="text-center" style="border:  1px solid;">Tiền học</th>
+                <th class="text-center" style="border:  1px solid;">Tiền sách/ Tài liệu</th>
+                <th class="text-center" style="border:  1px solid;">Tổng tiền</th>
+                <th class="text-center" style="border:  1px solid;">Nhận xét</th>
+                <th class="text-center" style="border:  1px solid;"></th>
             </tr>
             <tr class="text-center">
             	<td style="border: 1px solid; width: 15%;"><?= $model->hocsinh->HO_TEN?><br><?= $model->hocsinh->SO_DT?><br><?= $model->hocsinh->DIA_CHI?></td>
@@ -58,3 +58,4 @@ $this->params['breadcrumbs'][] = $this->title;
         </tbody>
     </table>
 </div>
+<pagebreak />

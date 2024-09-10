@@ -111,6 +111,18 @@ class SiteController extends Controller
                 $slhocphichuathu = Yii::$app->db->createCommand($sql)->bindValues(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->queryAll();
                 $sql = "SELECT COUNT(1) SOLUONG FROM quanlyhocphithutruoc a WHERE a.STATUS = 1 and a.ID_DONVI = :ID_DONVI";
                 $slhocphithutruocchuathu = Yii::$app->db->createCommand($sql)->bindValues(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->queryAll();
+                // Học sinh cần đóng học phí theo buổi
+                $slhocsinhhethocphitheobuoi = 0;
+                if (Yii::$app->user->identity->nhanvien->iDDONVI->HP_T) {
+                    $sql = 'SELECT COUNT(1) SOLUONG FROM
+                    (SELECT b.ID,a.TEN_LOP, b.HO_TEN, sum(case when c.`STATUS` = 1 then 1 ELSE 0 END) SOLUONG_DAHOC FROM lophoc a, hocsinh b, diemdanhhocsinh c WHERE a.ID_LOP = b.ID_LOP AND b.ID = c.ID_HOCSINH AND a.ID_DONVI = :ID_DONVI and a.STATUS = 1 and b.NGAY_KT IS NULL GROUP BY b.ID,a.TEN_LOP, b.HO_TEN) bh,
+                    (SELECT b.ID, sum(case when c.`STATUS` = 2 then c.SO_BH ELSE 0 END) SOLUONG_DADONGTIEN FROM lophoc a, hocsinh b, quanlyhocphithutruoc c WHERE a.ID_LOP = b.ID_LOP AND b.ID = c.ID_HOCSINH AND a.ID_DONVI = :ID_DONVI and a.STATUS = 1 and b.NGAY_KT IS NULL GROUP BY b.ID) bdt
+                    WHERE bh.ID = bdt.ID AND bdt.SOLUONG_DADONGTIEN - bh.SOLUONG_DAHOC < 1';
+                    $slhocsinhhethocphitheobuoi = Yii::$app->db->createCommand($sql)->bindValues(
+                    [
+                        ':ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI,
+                    ])->queryAll();
+                }
                 return $this->render('quanlytruonghoc', [
                     'solop' => $solop,
                     'tongsohocvien' => $tongsohocvien,
@@ -118,6 +130,7 @@ class SiteController extends Controller
                     'sonhanvien' => $sonhanvien,
                     'slhocphichuathu' => $slhocphichuathu,
                     'slhocphithutruocchuathu' => $slhocphithutruocchuathu,
+                    'slhocsinhhethocphitheobuoi' => $slhocsinhhethocphitheobuoi,
                 ]);
             }
             if (Yii::$app->user->can('diemdanhlophoc')) {

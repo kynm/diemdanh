@@ -101,6 +101,25 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                             'TU_NGAY',
                             'DEN_NGAY',
+                            [
+                                'attribute' => '',
+                                'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
+                                'value' => function ($model) {
+                                    $text = Html::a('<i class="fa fa-file-pdf-o"></i> Export Pdf', ['/quanlyhocphi/exportpdf', 'id' => $model->ID], ['class' => 'btn btn-success btn-flat', 'target' => '_blank']) . '<br/>';
+                                    if (Yii::$app->user->can('quanlyhocphi') && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI && !$model->getChitiethocphi()->where(['STATUS' => 1])->count()) {
+                                        $text .= Html::a('<i class="fa fa-trash-o"></i> Xóa', ['delete', 'id' => $model->ID], [
+                                            'class' => 'btn btn-danger btn-flat',
+                                            'data' => [
+                                                'confirm' => 'Dữ liệu sẽ biến mất hoàn toàn. Bạn chắc chắn muốn xóa mục này?',
+                                                'method' => 'post',
+                                            ],
+                                        ]);
+                                    }
+
+                                    return $text;
+                                },
+                                'format' => 'raw',
+                            ],
                         ],
                     ]); ?>
                 <?php Pjax::end(); ?>

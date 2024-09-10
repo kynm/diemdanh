@@ -120,6 +120,14 @@
         ];
     }
 
+    function statusduyethocphithutruoc()
+    {
+        return [
+            1 => 'CHƯA ĐÓNG',
+            2 => 'ĐÃ ĐÓNG',
+        ];
+    }
+
     function statustintuc()
     {
         return [
