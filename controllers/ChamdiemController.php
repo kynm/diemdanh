@@ -42,9 +42,9 @@ class ChamdiemController extends Controller
 
     public function actionChamdiemlophoc($idlophoc)
     {
-        if ((Yii::$app->user->can('diemdanhlophoc') || Yii::$app->user->can('chamdiemlophoc')) && $idlophoc) {
+        $model = Lophoc::findOne($idlophoc);
+        if ((Yii::$app->user->can('diemdanhlophoc') || Yii::$app->user->can('chamdiemlophoc')) && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
             $chamdiem = new Chamdiem();
-            $model = Lophoc::findOne($idlophoc);
             $chamdiem->ID_DONVI = Yii::$app->user->identity->nhanvien->ID_DONVI;
             $chamdiem->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
             $chamdiem->ID_LOP  = $idlophoc;
@@ -95,7 +95,10 @@ class ChamdiemController extends Controller
     public function actionCapnhatchamdiem($id)
     {
         $chamdiem = Chamdiem::findOne($id);
-        if (Yii::$app->user->can('diemdanhlophoc') && $chamdiem && $chamdiem->lop->STATUS == 1) {
+        if (Yii::$app->user->can('diemdanhlophoc') && $chamdiem && $chamdiem->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+            if ($chamdiem->load(Yii::$app->request->post()) && $chamdiem->save()) {
+                Yii::$app->session->setFlash('success', "Cập nhật thành công!");
+            }
             return $this->render('capnhatchamdiem', [
                 'chamdiem' => $chamdiem,
             ]);
@@ -104,27 +107,27 @@ class ChamdiemController extends Controller
         }
     }
 
-    /**
-     * Updates an existing Lophoc model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionUpdate($id)
-    {
-        if (Yii::$app->user->can('edit-lophoc')) {
-            $model = $this->findModel($id);
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->ID_LOP]);
-            } else {
-                return $this->render('update', [
-                    'model' => $model,
-                ]);
-            }
-        } else {
-            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
-        }
-    }
+    // /**
+    //  * Updates an existing Lophoc model.
+    //  * If update is successful, the browser will be redirected to the 'view' page.
+    //  * @param integer $id
+    //  * @return mixed
+    //  */
+    // public function actionUpdate($id)
+    // {
+    //     if (Yii::$app->user->can('edit-lophoc')) {
+    //         $model = $this->findModel($id);
+    //         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+    //             return $this->redirect(['view', 'id' => $model->ID_LOP]);
+    //         } else {
+    //             return $this->render('update', [
+    //                 'model' => $model,
+    //             ]);
+    //         }
+    //     } else {
+    //         throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
+    //     }
+    // }
 
     /**
      * Deletes an existing Lophoc model.

@@ -20,6 +20,9 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="row">
             <?php $form = ActiveForm::begin(['action' =>['chamdiem/capnhatchamdiem', 'id' => $chamdiem->ID], 'method' => 'post']); ?>
             <div class="col-sm-12">
+                    <?= $form->field($chamdiem, 'TIEUDE')->textInput(['maxlength' => true]) ?>
+                </div>
+            <div class="col-sm-12">
                 <?= $form->field($chamdiem, 'NOIDUNG')->widget(Summernote::class, [
                     'options' => ['placeholder' => 'NỘI DUNG BÀI KIỂM TRA',
                     'data-id' => $chamdiem->ID,
@@ -38,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?php endif; ?>
                     </div>
                     <div class="col-sm-3">
-                        <input class="form-control capnhatdiem" type="number" data-id="<?= $chitiet->ID ?>" value="<?= $chitiet->DIEM?>" placeholder="ĐIỂM">
+                        <input class="form-control capnhatdiem" type="number" step="0.01" data-id="<?= $chitiet->ID ?>" value="<?= $chitiet->DIEM?>" placeholder="ĐIỂM">
                     </div>
                     <div class="col-sm-6">
                         <textarea class="form-control capnhatghichu" data-id="<?= $chitiet->ID ?>" placeholder="NHẬN XÉT"><?= $chitiet->NHAN_XET?></textarea>
@@ -52,6 +55,9 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php
 $script = <<< JS
     $(document).on('blur', '.note-editable', function () {
+        $('#w0').submit();
+    });
+    $(document).on('blur', '#chamdiem-tieude', function () {
         $('#w0').submit();
     });
 

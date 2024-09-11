@@ -566,7 +566,7 @@ class LophocController extends Controller
     public function actionExport()
     {
         $sql = 'SELECT a.TEN_LOP, b.HO_TEN, b.SO_DT,b.DIA_CHI,b.NGAY_SINH FROM lophoc a, hocsinh b
-            WHERE a.ID_LOP = b.ID_LOP AND a.ID_DONVI = :ID_DONVI
+            WHERE a.ID_LOP = b.ID_LOP AND a.ID_DONVI = :ID_DONVI and a.STATUS = 1 and b.STATUS = 1
             ORDER BY a.TEN_LOP,b.HO_TEN';
         $result =  Yii::$app->db->createCommand($sql)->bindValues([':ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->queryAll();
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
