@@ -134,10 +134,13 @@ class SiteController extends Controller
                 ]);
             }
             if (Yii::$app->user->can('diemdanhlophoc')) {
-                $dslop = Yii::$app->user->identity->nhanvien->iDDONVI->getLophoc()->andWhere(['STATUS' => 1])->andWhere(['ID_NHANVIEN_DIEMDANH' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN])->all();
+                $idlop = ArrayHelper::map(Yii::$app->user->identity->nhanvien->iDDONVI->getLophoc()->andWhere(['STATUS' => 1])->andWhere(['ID_NHANVIEN_DIEMDANH' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN])->all(), 'ID_LOP', 'ID_LOP');
+                $idlop = array_merge($idlop, explode(',', Yii::$app->user->identity->nhanvien->ds_lop));
                 if (Yii::$app->user->can('diemdanhtoantrungtam')) {
-                    $dslop = Yii::$app->user->identity->nhanvien->iDDONVI->getLophoc()->andWhere(['STATUS' => 1])->all();
+                    $idlop = ArrayHelper::map(Yii::$app->user->identity->nhanvien->iDDONVI->getLophoc()->andWhere(['STATUS' => 1])->all(), 'ID_LOP', 'ID_LOP');
                 }
+
+                $dslop = Lophoc::find()->where(['in', 'ID_LOP', $idlop])->all();
                 return $this->render('diemdanhlophoc', [
                     'dslop' => $dslop,
                 ]);

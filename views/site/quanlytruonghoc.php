@@ -52,6 +52,18 @@ $this->title = 'QUẢN LÝ ĐIỂM DANH';
             </div>
         </div>
     </div>
+
+    <?php if (Yii::$app->user->can('quanlytruonghoc')):?>
+    <div class="col-lg-3 col-6">
+        <div class="info-box">
+            <span class="info-box-icon bg-aqua"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+            <div class="info-box-content">
+                <span class="info-box-number"  style="font-size: 20px; color: red;">QUẢN LÝ LỊCH HỌC</span>
+                <?= Html::a('QUẢN LÝ LỊCH HỌC', ['/quanlylichhoc/index'], ['class' => 'small-box-footer']) ?>
+            </div>
+        </div>
+    </div>
+    <?php endif; ?>
     <div class="col-lg-3 col-6">
         <div class="info-box">
             <span class="info-box-icon bg-aqua"><i class="fa fa-check" aria-hidden="true"></i></span>
@@ -64,7 +76,7 @@ $this->title = 'QUẢN LÝ ĐIỂM DANH';
     <?php if (Yii::$app->user->can('quanlyhocphi') && Yii::$app->user->identity->nhanvien->iDDONVI->HPTT):?>
     <div class="col-lg-3 col-6">
         <div class="info-box">
-            <span class="info-box-icon bg-aqua"><i class="fa fa-check" aria-hidden="true"></i></span>
+            <span class="info-box-icon bg-aqua"><i class="fa fa-money" aria-hidden="true"></i></span>
             <div class="info-box-content">
                 <span class="info-box-number"  style="font-size: 20px; color: red;">THU HỌC PHÍ (THEO THÁNG)</span>
                 <?= Html::a('<i class="fa fa-arrow-circle-right"></i> QUẢN LÝ THU HỌC PHÍ', ['/quanlyhocphi/index'], ['class' => 'small-box-footer']) ?>
@@ -75,7 +87,7 @@ $this->title = 'QUẢN LÝ ĐIỂM DANH';
     <?php if (Yii::$app->user->can('quanlyhocphi') && Yii::$app->user->identity->nhanvien->iDDONVI->HP_T):?>
     <div class="col-lg-3 col-6">
         <div class="info-box">
-            <span class="info-box-icon bg-aqua"><i class="fa fa-check" aria-hidden="true"></i></span>
+            <span class="info-box-icon bg-aqua"><i class="fa fa-money" aria-hidden="true"></i></span>
             <div class="info-box-content">
                 <span class="info-box-number"  style="font-size: 20px; color: red;">QUẢN LÝ HỌC PHÍ THU TRƯỚC</span>
                 <?= Html::a('<i class="fa fa-arrow-circle-right"></i> QUẢN LÝ HỌC PHÍ THU TRƯỚC', ['/quanlyhocphithutruoc/index'], ['class' => 'small-box-footer']) ?>

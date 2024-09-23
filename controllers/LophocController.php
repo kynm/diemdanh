@@ -373,10 +373,13 @@ class LophocController extends Controller
     public function actionListdshocsinhtheolop() {
         if (Yii::$app->request->post()) {
             $params = Yii::$app->request->post();
-            $result = Hocsinh::find()
+            $query = Hocsinh::find()
             ->where(['ID_DONVI'=> Yii::$app->user->identity->nhanvien->ID_DONVI])
-            ->where(['ID_LOP'=> $params['lopid']])
-            ->all();
+            ->where(['ID_LOP'=> $params['lopid']]);
+            if (isset($params['is_hptt']) && $params['is_hptt']) {
+                $query->andWhere(['in', 'HT_HP', [0,2,3]]);
+            }
+            $result = $query->all();
             echo "<option value=''>Chọn công việc</option>";
             foreach($result as $each) {
                 echo "<option value='" . $each->ID . "'>" . $each->HO_TEN . "</option>";

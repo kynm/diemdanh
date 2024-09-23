@@ -235,4 +235,25 @@ class HocsinhController extends Controller
 
         return json_encode($result);
     }
+
+    public function actionThaydoihinhthucthuhocphi() {
+        $result = [
+            'error' => 1,
+            'message' => 'LỖI CẬP NHẬT',
+        ];
+        if (Yii::$app->request->post()) {
+            $params = Yii::$app->request->post();
+            $hocsinh = Hocsinh::findOne($params['idhocsinh']);
+            if ($hocsinh->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI && Yii::$app->user->can('quanlyhocsinh')) {
+                $hocsinh->HT_HP = $params['HT_HP'];
+                $hocsinh->save();
+                $result = [
+                    'error' => 0,
+                    'message' => 'CẬP NHẬT THÀNH CÔNG',
+                ];
+            }
+        }
+
+        return json_encode($result);
+    }
 }

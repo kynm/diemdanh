@@ -9,8 +9,8 @@ use app\models\AuthAssignment;
 use app\models\User;
 use app\models\Daivt;
 use app\models\Donvi;
-use app\models\Tramvt;
 use app\models\Nhanvien;
+use app\models\Lophoc;
 use app\models\NhanvienSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -61,9 +61,11 @@ class NhanvienController extends Controller
         if (Yii::$app->user->can('quanlytruonghoc')) {
             $searchModel = new NhanvienSearch();
             $dataProvider = $searchModel->dsnhanviendonvi(Yii::$app->request->queryParams);
+            $dslop = ArrayHelper::map(Lophoc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->all(), 'ID_LOP', 'TEN_LOP');
             return $this->render('dsnhanviendonvi', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
+                'dslop' => $dslop,
             ]);
         }else {
             # code...
@@ -410,6 +412,31 @@ class NhanvienController extends Controller
             } else {
                 throw new NotFoundHttpException('The requested page does not exist.');
             }
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function actionThaydoilopdiemdanh()
+    {
+        if (Yii::$app->user->can('quanlytruonghoc')) {
+            $result = [
+                'error' => 1,
+                'message' => 'LỖI CẬP NHẬT',
+            ];
+            $inputs = Yii::$app->request->post();
+            $nhanvien = Nhanvien::findOne($inputs['idnhanvien']);
+            if ($nhanvien && $nhanvien->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+                $dslop = implode(',', $inputs['ds_lop']);
+                $nhanvien->ds_lop = $dslop;
+                $nhanvien->save();
+                $result = [
+                    'error' => null,
+                    'message' => 'CẬP NHẬT THÀNH CÔNG',
+                ];
+            }
+
+            return json_encode($result);
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }

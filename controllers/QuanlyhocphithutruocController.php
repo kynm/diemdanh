@@ -216,6 +216,11 @@ class QuanlyhocphithutruocController extends Controller
                 $hocphi->hocsinh->SOBH_DAMUA += $hocphi->SO_BH;
                 $hocphi->hocsinh->NGAY_BD = $hocphi->hocsinh->NGAY_BD ? $hocphi->hocsinh->NGAY_BD : $hocphi->NGAY_BD;
                 $hocphi->hocsinh->NGAY_KT = $hocphi->NGAY_KT;
+                if ($hocphi->hocsinh->NGAY_KT) {
+                    $hocphi->hocsinh->HT_HP = 3;
+                } else {
+                    $hocphi->hocsinh->HT_HP = 2;
+                }
                 $hocphi->hocsinh->save();
                 $result['error'] = 0;
                 $result['message'] = 'Cập nhật thành công';
@@ -374,8 +379,8 @@ class QuanlyhocphithutruocController extends Controller
             $dslop = ArrayHelper::map(Lophoc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->andWhere(['STATUS' => 1])->all(), 'ID_LOP', 'TEN_LOP');
             $dsidlop = (isset($params['ID_LOP'])  && $params['ID_LOP']) ? [$params['ID_LOP'] => $params['ID_LOP']] : array_keys($dslop);
             $sql = "SELECT bh.TEN_LOP, bh.HO_TEN,bh.SOLUONG_DAHOC, bdt.SOLUONG_DADONGTIEN,(bdt.SOLUONG_DADONGTIEN - bh.SOLUONG_DAHOC) SOBUOI_CONLAI FROM
-            (SELECT b.ID,a.TEN_LOP, b.HO_TEN, sum(case when c.`STATUS` = 1 then 1 ELSE 0 END) SOLUONG_DAHOC FROM lophoc a, hocsinh b, diemdanhhocsinh c WHERE a.ID_LOP = b.ID_LOP AND b.ID = c.ID_HOCSINH AND a.ID_DONVI = :ID_DONVI and a.ID_LOP IN (" . implode(',', $dsidlop) . ") and b.NGAY_KT IS NULL GROUP BY b.ID,a.TEN_LOP, b.HO_TEN) bh,
-            (SELECT b.ID, sum(case when c.`STATUS` = 2 then c.SO_BH ELSE 0 END) SOLUONG_DADONGTIEN FROM lophoc a, hocsinh b, quanlyhocphithutruoc c WHERE a.ID_LOP = b.ID_LOP AND b.ID = c.ID_HOCSINH AND a.ID_DONVI = :ID_DONVI and a.ID_LOP IN (" . implode(',', $dsidlop) . ") and b.NGAY_KT IS NULL GROUP BY b.ID) bdt
+            (SELECT b.ID,a.TEN_LOP, b.HO_TEN, sum(case when c.`STATUS` = 1 then 1 ELSE 0 END) SOLUONG_DAHOC FROM lophoc a, hocsinh b, diemdanhhocsinh c WHERE a.ID_LOP = b.ID_LOP AND b.ID = c.ID_HOCSINH AND a.ID_DONVI = :ID_DONVI and a.ID_LOP IN (" . implode(',', $dsidlop) . ") AND b.HT_HP IN (0,2) and b.NGAY_KT IS NULL GROUP BY b.ID,a.TEN_LOP, b.HO_TEN) bh,
+            (SELECT b.ID, sum(case when c.`STATUS` = 2 then c.SO_BH ELSE 0 END) SOLUONG_DADONGTIEN FROM lophoc a, hocsinh b, quanlyhocphithutruoc c WHERE a.ID_LOP = b.ID_LOP AND b.ID = c.ID_HOCSINH AND a.ID_DONVI = :ID_DONVI and a.ID_LOP IN (" . implode(',', $dsidlop) . ") AND b.HT_HP IN (0,2) and b.NGAY_KT IS NULL GROUP BY b.ID) bdt
             WHERE bh.ID = bdt.ID ORDER BY bh.TEN_LOP asc, (bdt.SOLUONG_DADONGTIEN - bh.SOLUONG_DAHOC) ASC";
             $result = Yii::$app->db->createCommand($sql)->bindValues(
                 [
@@ -465,6 +470,39 @@ class QuanlyhocphithutruocController extends Controller
             if ($hocphi && $hocphi->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI && $hocphi->STATUS == 1) {
                 $hocphi->NGAY_KT = $ngaykt;
                 $hocphi->save();
+                $result['error'] = 0;
+                $result['message'] = 'Cập nhật thành công';
+            }
+
+            return json_encode($result);
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function actionTinhngayketthuc()
+    {
+        if (Yii::$app->user->can('quanlyhocphi') &&Yii::$app->request->post() && Yii::$app->user->identity->nhanvien->ID_NHANVIEN) {
+            $inputs = Yii::$app->request->post();
+            $lophoc = Lophoc::findOne($inputs['lopid']);
+            $ngaybd = new \DateTime($inputs['ngay_bd']);
+            $sobh = $inputs['sobh'];
+            $result = [
+                'error' => 1,
+                'data' => [],
+                'message' => 'Lỗi cập nhật!',
+            ];
+            if ($lophoc && $lophoc->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI && $sobh && $ngaybd) {
+                $i = 0;
+                while ($i < $sobh) {
+                    $dateonweek = date_format($ngaybd, 'w');
+                    if (in_array($dateonweek, explode(',', $lophoc->ds_lichcodinh))) {
+                        $i ++;
+                    }
+                    $ngaybd = $ngaybd->modify('+1 day');
+                }
+                $ngaykt = $ngaybd;
+                $result['NGAY_KT'] = $ngaykt->format('Y-m-d');
                 $result['error'] = 0;
                 $result['message'] = 'Cập nhật thành công';
             }

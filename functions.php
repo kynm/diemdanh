@@ -162,4 +162,14 @@
         ];
     }
 
+    function hinhthucthuhocphi()
+    {
+        return [
+            0 => 'Chưa xác định',
+            1 => 'Thu cuối tháng',
+            2 => 'Thu trước theo buổi',
+            3 => 'Thu trước theo chu kỳ thời gian',
+        ];
+    }
+
 ?>

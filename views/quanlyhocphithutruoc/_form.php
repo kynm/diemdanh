@@ -45,8 +45,14 @@ use kartik\date\DatePicker;
                     <?= $form->field($model, 'SO_BH')->textInput(['maxlength' => true, 'type' => 'number']) ?>
                 </div>
                 <div class="col-sm-2">
+                    <br/>
+                    <input type="checkbox" name="tinhtientheobuoihoc" id="tinhtientheobuoihoc"> Tính tiền theo buổi học
+                </div>
+                <div class="col-sm-2">
                     <?= $form->field($model, 'TIENKHAC')->textInput(['maxlength' => true, 'type' => 'number']) ?>
                 </div>
+            </div>
+            <div class="row">
                 <?php 
                 if (!Yii::$app->user->can('hocphithutruoctheobuoi')) { ?>
                 <div class="col-sm-3">
@@ -101,11 +107,13 @@ $script = <<< JS
             method: 'POST',
             data: {
                 'lopid' : lopid,
+                'is_hptt' : 1,
             },
             success:function(data) {
                 $("#quanlyhocphithutruoc-id_hocsinh").html(data);
             }
         });
+        layngayketthuc();
     });
     $('#quanlyhocphithutruoc-sotien').on('change', function() {
       var sotien = $(this).val();
@@ -129,25 +137,57 @@ $script = <<< JS
     });
 
     $('#quanlyhocphithutruoc-so_bh').on('change', function() {
-      var sobh = $(this).val();
-      var lopid = $('#quanlyhocphithutruoc-id_lop').val();
-        $.ajax({
-            url: '/lophoc/tinhsotien',
-            method: 'post',
-            data: {
-                'lopid' : lopid,
-                'sobh' : sobh,
-            },
-            success:function(data) {
-                data = jQuery.parseJSON(data);
-                if (!data.error) {
-                    $("#quanlyhocphithutruoc-sotien").val(data.SOTIEN);
-                } else {
-                    Swal.fire(data.message);
+        var sobh = $(this).val();
+        var lopid = $('#quanlyhocphithutruoc-id_lop').val();
+        var status = $('#tinhtientheobuoihoc').is(":checked") ? 1 : 0;
+        if (status) {
+            $.ajax({
+                url: '/lophoc/tinhsotien',
+                method: 'post',
+                data: {
+                    'lopid' : lopid,
+                    'sobh' : sobh,
+                },
+                success:function(data) {
+                    data = jQuery.parseJSON(data);
+                    if (!data.error) {
+                        $("#quanlyhocphithutruoc-sotien").val(data.SOTIEN);
+                    } else {
+                        Swal.fire(data.message);
+                    }
                 }
-            }
-        });
+            });
+        }
+        layngayketthuc();
     });
+    $('#quanlyhocphithutruoc-ngay_bd').on('change', function() {
+        layngayketthuc();
+    });
+
+    function layngayketthuc() {
+        var sobh = $('#quanlyhocphithutruoc-so_bh').val();
+        var ngay_bd = $('#quanlyhocphithutruoc-ngay_bd').val();
+        var lopid = $('#quanlyhocphithutruoc-id_lop').val();
+        if (sobh && ngay_bd && lopid) {
+           $.ajax({
+                url: '/quanlyhocphithutruoc/tinhngayketthuc',
+                method: 'post',
+                data: {
+                    'lopid' : lopid,
+                    'sobh' : sobh,
+                    'ngay_bd' : ngay_bd,
+                },
+                success:function(data) {
+                    data = jQuery.parseJSON(data);
+                    if (!data.error) {
+                        $("#quanlyhocphithutruoc-ngay_kt").val(data.NGAY_KT);
+                    } else {
+                        Swal.fire(data.message);
+                    }
+                }
+            }); 
+        }
+    }
 
     $('#quanlyhocphithutruoc-id_hocsinh').on('change', function() {
         $('#quanlyhocphithutruoc-sotien').val(null);

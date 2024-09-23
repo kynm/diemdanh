@@ -18,7 +18,7 @@ class HocsinhSearch extends Hocsinh
     public function rules()
     {
         return [
-            [['MA_HOCSINH', 'HO_TEN', 'DIA_CHI', 'SO_DT', 'ID_LOP', 'STATUS'], 'safe'],
+            [['MA_HOCSINH', 'HO_TEN', 'DIA_CHI', 'SO_DT', 'ID_LOP', 'STATUS', 'HT_HP'], 'safe'],
         ];
     }
 
@@ -63,6 +63,7 @@ class HocsinhSearch extends Hocsinh
         ]);
 
         $query->andFilterWhere(['=', 'ID_LOP', $this->ID_LOP]);
+        $query->andFilterWhere(['=', 'HT_HP', $this->HT_HP]);
         $query->andFilterWhere(['=', 'STATUS', isset($params['HocsinhSearch']['STATUS']) ? $this->STATUS : 1]);
         $query->andFilterWhere(['like', 'MA_HOCSINH', $this->MA_HOCSINH])
             ->andFilterWhere(['like', 'HO_TEN', $this->HO_TEN])
@@ -139,6 +140,7 @@ class HocsinhSearch extends Hocsinh
 
         $query->andFilterWhere(['is not', 'NGAY_KT', new \yii\db\Expression('null')]);
         $query->andFilterWhere(['=', 'ID_LOP', $this->ID_LOP]);
+        $query->andFilterWhere(['in', 'HT_HP', [0,3]]);
         $query->andFilterWhere(['like', 'MA_HOCSINH', $this->MA_HOCSINH])
             ->andFilterWhere(['like', 'HO_TEN', $this->HO_TEN])
             ->andFilterWhere(['like', 'DIA_CHI', $this->DIA_CHI])

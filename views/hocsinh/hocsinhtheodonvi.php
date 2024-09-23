@@ -37,6 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     [
                         'attribute' => 'HO_TEN',
+                        'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
                         'value' => function($model) {
                             return Yii::$app->user->can('quanlyhocsinh') && Yii::$app->user->identity->nhanvien->ID_DONVI == $model->ID_DONVI ? Html::a($model->HO_TEN, ['/hocsinh/lichsudiemdanh', 'id' => $model->ID], ['class' => 'text text-primary']) : '';
                         },
@@ -61,19 +62,61 @@ $this->params['breadcrumbs'][] = $this->title;
                             return $model->NGAY_KT ? Yii::$app->formatter->asDatetime($model->NGAY_KT, 'php:d/m/Y') : NULL;
                         },
                     ],
-                    'TIENHOC',
-                    'SOBH_DAMUA',
+                    [
+                        'attribute' => 'TIENHOC',
+                        'contentOptions' => ['style' => 'width:7%; white-space: normal;word-break: break-word;'],
+                        'value' => function ($model) {
+                            return number_format($model->TIENHOC);
+                        },
+                        'format' => 'raw',
+                    ],
+                    [
+                        'attribute' => 'SOBH_DAMUA',
+                        'contentOptions' => ['style' => 'width:7%; white-space: normal;word-break: break-word;'],
+                        'value' => function ($model) {
+                            return number_format($model->SOBH_DAMUA);
+                        },
+                        'format' => 'raw',
+                    ],
                     [
                         'attribute' => 'SOBH_DAHOC',
-                        'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
+                        'contentOptions' => ['style' => 'width:7%; white-space: normal;word-break: break-word;'],
                         'value' => function ($model) {
                             return $model->getDsdiemdanh()->andWhere(['STATUS' => 1])->count();
                         },
                         'format' => 'raw',
                     ],
                     [
-                        'attribute' => 'STATUS',
+                        'attribute' => 'HT_HP',
                         'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
+                        'filter'=> hinhthucthuhocphi(),
+                        'filterType' => GridView::FILTER_SELECT2,
+                        'filterWidgetOptions' => [
+                            'options' => ['prompt' => ''],
+                            'pluginOptions' => ['allowClear' => true],
+                        ],
+                        'value' => function ($model) {
+                            return Select2::widget([
+                                'name' => 'HT_HP' . $model->ID,
+                                'id' => 'HT_HP' . $model->ID,
+                                'value' => $model->HT_HP,
+                                'data' => hinhthucthuhocphi(),
+                                'theme' => Select2::THEME_BOOTSTRAP,
+                                'options' => [
+                                    'placeholder' => 'Chọn hình thức',
+                                    'data-id' => $model->ID,
+                                    'class' => 'thaydoihinhthucthuhocphi',
+                                ],
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ]
+                            ]);
+                        },
+                        'format' => 'raw',
+                    ],
+                    [
+                        'attribute' => 'STATUS',
+                        'contentOptions' => ['style' => 'width:7%; white-space: normal;word-break: break-word;'],
                         'filter'=> $tranghtaihs,
                         'filterType' => GridView::FILTER_SELECT2,
                         'filterWidgetOptions' => [
@@ -114,6 +157,24 @@ $script = <<< JS
                 setTimeout(() => {
                     window.location.reload(true);
                 }, 1000);
+            }
+        });
+    });
+    $(document).on('change', '.thaydoihinhthucthuhocphi', function() {
+        var idhocsinh = $(this).data('id');
+        var HT_HP = $(this).val();
+        $.ajax({
+            url: '/hocsinh/thaydoihinhthucthuhocphi',
+            method: 'POST',
+            data: {
+                'HT_HP' : HT_HP,
+                'idhocsinh' : idhocsinh,
+            },
+            success:function(data) {
+                data = jQuery.parseJSON(data);
+                if (!data.error) {
+                    Swal.fire(data.message);
+                }
             }
         });
     });

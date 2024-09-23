@@ -72,6 +72,7 @@ class Nhanvien extends \yii\db\ActiveRecord
             'USER_NAME' => 'User  Name',
             'CON' => 'CON ĐANG THEO HỌC',
             'PHANQUYEN' => 'PHÂN QUYỀN',
+            'ds_lop' => 'Danh sách lớp điểm danh',
         ];
     }
 

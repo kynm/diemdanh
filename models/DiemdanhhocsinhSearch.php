@@ -19,7 +19,7 @@ class DiemdanhhocsinhSearch extends Diemdanhhocsinh
     {
         return [
             [['ID_LOP'], 'integer'],
-            [['MA_LOP', 'TEN_LOP', 'DIA_CHI', 'SO_DT', 'ID_DONVI'], 'safe'],
+            [['MA_LOP', 'TEN_LOP', 'DIA_CHI', 'SO_DT', 'ID_DONVI', 'ID_LOP'], 'safe'],
         ];
     }
 
@@ -65,17 +65,18 @@ class DiemdanhhocsinhSearch extends Diemdanhhocsinh
         ]);
         // grid filtering conditions
         $query->joinWith('diemdanh');
+        $this->load($params);
         $query->andFilterWhere([
             'quanlydiemdanh.ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI,
             'STATUS' => 0,
         ]);
 
         // $query->andFilterWhere(['>=', 'date(quanlydiemdanh.NGAY_DIEMDANH)', $params['TU_NGAY']]);
-        // $query->andFilterWhere(['<=', 'date(quanlydiemdanh.NGAY_DIEMDANH)', $params['DEN_NGAY']]);
+        $query->andFilterWhere(['=', 'quanlydiemdanh.ID_LOP', $this->ID_LOP]);
 
         $query->orderBy([
-            'quanlydiemdanh.ID_LOP' => SORT_DESC,
             'quanlydiemdanh.NGAY_DIEMDANH' => SORT_DESC,
+            'quanlydiemdanh.ID_LOP' => SORT_DESC,
         ]);
         return $dataProvider;
     }

@@ -1,9 +1,10 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 use yii\widgets\Pjax;
 use yii\helpers\ArrayHelper;
+use kartik\select2\Select2;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\NhanvienSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -27,19 +28,42 @@ $this->params['breadcrumbs'][] = $this->title;
                         'DIEN_THOAI',
                         'USER_NAME',
                         [
-                            'attribute' => 'PHANQUYEN',
-                            'value' => function($model)
-                            {
-                                $allrules = ArrayHelper::map($model->user->assignments, 'item_name', 'item_name');
-                                $text = '';
-                                if (Yii::$app->user->can('quanlytruonghoc') && $model->ID_NHANVIEN != Yii::$app->user->identity->nhanvien->ID_NHANVIEN) {
-                                    $text .= '<input type="checkbox" name="quyendd" value="1" data-id="'  . $model->ID_NHANVIEN . '" class="phanquyennhanvien" ' .  (in_array('diemdanhlophoc', $allrules) ? 'checked' : '') . '> Diểm danh lớp học<br>';
-                                    $text .= '<input type="checkbox" name="quyenddttt" data-id="'  . $model->ID_NHANVIEN . '" value="1" class="phanquyennhanvien"  ' .  (in_array('diemdanhtoantrungtam', $allrules) ? 'checked' : '') . '> Diểm danh toàn trung tâm<br>';
-                                }
-                                return $text;
+                            'attribute' => 'ds_lop',
+                            'contentOptions' => ['style' => 'width:20%; white-space: normal;word-break: break-word;'],
+                            'value' => function ($model) use ($dslop) {
+                                return Select2::widget([
+                                    'name' => 'ds_lop' . $model->ID_NHANVIEN,
+                                    'id' => 'ds_lop' . $model->ID_NHANVIEN,
+                                    'value' => explode(',', $model->ds_lop),
+                                    'data' => $dslop,
+                                    'theme' => Select2::THEME_BOOTSTRAP,
+                                    'options' => [
+                                        'placeholder' => 'Chọn lớp',
+                                        'data-id' => $model->ID_NHANVIEN,
+                                        'class' => 'thaydoilopdiemdanh',
+                                    ],
+                                    'pluginOptions' => [
+                                        'allowClear' => true,
+                                        'multiple' => true,
+                                    ],
+                                ]);
                             },
                             'format' => 'raw',
                         ],
+                        // [
+                        //     'attribute' => 'PHANQUYEN',
+                        //     'value' => function($model)
+                        //     {
+                        //         $allrules = ArrayHelper::map($model->user->assignments, 'item_name', 'item_name');
+                        //         $text = '';
+                        //         if (Yii::$app->user->can('quanlytruonghoc') && $model->ID_NHANVIEN != Yii::$app->user->identity->nhanvien->ID_NHANVIEN) {
+                        //             $text .= '<input type="checkbox" name="quyendd" value="1" data-id="'  . $model->ID_NHANVIEN . '" class="phanquyennhanvien" ' .  (in_array('diemdanhlophoc', $allrules) ? 'checked' : '') . '> Diểm danh lớp học<br>';
+                        //             $text .= '<input type="checkbox" name="quyenddttt" data-id="'  . $model->ID_NHANVIEN . '" value="1" class="phanquyennhanvien"  ' .  (in_array('diemdanhtoantrungtam', $allrules) ? 'checked' : '') . '> Diểm danh toàn trung tâm<br>';
+                        //         }
+                        //         return $text;
+                        //     },
+                        //     'format' => 'raw',
+                        // ],
                         [
                             'attribute' => '',
                             'value' => function($model)
@@ -114,6 +138,25 @@ $script = <<< JS
                 }
             });
         }
+        });
+    });
+
+    $(document).on('change', '.thaydoilopdiemdanh', function() {
+        var idnhanvien = $(this).data('id');
+        var ds_lop = $(this).val();
+        $.ajax({
+            url: '/nhanvien/thaydoilopdiemdanh',
+            method: 'POST',
+            data: {
+                'idnhanvien' : idnhanvien,
+                'ds_lop' : ds_lop,
+            },
+            success:function(data) {
+                data = jQuery.parseJSON(data);
+                if (data.error) {
+                    Swal.fire(data.message);
+                }
+            }
         });
     });
 JS;

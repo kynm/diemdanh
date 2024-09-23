@@ -13,6 +13,7 @@ use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use app\models\Lophoc;
+use app\models\Hocsinh;
 use app\models\Chitiethocphi;
 use app\models\Quanlyhocphithutruoc;
 use kartik\mpdf\Pdf;
@@ -99,6 +100,9 @@ class QuanlyhocphiController extends Controller
                 $hocphi->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
                 $hocphi->ID_QUANLYHOCPHI = $quanlyhocphi->ID;
                 $hocphi->ID_HOCSINH = $chitiet['ID_HOCSINH'];
+                if (! in_array($hocphi->hocsinh->HT_HP, [0,1])) {
+                    continue;
+                }
                 $hocphi->save(false);
             }
 
@@ -188,6 +192,7 @@ class QuanlyhocphiController extends Controller
         if (Yii::$app->user->can('quanlytruonghoc') && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
             $dshocphithutruoc = Quanlyhocphithutruoc::find()->where(['ID_DONVI' => $model->ID_DONVI])
                 ->andWhere(['ID_LOP' => $model->ID_LOP])
+                ->andWhere(['in', 'ID_HOCSINH', ArrayHelper::map(Hocsinh::find()->where(['ID_DONVI' => $model->ID_DONVI])->andWhere(['ID_LOP' => $model->ID_LOP])->andWhere(['in', 'HT_HP', [0,2,3]])->all(), 'ID', 'ID')])
                 // ->andWhere(['between', 'date(NGAY_BD)', Yii::$app->formatter->asDatetime($model->TU_NGAY, 'php:Y-m-d'), Yii::$app->formatter->asDatetime($model->DEN_NGAY, 'php:Y-m-d')])
                 ->all();
             return $this->render('inhocphitheolop', [
@@ -381,6 +386,8 @@ class QuanlyhocphiController extends Controller
             if ($hocphi && $hocphi->hocphi->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
                 $hocphi->STATUS = 1;
                 $hocphi->save();
+                $hocphi->hocsinh->HT_HP = 1;
+                $hocphi->hocsinh->save();
                 $result['error'] = 0;
                 $result['ID'] = $hocphi->ID;
                 $result['SO_BTT'] = $hocphi->SO_BTT;
@@ -482,6 +489,9 @@ class QuanlyhocphiController extends Controller
                         $hocphi->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
                         $hocphi->ID_QUANLYHOCPHI = $quanlyhocphi->ID;
                         $hocphi->ID_HOCSINH = $value;
+                        if (! in_array($hocphi->hocsinh->HT_HP, [0,1])) {
+                            continue;
+                        }
                         $hocphi->save();
                     }
                 }
