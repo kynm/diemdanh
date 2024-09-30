@@ -34,7 +34,32 @@ class QuanlyhocphithutruocController extends Controller
             ],
         ];
     }
+        // $dshocphithutruoc = Quanlyhocphithutruoc::find()->where(['ID_DONVI' => 750])
+        // ->andWhere(['is not', 'NGAY_BD', new \yii\db\Expression('null')])->andWhere(['is', 'NGAY_KT', new \yii\db\Expression('null')])
+        // ->all();
+        // foreach ($dshocphithutruoc as $key => $hocphi) {
+        //     $ngaybd = new \DateTime($hocphi->NGAY_BD);
 
+        //     $sobh = $hocphi->SO_BH;
+        //     $lophoc = $hocphi->lop;
+        //     $i = 0;
+        //     while ($i < $sobh) {
+        //         $dateonweek = date_format($ngaybd, 'w');
+        //         if (in_array($dateonweek, explode(',', $lophoc->ds_lichcodinh))) {
+        //             $i ++;
+        //         }
+        //         $ngaybd = $ngaybd->modify('+1 day');
+        //     }
+        //     $ngaykt = $ngaybd;
+        //     $hocphi->NGAY_KT = $ngaykt->format('Y-m-d');
+        //     $hocphi->GHICHU .= $hocphi->GHICHU . ' - HỌC PHÍ CHUYỂN ĐỔI';
+        //     if ($hocphi->STATUS == 2) {
+        //         $hocphi->GHICHU .= $hocphi->GHICHU . ' - ĐÃ THU, CONFIRM LẠI CẬP NHẬT LẠI';
+        //     }
+        //     $hocphi->STATUS = 1;
+        //     $hocphi->save();
+
+        // }
     /**
      * Lists all hocsinh models.
      * @return mixed
@@ -121,7 +146,7 @@ class QuanlyhocphithutruocController extends Controller
                             $model->GHICHU = $inputs['Quanlyhocphithutruoc']['GHICHU'];
                             $model->TIENKHAC = $inputs['Quanlyhocphithutruoc']['TIENKHAC'];
                             $model->TIENKHAC = $model->TIENKHAC ? $model->TIENKHAC : null;
-                            $model->TONGTIEN = $model->SOTIEN + $model->TIENKHAC;
+                            $model->TONGTIEN = $model->SOTIEN + $model->TIENKHAC - $model->TIENGIAM;
                             $model->save();
                         }
                     }
@@ -151,7 +176,7 @@ class QuanlyhocphithutruocController extends Controller
         if (Yii::$app->user->can('edit-hocsinh')) {
             $model = $this->findModel($id);
             if ($model->load(Yii::$app->request->post()) && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
-                $model->TONGTIEN = (int)$model->SOTIEN + (int)$model->TIENKHAC;
+                $model->TONGTIEN = (int)$model->SOTIEN + (int)$model->TIENKHAC - (int)$model->TIENGIAM;
                 $model->save();
                 Yii::$app->session->setFlash('success', "Cập nhật thành công!");
                 return $this->redirect(['index']);
@@ -272,7 +297,7 @@ class QuanlyhocphithutruocController extends Controller
             if ($hocphi && $hocphi->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI && $hocphi->STATUS == 1) {
                 $hocphi->SOTIEN = $sotien;
                 $hocphi->SO_BH = $hocphi->hocsinh->TIENHOC ? round($hocphi->SOTIEN / $hocphi->hocsinh->TIENHOC, 0) : $hocphi->SO_BH;
-                $hocphi->TONGTIEN = $hocphi->SOTIEN + $hocphi->TIENKHAC;
+                $hocphi->TONGTIEN = $hocphi->SOTIEN + $hocphi->TIENKHAC - $hocphi->TIENGIAM;
                 $hocphi->save();
                 $result['error'] = 0;
                 $result['data'] = [
@@ -305,7 +330,7 @@ class QuanlyhocphithutruocController extends Controller
             if ($hocphi && $hocphi->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI && $hocphi->STATUS == 1) {
                 $hocphi->SO_BH = $sobh;
                 $hocphi->SOTIEN = $hocphi->hocsinh->TIENHOC ? $hocphi->hocsinh->TIENHOC * $hocphi->SO_BH : $hocphi->SOTIEN;
-                $hocphi->TONGTIEN = $hocphi->SOTIEN + $hocphi->TIENKHAC;
+                $hocphi->TONGTIEN = $hocphi->SOTIEN + $hocphi->TIENKHAC - $hocphi->TIENGIAM;
                 $hocphi->save();
                 $result['error'] = 0;
                 $result['data'] = [
@@ -337,7 +362,7 @@ class QuanlyhocphithutruocController extends Controller
             ];
             if ($hocphi && $hocphi->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI && $hocphi->STATUS == 1) {
                 $hocphi->TIENKHAC = $tienkhac;
-                $hocphi->TONGTIEN = $hocphi->SOTIEN + $hocphi->TIENKHAC;
+                $hocphi->TONGTIEN = $hocphi->SOTIEN + $hocphi->TIENKHAC - $hocphi->TIENGIAM;
                 $hocphi->save();
                 $result['error'] = 0;
                 $result['data'] = [
@@ -346,6 +371,39 @@ class QuanlyhocphithutruocController extends Controller
                     'SO_BH' => $hocphi->SO_BH,
                     'TIENKHAC' => $hocphi->TIENKHAC,
                     'TONGTIEN' => $hocphi->TONGTIEN,
+                ];
+                $result['message'] = 'Cập nhật thành công';
+            }
+
+            return json_encode($result);
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function actionThaydoimiengiam()
+    {
+        if (Yii::$app->user->can('quanlyhocphi') &&Yii::$app->request->post() && Yii::$app->user->identity->nhanvien->ID_NHANVIEN) {
+            $inputs = Yii::$app->request->post();
+            $hocphi = Quanlyhocphithutruoc::findOne($inputs['id']);
+            $miengiam = $inputs['miengiam'];
+            $result = [
+                'error' => 1,
+                'data' => [],
+                'message' => 'Lỗi cập nhật!',
+            ];
+            if ($hocphi && $hocphi->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI && $hocphi->STATUS == 1) {
+                $hocphi->TIENGIAM = $miengiam;
+                $hocphi->TONGTIEN = $hocphi->SOTIEN + $hocphi->TIENKHAC - $hocphi->TIENGIAM;
+                $hocphi->save();
+                $result['error'] = 0;
+                $result['data'] = [
+                    'ID' => $hocphi->ID,
+                    'SOTIEN' => $hocphi->SOTIEN,
+                    'SO_BH' => $hocphi->SO_BH,
+                    'TIENKHAC' => $hocphi->TIENKHAC,
+                    'TONGTIEN' => $hocphi->TONGTIEN,
+                    'TIENGIAM' => $hocphi->TIENGIAM,
                 ];
                 $result['message'] = 'Cập nhật thành công';
             }

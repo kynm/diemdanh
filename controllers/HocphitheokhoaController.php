@@ -4,9 +4,9 @@ namespace app\controllers;
 
 use Yii;
 use app\models\ActivitiesLog;
-use app\models\Quanlyhocphi;
-use app\models\QuanlyhocphiSearch;
-use app\models\ChitiethocphiSearch;
+use app\models\Hocphitheokhoa;
+use app\models\HocphitheokhoaSearch;
+use app\models\QuanlyhocphithutruocSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
@@ -20,7 +20,7 @@ use kartik\mpdf\Pdf;
 /**
  * diemdanhController implements the CRUD actions for diemdanh model.
  */
-class QuanlyhocphiController extends Controller
+class HocphitheokhoaController extends Controller
 {
     /**
      * @inheritdoc
@@ -44,7 +44,7 @@ class QuanlyhocphiController extends Controller
     public function actionIndex()
     {
         if (Yii::$app->user->can('quanlyhocphi')) {
-            $searchModel = new QuanlyhocphiSearch();
+            $searchModel = new HocphitheokhoaSearch();
             $dataProvider = $searchModel->searchhocphitheodonvi(Yii::$app->request->queryParams);
 
             $dslop = ArrayHelper::map(Lophoc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->all(), 'ID_LOP', 'TEN_LOP');
@@ -61,11 +61,10 @@ class QuanlyhocphiController extends Controller
     public function actionCreate()
     {
         if (Yii::$app->user->can('quanlyhocphi')) {
-            $model = new Quanlyhocphi();
+            $model = new Hocphitheokhoa();
             $model->ID_DONVI = Yii::$app->user->identity->nhanvien->ID_DONVI;
             $model->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                self::taochitiethocphi($model);
                 Yii::$app->session->setFlash('success', "Tạo thành công!");
                 return $this->redirect(['view', 'id' => $model->ID]);
             } else {
@@ -80,78 +79,30 @@ class QuanlyhocphiController extends Controller
         }
     }
 
-    public function actionCreatemultiple()
-    {
-        if (Yii::$app->user->can('quanlyhocphi') && Yii::$app->user->can('taohocphitoantrungtam')) {
-            $model = new Quanlyhocphi();
-            $model->ID_DONVI = Yii::$app->user->identity->nhanvien->ID_DONVI;
-            $model->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
-            if ($model->load(Yii::$app->request->post())) {
-                $inputs = Yii::$app->request->post();
-                if ($inputs['Quanlyhocphi']['ID_LOP']) {
-                    foreach ($inputs['Quanlyhocphi']['ID_LOP'] as $key => $lop) {
-                        $model1 = new Quanlyhocphi();
-                        $model1->ID_DONVI = Yii::$app->user->identity->nhanvien->ID_DONVI;
-                        $model1->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
-                        $model1->ID_LOP = $lop;
-                        $model1->TIEUDE = $inputs['Quanlyhocphi']['TIEUDE'];
-                        $model1->TU_NGAY = $inputs['Quanlyhocphi']['TU_NGAY'];
-                        $model1->DEN_NGAY = $inputs['Quanlyhocphi']['DEN_NGAY'];
-                        $model1->save();
-                    }
-                }
-                Yii::$app->session->setFlash('success', "Tạo thành công!");
-                return $this->redirect(['index']);
-            } else {
-                $dslop = ArrayHelper::map(Lophoc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->all(), 'ID_LOP', 'TEN_LOP');
-                return $this->render('createmultiple', [
-                    'model' => $model,
-                    'dslop' => $dslop,
-                ]);
-            }
-        } else {
-            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');           
-        }
-    }
-
     public function taochitiethocphi($quanlyhocphi)
      {
-        $sql = "SELECT c.ID ID_HOCSINH,c.HO_TEN,c.TIENHOC, COUNT(1) SO_LUONG, SUM(CASE WHEN b.`STATUS` > 0 then 1 ELSE 0 END) SOLUONGDIHOC
-            , GROUP_CONCAT(CASE WHEN b.`STATUS` = 0 then DATE_FORMAT(a.NGAY_DIEMDANH,'%d/%m') ELSE null END ORDER BY a.NGAY_DIEMDANH asc SEPARATOR ', ') NGAYNGHI
-            , GROUP_CONCAT(CASE WHEN b.`STATUS` = 1 then DATE_FORMAT(a.NGAY_DIEMDANH,'%d/%m') ELSE null END ORDER BY a.NGAY_DIEMDANH asc SEPARATOR ', ') NGAYDIHOC
-            FROM quanlydiemdanh a, diemdanhhocsinh b, hocsinh c
-                WHERE a.ID = b.ID_DIEMDANH AND b.ID_HOCSINH = c.ID and a.ID_LOP = :ID_LOP AND a.NGAY_DIEMDANH BETWEEN :TU_NGAY and :DEN_NGAY GROUP BY c.HO_TEN,c.ID,c.TIENHOC order by c.ID";
-        $data = Yii::$app->db->createCommand($sql)->bindValues(
-            [
-                ':TU_NGAY' => $quanlyhocphi->TU_NGAY,
-                ':DEN_NGAY' => $quanlyhocphi->DEN_NGAY,
-                ':ID_LOP' => $quanlyhocphi->ID_LOP,
-            ])->queryAll();
-        foreach ($data as $key => $chitiet) {
-            $hocphi = Chitiethocphi::find()->where(['ID_QUANLYHOCPHI' => $quanlyhocphi->ID])->andWhere(['ID_HOCSINH' => $chitiet['ID_HOCSINH']])->one();
+        $dshocsinh = $quanlyhocphi->lop->dshocsinh;
+        foreach ($dshocsinh as $key => $hocsinh) {
+            $hocphi = Quanlyhocphithutruoc::find()->where(['ID_KHOAHOCPHI' => $quanlyhocphi->ID])->andWhere(['ID_HOCSINH' => $hocsinh->ID])->one();
             if (!$hocphi) {
-                $hocphi = new Chitiethocphi();
-                $hocphi->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
-                $hocphi->ID_QUANLYHOCPHI = $quanlyhocphi->ID;
-                $hocphi->ID_HOCSINH = $chitiet['ID_HOCSINH'];
-                if (! in_array($hocphi->hocsinh->HT_HP, [0,1])) {
-                    continue;
+                $hocphi = new Quanlyhocphithutruoc();
+                $hocphi->ID_HOCSINH = $hocsinh->ID;
+                $hocphi->ID_KHOAHOCPHI = $quanlyhocphi->ID;
+                if ($hocphi->hocsinh->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+                    $hocphi->ID_DONVI = Yii::$app->user->identity->nhanvien->ID_DONVI;
+                    $hocphi->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
+                    $hocphi->STATUS = 1;
+                    $hocphi->TIEUDE = $quanlyhocphi->TIEUDE;
+                    $hocphi->ID_LOP = $quanlyhocphi->ID_LOP;
+                    $hocphi->SOTIEN = $quanlyhocphi->TIENHOC;
+                    $hocphi->SO_BH = $quanlyhocphi->SO_BH;
+                    $hocphi->NGAY_BD = $quanlyhocphi->TU_NGAY;
+                    $hocphi->NGAY_KT = $quanlyhocphi->DEN_NGAY;
+                    $hocphi->TIENKHAC = null;
+                    $hocphi->TONGTIEN = $quanlyhocphi->TIENHOC;
+                    $hocphi->save();
                 }
-                $hocphi->save(false);
             }
-
-            $hocphi->SO_BH = $chitiet['SO_LUONG'];
-            $hocphi->SO_BN = $chitiet['SO_LUONG'] - $chitiet['SOLUONGDIHOC'];
-            $hocphi->NGAY_NGHI = $chitiet['NGAYNGHI'];
-            $hocphi->NGAYDIHOC = $chitiet['NGAYDIHOC'];
-            $hocphi->SO_BDH = $chitiet['SOLUONGDIHOC'];
-            $hocphi->SO_BTT = $chitiet['SOLUONGDIHOC'];
-            $hocphi->TIENHOC = $chitiet['TIENHOC'];
-            if ($hocphi->STATUS == 0) {
-                $hocphi->TONG_TIENHOC = $hocphi->SO_BTT * $hocphi->TIENHOC;
-                $hocphi->TONG_TIEN = $hocphi->TONG_TIENHOC + $hocphi->TIENKHAC;
-            }
-            $hocphi->save(false);
         }
      }
 
@@ -205,7 +156,7 @@ class QuanlyhocphiController extends Controller
     public function actionChitiethocphi($id)
     {
         $this->layout = 'printLayout';
-        $model = Chitiethocphi::findOne($id);
+        $model = Quanlyhocphithutruoc::findOne($id);
         if (Yii::$app->user->can('quanlytruonghoc') && $model && $model->hocphi->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
             $view = 'chitiethocphi';
             if (Yii::$app->user->can('inngayhoc')) {
@@ -222,7 +173,7 @@ class QuanlyhocphiController extends Controller
     public function actionInhocphitheolop($id)
     {
         $this->layout = 'printLayout';
-        $model = Quanlyhocphi::findOne($id);
+        $model = Hocphitheokhoa::findOne($id);
         if (Yii::$app->user->can('quanlytruonghoc') && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
             $dshocphithutruoc = Quanlyhocphithutruoc::find()->where(['ID_DONVI' => $model->ID_DONVI])
                 ->andWhere(['ID_LOP' => $model->ID_LOP])
@@ -252,7 +203,7 @@ class QuanlyhocphiController extends Controller
                 Yii::$app->session->setFlash('error', "Không thể xóa do đã tồn tại lượt thanh toán học phí");
                 return $this->redirect(['view', 'id' => $id]);
             }   else {
-                Chitiethocphi::deleteAll(['ID_QUANLYHOCPHI' => $id]);
+                Quanlyhocphithutruoc::deleteAll(['ID_KHOAHOCPHI' => $id]);
                 $model->delete();
             }
             Yii::$app->session->setFlash('success', "Xóa thành công!");
@@ -271,7 +222,7 @@ class QuanlyhocphiController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Quanlyhocphi::findOne($id)) !== null) {
+        if (($model = Hocphitheokhoa::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -282,7 +233,7 @@ class QuanlyhocphiController extends Controller
     {
         if (Yii::$app->request->post() && Yii::$app->user->identity->nhanvien->ID_NHANVIEN) {
             $params = Yii::$app->request->post();
-            $hocphi = Chitiethocphi::findOne($params['id']);
+            $hocphi = Quanlyhocphithutruoc::findOne($params['id']);
             $result = [
                 'error' => 1,
                 'message' => '',
@@ -305,38 +256,11 @@ class QuanlyhocphiController extends Controller
         }
     }
 
-    public function actionCapnhatsobuoitinhtien()
-    {
-        if (Yii::$app->request->post() && Yii::$app->user->identity->nhanvien->ID_NHANVIEN) {
-            $params = Yii::$app->request->post();
-            $hocphi = Chitiethocphi::findOne($params['id']);
-            $result = [
-                'error' => 1,
-                'message' => '',
-            ];
-            if ($hocphi && $hocphi->hocphi->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
-                $hocphi->SO_BTT = $params['sobuoi'];
-                $hocphi->TONG_TIENHOC = $hocphi->SO_BTT * $hocphi->TIENHOC;
-                $hocphi->TONG_TIEN = $hocphi->TONG_TIENHOC + $hocphi->TIENKHAC;
-                $hocphi->save();
-                $result['error'] = 0;
-                $result['ID'] = $hocphi->ID;
-                $result['SO_BTT'] = $hocphi->SO_BTT;
-                $result['TONG_TIEN'] = $hocphi->TONG_TIEN;
-                $result['message'] = 'Cập nhật thành công';
-            }
-
-            return json_encode($result);
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
-
     public function actionCapnhattienkhac()
     {
         if (Yii::$app->request->post() && Yii::$app->user->identity->nhanvien->ID_NHANVIEN) {
             $params = Yii::$app->request->post();
-            $hocphi = Chitiethocphi::findOne($params['id']);
+            $hocphi = Quanlyhocphithutruoc::findOne($params['id']);
             $result = [
                 'error' => 1,
                 'message' => '',
@@ -362,7 +286,7 @@ class QuanlyhocphiController extends Controller
     {
         if (Yii::$app->request->post() && Yii::$app->user->identity->nhanvien->ID_NHANVIEN) {
             $params = Yii::$app->request->post();
-            $hocphi = Chitiethocphi::findOne($params['id']);
+            $hocphi = Quanlyhocphithutruoc::findOne($params['id']);
             $result = [
                 'error' => 1,
                 'message' => '',
@@ -387,18 +311,15 @@ class QuanlyhocphiController extends Controller
     {
         if (Yii::$app->request->post() && Yii::$app->user->identity->nhanvien->ID_NHANVIEN) {
             $params = Yii::$app->request->post();
-            $hocphi = Chitiethocphi::findOne($params['id']);
+            $hocphi = Quanlyhocphithutruoc::findOne($params['id']);
             $result = [
                 'error' => 1,
                 'message' => '',
             ];
-            if ($hocphi && $hocphi->hocphi->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
-                $hocphi->NHAN_XET = $params['capnhatghichu'];
+            if ($hocphi && $hocphi->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+                $hocphi->GHICHU = $params['capnhatghichu'];
                 $hocphi->save();
                 $result['error'] = 0;
-                $result['ID'] = $hocphi->ID;
-                $result['SO_BTT'] = $hocphi->SO_BTT;
-                $result['TONG_TIEN'] = $hocphi->TONG_TIEN;
                 $result['message'] = 'Cập nhật thành công';
             }
 
@@ -412,7 +333,7 @@ class QuanlyhocphiController extends Controller
     {
         if (Yii::$app->request->post() && Yii::$app->user->identity->nhanvien->ID_NHANVIEN) {
             $params = Yii::$app->request->post();
-            $hocphi = Chitiethocphi::findOne($params['id']);
+            $hocphi = Quanlyhocphithutruoc::findOne($params['id']);
             $result = [
                 'error' => 1,
                 'message' => '',
@@ -439,7 +360,7 @@ class QuanlyhocphiController extends Controller
     {
         if (Yii::$app->request->post() && Yii::$app->user->identity->nhanvien->ID_NHANVIEN) {
             $params = Yii::$app->request->post();
-            $hocphi = Chitiethocphi::findOne($params['id']);
+            $hocphi = Quanlyhocphithutruoc::findOne($params['id']);
             $result = [
                 'error' => 1,
                 'message' => '',
@@ -464,7 +385,7 @@ class QuanlyhocphiController extends Controller
     {
         if (Yii::$app->request->post() && Yii::$app->user->identity->nhanvien->ID_NHANVIEN) {
             $params = Yii::$app->request->post();
-            $hocphi = Chitiethocphi::findOne($params['id']);
+            $hocphi = Quanlyhocphithutruoc::findOne($params['id']);
             $result = [
                 'error' => 1,
                 'message' => '',
@@ -485,7 +406,7 @@ class QuanlyhocphiController extends Controller
     {
 
         if (Yii::$app->user->can('quanlyhocphi')) {
-            $searchModel = new ChitiethocphiSearch();
+            $searchModel = new QuanlyhocphithutruocSearch();
             $params = Yii::$app->request->queryParams;
             $params['STATUS'] = isset( $params['STATUS']) ? $params['STATUS'] : 1;
             $dataProvider = $searchModel->searchchitiethocphitheodonvi($params);
@@ -510,26 +431,8 @@ class QuanlyhocphiController extends Controller
                 'message' => 'Lỗi cập nhật!',
             ];
             $params = Yii::$app->request->post();
-            $quanlyhocphi = Quanlyhocphi::findOne($params['id']);
+            $quanlyhocphi = Hocphitheokhoa::findOne($params['id']);
             self::taochitiethocphi($quanlyhocphi);
-            $dshocsinhlop = ArrayHelper::map($quanlyhocphi->lop->getDshocsinh()->andWhere(['STATUS' => 1])->all(), 'ID', 'ID');
-            $dshocsinhdatinhhp = ArrayHelper::map($quanlyhocphi->chitiethocphi, 'ID_HOCSINH', 'ID_HOCSINH');
-            $dshschuatinhhocphi = array_diff_key($dshocsinhdatinhhp, $dshocsinhlop);
-            foreach ($dshocsinhlop as $key => $value) {
-                if (!in_array($value, $dshocsinhdatinhhp)) {
-                    $hocphi = Chitiethocphi::find()->where(['ID_QUANLYHOCPHI' => $quanlyhocphi->ID])->andWhere(['ID_HOCSINH' => $value])->one();
-                    if (!$hocphi) {
-                        $hocphi = new Chitiethocphi();
-                        $hocphi->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
-                        $hocphi->ID_QUANLYHOCPHI = $quanlyhocphi->ID;
-                        $hocphi->ID_HOCSINH = $value;
-                        if (! in_array($hocphi->hocsinh->HT_HP, [0,1])) {
-                            continue;
-                        }
-                        $hocphi->save();
-                    }
-                }
-            }
             $result = [
                 'error' => 0,
                 'message' => 'Cập nhật thành công!',
@@ -581,7 +484,7 @@ class QuanlyhocphiController extends Controller
     public function actionExportpdfchitiet($id)
     {
         $this->layout = 'printLayout';
-        $model = Chitiethocphi::findOne($id);
+        $model = Quanlyhocphithutruoc::findOne($id);
         if (Yii::$app->user->can('quanlytruonghoc') && $model && $model->hocphi->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
             $view = 'chitiethocphi';
             if (Yii::$app->user->can('inngayhoc')) {
@@ -610,6 +513,18 @@ class QuanlyhocphiController extends Controller
             Yii::$app->response->headers->add('Content-Type', 'application/pdf');
             return $pdf->render();
 
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
+        }
+    }
+
+    public function actionDeletechitiet($id)
+    {
+        $model = Quanlyhocphithutruoc::findOne($id);
+        if (Yii::$app->user->can('quanlyhocphi') && $model->STATUS == 1 && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+           $model->delete();
+            Yii::$app->session->setFlash('success', "Hoàn thành xóa dữ liệu!");
+            return $this->redirect(['view', 'id' => $model->ID_KHOAHOCPHI]);
         } else {
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
         }

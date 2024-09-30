@@ -221,10 +221,6 @@ $script = <<< JS
                     $('#SO_BH-' + data.data.ID).val(data.data.SO_BH);
                     $('#TIENKHAC-' + data.data.ID).val(data.data.TIENKHAC);
                     $('#TONGTIEN-' + data.data.ID).html(data.data.TONGTIEN);
-                    console.log('#SOTIEN-' + data.data.ID);
-                    console.log('#SO_BH-' + data.data.ID);
-                    console.log('#TIENKHAC-' + data.data.ID);
-                    console.log('#TONGTIEN-' + data.data.ID);
                     Swal.fire('Xác nhận thành công');
                 } else {
                     Swal.fire('LỖI CẬP NHẬT!');
@@ -250,10 +246,6 @@ $script = <<< JS
                     $('#SO_BH-' + data.data.ID).val(data.data.SO_BH);
                     $('#TIENKHAC-' + data.data.ID).val(data.data.TIENKHAC);
                     $('#TONGTIEN-' + data.data.ID).html(data.data.TONGTIEN);
-                    console.log('#SOTIEN-' + data.data.ID);
-                    console.log('#SO_BH-' + data.data.ID);
-                    console.log('#TIENKHAC-' + data.data.ID);
-                    console.log('#TONGTIEN-' + data.data.ID);
                     Swal.fire('Xác nhận thành công');
                 } else {
                     Swal.fire('LỖI CẬP NHẬT!');
@@ -278,10 +270,6 @@ $script = <<< JS
                     $('#SO_BH-' + data.data.ID).val(data.data.SO_BH);
                     $('#TIENKHAC-' + data.data.ID).val(data.data.TIENKHAC);
                     $('#TONGTIEN-' + data.data.ID).html(data.data.TONGTIEN);
-                    console.log('#SOTIEN-' + data.data.ID);
-                    console.log('#SO_BH-' + data.data.ID);
-                    console.log('#TIENKHAC-' + data.data.ID);
-                    console.log('#TONGTIEN-' + data.data.ID);
                     Swal.fire('Xác nhận thành công');
                 } else {
                     Swal.fire('LỖI CẬP NHẬT!');

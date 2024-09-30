@@ -23,7 +23,7 @@ class Quanlyhocphithutruoc extends \yii\db\ActiveRecord
             [['SOTIEN', 'ID_NHANVIEN', 'ID_LOP', 'ID_DONVI', 'SO_BH', 'STATUS'], 'required'],
             [['GHICHU','TIEUDE'], 'string'],
             [['NGAY_BD', 'NGAY_KT'], 'safe'],
-            [['ID_LOP', 'ID_NHANVIEN', 'SOTIEN', 'TIENKHAC', 'TONGTIEN'], 'integer'],
+            [['ID_LOP', 'ID_NHANVIEN', 'SOTIEN', 'TIENKHAC', 'TONGTIEN', 'ID_KHOAHOCPHI', 'TIENGIAM'], 'integer'],
             [['ID_LOP'], 'exist', 'skipOnError' => true, 'targetClass' => Lophoc::className(), 'targetAttribute' => ['ID_LOP' => 'ID_LOP']],
             [['ID_NHANVIEN'], 'exist', 'skipOnError' => true, 'targetClass' => Nhanvien::className(), 'targetAttribute' => ['ID_NHANVIEN' => 'ID_NHANVIEN']],
             [['ID_DONVI'], 'exist', 'skipOnError' => true, 'targetClass' => Donvi::className(), 'targetAttribute' => ['ID_DONVI' => 'ID_DONVI']],
@@ -50,6 +50,7 @@ class Quanlyhocphithutruoc extends \yii\db\ActiveRecord
             'TONGTIEN' => 'TỔNG TIỀN THU',
             'STATUS' => 'TRẠNG THÁI',
             'TIEUDE' => 'TIÊU ĐỀ',
+            'TIENGIAM' => 'MIỄN GIẢM/ HỌC BỔNG'
         ];
     }
 

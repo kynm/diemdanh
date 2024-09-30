@@ -2,7 +2,7 @@
 use yii\helpers\Html;
 ?>
 <div class="box box-primary">
-    <?php if (!$model->getDsdiemdanh()->andWhere(['STATUS' => 1])->count() && !$model->getDshocphi()->count() && Yii::$app->user->can('quanlyhocsinh') && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI):?>
+    <?php if ( !$model->getDshocphi()->count()  && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI):?>
         <p>
             <?= Html::a('<i class="fa fa-trash-o"></i> Xóa', ['delete', 'id' => $model->ID], [
                 'class' => 'btn btn-danger btn-flat pull-right',

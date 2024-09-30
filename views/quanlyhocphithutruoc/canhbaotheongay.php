@@ -43,20 +43,28 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     'SO_DT',
                     [
+                        'attribute' => 'NGAY_BD',
+                        'value' => function($model) {
+                            $last = $model->getDshocphithutruoc()->andWhere(['STATUS' => 2])->orderBy(['NGAY_KT' => SORT_DESC])->limit(1)->one();
+                            return isset($last->NGAY_BD) ? Yii::$app->formatter->asDatetime($last->NGAY_BD, 'php:d/m/Y') : NULL;
+                        },
+                    ],
+                    [
                         'attribute' => 'NGAY_KT',
                         'value' => function($model) {
                             return $model->NGAY_KT ? Yii::$app->formatter->asDatetime($model->NGAY_KT, 'php:d/m/Y') : NULL;
                         },
                     ],
                     'TIENHOC',
-                    [
-                        'attribute' => 'SOBH_DAHOC',
-                        'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
-                        'value' => function ($model) {
-                            return $model->getDsdiemdanh()->andWhere(['STATUS' => 1])->count();
-                        },
-                        'format' => 'raw',
-                    ],
+                    // [
+                    //     'attribute' => 'SOBH_DAHOC',
+                    //     'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
+                    //     'value' => function ($model) {
+                    //         $last = $model->getDshocphithutruoc()->andWhere(['STATUS' => 2])->orderBy(['NGAY_KT' => SORT_DESC])->limit(1)->one();
+                    //         return isset($last) ?$model->getDsdiemdanh()->andWhere(['STATUS' => 1])->andWhere(['between', 'diemdanhhocsinh.created_at', $last->NGAY_BD, $last->NGAY_KT])->count() . '/' . $last->SO_BH : null;
+                    //     },
+                    //     'format' => 'raw',
+                    // ],
                 ],
             ]); ?>
         <?php Pjax::end(); ?>

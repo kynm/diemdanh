@@ -86,6 +86,11 @@ class Hocsinh extends \yii\db\ActiveRecord
         return $this->hasOne(Chitiethocphi::className(), ['ID_HOCSINH' => 'ID']);
     }
 
+    public function getDshocphithutruoc()
+    {
+        return $this->hasOne(Quanlyhocphithutruoc::className(), ['ID_HOCSINH' => 'ID']);
+    }
+
     public function getDsdiemdanh()
     {
         return $this->hasMany(Diemdanhhocsinh::className(), ['ID_HOCSINH' => 'ID']);

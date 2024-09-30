@@ -84,6 +84,17 @@ $this->title = 'QUẢN LÝ ĐIỂM DANH';
         </div>
     </div>
     <?php endif; ?>
+    <?php if (Yii::$app->user->can('quanlyhocphi') && Yii::$app->user->can('quanlyhocphitheokhoahoc')):?>
+    <div class="col-lg-3 col-6">
+        <div class="info-box">
+            <span class="info-box-icon bg-aqua"><i class="fa fa-money" aria-hidden="true"></i></span>
+            <div class="info-box-content">
+                <span class="info-box-number"  style="font-size: 20px; color: red;">THU HỌC PHÍ THEO KHÓA</span>
+                <?= Html::a('<i class="fa fa-arrow-circle-right"></i> QUẢN LÝ THU HỌC PHÍ', ['/hocphitheokhoa/index'], ['class' => 'small-box-footer']) ?>
+            </div>
+        </div>
+    </div>
+    <?php endif; ?>
     <?php if (Yii::$app->user->can('quanlyhocphi') && Yii::$app->user->identity->nhanvien->iDDONVI->HP_T):?>
     <div class="col-lg-3 col-6">
         <div class="info-box">
