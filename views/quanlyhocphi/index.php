@@ -26,14 +26,17 @@ $this->params['breadcrumbs'][] = $this->title;
                             ['class' => 'yii\grid\SerialColumn'],
                             [
                                 'attribute' => 'ID_LOP',
-                                'value' => 'lop.TEN_LOP',
-                                'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
+                                'value' => function ($model) {
+                                    return Html::a($model->lop->TEN_LOP, ['/lophoc/view', 'id' => $model->lop->ID_LOP]);
+                                },
+                                'contentOptions' => ['style' => 'width:8%; white-space: normal;word-break: break-word;'],
                                 'filter'=> $dslop,
                                 'filterType' => GridView::FILTER_SELECT2,
                                 'filterWidgetOptions' => [
                                     'options' => ['prompt' => ''],
                                     'pluginOptions' => ['allowClear' => true],
                                 ],
+                                'format' => 'raw',
                             ],
                             [
                                 'attribute' => 'TIEUDE',
@@ -51,9 +54,18 @@ $this->params['breadcrumbs'][] = $this->title;
                                 },
                                 'format' => 'raw',
                             ],
+
+                            [
+                                'attribute' => 'SOLUONGHS',
+                                'contentOptions' => ['style' => 'width:8%; white-space: normal;word-break: break-word;'],
+                                'value' => function ($model) {
+                                    return $model->lop->getDshocsinh()->andWhere(['STATUS' => 1])->count();
+                                },
+                                'format' => 'raw',
+                            ],
                             [
                                 'attribute' => 'SOLUONG',
-                                'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
+                                'contentOptions' => ['style' => 'width:8%; white-space: normal;word-break: break-word;'],
                                 'value' => function ($model) {
                                     return number_format($model->getChitiethocphi()->count());
                                 },
@@ -61,7 +73,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                             [
                                 'attribute' => 'SOLUONGCHUATHU',
-                                'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
+                                'contentOptions' => ['style' => 'width:8%; white-space: normal;word-break: break-word;'],
                                 'value' => function ($model) {
                                     return number_format($model->getChitiethocphi()->andWhere(['STATUS' => 0])->count());
                                 },

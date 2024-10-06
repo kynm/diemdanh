@@ -16,10 +16,10 @@ use kartik\select2\Select2;
     <div class="box box-primary">
         <div class="box-body">
             <div class="row">
-                <div class="col-sm-4">
+                <div class="col-sm-6">
                     <?= $form->field($model, 'TIEUDE')->textInput(['maxlength' => true]) ?>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <?= $form->field($model, 'ID_LOP')->widget(Select2::classname(), [
                         'data' => $dslop,
                         'pluginOptions' => [
@@ -29,13 +29,13 @@ use kartik\select2\Select2;
                         ],
                     ]); ?>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-4">
                     <?= $form->field($model, 'TIENHOC', ['options' => ['data-lopid' => $model->ID_LOP]])->textInput(['maxlength' => true, 'type' => 'number']) ?>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-4">
                     <?= $form->field($model, 'SO_BH')->textInput(['maxlength' => true, 'type' => 'number']) ?>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-6">
                     <label class="control-label">TỪ NGÀY</label>
                     <?= DatePicker::widget([
                         'model' => $model,
@@ -49,7 +49,7 @@ use kartik\select2\Select2;
                         ]
                     ]); ?>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-6">
                     <label class="control-label">ĐẾN NGÀY</label>
                     <?= DatePicker::widget([
                         'model' => $model,

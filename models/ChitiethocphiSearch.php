@@ -21,7 +21,7 @@ class ChitiethocphiSearch extends Chitiethocphi
     public function rules()
     {
         return [
-            [['ID_QUANLYHOCPHI', 'TIEUDE', 'STATUS', 'ID_LOP'], 'safe'],
+            [['ID_QUANLYHOCPHI', 'TIEUDE', 'STATUS', 'ID_LOP', 'ID_HOCSINH'], 'safe'],
         ];
     }
 
@@ -51,17 +51,19 @@ class ChitiethocphiSearch extends Chitiethocphi
             return $dataProvider;
         }
         $query->joinWith('hocphi');
+        $query->joinWith('hocsinh');
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI,
+            'quanlyhocphi.ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI,
         ]);
 
         $query->andFilterWhere(['like', 'quanlyhocphi.TIEUDE', $this->TIEUDE]);
         $query->andFilterWhere(['=', 'quanlyhocphi.ID_LOP', $this->ID_LOP]);
-        $query->andFilterWhere(['=', 'STATUS', isset($this->STATUS) ? $this->STATUS : 0]);
+        $query->andFilterWhere(['like', 'hocsinh.HO_TEN', $this->ID_HOCSINH]);
+        $query->andFilterWhere(['=', 'chitiethocphi.STATUS', isset($this->STATUS) ? $this->STATUS : 0]);
         $query->orderBy([
-            'STATUS' => SORT_ASC,
+            'chitiethocphi.STATUS' => SORT_ASC,
             'quanlyhocphi.ID_LOP' => SORT_DESC,
             'quanlyhocphi.created_at' => SORT_DESC,
         ]);

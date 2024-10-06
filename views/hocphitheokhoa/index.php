@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             [
                                 'attribute' => 'ID_LOP',
                                 'value' => 'lop.TEN_LOP',
-                                'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
+                                'contentOptions' => ['style' => 'width:8%; white-space: normal;word-break: break-word;'],
                                 'filter'=> $dslop,
                                 'filterType' => GridView::FILTER_SELECT2,
                                 'filterWidgetOptions' => [
@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                             [
                                 'attribute' => 'TIEUDE',
-                                'contentOptions' => ['style' => 'width:20%; white-space: normal;word-break: break-word;'],
+                                'contentOptions' => ['style' => 'width:15%; white-space: normal;word-break: break-word;'],
                                 'value' => function ($model) {
                                     return Html::a($model->TIEUDE, ['view', 'id' => $model->ID]);
                                 },
@@ -45,15 +45,31 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                             [
                                 'attribute' => 'created_at',
-                                'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
+                                'contentOptions' => ['style' => 'width:5%; white-space: normal;word-break: break-word;'],
                                 'value' => function ($model) {
                                     return Yii::$app->formatter->asDatetime($model->created_at, 'php:d/m/Y');
                                 },
                                 'format' => 'raw',
                             ],
                             [
+                                'attribute' => 'TU_NGAY',
+                                'contentOptions' => ['style' => 'width:5%; white-space: normal;word-break: break-word;'],
+                                'value' => function ($model) {
+                                    return Yii::$app->formatter->asDatetime($model->TU_NGAY, 'php:d/m/Y');
+                                },
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'SO_BH',
+                                'contentOptions' => ['style' => 'width:5%; white-space: normal;word-break: break-word;'],
+                                'value' => function ($model) {
+                                    return $model->SO_BH;
+                                },
+                                'format' => 'raw',
+                            ],
+                            [
                                 'attribute' => 'SOLUONG',
-                                'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
+                                'contentOptions' => ['style' => 'width:5%; white-space: normal;word-break: break-word;'],
                                 'value' => function ($model) {
                                     return number_format($model->getChitiethocphi()->count());
                                 },
@@ -61,7 +77,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                             [
                                 'attribute' => 'SOLUONGCHUATHU',
-                                'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
+                                'contentOptions' => ['style' => 'width:8%; white-space: normal;word-break: break-word;'],
                                 'value' => function ($model) {
                                     return number_format($model->getChitiethocphi()->andWhere(['STATUS' => 0])->count());
                                 },
@@ -69,7 +85,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                             [
                                 'attribute' => 'SOLUONGDATHU',
-                                'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
+                                'contentOptions' => ['style' => 'width:8%; white-space: normal;word-break: break-word;'],
                                 'value' => function ($model) {
                                     return number_format($model->getChitiethocphi()->andWhere(['STATUS' => 1])->count());
                                 },

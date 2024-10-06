@@ -38,7 +38,7 @@ $this->title = 'QUẢN LÝ ĐIỂM DANH';
         <div class="info-box">
             <span class="info-box-icon bg-aqua"><i class="fa fa-user-circle" aria-hidden="true"></i></span>
             <div class="info-box-content">
-                <span class="info-box-number"  style="font-size: 20px; color: red;"><?= $tongsohocvien?> HỌC VIÊN</span>
+                <span class="info-box-number"  style="font-size: 20px; color: red;"><?= Yii::$app->user->can('khonghienthisoluong') ? '' : $tongsohocvien?> HỌC VIÊN</span>
                 <?= Html::a('<i class="fa fa-arrow-circle-right"></i> DANH SÁCH HỌC VIÊN', ['/hocsinh/index'], ['class' => 'small-box-footer']) ?>
             </div>
         </div>
@@ -47,7 +47,7 @@ $this->title = 'QUẢN LÝ ĐIỂM DANH';
         <div class="info-box">
             <span class="info-box-icon bg-aqua"><i class="fa fa-user-circle" aria-hidden="true"></i></span>
             <div class="info-box-content">
-                <span class="info-box-number"  style="font-size: 20px; color: red;"><?= $sonhanvien?> NHÂN VIÊN</span>
+                <span class="info-box-number"  style="font-size: 20px; color: red;"><?= Yii::$app->user->can('khonghienthisoluong') ? '' : $sonhanvien?> NHÂN VIÊN</span>
                 <?= Html::a('<i class="fa fa-arrow-circle-right"></i>DANH SÁCH NHÂN VIÊN ', ['/nhanvien/dsnhanviendonvi'], ['class' => 'small-box-footer']) ?>
             </div>
         </div>
@@ -84,7 +84,7 @@ $this->title = 'QUẢN LÝ ĐIỂM DANH';
         </div>
     </div>
     <?php endif; ?>
-    <?php if (Yii::$app->user->can('quanlyhocphi') && Yii::$app->user->can('quanlyhocphitheokhoahoc')):?>
+    <?php if (Yii::$app->user->can('quanlyhocphi')):?>
     <div class="col-lg-3 col-6">
         <div class="info-box">
             <span class="info-box-icon bg-aqua"><i class="fa fa-money" aria-hidden="true"></i></span>

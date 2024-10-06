@@ -20,7 +20,7 @@ class Hocphitheokhoa extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['TU_NGAY', 'TIEUDE', 'ID_NHANVIEN', 'ID_LOP', 'ID_DONVI', 'DEN_NGAY'], 'required'],
+            [['TU_NGAY', 'TIEUDE', 'ID_NHANVIEN', 'ID_LOP', 'ID_DONVI'], 'required'],
             [['TIEUDE'], 'string'],
             [['NGAY_DIEMDANH'], 'safe'],
             [['ID_LOP', 'ID_NHANVIEN', 'TIENHOC', 'SO_BH'], 'integer'],

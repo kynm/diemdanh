@@ -34,14 +34,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 <td style="border: 1px solid; width: 10%;"><?= $chitiet->hocsinh->HO_TEN?></td>
                 <td style="border: 1px solid; width: 10%;"><?= $chitiet->hocsinh->SO_DT?></td>
                 <td style="border: 1px solid; width: 10%;"><?= $chitiet->hocsinh->DIA_CHI?></td>
-                <td style="border: 1px solid; width: 8%;"><?= $chitiet->hocsinh->NGAY_BD?></td>
-            	<td style="border: 1px solid; width: 8%;"><?= $chitiet->hocsinh->NGAY_KT?></td>
+                <td style="border: 1px solid; width: 8%;"><?= $chitiet->NGAY_BD?></td>
+            	<td style="border: 1px solid; width: 8%;"><?= $chitiet->NGAY_KT?></td>
                 <td style="border: 1px solid; width: 8%;"><?= number_format($chitiet->SOTIEN)?></td>
                 <td style="border: 1px solid; width: 8%;"><?= number_format($chitiet->TIENGIAM)?></td>
                 <td style="border: 1px solid; width: 8%;"><?= number_format($chitiet->TIENKHAC)?></td>
             	<td style="border: 1px solid; width: 8%;"><?= number_format($chitiet->TONGTIEN)?></td>
                 <td style="border: 1px solid; width: 15%;"><?= nl2br($chitiet->GHICHU)?></td>
-            	<td style="border: 1px solid; width: 5%;"><?= statusthutien()[$chitiet->STATUS]?></td>
+            	<td style="border: 1px solid; width: 5%;"><?= statusdonhang()[$chitiet->STATUS]?></td>
             </tr>
             <?php endforeach; ?>
         </tbody>

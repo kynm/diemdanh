@@ -64,7 +64,8 @@ class HocphitheokhoaController extends Controller
             $model = new Hocphitheokhoa();
             $model->ID_DONVI = Yii::$app->user->identity->nhanvien->ID_DONVI;
             $model->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if ($model->load(Yii::$app->request->post())) {
+                $model->save();
                 Yii::$app->session->setFlash('success', "Tạo thành công!");
                 return $this->redirect(['view', 'id' => $model->ID]);
             } else {

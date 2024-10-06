@@ -116,16 +116,16 @@ class QuanlyhocphiController extends Controller
 
     public function taochitiethocphi($quanlyhocphi)
      {
+        $dshocsinh = ArrayHelper::map($quanlyhocphi->lop->getDshocsinh()->andWhere(['STATUS' => 1])->andWhere(['in', 'HT_HP', [0,1]])->all(), 'ID', 'ID');
         $sql = "SELECT c.ID ID_HOCSINH,c.HO_TEN,c.TIENHOC, COUNT(1) SO_LUONG, SUM(CASE WHEN b.`STATUS` > 0 then 1 ELSE 0 END) SOLUONGDIHOC
             , GROUP_CONCAT(CASE WHEN b.`STATUS` = 0 then DATE_FORMAT(a.NGAY_DIEMDANH,'%d/%m') ELSE null END ORDER BY a.NGAY_DIEMDANH asc SEPARATOR ', ') NGAYNGHI
             , GROUP_CONCAT(CASE WHEN b.`STATUS` = 1 then DATE_FORMAT(a.NGAY_DIEMDANH,'%d/%m') ELSE null END ORDER BY a.NGAY_DIEMDANH asc SEPARATOR ', ') NGAYDIHOC
             FROM quanlydiemdanh a, diemdanhhocsinh b, hocsinh c
-                WHERE a.ID = b.ID_DIEMDANH AND b.ID_HOCSINH = c.ID and a.ID_LOP = :ID_LOP AND a.NGAY_DIEMDANH BETWEEN :TU_NGAY and :DEN_NGAY GROUP BY c.HO_TEN,c.ID,c.TIENHOC order by c.ID";
+                WHERE a.ID = b.ID_DIEMDANH AND b.ID_HOCSINH = c.ID and b.ID_HOCSINH in (" . implode(',', $dshocsinh) . ") AND a.NGAY_DIEMDANH BETWEEN :TU_NGAY and :DEN_NGAY GROUP BY c.HO_TEN,c.ID,c.TIENHOC order by c.ID";
         $data = Yii::$app->db->createCommand($sql)->bindValues(
             [
                 ':TU_NGAY' => $quanlyhocphi->TU_NGAY,
                 ':DEN_NGAY' => $quanlyhocphi->DEN_NGAY,
-                ':ID_LOP' => $quanlyhocphi->ID_LOP,
             ])->queryAll();
         foreach ($data as $key => $chitiet) {
             $hocphi = Chitiethocphi::find()->where(['ID_QUANLYHOCPHI' => $quanlyhocphi->ID])->andWhere(['ID_HOCSINH' => $chitiet['ID_HOCSINH']])->one();
@@ -211,8 +211,13 @@ class QuanlyhocphiController extends Controller
             if (Yii::$app->user->can('inngayhoc')) {
                 $view = 'chitiethocphicongayhoc';//thutrang yeu cau
             }
+            $hocphichuathukhac = $model->hocsinh->getDshocphi()
+            ->andWhere(['STATUS' => 0])
+            ->andWhere(['!=', 'ID', $model->ID])
+            ->all();
             return $this->render($view, [
                 'model' => $model,
+                'hocphichuathukhac' => $hocphichuathukhac,
             ]);
         } else {
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
@@ -225,9 +230,9 @@ class QuanlyhocphiController extends Controller
         $model = Quanlyhocphi::findOne($id);
         if (Yii::$app->user->can('quanlytruonghoc') && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
             $dshocphithutruoc = Quanlyhocphithutruoc::find()->where(['ID_DONVI' => $model->ID_DONVI])
-                ->andWhere(['ID_LOP' => $model->ID_LOP])
-                ->andWhere(['in', 'ID_HOCSINH', ArrayHelper::map(Hocsinh::find()->where(['ID_DONVI' => $model->ID_DONVI])->andWhere(['ID_LOP' => $model->ID_LOP])->andWhere(['in', 'HT_HP', [0,2,3]])->all(), 'ID', 'ID')])
-                // ->andWhere(['between', 'date(NGAY_BD)', Yii::$app->formatter->asDatetime($model->TU_NGAY, 'php:Y-m-d'), Yii::$app->formatter->asDatetime($model->DEN_NGAY, 'php:Y-m-d')])
+                ->andWhere(['in', 'ID_HOCSINH', ArrayHelper::map(Hocsinh::find()->where(['ID_DONVI' => $model->ID_DONVI])->andWhere(['ID_LOP' => $model->ID_LOP])
+                    ->andWhere(['STATUS' => 1])
+                    ->andWhere(['in', 'HT_HP', [0,2,3]])->all(), 'ID', 'ID')])
                 ->all();
             return $this->render('inhocphitheolop', [
                 'model' => $model,
@@ -512,7 +517,8 @@ class QuanlyhocphiController extends Controller
             $params = Yii::$app->request->post();
             $quanlyhocphi = Quanlyhocphi::findOne($params['id']);
             self::taochitiethocphi($quanlyhocphi);
-            $dshocsinhlop = ArrayHelper::map($quanlyhocphi->lop->getDshocsinh()->andWhere(['STATUS' => 1])->all(), 'ID', 'ID');
+            $dshocsinhlop = ArrayHelper::map($quanlyhocphi->lop->getDshocsinh()->andWhere(['STATUS' => 1])->andWhere(['in', 'HT_HP', [0,1]])->all()
+                , 'ID', 'ID');
             $dshocsinhdatinhhp = ArrayHelper::map($quanlyhocphi->chitiethocphi, 'ID_HOCSINH', 'ID_HOCSINH');
             $dshschuatinhhocphi = array_diff_key($dshocsinhdatinhhp, $dshocsinhlop);
             foreach ($dshocsinhlop as $key => $value) {
@@ -549,7 +555,11 @@ class QuanlyhocphiController extends Controller
         if (Yii::$app->user->can('quanlytruonghoc') && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
             $html = '';
             foreach ($model->chitiethocphi as $key => $chitiet) {
-                $html .= $this->renderPartial('chitiethocphi', ['model' => $chitiet]);
+                $hocphichuathukhac = $chitiet->hocsinh->getDshocphi()
+                ->andWhere(['STATUS' => 0])
+                ->andWhere(['!=', 'ID', $chitiet->ID])
+                ->all();
+                $html .= $this->renderPartial('chitiethocphi', ['model' => $chitiet, 'hocphichuathukhac' => $hocphichuathukhac]);
             }
             Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
             $filename = $model->TIEUDE . ' - ' . $model->lop->TEN_LOP . ' - '  . Yii::$app->user->identity->nhanvien->iDDONVI->TEN_DONVI . '.pdf';
@@ -560,6 +570,7 @@ class QuanlyhocphiController extends Controller
                     // any mpdf options you wish to set
                 ],
                 'filename' => $filename,
+                'orientation' => Pdf::ORIENT_LANDSCAPE,
                 'destination' => Pdf::DEST_DOWNLOAD,
                 'methods' => [
                     'SetTitle' => Yii::$app->user->identity->nhanvien->iDDONVI->TEN_DONVI,
@@ -583,6 +594,10 @@ class QuanlyhocphiController extends Controller
         $this->layout = 'printLayout';
         $model = Chitiethocphi::findOne($id);
         if (Yii::$app->user->can('quanlytruonghoc') && $model && $model->hocphi->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+            $hocphichuathukhac = $model->hocsinh->getDshocphi()
+                ->andWhere(['STATUS' => 0])
+                ->andWhere(['!=', 'ID', $model->ID])
+                ->all();
             $view = 'chitiethocphi';
             if (Yii::$app->user->can('inngayhoc')) {
                 $view = 'chitiethocphicongayhoc';//thutrang yeu cau
@@ -591,11 +606,12 @@ class QuanlyhocphiController extends Controller
             $filename = $model->hocphi->TIEUDE . ' - ' . $model->hocsinh->HO_TEN . '.pdf';
             $pdf = new Pdf([
                 'mode' => Pdf::MODE_UTF8,
-                'content' => $this->renderPartial($view, ['model' => $model]),
+                'content' => $this->renderPartial($view, ['model' => $model, 'hocphichuathukhac' => $hocphichuathukhac]),
                 'options' => [
                     // any mpdf options you wish to set
                 ],
                 'filename' => $filename,
+                'orientation' => Pdf::ORIENT_LANDSCAPE,
                 'destination' => Pdf::DEST_DOWNLOAD,
                 'methods' => [
                     'SetTitle' => Yii::$app->user->identity->nhanvien->iDDONVI->TEN_DONVI,

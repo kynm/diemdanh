@@ -51,6 +51,7 @@ class Quanlyhocphi extends \yii\db\ActiveRecord
             'TONGTIENCHUATHU' => 'TỔNG TIỀN CHƯA THU',
             'SOLUONGDATHU' => 'SỐ LƯỢNG ĐÃ THU',
             'created_at' => 'NGÀY TẠO',
+            'SOLUONGHS' => 'SỐ LƯỢNG HỌC SINH',
         ];
     }
 

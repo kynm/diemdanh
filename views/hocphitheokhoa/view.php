@@ -79,7 +79,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <td><input class="form-control capnhatsotien" type="number" name="SOTIEN" value="<?= $chitiet->SOTIEN?>" data-id="<?= $chitiet->ID ?>"></td>
                     <td><input class="form-control capnhatmiengiam" type="number" name="TIENGIAM" value="<?= $chitiet->TIENGIAM?>" data-id="<?= $chitiet->ID ?>"></td>
                     <td><input class="form-control capnhatngaybd" type="date" name ="NGAY_BD" value="<?= $chitiet->NGAY_BD?>" data-id="<?= $chitiet->ID ?>"></td>
-                    <td><input class="form-control capnhatngaykt" type="date" name ="NGAY_KT" value="<?= $chitiet->NGAY_KT?>" data-id="<?= $chitiet->ID ?>"></td>
+                    <td><?= $chitiet->NGAY_KT?></td>
                     <td><input class="form-control capnhattienkhac" type="number" name ="TIENKHAC" value="<?= $chitiet->TIENKHAC?>" data-id="<?= $chitiet->ID ?>"></td>
                     <td><input class="form-control capnhattongtien" id="TONGTIEN-<?= $chitiet->ID ?>" type="number" value="<?= $chitiet->TONGTIEN?>" data-id="<?= $chitiet->ID ?>"></td>
                     <td width="15%"><textarea class="form-control capnhatghichu" name="GHICHU" data-id="<?= $chitiet->ID ?>"><?= $chitiet->GHICHU?></textarea></td>
