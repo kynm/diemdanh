@@ -25,10 +25,14 @@ $this->params['breadcrumbs'][] = $this->title;
                         'filterModel' => $searchModel,
                         'columns' => [
                             ['class' => 'yii\grid\SerialColumn'],
-                            'TIEUDE',
+                            [
+                                'attribute' => 'TIEUDE',
+                                'contentOptions' => ['style' => 'width:5%; white-space: normal;word-break: break-word;'],
+                                'value' => 'TIEUDE',
+                            ],
                             [
                                 'attribute' => 'ID_LOP',
-                                'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
+                                'contentOptions' => ['style' => 'width:8%; white-space: normal;word-break: break-word;'],
                                 'value' => 'lop.TEN_LOP',
                                 'filter'=> $dslop,
                                 'filterType' => GridView::FILTER_SELECT2,
@@ -46,7 +50,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                 },
                                 'format' => 'raw',
                             ],
-                            'created_at',
+                            [
+                                'attribute' => 'created_at',
+                                'value' => function($model) {
+                                    return Yii::$app->formatter->asDatetime($model->NGAY_BD, 'php:d/m/Y');
+                                },
+                                'format' => 'raw',
+                            ],
                             [
                                 'attribute' => 'SOTIEN',
                                 'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
@@ -73,7 +83,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                             [
                                 'attribute' => 'TONGTIEN',
-                                'contentOptions' => ['style' => 'width:6; white-space: normal;word-break: break-word;'],
+                                'contentOptions' => ['style' => 'width:6%; white-space: normal;word-break: break-word;'],
                                 'value' => function($model) {
                                     return '<span id="TONGTIEN-' . $model->ID . '">' . number_format($model->TONGTIEN) . '</span>';
                                 },
@@ -97,7 +107,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'attribute' => 'GHICHU',
                                 'contentOptions' => ['style' => 'width:15%; white-space: normal;word-break: break-word;'],
                                 'value' => function($model) {
-                                    return $model->GHICHU;
+                                    return '<textarea class="form-control capnhatghichu" data-id="' .  $model->ID . '">' . $model->GHICHU . '</textarea>';
                                 },
                                 'format' => 'raw',
                             ],
@@ -306,6 +316,26 @@ $script = <<< JS
             data: {
                 id: id,
                 ngaykt: ngaykt,
+            },
+            success:function(data) {
+                data = jQuery.parseJSON(data);
+                if (!data.error) {
+                    Swal.fire('THAY ĐỔI THÀNH CÔNG');
+                } else {
+                    Swal.fire('LỖI CẬP NHẬT!');
+                }
+            }
+        });
+    });
+    $(document).on('change', '.capnhatghichu', function() {
+        var id = $(this).data('id');
+        var ghichu = $(this).val();
+        $.ajax({
+            url: '/quanlyhocphithutruoc/capnhatghichu',
+            method: 'post',
+            data: {
+                id: id,
+                ghichu: ghichu,
             },
             success:function(data) {
                 data = jQuery.parseJSON(data);

@@ -530,4 +530,36 @@ class HocphitheokhoaController extends Controller
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
         }
     }
+
+    public function actionThaydoingaykt()
+    {
+        if (Yii::$app->user->can('quanlyhocphi') &&Yii::$app->request->post() && Yii::$app->user->identity->nhanvien->ID_NHANVIEN) {
+            $inputs = Yii::$app->request->post();
+            $hocphi = Hocphitheokhoa::findOne($inputs['id']);
+            $ngaykt = $inputs['ngaykt'];
+            $result = [
+                'error' => 1,
+                'data' => [],
+                'message' => 'Lỗi cập nhật!',
+            ];
+            if ($hocphi && $hocphi->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+                $hocphi->DEN_NGAY = $ngaykt;
+                $hocphi->save();
+                $condition = ['and',
+                    ['=', 'ID_KHOAHOCPHI', $inputs['id']],
+                    ['=', 'ID_DONVI', Yii::$app->user->identity->nhanvien->ID_DONVI],
+                ];
+                Quanlyhocphithutruoc::updateAll([
+                    'NGAY_KT' => $hocphi->DEN_NGAY,
+                ], $condition);
+
+                $result['error'] = 0;
+                $result['message'] = 'Cập nhật thành công';
+            }
+
+            return json_encode($result);
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
 }

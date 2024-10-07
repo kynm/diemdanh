@@ -60,10 +60,26 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'format' => 'raw',
                             ],
                             [
+                                'attribute' => 'DEN_NGAY',
+                                'contentOptions' => ['style' => 'width:5%; white-space: normal;word-break: break-word;'],
+                                'value' => function ($model) {
+                                    return Yii::$app->formatter->asDatetime($model->DEN_NGAY, 'php:d/m/Y');
+                                },
+                                'format' => 'raw',
+                            ],
+                            [
                                 'attribute' => 'SO_BH',
                                 'contentOptions' => ['style' => 'width:5%; white-space: normal;word-break: break-word;'],
                                 'value' => function ($model) {
                                     return $model->SO_BH;
+                                },
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'SO_BUOI_DAHOC',
+                                'contentOptions' => ['style' => 'width:5%; white-space: normal;word-break: break-word;'],
+                                'value' => function ($model) {
+                                    return $model->soluongdadiemdanh . '/ ' . $model->SO_BH;
                                 },
                                 'format' => 'raw',
                             ],

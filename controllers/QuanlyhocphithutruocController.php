@@ -570,4 +570,26 @@ class QuanlyhocphithutruocController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    public function actionCapnhatghichu()
+    {
+        if (Yii::$app->request->post() && Yii::$app->user->identity->nhanvien->ID_NHANVIEN) {
+            $params = Yii::$app->request->post();
+            $hocphi = Quanlyhocphithutruoc::findOne($params['id']);
+            $result = [
+                'error' => 1,
+                'message' => '',
+            ];
+            if ($hocphi && $hocphi->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI && $hocphi->STATUS == 1) {
+                $hocphi->GHICHU = $params['ghichu'];
+                $hocphi->save();
+                $result['error'] = 0;
+                $result['message'] = 'Cập nhật thành công';
+            }
+
+            return json_encode($result);
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
 }

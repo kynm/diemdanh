@@ -2,7 +2,6 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
 /* @var $this yii\web\View */
 /* @var $model app\models\Donvi */
 $this->title = $model->TIEUDE;
@@ -38,21 +37,29 @@ $this->params['breadcrumbs'][] = $this->title;
                         'value' => $model->lop ? $model->lop->TEN_LOP : '',
                     ],
                     'TIEUDE',
-                    'TU_NGAY',
                     'DEN_NGAY',
+                    [
+                        'attribute' => 'TU_NGAY',
+                        'value' => Yii::$app->formatter->asDatetime($model->TU_NGAY, 'php:d/m/Y'),
+                        'format' => 'raw',
+                    ],
+                    [
+                        'attribute' => 'DEN_NGAY',
+                        'value' => '<input type="date" name ="HOCPHITHEOKHOA_DEN_NGAY" value="' . $model->DEN_NGAY . '" class="form-control" data-id="' . $model->ID  . '">',
+                        'format' => 'raw',
+                    ],
+                    
                     'TIENHOC',
                     'SO_BH',
+                    [
+                        'attribute' => 'SO_BUOI_DAHOC',
+                        'value' => $model->soluongdadiemdanh,
+                    ],
                 ],
             ]) ?>
         </div>
     </div>
 </div>
-<?php if (Yii::$app->user->can('quanlyhocphi') && !$model->getChitiethocphi()->where(['STATUS' => 1])->count()):?>
-<?= $this->render('_form_updatealldata', [
-    'model' => $model,
-    'inputs' => isset($inputs) ?? [],
-]) ?>
-<?php endif; ?>
 <div class="box-body table-responsive">
     <h4 class="text-center text-success invisible text-alert">Xác nhận thành công</h4>
     <table class="table table-bordered" style="font-size: 14px;">
@@ -79,7 +86,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <td><input class="form-control capnhatsotien" type="number" name="SOTIEN" value="<?= $chitiet->SOTIEN?>" data-id="<?= $chitiet->ID ?>"></td>
                     <td><input class="form-control capnhatmiengiam" type="number" name="TIENGIAM" value="<?= $chitiet->TIENGIAM?>" data-id="<?= $chitiet->ID ?>"></td>
                     <td><input class="form-control capnhatngaybd" type="date" name ="NGAY_BD" value="<?= $chitiet->NGAY_BD?>" data-id="<?= $chitiet->ID ?>"></td>
-                    <td><?= $chitiet->NGAY_KT?></td>
+                    <td><?= Yii::$app->formatter->asDatetime($chitiet->NGAY_KT, 'php:d/m/Y')?></td>
                     <td><input class="form-control capnhattienkhac" type="number" name ="TIENKHAC" value="<?= $chitiet->TIENKHAC?>" data-id="<?= $chitiet->ID ?>"></td>
                     <td><input class="form-control capnhattongtien" id="TONGTIEN-<?= $chitiet->ID ?>" type="number" value="<?= $chitiet->TONGTIEN?>" data-id="<?= $chitiet->ID ?>"></td>
                     <td width="15%"><textarea class="form-control capnhatghichu" name="GHICHU" data-id="<?= $chitiet->ID ?>"><?= $chitiet->GHICHU?></textarea></td>
@@ -382,6 +389,30 @@ $script = <<< JS
                 if (!data.error) {
                     $('#TONGTIEN-' + data.data.ID).val(data.data.TONGTIEN);
                     Swal.fire('Xác nhận thành công');
+                }
+            }
+        });
+    });
+
+    $(document).on('change', 'input[name=HOCPHITHEOKHOA_DEN_NGAY]', function() {
+        var id = $(this).data('id');
+        var ngaykt = $(this).val();
+        $.ajax({
+            url: '/hocphitheokhoa/thaydoingaykt',
+            method: 'post',
+            data: {
+                id: id,
+                ngaykt: ngaykt,
+            },
+            success:function(data) {
+                data = jQuery.parseJSON(data);
+                if (!data.error) {
+                    Swal.fire('THAY ĐỔI THÀNH CÔNG');
+                        setTimeout(() => {
+                        window.location.reload(true);
+                    }, 1000);
+                } else {
+                    Swal.fire('LỖI CẬP NHẬT!');
                 }
             }
         });

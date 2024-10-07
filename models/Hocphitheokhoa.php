@@ -20,7 +20,7 @@ class Hocphitheokhoa extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['TU_NGAY', 'TIEUDE', 'ID_NHANVIEN', 'ID_LOP', 'ID_DONVI'], 'required'],
+            [['TU_NGAY', 'TIEUDE', 'ID_NHANVIEN', 'ID_LOP', 'ID_DONVI', 'TU_NGAY', 'DEN_NGAY', 'TIENHOC'], 'required'],
             [['TIEUDE'], 'string'],
             [['NGAY_DIEMDANH'], 'safe'],
             [['ID_LOP', 'ID_NHANVIEN', 'TIENHOC', 'SO_BH'], 'integer'],
@@ -51,7 +51,8 @@ class Hocphitheokhoa extends \yii\db\ActiveRecord
             'TONGTIENCHUATHU' => 'TỔNG TIỀN CHƯA THU',
             'SOLUONGDATHU' => 'SỐ LƯỢNG ĐÃ THU',
             'created_at' => 'NGÀY TẠO',
-            'SO_BH' => 'SỐ BUỔI',
+            'SO_BH' => 'SỐ BUỔI KHÓA HỌC',
+            'SO_BUOI_DAHOC' => 'SỐ BUỔI ĐÃ HỌC'
         ];
     }
 
@@ -81,5 +82,11 @@ class Hocphitheokhoa extends \yii\db\ActiveRecord
     public function getChitiethocphi()
     {
         return $this->hasMany(Quanlyhocphithutruoc::className(), ['ID_KHOAHOCPHI' => 'ID']);
+    }
+
+    public function getSoluongdadiemdanh()
+    {
+        $dsdiemdanh = $this->lop->getDsdiemdanh()->andWhere(['between', 'date(NGAY_DIEMDANH)', date($this->TU_NGAY), date($this->DEN_NGAY)])->count();
+        return $dsdiemdanh;
     }
 }

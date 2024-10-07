@@ -375,12 +375,13 @@ class LophocController extends Controller
             $params = Yii::$app->request->post();
             $query = Hocsinh::find()
             ->where(['ID_DONVI'=> Yii::$app->user->identity->nhanvien->ID_DONVI])
-            ->where(['ID_LOP'=> $params['lopid']]);
+            ->andWhere(['ID_LOP'=> $params['lopid']])
+            ->andWhere(['STATUS' => 1]);
             if (isset($params['is_hptt']) && $params['is_hptt']) {
                 $query->andWhere(['in', 'HT_HP', [0,2,3]]);
             }
             $result = $query->all();
-            echo "<option value=''>Chọn công việc</option>";
+            echo "<option value=''>Chọn học sinh</option>";
             foreach($result as $each) {
                 echo "<option value='" . $each->ID . "'>" . $each->HO_TEN . "</option>";
             }
