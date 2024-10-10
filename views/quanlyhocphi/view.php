@@ -75,7 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ?>
                 <tr>
                     <td scope="col"><?= $key + 1;?></td>
-                    <td><?= $chitiet->hocsinh ? $chitiet->hocsinh->HO_TEN : 'HỌC SINH KHÔNG TỒN TẠI'?></td>
+                    <td><?= $chitiet->hocsinh ? $chitiet->hocsinh->HO_TEN .  ($chitiet->hocsinh->STATUS ? '' : '(ĐÃ NGHỈ)') : 'HỌC SINH KHÔNG TỒN TẠI'?></td>
                     <td width="5%"><?= $chitiet->SO_BH?></td>
                     <td width="5%"><?= $chitiet->SO_BN?></td>
                     <td width="5%"><?= $chitiet->NGAY_NGHI?></td>

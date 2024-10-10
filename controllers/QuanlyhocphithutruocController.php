@@ -67,7 +67,9 @@ class QuanlyhocphithutruocController extends Controller
     public function actionIndex()
     {
         $searchModel = new QuanlyhocphithutruocSearch();
-        $dataProvider = $searchModel->searchhocphithutruoctheodonvi(Yii::$app->request->queryParams);
+        $params = Yii::$app->request->queryParams;
+        $params['QuanlyhocphithutruocSearch']['STATUS'] = isset($params['QuanlyhocphithutruocSearch']['STATUS']) ? $params['QuanlyhocphithutruocSearch']['STATUS'] : 1;
+        $dataProvider = $searchModel->searchhocphithutruoctheodonvi($params);
         $dslop = ArrayHelper::map(Lophoc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->all(), 'ID_LOP', 'TEN_LOP');
         $view = 'index';
         if (Yii::$app->user->can('hocphithutruoctheobuoi')) {
@@ -138,7 +140,7 @@ class QuanlyhocphithutruocController extends Controller
                             $model->ID_LOP = $inputs['Quanlyhocphithutruoc']['ID_LOP'];
                             $model->SOTIEN = $inputs['Quanlyhocphithutruoc']['SOTIEN'];
                             $model->SO_BH = $inputs['Quanlyhocphithutruoc']['SO_BH'];
-                            if ($model->hocsinh->TIENHOC) {
+                            if (!$model->SOTIEN && $model->hocsinh->TIENHOC) {
                                 $model->SOTIEN = $inputs['Quanlyhocphithutruoc']['SO_BH'] * $model->hocsinh->TIENHOC;
                             }
                             $model->NGAY_BD = isset($inputs['Quanlyhocphithutruoc']['NGAY_BD']) ? $inputs['Quanlyhocphithutruoc']['NGAY_BD'] : null;

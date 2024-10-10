@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	<h2 class="text-center"><b>LỚP <?= mb_strtoupper($model->lop->TEN_LOP)?></b>
     </h2>
     <table class="table table-bordered">
-        <tbody>
+        <tbody style="color: black;font-size: 19px;">
             <tr class="bg-primary text-center">
                 <th class="text-center">Họ tên</th>
                 <th class="text-center">SĐT</th>

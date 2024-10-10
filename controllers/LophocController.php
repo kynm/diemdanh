@@ -229,6 +229,7 @@ class LophocController extends Controller
                         $diemdanhhocsinh->ID_LOP = $id;
                         $diemdanhhocsinh->ID_HOCSINH = $hocsinh->ID;
                         $diemdanhhocsinh->ID_DIEMDANH = $diemdanh->ID;
+                        $diemdanhhocsinh->NGAY_DIEMDANH = $diemdanh->NGAY_DIEMDANH;
                         $diemdanhhocsinh->save(false);
                     }
                 }

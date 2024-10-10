@@ -55,7 +55,22 @@ $this->params['breadcrumbs'][] = $this->title;
                             return $model->NGAY_KT ? Yii::$app->formatter->asDatetime($model->NGAY_KT, 'php:d/m/Y') : NULL;
                         },
                     ],
-                    'TIENHOC',
+                    [
+                        'attribute' => 'SOBH_DAMUA',
+                        'contentOptions' => ['style' => 'width:7%; white-space: normal;word-break: break-word;'],
+                        'value' => function ($model) {
+                            return number_format($model->SOBH_DAMUA);
+                        },
+                        'format' => 'raw',
+                    ],
+                    [
+                        'attribute' => 'SOBH_DAHOC',
+                        'contentOptions' => ['style' => 'width:7%; white-space: normal;word-break: break-word;'],
+                        'value' => function ($model) {
+                            return $model->getDsdiemdanh()->andWhere(['STATUS' => 1])->count();
+                        },
+                        'format' => 'raw',
+                    ],
                     // [
                     //     'attribute' => 'SOBH_DAHOC',
                     //     'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],

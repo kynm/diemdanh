@@ -106,9 +106,9 @@
     function statusdonhang()
     {
         return [
-            0 => 'TỪ CHỐI',
-            1 => 'CHỜ DUYỆT',
-            2 => 'ĐÃ DUYỆT',
+            // 0 => 'TỪ CHỐI',
+            1 => 'CHƯA NỘP',
+            2 => 'ĐÃ NỘP',
         ];
     }
 

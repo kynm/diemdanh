@@ -116,7 +116,7 @@ class QuanlyhocphiController extends Controller
 
     public function taochitiethocphi($quanlyhocphi)
      {
-        $dshocsinh = ArrayHelper::map($quanlyhocphi->lop->getDshocsinh()->andWhere(['STATUS' => 1])->andWhere(['in', 'HT_HP', [0,1]])->all(), 'ID', 'ID');
+        $dshocsinh = ArrayHelper::map($quanlyhocphi->lop->getDshocsinh()->andWhere(['in', 'HT_HP', [0,1]])->all(), 'ID', 'ID');
         $sql = "SELECT c.ID ID_HOCSINH,c.HO_TEN,c.TIENHOC, COUNT(1) SO_LUONG, SUM(CASE WHEN b.`STATUS` > 0 then 1 ELSE 0 END) SOLUONGDIHOC
             , GROUP_CONCAT(CASE WHEN b.`STATUS` = 0 then DATE_FORMAT(a.NGAY_DIEMDANH,'%d/%m') ELSE null END ORDER BY a.NGAY_DIEMDANH asc SEPARATOR ', ') NGAYNGHI
             , GROUP_CONCAT(CASE WHEN b.`STATUS` = 1 then DATE_FORMAT(a.NGAY_DIEMDANH,'%d/%m') ELSE null END ORDER BY a.NGAY_DIEMDANH asc SEPARATOR ', ') NGAYDIHOC

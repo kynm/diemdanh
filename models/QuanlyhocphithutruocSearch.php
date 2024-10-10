@@ -63,7 +63,7 @@ class QuanlyhocphithutruocSearch extends Quanlyhocphithutruoc
         $query->andFilterWhere(['=', 'quanlyhocphithutruoc.ID_LOP', $this->ID_LOP])
             ->andFilterWhere(['like', 'SOTIEN', $this->SOTIEN])
             ->andFilterWhere(['like', 'hocsinh.HO_TEN', $this->ID_HOCSINH])
-            ->andFilterWhere(['=', 'quanlyhocphithutruoc.STATUS', ($this->STATUS) ? $this->STATUS : 1])
+            ->andFilterWhere(['=', 'quanlyhocphithutruoc.STATUS', $this->STATUS])
             ->andFilterWhere(['like', 'SO_BH', $this->SO_BH]);
 
         return $dataProvider;

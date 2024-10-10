@@ -302,7 +302,7 @@ class ChamdiemController extends Controller
             $params['TU_NGAY'] = isset($params['TU_NGAY']) ? $params['TU_NGAY'] : date("Y-m-1");
             $params['DEN_NGAY'] = isset($params['DEN_NGAY']) ? $params['DEN_NGAY'] : date('Y-m-d');
             $sql = 'SELECT a.ID ID_CHAMDIEM,a.TIEUDE, a.NGAY_CHAMDIEM,c.ID ID_HOCSINH,c.HO_TEN,b.DIEM FROM chamdiem a, chamdiemhocsinh b, hocsinh c
-                WHERE a.ID = b.ID_CHAMDIEM AND b.ID_HOCSINH = c.ID AND c.ID_DONVI = :ID_DONVI AND c.ID_LOP = ' . $idlophoc . '
+                WHERE a.ID = b.ID_CHAMDIEM AND b.ID_HOCSINH = c.ID and c.STATUS = 1 AND c.ID_DONVI = :ID_DONVI AND c.ID_LOP = ' . $idlophoc . '
                 ORDER BY a.NGAY_CHAMDIEM, c.HO_TEN desc';
             $result = Yii::$app->db->createCommand($sql)->bindValues(
                 [
