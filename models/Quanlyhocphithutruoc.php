@@ -79,4 +79,9 @@ class Quanlyhocphithutruoc extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Nhanvien::className(), ['ID_NHANVIEN' => 'ID_NHANVIEN']);
     }
+
+    public function sobuoidahoc($tungay, $denngay)
+    {
+        return $this->hocsinh->getDsdiemdanh()->andWhere(['between', 'date(diemdanhhocsinh.NGAY_DIEMDANH)', date($tungay), date($denngay)])->count();
+    }
 }

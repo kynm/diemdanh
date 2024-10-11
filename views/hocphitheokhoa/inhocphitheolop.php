@@ -20,6 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <tr class="bg-primary text-center">
                 <th class="text-center">Họ tên</th>
                 <th class="text-center">Từ ngày</th>
+                <th class="text-center">Số buổi học</th>
                 <th class="text-center">Tiền học</th>
                 <th class="text-center">Miễn giảm/ Học bổng</th>
                 <th class="text-center">Tiền sách/Tài liệu</th>
@@ -31,6 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <tr style="color: <?= $chitiet->STATUS == 1 ? 'red;' : 'black;' ?>">
                 <td style="border: 1px solid; width: 10%;"><?= $chitiet->hocsinh->HO_TEN?></td>
                 <td style="border: 1px solid; width: 8%;"><?= $chitiet->NGAY_BD?></td>
+                <td style="border: 1px solid; width: 8%;"><?= $chitiet->sobuoidahoc($chitiet->NGAY_BD, $chitiet->NGAY_KT)?>/<?= $chitiet->SO_BH?></td>
                 <td style="border: 1px solid; width: 8%;"><?= number_format($chitiet->SOTIEN)?></td>
                 <td style="border: 1px solid; width: 8%;"><?= number_format($chitiet->TIENGIAM)?></td>
                 <td style="border: 1px solid; width: 8%;"><?= number_format($chitiet->TIENKHAC)?></td>

@@ -109,6 +109,7 @@ class QuanlydiemdanhController extends Controller
     {
         $model = $this->findModel($id);
         if (Yii::$app->user->can('delete-diemdanh') && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+            Diemdanhhocsinh::deleteAll(['ID_DIEMDANH' => $model->ID]);
             $model->delete();
             
             return $this->redirect(['index']);
