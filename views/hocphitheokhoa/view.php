@@ -1,12 +1,8 @@
 <?php
-
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-/* @var $this yii\web\View */
-/* @var $model app\models\Donvi */
 $this->title = $model->TIEUDE;
 $this->params['breadcrumbs'][] = ['label' => 'Đơn vị', 'url' => ['quanlyhocphi/index']];
-$this->params['breadcrumbs'][] = ['label' => 'Đơn vị chủ quản', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="quanlyhocphi-view">
@@ -93,12 +89,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?php if (Yii::$app->user->can('quanlyhocphi') && $chitiet->STATUS == 1):?>
                             <span class="btn btn-flat btn-warning duyetthuphitruoc" data-id="<?= $chitiet->ID ?>">Xác nhận thu tiền</span>
                             <?= Html::a('<i class="fa fa-trash-o"></i> Xóa', ['deletechitiet', 'id' => $chitiet->ID], [
-                                            'class' => 'btn btn-danger btn-flat',
-                                            'data' => [
-                                                'confirm' => Yii::t('app', 'Dữ liệu sẽ bị xóa vĩnh viễn không thể khôi phục lại.Bạn chắc chắn muốn xóa mục này?'),
-                                                'method' => 'post',
-                                            ],
-                                        ])?>
+                                'class' => 'btn btn-danger btn-flat',
+                                'data' => [
+                                    'confirm' => Yii::t('app', 'Dữ liệu sẽ bị xóa vĩnh viễn không thể khôi phục lại.Bạn chắc chắn muốn xóa mục này?'),
+                                    'method' => 'post',
+                                ],
+                            ])?>
                         <?php endif; ?>
                     </td>
                 </tr>

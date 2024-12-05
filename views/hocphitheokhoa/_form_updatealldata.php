@@ -1,16 +1,9 @@
 <?php
-
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
-/* @var $this yii\web\View */
-/* @var $model app\models\Daivt */
-/* @var $form yii\widgets\ActiveForm */
 ?>
-
 <div class="daivt-form">
-
     <?php $form = ActiveForm::begin(); ?>
-
     <div class="box box-primary">
         <div class="box-body">
             <div class="row">

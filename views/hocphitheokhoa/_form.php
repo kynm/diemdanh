@@ -5,9 +5,6 @@ use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use kartik\date\DatePicker;
 use kartik\select2\Select2;
-/* @var $this yii\web\View */
-/* @var $model app\models\Daivt */
-/* @var $form yii\widgets\ActiveForm */
 ?>
 
 <div class="daivt-form">
@@ -110,14 +107,10 @@ $script = <<< JS
             }); 
         }
     }
-
     function tinhsobuoihoc() {
         var tu_ngay = $('#hocphitheokhoa-tu_ngay').val();
         var den_ngay = $('#hocphitheokhoa-den_ngay').val();
         var lopid = $('#hocphitheokhoa-id_lop').val();
-        console.log(tu_ngay);
-        console.log(den_ngay);
-        console.log(lopid);
         if (tu_ngay && den_ngay && lopid) {
            $.ajax({
                 url: '/quanlyhocphithutruoc/tinhsobuoihoc',

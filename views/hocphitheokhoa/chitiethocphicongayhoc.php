@@ -1,15 +1,9 @@
 <?php
-
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
-/* @var $this yii\web\View */
-/* @var $model app\models\Donvi */
-
 $this->title = 'CHI TIẾT HỌC PHÍ';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-
 <div class="box-body table-responsive">
 	<h2 class="text-center"><b>THÔNG BÁO  <?= mb_strtoupper($model->hocphi->TIEUDE)?></b>
     <?php if ($model->STATUS):?>

@@ -1,13 +1,10 @@
 <?php
 use yii\helpers\Html;
-use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
 use kartik\select2\Select2;
 use app\models\Trangthaihocsinh;
-/* @var $this yii\web\View */
-/* @var $model app\models\Daivt */
 $tranghtaihs = ArrayHelper::map(Trangthaihocsinh::find()->all(), 'MA_TRANGTHAI', 'TRANGTHAI');
 
 $this->title = 'QUẢN LÝ HỌC SINH';

@@ -6,10 +6,6 @@ use kartik\select2\Select2;
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
 use yii\helpers\ArrayHelper;
-use app\models\Hocsinh;
-/* @var $this yii\web\View */
-/* @var $model app\models\Daivt */
-
 $this->title = 'Quản lý học phí';
 $this->params['breadcrumbs'][] = ['label' => 'Quản lý học phí', 'url' => ['quanlyhocphi/index']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -147,7 +143,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                             ],
                                         ]);
                                     }
-
                                     return $text;
                                 },
                                 'format' => 'raw',

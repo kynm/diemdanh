@@ -1,13 +1,8 @@
 <?php
-use yii\helpers\Html;
-use yii\helpers\Url;
-use yii\helpers\ArrayHelper;
-use kartik\grid\GridView;
 use yii\widgets\ActiveForm;
 use kartik\date\DatePicker;
 
 $this->title = $model->HO_TEN;
-$this->params['breadcrumbs'][] = ['label' => 'Đơn vị', 'url' => ['donvi/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="hocsinh-view">
