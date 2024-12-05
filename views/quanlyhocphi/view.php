@@ -41,6 +41,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     'TU_NGAY',
                     'DEN_NGAY',
                     'TIENHOC',
+                    [
+                        'attribute' => 'TIENHOC',
+                        'value' => number_format($model->lop->TIENHOC),
+                    ],
                 ],
             ]) ?>
         </div>
@@ -240,8 +244,8 @@ $('.capnhatsotienmoibuoi').on('change', function() {
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: '#DD6B55',
-            confirmButtonText: 'CÓ, xÓA NGAY!',
-            cancelButtonText: "KHÔNG XÓA!"
+            confirmButtonText: 'Đồng ý!',
+            cancelButtonText: "Không đồng ý!"
         }).then((result) => {
         if (result['isConfirmed']) {
             var capnhatghichu = $(this).val();
@@ -271,8 +275,8 @@ $('.capnhatsotienmoibuoi').on('change', function() {
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: '#DD6B55',
-            confirmButtonText: 'CÓ!',
-            cancelButtonText: "KHÔNG XÓA!"
+            confirmButtonText: 'Đồng ý!',
+            cancelButtonText: "Không đồng ý!"
         }).then((result) => {
         if (result['isConfirmed']) {
             var capnhatghichu = $(this).val();
@@ -302,8 +306,8 @@ $('.capnhatsotienmoibuoi').on('change', function() {
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: '#DD6B55',
-            confirmButtonText: 'ĐÃ THU!',
-            cancelButtonText: "CHƯA THU!"
+            confirmButtonText: 'Đồng ý!',
+            cancelButtonText: "Không đồng ý!"
         }).then((result) => {
         if (result['isConfirmed']) {
             var capnhatghichu = $(this).val();

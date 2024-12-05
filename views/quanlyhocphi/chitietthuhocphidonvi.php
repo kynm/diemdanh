@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ['class' => 'yii\grid\SerialColumn'],
                             [
                                 'attribute' => 'TIEUDE',
-                                'contentOptions' => ['style' => 'width:30%; white-space: normal;word-break: break-word;'],
+                                'contentOptions' => ['style' => 'width:20%; white-space: normal;word-break: break-word;'],
                                 'value' => function ($model) {
                                     return $model->hocphi->TIEUDE;
                                 },
@@ -51,8 +51,27 @@ $this->params['breadcrumbs'][] = $this->title;
                             'SO_BDH',
                             'SO_BN',
                             'SO_BTT',
-                            'TIENHOC',
-                            'TONG_TIEN',
+                            [
+                                'attribute' => 'TIENHOC',
+                                'value' => function ($model) {
+                                    return number_format($model->TIENHOC);
+                                },
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'TIENKHAC',
+                                'value' => function ($model) {
+                                    return number_format($model->TIENKHAC);
+                                },
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'TONG_TIEN',
+                                'value' => function ($model) {
+                                    return number_format($model->TONG_TIEN);
+                                },
+                                'format' => 'raw',
+                            ],
                             [
                                 'attribute' => 'STATUS',
                                 'value' => function ($model) {

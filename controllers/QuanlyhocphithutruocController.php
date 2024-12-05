@@ -34,32 +34,19 @@ class QuanlyhocphithutruocController extends Controller
             ],
         ];
     }
-        // $dshocphithutruoc = Quanlyhocphithutruoc::find()->where(['ID_DONVI' => 750])
-        // ->andWhere(['is not', 'NGAY_BD', new \yii\db\Expression('null')])->andWhere(['is', 'NGAY_KT', new \yii\db\Expression('null')])
-        // ->all();
-        // foreach ($dshocphithutruoc as $key => $hocphi) {
-        //     $ngaybd = new \DateTime($hocphi->NGAY_BD);
 
-        //     $sobh = $hocphi->SO_BH;
-        //     $lophoc = $hocphi->lop;
-        //     $i = 0;
-        //     while ($i < $sobh) {
-        //         $dateonweek = date_format($ngaybd, 'w');
-        //         if (in_array($dateonweek, explode(',', $lophoc->ds_lichcodinh))) {
-        //             $i ++;
-        //         }
-        //         $ngaybd = $ngaybd->modify('+1 day');
-        //     }
-        //     $ngaykt = $ngaybd;
-        //     $hocphi->NGAY_KT = $ngaykt->format('Y-m-d');
-        //     $hocphi->GHICHU .= $hocphi->GHICHU . ' - HỌC PHÍ CHUYỂN ĐỔI';
-        //     if ($hocphi->STATUS == 2) {
-        //         $hocphi->GHICHU .= $hocphi->GHICHU . ' - ĐÃ THU, CONFIRM LẠI CẬP NHẬT LẠI';
-        //     }
-        //     $hocphi->STATUS = 1;
-        //     $hocphi->save();
+    public function beforeAction($action)
+    {
+        $donvi = Yii::$app->user->identity->nhanvien->iDDONVI;
+        $date1=date_create($donvi->NGAY_KT);
+        $date2= date_create(date('Y-m-d'));
+        if ($date2 > $date1) {
+            Yii::$app->session->setFlash('error', "Vui lòng gia hạn trước khi tiếp tục sử dụng dịch vụ!");
+            return $this->redirect(['/']);
+        }
 
-        // }
+        return true;
+    }
     /**
      * Lists all hocsinh models.
      * @return mixed
@@ -156,7 +143,7 @@ class QuanlyhocphithutruocController extends Controller
                 Yii::$app->session->setFlash('success', "Thêm mới thành công!");
                 return $this->redirect(['index']);
             } else {
-            $dslop = ArrayHelper::map(Lophoc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->all(), 'ID_LOP', 'TEN_LOP');
+            $dslop = ArrayHelper::map(Lophoc::find()->where(['STATUS' => 1])->andWhere(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->all(), 'ID_LOP', 'TEN_LOP');
                 return $this->render('create', [
                     'model' => $model,
                     'dslop' => $dslop,
@@ -420,12 +407,32 @@ class QuanlyhocphithutruocController extends Controller
     {
         if (Yii::$app->user->can('quanlyhocphi')) {
             $searchModel = new HocsinhSearch();
-            $dataProvider = $searchModel->searchhocsinhhethantheongay(Yii::$app->request->queryParams);
+            $params = Yii::$app->request->queryParams;
+            $dataProvider = $searchModel->searchhocsinhhethantheongay($params);
             $dslop = ArrayHelper::map(Lophoc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->all(), 'ID_LOP', 'TEN_LOP');
+            $params['HocsinhSearch']['ID_LOP'] = isset($params['HocsinhSearch']['ID_LOP']) ? $params['HocsinhSearch']['ID_LOP'] : null;
             return $this->render('canhbaotheongay', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
                 'dslop' => $dslop,
+                'params' => $params,
+            ]);
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function actionCanhbaotheongayprint()
+    {
+        $this->layout = 'printLayout';
+        if (Yii::$app->user->can('quanlyhocphi')) {
+            $searchModel = new HocsinhSearch();
+            $params = Yii::$app->request->queryParams;
+            $params['HocsinhSearch']['ID_LOP'] = isset($params['HocsinhSearch']['ID_LOP']) ? $params['HocsinhSearch']['ID_LOP'] : null;
+            $dataProvider = $searchModel->searchhocsinhhethantheongay($params);
+            $result = $dataProvider->query->all();
+            return $this->render('canhbaotheongay_print', [
+                'result' => $result,
             ]);
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -440,7 +447,7 @@ class QuanlyhocphithutruocController extends Controller
             $dsidlop = (isset($params['ID_LOP'])  && $params['ID_LOP']) ? [$params['ID_LOP'] => $params['ID_LOP']] : array_keys($dslop);
             $sql = "SELECT bh.TEN_LOP, bh.HO_TEN,bh.SOLUONG_DAHOC, bdt.SOLUONG_DADONGTIEN,(bdt.SOLUONG_DADONGTIEN - bh.SOLUONG_DAHOC) SOBUOI_CONLAI FROM
             (SELECT b.ID,a.TEN_LOP, b.HO_TEN, sum(case when c.`STATUS` = 1 then 1 ELSE 0 END) SOLUONG_DAHOC FROM lophoc a, hocsinh b, diemdanhhocsinh c WHERE a.ID_LOP = b.ID_LOP AND b.ID = c.ID_HOCSINH AND a.ID_DONVI = :ID_DONVI and a.ID_LOP IN (" . implode(',', $dsidlop) . ") AND b.HT_HP IN (0,2) and b.NGAY_KT IS NULL GROUP BY b.ID,a.TEN_LOP, b.HO_TEN) bh,
-            (SELECT b.ID, sum(case when c.`STATUS` = 2 then c.SO_BH ELSE 0 END) SOLUONG_DADONGTIEN FROM lophoc a, hocsinh b, quanlyhocphithutruoc c WHERE a.ID_LOP = b.ID_LOP AND b.ID = c.ID_HOCSINH AND a.ID_DONVI = :ID_DONVI and a.ID_LOP IN (" . implode(',', $dsidlop) . ") AND b.HT_HP IN (0,2) and b.NGAY_KT IS NULL GROUP BY b.ID) bdt
+            (SELECT b.ID, sum(case when c.`STATUS` = 2 then c.SO_BH ELSE 0 END) SOLUONG_DADONGTIEN FROM lophoc a INNER JOIN  hocsinh b ON a.ID_LOP = b.ID_LOP LEFT join quanlyhocphithutruoc c ON b.ID = c.ID_HOCSINH WHERE a.ID_DONVI = :ID_DONVI and a.ID_LOP IN (" . implode(',', $dsidlop) . ") AND b.HT_HP IN (0,2) AND b.STATUS = 1 GROUP BY b.ID) bdt
             WHERE bh.ID = bdt.ID ORDER BY bh.TEN_LOP asc, (bdt.SOLUONG_DADONGTIEN - bh.SOLUONG_DAHOC) ASC";
             $result = Yii::$app->db->createCommand($sql)->bindValues(
                 [
@@ -468,6 +475,13 @@ class QuanlyhocphithutruocController extends Controller
                 header('Cache-Control: max-age=0');
                 $writer->save("php://output");
                 exit;
+            }
+
+            if (isset($params['is_print']) && $params['is_print']) {
+                $this->layout = 'printLayout';
+                return $this->render('canhbaotheosobuoihoc_print', [
+                'result' => $result,
+            ]);
             }
             return $this->render('canhbaotheosobuoihoc', [
                 'result' => $result,
@@ -585,6 +599,40 @@ class QuanlyhocphithutruocController extends Controller
             if ($hocphi && $hocphi->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI && $hocphi->STATUS == 1) {
                 $hocphi->GHICHU = $params['ghichu'];
                 $hocphi->save();
+                $result['error'] = 0;
+                $result['message'] = 'Cập nhật thành công';
+            }
+
+            return json_encode($result);
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function actionTinhsobuoihoc()
+    {
+        if (Yii::$app->user->can('quanlyhocphi') &&Yii::$app->request->post() && Yii::$app->user->identity->nhanvien->ID_NHANVIEN) {
+            $inputs = Yii::$app->request->post();
+            $lophoc = Lophoc::findOne($inputs['lopid']);
+            $tungay = new \DateTime($inputs['tu_ngay']);
+            $denngay = new \DateTime($inputs['den_ngay']);
+            $result = [
+                'error' => 1,
+                'data' => [],
+                'message' => 'Lỗi cập nhật!',
+            ];
+            if ($lophoc && $lophoc->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI && $tungay && $denngay) {
+                $sobh = 0;
+                $currentdate = $tungay;
+                while ($currentdate < $denngay) {
+                    $dateonweek = date_format($currentdate, 'w');
+                    if (in_array($dateonweek, explode(',', $lophoc->ds_lichcodinh))) {
+                        $sobh ++;
+                    }
+                    $currentdate = $currentdate->modify('+1 day');
+                }
+                $result['SO_BH'] = $sobh;
+                $result['TIENHOC'] = $sobh * $lophoc->TIENHOC;
                 $result['error'] = 0;
                 $result['message'] = 'Cập nhật thành công';
             }

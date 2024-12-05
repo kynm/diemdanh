@@ -19,6 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <th class="text-center">Họ tên</th>
                 <th class="text-center">Lớp</th>
                 <th class="text-center">TIỀN HỌC</th>
+                <th class="text-center">HỌC BỔNG/ MIỄN GIẢM</th>
                 <th class="text-center">TIỀN SÁCH/ TÀI LIỆU</th>
                 <th class="text-center">TỔNG TIỀN</th>
                 <th class="text-center">GHI CHÚ</th>
@@ -26,31 +27,33 @@ $this->params['breadcrumbs'][] = $this->title;
             <tr class="text-center">
             	<td style="border: 1px solid; width: 15%;"><?= $model->hocsinh->HO_TEN?><br><?= $model->hocsinh->SO_DT?><br><?= $model->hocsinh->DIA_CHI?></td>
             	<td style="border: 1px solid; width: 15%;"><?= $model->lop->TEN_LOP?></td>
-            	<td style="border: 1px solid; width: 7%;"><?= $model->SOTIEN?></td>
+                <td style="border: 1px solid; width: 7%;"><?= number_format($model->SOTIEN)?></td>
+            	<td style="border: 1px solid; width: 7%;"><?= number_format($model->TIENGIAM)?></td>
                 <td style="border: 1px solid; width: 7%;"><?= number_format($model->TIENKHAC)?></td>
             	<td style="border: 1px solid; width: 10%;"><?= number_format($model->TONGTIEN)?></td>
                 <td style="border: 1px solid; width: 20%;"><?= nl2br($model->GHICHU)?></td>
             </tr>
             <tr>
-                <td colspan="6" style="border: 1px solid;">
+                <td colspan="7" style="border: 1px solid;">
                     <?php if ($model->NGAY_KT):?>
+                        NGÀY BẮT ĐẦU: <?= Yii::$app->formatter->asDatetime($model->NGAY_BD, 'php:d/m/Y')?><br/>
                         NGÀY KẾT THÚC: <?= Yii::$app->formatter->asDatetime($model->NGAY_KT, 'php:d/m/Y')?>
                     <?php endif; ?>
                 </td>
             </tr>
             <tr>
-            	<td colspan="6" style="border: 1px solid;">
+            	<td colspan="7" style="border: 1px solid;">
 					<?=  isset(Yii::$app->user->identity->nhanvien->iDDONVI->TTTT) ? nl2br(Yii::$app->user->identity->nhanvien->iDDONVI->TTTT) : ''?>
 
             	</td>
             </tr>
             <tr>
-            	<td colspan="6" style="border: 1px solid;">
+            	<td colspan="7" style="border: 1px solid;">
                     <?=  isset(Yii::$app->user->identity->nhanvien->iDDONVI->QDLH) ? nl2br(Yii::$app->user->identity->nhanvien->iDDONVI->QDLH) : ''?>
             	</td>
             </tr>
             <tr>
-            	<td colspan="6" style="border: 1px solid;">
+            	<td colspan="7" style="border: 1px solid;">
                     <?=  isset(Yii::$app->user->identity->nhanvien->iDDONVI->TTLH) ? nl2br(Yii::$app->user->identity->nhanvien->iDDONVI->TTLH) : ''?>
             	</td>
             </tr>

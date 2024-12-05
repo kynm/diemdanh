@@ -77,10 +77,15 @@ use kartik\select2\Select2;
 </div>
 <?php
 $script = <<< JS
-    $('#quanlyhocphi-tieude').focus();
+    $('#hocphitheokhoa-tieude').focus();
     $('#hocphitheokhoa-so_bh, #hocphitheokhoa-tu_ngay, #hocphitheokhoa-id_lop').on('change', function() {
         layngayketthuc();
     });
+
+    $('#hocphitheokhoa-tu_ngay, #hocphitheokhoa-den_ngay').on('change', function() {
+        tinhsobuoihoc();
+    });
+
     function layngayketthuc() {
         var sobh = $('#hocphitheokhoa-so_bh').val();
         var tu_ngay = $('#hocphitheokhoa-tu_ngay').val();
@@ -98,6 +103,35 @@ $script = <<< JS
                     data = jQuery.parseJSON(data);
                     if (!data.error) {
                         $("#hocphitheokhoa-den_ngay").val(data.NGAY_KT);
+                    } else {
+                        Swal.fire(data.message);
+                    }
+                }
+            }); 
+        }
+    }
+
+    function tinhsobuoihoc() {
+        var tu_ngay = $('#hocphitheokhoa-tu_ngay').val();
+        var den_ngay = $('#hocphitheokhoa-den_ngay').val();
+        var lopid = $('#hocphitheokhoa-id_lop').val();
+        console.log(tu_ngay);
+        console.log(den_ngay);
+        console.log(lopid);
+        if (tu_ngay && den_ngay && lopid) {
+           $.ajax({
+                url: '/quanlyhocphithutruoc/tinhsobuoihoc',
+                method: 'post',
+                data: {
+                    'lopid' : lopid,
+                    'tu_ngay' : tu_ngay,
+                    'den_ngay' : den_ngay,
+                },
+                success:function(data) {
+                    data = jQuery.parseJSON(data);
+                    if (!data.error) {
+                        $("#hocphitheokhoa-so_bh").val(data.SO_BH);
+                        $("#hocphitheokhoa-tienhoc").val(data.TIENHOC);
                     } else {
                         Swal.fire(data.message);
                     }

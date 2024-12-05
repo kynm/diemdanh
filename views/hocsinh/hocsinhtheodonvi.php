@@ -74,7 +74,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'SOBH_DAMUA',
                         'contentOptions' => ['style' => 'width:7%; white-space: normal;word-break: break-word;'],
                         'value' => function ($model) {
-                            return number_format($model->SOBH_DAMUA);
+                            $sobuoi = in_array($model->HT_HP, [2,3]) ? $model->getDshocphithutruoc()->andWhere(['STATUS' => 2])->sum('SO_BH') : null;
+                            return $sobuoi;
                         },
                         'format' => 'raw',
                     ],

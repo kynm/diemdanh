@@ -113,21 +113,26 @@ class ChamdiemController extends Controller
     //  * @param integer $id
     //  * @return mixed
     //  */
-    // public function actionUpdate($id)
-    // {
-    //     if (Yii::$app->user->can('edit-lophoc')) {
-    //         $model = $this->findModel($id);
-    //         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-    //             return $this->redirect(['view', 'id' => $model->ID_LOP]);
-    //         } else {
-    //             return $this->render('update', [
-    //                 'model' => $model,
-    //             ]);
-    //         }
-    //     } else {
-    //         throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
-    //     }
-    // }
+    public function actionView($id)
+    {
+        $model = Chamdiem::findOne($id);
+        $dshocsinh = ArrayHelper::map(Hocsinh::find()
+            ->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])
+            ->where(['ID_LOP' => $model->ID_LOP])
+            ->andWhere(['STATUS' => 1])->all(), 'ID', 'ID');
+        $dschitietchamdiem = Chamdiemhocsinh::find()
+        ->where(['ID_CHAMDIEM' => $id])
+        ->andWhere(['ID_LOP' => $model->ID_LOP])
+        ->andWhere(['in', 'ID_HOCSINH', $dshocsinh])->all();
+        if (Yii::$app->user->can('diemdanhlophoc') && $model && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+            return $this->render('view', [
+                'model' => $model,
+                'dschitietchamdiem' => $dschitietchamdiem,
+            ]);
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
+        }
+    }
 
     /**
      * Deletes an existing Lophoc model.

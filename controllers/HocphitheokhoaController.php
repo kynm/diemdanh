@@ -37,6 +37,19 @@ class HocphitheokhoaController extends Controller
         ];
     }
 
+    public function beforeAction($action)
+    {
+        $donvi = Yii::$app->user->identity->nhanvien->iDDONVI;
+        $date1=date_create($donvi->NGAY_KT);
+        $date2= date_create(date('Y-m-d'));
+        if ($date2 > $date1) {
+            Yii::$app->session->setFlash('error', "Vui lòng gia hạn trước khi tiếp tục sử dụng dịch vụ!");
+            return $this->redirect(['/']);
+        }
+
+        return true;
+    }
+
     /**
      * Lists all diemdanh models.
      * @return mixed
@@ -82,7 +95,7 @@ class HocphitheokhoaController extends Controller
 
     public function taochitiethocphi($quanlyhocphi)
      {
-        $dshocsinh = $quanlyhocphi->lop->dshocsinh;
+        $dshocsinh = $quanlyhocphi->lop->getDshocsinh()->andWhere(['STATUS' => 1])->all();
         foreach ($dshocsinh as $key => $hocsinh) {
             $hocphi = Quanlyhocphithutruoc::find()->where(['ID_KHOAHOCPHI' => $quanlyhocphi->ID])->andWhere(['ID_HOCSINH' => $hocsinh->ID])->one();
             if (!$hocphi) {
@@ -200,7 +213,7 @@ class HocphitheokhoaController extends Controller
     {
         if (Yii::$app->user->can('quanlytruonghoc')) {
             $model = $this->findModel($id);
-            if ($model->getChitiethocphi()->where(['STATUS' => 1])->count() && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+            if ($model->getChitiethocphi()->where(['STATUS' => 2])->count() && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
                 Yii::$app->session->setFlash('error', "Không thể xóa do đã tồn tại lượt thanh toán học phí");
                 return $this->redirect(['view', 'id' => $id]);
             }   else {
@@ -410,13 +423,14 @@ class HocphitheokhoaController extends Controller
             $searchModel = new QuanlyhocphithutruocSearch();
             $params = Yii::$app->request->queryParams;
             $params['STATUS'] = isset( $params['STATUS']) ? $params['STATUS'] : 1;
-            $dataProvider = $searchModel->searchchitiethocphitheodonvi($params);
+            $dataProvider = $searchModel->searchhocphithutruoctheodonvi($params);
 
             $dslop = ArrayHelper::map(Lophoc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->all(), 'ID_LOP', 'TEN_LOP');
             return $this->render('chitietthuhocphidonvi', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
                 'dslop' => $dslop,
+                'params' => $params,
             ]);
         } else {
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
@@ -551,6 +565,38 @@ class HocphitheokhoaController extends Controller
                 ];
                 Quanlyhocphithutruoc::updateAll([
                     'NGAY_KT' => $hocphi->DEN_NGAY,
+                ], $condition);
+
+                $result['error'] = 0;
+                $result['message'] = 'Cập nhật thành công';
+            }
+
+            return json_encode($result);
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function actionThaydoingaybd()
+    {
+        if (Yii::$app->user->can('quanlyhocphi') &&Yii::$app->request->post() && Yii::$app->user->identity->nhanvien->ID_NHANVIEN) {
+            $inputs = Yii::$app->request->post();
+            $hocphi = Hocphitheokhoa::findOne($inputs['id']);
+            $ngaybd = $inputs['ngaybd'];
+            $result = [
+                'error' => 1,
+                'data' => [],
+                'message' => 'Lỗi cập nhật!',
+            ];
+            if ($hocphi && $hocphi->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+                $hocphi->TU_NGAY = $ngaybd;
+                $hocphi->save();
+                $condition = ['and',
+                    ['=', 'ID_KHOAHOCPHI', $inputs['id']],
+                    ['=', 'ID_DONVI', Yii::$app->user->identity->nhanvien->ID_DONVI],
+                ];
+                Quanlyhocphithutruoc::updateAll([
+                    'NGAY_BD' => $hocphi->TU_NGAY,
                 ], $condition);
 
                 $result['error'] = 0;

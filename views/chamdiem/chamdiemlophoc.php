@@ -61,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             [
                                 'attribute' => '',
                                 'value' => function($model) {
-                                    return '<span class="btn btn-danger xoachamdiem" data-id="' . $model->ID . '">Xóa</span>';
+                                    return '<span class="btn btn-danger xoachamdiem" data-id="' . $model->ID . '">Xóa</span>' . Html::a("Xem chi tiết", ['view', 'id' => $model->ID], ['class'=> 'btn btn-primary']);;
                                 },
                                 'format' => 'raw',
                             ],

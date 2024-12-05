@@ -14,10 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="box-body table-responsive">
 	<h2 class="text-center"><b>LỚP <?= mb_strtoupper($model->lop->TEN_LOP)?></b></h2>
-    <h3 class="text-center"><?= dateofmonth()[date_format(date_create($model->NGAY_DIEMDANH), 'w')] ?></h3>
-    <h3>SỐ HỌC CỦA LỚP: <?= $model->getDschitietdiemdanh()->count()?> (HỌC SINH)</h3>
-    <h3>SỐ HỌC SINH ĐI HỌC: <?= $model->getDschitietdiemdanh()->andWhere(['STATUS' => 1])->count()?> (HỌC SINH)</h3>
-    <h3>SỐ HỌC SINH NGHỈ: <?= $model->getDschitietdiemdanh()->andWhere(['STATUS' => 0])->count()?> (HỌC SINH)</h3>
+    <h3 class="text-center"><?= dateofmonth()[date_format(date_create($model->NGAY_CHAMDIEM), 'w')] ?></h3>
     <?php if($model->NOIDUNG) :?>
         <h3 class="text-center">NỘI DUNG BUỔI HỌC</h3>
         <div><?= nl2br($model->NOIDUNG)?></div>
@@ -29,14 +26,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     <tr class="bg-primary text-center">
                         <th class="text-center">STT</th>
                         <th class="text-center">Học sinh</th>
-                        <th class="text-center">Đi học</th>
+                        <th class="text-center">Điểm</th>
                         <th class="text-center">Nhận xét</th>
                     </tr>
-                    <?php foreach ($model->dschitietdiemdanh as $key => $value): ?>
-                    <tr style="color: <?= colordiemdanh($value)?>">
+                    <?php foreach ($dschitietchamdiem as $key => $value): ?>
+                    <tr>
                         <td><?= $key + 1?></td>
                         <td><?= $value->hocsinh->HO_TEN?></td>
-                        <td class="text-center"><?= $value->STATUS == 1 ? '<i class="fa fa-check"></i>' : 'X'?></td>
+                        <td class="text-center"><?= $value->DIEM?></td>
                         <td><?= $value->NHAN_XET?></td>
                     </tr>
                     <?php endforeach; ?>

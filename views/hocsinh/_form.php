@@ -20,7 +20,6 @@ use kartik\select2\Select2;
                 <div class="col-sm-2">
                     <?= $form->field($model, 'MA_HOCSINH')->textInput(['maxlength' => true]) ?>
                 </div>
-                    
                 <div class="col-sm-3">
                     <?= $form->field($model, 'HO_TEN')->textInput(['maxlength' => true]) ?>
                 </div>

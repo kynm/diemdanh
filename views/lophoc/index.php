@@ -30,23 +30,40 @@ $this->params['breadcrumbs'][] = $this->title;
                             ['class' => 'yii\grid\SerialColumn'],
                             [
                                 'attribute' => 'TEN_LOP',
-                                'contentOptions' => ['style' => 'width:40%; white-space: normal;word-break: break-word;'],
+                                'contentOptions' => ['style' => 'width:20%; white-space: normal;word-break: break-word;'],
                                 'value' => function ($model) {
                                     return Html::a($model->TEN_LOP, ['view', 'id' => $model->ID_LOP]);
                                 },
                                 'format' => 'raw',
                             ],
                             [
-                                'attribute' => 'SOHOCSINH',
+                                'attribute' => 'ACTION',
+                                'contentOptions' => ['style' => 'width:30%; white-space: normal;word-break: break-word;'],
                                 'value' => function ($model) {
-                                    return $model->getDshocsinh()->andWhere(['STATUS' => 1])->count();
-                                }
+                                    $html = '';
+                                    $html .= Html::a('</i> Điểm danh', ['lophoc/quanlydiemdanh', 'id' => $model->ID_LOP], ['class' => 'btn btn-danger btn-flat', 'data-pjax' => 0]);
+                                    $html .= Html::a('<i class="fa fa-list"></i> Quản lý học sinh', ['quanlyhocsinh', 'id' => $model->ID_LOP], ['class' => 'btn btn-primary btn-flat', 'data-pjax' => 0]);
+                                    $html .= Html::a('Kiểm tra', ['/chamdiem/chamdiemlophoc', 'idlophoc' => $model->ID_LOP], ['class' => 'btn btn-success btn-flat', 'data-pjax' => 0]);
+                                    return $html;
+                                },
+                                'format' => 'raw',
                             ],
                             [
                                 'attribute' => 'ID_NHANVIEN_DIEMDANH',
                                 'value' => 'nhanviendiemdanh.TEN_NHANVIEN',
                             ],
-                            'TIENHOC',
+                            [
+                                'attribute' => 'SOHOCSINH',
+                                'value' => function ($model) {
+                                    return number_format($model->getDshocsinh()->andWhere(['STATUS' => 1])->count());
+                                }
+                            ],
+                            [
+                                'attribute' => 'TIENHOC',
+                                'value' => function ($model) {
+                                    return number_format($model->TIENHOC);
+                                }
+                            ],
                              [
                                 'attribute' => 'STATUS',
                                 'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],

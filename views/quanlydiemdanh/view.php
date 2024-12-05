@@ -81,13 +81,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         },
                         'format' => 'raw',
                     ],
-                    [
-                        'attribute' => 'GHICHU',
-                        'value' => function ($model) {
-                            return $model->ghichu;
-                        },
-                        'format' => 'raw',
-                    ],
                 ],
             ]) ?>
             </div>
@@ -104,10 +97,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         <th class="text-center">Nhận xét</th>
                     </tr>
                     <?php foreach ($model->dschitietdiemdanh as $key => $value): ?>
-                    <tr class="text-center">
+                    <tr style="color: <?= colordiemdanh($value)?>">
                         <td><?= $key + 1?></td>
                         <td><?= $value->hocsinh->HO_TEN?></td>
-                        <td><?= $value->STATUS == 1 ? 'X' : ''?></td>
+                        <td class="text-center"><?= $value->STATUS == 1 ? '<i class="fa fa-check"></i>' : 'X'?></td>
                         <td><?= $value->NHAN_XET?></td>
                     </tr>
                     <?php endforeach; ?>

@@ -44,7 +44,7 @@ class Chitiethocphi extends \yii\db\ActiveRecord
             'ID_LOP' => 'LỚP HỌC',
             'STATUS' => 'TRẠNG THÁI',
             'created_at' => 'NGÀY TẠO',
-            'TIENKHAC' => 'TIỀN KHÁC',
+            'TIENKHAC' => 'TIỀN SÁCH/ TÀI LIỆU',
             'ID_HOCSINH' => 'HỌC SINH',
         ];
     }

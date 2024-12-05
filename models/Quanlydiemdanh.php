@@ -49,6 +49,7 @@ class Quanlydiemdanh extends \yii\db\ActiveRecord
             'GHICHU' => 'GHI CHÚ',
             'HANHDONG' => 'HÀNH ĐỘNG',
             'NOIDUNG' => 'NỘI DUNG',
+            'ID_NHANVIEN' => 'NGƯỜI ĐIỂM DANH',
         ];
     }
 

@@ -88,7 +88,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'attribute' => 'LUOTDIEMDANH',
                             'value' => function ($model) {
-                                return $model->getDsdiemdanh()->count();
+                                return $model->getDsdiemdanh()->andWhere(['>=','date(NGAY_DIEMDANH)', date('Y-m-1')])->count();
                             },
                         ],
                     ],

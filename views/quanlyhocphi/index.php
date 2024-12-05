@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             [
                                 'attribute' => 'ID_LOP',
                                 'value' => function ($model) {
-                                    return Html::a($model->lop->TEN_LOP, ['/lophoc/view', 'id' => $model->lop->ID_LOP]);
+                                    return $model->lop ? Html::a( $model->lop->TEN_LOP , ['/lophoc/view', 'id' => $model->lop->ID_LOP]) : 'Không xác định';
                                 },
                                 'contentOptions' => ['style' => 'width:8%; white-space: normal;word-break: break-word;'],
                                 'filter'=> $dslop,
@@ -117,7 +117,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'attribute' => '',
                                 'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
                                 'value' => function ($model) {
-                                    $text = Html::a('<i class="fa fa-file-pdf-o"></i> Export Pdf', ['/quanlyhocphi/exportpdf', 'id' => $model->ID], ['class' => 'btn btn-success btn-flat', 'target' => '_blank']) . '<br/>';
+                                    $text = Html::a('<i class="fa fa-file-pdf-o"></i> Export Pdf', ['/quanlyhocphi/exportpdf', 'id' => $model->ID], ['class' => 'btn btn-success btn-flat', 'target' => '_blank', 'data-pjax' => 0]) . '<br/>';
                                     if (Yii::$app->user->can('quanlyhocphi') && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI && !$model->getChitiethocphi()->where(['STATUS' => 1])->count()) {
                                         $text .= Html::a('<i class="fa fa-trash-o"></i> Xóa', ['delete', 'id' => $model->ID], [
                                             'class' => 'btn btn-danger btn-flat',

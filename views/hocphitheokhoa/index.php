@@ -95,7 +95,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'attribute' => 'SOLUONGCHUATHU',
                                 'contentOptions' => ['style' => 'width:8%; white-space: normal;word-break: break-word;'],
                                 'value' => function ($model) {
-                                    return number_format($model->getChitiethocphi()->andWhere(['STATUS' => 0])->count());
+                                    return number_format($model->getChitiethocphi()->andWhere(['STATUS' => 1])->count());
                                 },
                                 'format' => 'raw',
                             ],
@@ -103,7 +103,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'attribute' => 'SOLUONGDATHU',
                                 'contentOptions' => ['style' => 'width:8%; white-space: normal;word-break: break-word;'],
                                 'value' => function ($model) {
-                                    return number_format($model->getChitiethocphi()->andWhere(['STATUS' => 1])->count());
+                                    return number_format($model->getChitiethocphi()->andWhere(['STATUS' => 2])->count());
                                 },
                                 'format' => 'raw',
                             ],
@@ -119,7 +119,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'attribute' => 'TONGTIENDATHU',
                                 'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
                                 'value' => function ($model) {
-                                    return number_format($model->getChitiethocphi()->andWhere(['STATUS' => 1])->sum('TONGTIEN'));
+                                    return number_format($model->getChitiethocphi()->andWhere(['STATUS' => 2])->sum('TONGTIEN'));
                                 },
                                 'format' => 'raw',
                             ],
@@ -127,7 +127,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'attribute' => 'TONGTIENCHUATHU',
                                 'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
                                 'value' => function ($model) {
-                                    return number_format($model->getChitiethocphi()->andWhere(['STATUS' => 0])->sum('TONGTIEN'));
+                                    return number_format($model->getChitiethocphi()->andWhere(['STATUS' => 1])->sum('TONGTIEN'));
                                 },
                                 'format' => 'raw',
                             ],
@@ -138,7 +138,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
                                 'value' => function ($model) {
                                     $text = Html::a('<i class="fa fa-file-pdf-o"></i> Export Pdf', ['/quanlyhocphi/exportpdf', 'id' => $model->ID], ['class' => 'btn btn-success btn-flat', 'target' => '_blank']) . '<br/>';
-                                    if (Yii::$app->user->can('quanlyhocphi') && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI && !$model->getChitiethocphi()->where(['STATUS' => 1])->count()) {
+                                    if (Yii::$app->user->can('quanlyhocphi') && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI && !$model->getChitiethocphi()->where(['STATUS' => 2])->count()) {
                                         $text .= Html::a('<i class="fa fa-trash-o"></i> Xóa', ['delete', 'id' => $model->ID], [
                                             'class' => 'btn btn-danger btn-flat',
                                             'data' => [

@@ -189,7 +189,7 @@ class HocsinhController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        if (!$model->getDsdiemdanh()->andWhere(['STATUS' => 1])->count() && Yii::$app->user->can('quanlyhocsinh') && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+        if (Yii::$app->user->can('quanlyhocsinh') && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
             Diemdanhhocsinh::deleteAll(['ID_HOCSINH' => $id]);
             $model->delete();
             Yii::$app->session->setFlash('success', "Xóa học sinh thành công!");
@@ -246,6 +246,48 @@ class HocsinhController extends Controller
             $hocsinh = Hocsinh::findOne($params['idhocsinh']);
             if ($hocsinh->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI && Yii::$app->user->can('quanlyhocsinh')) {
                 $hocsinh->HT_HP = $params['HT_HP'];
+                $hocsinh->save();
+                $result = [
+                    'error' => 0,
+                    'message' => 'CẬP NHẬT THÀNH CÔNG',
+                ];
+            }
+        }
+
+        return json_encode($result);
+    }
+
+    public function actionCapnhatdiachihocsinh() {
+        $result = [
+            'error' => 1,
+            'message' => 'LỖI CẬP NHẬT',
+        ];
+        if (Yii::$app->request->post()) {
+            $params = Yii::$app->request->post();
+            $hocsinh = Hocsinh::findOne($params['idhocsinh']);
+            if ($hocsinh->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI && Yii::$app->user->can('quanlyhocsinh')) {
+                $hocsinh->DIA_CHI = $params['DIA_CHI'];
+                $hocsinh->save();
+                $result = [
+                    'error' => 0,
+                    'message' => 'CẬP NHẬT THÀNH CÔNG',
+                ];
+            }
+        }
+
+        return json_encode($result);
+    }
+
+    public function actionCapnhattienhoc() {
+        $result = [
+            'error' => 1,
+            'message' => 'LỖI CẬP NHẬT',
+        ];
+        if (Yii::$app->request->post()) {
+            $params = Yii::$app->request->post();
+            $hocsinh = Hocsinh::findOne($params['idhocsinh']);
+            if ($hocsinh->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI && Yii::$app->user->can('quanlyhocsinh')) {
+                $hocsinh->TIENHOC = $params['TIENHOC'];
                 $hocsinh->save();
                 $result = [
                     'error' => 0,

@@ -14,12 +14,16 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="box box-primary">
     <?= $this->render('/partial/_header_hocphithutruoc', []) ?>
+    <p>
+        <?= Html::a('<i class="fa fa-print"></i> Print', ['quanlyhocphithutruoc/canhbaotheongayprint', 'HocsinhSearch[ID_LOP]' => $params['HocsinhSearch']['ID_LOP']], [
+            'class' => 'btn btn-primary btn-flat pull-right', 'id' => 'canhbaotheongayprint', 'target' => '_blank']) ?>
+    </p>
     <div class="box-body">
         <?php Pjax::begin(); ?>    <?= GridView::widget([
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
                 'rowOptions' => function ($model, $index, $widget, $grid){
-                      return $model->NGAY_KT ?  ['style'=>'color:'. colorsthuhocphitheongay($model->NGAY_KT) .' !important;'] : [];
+                      return ['style'=>'color:'. colorsthuhocphitheongay($model->NGAY_KT) .' !important;'];
                     },
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
@@ -59,7 +63,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'SOBH_DAMUA',
                         'contentOptions' => ['style' => 'width:7%; white-space: normal;word-break: break-word;'],
                         'value' => function ($model) {
-                            return number_format($model->SOBH_DAMUA);
+                            $sobuoi = in_array($model->HT_HP, [2,3]) ? $model->getDshocphithutruoc()->andWhere(['STATUS' => 2])->sum('SO_BH') : null;
+                            return $sobuoi;
                         },
                         'format' => 'raw',
                     ],
@@ -71,17 +76,17 @@ $this->params['breadcrumbs'][] = $this->title;
                         },
                         'format' => 'raw',
                     ],
-                    // [
-                    //     'attribute' => 'SOBH_DAHOC',
-                    //     'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
-                    //     'value' => function ($model) {
-                    //         $last = $model->getDshocphithutruoc()->andWhere(['STATUS' => 2])->orderBy(['NGAY_KT' => SORT_DESC])->limit(1)->one();
-                    //         return isset($last) ?$model->getDsdiemdanh()->andWhere(['STATUS' => 1])->andWhere(['between', 'diemdanhhocsinh.created_at', $last->NGAY_BD, $last->NGAY_KT])->count() . '/' . $last->SO_BH : null;
-                    //     },
-                    //     'format' => 'raw',
-                    // ],
                 ],
             ]); ?>
         <?php Pjax::end(); ?>
     </div>
 </div>
+<?php
+$script = <<< JS
+    $(document).on('change', '#hocsinhsearch-id_lop', function() {
+        var idlop = $(this).val();
+        $('#canhbaotheongayprint').attr("href", "/quanlyhocphithutruoc/canhbaotheongayprint?HocsinhSearch[ID_LOP]=" + idlop);
+    });
+JS;
+$this->registerJs($script);
+?>

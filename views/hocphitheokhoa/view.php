@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="quanlyhocphi-view">
     <p>
     <?= Html::a('<i class="fa fa-arrow-left"></i> Quay lại', ['/hocphitheokhoa/index'], ['class' => 'btn btn-danger btn-flat']) ?>
-    <?php if (Yii::$app->user->can('quanlyhocphi') && !$model->getChitiethocphi()->where(['STATUS' => 1])->count()):?>
+    <?php if (Yii::$app->user->can('quanlyhocphi') && !$model->getChitiethocphi()->where(['STATUS' => 2])->count()):?>
         <?= Html::a('<i class="fa fa-trash-o"></i> Xóa', ['delete', 'id' => $model->ID], [
             'class' => 'btn btn-danger btn-flat',
             'data' => [
@@ -34,13 +34,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attributes' => [
                     [
                         'attribute' => 'ID_LOP',
-                        'value' => $model->lop ? $model->lop->TEN_LOP : '',
+                        'value' => $model->lop ?  Html::a($model->lop->TEN_LOP, ['/lophoc/view', 'id' => $model->lop->ID_LOP]) : '',
+                        'format' => 'raw',
                     ],
                     'TIEUDE',
                     'DEN_NGAY',
                     [
                         'attribute' => 'TU_NGAY',
-                        'value' => Yii::$app->formatter->asDatetime($model->TU_NGAY, 'php:d/m/Y'),
+                        'value' => '<input type="date" name ="HOCPHITHEOKHOA_TU_NGAY" value="' . $model->TU_NGAY . '" class="form-control" data-id="' . $model->ID  . '">',
                         'format' => 'raw',
                     ],
                     [
@@ -48,12 +49,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         'value' => '<input type="date" name ="HOCPHITHEOKHOA_DEN_NGAY" value="' . $model->DEN_NGAY . '" class="form-control" data-id="' . $model->ID  . '">',
                         'format' => 'raw',
                     ],
-                    
-                    'TIENHOC',
-                    'SO_BH',
                     [
                         'attribute' => 'SO_BUOI_DAHOC',
-                        'value' => $model->soluongdadiemdanh,
+                        'value' => $model->soluongdadiemdanh . '/ ' . $model->SO_BH,
                     ],
                 ],
             ]) ?>
@@ -81,7 +79,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php if (Yii::$app->user->can('quanlyhocphi') && $chitiet->STATUS == 1):?>
                 <tr>
                     <td scope="col"><?= $key + 1;?></td>
-                    <td><?= $chitiet->hocsinh ? $chitiet->hocsinh->HO_TEN : 'HỌC SINH KHÔNG TỒN TẠI'?></td>
+                    <td><?= $chitiet->hocsinh ? $chitiet->hocsinh->HO_TEN . ($chitiet->hocsinh->STATUS ? '' : '(ĐÃ NGHỈ)') : 'HỌC SINH KHÔNG TỒN TẠI'?></td>
                     <td><input class="form-control capnhatsobuoihoc" name="SO_BH" type="number" value="<?= $chitiet->SO_BH?>" data-id="<?= $chitiet->ID ?>"></td>
                     <td><input class="form-control capnhatsotien" type="number" name="SOTIEN" value="<?= $chitiet->SOTIEN?>" data-id="<?= $chitiet->ID ?>"></td>
                     <td><input class="form-control capnhatmiengiam" type="number" name="TIENGIAM" value="<?= $chitiet->TIENGIAM?>" data-id="<?= $chitiet->ID ?>"></td>
@@ -108,12 +106,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     <tr>
                         <td scope="col"><?= $key + 1;?></td>
                         <td><?= $chitiet->hocsinh ? $chitiet->hocsinh->HO_TEN : 'HỌC SINH KHÔNG TỒN TẠI'?></td>
-                        <td><?= $chitiet->SO_BH?></td>
-                        <td><?= $chitiet->SOTIEN?></td>
+                        <td><?= $chitiet->sobuoidahoc($chitiet->NGAY_BD, $chitiet->NGAY_KT)?>/<?= $chitiet->SO_BH?></td>
+                        <td><?= number_format($chitiet->TIENGIAM)?></td>
+                        <td><?= number_format($chitiet->SOTIEN)?></td>
                         <td><?= $chitiet->NGAY_BD?></td>
                         <td><?= $chitiet->NGAY_KT?></td>
-                        <td><?= $chitiet->TIENKHAC?></td>
-                        <td><?= $chitiet->TONGTIEN?></td>
+                        <td><?= ($chitiet->TIENKHAC)?></td>
+                        <td><?= ($chitiet->TONGTIEN)?></td>
                         <td width="15%"><?= nl2br($chitiet->GHICHU)?></td>
                         <td width="5%">
                             <?= Html::a('<i class="fa fa-print"></i> In', ['/quanlyhocphithutruoc/inchitiet', 'id' => $chitiet->ID], ['class' => 'btn btn-primary btn-flat', 'target' => '_blank']) ?>
@@ -403,6 +402,30 @@ $script = <<< JS
             data: {
                 id: id,
                 ngaykt: ngaykt,
+            },
+            success:function(data) {
+                data = jQuery.parseJSON(data);
+                if (!data.error) {
+                    Swal.fire('THAY ĐỔI THÀNH CÔNG');
+                        setTimeout(() => {
+                        window.location.reload(true);
+                    }, 1000);
+                } else {
+                    Swal.fire('LỖI CẬP NHẬT!');
+                }
+            }
+        });
+    });
+
+    $(document).on('change', 'input[name=HOCPHITHEOKHOA_TU_NGAY]', function() {
+        var id = $(this).data('id');
+        var ngaybd = $(this).val();
+        $.ajax({
+            url: '/hocphitheokhoa/thaydoingaybd',
+            method: 'post',
+            data: {
+                id: id,
+                ngaybd: ngaybd,
             },
             success:function(data) {
                 data = jQuery.parseJSON(data);

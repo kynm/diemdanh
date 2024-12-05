@@ -35,7 +35,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'method' => 'post',
                 ],
             ]) ?>
-        <?php endif; ?>
         <?= Html::a('<i class="fa fa-trash-o"></i> Xóa học sinh', ['/lophoc/deletehocsinh', 'id' => $model->ID_LOP], [
             'class' => 'btn btn-danger btn-flat',
             'data' => [
@@ -43,6 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
+        <?php endif; ?>
         <?= (Yii::$app->user->can('quanlytruonghoc')) ? Html::a('Import học sinh', ['/lophoc/importlophochocsinh', 'id' => $model->ID_LOP], ['class' => 'btn btn-primary btn-flat']) : ''?>
         <?= (Yii::$app->user->can('diemdanhlophoc')) ? Html::a('Kiểm tra', ['/chamdiem/chamdiemlophoc', 'idlophoc' => $model->ID_LOP], ['class' => 'btn btn-success btn-flat']) : ''?>
     </p>

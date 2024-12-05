@@ -46,14 +46,14 @@ if (Yii::$app->controller->action->id === 'login') {
             .fixed {
                   table-layout: fixed;
                 }
-.datatable table {
+/*.datatable table {
   border-collapse: collapse;
 }
 
 .datatable table, th, td {
   border: 1px solid black;
   padding-left: 3px;
-}
+}*/
         </style>
         </style>
         <script type="text/javascript">

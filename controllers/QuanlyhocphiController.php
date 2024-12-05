@@ -37,6 +37,19 @@ class QuanlyhocphiController extends Controller
         ];
     }
 
+    public function beforeAction($action)
+    {
+        $donvi = Yii::$app->user->identity->nhanvien->iDDONVI;
+        $date1=date_create($donvi->NGAY_KT);
+        $date2= date_create(date('Y-m-d'));
+        if ($date2 > $date1) {
+            Yii::$app->session->setFlash('error', "Vui lòng gia hạn trước khi tiếp tục sử dụng dịch vụ!");
+            return $this->redirect(['/']);
+        }
+
+        return true;
+    }
+
     /**
      * Lists all diemdanh models.
      * @return mixed
@@ -145,9 +158,9 @@ class QuanlyhocphiController extends Controller
             $hocphi->NGAY_NGHI = $chitiet['NGAYNGHI'];
             $hocphi->NGAYDIHOC = $chitiet['NGAYDIHOC'];
             $hocphi->SO_BDH = $chitiet['SOLUONGDIHOC'];
-            $hocphi->SO_BTT = $chitiet['SOLUONGDIHOC'];
-            $hocphi->TIENHOC = $chitiet['TIENHOC'];
-            if ($hocphi->STATUS == 0) {
+            if (!$hocphi->STATUS && !$hocphi->TONG_TIENHOC) {
+                $hocphi->SO_BTT = $chitiet['SOLUONGDIHOC'];
+                $hocphi->TIENHOC = $chitiet['TIENHOC'];
                 $hocphi->TONG_TIENHOC = $hocphi->SO_BTT * $hocphi->TIENHOC;
                 $hocphi->TONG_TIEN = $hocphi->TONG_TIENHOC + $hocphi->TIENKHAC;
             }
@@ -163,7 +176,7 @@ class QuanlyhocphiController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
-        if (Yii::$app->user->can('quanlytruonghoc') && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+        if (Yii::$app->user->can('quanlyhocphi') && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
             if (Yii::$app->request->post()) {
                 $inputs = Yii::$app->request->post();
                 $sobuoi = $inputs['SOBUOITINHTIEN'] ? $inputs['SOBUOITINHTIEN'] : 0;
@@ -206,10 +219,15 @@ class QuanlyhocphiController extends Controller
     {
         $this->layout = 'printLayout';
         $model = Chitiethocphi::findOne($id);
-        if (Yii::$app->user->can('quanlytruonghoc') && $model && $model->hocphi->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+        if (Yii::$app->user->can('quanlyhocphi') && $model && $model->hocphi->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
             $view = 'chitiethocphi';
             if (Yii::$app->user->can('inngayhoc')) {
                 $view = 'chitiethocphicongayhoc';//thutrang yeu cau
+            } elseif(Yii::$app->user->can('intoanbothongtin')){
+                $view = 'chitiettoanbothongtin';//thutrang yeu cau
+            }
+            if (Yii::$app->user->identity->nhanvien->iDDONVI->invoice_hocphithang) {
+                $view = Yii::$app->user->identity->nhanvien->iDDONVI->invoice_hocphithang;
             }
             $hocphichuathukhac = $model->hocsinh->getDshocphi()
             ->andWhere(['STATUS' => 0])
@@ -228,13 +246,17 @@ class QuanlyhocphiController extends Controller
     {
         $this->layout = 'printLayout';
         $model = Quanlyhocphi::findOne($id);
-        if (Yii::$app->user->can('quanlytruonghoc') && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+        if (Yii::$app->user->can('quanlyhocphi') && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
             $dshocphithutruoc = Quanlyhocphithutruoc::find()->where(['ID_DONVI' => $model->ID_DONVI])
                 ->andWhere(['in', 'ID_HOCSINH', ArrayHelper::map(Hocsinh::find()->where(['ID_DONVI' => $model->ID_DONVI])->andWhere(['ID_LOP' => $model->ID_LOP])
                     ->andWhere(['STATUS' => 1])
                     ->andWhere(['in', 'HT_HP', [0,2,3]])->all(), 'ID', 'ID')])
                 ->all();
-            return $this->render('inhocphitheolop', [
+            $view = 'inhocphitheolop';
+            if (Yii::$app->user->can('inhocphithangcokynhan')) {
+                $view = 'inhocphitheolopkynhan';
+            }
+            return $this->render($view, [
                 'model' => $model,
                 'dshocphithutruoc' => $dshocphithutruoc,
             ]);
@@ -251,7 +273,7 @@ class QuanlyhocphiController extends Controller
      */
     public function actionDelete($id)
     {
-        if (Yii::$app->user->can('quanlytruonghoc')) {
+        if (Yii::$app->user->can('quanlyhocphi')) {
             $model = $this->findModel($id);
             if ($model->getChitiethocphi()->where(['STATUS' => 1])->count() && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
                 Yii::$app->session->setFlash('error', "Không thể xóa do đã tồn tại lượt thanh toán học phí");
@@ -552,14 +574,18 @@ class QuanlyhocphiController extends Controller
     {
         $this->layout = 'printLayout';
         $model = Quanlyhocphi::findOne($id);
-        if (Yii::$app->user->can('quanlytruonghoc') && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+        if (Yii::$app->user->can('quanlyhocphi') && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
             $html = '';
             foreach ($model->chitiethocphi as $key => $chitiet) {
                 $hocphichuathukhac = $chitiet->hocsinh->getDshocphi()
                 ->andWhere(['STATUS' => 0])
                 ->andWhere(['!=', 'ID', $chitiet->ID])
                 ->all();
-                $html .= $this->renderPartial('chitiethocphi', ['model' => $chitiet, 'hocphichuathukhac' => $hocphichuathukhac]);
+                $view = 'chitiethocphi';
+                if (Yii::$app->user->identity->nhanvien->iDDONVI->invoice_hocphithang) {
+                    $view = Yii::$app->user->identity->nhanvien->iDDONVI->invoice_hocphithang;
+                }
+                $html .= $this->renderPartial($view, ['model' => $chitiet, 'hocphichuathukhac' => $hocphichuathukhac]);
             }
             Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
             $filename = $model->TIEUDE . ' - ' . $model->lop->TEN_LOP . ' - '  . Yii::$app->user->identity->nhanvien->iDDONVI->TEN_DONVI . '.pdf';
@@ -593,7 +619,7 @@ class QuanlyhocphiController extends Controller
     {
         $this->layout = 'printLayout';
         $model = Chitiethocphi::findOne($id);
-        if (Yii::$app->user->can('quanlytruonghoc') && $model && $model->hocphi->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+        if (Yii::$app->user->can('quanlyhocphi') && $model && $model->hocphi->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
             $hocphichuathukhac = $model->hocsinh->getDshocphi()
                 ->andWhere(['STATUS' => 0])
                 ->andWhere(['!=', 'ID', $model->ID])
@@ -601,9 +627,14 @@ class QuanlyhocphiController extends Controller
             $view = 'chitiethocphi';
             if (Yii::$app->user->can('inngayhoc')) {
                 $view = 'chitiethocphicongayhoc';//thutrang yeu cau
+            } elseif(Yii::$app->user->can('intoanbothongtin')){
+                $view = 'chitiettoanbothongtin';//thutrang yeu cau
+            }
+            if (Yii::$app->user->identity->nhanvien->iDDONVI->invoice_hocphithang) {
+                $view = Yii::$app->user->identity->nhanvien->iDDONVI->invoice_hocphithang;
             }
             Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
-            $filename = $model->hocphi->TIEUDE . ' - ' . $model->hocsinh->HO_TEN . '.pdf';
+            $filename = $model->hocsinh->HO_TEN . ' - ' . $model->hocphi->TIEUDE . '.pdf';
             $pdf = new Pdf([
                 'mode' => Pdf::MODE_UTF8,
                 'content' => $this->renderPartial($view, ['model' => $model, 'hocphichuathukhac' => $hocphichuathukhac]),

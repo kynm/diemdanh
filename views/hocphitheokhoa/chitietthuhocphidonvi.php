@@ -1,21 +1,22 @@
 <?php
-
 use yii\helpers\Html;
-use yii\widgets\DetailView;
-use kartik\select2\Select2;
+use yii\helpers\Url;
+use yii\helpers\ArrayHelper;
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
-use yii\helpers\ArrayHelper;
-use app\models\Hocsinh;
+use kartik\select2\Select2;
 /* @var $this yii\web\View */
-/* @var $model app\models\Daivt */
+/* @var $searchModel app\models\lophocSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Quản lý học phí';
-$this->params['breadcrumbs'][] = ['label' => 'Quản lý học phí', 'url' => ['quanlyhocphi/index']];
+$this->title = 'QUẢN LÝ HỌC PHÍ THU TRƯỚC';
+$this->params['breadcrumbs'][] = ['label' => 'Đơn vị', 'url' => ['donvi/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<?= $this->render('/partial/_header_hocphitheokhoa', []) ?>
-<div class="quanlyhocphi-index">
+<div class="lophoc-index">
+    <p>
+        <?= $this->render('/partial/_header_hocphitheokhoa', []) ?>
+    </p>
     <div class="box box-primary">
         <div class="box-body">
             <div class="table-responsive">
@@ -26,16 +27,13 @@ $this->params['breadcrumbs'][] = $this->title;
                             ['class' => 'yii\grid\SerialColumn'],
                             [
                                 'attribute' => 'TIEUDE',
-                                'contentOptions' => ['style' => 'width:30%; white-space: normal;word-break: break-word;'],
-                                'value' => function ($model) {
-                                    return $model->hocphi->TIEUDE;
-                                },
-                                'format' => 'raw',
+                                'contentOptions' => ['style' => 'width:5%; white-space: normal;word-break: break-word;'],
+                                'value' => 'TIEUDE',
                             ],
                             [
                                 'attribute' => 'ID_LOP',
-                                'value' => 'hocphi.lop.TEN_LOP',
-                                'contentOptions' => ['style' => 'width:10%;white-space: normal;word-break: break-word;word-break: break-word'],
+                                'contentOptions' => ['style' => 'width:8%; white-space: normal;word-break: break-word;'],
+                                'value' => 'lop.TEN_LOP',
                                 'filter'=> $dslop,
                                 'filterType' => GridView::FILTER_SELECT2,
                                 'filterWidgetOptions' => [
@@ -45,45 +43,89 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                             [
                                 'attribute' => 'ID_HOCSINH',
-                                'value' => 'hocsinh.HO_TEN',
+                                'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
+                                'value' => function ($model) {
+                                    $hoten = $model->hocsinh ? $model->hocsinh->HO_TEN : 'Không tìm thấy học sinh';
+                                    return $model->STATUS == 1 ? Html::a($hoten . ($model->hocsinh->STATUS ? '' : '(ĐÃ NGHỈ)'), ['view', 'id' => $model->ID]) : $hoten;
+                                },
+                                'format' => 'raw',
                             ],
-                            'SO_BH',
-                            'SO_BDH',
-                            'SO_BN',
-                            'SO_BTT',
-                            'TIENHOC',
-                            'TONG_TIEN',
+                            [
+                                'attribute' => 'SOTIEN',
+                                'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
+                                'value' => function($model) {
+                                    return $model->SOTIEN;
+                                },
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'SO_BH',
+                                'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
+                                'value' => function($model) {
+                                    return $model->SO_BH;
+                                },
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'TIENKHAC',
+                                'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
+                                'value' => function($model) {
+                                    return $model->TIENKHAC;
+                                },
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'TONGTIEN',
+                                'contentOptions' => ['style' => 'width:6%; white-space: normal;word-break: break-word;'],
+                                'value' => function($model) {
+                                    return number_format($model->TONGTIEN);
+                                },
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'NGAY_BD',
+                                'value' => function($model) {
+                                    return Yii::$app->formatter->asDatetime($model->NGAY_BD, 'php:d/m/Y');
+                                },
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'NGAY_KT',
+                                'value' => function($model) {
+                                    return Yii::$app->formatter->asDatetime($model->NGAY_KT, 'php:d/m/Y');
+                                },
+                                'format' => 'raw',
+                            ],
+                            [
+                                'attribute' => 'GHICHU',
+                                'contentOptions' => ['style' => 'width:15%; white-space: normal;word-break: break-word;'],
+                                'value' => function($model) {
+                                    return nl2br($model->GHICHU);
+                                },
+                                'format' => 'raw',
+                            ],
                             [
                                 'attribute' => 'STATUS',
+                                'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
                                 'value' => function ($model) {
-                                    return $model->STATUS ? '<span class="btn btn-flat btn-success">Đã thu</span>' : '<span class="btn btn-flat btn-danger">Chưa thu</span>';
+                                    return statusdonhang()[$model->STATUS];
                                 },
-                                'filter'=> statusthutien(),
+                                'filter'=> statusdonhang(),
                                 'filterType' => GridView::FILTER_SELECT2,
                                 'filterWidgetOptions' => [
                                     'options' => ['prompt' => ''],
                                     'pluginOptions' => ['allowClear' => true],
                                 ],
-                                'format' => 'raw',
                             ],
                             [
                                 'class' => 'yii\grid\ActionColumn',
-                                'template' => Yii::$app->user->can('quanlyhocphi') ? '{xacnhanthuhocphi}{print}{delete}' : '{print}',
+                                'template' => Yii::$app->user->can('quanlyhocphi') ? '{duyetthuphitruoc}{print}' : '{print}',
                                 'buttons' => [
-                                    'delete' => function ($url, $model) {
-                                        return $model->STATUS == 1 ? Html::a('<i class="fa fa-trash-o"></i> Xóa', ['delete', 'id' => $model->ID], [
-                                            'class' => 'btn btn-danger btn-flat',
-                                            'data' => [
-                                                'confirm' => Yii::t('app', 'Dữ liệu sẽ bị xóa vĩnh viễn không thể khôi phục lại.Bạn chắc chắn muốn xóa mục này?'),
-                                                'method' => 'post',
-                                            ],
-                                        ]) : null;
-                                    },
-                                    'xacnhanthuhocphi' => function ($url, $model) {
-                                        return $model->STATUS == 0 ? '<span class="btn btn-warning xacnhanthuhocphi" data-id="' . $model->ID . '">Xác nhận thu tiền</span>' : '<span class="btn btn-danger modieuchinh" data-id="' . $model->ID . '">Mở điều chỉnh</span>';
+                                    'duyetthuphitruoc' => function ($url, $model) {
+                                        return $model->STATUS == 1 ? '<span class="btn btn-primary duyetthuphitruoc" data-id="' . $model->ID . '">Duyệt</span>' : '<span class="btn btn-danger modieuchinh" data-id="' . $model->ID . '">Mở điều chỉnh</span>';
                                     },
                                     'print' => function ($url, $model) {
-                                        return Html::a('<i class="fa fa-print"></i>', ['/quanlyhocphi/chitiethocphi', 'id' => $model->ID], ['class' => 'btn btn-primary btn-flat', 'target' => '_blank']);
+                                        return Html::a('<i class="fa fa-print"></i>', ['/quanlyhocphithutruoc/inchitiet', 'id' => $model->ID], ['class' => 'btn btn-primary', 'target' => '_blank']);
                                     },
                                 ],
                             ],
@@ -96,7 +138,7 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 <?php
 $script = <<< JS
-    $(document).on('click', '.xacnhanthuhocphi', function() {
+    $(document).on('click', '.duyetthuphitruoc', function() {
         Swal.fire({
             title: 'Bạn có chắc chắn đã thu học phí học sinh này không?',
             type: "warning",
@@ -106,10 +148,9 @@ $script = <<< JS
             cancelButtonText: "CHƯA THU!"
         }).then((result) => {
         if (result['isConfirmed']) {
-            var capnhatghichu = $(this).val();
             var id = $(this).data('id');
             $.ajax({
-                url: '/quanlyhocphi/xacnhanthuhocphi',
+                url: '/quanlyhocphithutruoc/duyetthuphitruoc',
                 method: 'post',
                 data: {
                     id: id,
@@ -127,21 +168,19 @@ $script = <<< JS
         }
         });
     });
-
     $(document).on('click', '.modieuchinh', function() {
         Swal.fire({
-            title: 'Bạn có chắc chắn chưa thu học phí học sinh này không?',
+            title: 'Bạn có chắc chắn mở lại để điều chỉnh học sinh này không?',
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: '#DD6B55',
-            confirmButtonText: 'ĐÃ THU!',
-            cancelButtonText: "CHƯA THU!"
+            confirmButtonText: 'MỞ NGAY!',
+            cancelButtonText: "KHÔNG!"
         }).then((result) => {
         if (result['isConfirmed']) {
-            var capnhatghichu = $(this).val();
             var id = $(this).data('id');
             $.ajax({
-                url: '/quanlyhocphi/modieuchinh',
+                url: '/quanlyhocphithutruoc/modieuchinh',
                 method: 'post',
                 data: {
                     id: id,
@@ -159,36 +198,137 @@ $script = <<< JS
         }
         });
     });
-
-    $(document).on('click', '.xoaluotthuhocphi', function() {
-        Swal.fire({
-            title: 'Thao tác này sẽ xóa vĩnh viễn dữ liệu.Bạn có chắc chắn muốn xóa học phí học sinh này không?',
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: '#DD6B55',
-            confirmButtonText: 'CÓ, xÓA NGAY!',
-            cancelButtonText: "KHÔNG XÓA!"
-        }).then((result) => {
-        if (result['isConfirmed']) {
-            var capnhatghichu = $(this).val();
-            var id = $(this).data('id');
-            $.ajax({
-                url: '/quanlyhocphi/xoaluotthuhocphi',
-                method: 'post',
-                data: {
-                    id: id,
-                },
-                success:function(data) {
-                    data = jQuery.parseJSON(data);
-                    if (!data.error) {
-                        Swal.fire('Xác nhận thành công');
-                        setTimeout(() => {
-                            window.location.reload(true);
-                        }, 1000);
-                    }
+    $(document).on('change', 'input[name=SOTIEN]', function() {
+        var id = $(this).data('id');
+        var sotien = $(this).val();
+        $.ajax({
+            url: '/quanlyhocphithutruoc/thaydoisotien',
+            method: 'post',
+            data: {
+                id: id,
+                sotien: sotien,
+            },
+            success:function(data) {
+                data = jQuery.parseJSON(data);
+                if (!data.error) {
+                    $('#SOTIEN-' + data.data.ID).val(data.data.SOTIEN);
+                    $('#SO_BH-' + data.data.ID).val(data.data.SO_BH);
+                    $('#TIENKHAC-' + data.data.ID).val(data.data.TIENKHAC);
+                    $('#TONGTIEN-' + data.data.ID).html(data.data.TONGTIEN);
+                    Swal.fire('Xác nhận thành công');
+                } else {
+                    Swal.fire('LỖI CẬP NHẬT!');
                 }
-            });
-        }
+            }
+        });
+    });
+
+    $(document).on('change', 'input[name=SO_BH]', function() {
+        var id = $(this).data('id');
+        var so_bh = $(this).val();
+        $.ajax({
+            url: '/quanlyhocphithutruoc/thaydoisobuoihoc',
+            method: 'post',
+            data: {
+                id: id,
+                so_bh: so_bh,
+            },
+            success:function(data) {
+                data = jQuery.parseJSON(data);
+                if (!data.error) {
+                    $('#SOTIEN-' + data.data.ID).val(data.data.SOTIEN);
+                    $('#SO_BH-' + data.data.ID).val(data.data.SO_BH);
+                    $('#TIENKHAC-' + data.data.ID).val(data.data.TIENKHAC);
+                    $('#TONGTIEN-' + data.data.ID).html(data.data.TONGTIEN);
+                    Swal.fire('Xác nhận thành công');
+                } else {
+                    Swal.fire('LỖI CẬP NHẬT!');
+                }
+            }
+        });
+    });
+    $(document).on('change', 'input[name=TIENKHAC]', function() {
+        var id = $(this).data('id');
+        var tienkhac = $(this).val();
+        $.ajax({
+            url: '/quanlyhocphithutruoc/thaydoitienkhac',
+            method: 'post',
+            data: {
+                id: id,
+                tienkhac: tienkhac,
+            },
+            success:function(data) {
+                data = jQuery.parseJSON(data);
+                if (!data.error) {
+                    $('#SOTIEN-' + data.data.ID).val(data.data.SOTIEN);
+                    $('#SO_BH-' + data.data.ID).val(data.data.SO_BH);
+                    $('#TIENKHAC-' + data.data.ID).val(data.data.TIENKHAC);
+                    $('#TONGTIEN-' + data.data.ID).html(data.data.TONGTIEN);
+                    Swal.fire('Xác nhận thành công');
+                } else {
+                    Swal.fire('LỖI CẬP NHẬT!');
+                }
+            }
+        });
+    });
+    $(document).on('change', 'input[name=NGAY_BD]', function() {
+        var id = $(this).data('id');
+        var ngaybd = $(this).val();
+        $.ajax({
+            url: '/quanlyhocphithutruoc/thaydoingaybd',
+            method: 'post',
+            data: {
+                id: id,
+                ngaybd: ngaybd,
+            },
+            success:function(data) {
+                data = jQuery.parseJSON(data);
+                if (!data.error) {
+                    Swal.fire('THAY ĐỔI THÀNH CÔNG');
+                } else {
+                    Swal.fire('LỖI CẬP NHẬT!');
+                }
+            }
+        });
+    });
+    $(document).on('change', 'input[name=NGAY_KT]', function() {
+        var id = $(this).data('id');
+        var ngaykt = $(this).val();
+        $.ajax({
+            url: '/quanlyhocphithutruoc/thaydoingaykt',
+            method: 'post',
+            data: {
+                id: id,
+                ngaykt: ngaykt,
+            },
+            success:function(data) {
+                data = jQuery.parseJSON(data);
+                if (!data.error) {
+                    Swal.fire('THAY ĐỔI THÀNH CÔNG');
+                } else {
+                    Swal.fire('LỖI CẬP NHẬT!');
+                }
+            }
+        });
+    });
+    $(document).on('change', '.capnhatghichu', function() {
+        var id = $(this).data('id');
+        var ghichu = $(this).val();
+        $.ajax({
+            url: '/quanlyhocphithutruoc/capnhatghichu',
+            method: 'post',
+            data: {
+                id: id,
+                ghichu: ghichu,
+            },
+            success:function(data) {
+                data = jQuery.parseJSON(data);
+                if (!data.error) {
+                    Swal.fire('THAY ĐỔI THÀNH CÔNG');
+                } else {
+                    Swal.fire('LỖI CẬP NHẬT!');
+                }
+            }
         });
     });
 JS;

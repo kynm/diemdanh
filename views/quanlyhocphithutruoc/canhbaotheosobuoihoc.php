@@ -9,7 +9,7 @@ use kartik\select2\Select2;
 /* @var $this yii\web\View */
 /* @var $model app\models\Daivt */
 
-$this->title = 'QUẢN LÝ HỌC SINH';
+$this->title = 'CẢNH BÁO THEO SỐ BUỔI HỌC';
 $this->params['breadcrumbs'][] = ['label' => 'Đơn vị', 'url' => ['donvi/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -37,6 +37,10 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="col-md-2 col-xs-2">
                 <label>Xuất excel</label>
                 <input type="checkbox" name="is_excel" value="1">
+            </div>
+            <div class="col-md-2 col-xs-2">
+                <label>Print</label>
+                <input type="checkbox" name="is_print" value="1">
             </div>
             <div class="col-md-2 col-xs-2">
                 <?= Html::submitButton(

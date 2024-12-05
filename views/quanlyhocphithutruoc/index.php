@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'contentOptions' => ['style' => 'width:5%; white-space: normal;word-break: break-word;'],
                                 'value' => function ($model) {
                                     $hoten = $model->hocsinh ? $model->hocsinh->HO_TEN : 'Không tìm thấy học sinh';
-                                    return $model->STATUS == 1 ? Html::a($hoten, ['view', 'id' => $model->ID]) : $hoten;
+                                    return $model->STATUS == 1 ? Html::a($hoten . ($model->hocsinh->STATUS ? '' : '(ĐÃ NGHỈ)'), ['view', 'id' => $model->ID]) : $hoten;
                                 },
                                 'format' => 'raw',
                             ],

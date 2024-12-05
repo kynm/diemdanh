@@ -25,7 +25,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 <th class="text-center" style="width: 10%;">Tiền học</th>
                 <th class="text-center" style="width: 15%;">Tiền sách/ Tài liệu</th>
                 <th class="text-center" style="width: 10%;">Tổng tiền</th>
-                <th class="text-center" style="width: 20%;">Ghi chú</th>
             </tr>
             <tr class="text-center">
             	<td style="border: 1px solid;"><?= $model->hocsinh->HO_TEN?></td>
@@ -35,7 +34,6 @@ $this->params['breadcrumbs'][] = $this->title;
             	<td style="border: 1px solid;"><?= $model->TONG_TIENHOC?></td>
                 <td style="border: 1px solid;"><?= number_format($model->TIENKHAC)?></td>
             	<td style="border: 1px solid;"><?= number_format($model->TONG_TIEN)?></td>
-                <td style="border: 1px solid;"><?= nl2br($model->NHAN_XET)?></td>
             </tr>
             <?php if($hocphichuathukhac):?>
                 <?php $tongtien = $model->TONG_TIEN?>
@@ -49,7 +47,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         <td style="border: 1px solid; width: 7%;"><?= $hp->TONG_TIENHOC?></td>
                         <td style="border: 1px solid; width: 7%;"><?= number_format($hp->TIENKHAC)?></td>
                         <td style="border: 1px solid; width: 10%;"><?= number_format($hp->TONG_TIEN)?></td>
-                        <td style="border: 1px solid; width: 20%;"><?= nl2br($hp->NHAN_XET)?></td>
                     </tr>
                 <?php endforeach;?>
                 <tr class="text-center" style="border: 1px solid;">
@@ -59,19 +56,25 @@ $this->params['breadcrumbs'][] = $this->title;
                 </tr>
             <?php endif;?>
             <tr>
-            	<td colspan="8" style="border: 1px solid;">
+            	<td colspan="7" style="border: 1px solid;">
             		<b>1. Kính gửi quý phụ huynh <?= $model->hocphi->TIEUDE?>!</b><br>
 					<?=  isset(Yii::$app->user->identity->nhanvien->iDDONVI->TTTT) ? nl2br(Yii::$app->user->identity->nhanvien->iDDONVI->TTTT) : ''?>
 
             	</td>
             </tr>
             <tr>
-            	<td colspan="8" style="border: 1px solid;">
+            	<td colspan="7" style="border: 1px solid;">
+            		<p>Nhận xét:</p>
+                    <?= nl2br($model->NHAN_XET)?>
+            	</td>
+            </tr>
+            <tr>
+            	<td colspan="7" style="border: 1px solid;">
                     <?=  isset(Yii::$app->user->identity->nhanvien->iDDONVI->QDLH) ? nl2br(Yii::$app->user->identity->nhanvien->iDDONVI->QDLH) : ''?>
             	</td>
             </tr>
             <tr>
-            	<td colspan="8" style="border: 1px solid;">
+            	<td colspan="7" style="border: 1px solid;">
                     <?=  isset(Yii::$app->user->identity->nhanvien->iDDONVI->TTLH) ? nl2br(Yii::$app->user->identity->nhanvien->iDDONVI->TTLH) : ''?>
             	</td>
             </tr>

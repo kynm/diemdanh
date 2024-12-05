@@ -8,7 +8,7 @@ use kartik\date\DatePicker;
 /* @var $this yii\web\View */
 /* @var $model app\models\Daivt */
 /* @var $form yii\widgets\ActiveForm */
-$model->TIEUDE = 'ĐIỂM DANH NGÀY ' . $model->NGAY_DIEMDANH;
+$model->TIEUDE = 'ĐIỂM DANH NGÀY ' . Yii::$app->formatter->asDatetime($model->NGAY_DIEMDANH, 'php:d-m-Y');
 ?>
 
 <div class="daivt-form">
@@ -49,7 +49,12 @@ $model->TIEUDE = 'ĐIỂM DANH NGÀY ' . $model->NGAY_DIEMDANH;
 $script = <<< JS
     $('#quanlydiemdanh-ngay_diemdanh').on('change', function() {
         var NGAYDIEMDANH = $(this).val();
-        $('#quanlydiemdanh-tieude').val('ĐIỂM DANH NGÀY ' + NGAYDIEMDANH);
+        var date    = new Date(NGAYDIEMDANH),
+        yr      = date.getFullYear(),
+        month   = date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth(),
+        day     = date.getDate()  < 10 ? '0' + date.getDate()  : date.getDate(),
+        newDate = day + '-' + month + '-' + yr;
+        $('#quanlydiemdanh-tieude').val('ĐIỂM DANH NGÀY ' + newDate);
     });
 JS;
 $this->registerJs($script);

@@ -41,19 +41,21 @@ $this->params['breadcrumbs'][] = $this->title;
                                 },
                                 'format' => 'raw',
                             ],
-                            'NGAY_DIEMDANH',
                             [
-                                'attribute' => 'NOIDUNG',
-                                'contentOptions' => ['style' => 'width:25%; white-space: normal;word-break: break-word;'],
+                                'attribute' => 'NGAY_DIEMDANH',
                                 'value'  => function($model) {
-                                    return nl2br($model->NOIDUNG);
+                                    return  Yii::$app->formatter->asDatetime($model->NGAY_DIEMDANH, 'php:d/m/Y');
                                 },
                                 'format' => 'raw',
                             ],
                             [
+                                'attribute' => 'ID_NHANVIEN',
+                                'value'  => 'nhanvien.TEN_NHANVIEN',
+                            ],
+                            [
                                 'attribute' => 'TIEUDE',
                                 'value' => function ($model) {
-                                    return Html::a($model->TIEUDE, ['view', 'id' => $model->ID]);
+                                    return Html::a($model->TIEUDE, ['/quanlydiemdanh/view', 'id' => $model->ID], ['target' => '_blank']);
                                 },
                                 'contentOptions' => ['style' => 'width:10%;white-space: normal;word-break: break-word;word-break: break-word;'],
                                 'format' => 'raw',
@@ -85,14 +87,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                     $dshocsinhvang = ArrayHelper::map(Hocsinh::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->andWhere(['in', 'ID', $idhocsinh])->all(), 'ID', 'HO_TEN');
                                     return $dshocsinhvang ? implode(',', $dshocsinhvang) : null;
                                 }
-                            ],
-                            [
-                                'attribute' => 'GHICHU',
-                                'contentOptions' => ['style' => 'width:25%; white-space: normal;word-break: break-word;'],
-                                'value' =>function($model) {
-                                    return $model->ghichu;
-                                },
-                                'format' => 'raw',
                             ],
                         [
                                 'attribute' => 'HANHDONG',

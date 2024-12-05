@@ -16,6 +16,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <span class="btn btn-flat btn-success">Đã thu</span>
     <?php endif; ?>
     </h2>
+    <h2 class="text-center"><b><?= Yii::$app->formatter->asDatetime($model->NGAY_BD, 'php:d/m/Y')?> - <?= Yii::$app->formatter->asDatetime($model->NGAY_KT, 'php:d/m/Y')?></b>
+    </h2>
     <table class="table table-bordered" style="font-size: 20px;">
         <tbody>
             <tr class="bg-primary text-center">

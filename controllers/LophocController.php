@@ -39,6 +39,19 @@ class LophocController extends Controller
         ];
     }
 
+    public function beforeAction($action)
+    {
+        $donvi = Yii::$app->user->identity->nhanvien->iDDONVI;
+        $date1=date_create($donvi->NGAY_KT);
+        $date2= date_create(date('Y-m-d'));
+        if ($date2 > $date1) {
+            Yii::$app->session->setFlash('error', "Vui lòng gia hạn trước khi tiếp tục sử dụng dịch vụ!");
+            return $this->redirect(['/']);
+        }
+
+        return true;
+    }
+
     /**
      * Lists all Lophoc models.
      * @return mixed

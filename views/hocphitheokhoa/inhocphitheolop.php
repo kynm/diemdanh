@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php foreach ($model->chitiethocphi as $key => $chitiet): ?>
             <tr style="color: <?= $chitiet->STATUS == 1 ? 'red;' : 'black;' ?>">
                 <td style="border: 1px solid; width: 10%;"><?= $chitiet->hocsinh->HO_TEN?></td>
-                <td style="border: 1px solid; width: 8%;"><?= $chitiet->NGAY_BD?></td>
+                <td style="border: 1px solid; width: 8%;"><?= Yii::$app->formatter->asDatetime($chitiet->NGAY_BD, 'php:d/m/Y')?></td>
                 <td style="border: 1px solid; width: 8%;"><?= $chitiet->sobuoidahoc($chitiet->NGAY_BD, $chitiet->NGAY_KT)?>/<?= $chitiet->SO_BH?></td>
                 <td style="border: 1px solid; width: 8%;"><?= number_format($chitiet->SOTIEN)?></td>
                 <td style="border: 1px solid; width: 8%;"><?= number_format($chitiet->TIENGIAM)?></td>

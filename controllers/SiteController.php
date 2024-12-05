@@ -52,6 +52,20 @@ class SiteController extends Controller
         ];
     }
 
+    // public function beforeAction($action)
+    // {
+    //     if (!Yii::$app->user->isGuest) {
+    //         $donvi = Yii::$app->user->identity->nhanvien->iDDONVI;
+    //         $date1=date_create($donvi->NGAY_KT);
+    //         $date2= date_create(date('Y-m-d'));
+    //         if ($date2 < $date1) {
+    //             return $this->redirect(['login']);
+    //         }
+    //     }
+
+    //     return true; // or false to not run the action
+    // }
+
     /**
      * @inheritdoc
      */
@@ -92,7 +106,7 @@ class SiteController extends Controller
                     'sldh' => $sldh,
             ]);
             }
-            if (Yii::$app->user->can('quanlytruonghoc')) {
+            if (Yii::$app->user->can('quanlytruonghoc') || Yii::$app->user->can('quanlyhocphi')) {
                 $solop = Yii::$app->user->identity->nhanvien->iDDONVI->getLophoc()->andWhere(['STATUS' => 1])->count();
                 $sonhanvien = Yii::$app->user->identity->nhanvien->iDDONVI->getNhanviens()->andWhere(['not in', 'CHUC_VU', [5]])->count();
                 $tongsohocvien = Yii::$app->user->identity->nhanvien->iDDONVI->getHocsinh()->andWhere(['STATUS' => 1])->count();
@@ -133,6 +147,7 @@ class SiteController extends Controller
                     'slhocsinhhethocphitheobuoi' => $slhocsinhhethocphitheobuoi,
                 ]);
             }
+
             if (Yii::$app->user->can('diemdanhlophoc')) {
                 $idlop = ArrayHelper::map(Yii::$app->user->identity->nhanvien->iDDONVI->getLophoc()->andWhere(['STATUS' => 1])->andWhere(['ID_NHANVIEN_DIEMDANH' => Yii::$app->user->identity->nhanvien->ID_NHANVIEN])->all(), 'ID_LOP', 'ID_LOP');
                 $idlop = array_merge($idlop, explode(',', Yii::$app->user->identity->nhanvien->ds_lop));
@@ -145,6 +160,7 @@ class SiteController extends Controller
                     'dslop' => $dslop,
                 ]);
             }
+
 
             if (Yii::$app->user->can('phuhuynhhocsinh')) {
                 $dstintuc = Tintuc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->andWhere(['STATUS' => 1])->all();
@@ -244,37 +260,6 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
-    }
-
-    public function actionTinnhandieuhanh()
-    {
-        if (Yii::$app->user->can('create-tinnhandieuhanh')) {
-            if (Yii::$app->request->post()) {
-                $params = Yii::$app->request->post();
-                $noidung = $params['noidung'];
-                $dsdonvi = $params['donvi_id'];
-                if ($noidung) {
-                    foreach($dsdonvi as $id)
-                    {
-                        if ($params['noidung']) {
-                            $donvi = Donvi::find()->where(['ID_DONVI' => $id])->one();
-                            $message = '<code>' . Yii::$app->user->identity->nhanvien->TEN_NHANVIEN . ' GỬI TIN NHẮN </code>'. PHP_EOL;
-                            $message .= $params['noidung'];
-                            if ($donvi && $donvi->telegram_id) {
-                                sendtelegrammessage($donvi->chatid, $message);
-                            }
-                        }
-                    }
-                }
-                Yii::$app->session->setFlash('success', "Đã gửi lại tin nhắn telegram thành công!");
-                return $this->redirect(['index']);
-            } else {
-                return $this->render('tinnhandieuhanh', [
-                ]);
-            }
-        } else {
-            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
-        }
     }
 
     public function actionCongcuhotro()

@@ -70,6 +70,22 @@
         return $color;
     }
 
+    function colordiemdanh($diemdanh)
+    {
+        $color = '';
+        $text = mb_strtolower($diemdanh->NHAN_XET, 'UTF-8');
+        $arraytext = ['vắng', 'chưa làm', 'chưa thuộc', 'chưa học', 'nghỉ', 'chưa', 'nói chuyện', 'nghỉ'];
+        foreach ($arraytext as $key => $value) {
+            if (str_contains($text, $value) || !$diemdanh->STATUS) {
+                $color = 'red;';
+                break;
+            }
+        }
+        
+
+        return $color;
+    }
+
     function colorsthuhocphitheongay($ngay)
     {
         $date1=date_create($ngay);

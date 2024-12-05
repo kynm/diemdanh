@@ -138,7 +138,6 @@ class HocsinhSearch extends Hocsinh
             'ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI,
         ]);
 
-        $query->andFilterWhere(['is not', 'NGAY_KT', new \yii\db\Expression('null')]);
         $query->andFilterWhere(['=', 'ID_LOP', $this->ID_LOP]);
         $query->andFilterWhere(['in', 'HT_HP', [0,3]]);
         $query->andFilterWhere(['like', 'MA_HOCSINH', $this->MA_HOCSINH])

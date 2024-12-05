@@ -70,8 +70,20 @@ $this->params['breadcrumbs'][] = $this->title;
                             return $model->NGAY_KT ? Yii::$app->formatter->asDatetime($model->NGAY_KT, 'php:d/m/Y') : NULL;
                         },
                     ],
-                    'TIENHOC',
-                    'DIA_CHI',
+                    [
+                        'attribute' => 'TIENHOC',
+                        'value' => function($model) {
+                            return '<input class="form-control capnhattienhoc" type="number" data-id="' . $model->ID . '" value="' . $model->TIENHOC . '" placeholder="TIỀN HỌC">';
+                        },
+                        'format' => 'raw',
+                    ],
+                    [
+                        'attribute' => 'DIA_CHI',
+                        'value' => function($model) {
+                            return '<input class="form-control capnhatdiachi" type="text" data-id="' . $model->ID . '" value=" ' . $model->DIA_CHI . '" placeholder="ĐỊA CHỈ">';
+                        },
+                        'format' => 'raw',
+                    ],
                     'SO_DT',
                     [
                         'attribute' => '',
@@ -105,6 +117,43 @@ $script = <<< JS
                 setTimeout(() => {
                     window.location.reload(true);
                 }, 1000);
+            }
+        });
+    });
+
+    $(document).on('change', '.capnhatdiachi', function() {
+        var idhocsinh = $(this).data('id');
+        var diachi = $(this).val();
+        $.ajax({
+            url: '/hocsinh/capnhatdiachihocsinh',
+            method: 'POST',
+            data: {
+                'tienhoc' : tienhoc,
+                'idhocsinh' : idhocsinh,
+            },
+            success:function(data) {
+                data = jQuery.parseJSON(data);
+                if (!data.error) {
+                    Swal.fire(data.message);
+                }
+            }
+        });
+    });
+    $(document).on('change', '.capnhattienhoc', function() {
+        var idhocsinh = $(this).data('id');
+        var tienhoc = $(this).val();
+        $.ajax({
+            url: '/hocsinh/capnhattienhoc',
+            method: 'POST',
+            data: {
+                'TIENHOC' : tienhoc,
+                'idhocsinh' : idhocsinh,
+            },
+            success:function(data) {
+                data = jQuery.parseJSON(data);
+                if (!data.error) {
+                    Swal.fire(data.message);
+                }
             }
         });
     });

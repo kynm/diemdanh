@@ -1,7 +1,7 @@
 <?php
 use yii\helpers\Html;
 ?>
-<?php if (Yii::$app->user->can('quanlyhocsinh')):?>
+<?php if (Yii::$app->user->can('quanlyhocphi')):?>
     <?php if (Yii::$app->user->can('taohocphitoantrungtam')):?>
         <?= Html::a('<i class="fa fa-pencil-square-o"></i> Tạo mới', ['createmultiple'], ['class' => 'btn btn-primary btn-flat']) ?>
     <?php endif; ?>

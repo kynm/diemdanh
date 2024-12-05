@@ -4,27 +4,18 @@ use yii\helpers\Url;
 
 $this->title = 'QUẢN LÝ ĐIỂM DANH';
 ?>
-    <?php if (Yii::$app->user->identity->nhanvien->iDDONVI->STATUS == 1):?>
-        <?php if (!$solop):?>
-            <h5 class="info-box-number" style="color: red"><i class="fa fa-hand-o-right"></i><i class="fa fa-hand-o-right"></i><i class="fa fa-hand-o-right"></i>HIỆN BẠN CHƯA CÓ LỚP HỌC NÀO, VUI LÒNG TẠO LỚP HỌC ĐỂ BẮT ĐẦU SỬ DỤNG!</h5>
-        <?php elseif (!$tongsohocvien):?>
-            <h5 class="info-box-number" style="color: red"><i class="fa fa-hand-o-right"></i><i class="fa fa-hand-o-right"></i><i class="fa fa-hand-o-right"></i>HIỆN BẠN CHƯA CÓ HỌC SINH NÀO, VUI LÒNG QUAY LẠI TẠO HỌC SINH CHO LỚP HỌC!</h5>
-        <?php else: ?>
-            <h5  class="info-box-number" style="color: red"><i class="fa fa-hand-o-right"></i><i class="fa fa-hand-o-right"></i><i class="fa fa-hand-o-right"></i>BẠN ĐÃ TẠO THÀNH CÔNG LỚP HỌC VÀ HỌC SINH. VÙI LÒNG ĐĂNG XUẤT KHỎI TÀI KHOẢN QUẢN TRỊ VÀ THỰC HIỆN ĐIỂM DANH BẰNG TÀI KHOẢN ĐIỂM DANH!</h4>
-            <div><i class="fa fa-hand-o-right"></i><i class="fa fa-hand-o-right"></i><i class="fa fa-hand-o-right"></i>
-                <a href="<?= Url::to(['site/logout'])?>" data-method="post" class="btn btn-default btn-danger btn-flat" style="color: white;">
-                   <i class="fa fa-sign-out"></i> Đăng xuất ngay
-                </a>
-            </div>
-            <br>
-            <br>
-            <br>
-        <?php endif; ?>
-    <?php endif; ?>
-    <?php if (!Yii::$app->user->identity->nhanvien->iDDONVI->EMAIL):?>
-        <marquee onmouseover="this.stop();" onmouseout="this.start();" class="text-danger text-center" style="color:red">THÔNG BÁO: EASYCHECK hiện đã có tính năng tự động gửi email thông báo tình hình điểm danh. Vui lòng cập nhật Email để nhận thông báo:<?= Html::a('Cấu hình', ['/user/cauhinhdonvi'], ['class' => 'small-box-footer']) ?></marquee>
-    <?php endif; ?>
 <div class="row">
+    <?php
+    $donvi = Yii::$app->user->identity->nhanvien->iDDONVI;
+        $date1=date_create($donvi->NGAY_KT);
+        $date2= date_create(date('Y-m-d'));
+        if ($date2 > $date1) {
+    ?>
+    <h1 class="info-box-number text-center" style="color: red"><i class="fa fa-hand-o-right"></i><i class="fa fa-hand-o-right"></i><i class="fa fa-hand-o-right"></i>GÓI CƯỚC ĐÃ HẾT HẠN, VUI LÒNG LIÊN HỆ GIA HẠN ĐỂ TIẾP TỤC SỬ DỤNG DỊCH VỤ!</h1>
+    <?php
+        }
+    ?>
+    <?php if (Yii::$app->user->can('quanlytruonghoc')):?>
     <div class="col-lg-3 col-6">
         <div class="info-box">
             <span class="info-box-icon bg-aqua"><i class="fa fa-address-book" aria-hidden="true"></i></span>
@@ -53,7 +44,6 @@ $this->title = 'QUẢN LÝ ĐIỂM DANH';
         </div>
     </div>
 
-    <?php if (Yii::$app->user->can('quanlytruonghoc')):?>
     <div class="col-lg-3 col-6">
         <div class="info-box">
             <span class="info-box-icon bg-aqua"><i class="fa fa-calendar" aria-hidden="true"></i></span>
@@ -63,7 +53,6 @@ $this->title = 'QUẢN LÝ ĐIỂM DANH';
             </div>
         </div>
     </div>
-    <?php endif; ?>
     <div class="col-lg-3 col-6">
         <div class="info-box">
             <span class="info-box-icon bg-aqua"><i class="fa fa-check" aria-hidden="true"></i></span>
@@ -73,6 +62,7 @@ $this->title = 'QUẢN LÝ ĐIỂM DANH';
             </div>
         </div>
     </div>
+    <?php endif; ?>
     <?php if (Yii::$app->user->can('quanlyhocphi') && Yii::$app->user->identity->nhanvien->iDDONVI->HPTT):?>
     <div class="col-lg-3 col-6">
         <div class="info-box">
@@ -84,7 +74,7 @@ $this->title = 'QUẢN LÝ ĐIỂM DANH';
         </div>
     </div>
     <?php endif; ?>
-    <?php if (Yii::$app->user->can('quanlyhocphi')):?>
+    <?php if (Yii::$app->user->can('quanlyhocphi') && !Yii::$app->user->can('anquanlyhocphitheokhoa')):?>
     <div class="col-lg-3 col-6">
         <div class="info-box">
             <span class="info-box-icon bg-aqua"><i class="fa fa-money" aria-hidden="true"></i></span>
@@ -175,6 +165,11 @@ $this->title = 'QUẢN LÝ ĐIỂM DANH';
     <div class="text-center" style="color: red;font-size: 20px;">
         <span ><i class="fa fa-star"></i>HỌC SINH CHƯA THU HỌC PHÍ (THU TRƯỚC): <span style="color: red;font-size: 30px;"><?= $slhocphithutruocchuathu[0]['SOLUONG']?></span> HỌC SINH</span> <?= Html::a('CHI TIẾT', ['/quanlyhocphithutruoc/index'], ['target' => '_blank']) ?>
         <br/><span><i class="fa fa-star"></i>HỌC SINH HẾT HỌC PHÍ (THEO BUỔI): <span style="color: red;font-size: 30px;"><?= $slhocsinhhethocphitheobuoi[0]['SOLUONG']?></span> HỌC SINH</span> <?= Html::a('CHI TIẾT', ['/quanlyhocphithutruoc/canhbaotheosobuoihoc'], ['target' => '_blank']) ?>
+    </div>
+<?php endif; ?>
+<?php if (Yii::$app->user->can('canhbaohocphitheokhoa')):?>
+    <div class="text-center" style="color: red;font-size: 20px;">
+        <span ><i class="fa fa-star"></i>HỌC SINH CHƯA THU HỌC PHÍ: <span style="color: red;font-size: 30px;"><?= $slhocphithutruocchuathu[0]['SOLUONG']?></span> HỌC SINH</span> <?= Html::a('CHI TIẾT', ['/hocphitheokhoa/chitietthuhocphidonvi'], ['target' => '_blank']) ?>
     </div>
 <?php endif; ?>
 <?php if (Yii::$app->user->identity->nhanvien->iDDONVI->STATUS == 1):?>
