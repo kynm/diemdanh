@@ -1,16 +1,7 @@
 <?php
-
 use yii\helpers\Html;
-use yii\widgets\DetailView;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
-use yii\helpers\ArrayHelper;
-use app\models\Hocsinh;
-use yii\widgets\ActiveForm;
-use kartik\date\DatePicker;
-/* @var $this yii\web\View */
-/* @var $model app\models\Daivt */
-
 $this->title = $chamdiem->lop->TEN_LOP;
 $this->params['breadcrumbs'][] = $this->title;
 ?>

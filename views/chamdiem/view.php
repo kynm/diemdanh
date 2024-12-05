@@ -1,13 +1,4 @@
 <?php
-
-use yii\helpers\Html;
-use yii\widgets\DetailView;
-use yii\helpers\ArrayHelper;
-use app\models\Hocsinh;
-
-/* @var $this yii\web\View */
-/* @var $model app\models\Donvi */
-
 $this->title = 'CHI TIẾT HỌC PHÍ THEO LỚP';
 $this->params['breadcrumbs'][] = $this->title;
 ?>

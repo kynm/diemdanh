@@ -3,10 +3,6 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\editors\Summernote;
-
-/* @var $this yii\web\View */
-/* @var $model app\models\Daivt */
-
 $this->title = $chamdiem->TIEUDE;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -117,7 +113,6 @@ $script = <<< JS
                     }, 1000);
                 } else {
                     Swal.fire(data.message,'success');
-
                 }
             }
         });

@@ -1,10 +1,6 @@
 <?php
-
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\helpers\ArrayHelper;
-use kartik\select2\Select2;
-use kartik\date\DatePicker;
 ?>
 <div class="daivt-form">
     <div class="box box-primary">

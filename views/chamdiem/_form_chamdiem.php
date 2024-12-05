@@ -1,15 +1,8 @@
 <?php
-
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\helpers\ArrayHelper;
-use app\models\Donvi;
 use kartik\date\DatePicker;
-/* @var $this yii\web\View */
-/* @var $model app\models\Daivt */
-/* @var $form yii\widgets\ActiveForm */
 ?>
-
 <div class="daivt-form">
     <?php $form = ActiveForm::begin(['action' =>['chamdiem/themchamdiem', 'idlophoc' => $idlophoc], 'method' => 'post']); ?>
     <div class="box box-primary">
@@ -47,10 +40,6 @@ use kartik\date\DatePicker;
 </div>
 <?php
 $script = <<< JS
-    $('#quanlydiemdanh-ngay_chamdiem').on('change', function() {
-        var NGAYDIEMDANH = $(this).val();
-        $('#quanlydiemdanh-tieude').val('ĐIỂM DANH NGÀY ' + NGAYDIEMDANH);
-    });
 JS;
 $this->registerJs($script);
 ?>

@@ -1,16 +1,5 @@
 <?php
-use yii\helpers\Html;
-use yii\helpers\Url;
-use yii\helpers\ArrayHelper;
-use kartik\grid\GridView;
-use yii\widgets\Pjax;
-use kartik\select2\Select2;
-/* @var $this yii\web\View */
-/* @var $searchModel app\models\lophocSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
-
 $this->title = 'Doanh thu';
-$this->params['breadcrumbs'][] = ['label' => 'Đơn vị', 'url' => ['donvi/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="lophoc-index">

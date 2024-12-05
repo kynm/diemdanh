@@ -13,13 +13,13 @@ $this->title = 'THÔNG TIN HỆ THỐNG TRONG NGÀY';
                 <th class="text-center">SỐ ĐIỆN THOẠI</th>
             </tr>
             <?php
-                    foreach ($dsdonvi as $key => $value):
-                    ?>
-                    <tr>
-                        <td><?= $value['TEN_DONVI']?></td>
-                        <td class="text-center"><?= $value['SO_DT']?></td>
-                    </tr>
-                <?php endforeach; ?>
+                foreach ($dsdonvi as $key => $value):
+            ?>
+                <tr>
+                    <td><?= $value['TEN_DONVI']?></td>
+                    <td class="text-center"><?= $value['SO_DT']?></td>
+                </tr>
+            <?php endforeach; ?>
         </tbody>
     </table>
 </div>
@@ -78,15 +78,15 @@ $this->title = 'THÔNG TIN HỆ THỐNG TRONG NGÀY';
                 <th class="text-center">HỌC SINH</th>
             </tr>
             <?php
-                    foreach ($dsdiemdanh as $key => $value):
-                    ?>
-                    <tr>
-                        <td><?= $value['TEN_DONVI']?></td>
-                        <td class="text-center"><?= $value['SO_DT']?></td>
-                        <td class="text-center"><?= $value['TEN_LOP']?></td>
-                        <td class="text-center"><?= $value['NGAY_DIEMDANH']?></td>
-                    </tr>
-                <?php endforeach; ?>
+                foreach ($dsdiemdanh as $key => $value):
+            ?>
+                <tr>
+                    <td><?= $value['TEN_DONVI']?></td>
+                    <td class="text-center"><?= $value['SO_DT']?></td>
+                    <td class="text-center"><?= $value['TEN_LOP']?></td>
+                    <td class="text-center"><?= $value['NGAY_DIEMDANH']?></td>
+                </tr>
+            <?php endforeach; ?>
         </tbody>
     </table>
 </div>

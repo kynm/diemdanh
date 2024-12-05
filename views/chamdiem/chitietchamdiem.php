@@ -1,14 +1,6 @@
 <?php
-
-use yii\helpers\Html;
-use yii\widgets\DetailView;
-use kartik\select2\Select2;
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
-use yii\helpers\ArrayHelper;
-/* @var $this yii\web\View */
-/* @var $model app\models\Daivt */
-
 $this->title = 'CHI TIẾT KIỂM TRA';
 $this->params['breadcrumbs'][] = $this->title;
 ?>

@@ -1,15 +1,9 @@
 <?php
-
 namespace app\models;
-
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Donhang;
-
-/**
- * DonhangSearch represents the model behind the search form about `app\models\Donhang`.
- */
 class DonhangSearch extends Donhang
 {
     /**
@@ -31,7 +25,6 @@ class DonhangSearch extends Donhang
      */
     public function scenarios()
     {
-        // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
 
@@ -39,9 +32,6 @@ class DonhangSearch extends Donhang
     public function search($params)
     {
         $query = Donhang::find();
-
-        // add conditions that should always apply here
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -55,7 +45,7 @@ class DonhangSearch extends Donhang
 
         $query->andFilterWhere(['like', 'donvi.TEN_DONVI', $this->ID_DONVI]);
         $query->andFilterWhere(['like', 'donvi.SO_DT', $this->SO_DT]);
-        $query->andFilterWhere(['=', 'STATUS', $this->STATUS]);
+        $query->andFilterWhere(['=', 'donhang.STATUS', $this->STATUS]);
         $query->andFilterWhere(['=', 'TYPE', $this->TYPE]);
         $query->orderBy([
             'created_at' => SORT_DESC,

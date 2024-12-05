@@ -1,15 +1,7 @@
 <?php
 use yii\helpers\Html;
-use yii\helpers\Url;
-use yii\helpers\ArrayHelper;
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
-use kartik\select2\Select2;
-
-/* @var $this yii\web\View */
-/* @var $searchModel app\models\DonviSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
-
 $this->title = 'Đơn vị chủ quản';
 $this->params['breadcrumbs'][] = ['label' => 'Đơn vị', 'url' => ['donvi/index']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -19,7 +11,6 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= (Yii::$app->user->can('create-donvi')) ? Html::a('<i class="fa fa-plus"></i> Thêm đơn vị', ['create'], ['class' => 'btn btn-primary btn-flat']) : ''?>
         <?= (Yii::$app->user->can('Administrator')) ? Html::a('Dùng Thử', ['/donhang/theodoidungthu'], ['class' => 'btn btn-primary btn-flat']) :'' ?>
     </p>
-
     <div class="box box-primary">
         <div class="box-body">
             <?php Pjax::begin(); ?>    <?= GridView::widget([
@@ -84,7 +75,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                 return $model->NGAY_KT ? Yii::$app->formatter->asDatetime($model->NGAY_KT, 'php:d/m/Y') : NULL;
                             },
                         ],
-                        'EMAIL',
                         [
                             'attribute' => 'LUOTDIEMDANH',
                             'value' => function ($model) {
