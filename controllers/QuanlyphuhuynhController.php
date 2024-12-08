@@ -18,6 +18,7 @@ use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
+use app\models\ChitiethocphiSearch;
 
 /**
  * NhanvienController implements the CRUD actions for Nhanvien model.
@@ -165,7 +166,7 @@ class QuanlyphuhuynhController extends Controller
                 }
 
                 Yii::$app->session->setFlash('success', "Cập nhật thành công!");
-                return $this->redirect(['index', 'id']);
+                return $this->redirect(['index']);
             } else {
                 return $this->render('update', [
                     'model' => $model,
@@ -252,6 +253,22 @@ class QuanlyphuhuynhController extends Controller
             ]);
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function actionHocphitheothang($mahs)
+    {
+        $model = Yii::$app->user->identity->nhanvien->getDshocsinh()->andWhere(['MA_HOCSINH' => $mahs])->one();
+        if ($model && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+            $searchModel = new ChitiethocphiSearch();
+            $dataProvider = $searchModel->searchhocphitheohocsinh(Yii::$app->request->queryParams, $model->ID);
+            return $this->render('hocphitheothang', [
+                'model' => $model,
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');           
         }
     }
 }

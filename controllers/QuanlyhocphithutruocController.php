@@ -409,7 +409,7 @@ class QuanlyhocphithutruocController extends Controller
             $searchModel = new HocsinhSearch();
             $params = Yii::$app->request->queryParams;
             $dataProvider = $searchModel->searchhocsinhhethantheongay($params);
-            $dslop = ArrayHelper::map(Lophoc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->all(), 'ID_LOP', 'TEN_LOP');
+            $dslop = ArrayHelper::map(Lophoc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->andWhere(['STATUS' => 1])->all(), 'ID_LOP', 'TEN_LOP');
             $params['HocsinhSearch']['ID_LOP'] = isset($params['HocsinhSearch']['ID_LOP']) ? $params['HocsinhSearch']['ID_LOP'] : null;
             return $this->render('canhbaotheongay', [
                 'searchModel' => $searchModel,
