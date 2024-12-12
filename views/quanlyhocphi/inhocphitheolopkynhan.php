@@ -31,9 +31,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 <td style="border: 1px solid; width: 10%;"><?= $chitiet->hocsinh->HO_TEN?></td>
                 <td style="border: 1px solid; width: 10%;"><?= $chitiet->hocsinh->SO_DT?></td>
             	<td style="border: 1px solid; width: 10%;"><?= $chitiet->hocsinh->DIA_CHI?></td>
-                <td style="border: 1px solid; width: 8%;"><?= number_format($chitiet->TIENKHAC)?></td>
-            	<td style="border: 1px solid; width: 8%;"><?= number_format($chitiet->TONG_TIEN)?></td>
-                <td style="border: 1px solid; width: 10%;"></td>
+                <td style="border: 1px solid; width: 10%;"><?= number_format($chitiet->TIENKHAC)?></td>
+            	<td style="border: 1px solid; width: 10%;"><?= number_format($chitiet->TONG_TIEN)?></td>
+                <td style="border: 1px solid; width: 20%;"></td>
                 <td style="border: 1px solid; width: 20%;"><?= nl2br($chitiet->NHAN_XET)?></td>
             	<td style="border: 1px solid; width: 10%;"><?= statusthutien()[$chitiet->STATUS]?></td>
             </tr>

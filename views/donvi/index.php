@@ -10,6 +10,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= (Yii::$app->user->can('create-donvi')) ? Html::a('<i class="fa fa-plus"></i> Thêm đơn vị', ['create'], ['class' => 'btn btn-primary btn-flat']) : ''?>
         <?= (Yii::$app->user->can('Administrator')) ? Html::a('Dùng Thử', ['/donhang/theodoidungthu'], ['class' => 'btn btn-primary btn-flat']) :'' ?>
+        <?= (Yii::$app->user->can('Administrator')) ? Html::a('Theo dõi số liệu', ['/donvi/theodoisolieu'], ['class' => 'btn btn-primary btn-flat']) :'' ?>
     </p>
     <div class="box box-primary">
         <div class="box-body">
@@ -52,17 +53,21 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'attribute' => 'LOP',
                             'value' => function ($model) {
-                                return $model->getLophoc()->andWhere(['STATUS' => 1])->count();
+                                return $model->getLophoc()->andWhere(['STATUS' => 1])->count() . ' / ' . $model->SO_LOP;
                             },
                         ],
-                        'SO_LOP',
                         [
                             'attribute' => 'HOCSINH',
                             'value' => function ($model) {
-                                return $model->getHocsinh()->andWhere(['STATUS' => 1])->count();
+                                $sohs = $model->getHocsinh()->andWhere(['STATUS' => 1])->count();
+                                $sohsconlai = $model->SO_HS - $sohs;
+                                if ($sohsconlai <= 10) {
+                                    return '<span style="color:red">' . $sohs . '/' . $model->SO_HS . ' (' . ($sohsconlai) . ')</span>';
+                                }
+                                return $sohs . '/' . $model->SO_HS . ' (' . ($sohsconlai) . ')';
                             },
+                            'format' => 'raw',
                         ],
-                        'SO_HS',
                         [
                             'attribute' => 'NGAY_BD',
                             'value' => function($model) {

@@ -287,4 +287,14 @@ class DonviController extends Controller
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
         }
     }
+
+    public function actionTheodoisolieu()
+    {
+        $sqlhocsinhtaotrongngay = "SELECT a.TEN_DONVI,a.SO_DT,count(1) SOLUONG from donvi a, hocsinh b where a.ID_DONVI = b.ID_DONVI and date(b.created_at) = CURRENT_DATE() GROUP by a.TEN_DONVI,a.SO_DT ORDER BY SOLUONG DESC";
+        $hocsinhtaotrongngay = Yii::$app->db->createCommand($sqlhocsinhtaotrongngay)->queryAll();
+        return $this->render('theodoisolieu', [
+                'hocsinhtaotrongngay' => $hocsinhtaotrongngay,
+            ]);
+    }
+
 }

@@ -27,6 +27,14 @@ use yii\widgets\ActiveForm;
                 </div>
             </div>
             <div class="row">
+                <div class="col-md-3">
+                    <?= $form->field($model, 'invoice_hocphithutruoc')->textInput(['maxlength' => true]) ?>
+                </div>
+                <div class="col-md-3">
+                    <?= $form->field($model, 'invoice_hocphithang')->textInput(['maxlength' => true]) ?>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-sm-12">
                     <?= $form->field($model, 'SHOWALL')->checkBox(['label' => 'HIỂN THỊ TOÀN BỘ THÔNG TIN HỌC VIÊN KHI ĐIỂM DANH']) ?>
                 </div>
@@ -39,6 +47,7 @@ use yii\widgets\ActiveForm;
                 <div class="col-sm-12">
                     <?= $form->field($model, 'HP_T')->checkBox(['label' => 'HỌC PHÍ THU TRƯỚC']) ?>
                 </div>
+
             </div>
         </div>
         <div class="box-footer">
