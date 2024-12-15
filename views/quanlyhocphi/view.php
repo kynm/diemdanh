@@ -40,10 +40,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     'TIEUDE',
                     'TU_NGAY',
                     'DEN_NGAY',
-                    'TIENHOC',
                     [
                         'attribute' => 'TIENHOC',
-                        'value' => number_format($model->lop->TIENHOC),
+                        'value' => Yii::$app->user->can('hocphithangchung') ? '<input id="capnhattienhocchungtoanlop" class="form-control" data-id="' . $model->ID . '" type="number" value="' . $model->TIENHOC . '">' : '',
+                        'format' => 'raw',
                     ],
                 ],
             ]) ?>
@@ -329,6 +329,25 @@ $('.capnhatsotienmoibuoi').on('change', function() {
                 }
             });
         }
+        });
+    });
+
+    $('#capnhattienhocchungtoanlop').on('change', function() {
+        var tongtien = $(this).val();
+        var id = $(this).data('id');
+        $.ajax({
+            url: '/quanlyhocphi/capnhattienhocchungtoanlop',
+            method: 'post',
+            data: {
+                id: id,
+                tongtien: tongtien,
+            },
+            success:function(data) {
+                data = jQuery.parseJSON(data);
+                if (!data.error) {
+                    Swal.fire('Cập nhật thành công');
+                }
+            }
         });
     });
 JS;

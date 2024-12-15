@@ -33,6 +33,10 @@ use yii\widgets\ActiveForm;
                 <div class="col-md-3">
                     <?= $form->field($model, 'invoice_hocphithang')->textInput(['maxlength' => true]) ?>
                 </div>
+
+                <div class="col-md-6">
+                    <?= $form->field($model, 'linkqr')->textInput(['maxlength' => true]) ?>
+                </div>
             </div>
             <div class="row">
                 <div class="col-sm-12">

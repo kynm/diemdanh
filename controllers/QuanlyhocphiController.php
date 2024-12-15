@@ -661,4 +661,28 @@ class QuanlyhocphiController extends Controller
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
         }
     }
+
+    public function actionCapnhattienhocchungtoanlop()
+    {
+        if (Yii::$app->request->post() && Yii::$app->user->can('quanlyhocphi') && Yii::$app->user->can('hocphithangchung')) {
+            $result = [
+                'error' => 1,
+                'message' => 'Lỗi cập nhật!',
+            ];
+            $params = Yii::$app->request->post();
+            $model = $this->findModel($params['id']);
+            if ($model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+                $model->TIENHOC = (int)$params['tongtien'];
+                $model->save();
+                $result = [
+                    'error' => 0,
+                    'message' => 'Cập nhật thành công!',
+                ];
+            }
+            return json_encode($result);
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
+        }
+
+    }
 }

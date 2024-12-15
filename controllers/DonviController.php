@@ -292,8 +292,11 @@ class DonviController extends Controller
     {
         $sqlhocsinhtaotrongngay = "SELECT a.TEN_DONVI,a.SO_DT,count(1) SOLUONG from donvi a, hocsinh b where a.ID_DONVI = b.ID_DONVI and date(b.created_at) = CURRENT_DATE() GROUP by a.TEN_DONVI,a.SO_DT ORDER BY SOLUONG DESC";
         $hocsinhtaotrongngay = Yii::$app->db->createCommand($sqlhocsinhtaotrongngay)->queryAll();
+        $sqldiemdanhtrongngay = "SELECT a.TEN_DONVI, a.SO_DT,count(1) SOLUONG FROM donvi a, quanlydiemdanh b where a.ID_DONVI = b.ID_DONVI AND date(b.NGAY_DIEMDANH) = CURRENT_DATE() group by a.TEN_DONVI, a.SO_DT";
+        $diemdanhtrongngay = Yii::$app->db->createCommand($sqldiemdanhtrongngay)->queryAll();
         return $this->render('theodoisolieu', [
                 'hocsinhtaotrongngay' => $hocsinhtaotrongngay,
+                'diemdanhtrongngay' => $diemdanhtrongngay,
             ]);
     }
 

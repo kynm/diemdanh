@@ -38,7 +38,7 @@ class Donvi extends \yii\db\ActiveRecord
             [['ID_DONVI', 'MA_DONVI','TEN_DONVI'], 'required'],
             [['ID_DONVI', 'CAP_TREN', 'SO_LOP', 'SO_HS', 'SHOWALL', 'DIEMDANHTHUCONG', 'HPTT', 'HP_T'], 'integer'],
             [['MA_DONVI'], 'string', 'max' => 30],
-            [['TEN_DONVI', 'DIA_CHI', 'NGAY_BD', 'NGAY_KT', 'EMAIL', 'invoice_hocphithutruoc', 'invoice_hocphithang'], 'string', 'max' => 100],
+            [['TEN_DONVI', 'DIA_CHI', 'NGAY_BD', 'NGAY_KT', 'EMAIL', 'invoice_hocphithutruoc', 'invoice_hocphithang', 'linkqr'], 'string', 'max' => 100],
             ['EMAIL', 'email'],
             [['SO_DT'], 'string', 'max' => 20],
             [['MA_DONVI', 'SO_DT'], 'unique'],
@@ -76,6 +76,7 @@ class Donvi extends \yii\db\ActiveRecord
             'HP_T' => 'HỌC PHÍ THEO THÁNG',
             'invoice_hocphithutruoc' => 'Mẫu học phí thu trước',
             'invoice_hocphithang' => 'Mẫu học phí theo tháng',
+            'linkqr' => 'Link QR thanh toán',
         ];
     }
 

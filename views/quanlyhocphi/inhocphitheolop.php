@@ -14,6 +14,15 @@ $this->params['breadcrumbs'][] = $this->title;
     <h2 class="text-center"><b>THÔNG BÁO  <?= mb_strtoupper($model->TIEUDE)?></b>
 	<h2 class="text-center"><b>LỚP <?= mb_strtoupper($model->lop->TEN_LOP)?></b>
     </h2>
+    <div class="text-center">
+        <?php if(Yii::$app->user->identity->nhanvien->iDDONVI->linkqr):
+            $addInfo = $model->lop->TEN_LOP . ' ' . mb_strtoupper($model->TIEUDE);
+            $addInfo = preg_replace('/[\x00-\x1F\x7F]/u', '', $addInfo);
+        ?>
+            <img height="400" width="300" src="<?= Yii::$app->user->identity->nhanvien->iDDONVI->linkqr . '?amount=' . $model->TIENHOC . '&&addInfo=' . $addInfo?>">
+        <?php endif; ?>
+        <?= nl2br(Yii::$app->user->identity->nhanvien->iDDONVI->TTTT)?>
+    </div>
     <table class="table table-bordered">
         <tbody style="color: black;font-size: 19px;">
             <tr class="bg-primary text-center">
