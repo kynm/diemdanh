@@ -34,7 +34,7 @@ LoginAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; <a>EASY CHECK</a> 2024</p>
+        <p class="pull-left">&copy; <a href="https://easycheck.io.vn" target="_blank">EASY CHECK</a> 2024</p>
     </div>
 </footer>
 

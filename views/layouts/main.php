@@ -65,9 +65,9 @@ if (Yii::$app->controller->action->id === 'login') {
 
     </div>
 <footer class="main-footer">
-    <span><b>Easy Check</b> 1.0</span>
+    <span><b><a href="https://easycheck.io.vn" target="_blank">Easy Check</a></b> 1.0</span>
     <span class="pull-right">
-        <a href="#"> <a href="https://www.facebook.com/easycheckvn" target="_blank"><i class="fa fa-facebook" style="font-size: 36px;"></i></a>
+        <a href="https://www.facebook.com/easycheckvn" target="_blank"><i class="fa fa-facebook" style="font-size: 35px;"></i></a>
     </span>
 </footer>
     <?php $this->endBody() ?>

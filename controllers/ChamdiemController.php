@@ -154,6 +154,27 @@ class ChamdiemController extends Controller
         }
     }
 
+    public function actionSuangaychamdiem()
+    {
+        $params = Yii::$app->request->post();
+        $model = $this->findModel($params['id']);
+        $result = [
+            'error' => 1,
+            'message' => 'Lỗi thực hiện',
+        ];
+        if ($model && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI &&Yii::$app->user->can('diemdanhlophoc')) {
+            $ngay = $params['ngay'];
+            $model->NGAY_CHAMDIEM = $ngay;
+            $model->save();
+            $result = [
+                'error' => 0,
+                'message' => 'Cập nhật thành công',
+            ];
+        }
+        
+        return json_encode($result);
+    }
+
     /**
      * Finds the Lophoc model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -259,6 +280,94 @@ class ChamdiemController extends Controller
         }
     }
 
+    public function actionCapnhatdiemnghe()
+    {
+        if (Yii::$app->request->post() && Yii::$app->user->identity->nhanvien->ID_NHANVIEN) {
+            $params = Yii::$app->request->post();
+            $chamdiemhocsinh = Chamdiemhocsinh::findOne($params['id']);
+            $result = [
+                'error' => 1,
+                'message' => 'LỖI CẬP NHẬT',
+            ];
+            if ($chamdiemhocsinh && $chamdiemhocsinh->chamdiem->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+                $chamdiemhocsinh->NGHE = $params['diem'];
+                $chamdiemhocsinh->save();
+                $result['error'] = 0;
+                $result['message'] = 'Cập nhật thành công';
+            }
+
+            return json_encode($result);
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function actionCapnhatdiemnoi()
+    {
+        if (Yii::$app->request->post() && Yii::$app->user->identity->nhanvien->ID_NHANVIEN) {
+            $params = Yii::$app->request->post();
+            $chamdiemhocsinh = Chamdiemhocsinh::findOne($params['id']);
+            $result = [
+                'error' => 1,
+                'message' => 'LỖI CẬP NHẬT',
+            ];
+            if ($chamdiemhocsinh && $chamdiemhocsinh->chamdiem->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+                $chamdiemhocsinh->NOI = $params['diem'];
+                $chamdiemhocsinh->save();
+                $result['error'] = 0;
+                $result['message'] = 'Cập nhật thành công';
+            }
+
+            return json_encode($result);
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function actionCapnhatdiemdoc()
+    {
+        if (Yii::$app->request->post() && Yii::$app->user->identity->nhanvien->ID_NHANVIEN) {
+            $params = Yii::$app->request->post();
+            $chamdiemhocsinh = Chamdiemhocsinh::findOne($params['id']);
+            $result = [
+                'error' => 1,
+                'message' => 'LỖI CẬP NHẬT',
+            ];
+            if ($chamdiemhocsinh && $chamdiemhocsinh->chamdiem->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+                $chamdiemhocsinh->DOC = $params['diem'];
+                $chamdiemhocsinh->save();
+                $result['error'] = 0;
+                $result['message'] = 'Cập nhật thành công';
+            }
+
+            return json_encode($result);
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function actionCapnhatdiemviet()
+    {
+        if (Yii::$app->request->post() && Yii::$app->user->identity->nhanvien->ID_NHANVIEN) {
+            $params = Yii::$app->request->post();
+            $chamdiemhocsinh = Chamdiemhocsinh::findOne($params['id']);
+            $result = [
+                'error' => 1,
+                'message' => 'LỖI CẬP NHẬT',
+            ];
+            if ($chamdiemhocsinh && $chamdiemhocsinh->chamdiem->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+                $chamdiemhocsinh->VIET = $params['diem'];
+                $chamdiemhocsinh->save();
+                $result['error'] = 0;
+                $result['message'] = 'Cập nhật thành công';
+            }
+
+            return json_encode($result);
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
     public function actionCapnhatdiem()
     {
         if (Yii::$app->request->post() && Yii::$app->user->identity->nhanvien->ID_NHANVIEN) {
@@ -271,6 +380,7 @@ class ChamdiemController extends Controller
             if ($chamdiemhocsinh && $chamdiemhocsinh->chamdiem->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
                 $chamdiemhocsinh->DIEM = $params['diem'];
                 $chamdiemhocsinh->save();
+                die(var_dump($chamdiemhocsinh->errors));
                 $result['error'] = 0;
                 $result['message'] = 'Cập nhật thành công';
             }

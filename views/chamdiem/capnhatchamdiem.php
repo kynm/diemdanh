@@ -29,17 +29,29 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <?php ActiveForm::end(); ?>
             <?php foreach ($chamdiem->dschitietchamdiem as $key => $chitiet):?>
-                <div class="col-sm-6">
-                    <div class="col-sm-3" style="font-size:20px">
+                <div class="col-sm-12">
+                    <div class="col-sm-3" style="font-size:15px">
                         <?= Html::a($chitiet->hocsinh->HO_TEN, ['/hocsinh/lichsuchamdiem', 'id' => $chitiet->hocsinh->ID], ['target' => '_blank']) ?>
                         <?php if (Yii::$app->user->identity->nhanvien->iDDONVI->SHOWALL):?>
                             <span class="xemtoanbothongtin">(<?= $chitiet->hocsinh->SO_DT . ' - ' . $chitiet->hocsinh->DIA_CHI?>)</span>
                         <?php endif; ?>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-1">
+                        <input class="form-control capnhatdiemnghe" type="number" step="0.01" data-id="<?= $chitiet->ID ?>" value="<?= $chitiet->NGHE?>" placeholder="NGHE">
+                    </div>
+                    <div class="col-sm-1">
+                        <input class="form-control capnhatdiemnoi" type="number" step="0.01" data-id="<?= $chitiet->ID ?>" value="<?= $chitiet->NOI?>" placeholder="NÓI">
+                    </div>
+                    <div class="col-sm-1">
+                        <input class="form-control capnhatdiemdoc" type="number" step="0.01" data-id="<?= $chitiet->ID ?>" value="<?= $chitiet->DOC?>" placeholder="ĐỌC">
+                    </div>
+                    <div class="col-sm-1">
+                        <input class="form-control capnhatdiemviet" type="number" step="0.01" data-id="<?= $chitiet->ID ?>" value="<?= $chitiet->VIET?>" placeholder="VIẾT">
+                    </div>
+                    <div class="col-sm-1">
                         <input class="form-control capnhatdiem" type="number" step="0.01" data-id="<?= $chitiet->ID ?>" value="<?= $chitiet->DIEM?>" placeholder="ĐIỂM">
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
                         <textarea class="form-control capnhatghichu" data-id="<?= $chitiet->ID ?>" placeholder="NHẬN XÉT"><?= $chitiet->NHAN_XET?></textarea>
                     </div>
                 </div>
@@ -76,6 +88,78 @@ $script = <<< JS
         });
     });
 
+    $('.capnhatdiemnghe').on('change', function() {
+        var diem = $(this).val();
+        var id = $(this).data('id');
+        $.ajax({
+            url: '/chamdiem/capnhatdiemnghe',
+            method: 'post',
+            data: {
+                id: id,
+                diem: diem,
+            },
+            success:function(data) {
+                data = jQuery.parseJSON(data);
+                if (data.error) {
+                    Swal.fire(data.message);
+                }
+            }
+        });
+    });
+    $('.capnhatdiemnoi').on('change', function() {
+        var diem = $(this).val();
+        var id = $(this).data('id');
+        $.ajax({
+            url: '/chamdiem/capnhatdiemnoi',
+            method: 'post',
+            data: {
+                id: id,
+                diem: diem,
+            },
+            success:function(data) {
+                data = jQuery.parseJSON(data);
+                if (data.error) {
+                    Swal.fire(data.message);
+                }
+            }
+        });
+    });
+    $('.capnhatdiemdoc').on('change', function() {
+        var diem = $(this).val();
+        var id = $(this).data('id');
+        $.ajax({
+            url: '/chamdiem/capnhatdiemdoc',
+            method: 'post',
+            data: {
+                id: id,
+                diem: diem,
+            },
+            success:function(data) {
+                data = jQuery.parseJSON(data);
+                if (data.error) {
+                    Swal.fire(data.message);
+                }
+            }
+        });
+    });
+    $('.capnhatdiemviet').on('change', function() {
+        var diem = $(this).val();
+        var id = $(this).data('id');
+        $.ajax({
+            url: '/chamdiem/capnhatdiemviet',
+            method: 'post',
+            data: {
+                id: id,
+                diem: diem,
+            },
+            success:function(data) {
+                data = jQuery.parseJSON(data);
+                if (data.error) {
+                    Swal.fire(data.message);
+                }
+            }
+        });
+    });
     $('.capnhatdiem').on('change', function() {
         var diem = $(this).val();
         var id = $(this).data('id');

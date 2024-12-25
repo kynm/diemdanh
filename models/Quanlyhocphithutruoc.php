@@ -1,8 +1,8 @@
 <?php
-
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 class Quanlyhocphithutruoc extends \yii\db\ActiveRecord
 {
@@ -82,6 +82,30 @@ class Quanlyhocphithutruoc extends \yii\db\ActiveRecord
 
     public function sobuoidahoc($tungay, $denngay)
     {
-        return $this->hocsinh->getDsdiemdanh()->andWhere(['between', 'date(diemdanhhocsinh.NGAY_DIEMDANH)', date($tungay), date($denngay)])->count();
+        return $this->hocsinh->getDsdiemdanh()->andWhere(['between', 'date(diemdanhhocsinh.NGAY_DIEMDANH)', date($tungay), date($denngay)])->andWhere(['diemdanhhocsinh.STATUS' => 1])->count();
+    }
+
+    public function getDschamdiem()
+    {
+        return $this->hasOne(Chamdiem::className(), ['ID_LOP' => 'ID_LOP']);
+    }
+
+    public function getDanhsachkiemtra()
+    {
+        $dschamdiem = ArrayHelper::map($this->getDschamdiem()->andWhere(['between', 'date(chamdiem.NGAY_CHAMDIEM)', date($this->NGAY_BD), date($this->NGAY_KT)])->all(), 'ID', 'ID');
+        $dschamdiemhocsinh = Chamdiemhocsinh::find()->where(['in', 'ID_CHAMDIEM', $dschamdiem])->andWhere(['ID_HOCSINH' => $this->ID_HOCSINH])->all();
+        return $dschamdiemhocsinh;
+    }
+
+    public function sobuoinghi($tungay, $denngay)
+    {
+        $sobuoinghi = $this->hocsinh->getDsdiemdanh()->andWhere(['between', 'date(diemdanhhocsinh.NGAY_DIEMDANH)', date($tungay), date($denngay)])->andWhere(['diemdanhhocsinh.STATUS' => 0])->count();
+        return $sobuoinghi;
+    }
+
+    public function dsngaynghihoc($tungay, $denngay)
+    {
+        $dsngayhoc = ArrayHelper::map($this->hocsinh->getDsdiemdanh()->andWhere(['between', 'date(diemdanhhocsinh.NGAY_DIEMDANH)', date($tungay), date($denngay)])->andWhere(['diemdanhhocsinh.STATUS' => 0])->select(["DATE_FORMAT(diemdanhhocsinh.NGAY_DIEMDANH,'%d/%m') NGAY_DIEMDANH"])->all(), 'NGAY_DIEMDANH', 'NGAY_DIEMDANH');
+        return implode(',', $dsngayhoc);
     }
 }

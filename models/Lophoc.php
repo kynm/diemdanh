@@ -106,4 +106,23 @@ class Lophoc extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Nhanvien::className(), ['ID_NHANVIEN' => 'ID_NHANVIEN_DIEMDANH']);
     }
+
+    public function getDschamdiem()
+    {
+        return $this->hasMany(Chamdiem::className(), ['ID_LOP' => 'ID_LOP']);
+    }
+
+    public function getChecklichtronngay()
+    {
+        $check = false;
+        $dslich = explode(',', $this->ds_lichcodinh);
+        foreach ($dslich as $key => $lich) {
+            if ($lich == date('w')) {
+                $check = true;
+                break;
+            }
+        }
+
+        return $check;
+    }
 }

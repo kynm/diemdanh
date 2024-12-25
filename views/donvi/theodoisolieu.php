@@ -32,7 +32,7 @@ $this->title = 'THÔNG TIN HỆ THỐNG TRONG NGÀY';
             <tr class="bg-primary">
                 <th class="text-center">ĐƠN VỊ</th>
                 <th class="text-center">SỐ ĐIỆN THOẠI</th>
-                <th class="text-center">SỐ HỌC SINH</th>
+                <th class="text-center">SỐ LƯỢNG</th>
             </tr>
             <?php
                 foreach ($diemdanhtrongngay as $key => $value):

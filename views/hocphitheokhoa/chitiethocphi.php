@@ -6,7 +6,7 @@ $this->title = 'CHI TIẾT HỌC PHÍ';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="box-body table-responsive">
-	<h2 class="text-center"><b>THÔNG BÁO  <?= mb_strtoupper($model->hocphi->TIEUDE)?></b>
+	<h2 class="text-center"><b>THÔNG BÁO  <?= mb_strtoupper($model->TIEUDE)?></b>
     <?php if ($model->STATUS):?>
         <span class="btn btn-flat btn-success">Đã thu</span>
     <?php endif; ?>
@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </tr>
             <tr class="text-center">
             	<td style="border: 1px solid; width: 15%;"><?= $model->hocsinh->HO_TEN?><br><?= $model->hocsinh->SO_DT?><br><?= $model->hocsinh->DIA_CHI?></td>
-            	<td style="border: 1px solid; width: 15%;"><?= $model->hocphi->lop->TEN_LOP?></td>
+            	<td style="border: 1px solid; width: 15%;"><?= $model->lop->TEN_LOP?></td>
                 <td style="border: 1px solid; width: 15%;"><?= $model->NGAY_NGHI?></td>
             	<td style="border: 1px solid; width: 7%;"><?= $model->TONG_TIENHOC?></td>
                 <td style="border: 1px solid; width: 7%;"><?= number_format($model->TIENKHAC)?></td>
@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </tr>
             <tr>
             	<td colspan="8" style="border: 1px solid;">
-            		<b>1. Kính gửi quý phụ huynh <?= $model->hocphi->TIEUDE?>!</b><br>
+            		<b>1. Kính gửi quý phụ huynh <?= $model->TIEUDE?>!</b><br>
 					<?=  isset(Yii::$app->user->identity->nhanvien->iDDONVI->TTTT) ? nl2br(Yii::$app->user->identity->nhanvien->iDDONVI->TTTT) : ''?>
 
             	</td>

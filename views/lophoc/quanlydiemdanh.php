@@ -16,8 +16,13 @@ $this->params['breadcrumbs'][] = ['label' => 'Đơn vị', 'url' => ['donvi/inde
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="daivt-view">
+    <?php if (Yii::$app->user->can('quanlyhocsinh')):?>
+        <?= Html::a('<i class="fa fa-pencil-square-o"></i> Quản lý học sinh', ['quanlyhocsinh', 'id' => $model->ID_LOP], ['class' => 'btn btn-primary btn-flat']) ?>
+    <?php endif; ?>
+    <?= (Yii::$app->user->can('diemdanhlophoc')) ? Html::a('Kiểm tra', ['/chamdiem/chamdiemlophoc', 'idlophoc' => $model->ID_LOP], ['class' => 'btn btn-success btn-flat']) : ''?>
     <?= $this->render('_detail', ['model' => $diemdanh->lop,]) ?>
 </div>
+
 <?php if (Yii::$app->user->can('diemdanhlophoc') && $diemdanh->lop->STATUS == 1):?>
 <?php if (!Yii::$app->user->identity->nhanvien->iDDONVI->DIEMDANHTHUCONG):?>
     <div class="daivt-view">

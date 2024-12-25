@@ -156,6 +156,26 @@ $this->title = 'QUẢN LÝ ĐIỂM DANH';
         </tbody>
     </table>
 </div>
+<div class="box-body table-responsive">
+    <h3>ĐIỂM DANH THEO LỊCH HỌC TRONG NGÀY</h3>
+    <table class="table table-bordered">
+        <tbody>
+            <tr class="bg-primary">
+                <th class="text-center">LỚP</th>
+                <th class="text-center">ĐIỂM DANH</th>
+            </tr>
+            <?php foreach (Yii::$app->user->identity->nhanvien->iDDONVI->lophoc as $key => $lop):?>
+                <?php if ($lop->checklichtronngay):?>
+                    <tr>
+                        <td><?= $lop->TEN_LOP?></td>
+                        <td class="text-center">
+                            <?= $lop->getDsdiemdanh()->andWhere(['NGAY_DIEMDANH' => date('Y-m-d')])->count() ? '<span class="text-success">ĐÃ ĐIỂM DANH</span>' : Html::a('</i> Điểm danh', ['lophoc/quanlydiemdanh', 'id' => $lop->ID_LOP], ['class' => 'btn btn-danger btn-flat', 'data-pjax' => 0, 'target' => '_blank']) ?></td>
+                    </tr>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
 <?php if (Yii::$app->user->can('quanlyhocphi') && Yii::$app->user->identity->nhanvien->iDDONVI->HPTT):?>
     <div class="text-center" style="color: red;font-size: 20px;">
         <span ><i class="fa fa-star"></i>HỌC SINH CHƯA THU HỌC PHÍ HÀNG THÁNG: <span style="color: red;font-size: 30px;"><?= $slhocphichuathu[0]['SOLUONG']?></span> HỌC SINH</span> <?= Html::a('CHI TIẾT', ['/quanlyhocphi/chitietthuhocphidonvi'], ['target' => '_blank']) ?>

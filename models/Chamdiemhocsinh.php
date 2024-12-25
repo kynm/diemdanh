@@ -42,6 +42,10 @@ class Chamdiemhocsinh extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'DIEM' => 'ĐIỂM',
+            'NGHE' => 'NGHE',
+            'NOI' => 'NÓI',
+            'DOC' => 'ĐỌC',
+            'VIET' => 'VIẾT',
             'ID_HOCSINH' => 'HỌC SINH',
             'ID_LOP' => 'LỚP',
             'NHAN_XET' => 'GHI CHÚ',

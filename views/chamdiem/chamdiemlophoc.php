@@ -34,8 +34,9 @@ $this->params['breadcrumbs'][] = $this->title;
                             [
                                 'attribute' => 'NGAY_CHAMDIEM',
                                 'value' => function($model) {
-                                    return Yii::$app->formatter->asDatetime($model->NGAY_CHAMDIEM, 'php:d/m/Y');
+                                    return '<input class="form-control suangaychamdiem" data-id="' . $model->ID . '" type="date" value="' . $model->NGAY_CHAMDIEM . '">';;
                                 },
+                                'format' => 'raw',
                             ],
                             [
                                 'attribute' => 'SOHOCSINH',
@@ -66,37 +67,53 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php
 $script = <<< JS
     $(document).on('click', '.xoachamdiem', function() {
-    Swal.fire({
-        title: 'Dữ liệu sẽ bị xóa vĩnh viễn, không thể khôi phục lại.Bạn có chắc chắc muốn xóa lượt chấm điểm không?',
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: '#DD6B55',
-        confirmButtonText: 'Xóa ngay!',
-        cancelButtonText: "Không!"
-    }).then((result) => {
-    if (result['isConfirmed']) {
+        Swal.fire({
+            title: 'Dữ liệu sẽ bị xóa vĩnh viễn, không thể khôi phục lại.Bạn có chắc chắc muốn xóa lượt chấm điểm không?',
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: 'Xóa ngay!',
+            cancelButtonText: "Không!"
+        }).then((result) => {
+            if (result['isConfirmed']) {
+                var id = $(this).data('id');
+                $.ajax({
+                    url: '/chamdiem/xoachamdiem',
+                    method: 'post',
+                    data: {
+                        id: id,
+                    },
+                    success:function(data) {
+                        data = jQuery.parseJSON(data);
+                        if (!data.error) {
+                            Swal.fire('Xác nhận thành công');
+                            setTimeout(() => {
+                                window.location.reload(true);
+                              }, 1000);
+                        } else {
+                            Swal.fire(data.message);
+                        }
+                    }
+                });
+            }
+        });
+    });
+    $(document).on('change', '.suangaychamdiem', function() {
         var id = $(this).data('id');
+        var ngay = $(this).val();
         $.ajax({
-            url: '/chamdiem/xoachamdiem',
+            url: '/chamdiem/suangaychamdiem',
             method: 'post',
             data: {
                 id: id,
+                ngay: ngay,
             },
             success:function(data) {
                 data = jQuery.parseJSON(data);
-                if (!data.error) {
-                    Swal.fire('Xác nhận thành công');
-                    setTimeout(() => {
-                        window.location.reload(true);
-                      }, 1000);
-                } else {
-                    Swal.fire(data.message);
-                }
+                Swal.fire(data.message);
             }
         });
-    }
     });
-});
 JS;
 $this->registerJs($script);
 ?>

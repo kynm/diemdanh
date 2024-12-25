@@ -17,6 +17,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     <tr class="bg-primary text-center">
                         <th class="text-center">STT</th>
                         <th class="text-center">Học sinh</th>
+                        <th class="text-center">Nghe</th>
+                        <th class="text-center">Nói</th>
+                        <th class="text-center">Đọc</th>
+                        <th class="text-center">Viết</th>
                         <th class="text-center">Điểm</th>
                         <th class="text-center">Nhận xét</th>
                     </tr>
@@ -24,8 +28,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     <tr>
                         <td><?= $key + 1?></td>
                         <td><?= $value->hocsinh->HO_TEN?></td>
+                        <td class="text-center"><?= $value->NGHE?></td>
+                        <td class="text-center"><?= $value->NOI?></td>
+                        <td class="text-center"><?= $value->DOC?></td>
+                        <td class="text-center"><?= $value->VIET?></td>
                         <td class="text-center"><?= $value->DIEM?></td>
-                        <td><?= $value->NHAN_XET?></td>
+                        <td><?= nl2br($value->NHAN_XET)?></td>
                     </tr>
                     <?php endforeach; ?>
                 </tbody>

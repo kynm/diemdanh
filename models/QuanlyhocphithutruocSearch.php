@@ -65,7 +65,11 @@ class QuanlyhocphithutruocSearch extends Quanlyhocphithutruoc
             ->andFilterWhere(['like', 'hocsinh.HO_TEN', $this->ID_HOCSINH])
             ->andFilterWhere(['=', 'quanlyhocphithutruoc.STATUS', $this->STATUS])
             ->andFilterWhere(['like', 'SO_BH', $this->SO_BH]);
-
+        $query->orderBy([
+            'STATUS' => SORT_ASC,
+            'created_at' => SORT_DESC,
+            'ID_LOP' => SORT_DESC,
+        ]);
         return $dataProvider;
     }
 

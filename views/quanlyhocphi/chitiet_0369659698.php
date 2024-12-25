@@ -58,19 +58,27 @@
                 </tr>
             <?php endif;?>
             <tr>
+                <td style="border: 1px solid;">GHI CHÚ</td>
+                <td colspan="2" style="border: 1px solid;"><?= nl2br($model->NHAN_XET)?></td>
+            </tr>
+            <tr>
                 <td style="border: 1px solid;">THÔNG TIN THANH TOÁN</td>
                 <td style="border: 1px solid;text-align: center;">
                     <?= nl2br(Yii::$app->user->identity->nhanvien->iDDONVI->TTTT)?>
-                    NỘI DUNG CHUYỂN KHOẢN: <?= $model->hocsinh->HO_TEN?>_<?= $model->hocphi->lop->TEN_LOP?>_<?= mb_strtoupper($model->hocphi->TIEUDE)?>
+                    NỘI DUNG CHUYỂN KHOẢN: <?= $model->hocsinh->HO_TEN?><?= $model->hocphi->lop->TEN_LOP?>
                 </td>
                 <td style="border: 1px solid;min-width: 300px;">
                     <?php if(Yii::$app->user->identity->nhanvien->iDDONVI->linkqr):
-                        $addInfo = $model->hocsinh->HO_TEN . ' ' . $model->hocphi->lop->TEN_LOP . ' ' . mb_strtoupper($model->hocphi->TIEUDE);
+                        $addInfo = $model->hocsinh->HO_TEN . ' ' . $model->hocphi->lop->TEN_LOP;
                         $addInfo = preg_replace('/[\x00-\x1F\x7F]/u', '', $addInfo);
                     ?>
                         <img height="250" width="200" src="<?= Yii::$app->user->identity->nhanvien->iDDONVI->linkqr . '?amount=' . $tongtien . '&&addInfo=' . $addInfo?>">
                     <?php endif; ?>
                 </td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid;">QUY ĐỊNH LỚP HỌC</td>
+                <td colspan="2" style="border: 1px solid;"><?= nl2br(Yii::$app->user->identity->nhanvien->iDDONVI->QDLH)?></td>
             </tr>
             <tr>
                 <td colspan="2"></td>

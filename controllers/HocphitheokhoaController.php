@@ -113,7 +113,16 @@ class HocphitheokhoaController extends Controller
                     $hocphi->NGAY_BD = $quanlyhocphi->TU_NGAY;
                     $hocphi->NGAY_KT = $quanlyhocphi->DEN_NGAY;
                     $hocphi->TIENKHAC = null;
-                    $hocphi->TONGTIEN = $quanlyhocphi->TIENHOC;
+                    $hocphi->TONGTIEN = $quanlyhocphi->TIENHOC - $hocphi->TIENGIAM;
+                    $hocphi->save();
+                }
+            }
+
+            if (Yii::$app->user->can('trutienbuoihocnghi') && $hocphi->STATUS == 1) {
+                $sobuoinghi = $hocphi->sobuoinghi($quanlyhocphi->TU_NGAY, $quanlyhocphi->DEN_NGAY);
+                if ($sobuoinghi) {
+                    $hocphi->TIENGIAM = $sobuoinghi * $hocphi->hocsinh->TIENHOC;
+                    $hocphi->TONGTIEN = $quanlyhocphi->TIENHOC + $hocphi->TIENKHAC - $hocphi->TIENGIAM;
                     $hocphi->save();
                 }
             }
@@ -422,7 +431,7 @@ class HocphitheokhoaController extends Controller
         if (Yii::$app->user->can('quanlyhocphi')) {
             $searchModel = new QuanlyhocphithutruocSearch();
             $params = Yii::$app->request->queryParams;
-            $params['STATUS'] = isset( $params['STATUS']) ? $params['STATUS'] : 1;
+            $params['STATUS'] = isset($params['STATUS']) ? $params['STATUS'] : 1;
             $dataProvider = $searchModel->searchhocphithutruoctheodonvi($params);
 
             $dslop = ArrayHelper::map(Lophoc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->all(), 'ID_LOP', 'TEN_LOP');
@@ -463,11 +472,12 @@ class HocphitheokhoaController extends Controller
     public function actionExportpdf($id)
     {
         $this->layout = 'printLayout';
-        $model = Quanlyhocphi::findOne($id);
+        $model = Hocphitheokhoa::findOne($id);
         if (Yii::$app->user->can('quanlytruonghoc') && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
             $html = '';
+            $view = Yii::$app->user->identity->nhanvien->iDDONVI->invoice_hocphithutruoc ? '/quanlyhocphithutruoc/' . Yii::$app->user->identity->nhanvien->iDDONVI->invoice_hocphithutruoc : '/quanlyhocphithutruoc/inchitiet';
             foreach ($model->chitiethocphi as $key => $chitiet) {
-                $html .= $this->renderPartial('chitiethocphi', ['model' => $chitiet]);
+                $html .= $this->renderPartial($view, ['model' => $chitiet]);
             }
             Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
             $filename = $model->TIEUDE . ' - ' . $model->lop->TEN_LOP . ' - '  . Yii::$app->user->identity->nhanvien->iDDONVI->TEN_DONVI . '.pdf';
@@ -478,7 +488,7 @@ class HocphitheokhoaController extends Controller
                     // any mpdf options you wish to set
                 ],
                 'filename' => $filename,
-                'destination' => Pdf::DEST_DOWNLOAD,
+                'orientation' => Pdf::ORIENT_LANDSCAPE,
                 'methods' => [
                     'SetTitle' => Yii::$app->user->identity->nhanvien->iDDONVI->TEN_DONVI,
                     'SetSubject' => Yii::$app->user->identity->nhanvien->iDDONVI->TEN_DONVI,
@@ -501,7 +511,7 @@ class HocphitheokhoaController extends Controller
         $this->layout = 'printLayout';
         $model = Quanlyhocphithutruoc::findOne($id);
         if (Yii::$app->user->can('quanlytruonghoc') && $model && $model->hocphi->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
-            $view = 'chitiethocphi';
+            $view = Yii::$app->user->identity->nhanvien->iDDONVI->invoice_hocphithutruoc ? '/quanlyhocphithutruoc/' . Yii::$app->user->identity->nhanvien->iDDONVI->invoice_hocphithutruoc : '/quanlyhocphithutruoc/inchitiet';
             if (Yii::$app->user->can('inngayhoc')) {
                 $view = 'chitiethocphicongayhoc';//thutrang yeu cau
             }

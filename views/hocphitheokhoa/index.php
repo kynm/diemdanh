@@ -7,7 +7,7 @@ use kartik\grid\GridView;
 use yii\widgets\Pjax;
 use yii\helpers\ArrayHelper;
 $this->title = 'Quản lý học phí';
-$this->params['breadcrumbs'][] = ['label' => 'Quản lý học phí', 'url' => ['quanlyhocphi/index']];
+$this->params['breadcrumbs'][] = ['label' => 'Quản lý học phí', 'url' => ['hocphitheokhoa/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?= $this->render('/partial/_header_hocphitheokhoa', []) ?>
@@ -133,7 +133,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'attribute' => '',
                                 'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
                                 'value' => function ($model) {
-                                    $text = Html::a('<i class="fa fa-file-pdf-o"></i> Export Pdf', ['/quanlyhocphi/exportpdf', 'id' => $model->ID], ['class' => 'btn btn-success btn-flat', 'target' => '_blank']) . '<br/>';
+                                    $text = Html::a('<i class="fa fa-file-pdf-o"></i> Export Pdf', ['/hocphitheokhoa/exportpdf', 'id' => $model->ID], ['class' => 'btn btn-success btn-flat', 'target' => '_blank', 'data-pjax' => 0]) . '<br/>';
                                     if (Yii::$app->user->can('quanlyhocphi') && $model->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI && !$model->getChitiethocphi()->where(['STATUS' => 2])->count()) {
                                         $text .= Html::a('<i class="fa fa-trash-o"></i> Xóa', ['delete', 'id' => $model->ID], [
                                             'class' => 'btn btn-danger btn-flat',

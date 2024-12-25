@@ -44,6 +44,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'pluginOptions' => ['allowClear' => true],
                                 ],
                             ],
+                            'NGHE',
+                            'NOI',
+                            'DOC',
+                            'VIET',
                             'DIEM',
                             [
                                 'attribute' => 'NHAN_XET',

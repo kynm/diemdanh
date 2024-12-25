@@ -61,6 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <tr class="bg-primary text-center">
                 <th class="text-center" style="width: 10px">#</th>
                 <th class="text-center">HỌC SINH</th>
+                <th class="text-center">SỐ BUỔI ĐÃ HỌC</th>
                 <th class="text-center">SỐ BUỔI</th>
                 <th class="text-center">TIỀN HỌC</th>
                 <th class="text-center">MIỄN GIẢM/ HỌC BỔNG</th>
@@ -76,6 +77,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <tr>
                     <td scope="col"><?= $key + 1;?></td>
                     <td><?= $chitiet->hocsinh ? $chitiet->hocsinh->HO_TEN . ($chitiet->hocsinh->STATUS ? '' : '(ĐÃ NGHỈ)') : 'HỌC SINH KHÔNG TỒN TẠI'?></td>
+                        <td><?= $chitiet->sobuoidahoc($chitiet->NGAY_BD, $chitiet->NGAY_KT)?>/<?= $chitiet->SO_BH?></td>
                     <td><input class="form-control capnhatsobuoihoc" name="SO_BH" type="number" value="<?= $chitiet->SO_BH?>" data-id="<?= $chitiet->ID ?>"></td>
                     <td><input class="form-control capnhatsotien" type="number" name="SOTIEN" value="<?= $chitiet->SOTIEN?>" data-id="<?= $chitiet->ID ?>"></td>
                     <td><input class="form-control capnhatmiengiam" type="number" name="TIENGIAM" value="<?= $chitiet->TIENGIAM?>" data-id="<?= $chitiet->ID ?>"></td>
@@ -103,12 +105,13 @@ $this->params['breadcrumbs'][] = $this->title;
                         <td scope="col"><?= $key + 1;?></td>
                         <td><?= $chitiet->hocsinh ? $chitiet->hocsinh->HO_TEN : 'HỌC SINH KHÔNG TỒN TẠI'?></td>
                         <td><?= $chitiet->sobuoidahoc($chitiet->NGAY_BD, $chitiet->NGAY_KT)?>/<?= $chitiet->SO_BH?></td>
-                        <td><?= number_format($chitiet->TIENGIAM)?></td>
+                        <td><?= number_format($chitiet->SO_BH)?></td>
                         <td><?= number_format($chitiet->SOTIEN)?></td>
+                        <td><?= number_format($chitiet->TIENGIAM)?></td>
                         <td><?= $chitiet->NGAY_BD?></td>
                         <td><?= $chitiet->NGAY_KT?></td>
-                        <td><?= ($chitiet->TIENKHAC)?></td>
-                        <td><?= ($chitiet->TONGTIEN)?></td>
+                        <td><?= number_format($chitiet->TIENKHAC)?></td>
+                        <td><?= number_format($chitiet->TONGTIEN)?></td>
                         <td width="15%"><?= nl2br($chitiet->GHICHU)?></td>
                         <td width="5%">
                             <?= Html::a('<i class="fa fa-print"></i> In', ['/quanlyhocphithutruoc/inchitiet', 'id' => $chitiet->ID], ['class' => 'btn btn-primary btn-flat', 'target' => '_blank']) ?>
@@ -329,6 +332,7 @@ $script = <<< JS
         if (result['isConfirmed']) {
             var capnhatghichu = $(this).val();
             var id = $(this).data('id');
+            Swal.fire("HỆ THỐNG ĐANG XỬ LÝ DỮ LIỆU, VUI LÒNG CHỜ TRONG GIÂY LÁT!");
             $.ajax({
                 url: '/hocphitheokhoa/bosunghocsinh',
                 method: 'post',
