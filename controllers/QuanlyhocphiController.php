@@ -596,7 +596,7 @@ class QuanlyhocphiController extends Controller
                     // any mpdf options you wish to set
                 ],
                 'filename' => $filename,
-                'orientation' => Pdf::ORIENT_LANDSCAPE,
+                // 'orientation' => Pdf::ORIENT_LANDSCAPE,
                 'destination' => Pdf::DEST_DOWNLOAD,
                 'methods' => [
                     'SetTitle' => Yii::$app->user->identity->nhanvien->iDDONVI->TEN_DONVI,
@@ -642,7 +642,7 @@ class QuanlyhocphiController extends Controller
                     // any mpdf options you wish to set
                 ],
                 'filename' => $filename,
-                'orientation' => Pdf::ORIENT_LANDSCAPE,
+                // 'orientation' => Pdf::ORIENT_LANDSCAPE,
                 'destination' => Pdf::DEST_DOWNLOAD,
                 'methods' => [
                     'SetTitle' => Yii::$app->user->identity->nhanvien->iDDONVI->TEN_DONVI,
