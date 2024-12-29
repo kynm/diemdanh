@@ -82,6 +82,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'format' => 'raw',
                             ],
                             [
+                                'attribute' => 'TIENGIAM',
+                                'contentOptions' => ['style' => 'width:10%; white-space: normal;word-break: break-word;'],
+                                'value' => function($model) {
+                                    return $model->STATUS == 1 ? '<input type="number" id="TIENGIAM-' . $model->ID . '" name="TIENGIAM" class="form-control capnhatmiengiam" value="' . $model->TIENGIAM . '" data-id="' . $model->ID  . '">' : $model->TIENGIAM;
+                                },
+                                'format' => 'raw',
+                            ],
+                            [
                                 'attribute' => 'TONGTIEN',
                                 'contentOptions' => ['style' => 'width:6%; white-space: normal;word-break: break-word;'],
                                 'value' => function($model) {
@@ -343,6 +351,28 @@ $script = <<< JS
                     Swal.fire('THAY ĐỔI THÀNH CÔNG');
                 } else {
                     Swal.fire('LỖI CẬP NHẬT!');
+                }
+            }
+        });
+    });
+
+    $(document).on('change', 'input[name=TIENGIAM]', function() {
+        var miengiam = $(this).val();
+        var id = $(this).data('id');
+        console.log(id);
+        $.ajax({
+            url: '/quanlyhocphithutruoc/thaydoimiengiam',
+            method: 'post',
+            data: {
+                id: id,
+                miengiam: miengiam,
+            },
+            success:function(data) {
+                data = jQuery.parseJSON(data);
+                if (!data.error) {
+                    $('#TONGTIEN-' + data.data.ID).html(data.data.TONGTIEN);
+        console.log(data.data.ID);
+                    Swal.fire('Xác nhận thành công');
                 }
             }
         });

@@ -80,4 +80,26 @@ class DiemdanhhocsinhSearch extends Diemdanhhocsinh
         ]);
         return $dataProvider;
     }
+
+    public function searchtheodoihocbutheolop($id, $params)
+    {
+        $query = Diemdanhhocsinh::find();
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+        // grid filtering conditions
+        $query->joinWith('diemdanh');
+        $this->load($params);
+        $query->andFilterWhere([
+            'quanlydiemdanh.ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI,
+            'quanlydiemdanh.ID_LOP' => $id,
+            'STATUS' => 0,
+        ]);
+
+        $query->orderBy([
+            'quanlydiemdanh.NGAY_DIEMDANH' => SORT_DESC,
+            'quanlydiemdanh.ID_LOP' => SORT_DESC,
+        ]);
+        return $dataProvider;
+    }
 }

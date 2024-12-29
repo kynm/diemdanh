@@ -82,7 +82,7 @@ class HocphitheokhoaController extends Controller
                 Yii::$app->session->setFlash('success', "Tạo thành công!");
                 return $this->redirect(['view', 'id' => $model->ID]);
             } else {
-                $dslop = ArrayHelper::map(Lophoc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->all(), 'ID_LOP', 'TEN_LOP');
+                $dslop = ArrayHelper::map(Lophoc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->andWhere(['STATUS' => 1])->all(), 'ID_LOP', 'TEN_LOP');
                 return $this->render('create', [
                     'model' => $model,
                     'dslop' => $dslop,

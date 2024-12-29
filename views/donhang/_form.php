@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\select2\Select2;
 use kartik\date\DatePicker;
+use yii\web\JsExpression;
 ?>
 
 <div class="daivt-form">
@@ -16,12 +17,23 @@ use kartik\date\DatePicker;
                 <div class="col-md-4">
                     <?= $form->field($model, 'ID_DONVI')->widget(Select2::classname(), [
                         'data' => $dsdonvi,
+                        'options' => ['multiple'=>false, 'placeholder' => 'Nhập tên hoặc mã số thuế đơn vị'],
                         'pluginOptions' => [
-                            'placeholder' => 'Chọn ĐƠN VỊ',
                             'allowClear' => true,
-                            // 'multiple' => true
+                            'minimumInputLength' => 3,
+                            'language' => [
+                                'errorLoading' => new JsExpression("function () { return 'Hệ thống đang tìm kiếm...'; }"),
+                            ],
+                            'ajax' => [
+                                'url' => '/donvi/getdsdonvi',
+                                'dataType' => 'json',
+                                'data' => new JsExpression('function(params) { return {q:params.term}; }')
+                            ],
+                            'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+                            'templateResult' => new JsExpression('function(city) { return city.text; }'),
+                            'templateSelection' => new JsExpression('function (city) { return city.text; }'),
                         ],
-                    ]); ?>
+                    ]);?>
                 </div>
                 <div class="col-md-4">
                     <?= $form->field($model, 'STATUS')->widget(Select2::classname(), [
@@ -96,4 +108,4 @@ use kartik\date\DatePicker;
     </div>
     <?php ActiveForm::end(); ?>
 </div>
-<?php
+

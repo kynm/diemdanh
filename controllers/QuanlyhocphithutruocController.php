@@ -445,8 +445,9 @@ class QuanlyhocphithutruocController extends Controller
             $params = Yii::$app->request->queryParams;
             $dslop = ArrayHelper::map(Lophoc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->andWhere(['STATUS' => 1])->all(), 'ID_LOP', 'TEN_LOP');
             $dsidlop = (isset($params['ID_LOP'])  && $params['ID_LOP']) ? [$params['ID_LOP'] => $params['ID_LOP']] : array_keys($dslop);
+            $dsidlop = $dsidlop ? $dsidlop : [0];
             $sql = "SELECT bh.TEN_LOP, bh.HO_TEN,bh.SOLUONG_DAHOC, bdt.SOLUONG_DADONGTIEN,(bdt.SOLUONG_DADONGTIEN - bh.SOLUONG_DAHOC) SOBUOI_CONLAI FROM
-            (SELECT b.ID,a.TEN_LOP, b.HO_TEN, sum(case when c.`STATUS` = 1 then 1 ELSE 0 END) SOLUONG_DAHOC FROM lophoc a, hocsinh b, diemdanhhocsinh c WHERE a.ID_LOP = b.ID_LOP AND b.ID = c.ID_HOCSINH AND a.ID_DONVI = :ID_DONVI and a.ID_LOP IN (" . implode(',', $dsidlop) . ") AND b.HT_HP IN (0,2) and b.NGAY_KT IS NULL GROUP BY b.ID,a.TEN_LOP, b.HO_TEN) bh,
+            (SELECT b.ID,a.TEN_LOP, b.HO_TEN, sum(case when c.`STATUS` = 1 then 1 ELSE 0 END) SOLUONG_DAHOC FROM lophoc a, hocsinh b, diemdanhhocsinh c WHERE a.ID_LOP = b.ID_LOP AND b.ID = c.ID_HOCSINH AND a.ID_DONVI = :ID_DONVI and a.ID_LOP IN (" . implode(',', $dsidlop) . ") AND b.HT_HP IN (0,2) AND b.STATUS = 1 and b.NGAY_KT IS NULL GROUP BY b.ID,a.TEN_LOP, b.HO_TEN) bh,
             (SELECT b.ID, sum(case when c.`STATUS` = 2 then c.SO_BH ELSE 0 END) SOLUONG_DADONGTIEN FROM lophoc a INNER JOIN  hocsinh b ON a.ID_LOP = b.ID_LOP LEFT join quanlyhocphithutruoc c ON b.ID = c.ID_HOCSINH WHERE a.ID_DONVI = :ID_DONVI and a.ID_LOP IN (" . implode(',', $dsidlop) . ") AND b.HT_HP IN (0,2) AND b.STATUS = 1 GROUP BY b.ID) bdt
             WHERE bh.ID = bdt.ID ORDER BY bh.TEN_LOP asc, (bdt.SOLUONG_DADONGTIEN - bh.SOLUONG_DAHOC) ASC";
             $result = Yii::$app->db->createCommand($sql)->bindValues(

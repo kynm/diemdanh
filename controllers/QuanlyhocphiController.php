@@ -82,7 +82,7 @@ class QuanlyhocphiController extends Controller
                 Yii::$app->session->setFlash('success', "Tạo thành công!");
                 return $this->redirect(['view', 'id' => $model->ID]);
             } else {
-                $dslop = ArrayHelper::map(Lophoc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->all(), 'ID_LOP', 'TEN_LOP');
+                $dslop = ArrayHelper::map(Lophoc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->andWhere(['STATUS' => 1])->all(), 'ID_LOP', 'TEN_LOP');
                 return $this->render('create', [
                     'model' => $model,
                     'dslop' => $dslop,
@@ -116,7 +116,7 @@ class QuanlyhocphiController extends Controller
                 Yii::$app->session->setFlash('success', "Tạo thành công!");
                 return $this->redirect(['index']);
             } else {
-                $dslop = ArrayHelper::map(Lophoc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->all(), 'ID_LOP', 'TEN_LOP');
+                $dslop = ArrayHelper::map(Lophoc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->andWhere(['STATUS' => 1])->all(), 'ID_LOP', 'TEN_LOP');
                 return $this->render('createmultiple', [
                     'model' => $model,
                     'dslop' => $dslop,
@@ -557,6 +557,32 @@ class QuanlyhocphiController extends Controller
                         $hocphi->save();
                     }
                 }
+            }
+            $result = [
+                'error' => 0,
+                'message' => 'Cập nhật thành công!',
+            ];
+
+            return json_encode($result);
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function actionCapnhatdadonghochocphitoanlop()
+    {
+        if (Yii::$app->request->post() && Yii::$app->user->identity->nhanvien->ID_NHANVIEN && Yii::$app->user->can('capnhatdadonghocphicalop') &&  Yii::$app->user->can('quanlyhocphi')) {
+            $result = [
+                'error' => 1,
+                'message' => 'Lỗi cập nhật!',
+            ];
+            $params = Yii::$app->request->post();
+            $quanlyhocphi = Quanlyhocphi::findOne($params['id']);
+            if ($quanlyhocphi && $quanlyhocphi->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+                $condition =['=', 'ID_QUANLYHOCPHI', $params['id']];
+                Chitiethocphi::updateAll([
+                    'STATUS' => 1,
+                ], $condition);
             }
             $result = [
                 'error' => 0,

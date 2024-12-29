@@ -128,7 +128,7 @@ class DonhangController extends Controller
                 Yii::$app->session->setFlash('success', "TẠO MỚI THÀNH CÔNG!");
                 return $this->redirect(['index']);
             } else {
-            $dsdonvi = ArrayHelper::map(Donvi::find()->all(), 'ID_DONVI', 'TEN_DONVI');
+            $dsdonvi = ArrayHelper::map(Donvi::find()->orderBy(['ID_DONVI' => SORT_DESC])->LIMIT(10)->all(), 'ID_DONVI', 'TEN_DONVI');
                 return $this->render('create', [
                     'model' => $model,
                     'dsdonvi' => $dsdonvi,
@@ -227,17 +227,32 @@ class DonhangController extends Controller
             $model->NGAY_BD = date('Y-m-d');
             $model->NGAY_KT = date('Y-m-d', strtotime('+1 year'));
             $model->SOTIEN = 350000;
-            $model->STATUS = 1;
             $model->GHICHU = 'SỐ TÀI KHOẢN: ' . PHP_EOL .'NỘI DUNG:';
             if ($model->load(Yii::$app->request->post())) {
+                $date1=date_create($donvi->NGAY_KT);
+                $date2= date_create(date('Y-m-d'));
+                if ($donvi->STATUS == 1 || $donvi->STATUS == 0 || $date2 > $date1) {
+                    $model->TYPE = 1;
+                } else {
+                    $model->TYPE = 2;
+                }
+                if ($model->TYPE == 1) {
+                    $model->SOTIEN = 350000;
+                    if ($model->SO_HS > 150) {
+                        $a = ($model->SO_HS - 150) / 50;
+                        $model->SOTIEN += CEIL($a) * 50000;
+                    }
+                } else {
+                    $a = $model->SO_HS / 50;
+                    $model->SOTIEN += CEIL($a) * 50000;
+                }
+                $model->STATUS = 1;
                 $model->save();
                 Yii::$app->session->setFlash('success', "TẠO MỚI THÀNH CÔNG!");
                 return $this->redirect(['/']);
             } else {
-            $dsdonvi = ArrayHelper::map(Donvi::find()->all(), 'ID_DONVI', 'TEN_DONVI');
                 return $this->render('donvimuahang', [
                     'model' => $model,
-                    'dsdonvi' => $dsdonvi,
                 ]);
             }
     }

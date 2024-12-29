@@ -24,6 +24,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php endif; ?>
     <?= Html::a('<i class="fa fa-print"></i> In theo lớp', ['/quanlyhocphi/inhocphitheolop', 'id' => $model->ID], ['class' => 'btn btn-primary btn-flat', 'target' => '_blank']) ?>
     <?= Html::a('<i class="fa fa-file-pdf-o"></i> Export Pdf', ['/quanlyhocphi/exportpdf', 'id' => $model->ID], ['class' => 'btn btn-success btn-flat', 'target' => '_blank']) ?>
+    <?php if (Yii::$app->user->can('capnhatdadonghocphicalop')):?>
+    <span class="pull-right btn btn-danger capnhatdadonghochocphitoanlop" data-id="<?= $model->ID?>">Cập nhật đã đóng học phí cả lớp</span>
+    <?php endif; ?>
     <?php if (Yii::$app->user->can('quanlyhocphi')):?>
     <span class="pull-right btn btn-warning bosunghocsinh" data-id="<?= $model->ID?>">Bổ sung HS</span>
     <?php endif; ?>
@@ -291,6 +294,38 @@ $('.capnhatsotienmoibuoi').on('change', function() {
                     data = jQuery.parseJSON(data);
                     if (!data.error) {
                         Swal.fire('Bổ sung thành công!');
+                        setTimeout(() => {
+                            window.location.reload(true);
+                        }, 800);
+                    }
+                }
+            });
+        }
+        });
+    });
+
+    $('.capnhatdadonghochocphitoanlop').on('click', function() {
+        Swal.fire({
+            title: 'Bạn có muốn cập nhật học sinh cả lớp lớp đã đóng học phí không?',
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: 'Đồng ý!',
+            cancelButtonText: "Không đồng ý!"
+        }).then((result) => {
+        if (result['isConfirmed']) {
+            var capnhatghichu = $(this).val();
+            var id = $(this).data('id');
+            $.ajax({
+                url: '/quanlyhocphi/capnhatdadonghochocphitoanlop',
+                method: 'post',
+                data: {
+                    id: id,
+                },
+                success:function(data) {
+                    data = jQuery.parseJSON(data);
+                    if (!data.error) {
+                        Swal.fire('Cập nhật thành công!');
                         setTimeout(() => {
                             window.location.reload(true);
                         }, 800);

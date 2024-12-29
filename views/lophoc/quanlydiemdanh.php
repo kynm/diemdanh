@@ -20,6 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('<i class="fa fa-pencil-square-o"></i> Quản lý học sinh', ['quanlyhocsinh', 'id' => $model->ID_LOP], ['class' => 'btn btn-primary btn-flat']) ?>
     <?php endif; ?>
     <?= (Yii::$app->user->can('diemdanhlophoc')) ? Html::a('Kiểm tra', ['/chamdiem/chamdiemlophoc', 'idlophoc' => $model->ID_LOP], ['class' => 'btn btn-success btn-flat']) : ''?>
+    <?= (Yii::$app->user->can('theodoihocbu')) ? Html::a('Học bù', ['/quanlydiemdanh/theodoihocbutheolop', 'idlophoc' => $model->ID_LOP, 'TU_NGAY' => $params['TU_NGAY'], 'DEN_NGAY' => $params['DEN_NGAY']], ['class' => 'btn btn-success btn-flat']) : ''?>
     <?= $this->render('_detail', ['model' => $diemdanh->lop,]) ?>
 </div>
 

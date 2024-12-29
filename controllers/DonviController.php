@@ -300,4 +300,24 @@ class DonviController extends Controller
             ]);
     }
 
+    public function actionGetdsdonvi($q = null, $id = null) {
+        if (Yii::$app->user->can('create-donvi')) {
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            $out = ['results' => ['id' => '', 'text' => '']];
+            if (!is_null($q)) {
+                $query = Donvi::find();
+                $query->select(['ID_DONVI id', 'CONCAT(TEN_DONVI, " - ", SO_DT) AS text'])
+                    ->where(['like', 'TEN_DONVI', $q])
+                    ->orWhere(['like', 'SO_DT', $q])
+                    ->limit(20);
+                $command = $query->createCommand();
+                $data = $command->queryAll();
+                $out['results'] = array_values($data);
+            }
+            return $out;
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
+        }
+    }
+
 }

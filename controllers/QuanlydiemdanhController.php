@@ -62,11 +62,31 @@ class QuanlydiemdanhController extends Controller
             $searchModel = new DiemdanhhocsinhSearch();
             $dataProvider = $searchModel->searchtheodoihocbu(Yii::$app->request->queryParams);
 
-            $dslop = ArrayHelper::map(Lophoc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->all(), 'ID_LOP', 'TEN_LOP');
+            $dslop = ArrayHelper::map(Lophoc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->andWhere(['STATUS' => 1])->all(), 'ID_LOP', 'TEN_LOP');
             return $this->render('theodoihocbu', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
                 'dslop' => $dslop,
+            ]);
+        } else {
+            throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');
+        }
+    }
+
+    public function actionTheodoihocbutheolop($idlophoc)
+    {
+        $lophoc = Lophoc::findOne($idlophoc);
+        if (Yii::$app->user->can('theodoihocbu') && $lophoc->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI) {
+            $searchModel = new DiemdanhhocsinhSearch();
+            $params = Yii::$app->request->queryParams;
+            $dataProvider = $searchModel->searchtheodoihocbutheolop($idlophoc, $params);
+
+            return $this->render('theodoihocbutheolop', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'lophoc' => $lophoc,
+                'params' => $params,
+
             ]);
         } else {
             throw new ForbiddenHttpException('Bạn không có quyền truy cập chức năng này');

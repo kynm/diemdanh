@@ -169,7 +169,7 @@ class HocsinhController extends Controller
                 Yii::$app->session->setFlash('success', "Cập nhật thành công!");
                 return $this->redirect(['/lophoc/quanlyhocsinh', 'id' => $model->ID_LOP]);
             } else {
-                $dslop = ArrayHelper::map(Lophoc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->all(), 'ID_LOP', 'TEN_LOP');
+                $dslop = ArrayHelper::map(Lophoc::find()->where(['ID_DONVI' => Yii::$app->user->identity->nhanvien->ID_DONVI])->andWhere(['STATUS' => 1])->all(), 'ID_LOP', 'TEN_LOP');
                 return $this->render('update', [
                     'model' => $model,
                     'dslop' => $dslop,
