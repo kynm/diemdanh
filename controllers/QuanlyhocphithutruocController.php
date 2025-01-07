@@ -522,6 +522,10 @@ class QuanlyhocphithutruocController extends Controller
                 $hocphi->NGAY_BD = $ngaybd;
                 $hocphi->save();
                 $result['error'] = 0;
+                $result['sobh'] = $hocphi->SO_BH;
+                $result['tu_ngay'] = $hocphi->NGAY_BD;
+                $result['lopid'] = $hocphi->ID_LOP;
+                $result['ID'] = $hocphi->ID;
                 $result['message'] = 'Cập nhật thành công';
             }
 
@@ -578,6 +582,7 @@ class QuanlyhocphithutruocController extends Controller
                 }
                 $ngaykt = $ngaybd;
                 $result['NGAY_KT'] = $ngaykt->format('Y-m-d');
+                $result['ID'] = $ngaykt->format('Y-m-d');
                 $result['error'] = 0;
                 $result['message'] = 'Cập nhật thành công';
             }

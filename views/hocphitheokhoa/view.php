@@ -47,7 +47,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     [
                         'attribute' => 'SO_BUOI_DAHOC',
-                        'value' => $model->soluongdadiemdanh . '/ ' . $model->SO_BH,
+                        'value' => Html::a($model->soluongdadiemdanh . '/ ' . $model->SO_BH, ['/lophoc/quanlydiemdanhnew', 'id' => $model->ID_LOP, 'TU_NGAY' => $model->TU_NGAY, 'DEN_NGAY' => $model->DEN_NGAY], ['class' => 'text text-primary', 'target' => '_blank']),
+                        'format' => 'raw',
                     ],
                 ],
             ]) ?>
@@ -77,7 +78,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <tr>
                     <td scope="col"><?= $key + 1;?></td>
                     <td><?= $chitiet->hocsinh ? $chitiet->hocsinh->HO_TEN . ($chitiet->hocsinh->STATUS ? '' : '(ĐÃ NGHỈ)') : 'HỌC SINH KHÔNG TỒN TẠI'?></td>
-                        <td><?= $chitiet->sobuoidahoc($chitiet->NGAY_BD, $chitiet->NGAY_KT)?>/<?= $chitiet->SO_BH?></td>
+                        <td><?= Html::a($chitiet->sobuoidahoc($chitiet->NGAY_BD, $chitiet->NGAY_KT) . '/' . $chitiet->SO_BH, ['/hocsinh/lichsudiemdanh', 'id' => $chitiet->hocsinh->ID, 'TU_NGAY' => $chitiet->NGAY_BD, 'DEN_NGAY' => $chitiet->NGAY_KT], ['class' => 'text text-primary', 'target' => '_blank'])?></td>
                     <td><input class="form-control capnhatsobuoihoc" name="SO_BH" type="number" value="<?= $chitiet->SO_BH?>" data-id="<?= $chitiet->ID ?>"></td>
                     <td><input class="form-control capnhatsotien" type="number" name="SOTIEN" value="<?= $chitiet->SOTIEN?>" data-id="<?= $chitiet->ID ?>"></td>
                     <td><input class="form-control capnhatmiengiam" type="number" name="TIENGIAM" value="<?= $chitiet->TIENGIAM?>" data-id="<?= $chitiet->ID ?>"></td>
@@ -104,7 +105,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <tr>
                         <td scope="col"><?= $key + 1;?></td>
                         <td><?= $chitiet->hocsinh ? $chitiet->hocsinh->HO_TEN : 'HỌC SINH KHÔNG TỒN TẠI'?></td>
-                        <td><?= $chitiet->sobuoidahoc($chitiet->NGAY_BD, $chitiet->NGAY_KT)?>/<?= $chitiet->SO_BH?></td>
+                        <td><?= Html::a($chitiet->sobuoidahoc($chitiet->NGAY_BD, $chitiet->NGAY_KT) . '/' . $chitiet->SO_BH, ['/hocsinh/lichsudiemdanh', 'id' => $chitiet->hocsinh->ID, 'TU_NGAY' => $chitiet->NGAY_BD, 'DEN_NGAY' => $chitiet->NGAY_KT], ['class' => 'text text-primary', 'target' => '_blank'])?></td>
                         <td><?= number_format($chitiet->SO_BH)?></td>
                         <td><?= number_format($chitiet->SOTIEN)?></td>
                         <td><?= number_format($chitiet->TIENGIAM)?></td>

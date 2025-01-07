@@ -107,7 +107,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             [
                                 'attribute' => 'NGAY_KT',
                                 'value' => function($model) {
-                                    return $model->STATUS == 1 ? '<input type="date" name="NGAY_KT" value="' . $model->NGAY_KT . '" class="form-control" data-id="' . $model->ID  . '">' : ($model->NGAY_KT ? Yii::$app->formatter->asDatetime($model->NGAY_KT, 'php:d/m/Y') : NULL);
+                                    return $model->STATUS == 1 ? '<input type="date" name="NGAY_KT" id="NGAY_KT_' . $model->ID . '" value="' . $model->NGAY_KT . '" class="form-control" data-id="' . $model->ID  . '">' : ($model->NGAY_KT ? Yii::$app->formatter->asDatetime($model->NGAY_KT, 'php:d/m/Y') : NULL);
                                 },
                                 'format' => 'raw',
                             ],
@@ -308,6 +308,29 @@ $script = <<< JS
             success:function(data) {
                 data = jQuery.parseJSON(data);
                 if (!data.error) {
+                    var sobh = data.sobh;
+                    var tu_ngay = data.tu_ngay;
+                    var lopid = data.lopid;
+                    var idhptt = data.ID;
+                    if (sobh && tu_ngay && lopid) {
+                       $.ajax({
+                            url: '/quanlyhocphithutruoc/tinhngayketthuc',
+                            method: 'post',
+                            data: {
+                                'lopid' : lopid,
+                                'sobh' : sobh,
+                                'ngay_bd' : tu_ngay,
+                            },
+                            success:function(data) {
+                                data = jQuery.parseJSON(data);
+                                if (!data.error) {
+                                    $("#NGAY_KT_" + idhptt).val(data.NGAY_KT);
+                                } else {
+                                    Swal.fire(data.message);
+                                }
+                            }
+                        }); 
+                    }
                     Swal.fire('THAY ĐỔI THÀNH CÔNG');
                 } else {
                     Swal.fire('LỖI CẬP NHẬT!');

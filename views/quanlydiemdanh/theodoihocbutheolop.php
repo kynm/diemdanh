@@ -57,7 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             [
                                 'attribute' => 'HANHDONG',
                                 'value'  => function($model) {
-                                    return Yii::$app->user->can('quanlytruonghoc') ? '<span class="btn btn-danger btn-default text-white xacnhanhocbu" data-chitietid="' . $model->ID . '" style="color: white;">Xác nhận học bù</span>' : '';
+                                    return Yii::$app->user->can('theodoihocbu') ? '<span class="btn btn-danger btn-default text-white xacnhanhocbu" data-chitietid="' . $model->ID . '" style="color: white;">Xác nhận học bù</span>' : '';
                                 },
                                 'format' => 'raw',
                             ],

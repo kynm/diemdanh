@@ -76,6 +76,14 @@ $this->params['breadcrumbs'][] = $this->title;
                         },
                         'format' => 'raw',
                     ],
+                    [
+                        'attribute' => 'XEM_DIEMDANH',
+                        'contentOptions' => ['style' => 'width:7%; white-space: normal;word-break: break-word;'],
+                        'value' => function ($model) {
+                            return Html::a('Xem điểm danh', ['/hocsinh/lichsudiemdanh', 'id' => $model->ID, 'TU_NGAY' => $model->NGAY_BD, 'DEN_NGAY' => $model->NGAY_KT], ['class' => 'text text-primary', 'target' => '_blank']);
+                        },
+                        'format' => 'raw',
+                    ],
                 ],
             ]); ?>
         <?php Pjax::end(); ?>

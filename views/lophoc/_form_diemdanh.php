@@ -51,7 +51,7 @@ $script = <<< JS
         var NGAYDIEMDANH = $(this).val();
         var date    = new Date(NGAYDIEMDANH),
         yr      = date.getFullYear(),
-        month   = date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth(),
+        month   = date.getMonth() < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1,
         day     = date.getDate()  < 10 ? '0' + date.getDate()  : date.getDate(),
         newDate = day + '-' + month + '-' + yr;
         $('#quanlydiemdanh-tieude').val('ĐIỂM DANH NGÀY ' + newDate);

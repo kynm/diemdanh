@@ -224,7 +224,7 @@ class QuanlydiemdanhController extends Controller
             'error' => 1,
             'message' => 'LỖI CẬP NHẬT',
         ];
-        if ($diemdanhhocsinh && $diemdanh && $diemdanh->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI && Yii::$app->user->can('quanlytruonghoc')) {
+        if ($diemdanhhocsinh && $diemdanh && $diemdanh->ID_DONVI == Yii::$app->user->identity->nhanvien->ID_DONVI && Yii::$app->user->can('theodoihocbu')) {
             $diemdanhhocsinh->STATUS = 1;
             $diemdanhhocsinh->NHAN_XET .= '<br/> ĐÃ HỌC BÙ';
             $diemdanhhocsinh->save();

@@ -40,7 +40,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'ID_LOP',
                         'value' => $model->lop ? $model->lop->TEN_LOP : '',
                     ],
-                    'TIEUDE',
+                    [
+                        'attribute' => 'TIEUDE',
+                        'value' => '<input id="capnhatieude" class="form-control" data-id="' . $model->ID . '" type="text" value="' . $model->TIEUDE . '">',
+                        'format' => 'raw',
+                    ],
                     'TU_NGAY',
                     'DEN_NGAY',
                     [
@@ -110,7 +114,7 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 <?php
 $script = <<< JS
-$('.capnhatsotienmoibuoi').on('change', function() {
+    $('.capnhatsotienmoibuoi').on('change', function() {
         var sotienmoibuoi = $(this).val();
         var id = $(this).data('id');
         $.ajax({
@@ -381,6 +385,25 @@ $('.capnhatsotienmoibuoi').on('change', function() {
                 data = jQuery.parseJSON(data);
                 if (!data.error) {
                     Swal.fire('Cập nhật thành công');
+                }
+            }
+        });
+    });
+    $('#capnhatieude').on('change', function() {
+        var tieude = $(this).val();
+        var id = $(this).data('id');
+        $.ajax({
+            url: '/quanlyhocphi/capnhattieude',
+            method: 'post',
+            data: {
+                id: id,
+                tieude: tieude,
+            },
+            success:function(data) {
+                data = jQuery.parseJSON(data);
+                if (!data.error) {
+                    $('#tongtien-' + data.ID).val(data.TONG_TIEN);
+                    Swal.fire('Xác nhận thành công');
                 }
             }
         });

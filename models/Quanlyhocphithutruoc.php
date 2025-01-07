@@ -82,7 +82,8 @@ class Quanlyhocphithutruoc extends \yii\db\ActiveRecord
 
     public function sobuoidahoc($tungay, $denngay)
     {
-        return $this->hocsinh->getDsdiemdanh()->andWhere(['between', 'date(diemdanhhocsinh.NGAY_DIEMDANH)', date($tungay), date($denngay)])->andWhere(['diemdanhhocsinh.STATUS' => 1])->count();
+        $count = $this->hocsinh->getDsdiemdanh()->andWhere(['between', 'date(diemdanhhocsinh.NGAY_DIEMDANH)', date($tungay), date($denngay)])->andWhere(['diemdanhhocsinh.STATUS' => 1])->count();
+        return $count;
     }
 
     public function getDschamdiem()

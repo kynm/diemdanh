@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </th>
                 <th class="text-center" style="width: 55%;">
                     <h3>THÔNG BÁO HỌC PHÍ</h3>
-                    <h6>TỪ NGÀY: <?= Yii::$app->formatter->asDatetime($model->NGAY_BD, 'php:d/m/Y')?>. ĐẾN NGÀY: <?= Yii::$app->formatter->asDatetime($model->NGAY_KT, 'php:d/m/Y')?></h6>
+                    <h4><?= Yii::$app->formatter->asDatetime($model->NGAY_BD, 'php:d/m/Y')?> - <?= Yii::$app->formatter->asDatetime($model->NGAY_KT, 'php:d/m/Y')?></h4>
                 </th>
                 <th>
                     <h5 class="text-center"><?=mb_strtoupper(Yii::$app->user->identity->nhanvien->iDDONVI->TEN_DONVI)?></h5>
@@ -31,17 +31,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 <td colspan="2" style="border: 1px solid;"><?= $model->hocsinh->HO_TEN?> - <?= $model->lop->TEN_LOP?></td>
             </tr>
             <tr>
-                <td style="border: 1px solid;">NGÀY NGHỈ</td>
-                <td colspan="2" style="border: 1px solid;"><?= $model->dsngaynghihoc($model->NGAY_BD, $model->NGAY_KT)?></td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid;">SỐ BUỔI HỌC</td>
-                <td colspan="2" style="border: 1px solid;"><?= $model->sobuoidahoc($model->NGAY_BD, $model->NGAY_KT)?>/<?= $model->SO_BH?></td>
-            </tr>
-            <tr>
                 <td style="border: 1px solid;">TỔNG TIỀN</td>
                 <td colspan="2" style="border: 1px solid;">
-                    <div style="font-size:20px"><?= number_format($model->TONGTIEN)?> (ĐỒNG) </div> <?= $model->TIENKHAC ? ' - ĐÃ BAO GỒM TIỀN SÁCH/TÀI LIỆU: ' . number_format($model->TIENKHAC) . ' (ĐỒNG) ' : ''?>
+                    <div style="font-size:20px"><?= number_format($model->TONGTIEN)?> (ĐỒNG)
+                        <?= $model->TIENKHAC ? ' - ĐÃ BAO GỒM TIỀN SÁCH/TÀI LIỆU: ' . number_format($model->TIENKHAC) . ' (ĐỒNG) ' : ''?>
+                        <?= $model->TIENGIAM ? ' - GIẢM TRỪ/HỌC BỔNG: ' . number_format($model->TIENGIAM) . ' (ĐỒNG) ' : ''?>
+                    </div>
                     <?php if ($model->STATUS == 2):?>
                         <span class="btn btn-flat btn-success">Đã thu</span>
                     <?php endif; ?>
@@ -81,36 +76,4 @@ $this->params['breadcrumbs'][] = $this->title;
     </table>
 </div>
 <pagebreak />
-    <?php
-    $danhsachkiemtra = $model->danhsachkiemtra;
-    if($danhsachkiemtra): ?>
-    <b><h3>ĐIỂM KIỂM TRA</h3></b>
-    <table class="table table-bordered" style="font-size: 18px;">
-        <tbody>
-            <tr class="bg-primary text-center">
-                <th class="text-center">Họ tên</th>
-                <th class="text-center">Nghe</th>
-                <th class="text-center">Nói</th>
-                <th class="text-center">Đọc</th>
-                <th class="text-center">Viết</th>
-                <th class="text-center">Điểm</th>
-                <th style="width: 20%;">Nhận xét</th>
-                <th style="width: 30%;">Nhận xét chung</th>
-            </tr>
-            <?php foreach ($danhsachkiemtra as $key => $value):?>
-                <tr>
-                    <td><?=$value->hocsinh->HO_TEN ?></td>
-                    <td><?=$value->NGHE ?></td>
-                    <td><?=$value->NOI ?></td>
-                    <td><?=$value->DOC ?></td>
-                    <td><?=$value->VIET ?></td>
-                    <td><?=$value->DIEM ?></td>
-                    <td><?= nl2br($value->NHAN_XET) ?></td>
-                    <td><?= nl2br($value->chamdiem->NOIDUNG) ?></td>
-                </tr>
-            <?php endforeach?>
-        </tbody>
-    </table>
-    <?php endif;?>
-</div>
-<pagebreak />
+

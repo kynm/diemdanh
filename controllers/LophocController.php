@@ -243,7 +243,8 @@ class LophocController extends Controller
                         $diemdanhhocsinh->ID_HOCSINH = $hocsinh->ID;
                         $diemdanhhocsinh->ID_DIEMDANH = $diemdanh->ID;
                         $diemdanhhocsinh->NGAY_DIEMDANH = $diemdanh->NGAY_DIEMDANH;
-                        $diemdanhhocsinh->save(false);
+                        $diemdanhhocsinh->STATUS = 1;
+                        $diemdanhhocsinh->save();
                     }
                 }
                 Yii::$app->session->setFlash('success', "Thêm điểm danh thành công!");
@@ -465,6 +466,7 @@ class LophocController extends Controller
                             $diemdanhhocsinh = new Diemdanhhocsinh();
                             $diemdanhhocsinh->ID_NHANVIEN = Yii::$app->user->identity->nhanvien->ID_NHANVIEN;
                             $diemdanhhocsinh->ID_LOP = $id;
+                            $diemdanhhocsinh->NGAY_DIEMDANH = $diemdanh->NGAY_DIEMDANH;
                             $diemdanhhocsinh->ID_HOCSINH = $chitiet['ID_HOCSINH'];
                             $diemdanhhocsinh->ID_DIEMDANH = $diemdanh->ID;
                             $diemdanhhocsinh->STATUS = $chitiet['STATUS'];
@@ -510,6 +512,7 @@ class LophocController extends Controller
                     $diemdanhhocsinh->ID_LOP = $diemdanh->ID_LOP;
                     $diemdanhhocsinh->ID_HOCSINH = $hocsinh->ID;
                     $diemdanhhocsinh->ID_DIEMDANH = $diemdanh->ID;
+                    $diemdanhhocsinh->NGAY_DIEMDANH = $diemdanh->NGAY_DIEMDANH;
                     $diemdanhhocsinh->STATUS = 1;
                     $diemdanhhocsinh->save();
                 }
