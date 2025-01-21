@@ -82,7 +82,7 @@ class Quanlyhocphithutruoc extends \yii\db\ActiveRecord
 
     public function sobuoidahoc($tungay, $denngay)
     {
-        $count = $this->hocsinh->getDsdiemdanh()->andWhere(['between', 'date(diemdanhhocsinh.NGAY_DIEMDANH)', date($tungay), date($denngay)])->andWhere(['diemdanhhocsinh.STATUS' => 1])->count();
+        $count = $this->hocsinh ? $this->hocsinh->getDsdiemdanh()->andWhere(['between', 'date(diemdanhhocsinh.NGAY_DIEMDANH)', date($tungay), date($denngay)])->andWhere(['diemdanhhocsinh.STATUS' => 1])->count() : 0;
         return $count;
     }
 
@@ -100,7 +100,7 @@ class Quanlyhocphithutruoc extends \yii\db\ActiveRecord
 
     public function sobuoinghi($tungay, $denngay)
     {
-        $sobuoinghi = $this->hocsinh->getDsdiemdanh()->andWhere(['between', 'date(diemdanhhocsinh.NGAY_DIEMDANH)', date($tungay), date($denngay)])->andWhere(['diemdanhhocsinh.STATUS' => 0])->count();
+        $sobuoinghi = $this->hocsinh ? $this->hocsinh->getDsdiemdanh()->andWhere(['between', 'date(diemdanhhocsinh.NGAY_DIEMDANH)', date($tungay), date($denngay)])->andWhere(['diemdanhhocsinh.STATUS' => 0])->count() : 0;
         return $sobuoinghi;
     }
 

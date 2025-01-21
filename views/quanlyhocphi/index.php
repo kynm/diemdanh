@@ -59,7 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'attribute' => 'SOLUONGHS',
                                 'contentOptions' => ['style' => 'width:8%; white-space: normal;word-break: break-word;'],
                                 'value' => function ($model) {
-                                    return $model->lop->getDshocsinh()->andWhere(['STATUS' => 1])->count();
+                                    return $model->lop ? $model->lop->getDshocsinh()->andWhere(['STATUS' => 1])->count() : 'Lớp đã xóa';
                                 },
                                 'format' => 'raw',
                             ],
