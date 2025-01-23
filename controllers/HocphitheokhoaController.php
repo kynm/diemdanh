@@ -120,11 +120,10 @@ class HocphitheokhoaController extends Controller
 
             if (Yii::$app->user->can('trutienbuoihocnghi') && $hocphi->STATUS == 1) {
                 $sobuoinghi = $hocphi->sobuoinghi($quanlyhocphi->TU_NGAY, $quanlyhocphi->DEN_NGAY);
-                if ($sobuoinghi) {
-                    $hocphi->TIENGIAM = $sobuoinghi * $hocphi->hocsinh->TIENHOC;
-                    $hocphi->TONGTIEN = $quanlyhocphi->TIENHOC + $hocphi->TIENKHAC - $hocphi->TIENGIAM;
-                    $hocphi->save();
-                }
+                $hocphi->SO_BH = $quanlyhocphi->SO_BH - $sobuoinghi;
+                $hocphi->TIENGIAM = $sobuoinghi * $hocphi->hocsinh->TIENHOC;
+                $hocphi->TONGTIEN = $hocphi->SO_BH * $hocphi->hocsinh->TIENHOC + $hocphi->TIENKHAC - $hocphi->TIENGIAM;
+                $hocphi->save();
             }
         }
      }

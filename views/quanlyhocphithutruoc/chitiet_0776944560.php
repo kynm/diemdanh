@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </tr>
             <tr>
                 <td style="border: 1px solid;">SỐ BUỔI HỌC</td>
-                <td colspan="2" style="border: 1px solid;"><?= $model->sobuoidahoc($model->NGAY_BD, $model->NGAY_KT)?>/<?= $model->SO_BH?></td>
+                <td colspan="2" style="border: 1px solid;"><?= $model->sobuoidahoc($model->NGAY_BD, $model->NGAY_KT)?>/<?= $model->khoahoc->SO_BH?></td>
             </tr>
             <tr>
                 <td style="border: 1px solid;">TỔNG TIỀN</td>

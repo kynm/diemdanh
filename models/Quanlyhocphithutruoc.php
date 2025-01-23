@@ -72,6 +72,11 @@ class Quanlyhocphithutruoc extends \yii\db\ActiveRecord
         return $this->hasOne(Hocsinh::className(), ['ID' => 'ID_HOCSINH']);
     }
 
+    public function getKhoahoc()
+    {
+        return $this->hasOne(Hocphitheokhoa::className(), ['ID' => 'ID_KHOAHOCPHI']);
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */

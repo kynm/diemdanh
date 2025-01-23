@@ -78,7 +78,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <tr>
                     <td scope="col"><?= $key + 1;?></td>
                     <td><?= $chitiet->hocsinh ? $chitiet->hocsinh->HO_TEN . ($chitiet->hocsinh->STATUS ? '' : '(ĐÃ NGHỈ)') : 'HỌC SINH KHÔNG TỒN TẠI'?></td>
-                        <td><?= $chitiet->hocsinh ? Html::a($chitiet->sobuoidahoc($chitiet->NGAY_BD, $chitiet->NGAY_KT) . '/' . $chitiet->SO_BH, ['/hocsinh/lichsudiemdanh', 'id' => $chitiet->hocsinh->ID, 'TU_NGAY' => $chitiet->NGAY_BD, 'DEN_NGAY' => $chitiet->NGAY_KT], ['class' => 'text text-primary', 'target' => '_blank']) : 'Học sinh đã xóa'?></td>
+                        <td><?= $chitiet->hocsinh ? Html::a($chitiet->sobuoidahoc($chitiet->NGAY_BD, $chitiet->NGAY_KT) . '/' . $model->SO_BH, ['/hocsinh/lichsudiemdanh', 'id' => $chitiet->hocsinh->ID, 'TU_NGAY' => $chitiet->NGAY_BD, 'DEN_NGAY' => $chitiet->NGAY_KT], ['class' => 'text text-primary', 'target' => '_blank']) : 'Học sinh đã xóa'?></td>
                     <td><input class="form-control capnhatsobuoihoc" name="SO_BH" type="number" value="<?= $chitiet->SO_BH?>" data-id="<?= $chitiet->ID ?>"></td>
                     <td><input class="form-control capnhatsotien" type="number" name="SOTIEN" value="<?= $chitiet->SOTIEN?>" data-id="<?= $chitiet->ID ?>"></td>
                     <td><input class="form-control capnhatmiengiam" type="number" name="TIENGIAM" value="<?= $chitiet->TIENGIAM?>" data-id="<?= $chitiet->ID ?>"></td>
@@ -105,7 +105,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <tr>
                         <td scope="col"><?= $key + 1;?></td>
                         <td><?= $chitiet->hocsinh ? $chitiet->hocsinh->HO_TEN : 'HỌC SINH KHÔNG TỒN TẠI'?></td>
-                        <td><?= $chitiet->hocsinh ? Html::a($chitiet->sobuoidahoc($chitiet->NGAY_BD, $chitiet->NGAY_KT) . '/' . $chitiet->SO_BH, ['/hocsinh/lichsudiemdanh', 'id' => $chitiet->hocsinh->ID, 'TU_NGAY' => $chitiet->NGAY_BD, 'DEN_NGAY' => $chitiet->NGAY_KT], ['class' => 'text text-primary', 'target' => '_blank']) : 'Học sinh đã xóa'?></td>
+                        <td><?= $chitiet->hocsinh ? Html::a($chitiet->sobuoidahoc($chitiet->NGAY_BD, $chitiet->NGAY_KT) . '/' . $model->SO_BH, ['/hocsinh/lichsudiemdanh', 'id' => $chitiet->hocsinh->ID, 'TU_NGAY' => $chitiet->NGAY_BD, 'DEN_NGAY' => $chitiet->NGAY_KT], ['class' => 'text text-primary', 'target' => '_blank']) : 'Học sinh đã xóa'?></td>
                         <td><?= number_format($chitiet->SO_BH)?></td>
                         <td><?= number_format($chitiet->SOTIEN)?></td>
                         <td><?= number_format($chitiet->TIENGIAM)?></td>
